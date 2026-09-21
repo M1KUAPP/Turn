@@ -187,10 +187,12 @@ The moments that carry the product:
   game's art direction.
 - **Personality:** curious and good-natured. It enjoys being asked, and it
   never mocks a wrong guess.
-- **Voice:** the answer is always one of three fixed phrases, "Yes", "No",
-  or "Ask another way", so nobody has to read a joke to learn the answer. The
-  humor lives in the character and in the words around the answers, such as
-  the hint and the reveal, and those words stay short and plain.
+- **Voice:** a yes-or-no question always gets one of three fixed phrases,
+  "Yes", "No", or "Ask another way", and the few other replies, such as "Ask
+  a yes-or-no question", are fixed too, so nobody has to read a joke to learn
+  the answer. The humor lives in the character and in the words around the
+  answers, such as the hint and the reveal, and those words stay short and
+  plain.
 - **Art direction:** one simple, expressive character with a silhouette that
   reads at small sizes. Motion carries the meaning, and every reaction also
   shows its word, so a round works with the sound off and with Reduce
@@ -327,7 +329,7 @@ is named; the rest are watched and reported as rates, as the idea's
 ## What Guessling is not
 
 - **Not a chatbot.** The Guessling never writes text: Jev returns
-  probabilities, and every answer is one of three fixed phrases.
+  probabilities, and every reply is a fixed phrase.
 - **Not a race.** No timers, and no scores against other players.
 - **Not ad-supported, and not a data business.**
 - **Not for children.** It stays out of the Kids category.
