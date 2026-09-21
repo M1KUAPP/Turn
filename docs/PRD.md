@@ -490,7 +490,7 @@ https://apps.apple.com/app/id<APP_ID>
 - **SEC-2, Must.** The answer's names and card never reach the app before
   the round ends (END-2). Check: the app's traffic during a round.
 - **SEC-3, Must.** The server limits bursts of requests per player and caps
-  each puzzle's calls to Jev per minute, and refuses text over its limits.
+  all its calls to Jev per minute, and refuses text over its limits.
   Check: a burst over the limit gets a "slow down" error.
 - **SEC-4, Must.** No error text from Jev's SDK reaches the app or the logs.
   Check: a request with a bad key on the test server.
