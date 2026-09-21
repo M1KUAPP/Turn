@@ -1,0 +1,1068 @@
+# Jev research notes
+
+What Jev is, how an app calls it, what it costs, and which of its terms and
+limits shape a RevenueCat Shipaton 2026 app built around it. Jev is TypeSafe
+AI's hosted decision model; every source below was read on September 22, 2026,
+so versions, prices, and limits are as of that date.
+
+Contents:
+
+1.  [What Jev is](#what-jev-is)
+1.  [How Jev is used](#how-jev-is-used)
+1.  [Pricing, limits, and terms](#pricing-limits-and-terms)
+1.  [What teams can build with Jev](#what-teams-can-build-with-jev)
+1.  [Store review and Jev](#store-review-and-jev)
+1.  [Integration effort and limitations](#integration-effort-and-limitations)
+1.  [Latest versions as of September 22, 2026](#latest-versions-as-of-september-22-2026)
+1.  [Conflicts between sources](#conflicts-between-sources)
+1.  [Gaps](#gaps)
+
+## What Jev is
+
+The docs open with the definition: "Jev is TypeSafe's flagship model and the
+first System One model. Send state and typed questions; get structured answers
+your code can use directly." ([ts-intro])
+
+- **Problem it solves.** "Large language models (LLMs) are designed to produce
+  text for humans to read. When you need a model to make a judgment that your
+  code will consume, that creates a mismatch". Jev instead "evaluates typed
+  questions against a state and returns structured results directly. No text
+  generation, no parsing." ([ts-intro])
+- **Who it's for.** Developers building what TypeSafe calls "AI-powered
+  software, where code owns the workflow and AI handles narrow, structured
+  decisions". The same page says: "System One is TypeSafe's model for building
+  AI-powered software, not agents. It does not generate code or choose its own
+  next action." ([ts-build])
+- **Maker.** TypeSafe AI, Inc., "located at 255 California St, Suite 1300, San
+  Francisco, CA 94117" ([ts-terms]). The team page names Diogo Almeida (CEO),
+  Sasha Sheng (COO), and Erik Gafni (CTO), and says the team "works in-person
+  five days a week in our San Francisco office" ([ts-team]). The site calls the
+  company "an AI lab building machine-native intelligence infrastructure for
+  automation" ([ts-home]).
+- **Maturity.** Early access, not general availability. The homepage says "Try
+  our first System One Model, Jev, in early access", and its FAQ answers "How do
+  I get started or ask a question?" with "Join the waitlist! Jev is in its early
+  days" ([ts-home]). The launch post says TypeSafe is "opening early access and
+  bringing developers off the waitlist as quickly as we can"
+  ([ts-blog-launch]). The console's login page offers "Continue with Google" or
+  an emailed code and shows no waitlist ([ts-console]).
+- **Launch date.** The post "Introducing System One Models & Jev" is dated
+  September 15, 2026, signed "Diogo Almeida, founder, TypeSafe", and announces
+  that "TypeSafe AI is releasing our first System One Model" after "two years in
+  stealth" ([ts-blog-launch]). A preview came first: one cookbook's
+  published run "used `jev-1.12`" and was "rendered 2026-07-31"
+  ([cb-skill-suggestion]), and the v1 API replaced a `/preview/evaluation`
+  endpoint ([ts-migrate]).
+- **Current version.** `jev-1.13.0`. Both aliases, `jev-latest` and
+  `jev-preview`, point to it, and the Models page says no preview build is
+  available ([ts-models]).
+- **How it works.** TypeSafe trains its models with "Reinforcement learning for
+  calibrated decisions" (RLCD), which "trains TypeSafe to return decisions and
+  calibrated probabilities instead of generated text" ([ts-primer]). "Jev is not
+  fine-tuned or LoRA-adapted with customer data", and "the same weights serve
+  every account" ([ts-models]).
+- **Input.** "Jev currently accepts text input only. It evaluates strings, JSON
+  objects, and arrays of text. Images, audio, and video are not supported
+  (yet)." ([ts-system-one])
+- **Name.** "We named Jev after William Stanley Jevons" ([ts-blog-launch]); the
+  model class borrows Daniel Kahneman's System 1 idea ([ts-system-one]).
+- **Vendor performance claims.** The homepage claims "193.6x Faster, 444.6x
+  Cheaper", footnoted "based on workflows for System One tasks" ([ts-home]),
+  and the launch post adds "we expect that these are on the higher end of real
+  world gains" ([ts-blog-launch]). TypeSafe's eval site averages four workflows
+  against labels from "GPT-6 Astra and Claude Fable 5.1" and lists "Jev ·
+  workflow · 67.8% · $0.0004 · 0.4 s", next to "opus 5 · workflow · 73.1% ·
+  $0.1761 · 37.8 s" and "haiku 4.5 · workflow · 53.6% · $0.0195 · 12.5 s"
+  ([ts-evals]).
+- Synthesis: Jev is a fast, cheap classifier and scorer that code calls, not a
+  chatbot. Any feature that must write text, such as replies, summaries, or
+  names, needs a second, generative model ([ts-jagged], "Generation").
+
+[ts-team]: https://typesafe.ai/team
+[ts-primer]: https://docs.typesafe.ai/introduction/machine-learning-primer
+[ts-evals]: https://evals.typesafe.ai/
+
+## How Jev is used
+
+### Jev product surfaces
+
+- **Hosted HTTP API.** `POST https://api.typesafe.ai/v1/systemone` answers
+  questions, and `GET /v1/models` lists model names ([ts-api]; [ts-models]). A
+  live OpenAPI 3.1 schema with `"version": "0.2.0"` is served at
+  `https://api.typesafe.ai/openapi.json` ([ts-openapi]).
+- **Console and Playground.** The Master Customer Agreement (MCA) defines the
+  services as "the TypeSafe-hosted web interface available at
+  https://console.typesafe.ai" and "the TypeSafe-hosted application programming
+  interface" ([ts-mca]). API keys come from the console's keys page, and the
+  Playground lets you "Paste any text as the state" and mix question types
+  ([ts-quickstart]).
+- **Client SDKs.** Python (`typesafe-sdk`) and JavaScript or TypeScript
+  (`@typesafe-ai/sdk`), which "handle retries automatically with their default
+  retry policy". "You can also call the HTTP API directly from any language."
+  ([ts-sdk])
+- **Agent skill.** A "Drop-in skill for Claude Code, Codex, and other agent
+  environments" that teaches coding agents the API and its patterns
+  ([ts-skill]).
+- **Docs MCP server.** `https://docs.typesafe.ai/mcp` is a Model Context
+  Protocol server that "provides search and retrieval tools for the TypeSafe AI
+  site". Its tools search and read the docs; they don't call Jev
+  ([ts-docs-mcp]).
+- **LLM adapter.** `system-one-adapter-python` is "A drop-in replacement for
+  `typesafe_sdk`'s `system_one` evaluation API, backed by LLM APIs instead of
+  TypeSafe", described as "Useful for comparing TypeSafe against an LLM"
+  ([gh-adapter]).
+- **Not found.** No first-party CLI, mobile SDK, IDE extension, or MCP server
+  that calls Jev appears in the docs index ([ts-llms]) or among the ten public
+  repositories of the `typesafe-ai` GitHub organization ([gh-org]).
+- **Secondary and unverified.** A community issue on TypeSafe's Python SDK says
+  "Jev is also served through OpenRouter's Decisions API" at
+  `https://openrouter.ai/api/alpha/decisions`, and a maintainer replied
+  "OpenRouter is going to implement our API spec very soon" ([gh-py-issue-7]).
+  OpenRouter's public model list had no Jev entry on September 22, 2026
+  ([or-models]).
+
+[ts-sdk]: https://docs.typesafe.ai/sdk
+[ts-docs-mcp]: https://docs.typesafe.ai/mcp
+[gh-adapter]: https://github.com/typesafe-ai/system-one-adapter-python
+[gh-py-issue-7]: https://github.com/typesafe-ai/typesafe-sdk-python/issues/7
+[or-models]: https://openrouter.ai/api/v1/models
+
+### Jev platform and language support
+
+- **Official SDKs.** The Python SDK "requires Python >= 3.10" ([ts-quickstart]).
+  The JavaScript SDK needs "Node.js 20 or newer" and "includes ESM, CommonJS,
+  and TypeScript declarations" ([ts-js]); its npm package lists no runtime
+  dependencies ([npm-sdk]).
+- **Browsers are blocked by default.** The JS option `dangerouslyAllowBrowser`
+  means "Allow browser use, exposing the API key to page users. Default: false."
+  ([ts-js-config]) The SDK source's error reads: "TypeSafeClient is running in a
+  browser, which would expose your API key to anyone using the page. Call the
+  API from a server instead" ([gh-js-client]).
+- **Server runtimes.** The JS SDK's runtime detection names Bun, Deno, Vercel
+  Edge (`vercel-edge`), Cloudflare Workers (`cloudflare-workers`), and Node
+  ([gh-js-runtime]).
+- **Mobile platforms.** The docs index has no page on Swift or iOS, Kotlin or
+  Android, React Native or Expo, or Flutter ([ts-llms]). Turning down a
+  community .NET port on September 20, 2026, a maintainer wrote that TypeSafe
+  "won't accept or promote community code" and "will offer official SDKs in
+  other languages in time" ([gh-py-issue-8]).
+- **Community clients (secondary).** Individuals have published unofficial
+  clients, none vetted here: the Dart packages `jev_dart` ("works in CLI,
+  server, and Flutter") and `typesafe_ai_sdk` ("An unofficial Dart SDK"), whose
+  latest versions came out on September 21 and 20, 2026 ([pub-jev-dart];
+  [pub-ts-dart]), and GitHub repositories such as `NSStudent/JevSwiftSDK` for
+  Swift and `pambrose/jev4k` for Kotlin ([gh-jevswiftsdk]; [gh-jev4k]).
+- **Human languages.** "English is the primary training language and where
+  accuracy is currently best. Other languages, including CJK scripts, are
+  handled but not equally well" ([ts-models]).
+- Synthesis: Call Jev from your own backend, not from the app binary. A key
+  shipped inside an iOS or Android app can be extracted by users, which the
+  MCA's credential clause and the SDK's browser guard both argue against. See
+  [Master Customer Agreement terms for apps](#master-customer-agreement-terms-for-apps).
+
+[gh-js-client]: https://github.com/typesafe-ai/typesafe-sdk-js/blob/v0.6.0/src/client.ts
+[gh-js-runtime]: https://github.com/typesafe-ai/typesafe-sdk-js/blob/v0.6.0/src/runtime.ts
+[gh-py-issue-8]: https://github.com/typesafe-ai/typesafe-sdk-python/issues/8
+[pub-jev-dart]: https://pub.dev/packages/jev_dart
+[pub-ts-dart]: https://pub.dev/packages/typesafe_ai_sdk
+[gh-jevswiftsdk]: https://github.com/NSStudent/JevSwiftSDK
+[gh-jev4k]: https://github.com/pambrose/jev4k
+
+### Installing an SDK and authenticating
+
+The quickstart's install commands and the JavaScript page's, in one block
+([ts-quickstart]; [ts-js]):
+
+```bash
+pip install typesafe-sdk          # Python 3.10 or newer
+uv add typesafe-sdk               # or with uv
+npm install @typesafe-ai/sdk      # Node.js 20 or newer
+export TYPESAFE_API_KEY="..."     # key from https://console.typesafe.ai/keys
+```
+
+- **Authentication.** Every request sends `Authorization: Bearer <API_KEY>`
+  and `Content-Type: application/json` ([ts-api]).
+- **Environment variables.** The SDKs read `TYPESAFE_API_KEY` (required),
+  `TYPESAFE_BASE_URL` (default `https://api.typesafe.ai`),
+  `TYPESAFE_DEFAULT_MODEL` (default `jev-latest`), and `TYPESAFE_LOG_LEVEL`
+  ([ts-py-usage]; [ts-js-env]).
+- **Keeping keys secret.** The MCA says "Customer will ensure that each
+  Customer User keeps the Access Credentials confidential and does not share
+  them with anyone else" ([ts-mca]). TypeSafe's agent skill says: "Keep API
+  credentials server-side in web apps." ([gh-skill-md])
+- **Logging.** At the Python SDK's `debug` level, secret headers are redacted,
+  but "Request and response bodies are not redacted." ([ts-py-usage])
+
+[ts-js-env]: https://docs.typesafe.ai/sdk/javascript/api/variables/ENV
+
+### Key Jev concepts and terms
+
+- **System One model:** "a class of AI models built to make fast, structured
+  decisions that software can use directly" ([ts-system-one]).
+- **State:** "the content you ask a System One model to evaluate", sent as a
+  string, a JSON object, or an array ([ts-state]).
+- **Question:** a named judgment about the state with a `type`, `instructions`,
+  and usually `criteria` ([ts-primitives]).
+- **Question ID:** the key you choose for a question. "Question IDs are for your
+  code. They are not sent to the model." ([ts-primitives])
+- **Choice:** selects "one option from a defined set" and returns `choice`,
+  `probabilities`, and `confidence` ([ts-choice]).
+- **Score:** rates content "against ordered, descriptive levels" and returns
+  `score`, `legend`, `probabilities`, and `confidence` ([ts-score]).
+- **Noul:** a yes/no question whose answer, `noul`, is "the probability that
+  the answer is yes" ([ts-noul]).
+- **Criteria:** "a map of options for a Choice question, an ordered list of
+  levels for a Score, and an optional description of yes and no for a Noul"
+  ([ts-primitives]).
+- **Confidence:** a statistic that "collapses that shape into a single number
+  from 0 to 1" on Choice and Score answers; "Noul answers don't carry one"
+  ([ts-confidence]).
+- **Alias:** "a model name that resolves to a versioned model ID", such as
+  `jev-latest` ([ts-models]).
+- **Speculative fan-out:** "Send many questions in a single call, including
+  speculative ones, and let your code decide what's relevant." ([ts-fan-out])
+- **Jaggedness:** TypeSafe's list of known failure modes: "Jev isn't perfect.
+  Here are some jagged edges we are aware of with jev-1.13." ([ts-jagged])
+
+[ts-state]: https://docs.typesafe.ai/concepts/state
+[ts-choice]: https://docs.typesafe.ai/primitives/choice
+[ts-noul]: https://docs.typesafe.ai/primitives/noul
+[ts-fan-out]: https://docs.typesafe.ai/patterns/fan-out
+
+### The System One HTTP API
+
+A request carries `state`, `model`, and `questions`, and the API reference
+marks all three required ([ts-api]). Rules for questions, all from the same
+page:
+
+- Every question has a `type` and `instructions`, and `instructions` "can be a
+  string, an object, or an array".
+- Noul `criteria` is optional: "Optional descriptions of what a yes and a no
+  mean", under `true` and `false` keys.
+- Choice `criteria` maps each option to a description or `null`: "You can have
+  a maximum of 255 options per Choice."
+- Score `criteria` is an ordered array: "A Score should have at least two
+  levels; the API accepts up to 10."
+- The question key "is not sent to the underlying model and is not used in
+  inference".
+
+Questions can point at nested state "with a dot-and-index path to its key,
+including the backticks", such as `ticket.messages[0].text`
+([ts-primitives]). The quickstart's curl command, carrying its three-question
+request body ([ts-quickstart]):
+
+```bash
+curl -X POST https://api.typesafe.ai/v1/systemone \
+  -H "Authorization: Bearer $TYPESAFE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d @- <<'EOF'
+  {
+    "state": "Hi, I've been trying to connect my Stripe account for 3 days and the integration keeps failing. I'm losing sales. Please help ASAP.",
+    "model": "jev-latest",
+    "questions": {
+      "department": {
+        "type": "choice",
+        "instructions": "Which team should handle this",
+        "criteria": {
+          "billing": "Payment or subscription issues",
+          "technical": "Bugs or integration problems",
+          "sales": "Pricing or account questions"
+        }
+      },
+      "frustration": {
+        "type": "score",
+        "instructions": "How frustrated the customer appears",
+        "criteria": [
+          "Calm, just stating facts",
+          "Frustrated but civil",
+          "Very angry, strong language"
+        ]
+      },
+      "is_urgent": {
+        "type": "noul",
+        "instructions": "The message conveys urgency or time-sensitivity"
+      }
+    }
+  }
+EOF
+```
+
+The response the quickstart shows for it ([ts-quickstart]):
+
+```json
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "department": {
+      "type": "choice",
+      "choice": "technical",
+      "confidence": 0.78,
+      "probabilities": { "technical": 0.85, "sales": 0.0, "billing": 0.15 }
+    },
+    "frustration": {
+      "type": "score",
+      "score": 1.0,
+      "confidence": 1.0,
+      "legend": {
+        "0": "Calm, just stating facts",
+        "1": "Frustrated but civil",
+        "2": "Very angry, strong language"
+      },
+      "probabilities": { "0": 0.0, "1": 1.0, "2": 0.0 }
+    },
+    "is_urgent": { "type": "noul", "noul": 1.0 }
+  },
+  "usage": { "input_tokens": 392, "output_tokens": 65 }
+}
+```
+
+Response fields, per the API reference ([ts-api]):
+
+- `model` is "The model that performed the evaluation", `answers` holds "One
+  Answer per question, keyed by the same ids you used", and `usage` has
+  `input_tokens` and `output_tokens`.
+- A Noul answer's `noul` is "The yes/no answer on a scale from 0 (no) to 1
+  (yes)."
+- A Choice answer has `choice` ("The highest-probability option"),
+  `probabilities` ("floats that sum to 1"), and `confidence`.
+- A Score answer has `score` ("The probability-weighted answer across the
+  levels; can land between levels"), `legend`, `probabilities`, and
+  `confidence`.
+
+The documented errors ([ts-api]):
+
+| Status                     | What the API reference says                                                  |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| `401 Unauthorized`         | "Missing or invalid API key. Check the `Authorization` header."              |
+| `422 Unprocessable Entity` | "The request body failed validation"                                         |
+| `429 Too Many Requests`    | "You have exceeded your rate limit. Back off and retry after a short delay." |
+| `529 Overloaded`           | "TypeSafe is temporarily overloaded. Retry after a short delay."             |
+
+For `429` and `529`, "retry the request with exponential backoff instead of
+retrying immediately. Our client SDKs handle this automatically" ([ts-api]).
+The live API's status for a missing key differs; see
+[Conflicts between sources](#conflicts-between-sources).
+
+### Python SDK methods
+
+Signatures from the client and answer-type pages ([ts-py-sync];
+[ts-py-async]; [ts-py-responses]):
+
+```text
+TypeSafeClient(api_key=None, model=None, retry=None, timeout=None, headers=None,
+               transport=None, http_client=None, base_url=None)
+AsyncTypeSafeClient(...)            # same parameters; await client.system_one(...)
+
+client.system_one(state, questions, model=None, retry=None, timeout=None,
+                  extra_headers=None, extra_body=None, response_model=None)
+  -> SystemOneResponse   # .model .usage .answers .nouls .choices .scores
+                         # .request_id .raw_http_response
+client.models.list() -> ListModelsResponse   # .models: name, description, release_date
+```
+
+- **Questions.** `Noul(instructions=..., criteria=...)`,
+  `Choice(instructions=..., criteria={...})`, and
+  `Score(instructions=..., criteria=[...])`, where a Noul's optional criteria
+  is `NoulCriteria(true=..., false=...)`. Plain dictionaries with a `type` key
+  also work, and "You can mix dictionaries and question objects in the same
+  request." ([ts-py-questions])
+- **Answers.** `NoulAnswer.noul`; `ChoiceAnswer.choice`, `.confidence`, and
+  `.probabilities`; `ScoreAnswer.score`, `.confidence`, `.legend`, and
+  `.probabilities` ([ts-py-responses]). "The SDK keys `probabilities` and
+  `legend` by integer level rather than by string." ([ts-score])
+- **Typed responses.** Since v0.7.0, `system_one` "accepts a new
+  `response_model` argument that can be set to a desired `pydantic` model"
+  ([ts-py-changelog]).
+- **Exceptions.** `TypeSafeAPIError` carries `status`, `body`, `headers`,
+  `endpoint`, and `request_id`, with subclasses for 400, 401, 403, 404, 422,
+  429 (`TypeSafeRateLimitError.retry_after_ms`), and 5xx. Connection failures
+  raise `TypeSafeAPIConnectionError` or `TypeSafeAPITimeoutError`
+  ([ts-py-exceptions]).
+- **Timeouts and retries.** `DEFAULT_TIMEOUT = 10.0`, "Default timeout in
+  seconds for each HTTP operation" ([ts-py-constants]). `RetryPolicy` sets the
+  retry count, backoff, retried statuses, and a "Total retry budget in seconds
+  per SDK call" ([ts-py-retries]). In the v0.7.1 source the defaults are
+  `max_retries: int = 2`, `backoff_initial: float = 0.5`,
+  `backoff_max: float = 5.0`, statuses `{408, 429, *range(500, 600)}`, and
+  `timeout: float | None = 30.0` ([gh-py-retry]).
+
+[ts-py-sync]: https://docs.typesafe.ai/sdk/python/api/clients/sync
+[ts-py-async]: https://docs.typesafe.ai/sdk/python/api/clients/async
+[ts-py-responses]: https://docs.typesafe.ai/sdk/python/api/types/responses
+[ts-py-questions]: https://docs.typesafe.ai/sdk/python/api/types/questions
+[ts-py-exceptions]: https://docs.typesafe.ai/sdk/python/api/exceptions
+[ts-py-constants]: https://docs.typesafe.ai/sdk/python/api/constants
+[ts-py-retries]: https://docs.typesafe.ai/sdk/python/api/retries
+[gh-py-retry]: https://github.com/typesafe-ai/typesafe-sdk-python/blob/v0.7.1/src/typesafe_sdk/_core/retry.py
+
+### JavaScript SDK methods
+
+Signatures from the JS API reference ([ts-js-client]; [ts-js-result];
+[ts-js-promise]; [ts-js-models]):
+
+```text
+new TypeSafeClient(config?: TypeSafeClientConfig)
+client.systemOne<Q>(request: { state, questions: Q, model? }, options?: RequestOptions)
+  -> APIPromise<SystemOneResult<Q>>     // { answers, model, usage }
+     .withResponse()                    // { data, response, requestId }
+client.models.list(options?) -> APIPromise<ModelCard[]>   // name, description, release_date
+choice(instructions, criteria)   noul(instructions?, criteria?)   score(instructions, criteria)
+```
+
+The JavaScript page's quickstart, restyled by this repo's Prettier settings
+([ts-js]):
+
+```ts
+import { choice, TypeSafeClient } from '@typesafe-ai/sdk'
+
+const client = new TypeSafeClient()
+const response = await client.systemOne({
+  state: { document: 'I was charged twice. Please fix this ASAP.' },
+  questions: {
+    category: choice('What is this ticket about?', {
+      billing: null,
+      technical: null,
+      other: null
+    })
+  }
+})
+
+console.log(response.answers.category.choice)
+```
+
+- **Typing.** "Answer types are inferred from your questions." ([ts-js])
+- **Config.** `apiKey`, `baseURL`, `dangerouslyAllowBrowser`,
+  `defaultHeaders`, `defaultModel`, `fetch`, `logger`, `logLevel`, `retry`, and
+  `timeout`, which is "Timeout per attempt in milliseconds, without a total
+  retry budget. Default: 10000." ([ts-js-config])
+- **Per-call options.** `headers`, `retry`, `signal` for cancellation, and
+  `timeout` ([ts-js-options]).
+- **Retries.** Defaults: `maxRetries` 2, `backoffInitialMs` 500,
+  `backoffMaxMs` 5000, `backoffJitter` 0.25, and `httpStatuses` "408, 429, and
+  500–599", honoring `Retry-After` up to `maxRetryAfterMs` 60000
+  ([ts-js-retry]).
+- **Errors.** `APIError` subclasses are `BadRequestError`,
+  `AuthenticationError`, `PermissionDeniedError`, `NotFoundError`,
+  `UnprocessableEntityError`, `RateLimitError`, and `InternalServerError`, plus
+  `APIConnectionError`, `APITimeoutError`, and `APIUserAbortError`
+  ([ts-js-api]). `RateLimitError.retryAfterMs` is the "Server retry delay in
+  milliseconds" ([ts-js-ratelimit]).
+
+[ts-js-client]: https://docs.typesafe.ai/sdk/javascript/api/classes/TypeSafeClient
+[ts-js-result]: https://docs.typesafe.ai/sdk/javascript/api/interfaces/SystemOneResult
+[ts-js-promise]: https://docs.typesafe.ai/sdk/javascript/api/classes/APIPromise
+[ts-js-models]: https://docs.typesafe.ai/sdk/javascript/api/interfaces/Models
+[ts-js-options]: https://docs.typesafe.ai/sdk/javascript/api/interfaces/RequestOptions
+[ts-js-retry]: https://docs.typesafe.ai/sdk/javascript/api/interfaces/RetryPolicy
+[ts-js-api]: https://docs.typesafe.ai/sdk/javascript/api
+[ts-js-ratelimit]: https://docs.typesafe.ai/sdk/javascript/api/classes/RateLimitError
+
+### Rate limits, context length, and latency
+
+- **Rate limits.** "250,000 tokens per second / 1,200 requests per minute"; "A
+  request over either limit returns `429 Too Many Requests`." ([ts-models])
+- **Limits can move.** "Rate limits are adjusting dynamically. We are serving a
+  very large volume of demand, and the limits above can change without notice".
+  "Higher limits are available on custom and enterprise plans. Contact
+  sales@typesafe.ai." ([ts-models])
+- **Context length.** "64k tokens per request; 32k tokens for `state` plus the
+  longest question" ([ts-models]).
+- **Batching.** "Every question is evaluated in parallel and in isolation
+  against the same state in one go. Adding questions barely changes the
+  response time." ([ts-intro]) Thirteen questions over a roughly
+  54,000-character article took "0.27s" in one call and "2.71s" as 13 calls
+  ([cb-parallel]).
+- **Latency claims.** "Most queries complete in about 100 ms. System One is fast
+  enough for real-time request paths and user interfaces." ([ts-build]) The
+  use-case map says "real-time speeds (150ms)" ([ts-use-cases]), and the launch
+  post says "End-to-end response time is 70ms-500ms for TypeSafe"
+  ([ts-blog-launch]).
+- **Measured latency.** Two cookbooks report a "mean round-trip latency" of
+  "111ms" and "114ms" for Jev, against 826 ms to 13.9 s for the LLMs they
+  compare ([cb-consistency-noul]; [cb-consistency-choice]).
+- **Where it runs.** The launch post says TypeSafe's evals "are generally run
+  from our laptops on the West Coast (this is where our service is currently
+  based)" ([ts-blog-launch]).
+- **Uptime.** The status page reported "99.841% uptime" for `api.typesafe.ai`
+  over its 90-day window and "All services are online" on September 21, 2026
+  ([ts-status]). Its one listed incident, "Console is unavailable.", was
+  resolved September 21, 2026 at 8:16am UTC: "Issues with TypeSafe console and
+  API are fully resolved." ([ts-incident])
+- Synthesis: 1,200 requests per minute averages 20 per second, and the docs
+  don't say whether that limit is per key or per account. Put all of a screen's
+  questions in one request, cache answers, and budget for your users' network
+  trip to your backend plus the backend's trip to a US West Coast service on
+  top of the quoted 100 to 150 ms.
+
+[ts-incident]: https://status.typesafe.ai/incident/1070098
+
+### Offline behavior and data handling
+
+- **Hosted only.** The MCA covers only "TypeSafe-hosted" services ([ts-mca]),
+  and no source describes an offline, on-device, or self-hosted mode.
+- **What leaves the device.** The MCA's "Input" is "any data, files, queries,
+  and other materials that Customer (including Customer Users or End Users)
+  inputs", including through "any Customer Application" ([ts-mca]), so the
+  state and questions of every call go to TypeSafe.
+- **Hosting location.** "The Services are hosted in the United States"
+  ([ts-privacy]).
+- **No training on inputs.** "Jev is not trained on customer requests or
+  responses." ([ts-models]) The MCA adds that TypeSafe "will not, include
+  Customer Data in a dataset used to train (i.e., to modify the model weights
+  of) any artificial intelligence or machine learning models without
+  Customer's prior consent" ([ts-mca]).
+- **Rights TypeSafe keeps.** The MCA grants TypeSafe rights "in perpetuity" to
+  use Customer Data "to derive and generate Telemetry", "to monitor for fraud
+  and abuse", and "as necessary to comply with applicable Laws" ([ts-mca]).
+- **Retention.** The privacy policy keeps personal data "for as long as
+  reasonably necessary to provide you with the Services" ([ts-privacy]); the
+  DPA says "as long as necessary taking into account the purpose of the
+  Processing" ([ts-dpa]). The MCA says TypeSafe "may delete Customer Data at
+  any time in its sole discretion" ([ts-mca]).
+- **Zero data retention.** "We also offer zero data retention (ZDR) for
+  enterprise customers. Contact privacy@typesafe.ai to learn more." ([ts-legal])
+- **Processor terms.** The DPA makes TypeSafe the "processor" and the customer
+  the "controller", promises notice "within 72 hours" of a security incident,
+  and points to subprocessors listed at `trust.typesafe.ai/subprocessors`
+  ([ts-dpa]). That page renders only with JavaScript, and its list couldn't be
+  read ([ts-trust]).
+- Synthesis: Every Jev decision needs a network round trip, so the app needs a
+  sensible fallback when offline, such as a default code path or a queued
+  check.
+
+[ts-dpa]: https://typesafe.ai/legal/data-processing
+[ts-legal]: https://docs.typesafe.ai/legal
+
+## Pricing, limits, and terms
+
+### Jev prices
+
+- **Rate card.** Jev 1.13 costs "$42 / $0.042" per billion or million tokens.
+  "Charged per input token. Output tokens are free." ([ts-models]) The homepage
+  repeats "$42 Per Billion input tokens" and claims "238x Lower input price than
+  Claude Fable 5.1" ([ts-home]).
+- **Are prices subsidized?** The homepage FAQ says "We can serve Jev profitably
+  at our current prices" ([ts-home]); the launch post says "We can't prove it
+  isn't subsidized" and expects pricing "to go down, not up"
+  ([ts-blog-launch]).
+- **Worked numbers.** The quickstart's three-question call used 392 input
+  tokens ([ts-quickstart]). A re-ranking cookbook reports "1200 TypeSafe calls
+  used 1,536,002 input and 25,200 output tokens, costing $0.0645." ([cb-rerank])
+  The launch post's Doom demo made "10 queries a second (which ends up costing
+  ~$7/hour)" ([ts-blog-launch]).
+- Synthesis: At $0.042 per million input tokens, a call the size of the
+  quickstart's costs about $0.000016, and 100,000 such calls cost about $1.65.
+  Cost is unlikely to limit a hackathon app; rate limits and access are the
+  tighter constraints.
+
+### Free tier, credits, and programs
+
+- **Credits.** "In order to generate Output or otherwise use the Services,
+  Customer must obtain TypeSafe-managed credits that are consumed by each Input
+  submitted" ([ts-mca]).
+- **Expiry and refills.** Purchased credits expire "12 months after the
+  purchase date"; with auto-refill off and a zero balance, "TypeSafe may decline
+  to generate Output in response to Customer's submission of Input"
+  ([ts-mca]).
+- **Promotional credits.** "TypeSafe may, but has no obligation to, issue
+  Promotional Credits", and customers may not "create more than one account for
+  the purpose of receiving additional Promotional Credits" ([ts-mca]).
+- **Plans.** The only plan tiers named are "custom and enterprise plans" for
+  higher limits ([ts-models]).
+- **Not stated.** No source names a free tier, a trial, a credit amount for new
+  accounts, or a startup or hackathon program, and `typesafe.ai/pricing`
+  returned HTTP 404 on September 22, 2026 ([ts-pricing]).
+
+[ts-pricing]: https://typesafe.ai/pricing
+
+### Master Customer Agreement terms for apps
+
+The MCA, "Last updated Sep 19, 2026", governs the console and API; the website
+Terms of Use cover only the site ([ts-mca]; [ts-terms]). Its clauses that
+matter for an app sold through a store:
+
+- **Apps are allowed (section 2.2).** The license "includes the right to include
+  the API into one or more software applications developed and operated by
+  Customer for the benefit of Customer's end users" ([ts-mca]).
+- **No resale (2.3(a)).** Customers may not "sell, lease, loan, distribute,
+  sublicense, disclose, or otherwise offer or make the Services available as a
+  standalone service" ([ts-mca]).
+- **No distillation (2.3(b)).** Customers may not "use the Services or any
+  Output ... to perform model distillation, train a model to imitate the output
+  of the Services, or develop ... a similar or competing product" ([ts-mca]).
+- **Credentials (2.4).** Keys must stay confidential, and "Customer is
+  responsible for all actions taken in connection with, or through an account
+  associated with, Access Credentials" ([ts-mca]).
+- **Breaking changes (2.5).** Updates "may result in the API's becoming
+  incompatible with a Customer Application"; TypeSafe will use "commercially
+  reasonable efforts to provide advance notice" ([ts-mca]).
+- **Output ownership (4.2).** "TypeSafe hereby assigns to Customer all of its
+  right, title, and interest, if any, in the Output." ([ts-mca])
+- **User consent (5).** The customer "has made all disclosures, has provided all
+  notices, and has obtained (and will maintain) all rights, consents, and
+  permissions necessary" for TypeSafe's use of Input, and answers for End
+  Users' acts ([ts-mca]).
+- **Suspension (6).** TypeSafe "may immediately suspend Customer's access" for
+  breaches of the license, credential, or customer-obligation sections, or for
+  payments "overdue by 30 days or more" ([ts-mca]).
+- **Accuracy (9.3).** "THE SERVICES MAY PRODUCE INACCURATE OR ERRONEOUS OUTPUT;
+  (II) CUSTOMER IS RESPONSIBLE FOR INDEPENDENTLY EVALUATING THE OUTPUT"
+  ([ts-mca]).
+- **End-user claims (13.2).** The customer defends TypeSafe against claims
+  "brought by an End User and related to the subject matter of this Agreement"
+  ([ts-mca]).
+- **Publicity (16.4).** "neither Party may publicly announce that the Parties
+  have entered into the Agreement, except with the other Party's prior consent
+  or as required by Laws", while TypeSafe may list the customer's name and logo
+  ([ts-mca]).
+- **Law and export (16.2, 16.12).** California law with San Francisco venue,
+  disputes in JAMS arbitration, and U.S. export rules apply ([ts-mca]).
+- **Age.** The MCA has no age clause. The privacy policy says: "We do not
+  knowingly collect, maintain, or use personal data from children under 18
+  years of age, and no part of the Services is directed to children."
+  ([ts-privacy])
+- **Attribution.** Neither the MCA nor the docs require a "powered by" credit.
+- **Website only.** The Terms of Use say "The Site is intended for visitors
+  located within the United States" ([ts-terms]); the MCA has no such limit
+  beyond its export clause ([ts-mca]).
+- Synthesis: A subscription app that calls Jev from its own backend fits the
+  "Customer Application" grant. A thin app that just relays Jev to users risks
+  the standalone-service ban, and naming TypeSafe in a Devpost write-up may
+  need TypeSafe's consent under 16.4; ask sales@typesafe.ai before submitting.
+
+## What teams can build with Jev
+
+### Use cases the docs list
+
+- **Categories.** The use-case map lists "AI Automation Software", "Real-time
+  applications", "AI Map Reduce over Big Data", "Universal Verification", and
+  "Harness Engineering". On real time: "Fast and smart enough to be programmed
+  to play games or embedded into a UI." ([ts-use-cases])
+- **Industries.** The map covers search and retrieval, scientific discovery,
+  model routing, LLM guardrails, semantic code linting, feature extraction,
+  recruiting, lead generation, customer support, insurance claims, financial
+  crime, legal and compliance, e-commerce, moderation, advertising, gaming, risk
+  assessment, demand forecasting, and knowledge graphs. Its customer support
+  entry says "Detect urgency, frustration, churn risk, and refund requests"; its
+  gaming entry says "Detect churn signals and route player-support requests"
+  ([ts-use-cases]).
+- **Decision shapes.** Classification, detection, scoring, routing, search,
+  retrieval, ranking, verification, ML feature extraction, and structured data
+  extraction ([ts-use-cases]).
+- **Patterns.** Speculative fan-out, confidence-gated routing (a voice banking
+  example that only approves a transfer "above 0.85"), composite scoring (a
+  resume screen), and intent routing, which sends each request to
+  "deterministic logic, a specialist LLM, or a human" ([ts-patterns];
+  [ts-confidence-routing]; [ts-composite]; [ts-intent]).
+- **Fit.** "Jev is designed for common-sense judgments: classifying content,
+  routing requests, scoring responses, and evaluating information." Tasks like
+  "complex mathematics or chess-like planning, may be better suited to large
+  reasoning models." ([ts-home])
+
+[ts-patterns]: https://docs.typesafe.ai/patterns
+[ts-composite]: https://docs.typesafe.ai/patterns/composite-scoring
+[ts-intent]: https://docs.typesafe.ai/patterns/intent-routing
+
+### Cookbooks and demos
+
+Each cookbook is a runnable notebook with published numbers. Most set their
+model to `jev-1.12`, and the dated runs fall between July 31 and August 16, 2026
+([cb-skill-suggestion]; [cb-citation]). Synthesis: results on `jev-1.13.0` may
+differ.
+
+| Cookbook                                                  | What it builds                                          | Reported result                                  |
+| --------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------ |
+| [Parallel questions][cb-parallel]                         | 13 checks over the GDPR article in one call             | "12.2x cheaper, 10.0x faster" than 13 calls      |
+| [Self-consistency: nouls][cb-consistency-noul]            | 14-question insurance-claim rubric, 15 repeats          | "mean round-trip latency of 111ms"               |
+| [Self-consistency: choices][cb-consistency-choice]        | 8-question moderation rubric, 15 repeats                | "TypeSafe flips on 2 of the 8 questions"         |
+| [Guardrails for LLMs][cb-guardrails]                      | Hazard screening of LLM inputs and outputs              | Pass, review, block, or route to support         |
+| [Function calling][cb-function-calling]                   | Plain-language trading requests to typed function calls | "54 questions per command"                       |
+| [Date extraction][cb-date]                                | Date parts read as Choices, resolved in code            | Weak reads sent to review                        |
+| [Pre-parsed value extraction][cb-pre-parsed]              | A regex finds candidates and Jev picks one              | "It cannot invent a value or transpose a digit." |
+| [Line-by-line search][cb-semantic-find]                   | Ranks 218 lines of GitHub's Terms of Service            | "up to 255 lines in one request"                 |
+| [Re-ranking][cb-rerank]                                   | Re-ranks BM25 shortlists of court opinions              | Top-1 accuracy "from 5% to 18%"                  |
+| [Structure recovery][cb-autoformat]                       | Rebuilds Markdown from plain text                       | "Two round trips, 10,211 tokens, 0.8s"           |
+| [Double-checking citations][cb-citation]                  | Checks an LLM's citations against RFC 7519              | "All four planted failures were caught"          |
+| [Classifying RAG passages][cb-rag]                        | Filters retrieved passages and flags prompt injection   | Evidence and conflicts sent in separate blocks   |
+| [Classification using confidence][cb-classify-confidence] | SEC filings into 75 industry groups                     | The confident half is "right 90% of the time"    |
+| [Knowledge graph entity alignment][cb-entity]             | Merge, curate, or skip 450 candidate product pairs      | One Score question "carries the whole decision"  |
+| [Hierarchical classification][cb-hierarchical]            | Beam search down patent, retail, and code taxonomies    | Keeps the best `K` paths at each level           |
+| [Skill suggestion][cb-skill-suggestion]                   | Picks at most one of 182 agent skills                   | Wrong loads "drop by more than half"             |
+| [SDE cascade][cb-sde]                                     | Jev verifies a cheap LLM's extraction and escalates     | Verifier priced at "$0.042 / $0.00"              |
+| [Autoresearch feature discovery][cb-autoresearch]         | Text turned into features for a CatBoost model          | An LLM proposes the questions each round         |
+
+Demos:
+
+- **Smart home assistant.** A "simple Vite/React single-page app" that asks
+  many speculative questions per request and falls back to an LLM for
+  conversation. "The full source code will be available on GitHub at release."
+  ([ts-smart-home]) It wasn't among the organization's public repositories on
+  September 22, 2026 ([gh-org]).
+- **Doom and Wikiracing.** The launch post shows a Doom bot playing from
+  "structured state as a data structure with text, not on images", and a
+  Wikiracing agent where each step can mean "choosing between hundreds to
+  thousands of links", split into two stages because "Jev supports a
+  cardinality up to 255" ([ts-blog-launch]).
+
+[cb-citation]: https://docs.typesafe.ai/cookbooks/citation_check
+[cb-date]: https://docs.typesafe.ai/cookbooks/date_extraction_cookbook
+[cb-pre-parsed]: https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook
+[cb-autoformat]: https://docs.typesafe.ai/cookbooks/autoformat
+[cb-classify-confidence]: https://docs.typesafe.ai/cookbooks/classification_using_confidence
+[cb-entity]: https://docs.typesafe.ai/cookbooks/entity_alignment
+[cb-hierarchical]: https://docs.typesafe.ai/cookbooks/hierarchical_classification
+[cb-autoresearch]: https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery
+
+### Integrations named in the sources
+
+- **LLMs.** The docs pair Jev with generative models: the smart home demo
+  "uses an LLM to split the request into a list of atomic commands"
+  ([ts-smart-home]), and the SDE cascade escalates to `gpt-5.5` only "if a
+  verifier signal fires" ([cb-sde]).
+- **Coding agents.** The skill installs as a Claude Code plugin or through
+  `npx skills add typesafe-ai/skills --skill typesafe-ai` ([ts-skill]).
+- **RevenueCat, Stripe, Supabase, and Firebase.** None is documented as an
+  integration. Stripe appears only in sample ticket text ([ts-quickstart]), and
+  Supabase's auth docs appear only as a test corpus ([cb-rag]).
+- Synthesis: Jev has no purchase or entitlement features, so the app pairs it
+  with the RevenueCat SDK that the Shipaton rules require ([related-materials]).
+  Jev's natural place is a decision the paid tier improves, run on every user
+  action because each call costs a fraction of a cent.
+
+[related-materials]: /docs/research/related-materials.md
+
+### Ideas that fit Jev's shape
+
+- Synthesis: Real-time UI decisions. Jev answers in about 100 to 150 ms
+  ([ts-build]; [ts-use-cases]), fast enough to classify or score each user
+  entry as it is saved, for example sorting journal entries, tasks, or expenses
+  into user-defined categories with Choice.
+- Synthesis: Plain-language commands. The function-calling cookbook maps a
+  sentence to a typed call with a confidence ([cb-function-calling]); an app
+  could turn typed or dictated requests into actions, asking the user to
+  confirm when confidence is low, as the voice banking pattern does
+  ([ts-confidence-routing]). Dictation must become text on the device first,
+  because Jev reads only text ([ts-system-one]).
+- Synthesis: Community moderation. A user-content app can screen posts with
+  Noul and Score batteries and route by confidence ([ts-use-cases];
+  [cb-guardrails]).
+- Synthesis: Retention signals. Scoring in-app feedback for "frustration, churn
+  risk, and refund requests" ([ts-use-cases]) could trigger a RevenueCat offer
+  or a support hand-off.
+- Synthesis: Games. TypeSafe markets Jev as "Fast and smart enough to be
+  programmed to play games" ([ts-use-cases]), and its Doom demo cost about $7 an
+  hour at 10 queries a second ([ts-blog-launch]).
+
+## Store review and Jev
+
+What the sources state:
+
+- **Network use.** Jev runs only as "the TypeSafe-hosted application
+  programming interface" ([ts-mca]), and "The Services are hosted in the United
+  States" ([ts-privacy]).
+- **AI-generated content.** "System One models do not write replies, produce
+  code, or generate explanations of their reasoning." ([ts-system-one]) "Every
+  answer is constrained to the options you supplied." ([ts-primitives]) The MCA
+  still warns that the services "MAY PRODUCE INACCURATE OR ERRONEOUS OUTPUT"
+  ([ts-mca]).
+- **Moderation.** The use-case map offers to "Moderate user content and
+  automated conversations" and "Detect toxicity, harassment, spam, fraud, unsafe
+  advice, personal-data exposure, opt-out requests, and policy-violating
+  claims" ([ts-use-cases]). The jaggedness page warns: "State is data, and
+  `jev-1.13` does not treat it as hostile by default." ([ts-jagged])
+- **Data collection.** TypeSafe "will not train or fine tune any artificial
+  intelligence or machine learning models on your prompts or other Input"
+  ([ts-privacy]). The app maker must give users the notices and get the
+  consents the MCA's section 5 requires ([ts-mca]).
+- **Minors.** "no part of the Services is directed to children", and TypeSafe
+  doesn't knowingly handle personal data from anyone under 18 ([ts-privacy]).
+- **Accounts.** The sources cover only developer keys, not end-user accounts
+  ([ts-mca]).
+- **Not covered.** No TypeSafe page mentions the App Store, Google Play, app
+  review, Apple's privacy labels, Google's Data safety form, or age ratings
+  ([ts-llms]).
+
+Synthesis for store review:
+
+- Synthesis: Apple's guideline 5.1.2(i), as quoted in the repo's store notes,
+  says "You must clearly disclose where personal data will be shared with third
+  parties, including with third-party AI, and obtain explicit permission before
+  doing so." ([best-practices-apple]) Treat TypeSafe as third-party AI: name it
+  in the privacy policy and ask before sending personal text.
+- Synthesis: Google Play's Data safety form covers "data collected and handled
+  through any third-party libraries or SDKs" ([best-practices-play]); list
+  TypeSafe among the places user text goes, even when a backend relays it.
+- Synthesis: Keep apps that send personal data to Jev out of the Kids category,
+  given the privacy policy's under-18 statement.
+- Synthesis: Because Jev can't generate text, it adds no generated content for
+  reviewers to police, but its moderation calls can err, so keep a report
+  button and human review for anything it blocks.
+
+[best-practices-apple]: /docs/research/best-practices.md#app-review-guidelines-for-a-subscription-app
+[best-practices-play]: /docs/research/best-practices.md#app-content-data-safety-and-account-deletion
+
+## Integration effort and limitations
+
+### Quickstart steps and effort
+
+- **Steps.** The quickstart offers four paths: the Playground (open, paste
+  state, add a question, add more), the API (get a key, POST, read the
+  reference), the Python SDK (install, then call with `TYPESAFE_API_KEY` set),
+  and the agent skill (install, then prompt) ([ts-quickstart]).
+- **JavaScript.** Install `@typesafe-ai/sdk`, set `TYPESAFE_API_KEY`, and call
+  `client.systemOne` ([ts-js]).
+- **Where the time goes.** "Agents aren't great at writing questions, so expect
+  to edit collaboratively with them." ([ts-skill]) TypeSafe also advises: "Start
+  with conservative thresholds, test with your own data, and adjust as you
+  observe results." ([ts-confidence])
+- **Support.** "Customer may email TypeSafe at support@typesafe.ai to request
+  Support" ([ts-mca]); the jaggedness page points to TypeSafe's Discord
+  ([ts-jagged]), which calls itself "The home of Jev, the first public System
+  One model" ([ts-discord]).
+- Synthesis: A working call takes minutes once a key exists. A mobile app adds
+  a backend endpoint that holds the key, then question wording and threshold
+  tuning, which the docs treat as the real work. Access is the schedule risk:
+  get a key on the first day, because early access may be gated and the
+  Shipaton deadline is September 30, 2026.
+
+[ts-discord]: https://discord.com/invite/WUujKYBp8s
+
+### Known limitations on the jaggedness page
+
+The page for `jev-1.13`, "Last reviewed 2026-09-17", lists nine failure modes
+and a fix for each ([ts-jagged]):
+
+1.  **Literal reading.** "answers the question you wrote, not the one you
+    meant"; state the exact condition.
+1.  **Math and numbers.** "Jev is not a calculator" and "does not count
+    reliably"; keep arithmetic in code.
+1.  **Dates and times.** It "reads dates as text, not as ordered quantities";
+    extract parts with Choice and compare in code.
+1.  **Indirection.** Double negatives and multi-hop questions "are answered
+    less reliably".
+1.  **Large, noisy state.** "Accuracy falls as the state grows with content
+    unrelated to the decision"; filter first.
+1.  **Adversarial content.** Injected instructions and misleading framing "can
+    move the answer".
+1.  **Contradictory instructions and criteria.** Align the question with its
+    criteria.
+1.  **Structural invariants.** A question and its negation needn't sum to 1:
+    one example gave 0.72 and 0.47, a sum of 1.19.
+1.  **Generation.** "`jev-1.13` is not trained to generate text."
+
+Other documented limits:
+
+- **Determinism.** The homepage FAQ says "Determinism means returning the same
+  result for an identical input. This is less valuable than consistency." and
+  "Jev is designed for consistency." ([ts-home]) In a 15-run test, "TypeSafe
+  flips on 2 of the 8 questions" ([cb-consistency-choice]).
+- **Correctness.** "Jev guarantees the shape of its answers, not that every
+  decision is correct." ([ts-home])
+- **Text only and English first**, as covered under
+  [Jev platform and language support](#jev-platform-and-language-support)
+  ([ts-system-one]; [ts-models]).
+
+### Gotchas in the API and SDKs
+
+- **Aliases move.** "An alias moves when a new release ships, so the answers
+  behind it can change without a change on your side." Pin the versioned ID if
+  thresholds were tuned against it ([ts-models]).
+- **The v1 break.** The old `POST /preview/evaluation` endpoint and the
+  `typesafe-client` package no longer work: "The previous `typesafe-client`
+  package ... sends `document` and no longer works against the API", and "a
+  request with `document` fails validation" ([ts-migrate]). That migration page
+  is missing from the docs index and sitemap ([ts-llms]; [ts-sitemap]).
+- **Confidence changed.** "The computation behind `confidence` changed", so
+  older thresholds "should be carefully re-evaluated" ([ts-migrate]).
+- **Scores hide shape.** "Different distributions can produce the same score."
+  Read `probabilities` and `confidence` too ([ts-score]).
+- **Noul values aren't degrees.** "A Noul value of 0.5 means the model gives
+  yes and no equal probability. It does not mean the candidate has a medium
+  skill level." ([ts-primitives])
+- **Choice always picks.** Choice probabilities "always add up to 1, so a line
+  ranks first even when none answer the query"; add a Noul or a "none" option
+  ([cb-semantic-find]; [ts-primitives]).
+- **Breaking SDK releases.** JS v0.6.0 and Python v0.6.0 changed
+  `Score.criteria` to "an ordered sequence", and Python v0.7.0 switched its
+  "ser/de library ... from `msgspec` to `pydantic`" ([ts-js-changelog];
+  [ts-py-changelog]).
+
+### Open issues on TypeSafe's repositories
+
+Community members filed these on TypeSafe's own GitHub repositories; unless
+noted, TypeSafe hasn't confirmed them:
+
+- A missing key "returns 403, but the docs say 401, and the SDKs then raise
+  PermissionDenied instead of AuthenticationError" ([gh-skills-8]); the live
+  API behaves this way (see
+  [Conflicts between sources](#conflicts-between-sources)).
+- "request-body validation returns 400, but the API reference documents 422"
+  ([gh-skills-1]).
+- The JS SDK "can build two request shapes the API rejects: noul() with no
+  arguments, and state: null" ([gh-js-6]), and "score() accepts a null level
+  that the API refuses with 422" ([gh-js-12]).
+- In the JS SDK, "API key is echoed into APIConnectionError, and an empty key
+  is sent" ([gh-js-14]). The Python fix shipped in v0.7.1: "validate the API
+  key early and exclude the value from logged exceptions" ([gh-py-releases]).
+- "Handled systemOne cancellation can terminate Node 20/22 through native
+  fetch" ([gh-js-2]).
+- HTTP 402 and 413 "fall through to the generic APIError" ([gh-js-13]); no
+  TypeSafe page says what the API returns when credits run out.
+
+[gh-skills-1]: https://github.com/typesafe-ai/skills/issues/1
+[gh-js-6]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/6
+[gh-js-12]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/12
+[gh-js-14]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/14
+[gh-js-2]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/2
+
+## Latest versions as of September 22, 2026
+
+| Component                         | Latest                             | Date               | Sources                      |
+| --------------------------------- | ---------------------------------- | ------------------ | ---------------------------- |
+| Jev model                         | `jev-1.13.0`, behind both aliases  | Not stated         | [ts-models]                  |
+| Python SDK `typesafe-sdk`         | 0.7.1                              | September 21, 2026 | [pypi-sdk]; [gh-py-releases] |
+| Python SDK, docs changelog        | 0.7.0                              | September 18, 2026 | [ts-py-changelog]            |
+| JavaScript SDK `@typesafe-ai/sdk` | 0.6.0                              | September 15, 2026 | [ts-js-changelog]; [npm-sdk] |
+| HTTP API                          | v1; OpenAPI document version 0.2.0 | Not stated         | [ts-migrate]; [ts-openapi]   |
+| Agent skill repository            | Tag `v0.5.7`                       | Not stated         | [gh-skills-tags]             |
+| System One adapter                | 0.2.0                              | September 18, 2026 | [gh-adapter-releases]        |
+
+- **Newest changelog entry.** The Python SDK's v0.7.1 release on September 21,
+  2026 is the newest dated entry; the docs changelog stops at v0.7.0 on
+  September 18, 2026 ([gh-py-releases]; [ts-py-changelog]).
+- **Model notes.** The model has no changelog. The version-specific jaggedness
+  page, "Last reviewed 2026-09-17", is the closest thing ([ts-jagged]).
+- **Docs freshness.** The newest page dates in the docs sitemap are September
+  21, 2026, on the Python SDK pages ([ts-sitemap]).
+
+[gh-skills-tags]: https://github.com/typesafe-ai/skills/tags
+[gh-adapter-releases]: https://github.com/typesafe-ai/system-one-adapter-python/releases
+
+## Conflicts between sources
+
+- **Missing-key status.** The API reference lists `401 Unauthorized` for
+  "Missing or invalid API key" ([ts-api]). On September 22, 2026, a request
+  with no key returned HTTP 403 and "Must supply an API key! Check your request
+  and try again."; a request with an invalid key returned HTTP 401 and "Cannot
+  authenticate with the server. Please check your API key and try again."
+  ([api-systemone]; [gh-skills-8]).
+- **Latency.** The build guide says "about 100 ms" ([ts-build]), the use-case
+  map "150ms" ([ts-use-cases]), and the launch post "70ms-500ms"
+  ([ts-blog-launch]).
+- **Batching savings.** The primitives page says 13 batched questions are
+  "11.5x cheaper and 9.6x faster" ([ts-primitives]); the cookbook it cites
+  prints "12.2x cheaper, 10.0x faster" ([cb-parallel]).
+- **Python SDK version.** The docs changelog ends at v0.7.0 ([ts-py-changelog]);
+  PyPI and GitHub have v0.7.1 from September 21, 2026 ([pypi-sdk];
+  [gh-py-releases]).
+- **Model names.** The Models page lists `jev-latest`, `jev-preview`, and
+  `jev-1.13.0` ([ts-models]), but the usage guide shows
+  `TypeSafeClient(model="jev")` ([ts-py-usage]), the jaggedness page uses
+  `model="jev-1.13"` ([ts-jagged]), and cookbooks set
+  `TYPESAFE_MODEL = "jev-1.12"` ([cb-parallel]). No page says whether these
+  shorter names still resolve.
+- **Score levels.** The API reference wants "at least two levels" and accepts
+  "up to 10" ([ts-api]), while the OpenAPI schema sets `"minItems": 1` with no
+  maximum ([ts-openapi]) and an issue says "a single level is accepted"
+  ([gh-skills-6]).
+- **Waitlist.** The homepage FAQ says "Join the waitlist!" ([ts-home]), the
+  launch post says developers are coming "off the waitlist"
+  ([ts-blog-launch]), and the console login shows no waitlist ([ts-console]).
+- **"Zero Hallucinations."** The homepage claims "Zero Hallucinations"
+  ([ts-home]), meaning answers stay inside the supplied options; the same page
+  says Jev "can choose the wrong one", and the MCA says output may be
+  "INACCURATE OR ERRONEOUS" ([ts-mca]).
+
+[api-systemone]: https://api.typesafe.ai/v1/systemone
+[gh-skills-6]: https://github.com/typesafe-ai/skills/issues/6
+
+## Gaps
+
+What the sources don't say that a mobile subscription app team needs, as of
+September 22, 2026:
+
+- **Mobile guidance.** No official iOS, Android, React Native, Expo, or Flutter
+  SDK or guide, and no advice on keys in mobile apps beyond "Keep API
+  credentials server-side in web apps." ([gh-skill-md])
+- **Access and timing.** Whether a new console account gets a working key at
+  once or waits on a waitlist, and for how long ([ts-home]; [ts-console]).
+- **Free usage.** Any free tier, trial, starting credit, minimum purchase, or
+  startup or hackathon program; how Promotional Credits are granted
+  ([ts-mca]).
+- **Rate-limit scope.** Whether 1,200 requests per minute applies per key, per
+  organization, or per account, and whether per-key caps exist
+  ([ts-models]).
+- **Out-of-credit behavior.** Which status the API returns when credits run out
+  ([gh-js-13]), and the byte limit on request bodies.
+- **Regions.** Any endpoint or data residency outside the United States, and
+  expected latency from Asia or Europe ([ts-privacy]; [ts-blog-launch]).
+- **Retention detail.** How long non-ZDR requests and logs are kept, and which
+  subprocessors and certifications apply; the trust center didn't render
+  ([ts-trust]).
+- **Offline use.** Any on-device, offline, or self-hosted option ([ts-mca]).
+- **Store review.** Anything on app review, privacy labels, Data safety, age
+  ratings, or the Kids category, and whether apps whose end users are under 18
+  may send data to Jev ([ts-llms]; [ts-privacy]).
+- **Service levels.** No uptime commitment beyond the public status page
+  ([ts-status]).
+- **Deprecation.** How long pinned versions such as `jev-1.13.0` or `jev-1.12`
+  stay available after a new release ([ts-models]).
+- **Model history.** Release notes for `jev-1.13` against `jev-1.12`, and the
+  answers to the launch post's FAQ items "Where does our training data come
+  from?" and "How does Jev perform against public benchmarks?", which the page
+  source doesn't contain ([ts-blog-launch]).
+- **Publicity consent.** How to get TypeSafe's consent under MCA section 16.4
+  before naming it in a submission ([ts-mca]).
+- **Demo source.** The smart home demo's promised GitHub source
+  ([ts-smart-home]).
+- **Other inputs.** Images and audio are unsupported, so camera or voice
+  features need on-device text conversion first ([ts-system-one]).
+
+[ts-intro]: https://docs.typesafe.ai/introduction
+[ts-build]: https://docs.typesafe.ai/concepts/how-to-build-with-system-one
+[ts-terms]: https://typesafe.ai/legal/terms
+[ts-home]: https://typesafe.ai/
+[ts-blog-launch]: https://typesafe.ai/blog/introducing-system-one-models-and-jev
+[ts-console]: https://console.typesafe.ai/
+[cb-skill-suggestion]: https://docs.typesafe.ai/cookbooks/skill_suggestion
+[ts-migrate]: https://docs.typesafe.ai/migrating-to-v1
+[ts-models]: https://docs.typesafe.ai/models
+[ts-system-one]: https://docs.typesafe.ai/concepts/system-one
+[ts-jagged]: https://docs.typesafe.ai/model-jaggedness/jev-1.13
+[ts-api]: https://docs.typesafe.ai/api
+[ts-openapi]: https://api.typesafe.ai/openapi.json
+[ts-mca]: https://typesafe.ai/legal/mca
+[ts-quickstart]: https://docs.typesafe.ai/introduction/quickstart
+[ts-skill]: https://docs.typesafe.ai/agent-skill
+[ts-llms]: https://docs.typesafe.ai/llms.txt
+[gh-org]: https://github.com/typesafe-ai
+[ts-js]: https://docs.typesafe.ai/sdk/javascript
+[npm-sdk]: https://www.npmjs.com/package/@typesafe-ai/sdk
+[ts-js-config]: https://docs.typesafe.ai/sdk/javascript/api/interfaces/TypeSafeClientConfig
+[ts-py-usage]: https://docs.typesafe.ai/sdk/python/usage
+[gh-skill-md]: https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md
+[ts-primitives]: https://docs.typesafe.ai/primitives
+[ts-score]: https://docs.typesafe.ai/primitives/score
+[ts-confidence]: https://docs.typesafe.ai/confidence
+[ts-py-changelog]: https://docs.typesafe.ai/sdk/python/changelog
+[cb-parallel]: https://docs.typesafe.ai/cookbooks/parallel_questions
+[ts-use-cases]: https://docs.typesafe.ai/concepts/use-case-map
+[cb-consistency-noul]: https://docs.typesafe.ai/cookbooks/consistency_noul_cookbook
+[cb-consistency-choice]: https://docs.typesafe.ai/cookbooks/consistency_choice_cookbook
+[ts-status]: https://status.typesafe.ai/
+[ts-privacy]: https://typesafe.ai/legal/privacy-policy
+[ts-trust]: https://trust.typesafe.ai/subprocessors
+[cb-rerank]: https://docs.typesafe.ai/cookbooks/rerank_typesafe
+[ts-confidence-routing]: https://docs.typesafe.ai/patterns/confidence-routing
+[cb-guardrails]: https://docs.typesafe.ai/cookbooks/llm_guardrails
+[cb-function-calling]: https://docs.typesafe.ai/cookbooks/function_calling
+[cb-semantic-find]: https://docs.typesafe.ai/cookbooks/semantic_find
+[cb-rag]: https://docs.typesafe.ai/cookbooks/classifying_rag_passages
+[cb-sde]: https://docs.typesafe.ai/cookbooks/sde_cascade
+[ts-smart-home]: https://docs.typesafe.ai/demos/smart-home
+[ts-sitemap]: https://docs.typesafe.ai/sitemap.xml
+[ts-js-changelog]: https://docs.typesafe.ai/sdk/javascript/changelog
+[gh-skills-8]: https://github.com/typesafe-ai/skills/issues/8
+[gh-py-releases]: https://github.com/typesafe-ai/typesafe-sdk-python/releases
+[gh-js-13]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/13
+[pypi-sdk]: https://pypi.org/project/typesafe-sdk/
