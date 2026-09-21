@@ -26,8 +26,9 @@ Contents:
 ## Key takeaways
 
 - **The official rules settle several open points.** Winners are announced
-  October 21, companies may enter, and the Grand Prize shortlist uses revenue
-  "as reported in RevenueCat". See
+  October 21, companies may enter, judges need free access until judging ends
+  on October 13, and the Grand Prize shortlist uses revenue "as reported in
+  RevenueCat". See
   [What the official rules add](#what-the-official-rules-add).
 - **Ship to the App Store first.** Apple says 90% of submissions are reviewed
   in under 24 hours on average. A new personal Google Play account that
@@ -94,6 +95,20 @@ Shipaton page. What they add or change:
   rules set no other cap; see [Open questions](#open-questions).
 - **Travel.** "Only the Grand Prize and 1st Place: #BuildInPublic Award
   include travel and accommodation."
+- **Judge access.** "The Entrant must make the Project available free of
+  charge and without any restriction, for testing, evaluation and use by the
+  Sponsor, Administrator and Judges until the Judging Period ends", on
+  October 13. Synthesis: a judge's free trial or promo code has to last that
+  long.
+- **Eligibility.** Individuals must be "at least the age of majority where
+  they reside as of the time of entry", apart from the brief's Next Gen
+  exception for minors. Residents of places where US or local law prohibits
+  taking part are excluded, including Russia, Crimea, Cuba, Iran, and North
+  Korea.
+- **Ownership and taxes.** "All Submissions remain the intellectual property
+  of the individuals or organizations that developed them", and the Sponsor
+  gets a non-exclusive license to use entries for judging. Winners may need a
+  W-9 (US residents) or a W-8BEN form (other countries).
 - **Category fields.** The rules ask for the Stripe Project ID, the Replit
   preview URL and username, the OneSignal App ID, the Noise account email, and
   a live Galaxy Store URL, and the Layers installation "must be in place and
@@ -314,17 +329,19 @@ What RevenueCat and the stores ask of a paywall:
   of Use and the privacy policy. Google Play lists an annual plan shown mainly
   as a monthly price as a violation.
 - Judges need a free trial or a promo code (see the
-  [submission checklist](/docs/BRIEF.md#submission-checklist)). Apple offer
-  codes and Google Play promo codes cover this. Create them once the app is
-  live: RevenueCat notes that a never-released app's purchases fail in
-  production "even if you download with a code".
+  [submission checklist](/docs/BRIEF.md#submission-checklist)), and the rules
+  require free access for them until judging ends on October 13. Apple offer
+  codes and Google Play promo codes cover this; pick a free period that lasts
+  past October 13 (Google Play's allow "between 3 and 90 days"). Create them
+  once the app is live: RevenueCat notes that a never-released app's
+  purchases fail in production "even if you download with a code".
 
 For the deadline (synthesis): where revenue counts, as on the Grand Prize
 shortlist, a hard or onboarding paywall brings money in before September 30.
-A 7-day trial started after September 23 ends after the deadline, so a 3-day
-trial or a paid introductory offer shows conversions sooner. Skip A/B tests:
-Experiments needs a Pro or Enterprise plan, and a launch week brings little
-traffic.
+For users, a 7-day trial started after September 23 ends after the deadline,
+so a 3-day trial or a paid introductory offer shows conversions sooner. Skip
+A/B tests: Experiments needs a Pro or Enterprise plan, and a launch week
+brings little traffic.
 
 More in the [monetization notes][bp-money].
 
