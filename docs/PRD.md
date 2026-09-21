@@ -11,6 +11,7 @@ Contents:
 1.  [Overview](#overview)
 1.  [Goals and non-goals](#goals-and-non-goals)
 1.  [Player scenarios](#player-scenarios)
+1.  [Functional requirements](#functional-requirements)
 1.  [See also](#see-also)
 
 ## Overview
@@ -98,6 +99,131 @@ Each scenario must work end to end on the release build.
     they finish the round, and the app then opens the new day's puzzle.
 11. **App Review.** A reviewer follows the review notes, finishes a round,
     and reaches the paywall.
+
+## Functional requirements
+
+The flows follow the product's [principles][product-principles]; the TRD
+says how each is built.
+
+[product-principles]: /docs/PRODUCT.md#product-principles
+
+### The AI notice
+
+- **NOTICE-1, Must.** Before a player's first question can be sent, the app
+  shows a notice, whose text comes from the server. It says that typed
+  questions go to an AI service to be answered, that asked questions are
+  kept without anything that identifies the player, to answer everyone the
+  same way and to improve puzzles, and that plays are counted; it asks the
+  player not to type personal information; it links the privacy policy; and
+  it offers "Allow AI answers" and "Not now" with equal weight. Check: on a
+  fresh install, the question field stays disabled until the player
+  chooses, and the notice matches the server's text.
+- **NOTICE-2, Must.** The notice names TypeSafe, unless TypeSafe objects, in
+  which case the server's text says "a third-party AI service"; the idea's
+  [Jev section][idea-jev] explains why. Check: changing the server's text
+  changes the notice with no app update.
+- **NOTICE-3, Must.** With "Not now", nothing the player types reaches
+  TypeSafe, the server stores none of their wordings and counts none of
+  their plays, and the player still plays everything, Guessling+ included,
+  through the question list (ASK-9). Check: with "Not now", the server's
+  logs show no Jev call and no count for that player.
+- **NOTICE-4, Must.** The choice is kept on the device and can be changed
+  both ways in Settings at any time; the app never asks again after each
+  question. Check: switching AI answers off in Settings stops the next
+  question from reaching TypeSafe.
+- **NOTICE-5, Must.** When the server's notice changes version, the app
+  shows the new notice before the next question can reach TypeSafe. Check:
+  raising the version on the server brings the notice back.
+
+[idea-jev]: /docs/IDEA.md#how-jev-fits
+
+### Today's puzzle
+
+- **TODAY-1, Must.** The app opens to today's puzzle: its number, the hint,
+  the Guessling, the turns left out of twenty, and the question field.
+  Check: a cold start shows all five.
+- **TODAY-2, Must.** Today is the device's local calendar date, and a new
+  puzzle starts at local midnight, as NYT's daily games do
+  ([daily puzzle notes][daily-when]). Check: across 11:59 PM and 12:00 AM
+  on the device, the puzzle number goes up by one.
+- **TODAY-3, Must.** Daily puzzle #11 belongs to Thursday, September 24,
+  2026, and each later date's number is one higher; #1 to #10 are the
+  starter puzzles. Every player on the same date gets the same puzzle.
+  Check: two devices set to the same date show the same number and hint.
+- **TODAY-4, Must.** A round's questions, answers, and turns survive closing
+  and reopening the app. Check: force-quit mid-round and reopen.
+- **TODAY-5, Must.** A round still open at local midnight can be finished,
+  without Guessling+, for at least 24 hours after that midnight; the app
+  offers it until it ends, then shows the new day's puzzle. Check: scenario 10.
+
+[daily-when]: /docs/research/daily-puzzles.md#when-a-new-puzzle-appears
+
+### Asking a question
+
+- **ASK-1, Must.** The player types a question in their own words, from 1
+  to 140 characters, and sends it. Check: a 141st character can't be
+  typed, and an empty question can't be sent.
+- **ASK-2, Must.** Each question gets one answer, shown in words and by the
+  Guessling: "Yes" with a nod, "No" with a head shake, or "Ask another way"
+  with a shrug. Check: each answer shows its word and its reaction.
+- **ASK-3, Must.** A Yes or a No uses a turn; "Ask another way" doesn't.
+  Check: the turn count drops only on Yes and No.
+- **ASK-4, Must.** Text that isn't a yes-or-no question, such as "What
+  color is it?", gets "Ask a yes-or-no question" with a shrug and doesn't
+  use a turn. Check: that example leaves the turn count unchanged.
+- **ASK-5, Must.** The same wording gets the same answer for every player
+  of a puzzle, all through its puzzle day, even when two players send it at
+  the same moment. Wordings match when they differ only in letter case,
+  spacing, or final punctuation. Check: two devices send the same new
+  wording at once and get the same answer.
+- **ASK-6, Must.** A question that asks the same thing as a bank question,
+  in other words, gets that bank question's checked answer, and a negated
+  one gets the negation's answer. Check: CONTENT-6 passes.
+- **ASK-7, Must.** Questions about the letters of the answer's name, such
+  as "Does it start with B?" or "Does its name have five letters?", get
+  correct answers worked out from the name, never from the AI. Check: a
+  test list of letter questions against a known puzzle.
+- **ASK-8, Must.** The question field stays disabled while an answer is
+  pending, so each answer arrives before the next question. Check: the
+  field can't be used until the answer or an error shows.
+- **ASK-9, Must.** With AI answers off, the app offers the category's bank
+  questions as a searchable list. A picked question gets its checked
+  answer. A typed question gets an answer only if it matches a bank
+  question's wording or a wording already answered for the puzzle;
+  otherwise the Guessling asks the player to pick from the list, and no
+  turn is used. Check: with AI answers off, three picked questions get
+  answers, a new wording brings up the list, and the server's logs show no
+  call to Jev.
+- **ASK-10, Must.** On one puzzle, a player gets at most 40 answers that
+  don't use a turn. After that, the app says the Guessling needs a rest and
+  accepts only guesses. Check: the 41st such input is refused, and a guess
+  still works.
+- **ASK-11, Must.** The round shows every question so far with its answer,
+  oldest first, with the newest in view. Check: after five questions, all
+  five show in order.
+- **ASK-12, Must.** A question the bank doesn't cover gets a live answer:
+  Yes when Jev's probability is above 0.7, No below 0.3, and "Ask another
+  way" in between, the idea's thresholds. Check: recorded Jev answers of
+  0.29, 0.5, and 0.71 give No, "Ask another way", and Yes.
+
+### Guessing
+
+- **GUESS-1, Must.** At any point in a round, the Guess button takes a name
+  of 1 to 60 characters. Check: a 61st character can't be typed.
+- **GUESS-2, Must.** The server decides a guess by comparing it with the
+  puzzle's accepted names, ignoring letter case, spacing, punctuation, and a
+  leading "a", "an", or "the"; the AI never decides a guess. Check: if the
+  accepted names are "octopus" and "octopuses", "An Octopus!" is right and
+  "squid" is wrong.
+- **GUESS-3, Must.** Every guess uses a turn, as the final guess does in
+  classic Twenty Questions ([daily puzzle notes][daily-rules]), and a right
+  guess ends the round as solved. Check: a wrong guess drops the turn count
+  by one.
+- **GUESS-4, Must.** A question of the form "Is it a ...?", "Is it an
+  ...?", or "Is it the ...?" that names an accepted name counts as a right
+  guess. Check: "Is it an octopus?" solves the octopus puzzle.
+
+[daily-rules]: /docs/research/daily-puzzles.md#rules-of-the-classic-game
 
 ## See also
 
