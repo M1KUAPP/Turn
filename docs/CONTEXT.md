@@ -376,6 +376,11 @@ supported SDK.
   purchases can take 24 hours to work after a first launch.
 - **Build.** Since April 28, 2026, uploads must be built with Xcode 26 or
   later, using an iOS 26 SDK.
+- **Release.** With the "Automatic" setting, "The app goes live automatically
+  after it is approved by App Review"; an app in "Pending Developer Release"
+  isn't live. RevenueCat's launch checklist suggests you "choose to manually
+  release the version and wait ~24 hours" when products are new, which uses
+  part of the deadline buffer.
 - **Subscription screen.** Show the subscription's name and duration, the
   full renewal price, and a way to restore purchases. Link the Terms of Use
   and the privacy policy in the app and in the metadata; without a custom
@@ -390,7 +395,8 @@ supported SDK.
   entitlements or aren't allowed.
 - **Screenshots.** App Store Connect needs 6.9-inch or 6.5-inch iPhone
   screenshots. The 1179 × 2556 screenshot the Shipaton submission asks for
-  is Apple's 6.3-inch size, so prepare both.
+  is Apple's 6.3-inch size, so prepare both. Screenshots and previews can't
+  be changed while the app is "Waiting for Review", so finish them first.
 - **Privacy label.** With RevenueCat, declare that the app collects
   "Purchases" data.
 
