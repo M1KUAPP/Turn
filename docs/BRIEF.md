@@ -158,9 +158,11 @@ Also:
   aim to be live a day or two before the deadline.
 - New personal Google Play accounts created after Nov 13, 2023 must run a
   closed test with at least 12 testers for 14 days before they can apply for
-  production access. A test that starts after September 16, 2026 can't
-  finish by the deadline, so such accounts should consider another store.
-  The Discord channel `#looking-for-google-play-tester` helps find testers.
+  production access. Counting back 14 days, a test must start by September
+  16, 2026 just to end by the deadline, and production access and review
+  still follow; if yours ends after the September 23 review target, consider
+  another store. The Discord channel `#looking-for-google-play-tester` helps
+  find testers.
 - Developer accounts cost $99 per year for Apple and a one-time $25 for Google
   Play. Organization accounts may need a D-U-N-S number.
 - If there isn't time for two reviews, ship monetization in the first build,
@@ -333,9 +335,10 @@ What this means for an entry:
   September 30. You can also list a sale on your own app with the
   #ShipatonSale hashtag to reach other participants.
 - **Livestreams:** twice a week, with expert guests and live Q&A, on the
-  [livestream calendar](https://luma.com/shipaton-live). The last three are "ASO in the age of
-  AI agents" (Tuesday, September 22), a "Final AMA" (Friday, September 25),
-  and a wrap-up celebration (Tuesday, September 29), all at 9AM PT.
+  [livestream calendar](https://luma.com/shipaton-live). The last three are
+  "ASO in the age of AI agents" (Tuesday, September 22), a "Final AMA"
+  (Friday, September 25), and a wrap-up celebration (Tuesday, September 29),
+  all at 9AM PT.
 - **Community:** the official Discord, for teammates, feedback, and help.
   Join through the [FAQ's invite](https://discord.gg/shipaton26) or
   [Devpost's invite](https://discord.gg/X95EwqBxQT). Channels include
