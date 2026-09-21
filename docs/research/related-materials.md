@@ -78,18 +78,29 @@ Key facts:
 - Testing, read on September 22, 2026: "The Entrant must make the Project
   available free of charge and without any restriction, for testing,
   evaluation and use by the Sponsor, Administrator and Judges until the
-  Judging Period ends." The submission requirements add that "the app must
-  either offer a free trial or the Entrant must include a promo code for
-  judges to unlock the in-app purchase and test all premium features."
-  ([rules], section 4)
+  Judging Period ends." The submission requirements add: "Except for Projects
+  submitted for the Next Gen Award, the app must either offer a free trial or
+  the Entrant must include a promo code for judges to unlock the in-app
+  purchase and test all premium features." ([rules], section 4)
 - Eligibility, read on September 22, 2026: "Individuals who are at least the
-  age of majority where they reside as of the time of entry". The rules
-  exclude residents of places where US or local law prohibits taking part,
-  naming Russia, Crimea, Cuba, Iran, and North Korea. ([rules], section 3)
-- Ownership, read on September 22, 2026: "All Submissions remain the
-  intellectual property of the individuals or organizations that developed
-  them. By submitting an entry, entrants agree that the Sponsor will have a
-  non-exclusive license to use such entry for judging the entry." ([rules])
+  age of majority where they reside as of the time of entry". Excluded are
+  residents of places where US or local law prohibits taking part "(including,
+  but not limited to, Russia, Crimea, Cuba, Iran, and North Korea and any
+  other country designated by the United States Treasury's Office of Foreign
+  Assets Control)". ([rules], section 3)
+- Ownership and publicity, read on September 22, 2026: "All Submissions remain
+  the intellectual property of the individuals or organizations that
+  developed them. By submitting an entry, entrants agree that the Sponsor will
+  have a non-exclusive license to use such entry for judging the entry." The
+  same section continues: "Entrants agree that the sponsor and Devpost shall
+  have the right to promote the Submission and use the name, likeness, voice
+  and image of all individuals contributing to a Submission, in any materials
+  promoting or publicizing the Hackathon and its results, during the
+  Hackathon Period and for three years thereafter." Section 10 adds: "By
+  participating in the Hackathon, Entrant consents to the promotion and
+  display of the Entrant's Submission, and to the use of personal information
+  about themselves for promotional purposes, by the Sponsor, Administrator,
+  and third parties acting on their behalf." ([rules], sections 7 and 10)
 - Taxes, read on September 22, 2026: "United States residents may be
   required to provide a completed form W-9 and residents of other countries
   may be required to provide a completed W-8BEN form." ([rules], section 8)
