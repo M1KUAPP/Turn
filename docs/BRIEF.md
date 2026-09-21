@@ -454,7 +454,10 @@ from the 2026 guides. Each tip notes which edition it comes from.
 ## Open questions
 
 The captured sources leave these points open or disagree on them. Confirm
-them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
+them in the official rules, on Discord, or at `shipaton@revenuecat.com`. The
+context's
+[summary of the official rules](/docs/CONTEXT.md#what-the-official-rules-add)
+settles several of them and moves the winners date to October 21.
 
 - **Official rules.** They are not captured, so the minimum age outside Next
   Gen, the full country list, IP ownership, taxes, disqualification terms,
@@ -500,8 +503,9 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
 
 - [Research notes](/docs/research/shipaton-2026.md): per-claim citations and
   the full perk, event, and livestream tables.
-- [Context](/docs/CONTEXT.md): what past winners did, best practices from
-  primary sources, and related materials.
+- [Context](/docs/CONTEXT.md): what the official rules settle or change,
+  what past winners did, best practices from primary sources, and related
+  materials.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
