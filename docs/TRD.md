@@ -21,6 +21,7 @@ Contents:
 1.  [Answer pipeline](#answer-pipeline)
 1.  [Puzzle days and content tooling](#puzzle-days-and-content-tooling)
 1.  [Purchases and entitlements](#purchases-and-entitlements)
+1.  [The iPhone app](#the-iphone-app)
 1.  [See also](#see-also)
 
 ## Overview
@@ -696,6 +697,110 @@ https://apps.apple.com/redeem?ctx=offercodes&id={apple_app_id}&code={code}
   (RELEASE-2) ([RevenueCat notes on offer codes][rc-codes]).
 
 [rc-codes]: /docs/research/revenuecat-expo.md#apple-offer-codes
+
+## The iPhone app
+
+### Screens and navigation
+
+Expo Router, with one stack:
+
+| Route         | Screen                                                                 | Requirements           |
+| ------------- | ---------------------------------------------------------------------- | ---------------------- |
+| `/`           | Today: the Guessling, the hint, turns, the history, the question field | TODAY, ASK, GUESS, END |
+| `/notice`     | The AI notice, as a modal before the first question                    | NOTICE                 |
+| `/archive`    | The archive list, with locks for players without Guessling+            | ARCHIVE                |
+| `/puzzle/[n]` | An archive round or a round open past midnight, on the Today component | ARCHIVE-3, TODAY-5     |
+| `/settings`   | AI answers, restore, redeem, policy links, support, version, switches  | SET, PAY-6, PAY-8      |
+| Paywall       | `RevenueCatUI.presentPaywall()`, a native modal                        | PAY                    |
+
+### State, storage, and time
+
+- A round's state lives in one reducer per puzzle, saved to the device's
+  key-value store after every answer (TODAY-4); the server holds only the
+  turn count and status.
+- The app works out today's date from the device's time zone when it
+  starts, when it returns to the foreground, and at local midnight, and
+  moves to the new puzzle then, keeping a round still open (TODAY-2,
+  TODAY-5).
+- The streak and the statistics are computed on the device from the saved
+  rounds (STREAK-1, STREAK-2, END-5).
+
+### Networking
+
+- One `api.ts` module adds the headers, parses errors into the codes of the
+  [Worker API](#worker-api), and gives each request 5 seconds before it
+  shows the offline or busy state (PERF-2).
+- A question gets a `requestId` from `expo-crypto`'s `randomUUID()` when
+  it's typed, and is kept with the round until an answer arrives. "Send
+  again" resends the same ID, so a retry never costs a second turn
+  (STATE-1, STATE-2).
+- The question field is disabled while a request is pending (ASK-8).
+
+### The notice, sharing, and settings
+
+- `/notice` shows the text from `GET /v1/config` with two buttons of equal
+  weight; the choice and the notice's version go to the device store, and a
+  newer version brings the modal back before the next question (NOTICE-1,
+  NOTICE-4, NOTICE-5).
+- Share builds the text of SHARE-1 on the device from the round's history
+  and opens `Share.share({ message })`; no photo-library access is needed
+  (SHARE-1, SHARE-2, SHARE-3).
+- The privacy policy, the terms, and support open in Safari with
+  `Linking.openURL`, not in a browser inside the app, which would change the
+  age rating's web-access answer (SET-1, STORE-4).
+
+### Reactions, sound, and haptics
+
+- The Guessling is four poses, nod, head shake, shrug, and celebration,
+  animated with Reanimated. With Reduce Motion on, `useReducedMotion()`
+  swaps the motion for a fade between poses (ASK-2, A11Y-3).
+- Sounds play in the ambient audio category, so the silent switch mutes
+  them and the player's music keeps playing; a light haptic marks each
+  answer and a success haptic the solve. Both follow Settings' switches
+  (SET-2) ([Apple notes on sound][apple-sound]).
+
+[apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
+
+### Accessibility
+
+- Every answer shows its word, and the Guessling's image carries the answer
+  as its accessibility label; `AccessibilityInfo.announceForAccessibility`
+  reads each new answer (A11Y-1, A11Y-4).
+- Text uses the system's Dynamic Type sizes, and screens scroll rather than
+  truncate at the largest sizes (A11Y-2).
+- Colors come from one theme with light and dark variants, and text keeps a
+  contrast of at least 4.5 to 1 (A11Y-5).
+- The paywall is RevenueCat's native view; the VoiceOver and Larger Text
+  checks run on it too, since a label can be claimed only if the purchase
+  works with that feature (A11Y-6).
+
+### Build configuration
+
+`app.config.ts`:
+
+```ts
+export default {
+  name: 'Guessling',
+  slug: 'guessling',
+  orientation: 'portrait',
+  ios: {
+    bundleIdentifier: 'com.<team>.guessling',
+    supportsTablet: false, // iPhone only, the default (COMPAT-1)
+    config: { usesNonExemptEncryption: false } // HTTPS through the system only
+  },
+  plugins: ['expo-router']
+}
+```
+
+- `ios.deploymentTarget` stays at SDK 57's 16.4 (COMPAT-1).
+- Expo aggregates its modules' privacy manifests; if Apple emails about a
+  missing required reason after an upload, the reason goes into
+  `ios.privacyManifests` ([RevenueCat notes on privacy manifests][rc-pm]).
+- The app still runs on iPad at phone resolution, so every screen, the
+  share sheet and the paywall included, is checked on an iPad simulator
+  (COMPAT-3).
+
+[rc-pm]: /docs/research/revenuecat-expo.md#privacy-manifests-in-expo
 
 ## See also
 
