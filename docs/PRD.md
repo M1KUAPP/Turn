@@ -170,9 +170,10 @@ says how each is built.
 - **ASK-1, Must.** The player types a question in their own words, from 1
   to 140 characters, and sends it. Check: a 141st character can't be
   typed, and an empty question can't be sent.
-- **ASK-2, Must.** Each question gets one answer, shown in words and by the
-  Guessling: "Yes" with a nod, "No" with a head shake, or "Ask another way"
-  with a shrug. Check: each answer shows its word and its reaction.
+- **ASK-2, Must.** Each yes-or-no question gets one of three answers, shown
+  in words and by the Guessling: "Yes" with a nod, "No" with a head shake,
+  or "Ask another way" with a shrug. Check: each answer shows its word and
+  its reaction.
 - **ASK-3, Must.** A Yes or a No uses a turn; "Ask another way" doesn't.
   Check: the turn count drops only on Yes and No.
 - **ASK-4, Must.** Text that isn't a yes-or-no question, such as "What
