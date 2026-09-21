@@ -31,8 +31,8 @@ Contents:
   Guessling helps them uncover a hidden thing each day by answering any
   yes-or-no question they type, the same way for every player, so they get a
   fair new deduction puzzle every day."
-- **Store:** the App Store, on iPhone. A new Google Play account or the
-  Galaxy Store can't be live in time; see
+- **Store:** the App Store, on iPhone. A new personal Google Play account
+  or the Galaxy Store can't be live in time; see
   [getting through store review][ctx-review].
 - **Price:** today's puzzle is free. Guessling+ opens the archive of past
   puzzles for $19.99 a year with a 3-day free trial, or $2.99 a month.
@@ -40,27 +40,33 @@ Contents:
   every eligible entry.
 - **Jev's job:** Jev checks every puzzle's answers before it ships, matches
   each typed question to a checked answer, and answers the rest live.
-- **Dates:** in App Store review by Thursday, September 24; live by Sunday,
-  September 27; submitted on Devpost by Wednesday, September 30 at 11:45 PM
-  PT; free for judges until judging ends on October 13.
+- **Dates:** in App Store review by Thursday, September 24, a day after the
+  brief's suggested date, which the ideation's constraint C2 accepts; live
+  as soon as it's approved, and by Sunday, September 27 at the latest;
+  submitted on Devpost by Wednesday, September 30 at 11:45 PM PT; free for
+  judges until judging ends on October 13.
 
 [ctx-review]: /docs/CONTEXT.md#getting-through-store-review
 
 ## Problem and audience
 
-- **Who:** adults who play the day's word puzzles and want more than a few
+- **Who:** people who play the day's word puzzles and want more than a few
   minutes of them. The habit is proven: NYT Games has 293,384 US ratings, and
-  The New York Times Company says its Games team brings "millions of people
-  back to play every day". So is the genre: Akinator, which guesses what the
-  player is thinking, has 422,100.
+  The New York Times Company says its Games team builds "communities that
+  bring millions of people back to play every day". So is the genre:
+  Akinator, which guesses what the player is thinking, has 422,100.
 - **The gap:** in Akinator, the app asks the questions. The four apps found
-  that let the player question an AI have 3 to 19 ratings each, and their
-  reviews punish answers that contradict themselves or hedge: "It either is
-  nomadic or it isn't." None of them, and no 2026 gallery entry, pairs a
-  shared daily puzzle with questions in the player's own words.
-- **The field:** Best Game draws on 148 games in the gallery, but only 11
-  projects name the category, and word and trivia games are a thin genre,
-  with 15.
+  that let the player question an AI have 3 to 19 ratings each, and one of
+  them draws reviews that punish answers that contradict themselves or
+  hedge: "It either is nomadic or it isn't." None of them pairs a shared
+  daily puzzle with questions in the player's own words, and no gallery
+  tagline read on September 22 does. The closest are Terravel, with a daily
+  hidden place, and Das Verhör, a daily German deduction game in which
+  on-device AI speaks for the suspects.
+- **The field:** on September 22, Best Game drew on 148 games in the
+  gallery, but only 11 projects named the category, and none of the 15 word
+  and trivia games, against 39 arcade and 35 puzzle games, took free-form
+  questions. The field will grow before the deadline.
 
 The [evidence notes][ev-hunch] and the [gallery notes][gallery-other] have
 the sources.
@@ -70,7 +76,7 @@ the sources.
 ## What the app does
 
 1.  **Open today's puzzle.** Everyone gets the same hidden thing and a
-    one-word hint, such as "An animal", with twenty questions to find it.
+    short hint, such as "An animal", with twenty questions to find it.
 1.  **Ask anything.** The player types a yes-or-no question in their own
     words, and before they can type the next one, the Guessling nods for
     Yes or shakes its head for No. When a question can't be settled, it
@@ -196,16 +202,19 @@ Guessling applies them.
 - **Free:** today's puzzle, every day. A daily game that locks its daily
   puzzle fights its genre.
 - **Guessling+:** one entitlement that opens the archive of every past
-  puzzle: ten at launch, and one more each day. That's how NYT Games sells
-  puzzles, and nothing it promises is missing on launch day.
-- **Plans:** yearly at $19.99 with a 3-day free trial, shown first, and
+  puzzle: ten at launch, and one more each day. Puzzle subscriptions already
+  sell archives, as Apple News+ does with its "daily and archived" puzzles,
+  and nothing Guessling+ promises is missing on launch day.
+- **Plans:** yearly at $19.99 with a 3-day free trial, as the default, and
   monthly at $2.99. That's below NYT Games' $4.99 to $5.99 a month for a
   bundle, and above a single 20-questions rival's $0.99 a month.
 - **Paywall:** one RevenueCat Paywall, configured remotely and dismissible,
   shown after today's result as "Play yesterday's?" and on any locked
   archive puzzle.
-- **Trial length:** trials started by September 27 convert before September
-  30, while revenue still counts toward the Grand Prize shortlist.
+- **Trial length:** a trial started before 11:45 PM PT on September 27
+  converts before the Submission Period closes on September 30, while
+  revenue still counts toward the Grand Prize shortlist. The cost: a median
+  25.5% of trials of 4 days or less become paid, against 37.4% at 5–9 days.
 - **Judges:** one-time-use Apple offer codes for a free month of Guessling+,
   created once the app is live. A code redeemed on October 1 lasts past the
   end of judging on October 13, and the daily puzzle needs no code.
@@ -228,18 +237,20 @@ Guessling enters two and the Grand Prize considers it anyway.
 - **HAMM, second.** Judges want "a well-crafted paywall, thoughtful pricing
   and packaging, strong conversion, and monetization that genuinely fits the
   product". Guessling brings a paywall at the moment a player wants more,
-  two plans with the yearly first, a trial timed to the deadline, and its
-  conversion numbers.
+  two plans with the yearly as the default, a trial timed to the deadline
+  at some cost in conversion, and its conversion numbers.
 - **Grand Prize, automatically.** Its shortlist counts revenue as reported
-  in RevenueCat, so every sale goes through RevenueCat.
+  in RevenueCat, so every sale goes through RevenueCat. Revenue builds the
+  shortlist but "does not decide the winner", so the write-up also says what
+  changed after launch and what was learned.
 
 Left out, with the reason:
 
 - **Growth Loop and #BuildInPublic:** the red team scored both 2 or lower,
   and Layers would add a tracking prompt to the one submission that can't
   afford a rejection.
-- **Keep Them Coming Back:** it needs OneSignal and push notifications, which
-  the first version leaves out.
+- **Keep Them Coming Back:** it needs a working OneSignal integration and
+  campaign, which the first version leaves out.
 - **Design and Peace Prize:** the Guessling's art is judged under Best Game,
   and a game isn't a social-good app.
 - **The five Influencer Awards:** each is a fixed brief, and none asks for a
@@ -306,22 +317,25 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
 - **Friday, September 25 and Saturday, September 26:** in review. A
   rejection gets a fix for the cited guideline only and a same-day
   resubmission. Draft the launch posts and the video script.
-- **Sunday, September 27:** live. Create the offer codes, confirm a
-  production purchase, and post the first public puzzle.
+- **Sunday, September 27, at the latest:** live, since the build releases
+  automatically once approved. Create the offer codes, confirm a production
+  purchase, which RevenueCat warns can take 24 hours to work after a first
+  launch, and post the first public puzzle.
 - **Monday, September 28:** record the video on an iPhone and upload it.
 - **Tuesday, September 29:** write the Devpost description and category
   answers with the numbers so far.
 - **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
-  PT. Keep the Worker running and Jev's credits funded through October 13.
+  PT. Keep the Worker running and Jev's credits funded through at least
+  October 21, when winners are announced.
 
 ### Review-safety checklist
 
 From the context's [review essentials][ctx-apple]:
 
 - The subscriptions go in the same submission as the first build.
-- The paywall shows the billed amount first, the trial, the renewal, how to
-  cancel, and Restore Purchases, with links to the Terms of Use and the
-  privacy policy, which the metadata links too.
+- The paywall makes the billed amount the most prominent price and shows
+  the trial, the renewal, how to cancel, and Restore Purchases, with links
+  to the Terms of Use and the privacy policy, which the metadata links too.
 - The permission notice comes before the first question goes to TypeSafe,
   and the privacy label declares "Purchases" and the typed questions.
 - No accounts, so no deletion flow, and no third-party login.
@@ -343,21 +357,24 @@ The brief's [pitch advice][brief-pitch] and the context's
   share card invites another player.
 - **Numbers to report:** players, puzzles solved, questions asked, paywall
   views, trial starts, conversions, and revenue as RevenueCat reports it,
-  plus the consistency test's results. With about three days live, rates
-  will say more than totals.
+  plus the consistency test's results. The video carries about a day of
+  numbers and the write-up about three, so rates will say more than totals.
 - **Naming Jev:** only once TypeSafe consents; until then, "a hosted
-  decision model".
+  decision model". The video is recorded on September 28, so it names Jev
+  only if consent has arrived by then.
 
 The video, two minutes on an iPhone:
 
-1.  **0:00–0:10:** the Guessling and today's hint, "An animal". The player
-    types "Does it live in water?" and the Guessling shakes its head.
+1.  **0:00–0:10:** one line on screen, "Daily puzzles end in minutes. Ask
+    anything instead.", then the Guessling and today's hint, "An animal".
+    The player types "Does it live in water?" and the Guessling shakes its
+    head.
 1.  **0:10–0:40:** a real round. Two wordings of one question get the same
     answer, a question the bank doesn't cover gets "Ask another way" at no
     cost, and a correct guess ends in a celebration and a share card sent to
     Messages.
-1.  **0:40–1:05:** art direction and tone: the Guessling's reactions, the
-    reveal, and the streak.
+1.  **0:40–1:05:** art direction and tone: the Guessling's reactions and
+    the reveal.
 1.  **1:05–1:35:** "Play yesterday's?" opens the paywall, a purchase goes
     through, and the archive opens.
 1.  **1:35–2:00:** the numbers since launch, the consistency test's result,
@@ -365,23 +382,28 @@ The video, two minutes on an iPhone:
 
 The write-up, in order: the logline; the problem, daily puzzles that end in
 minutes and 20-questions apps that contradict themselves; how answers stay
-the same for everyone; the money; the difference; the numbers; the
-categories and why; and the AI tools used, credited openly.
+the same for everyone; the money; the difference; the numbers; what changed
+after launch and what was learned, for the Grand Prize; the categories and
+why; and the AI tools used, credited openly.
 
 [brief-pitch]: /docs/BRIEF.md#pitch-the-submission
 [ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
 
 ## Risks
 
-- **Answers contradict each other.** The checked bank and matching prevent
-  it. Trigger: on September 24, fewer than 90% of a test set of paraphrases
-  reach the same bank question, or a negated pair disagrees on any puzzle;
-  then grow the bank before submitting.
+- **Answers contradict each other.** The checked bank and matching reduce
+  it, though Jev reads wording literally and a question and its negation
+  needn't agree. Trigger: on September 24, fewer than 90% of a test set of
+  paraphrases reach the same bank question, or a negated pair disagrees on
+  any puzzle; then grow the bank before submitting.
 - **No Jev key in time.** Request it on September 22, then write to
   `support@typesafe.ai` and ask in TypeSafe's Discord. Trigger: no key by
   noon PT on September 23; then people answer the bank by hand, questions
   outside it get "Ask another way", and Jev joins on the Worker when the key
-  arrives, with no app update.
+  arrives, with no app update. Submit only once live answers work: a build
+  that matches only exact wordings would answer most questions with "Ask
+  another way" and risk guideline 2.1, App Completeness. September 26 is the
+  latest first submission that leaves room for one rejection.
 - **App Review rejects the build.** The review-safety checklist covers the
   common causes. Trigger: not approved by the end of September 26; then fix
   only the cited guideline. Monday, September 28 is the last resubmission
@@ -390,13 +412,14 @@ categories and why; and the AI tools used, credited openly.
   reveal carry the art direction, and the video gives them 25 seconds
   instead of explaining how answers work.
 - **Jev is busy or out of credits during judging.** Credits stay funded
-  through October 13, the SDK retries busy responses, the app shows a busy
-  state, and exact bank wordings are answered in code.
+  through at least October 21, the SDK retries busy responses, the app shows
+  a busy state, and exact bank wordings are answered in code.
 - **TypeSafe doesn't consent to naming Jev.** Trigger: no consent by
-  September 29; then the video and the write-up call it "a hosted decision
-  model".
-- **Few numbers.** Posting starts on launch day, and the write-up leads with
-  rates and the consistency results rather than totals.
+  September 28, when the video is recorded; then the video calls it "a
+  hosted decision model", and the write-up names Jev only if consent arrives
+  before the deadline.
+- **Few numbers.** Posting starts on launch day, and the write-up's numbers
+  lead with rates and the consistency results rather than totals.
 
 ## How the idea was chosen
 
@@ -410,10 +433,10 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
     sent 20 on.
 1.  [Round 4][r4] had two scorers, one of them blind, rank Hunch, Subtext,
     Flagged, SaySo, and Earshot highest.
-1.  [Round 5][r5] checked App Store rivals and harm data, which moved Flagged
-    up and the other three down.
+1.  [Round 5][r5] checked App Store rivals and harm data, which raised
+    Flagged's total and lowered the other four, Hunch's by one point.
 1.  [Round 6][r6] had a red team find that Hunch could contradict itself,
-    and the checked bank fixed it.
+    and the checked bank addressed it.
 1.  [Round 7][r7] re-scored the finalists with their fixes, 83 for Hunch
     against 77 and 62, and named the winner Guessling.
 1.  [Round 8][r8] chose a free daily puzzle and a paid archive.
@@ -458,19 +481,22 @@ Still open, each with a safe default:
   TypeSafe page says what the API returns when credits run out; with
   auto-refill off and a zero balance, TypeSafe "may decline to generate
   Output". Safe default: buy credits on day one, turn auto-refill on, and
-  watch usage through October 13.
+  watch usage through at least October 21.
 - **Naming Jev.** No source says how to get TypeSafe's consent under section
-  16.4. Safe default: ask TypeSafe on September 22 and say "a hosted
-  decision model" until it answers.
+  16.4. Safe default: ask TypeSafe on September 22, covering the notice and
+  the privacy policy as well as the video and the write-up, and say "a
+  hosted decision model" until it answers.
 - **The Guessling's art.** Whether the team can draw the character in a day
   is unknown. Safe default: AI-assisted art, credited openly, as past
   winners did.
 - **"20 Questions" in the name.** Several App Store apps use it, but no
   source here says whether it is free to use. Safe default: keep it as a
   description after the brand name.
-- **Age rating.** TypeSafe's services aren't directed to children, and no
-  source here names the right App Store age rating. Safe default: answer
-  Apple's questionnaire honestly and stay out of the Kids category.
+- **Age rating.** TypeSafe's services aren't directed to children, it
+  doesn't knowingly handle personal data from anyone under 18, and no source
+  here names the right App Store age rating. Safe default: ask TypeSafe
+  whether younger players may use the game, answer Apple's questionnaire
+  honestly, and stay out of the Kids category.
 - **More than one prize.** The context's
   [open questions](/docs/CONTEXT.md#open-questions) apply. Safe default:
   expect at most one prize.
@@ -488,6 +514,6 @@ Still open, each with a safe default:
 - [Gallery notes](/docs/research/gallery-2026.md): the 1,115 projects in the
   2026 gallery on September 22, 2026.
 - [Evidence notes](/docs/research/idea-evidence.md): rivals, reviews, and
-  demand for the five finalists.
+  demand for the top five ideas.
 
 [ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
