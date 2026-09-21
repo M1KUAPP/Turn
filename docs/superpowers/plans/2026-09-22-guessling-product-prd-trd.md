@@ -306,9 +306,10 @@ The four new notes supply the facts behind them.
     portrait; tested on an iPad simulator, since iPhone apps still run on
     iPad; Mac and Apple Vision Pro availability off.
 19. **Storefronts.** The United States and other storefronts, except China
-    mainland and Vietnam, which need game licenses, and the EU until the
-    team completes trader verification, which publishes its contact
-    details.
+    mainland and Vietnam, which need game licenses; Brazil once its tax form
+    is in; and the EU once the team completes trader verification, which
+    publishes its contact details. Verification starts on September 22,
+    since judges in the EU need access "without any restriction".
 20. **Stack pins.** Expo SDK 57 with React Native 0.86.3, the EAS image
     `macos-tahoe-26.5-xcode-26.6`, `react-native-purchases` and `-ui`
     10.10.1, Wrangler 4.136.1, `@typesafe-ai/sdk` 0.6.0 with every option in

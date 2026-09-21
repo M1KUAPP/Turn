@@ -130,10 +130,11 @@ says how each is built.
   [Jev section][idea-jev] explains why. Check: changing the server's text
   changes the notice with no app update.
 - **NOTICE-3, Must.** With "Not now", nothing the player types reaches
-  TypeSafe, the server stores none of their wordings and counts none of
-  their plays, and the player still plays everything, Guessling+ included,
-  through the question list (ASK-9). Check: with "Not now", the server's
-  logs show no Jev call and no count for that player.
+  TypeSafe, the server stores none of their wordings, except in a report they
+  choose to send, and counts none of their plays, and the player still plays
+  everything, Guessling+ included, through the question list (ASK-9). Check:
+  with "Not now", the server's logs show no Jev call and no count for that
+  player.
 - **NOTICE-4, Must.** The choice is kept on the device and can be changed
   both ways in Settings at any time; the app never asks again after each
   question. Check: switching AI answers off in Settings stops the next
@@ -150,7 +151,7 @@ says how each is built.
   the Guessling, the turns left out of twenty, and the question field.
   Check: a cold start shows all five.
 - **TODAY-2, Must.** Today is the device's local calendar date, and a new
-  puzzle starts at local midnight, as NYT's daily games do
+  puzzle starts at local midnight, as Wordle, Connections, and Strands do
   ([daily puzzle notes][daily-when]). Check: across 11:59 PM and 12:00 AM
   on the device, the puzzle number goes up by one.
 - **TODAY-3, Must.** Daily puzzle #11 belongs to Thursday, September 24,
@@ -285,11 +286,12 @@ https://apps.apple.com/app/id<APP_ID>
 
 ### Streak
 
-- **STREAK-1, Should.** The app counts the current streak, consecutive
-  puzzle days whose daily puzzle the player solved on its date, and the
-  longest streak; a loss or a day missed resets the current streak, and a
-  round finished after midnight (TODAY-5) doesn't extend it, as in Wordle.
-  Check: solve two days, skip one, and the current streak is zero.
+- **STREAK-1, Should.** The app counts the current streak, consecutive puzzle
+  days whose daily puzzle the player solved on its date, and the longest
+  streak; a loss or a day missed resets the current streak, and finishing a
+  round after midnight (TODAY-5) breaks it, as a late finish does in Wordle.
+  Check: solve two days, skip one, and the current streak is zero; a round
+  finished after midnight also ends the streak.
 - **STREAK-2, Should.** Archive rounds never change the streak. Check:
   solving an archive puzzle leaves both counts unchanged.
 
@@ -330,13 +332,16 @@ https://apps.apple.com/app/id<APP_ID>
 - **PAY-5, Must.** A purchase or a restore unlocks the archive at once, with
   no restart. Check: after a sandbox purchase, the archive opens.
 - **PAY-6, Must.** Settings has Restore Purchases, which restores
-  Guessling+ bought with the same Apple Account. Check: on a second device.
+  Guessling+ bought with the same Apple Account. Check: on a second device
+  after launch; in the sandbox, RevenueCat's anonymous IDs restore only
+  after another purchase on that device.
 - **PAY-7, Must.** Judges get a free month of Guessling+ through an Apple
   offer code: a custom code with a small redemption limit, for one month
   free with auto-renewal off, open to new, existing, and expired
   subscribers, sent as a redemption link. A judge whose Guessling+ doesn't
-  unlock taps Restore Purchases. Check: a code redeemed on the live app
-  unlocks the archive within the hour Apple allows for new codes.
+  unlock taps Restore Purchases. Check: once the app is live and the code
+  is an hour old, since Apple says new codes can take that long to work,
+  redeeming it on a real device unlocks the archive.
 - **PAY-8, Should.** Settings has Redeem Code, which opens Apple's offer
   code sheet, and Manage Subscription, which opens the App Store's
   subscription settings. Check: both open.
@@ -393,9 +398,10 @@ https://apps.apple.com/app/id<APP_ID>
   puzzles are published: the ten starters, #1 to #10, and the daily
   puzzles for September 24 to 30, #11 to #17. Check: the server serves all 17.
 - **CONTENT-2, Must.** Each later daily puzzle is published at least two
-  days before its date, since a date is live somewhere for about 50 hours
-  and a change to published data can take a minute or more to reach every
-  location ([Cloudflare notes][cf-kv]). Check: the daily check (AVAIL-3)
+  days before its date, a margin over the day ahead the Cloudflare note
+  advises, since a date is live somewhere for about 50 hours and a change
+  to published data can take a minute or more to reach every location
+  ([Cloudflare notes][cf-kv]). Check: the daily check (AVAIL-3)
   finds the next two dates published.
 - **CONTENT-3, Must.** Every puzzle has a hidden thing that meets the
   product's [quality bar][product-puzzles], a hint that names its category,
@@ -457,7 +463,7 @@ https://apps.apple.com/app/id<APP_ID>
   state, never a broken screen, and the server stays within Jev's limit of
   1,200 requests per minute. Check: a load test on the test server at 30
   questions per second, half of them repeats.
-- **AVAIL-3, Should.** Once a day, a check confirms that the next two dates'
+- **AVAIL-3, Must.** Once a day, a check confirms that the next two dates'
   puzzles are published and that Jev answers a test question, and tells the
   team if not. Check: an unpublished date triggers the message.
 
@@ -571,15 +577,16 @@ apply; these are Guessling's own.
   prices, and its keywords don't repeat the name. Check: App Store Connect.
 - **STORE-2, Must.** The screenshots are final before submission: the
   6.9-inch iPhone set for the listing and one 1179 × 2556 screenshot for
-  Devpost; the app's iPhone-only build needs no iPad set. Check: App Store
-  Connect accepts them.
+  Devpost; the app's iPhone-only build most plausibly needs no iPad set,
+  since Apple doesn't define "runs on iPad". Check: App Store Connect
+  accepts them.
 - **STORE-3, Must.** The privacy policy URL, the Terms of Use, which rely on
   Apple's standard license agreement and set no minimum age, and a support
   URL with contact details are in the metadata and live on the server.
   Check: each link opens.
-- **STORE-4, Must.** The age rating questionnaire is answered honestly:
-  in-app controls none, unrestricted web access no, user-generated content
-  no, messaging and advertising no, contests none, and every content
+- **STORE-4, Must.** The age rating questionnaire is answered honestly: in-app
+  controls none, unrestricted web access no, user-generated content no, social
+  media, messaging, and advertising no, contests none, and every content
   descriptor none, which likely yields 4+
   ([Apple notes on ratings][apple-rating]). The app stays out of the Kids
   category. Check: the rating App Store Connect calculates.
@@ -599,11 +606,14 @@ apply; these are Guessling's own.
   days, within the 4,000 bytes the field allows. Check: a teammate follows
   them on a clean install.
 - **STORE-8, Must.** The app is offered in the United States and other
-  storefronts, except China mainland and Vietnam, which need game licenses,
-  and the EU's 27 until the team decides to complete trader verification,
-  which publishes its contact details on EU product pages
-  ([Apple notes on storefronts][apple-eu]). The subscriptions use the same
-  storefronts. Check: the availability settings.
+  storefronts, except China mainland and Vietnam, which need game licenses;
+  Brazil once its tax form is in; and the EU's 27 once the team completes
+  trader verification, which publishes its contact details on EU product
+  pages ([Apple notes on storefronts][apple-eu]). The team starts that
+  verification on September 22, because judges in the EU couldn't
+  download the app without it, and the rules require access "without any
+  restriction". The subscriptions use the same storefronts. Check: the
+  availability settings.
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
 [apple-rating]: /docs/research/apple-requirements.md#questionnaire-answers-for-guessling
@@ -625,7 +635,8 @@ Before submitting to App Review on September 24, 2026:
   server.
 - **RELEASE-4, Must.** Jev's credits are funded with auto-refill on, the
   In-App Purchase Key is uploaded to RevenueCat, and RevenueCat's sandbox
-  access stays open to anybody, because App Review buys in the sandbox.
+  access stays open to anybody, because App Review reportedly buys in the
+  sandbox.
   Check: each setting.
 
 After approval, and before the Devpost deadline on September 30, 2026:
@@ -646,8 +657,8 @@ What version 1.0 depends on, each owned by the team:
   TypeSafe in the notice and on players under 18, as the idea's
   [open questions][idea-open] say.
 - **Apple:** the Developer Program membership, the Paid Apps Agreement, tax
-  and banking, the In-App Purchase Key, and a trader status declaration,
-  which Apple asks for even outside the EU.
+  and banking, the In-App Purchase Key, and verified trader status for the
+  EU storefronts (STORE-8).
 - **RevenueCat:** a project on the Pro plan, free below $2,500 of monthly
   tracked revenue.
 - **Cloudflare:** Workers Paid at $5 a month and a domain for the server's
@@ -665,9 +676,11 @@ sold (AVAIL-1).
 The idea's [open questions][idea-open-q] still apply. New ones, each with a
 safe default:
 
-- **Age checks under US state laws.** Texas, Utah, and Louisiana now expect
-  developers to check users' ages through Apple's Declared Age Range API,
-  and no source covers calling it from Expo
+- **Age laws in US states.** New Apple Accounts in Texas are subject to its
+  age-assurance law, and for new accounts in Utah and Louisiana, Apple
+  shares age categories with apps that ask through its Declared Age Range
+  API. What these laws require of developers is a question for counsel, and
+  no source covers calling the API from Expo
   ([Apple notes][apple-age-laws]). Safe default: ask counsel before launch;
   if an age check is required, players in an under-18 range get the
   question list only, so nothing reaches TypeSafe.
