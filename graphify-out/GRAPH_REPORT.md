@@ -1,20 +1,20 @@
-# Graph Report - revenuecat (2026-09-21)
+# Graph Report - revenuecat (2026-09-22)
 
 ## Corpus Check
 
-- 76 files · ~101,824 words
+- 81 files · ~152,977 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 982 nodes · 908 edges · 84 communities (78 shown, 3 thin omitted)
+- 1164 nodes · 1085 edges · 102 communities (96 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `00bc28bf`
+- Built from commit: `a5e02bbf`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -101,6 +101,24 @@
 - RevenueCat Shipaton 2026 brief
 - Tasks
 - Resources, perks, and programs
+- Past RevenueCat hackathon winners
+- Related materials for Shipaton 2026
+- Shipaton 2026 context
+- Tasks
+- Apple App Store review
+- Monetization and paywall benchmarks
+- Winning playbook
+- Best practices for a new subscription app
+- Google Play review
+- Store listing and discoverability
+- Prize categories and prize structure
+- Retention and push notifications
+- Past editions and winners
+- Demo video and write-up
+- Samsung Galaxy Store review
+- Submission requirements
+- Judging process and criteria
+- Eligibility rules
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -113,7 +131,7 @@
 7. `Shipaton 2026 recordings` - 15 edges
 8. `Shipaton 2026 research notes` - 14 edges
 9. `RevenueCat Shipaton 2026 brief` - 13 edges
-10. `Resources, perks, and programs` - 13 edges
+10. `Shipaton 2026 context` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -123,7 +141,7 @@
 
 - None detected.
 
-## Communities (84 total, 3 thin omitted)
+## Communities (102 total, 3 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -497,8 +515,8 @@ Nodes (4): Campus Versus, Featured rivalries, How campus versus works, See also
 
 ### Community 80 - "Shipaton 2026 research notes"
 
-Cohesion: 0.04
-Nodes (44): 2024 RevenueCat Ship-a-ton, App review timing and late approvals, Build-in-public case studies and interviews, Build requirements, Building fast (how to win, part 2), Category requirements at a glance, Conflicts and ambiguities, Conflicts that affect a submission (+36 more)
+Cohesion: 0.20
+Nodes (9): Conflicts and ambiguities, Conflicts that affect a submission, Gaps in the corpus, Key dates and timeline, Minor and historical inconsistencies, Official rules and legal terms, Overview of Shipaton 2026, Shipaton 2026 research notes (+1 more)
 
 ### Community 81 - "RevenueCat Shipaton 2026 brief"
 
@@ -515,10 +533,100 @@ Nodes (14): Appendix: check scripts, Design, Global constraints, Shipaton 2026 b
 Cohesion: 0.15
 Nodes (13): Blog index, Build-in-public partners, Builder resources page, Discord and community, Livestreams, Media kit, Resources, perks, and programs, Ship Kit perks (+5 more)
 
+### Community 84 - "Past RevenueCat hackathon winners"
+
+Cohesion: 0.04
+Nodes (46): 2024 Ship-a-ton winners, 2024 winners at a glance, 2024 winners in their own words, 2024 winners now, 2024 write-ups, 2025 winners at a glance, 2025 winners in their own words, 2025 winners now (+38 more)
+
+### Community 85 - "Related materials for Shipaton 2026"
+
+Cohesion: 0.06
+Nodes (33): App Growth Annual and the Shippies, App Review Guidelines, App Store Connect help, Charts and traction metrics, Conflicts, Galaxy Store Seller Portal guides, Galaxy Store support, Gaps (+25 more)
+
+### Community 86 - "Shipaton 2026 context"
+
+Cohesion: 0.07
+Nodes (26): Apple App Store review essentials, Categories new in 2026, Categories with a precedent, Demo video and write-up, Galaxy Store review essentials, Getting through store review, Google Play review essentials, Influencer Award creators (+18 more)
+
+### Community 87 - "Tasks"
+
+Cohesion: 0.12
+Nodes (15): Appendix: check scripts, Design, Global constraints, Shipaton 2026 context implementation plan, Task 1: Frame, official rules, and see also, Task 2: Past winners, Task 3: What wins each category, Task 4: Monetization and store review (+7 more)
+
+### Community 88 - "Apple App Store review"
+
+Cohesion: 0.20
+Nodes (10): Account deletion on the App Store, App Review Guidelines for a subscription app, Apple App Store review, Apple review timing and expedited review, Apple takeaways for the last nine days, First in-app purchase or subscription, Privacy policy, privacy labels, and Terms of Use, Sandbox testing on Apple (+2 more)
+
+### Community 89 - "Monetization and paywall benchmarks"
+
+Cohesion: 0.22
+Nodes (9): Codes that let judges unlock premium, Conversion and revenue benchmarks, Monetization and paywall benchmarks, Monetization takeaways for the last nine days, Paywall design and offers in the report, Prices and plan mix, RevenueCat docs on paywalls, offerings, and experiments, State of Subscription Apps 2026 definitions (+1 more)
+
+### Community 90 - "Winning playbook"
+
+Cohesion: 0.22
+Nodes (9): Build-in-public case studies and interviews, Building fast (how to win, part 2), Deadline-week checklist distilled from the 2026 sources, Growth (how to win, part 3), Ideation (how to win, part 1), Overview video tips, Pitching (how to win, part 4), Shipyard lessons (2026, different hackathon) (+1 more)
+
+### Community 91 - "Best practices for a new subscription app"
+
+Cohesion: 0.25
+Nodes (7): Best practices for a new subscription app, Conflicts, Conflicts between sources, Conflicts inside one source, Conflicts with the repo's notes, Gaps, Source index
+
+### Community 92 - "Google Play review"
+
+Cohesion: 0.25
+Nodes (8): App content, data safety, and account deletion, Google Play review, Google Play review times, Google Play takeaways for the last nine days, License testing on Google Play, Subscriptions and payments policies, Target API level for new apps, Testing and production access for new personal accounts
+
+### Community 93 - "Store listing and discoverability"
+
+Cohesion: 0.29
+Nodes (7): Apple product page fields, Custom product pages, tests, and in-app events, Galaxy Store listing fields, Google Play listing fields, Google Play listing practices and experiments, Listing takeaways for the last nine days, Store listing and discoverability
+
+### Community 94 - "Prize categories and prize structure"
+
+Cohesion: 0.29
+Nodes (7): Category requirements at a glance, Influencer award briefs, Overall prize structure, Prize categories and prize structure, Prize table, RevenueCat core category requirements, Sponsor award requirements
+
+### Community 95 - "Retention and push notifications"
+
+Cohesion: 0.33
+Nodes (6): Apple and Android rules for notifications, Billing retries and grace periods, OneSignal permission prompts, OneSignal re-engagement journeys, Retention and push notifications, Retention takeaways for the last nine days
+
+### Community 96 - "Past editions and winners"
+
+Cohesion: 0.33
+Nodes (6): 2024 RevenueCat Ship-a-ton, Past editions and winners, Patterns among past winners, Shipaton 2025, Shipyard: Creator Contest 2026 (a different hackathon), What changed from 2025 to 2026
+
+### Community 97 - "Demo video and write-up"
+
+Cohesion: 0.40
+Nodes (5): Demo video and write-up, Devpost guidance on demo videos, Devpost guidance on the write-up, How Devpost advice maps to Shipaton judging, Pitch takeaways for the last nine days
+
+### Community 98 - "Samsung Galaxy Store review"
+
+Cohesion: 0.40
+Nodes (5): Galaxy in-app purchases and RevenueCat support, Galaxy review process and requirements, Galaxy seller registration, Galaxy Store takeaways for the last nine days, Samsung Galaxy Store review
+
+### Community 99 - "Submission requirements"
+
+Cohesion: 0.40
+Nodes (5): App review timing and late approvals, Build requirements, Devpost form walkthrough, Devpost submission checklist, Submission requirements
+
+### Community 100 - "Judging process and criteria"
+
+Cohesion: 0.40
+Nodes (5): Judges on Devpost and the site, Judging criteria sources, Judging funnel and stages, Judging process and criteria, Scoring weights and tie-breakers
+
+### Community 101 - "Eligibility rules"
+
+Cohesion: 0.67
+Nodes (3): Eligibility rules, Which apps qualify, Who may enter
+
 ## Knowledge Gaps
 
-- **748 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+743 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 820 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **895 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+890 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 972 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -526,13 +634,13 @@ Nodes (13): Blog index, Build-in-public partners, Builder resources page, Discor
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Resources, perks, and programs`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **Why does `Shipaton 2025 Winners` connect `Shipaton 2025 Winners` to `RevenueCat design award`, `#buildinpublic award`, `RevenueCat peace prize`, `Best vibes award`, `Buzziest launch award`, `HAMM award`, `OneSignal boost award`, `Kotlin multiplatform reach award`?**
+- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Demo video and write-up`, `Samsung Galaxy Store review`, `Apple App Store review`, `Monetization and paywall benchmarks`, `Google Play review`, `Store listing and discoverability`, `Retention and push notifications`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `RevenueCat Shipaton 2026` connect `RevenueCat Shipaton 2026` to `Prizes`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _748 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _895 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
