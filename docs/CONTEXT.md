@@ -263,8 +263,7 @@ past winners are synthesis.
   from "the top 10–15" entries, and "Audience Fit (30%)" weighed the most.
   Winners built the brief's core and cut the rest ("We said no to meal
   planning, social features, and community feeds"), answered the creator's
-  named pain point, and designed monetization in. Only one, Remy Reminders,
-  was found published by the creator whose brief it answered.
+  named pain point, and designed monetization in.
 
 ### Categories new in 2026
 
