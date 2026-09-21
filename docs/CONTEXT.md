@@ -18,6 +18,7 @@ Contents:
 1.  [Store listing and discoverability](#store-listing-and-discoverability)
 1.  [Retention and push notifications](#retention-and-push-notifications)
 1.  [Demo video and write-up](#demo-video-and-write-up)
+1.  [Related materials](#related-materials)
 1.  [See also](#see-also)
 
 ## What the official rules add
@@ -436,6 +437,154 @@ Mapped to Shipaton (synthesis):
 More in the [pitch notes][bp-pitch].
 
 [bp-pitch]: /docs/research/best-practices.md#demo-video-and-write-up
+
+## Related materials
+
+These are the documents a team is most likely to need; the
+[related materials notes](/docs/research/related-materials.md) list many
+more, with the key facts from each. All links were checked on
+September 21, 2026.
+
+### RevenueCat setup and tools
+
+- [SDK quickstart][rc-quickstart] and [Zero to Ship][rc-start] go from
+  installing the SDK to a first shipped subscription, with hands-on
+  [codelabs][rc-codelabs]. Append `.md` to any RevenueCat docs URL to get a
+  clean Markdown copy for coding agents.
+- The latest SDKs on September 21, 2026: purchases-ios 5.90.2,
+  purchases-android 10.22.1, react-native-purchases 10.10.1 (also used by
+  Expo), purchases-flutter 10.13.1, and purchases-kmp 3.9.0.
+- The [Test Store][rc-test-store] comes with every new project, so purchases
+  work before any store setup. Never ship its key: "Using a Test Store API key
+  in production will crash your app."
+- Before review, work through the [launch checklist][rc-launch] and the
+  [App Store rejections][rc-rejections] guide.
+- "Charts show production data only" ([charts][rc-charts]), so test purchases
+  never reach the numbers you screenshot. The project ID the submission asks
+  for is under Project settings, General settings, and in the dashboard URL.
+- The [AI Toolkit][rc-ai-toolkit] installs RevenueCat skills for coding
+  agents and configures the [MCP server][rc-mcp]. In Claude Code, run
+  `claude plugins marketplace add RevenueCat/ai-toolkit`, then
+  `claude plugins install revenuecat`.
+
+[rc-quickstart]: https://www.revenuecat.com/docs/getting-started/quickstart
+[rc-start]: https://revenuecat.github.io/start/
+[rc-codelabs]: https://revenuecat.github.io/
+[rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
+[rc-launch]: https://www.revenuecat.com/docs/test-and-launch/launch-checklist
+[rc-rejections]: https://www.revenuecat.com/docs/test-and-launch/app-store-rejections
+[rc-charts]: https://www.revenuecat.com/docs/dashboard-and-metrics/charts
+[rc-ai-toolkit]: https://www.revenuecat.com/docs/tools/ai-toolkit
+[rc-mcp]: https://www.revenuecat.com/docs/tools/mcp
+
+### Programs behind the 2026 categories
+
+- **Catvertising:** [Ad Monetization][rc-ads], RevenueCat's beta for
+  tracking ad revenue.
+- **Funnel Vision:** [Funnels][rc-funnels] and the
+  [Stripe Projects quickstart][rc-stripe-projects], which provisions
+  RevenueCat with `stripe projects add revenuecat/app`.
+- **Best App for Galaxy:** RevenueCat's
+  [Galaxy onboarding guide][rc-galaxy-onboarding], Samsung's
+  [foldable guidance][sam-foldables], and the free
+  [Remote Test Lab][sam-rtl].
+
+[rc-ads]: https://www.revenuecat.com/docs/ad-monetization
+[rc-funnels]: https://www.revenuecat.com/docs/tools/funnels
+[rc-stripe-projects]: https://www.revenuecat.com/docs/getting-started/stripe-projects-quickstart
+[rc-galaxy-onboarding]: https://www.revenuecat.com/docs/platform-resources/galaxy-platform-resources/galaxy-store-onboarding
+[sam-foldables]: https://developer.samsung.com/foldables-and-largescreens
+[sam-rtl]: https://developer.samsung.com/remote-test-lab
+
+### Store documentation
+
+- **Apple:** the [App Review Guidelines][apple-guidelines], last updated June
+  8, 2026; [App Review][apple-app-review] for review times and expedited
+  review; [screenshot specifications][asc-screenshots];
+  [TestFlight][asc-testflight]; and [sandbox testing][asc-sandbox].
+- **Google Play:**
+  [testing requirements for new personal accounts][gp-testing-reqs],
+  [publishing and review times][gp-publish], and [subscriptions][gp-subs].
+- **Galaxy Store:** [getting started][sam-prepare] with seller status, the
+  [App Distribution Guide][sam-distribution], and the [FAQ][sam-faq].
+
+[apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
+[apple-app-review]: https://developer.apple.com/distribute/app-review/
+[asc-screenshots]: https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications
+[asc-testflight]: https://developer.apple.com/help/app-store-connect/test-a-beta-version/testflight-overview
+[asc-sandbox]: https://developer.apple.com/help/app-store-connect/test-in-app-purchases/overview-of-testing-in-sandbox
+[gp-testing-reqs]: https://support.google.com/googleplay/android-developer/answer/14151465
+[gp-publish]: https://support.google.com/googleplay/android-developer/answer/9859751
+[gp-subs]: https://support.google.com/googleplay/android-developer/answer/140504
+[sam-prepare]: https://developer.samsung.com/galaxy-store/prepare.html
+[sam-distribution]: https://developer.samsung.com/galaxy-store/distribution-guide.html
+[sam-faq]: https://developer.samsung.com/galaxy-store/faq.html
+
+### Sponsor documentation
+
+- **JetBrains:** a [Kotlin Multiplatform starter guide][jb-starter] written
+  for Shipaton. JetBrains offers entrants free access to the EAP version of
+  its Junie CLI agent.
+- **Noise:** [getting started][noise-start] takes four steps: billing, a
+  playbook, campaign images, and the first campaign.
+- **Replit:** [build a mobile app][replit-mobile-app] with Agent, then
+  [add RevenueCat payments][replit-payments].
+- **OneSignal:** [mobile SDK setup][os-sdk-setup]. The App ID is under
+  Settings > Keys & IDs, and the [RevenueCat integration][os-revenuecat]
+  syncs subscription tags.
+- **Layers:** [SDK setup][layers-sdk], with the App ID under Connections, and
+  the [Shipaton offer][layers-shipaton].
+- **Stripe:** the [Stripe Projects CLI][stripe-projects]; run
+  `stripe projects list` to see project IDs.
+
+[jb-starter]: https://kotlinlang.org/docs/multiplatform/shipathon-starter-guide.html
+[noise-start]: https://getnoise.com/docs/getting-started
+[replit-mobile-app]: https://docs.replit.com/build/mobile-app
+[replit-payments]: https://docs.replit.com/build/mobile-payments
+[os-sdk-setup]: https://documentation.onesignal.com/docs/en/mobile-sdk-setup
+[os-revenuecat]: https://documentation.onesignal.com/docs/en/revenuecat
+[layers-sdk]: https://layers.com/docs/sdk
+[layers-shipaton]: https://layers.com/shipaton/
+[stripe-projects]: https://docs.stripe.com/projects
+
+### Influencer Award creators
+
+For audience research only: the rules bar using a creator's name, likeness,
+or brand without "express written consent".
+
+| Award                      | Creator            | YouTube                          | Brief video          |
+| -------------------------- | ------------------ | -------------------------------- | -------------------- |
+| Productivity               | Christopher Lawley | [@ChrisLawley][yt-lawley]        | [Video][vid-lawley]  |
+| Nutrition & Healthy Eating | Abbey Sharp        | [@AbbeySharpRD][yt-abbey]        | [Video][vid-abbey]   |
+| Yoga & Fitness             | Simone Sharice     | [@SIMONESHARICE][yt-simone]      | [Video][vid-simone]  |
+| Career Coaching            | Leadership Heather | [@LeadershipHeather][yt-heather] | [Video][vid-heather] |
+| Gaming                     | Lewis Blogs Gaming | [@LewisBlogsGaming][yt-lewis]    | [Video][vid-lewis]   |
+
+[yt-lawley]: https://www.youtube.com/@ChrisLawley
+[yt-abbey]: https://www.youtube.com/@AbbeySharpRD
+[yt-simone]: https://www.youtube.com/@SIMONESHARICE
+[yt-heather]: https://www.youtube.com/@LeadershipHeather
+[yt-lewis]: https://www.youtube.com/@LewisBlogsGaming
+[vid-lawley]: https://www.youtube.com/watch?v=hz-eZBMxots
+[vid-abbey]: https://www.youtube.com/watch?v=iDVQ6mShT6M
+[vid-simone]: https://www.youtube.com/watch?v=vZwrxAbGtNo
+[vid-heather]: https://www.youtube.com/watch?v=x5mc6Vxem2k
+[vid-lewis]: https://www.youtube.com/watch?v=ZNMnK-Y523g
+
+### Past-edition pages
+
+| Edition         | Winners post                                   | Devpost gallery                |
+| --------------- | ---------------------------------------------- | ------------------------------ |
+| 2024 Ship-a-ton | [2024 Ship-a-ton Winners][past-2024-winners]   | [Gallery][dp-2024-gallery]     |
+| Shipaton 2025   | [Shipaton 2025 Winners][past-2025-winners]     | [Gallery][dp-2025-gallery]     |
+| Shipyard 2026   | [Shipyard 2026 winners][past-shipyard-winners] | [Gallery][dp-shipyard-gallery] |
+
+[past-2024-winners]: https://www.revenuecat.com/blog/company/2024-ship-a-ton-winners
+[past-2025-winners]: https://www.revenuecat.com/blog/company/shipaton-2025-winners
+[past-shipyard-winners]: https://www.revenuecat.com/blog/company/shipyard-2026-winners
+[dp-2024-gallery]: https://revenuecat-ship-a-ton.devpost.com/project-gallery
+[dp-2025-gallery]: https://revenuecat-shipaton-2025.devpost.com/project-gallery
+[dp-shipyard-gallery]: https://revenuecat-shipyard-2026.devpost.com/project-gallery
 
 ## See also
 
