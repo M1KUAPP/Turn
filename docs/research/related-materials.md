@@ -75,6 +75,24 @@ Key facts:
   section 4)
 - Travel: "Only the Grand Prize and 1st Place: #BuildInPublic Award include
   travel and accommodation." ([rules], section 8)
+- Testing, read on September 22, 2026: "The Entrant must make the Project
+  available free of charge and without any restriction, for testing,
+  evaluation and use by the Sponsor, Administrator and Judges until the
+  Judging Period ends." The submission requirements add that "the app must
+  either offer a free trial or the Entrant must include a promo code for
+  judges to unlock the in-app purchase and test all premium features."
+  ([rules], section 4)
+- Eligibility, read on September 22, 2026: "Individuals who are at least the
+  age of majority where they reside as of the time of entry". The rules
+  exclude residents of places where US or local law prohibits taking part,
+  naming Russia, Crimea, Cuba, Iran, and North Korea. ([rules], section 3)
+- Ownership, read on September 22, 2026: "All Submissions remain the
+  intellectual property of the individuals or organizations that developed
+  them. By submitting an entry, entrants agree that the Sponsor will have a
+  non-exclusive license to use such entry for judging the entry." ([rules])
+- Taxes, read on September 22, 2026: "United States residents may be
+  required to provide a completed form W-9 and residents of other countries
+  may be required to provide a completed W-8BEN form." ([rules], section 8)
 - The Devpost resources tab defines the Ship Kit milestones: "First test
   purchase" means "You've tested your monetization flow using RevenueCat's test
   store"; "First Store API call" is "Triggered when you use a real API key vs. a
