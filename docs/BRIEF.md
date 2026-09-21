@@ -98,15 +98,17 @@ Contents:
 
 ## Submission checklist
 
-The 2026 submission guide lists nine items and warns that "missing any of them
-will make your app not eligible for judging":
+Provide all ten. The first nine come from the 2026 submission guide, which
+warns that "missing any of them will make your app not eligible for judging";
+intake also checks the tenth, per the judging post:
 
 1.  A project name and a short tagline.
 2.  A description of the app: the problem, who it is for, what it lets them
     do, how it makes money, what makes it different, and which categories you
     target and why. Don't let AI write the whole description.
 3.  A public App Store, Google Play, Mac App Store, or Galaxy Store URL that
-    works in the US.
+    works in the US. Next Gen entries submit a public repository with code,
+    setup instructions, and a visible open-source license instead.
 4.  A demo video on YouTube or Vimeo. Devpost asks for it to be "publicly
     visible"; the guide adds that unlisted YouTube videos are fine and private
     ones are not. Keep the essential footage within 2 minutes, because judges
@@ -119,12 +121,23 @@ will make your app not eligible for judging":
     dashboard.
 8.  A free trial or a promo code, so judges can test all premium features.
 9.  Category-specific links, IDs, metrics, or explanations for every category
-    you select.
+    you select. The sponsor categories ask for:
+    - Ship Kotlin Everywhere: live links on both the App Store and Google
+      Play.
+    - Most Viral App: a live app URL and your Noise account email.
+    - Best App for Galaxy: a live app URL and how you optimized for Galaxy.
+    - Idea to Income: three social posts from different build stages, and
+      your Replit preview URL and username.
+    - Keep Them Coming Back: your OneSignal App ID.
+    - Growth Loop: confirmation that the Layers SDK is installed, the growth
+      loop, and what you learned.
+    - Funnel Vision: the funnel URL and the Stripe Project ID.
+10. A valid bundle ID or package name. Intake uses it to confirm the
+    RevenueCat SDK integration, and "a lot of project submissions get filtered
+    out" at that stage.
 
 Also:
 
-- Intake checks for a valid bundle ID or package name, which RevenueCat uses
-  to confirm the SDK integration.
 - The Devpost form has five sections: Manage team, Project overview, Project
   details, Additional info, and Submit. Add every teammate before the
   deadline.
@@ -453,7 +466,8 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
   category page also lists a 2nd and 3rd place, each with a blog feature.
 - **Required items.** Devpost lists six; the submission guide lists nine,
   adding the tagline, the RevenueCat project ID, and category-specific
-  details. Provide all nine.
+  details, and intake also checks the bundle ID or package name. Provide all
+  of them.
 - **Funnel Vision.** Its "measurement period" for web payment volume is not
   defined. The category page says no extra fields were announced, but the
   submission guide asks for the funnel URL and the Stripe Project ID; include
