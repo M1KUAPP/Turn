@@ -12,6 +12,8 @@ Contents:
 1.  [Goals and non-goals](#goals-and-non-goals)
 1.  [Player scenarios](#player-scenarios)
 1.  [Functional requirements](#functional-requirements)
+1.  [Puzzle content requirements](#puzzle-content-requirements)
+1.  [Non-functional requirements](#non-functional-requirements)
 1.  [See also](#see-also)
 
 ## Overview
@@ -377,6 +379,155 @@ https://apps.apple.com/app/id<APP_ID>
 - **STATE-5, Must.** When the server can't confirm Guessling+, the app says
   so and offers a retry, instead of showing a subscriber the paywall. Check:
   with RevenueCat's API unreachable from a test server.
+
+## Puzzle content requirements
+
+- **CONTENT-1, Must.** By submission on September 24, 2026, 17 checked
+  puzzles are published: the ten starters, #1 to #10, and the daily
+  puzzles for September 24 to 30, #11 to #17. Check: the server serves all 17.
+- **CONTENT-2, Must.** Each later daily puzzle is published at least two
+  days before its date, since a date is live somewhere for about 50 hours
+  and a change to published data can take a minute or more to reach every
+  location ([Cloudflare notes][cf-kv]). Check: the daily check (AVAIL-3)
+  finds the next two dates published.
+- **CONTENT-3, Must.** Every puzzle has a hidden thing that meets the
+  product's [quality bar][product-puzzles], a hint that names its category,
+  accepted names that include plurals, common variants, and common
+  misspellings, a fact card of at most 40 facts, and a checked answer for
+  every bank question and negation in its category. Check: the publishing
+  script refuses a puzzle that lacks any of them.
+- **CONTENT-4, Must.** Before a puzzle ships, Jev answers every bank
+  question and its negation against the fact card, and a person fixes every
+  answer between 0.3 and 0.7 and every pair whose answers don't differ.
+  Check: the puzzle's review file has no unresolved line.
+- **CONTENT-5, Must.** The four launch categories are animals, foods,
+  everyday objects, and places, each with a bank of about 100 questions,
+  and never more than 127, so that the questions, their negations, and
+  "none" fit the 255 options a Choice allows. Check: the publishing script
+  refuses a bank over 127 questions.
+- **CONTENT-6, Must.** Before submission, the consistency test passes for
+  each category: at least 90% of a test set of at least 100 paraphrases, a
+  quarter of them negated, reach the bank entry with the same meaning, and
+  at most 5% of 50 questions outside the bank match any entry. Check: the
+  saved results (METRIC-4).
+- **CONTENT-7, Must.** Weapons, alcohol, tobacco, drugs, horror, and medical
+  topics stay out of every hidden thing and hint, which keeps the age rating
+  at a likely 4+ (STORE-4). Check: the schedule reviewed against the list.
+- **CONTENT-8, Must.** A published puzzle changes only once its puzzle day
+  has ended everywhere, and the change is checked again before it's
+  republished. Check: the server refuses to forget answers earlier.
+- **CONTENT-9, Should.** No category runs two days in a row. Check: the
+  schedule of dates and categories.
+
+[cf-kv]: /docs/research/cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
+[product-puzzles]: /docs/PRODUCT.md#puzzles
+
+## Non-functional requirements
+
+### Performance
+
+- **PERF-1, Must.** On Wi-Fi or LTE in the United States, 95% of answers
+  appear within 2 seconds of Send, and half within 1 second. Check: 50
+  questions on the release build, timed in the app.
+- **PERF-2, Must.** No question waits longer than 5 seconds for an answer,
+  the busy state, or the offline state. Check: with Jev delayed on a test
+  server.
+- **PERF-3, Must.** Today's puzzle shows within 3 seconds of a cold start
+  on a network. Check: timed on the oldest iPhone the team has that runs
+  iOS 16.4 or later.
+
+### Availability
+
+- **AVAIL-1, Must.** The server, the archive, Jev's credits, and a new
+  puzzle each day stay up through at least October 22, 2026, the later of
+  the winners dates, and for as long as any Guessling+ subscription runs,
+  since the Paid Apps Agreement requires "the full amount of content" for
+  the whole subscription ([Apple notes][apple-subs]). Check: the daily
+  check passes every day.
+- **AVAIL-2, Must.** Under load, players get stored answers or the busy
+  state, never a broken screen, and the server stays within Jev's limit of
+  1,200 requests per minute. Check: a load test on the test server at 30
+  questions per second, half of them repeats.
+- **AVAIL-3, Should.** Once a day, a check confirms that the next two dates'
+  puzzles are published and that Jev answers a test question, and tells the
+  team if not. Check: an unpublished date triggers the message.
+
+[apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
+
+### Privacy
+
+- **PRIV-1, Must.** No accounts, no sign-in, no third-party analytics or
+  advertising SDK, and no tracking, so the app never shows the tracking
+  permission prompt. Check: the app's dependency list.
+- **PRIV-2, Must.** Only a question's wording and the puzzle's card and
+  bank go to TypeSafe, never an ID, a device detail, or a network address.
+  Check: the Jev requests the test server logs.
+- **PRIV-3, Must.** The server never stores a question's text next to a
+  player's ID, and keeps no network address past a request. Check: the
+  stored fields and the log settings.
+- **PRIV-4, Must.** The privacy policy, at a public URL, says what the app
+  collects, how, and every use; names TypeSafe, RevenueCat, and Cloudflare
+  and confirms they protect data as the policy does; gives retention for
+  each kind of data; and says how to withdraw AI consent in Settings and
+  how a player without an account asks for deletion, as guideline 5.1.1(i)
+  requires ([Apple notes][apple-policy]). Check: against 5.1.1(i).
+- **PRIV-5, Must.** The App Privacy answers match the TRD's data inventory
+  (STORE-5). Check: side by side.
+
+[apple-policy]: /docs/research/apple-requirements.md#what-the-privacy-policy-must-say
+
+### Security
+
+- **SEC-1, Must.** Jev's key and RevenueCat's secret key exist only as
+  server secrets; the app holds only RevenueCat's public iOS key and the
+  server's address. Check: a search of the built app.
+- **SEC-2, Must.** The answer's names and card never reach the app before
+  the round ends (END-2). Check: the app's traffic during a round.
+- **SEC-3, Must.** The server limits bursts of requests per player and caps
+  each puzzle's calls to Jev per minute, and refuses text over its limits.
+  Check: a burst over the limit gets a "slow down" error.
+- **SEC-4, Must.** No error text from Jev's SDK reaches the app or the logs.
+  Check: a request with a bad key on the test server.
+- **SEC-5, Must.** A build that App Review or players can install never
+  carries RevenueCat's Test Store key, which crashes release builds on
+  purpose ([RevenueCat notes][rc-keys]). Check: the build fails with it.
+
+[rc-keys]: /docs/research/revenuecat-expo.md#configuring-the-sdk-and-api-keys
+
+### Accessibility
+
+- **A11Y-1, Must.** VoiceOver reads each answer's word and announces it
+  when it arrives, and every control, the paywall's included, has a label.
+  Check: a round and a purchase with VoiceOver on.
+- **A11Y-2, Must.** Text follows Dynamic Type up to the largest
+  accessibility size without cutting off questions, answers, prices, or
+  buttons. Check: a round and the paywall at the largest size.
+- **A11Y-3, Must.** With Reduce Motion on, each reaction becomes a fade or a
+  still pose instead of disappearing. Check: a round with Reduce Motion on.
+- **A11Y-4, Must.** Color is never the only signal: each answer shows its
+  word. Check: a round in grayscale.
+- **A11Y-5, Should.** Every screen, the paywall included, supports Dark
+  Mode, with text contrast of at least 4.5 to 1. Check: a round in Dark
+  Mode.
+- **A11Y-6, Should.** Once the app is live, the team publishes
+  Accessibility Nutrition Labels for each feature that passes every common
+  task, the purchase included; they're voluntary for now
+  ([Apple notes][apple-a11y]). Check: each claimed label's criteria.
+
+[apple-a11y]: /docs/research/apple-requirements.md#what-each-label-claims
+
+### Compatibility
+
+- **COMPAT-1, Must.** iPhone only, with iPad support off, in portrait, on
+  iOS 16.4 or later, the floor of Expo SDK 57. Check: the build settings.
+- **COMPAT-2, Must.** Built with Xcode 26 or later and an iOS 26 SDK, which
+  App Store uploads need since April 28, 2026. Check: the build log.
+- **COMPAT-3, Must.** Every screen works on the smallest and the largest
+  supported iPhone, and on an iPad, where an iPhone app still runs at phone
+  resolution; the share sheet is tested there too. Check: three
+  simulators.
+- **COMPAT-4, Must.** The app isn't offered on Apple silicon Macs or Apple
+  Vision Pro. Check: App Store Connect's availability settings.
 
 ## See also
 
