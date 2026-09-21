@@ -18,6 +18,7 @@ Contents:
 1.  [Round 7: the choice](#round-7-the-choice)
 1.  [Round 8: monetization](#round-8-monetization)
 1.  [Round 9: scope, stack, and schedule](#round-9-scope-stack-and-schedule)
+1.  [Round 10: pitch test](#round-10-pitch-test)
 
 ## Round 1: constraints and rubric
 
@@ -638,3 +639,81 @@ From the context's [review essentials][ctx-apple-r9]:
 
 **Decision:** in review by the end of Thursday, September 24, live by Sunday,
 September 27, and submitted to Devpost on September 30.
+
+## Round 10: pitch test
+
+**Question:** does the pitch hold?
+
+**Method:** write the pitch the way judges will meet it, in the order of the
+brief's [pitch advice][brief-pitch]: the logline, two minutes of video, the
+write-up, and the category answers. Then score the idea again and set the
+triggers that would stop or change the plan.
+
+**Logline:** "For people who finish the day's word puzzles in minutes,
+Guessling helps them uncover a hidden thing each day by answering any
+yes-or-no question they type, the same way for every player, so they get a
+fair new deduction puzzle every day."
+
+**Video, two minutes on a device:**
+
+1.  **0:00–0:10:** the Guessling and today's hint, "An animal". The player
+    types "Does it live in water?" and the Guessling shakes its head.
+1.  **0:10–0:40:** a real round. Two wordings of one question get the same
+    answer, a question the bank doesn't cover gets "Ask another way" at no
+    cost, and a correct guess ends in a celebration and a share card sent to
+    Messages.
+1.  **0:40–1:05:** art direction and tone: the Guessling's reactions, the
+    reveal, and the streak.
+1.  **1:05–1:35:** "Play yesterday's?" opens the paywall, a purchase goes
+    through, and the archive opens.
+1.  **1:35–2:00:** the numbers since launch, the consistency test's result,
+    and the two categories, Best Game and HAMM.
+
+**Write-up outline:** the logline; the problem, daily puzzles that end in
+minutes and 20-questions apps that contradict themselves; how answers stay
+the same for everyone; the money, with the free daily puzzle, the paid
+archive, prices, and paywall placement; the difference, with no app found
+pairing a shared daily object with questions in the player's own words; the
+numbers; the categories and why; and the AI tools used, credited openly. Jev
+is named only once TypeSafe consents.
+
+**Category answers, first drafts:**
+
+- **Best Game:** the loop of ask, answer, guess, share, and come back
+  tomorrow; the Guessling's art and tone; and monetization that fits the
+  genre, a free daily puzzle with a paid archive.
+- **HAMM:** the paywall at the moment a player wants more, two plans with
+  the yearly as default, a 3-day trial timed to the deadline, a RevenueCat
+  Paywall configured remotely, offer codes for judges, and the conversion
+  numbers from RevenueCat's charts.
+
+**Final score:** 82.5. Early traction falls from 4 to 3.5, because the
+video's numbers beat will rest on about three days live; every other score
+holds.
+
+| Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
+| --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
+| 4   | 3.5   | 5   | 4     | 5    | 4      | 3.5      | 82.5  |
+
+**Go and no-go triggers:**
+
+- **No Jev key by noon PT on Wednesday, September 23:** write to
+  `support@typesafe.ai` and ask in TypeSafe's Discord. Keep building: people
+  answer the bank by hand, questions outside it get "Ask another way", and
+  Jev joins on the Worker when the key arrives, with no app update.
+- **Consistency gate before submitting on September 24:** at least 90% of a
+  test set of paraphrases must reach the same bank question, and every
+  negated pair must agree on every card. Otherwise, grow the bank before
+  shipping.
+- **Not approved by the end of Saturday, September 26:** fix only what the
+  rejection cites and resubmit. Monday, September 28 is the last
+  resubmission that can still be live by the deadline.
+- **No consent from TypeSafe by Tuesday, September 29:** describe Jev as "a
+  hosted decision model" in public, and leave its name out of the video and
+  the write-up.
+- **Throughout judging:** keep Jev's credits funded and watch for busy
+  responses until October 13.
+
+**Decision:** go. Guessling is the idea, and `docs/IDEA.md` states it.
+
+[brief-pitch]: /docs/BRIEF.md#pitch-the-submission
