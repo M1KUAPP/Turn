@@ -11,6 +11,7 @@ cite a source for each claim; their web sources were read on September 21, 2026.
 Contents:
 
 1.  [What the official rules add](#what-the-official-rules-add)
+1.  [Past winners](#past-winners)
 1.  [See also](#see-also)
 
 ## What the official rules add
@@ -52,6 +53,73 @@ More in the [rules notes][rm-rules].
 
 [dp-2026-gallery]: https://revenuecat-shipaton-2026.devpost.com/project-gallery
 [rm-rules]: /docs/research/related-materials.md#official-rules-and-devpost-pages
+
+## Past winners
+
+Three past RevenueCat hackathons set the precedent. The brief's
+[lessons from past winners](/docs/BRIEF.md#lessons-from-past-winners) name the
+headline winners; the [past winners notes](/docs/research/past-winners.md)
+cover every placed entry.
+
+| Edition         | Dates on Devpost      | Cash     | Participants | Projects in the gallery |
+| --------------- | --------------------- | -------- | ------------ | ----------------------- |
+| 2024 Ship-a-ton | Aug 5 – Sep 19, 2024  | $25,500  | 1,672        | 365                     |
+| Shipaton 2025   | Jul 31 – Oct 1, 2025  | $355,000 | 51,882       | 813                     |
+| Shipyard 2026   | Jan 15 – Feb 12, 2026 | $165,000 | 7,057        | 857                     |
+
+Shipyard was a separate contest built on creator briefs, like the 2026
+Influencer Awards, and its apps could ship through TestFlight or Google Play
+internal testing instead of the stores.
+
+### Lessons from the winners
+
+- **Revenue builds the shortlist; it doesn't pick the winner.** Payout, the
+  2025 Grand Prize, led its write-up with "17,000+ users", "$30,017 revenue",
+  and "1750+ paid subscriptions", and had "Shipped v1 in 10 days". Its growth
+  began with an influencer co-founder, "our only distribution channel in the
+  beginning", before paid ads. RevenueCat's 2026 how-to-win session said:
+  "based on the revenue we build a short list of the apps that we then judge
+  in the final stage". In 2024, Payout's builder, now a 2026 judge, didn't
+  place in the money award with an app that, by the builder's own account,
+  made "half of the total revenue".
+- **Most winners didn't lead with numbers.** Only 10 of the 30 2025 write-ups
+  give user, revenue, or engagement figures; the rest placed on the product,
+  the story, or deep use of a sponsor's tool. RevenueCat: "there were apps that
+  made really highly polished content that didn't win and there were apps that
+  made not super highly polished content that did win. It was more about the
+  story".
+- **Deadlines moved for slow review.** The 2024 deadline moved by a day, and
+  in 2025 by 12 hours because "App Review has been moving a little slower than
+  usual this week". Synthesis: plan for slow review, not for an extension.
+- **Long videos didn't disqualify, but they gamble on the prescreen.** 12 of
+  the 27 timed 2025 winning videos ran past the three minutes judges then had
+  to watch. In 2026 that limit is two minutes; see the brief's
+  [submission checklist](/docs/BRIEF.md#submission-checklist).
+- **Winners filed late with fresh numbers.** 26 of the 30 2025 Devpost pages
+  were started between September 28 and October 1, 2025, and Gurwi's team
+  waited "to attach the most up to date app metrics and marketing results".
+  Editing is allowed until the deadline, so a draft entered early can still
+  carry the latest numbers.
+- **AI-built apps win, credited openly.** At least 13 of the 30 2025
+  write-ups credit AI tools, from Payout's "not one line of code written by
+  hand" to Crystal Abyss and MaestLog.
+- **First apps can win.** Echo Reminder, ReadHim, Dripped, MaestLog, and Gurwi
+  were their builders' first shipped apps.
+
+### Where the winners are now
+
+As of September 21, 2026:
+
+- 28 of the 30 2025 winners are on at least one store, but only five have more
+  than 100 US App Store ratings: Payout (11,329), PitchLab (2,064), Shutter
+  Declutter (355), Hearing Buddy (131), and Kigaru Talks (128).
+- Payout is the outlier. Its builder's site says it "hit $100K MRR in 5
+  months" and "has now generated over $1M in revenue", and its Google Play
+  listing shows "100K+" downloads.
+- All nine 2024 winners are still listed. Of the seven Shipyard winners, only
+  Remy Reminders became an app its creator publishes.
+- Synthesis: placing didn't guarantee traction; most winners were still small
+  a year on.
 
 ## See also
 
