@@ -66,8 +66,8 @@ Contents:
             v                                   | one object per puzzle, in wnam
 +------------------------+       +--------------v---------------+       +--------------+
 | App Store, RevenueCat  |       | Durable Object puzzle-<n>    |------>| Jev          |
-| (purchases, paywall)   |       | answers, players, reports    |       | (TypeSafe,   |
-+------------------------+       +--------------+---------------+       | us-west-2)   |
+| (purchases, paywall)   |       | answers, players, reports    |       | (TypeSafe)   |
++------------------------+       +--------------+---------------+       |              |
                                                 |                       +--------------+
                                  +--------------v---------------+
                                  | Workers KV                   |
@@ -126,7 +126,7 @@ The path of one question:
 | Build image        | EAS `macos-tahoe-26.5-xcode-26.6`, pinned                   | Xcode 26.6 with the iOS 26.5 SDK (COMPAT-2)           |
 | Purchases          | `react-native-purchases` and `-ui` 10.10.1                  | RevenueCat's SDK and Paywalls; needs a dev build      |
 | Backend            | Cloudflare Workers Paid, Wrangler 4.136.1, `wrangler.jsonc` | Free caps 100,000 requests a day and 10 ms of CPU     |
-| Jev client         | `@typesafe-ai/sdk` 0.6.0, every option set in code          | Runs in a Worker; its defaults wait too long          |
+| Jev client         | `@typesafe-ai/sdk` 0.6.0, every option set in code          | Ran in a local workerd test; defaults wait too long   |
 | Jev model          | `jev-1.13.0`, pinned                                        | An alias "moves when a new release ships"             |
 | Worker tests       | `@cloudflare/vitest-plugin` 1.2.1 with Vitest 4.1           | The plugin needs Vitest 4.1, not 5                    |
 | Jev mocks in tests | `@msw/cloudflare` 0.0.1 with `msw` 2.14 or later            | Cloudflare's documented way to mock outbound requests |
@@ -138,8 +138,9 @@ The path of one question:
   Worker passes every SDK option in code
   ([Cloudflare notes][cf-nodejs]).
 - No `expo-updates` in version 1.0: it would add Crash Data to the privacy
-  label, and fixes to behavior need review anyway
-  ([RevenueCat notes on EAS Update][rc-eas-update]).
+  label, and Expo says changes to an app's behavior "usually" need review
+  ([RevenueCat notes on EAS Update][rc-eas-update]). It can join a later
+  build if the team wants JavaScript bug fixes during judging.
 
 [cf-nodejs]: /docs/research/cloudflare-workers.md#nodejs-compatibility-by-default
 [rc-eas-update]: /docs/research/revenuecat-expo.md#eas-update-and-app-store-rules
@@ -516,15 +517,14 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 - Past the budget, the Worker answers `busy` and stores nothing, so the
   next attempt can still reach Jev (STATE-3, PERF-2).
 - Every Jev request in play first takes a token from one Durable Object,
-  `jev-budget`, which hands out at most 1,000 a minute across all puzzles.
-  The SDK's injected `fetch` asks for a token before each attempt, so a
-  retry counts too, and a new wording without one gets `busy`. The count
-  lives in memory, since losing it on eviction only resets one minute's
-  window. The scripts
-  cap themselves at 100 a minute and the daily check sends one question,
-  so everything stays under TypeSafe's 1,200 requests a minute (AVAIL-2,
-  SEC-3). A cap per puzzle couldn't: three dates can be live at once,
-  besides rounds past midnight and archive puzzles.
+  `jev-budget`, which hands out at most 1,000 a minute across all puzzles. The
+  SDK's injected `fetch` asks for a token before each attempt, so a retry counts
+  too, and a new wording without one gets `busy`. The count lives in memory,
+  since losing it on eviction only resets one minute's window. The scripts cap
+  themselves at 100 a minute and the daily check sends one question, so
+  everything stays under TypeSafe's 1,200 requests a minute (AVAIL-2, SEC-3). A
+  cap per puzzle couldn't: three dates can be live at once, besides rounds past
+  midnight and archive puzzles.
 - Cloudflare warns that one object for a global counter "funnels all
   traffic through a single instance"; at 1,000 a minute, about 17 a
   second, the budget stays far under an object's guidance of 500 to 1,000
@@ -620,16 +620,16 @@ puzzle is published (CONTENT-7, CONTENT-9).
 
 ### RevenueCat and App Store Connect setup
 
-| Item                | Value                                                                    |
-| ------------------- | ------------------------------------------------------------------------ |
-| Entitlement         | lookup key `plus`, shown to players as Guessling+                        |
-| Products            | `guessling_plus_yearly` at $19.99 and `guessling_plus_monthly` at $2.99  |
-| Subscription group  | Guessling+, with both products at the same level                         |
-| Introductory offer  | a 3-day free trial on the yearly product                                 |
-| Offering            | `default`, with the `$rc_annual` and `$rc_monthly` packages              |
-| Paywall             | one RevenueCat Paywall on `default`, yearly preselected (PAY-1, PAY-2)   |
-| In-App Purchase Key | uploaded to RevenueCat, which StoreKit 2 needs to record transactions    |
-| Sandbox access      | "Anybody", at least until approval, since App Review buys in the sandbox |
+| Item                | Value                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------- |
+| Entitlement         | lookup key `plus`, shown to players as Guessling+                                   |
+| Products            | `guessling_plus_yearly` at $19.99 and `guessling_plus_monthly` at $2.99             |
+| Subscription group  | Guessling+, with both products at the same level                                    |
+| Introductory offer  | a 3-day free trial on the yearly product                                            |
+| Offering            | `default`, with the `$rc_annual` and `$rc_monthly` packages                         |
+| Paywall             | one RevenueCat Paywall on `default`, yearly preselected (PAY-1, PAY-2)              |
+| In-App Purchase Key | uploaded to RevenueCat, which StoreKit 2 needs to record transactions               |
+| Sandbox access      | "Anybody", at least until approval, since App Review reportedly buys in the sandbox |
 
 - The paywall is built in RevenueCat's editor with Close ("Navigate back"),
   Restore Purchases, Terms of Use, and Privacy Policy buttons, since
@@ -659,9 +659,12 @@ puzzle is published (CONTENT-7, CONTENT-9).
   Purchases tap, since a programmatic restore can prompt for sign-in
   (PAY-6). Redeem Code calls `Purchases.presentCodeRedemptionSheet()`
   (PAY-8).
-- When the app returns to the foreground, it calls `getCustomerInfo()`, so
-  a code redeemed through its link shows up without a restart; Restore
-  Purchases is the fallback (PAY-7).
+- When the app returns to the foreground, it calls
+  `Purchases.syncPurchases()`, which RevenueCat says to call after a
+  redirect to the App Store, then reads the customer info, so a code
+  redeemed through its link shows up without a restart; Restore Purchases
+  is the fallback (PAY-7). `getCustomerInfo()` alone wouldn't do, since it
+  refreshes only a cache older than five minutes.
 - A reinstall gets a new anonymous ID; Restore Purchases, with RevenueCat's
   default transfer behavior, merges the old and new IDs.
 
@@ -670,8 +673,9 @@ puzzle is published (CONTENT-7, CONTENT-9).
 The Worker asks RevenueCat's API v2 for the player's active entitlements,
 with a v2 secret key limited to `customer_information:customers:read`,
 which allows 480 requests a minute. API v1 would create a customer for any
-unknown ID, and a v2 `404` means RevenueCat has never seen the ID
-([RevenueCat notes][rc-v2]).
+unknown ID; for v2, the docs list a `404` for a customer RevenueCat doesn't
+know, which the note couldn't test without a key, so the first day's tests
+confirm it ([RevenueCat notes][rc-v2]).
 
 ```ts
 const ANONYMOUS_ID = /^\$RCAnonymousID:[a-z0-9]{32}$/
@@ -768,8 +772,8 @@ Expo Router, with one stack:
   and opens `Share.share({ message })`; no photo-library access is needed
   (SHARE-1, SHARE-2, SHARE-3).
 - The privacy policy, the terms, and support open in Safari with
-  `Linking.openURL`, not in a browser inside the app, which would change the
-  age rating's web-access answer (SET-1, STORE-4).
+  `Linking.openURL`, not in a browser inside the app, which could change
+  the age rating's web-access answer (SET-1, STORE-4).
 
 ### Reactions, sound, and haptics
 
@@ -894,15 +898,16 @@ export default {
 
 ### Failure modes
 
-| Failure                           | What the player sees                                | What the system does                                             |
-| --------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------- |
-| Jev slow, `429`, or `529`         | An answer, or busy with the question list (STATE-3) | One retry inside the 3-second budget; stored answers still work  |
-| Jev down or out of credits        | Busy with the question list                         | The daily check alerts; `aiEnabled` can switch live answers off  |
-| RevenueCat's API down             | "Couldn't confirm Guessling+" and a retry (STATE-5) | Cached yes answers keep subscribers playing for up to 15 minutes |
-| A puzzle missing from KV          | "Today's puzzle is late" and a retry (STATE-4)      | The daily check alerts two days ahead (AVAIL-3)                  |
-| An overloaded or restarted object | Busy                                                | One retry on a new stub for idempotent reads                     |
-| No network on the phone           | Offline, with the question kept (STATE-1)           | Nothing is sent, so no turn is used                              |
-| A player leaves mid-question      | The answer on return, by the same `requestId`       | The object stores the answer as soon as Jev returns              |
+| Failure                                  | What the player sees                                | What the system does                                              |
+| ---------------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------- |
+| Jev slow, `429`, or `529`                | An answer, or busy with the question list (STATE-3) | One retry inside the 3-second budget; stored answers still work   |
+| Jev down or out of credits               | Busy with the question list                         | The daily check alerts; `aiEnabled` can switch live answers off   |
+| RevenueCat's API down                    | "Couldn't confirm Guessling+" and a retry (STATE-5) | Cached yes answers keep subscribers playing for up to 15 minutes  |
+| A puzzle missing from KV                 | "Today's puzzle is late" and a retry (STATE-4)      | The daily check alerts two days ahead (AVAIL-3)                   |
+| An overloaded object                     | Busy                                                | No retry: Cloudflare says overload errors "should not be retried" |
+| A restarted object, or a retryable error | Busy, or the answer on retry                        | One retry on a new stub; a repeated `requestId` is safe           |
+| No network on the phone                  | Offline, with the question kept (STATE-1)           | Nothing is sent, so no turn is used                               |
+| A player leaves mid-question             | The answer on return, by the same `requestId`       | The object stores the answer as soon as Jev returns               |
 
 ### Logs and counts
 
