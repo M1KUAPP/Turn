@@ -172,8 +172,9 @@ says how each is built.
   typed, and an empty question can't be sent.
 - **ASK-2, Must.** Each yes-or-no question gets one of three answers, shown
   in words and by the Guessling: "Yes" with a nod, "No" with a head shake,
-  or "Ask another way" with a shrug. Check: each answer shows its word and
-  its reaction.
+  or "Ask another way" with a shrug. A question that names an accepted name
+  is a guess instead (GUESS-4). Check: each answer shows its word and its
+  reaction.
 - **ASK-3, Must.** A Yes or a No uses a turn; "Ask another way" doesn't.
   Check: the turn count drops only on Yes and No.
 - **ASK-4, Must.** Text that isn't a yes-or-no question, such as "What
