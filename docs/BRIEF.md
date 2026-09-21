@@ -178,8 +178,8 @@ The 2026 "How we judge Shipaton" post describes four stages, and notes that
 1.  **Intake filtering, October 1.** Entries are exported from Devpost and
     checked for a store link, a valid bundle ID or package name, answers to
     all required fields, a video, and the icon and screenshots needed for
-    Times Square. "a lot of project submissions get filtered out at this
-    point."
+    Times Square. Many entries stop here: "a lot of project submissions get
+    filtered out at this point."
 2.  **Prescreening.** At least two RevenueCat screeners score each entry from
     1 to 5 in every category it targets, after watching the first 2 minutes of
     video and reading the submission. They don't have to download the app.
@@ -198,8 +198,8 @@ What this means for an entry:
 - There is no early judging, because entries can change until the deadline.
 - A category whose questions you leave blank is not judged for your app.
 - The first two minutes of video carry the prescreen: the elevator pitch, the
-  app in use, and how and why it targets each category. "don't try to jam
-  your app into every prize category."
+  app in use, and how and why it targets each category. The post's advice:
+  "don't try to jam your app into every prize category."
 - For the Grand Prize, revenue is used for the shortlist, "but it does not
   decide the winner". Show what you did after launch, with numbers.
 - No category weights or tie-breakers are published; Devpost points to the
@@ -281,10 +281,9 @@ What this means for an entry:
 
 ## Rules to watch
 
-- Read the [official rules](https://revenuecat-shipaton-2026.devpost.com/rules)
-  before submitting. They govern eligibility, deadlines, and legal terms, and
-  they aren't captured here; see [Open questions](#open-questions) for what
-  that leaves open.
+- Read the [official rules][rules] before submitting. They govern
+  eligibility, deadlines, and legal terms, and they aren't captured here; see
+  [Open questions](#open-questions) for what that leaves open.
 - The demo video has hard limits on length, visibility, and licensed
   content; see item 4 of the [submission checklist](#submission-checklist).
 - For the Influencer Awards, "do not use the likeness or brand of the
@@ -316,27 +315,27 @@ What this means for an entry:
   Discord. Examples: no Paddle fees on your first $100k in transaction volume,
   500 Codemagic build minutes per month, $250 in Stripe credits, and $100 in
   Sentry credits.
-- **Builder resources:** the "Zero to Ship" quest at
-  https://revenuecat.github.io/start/, the RevenueCat SDK quickstart and
-  codelabs, docs for Android, iOS, React Native with Expo, Kotlin
-  Multiplatform, and Flutter, and the AI Toolkits for RevenueCat SDK at
-  https://github.com/RevenueCat/ai-toolkit, which help coding assistants
-  integrate RevenueCat correctly.
+- **Builder resources:** the
+  [Zero to Ship quest](https://revenuecat.github.io/start/), the RevenueCat
+  SDK quickstart and codelabs, docs for Android, iOS, React Native with Expo,
+  Kotlin Multiplatform, and Flutter, and the
+  [AI Toolkits for RevenueCat SDK](https://github.com/RevenueCat/ai-toolkit),
+  which help coding assistants integrate RevenueCat correctly.
 - **#ShipatonSale:** a directory of 42 community deals on tools and services,
   each with its own dates. Examples for the final stretch: AcceptMyApp review
   prep at 30% off with `SHIP30`, Marquee App Store screenshots at 100% off
   with `SHIPATON26` (500 redemptions), and Lingue's Starter plan free through
   September 30. You can also list a sale on your own app with the
   #ShipatonSale hashtag to reach other participants.
-- **Livestreams:** twice a week, with expert guests and live Q&A; the calendar
-  is at https://luma.com/shipaton-live. The last three are "ASO in the age of
+- **Livestreams:** twice a week, with expert guests and live Q&A, on the
+  [livestream calendar](https://luma.com/shipaton-live). The last three are "ASO in the age of
   AI agents" (Tuesday, September 22), a "Final AMA" (Friday, September 25),
   and a wrap-up celebration (Tuesday, September 29), all at 9AM PT.
-- **Community:** the official Discord at https://discord.gg/shipaton26
-  (Devpost links https://discord.gg/X95EwqBxQT) for teammates, feedback, and
-  help, with channels such as `#shipkit-support`,
-  `#post-engagement-boost` for build-in-public content, and
-  `#looking-for-google-play-tester`.
+- **Community:** the official Discord, for teammates, feedback, and help.
+  Join through the [FAQ's invite](https://discord.gg/shipaton26) or
+  [Devpost's invite](https://discord.gg/X95EwqBxQT). Channels include
+  `#shipkit-support`, `#post-engagement-boost` for build-in-public content,
+  and `#looking-for-google-play-tester`.
 - **IRL events:** local meetups run with partner communities around the
   world, listed on the Shipaton events page. You can apply to host one;
   approved organizers get a Meetup-in-a-box kit with swag and an event
@@ -495,8 +494,8 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
   the full perk, event, and livestream tables.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
-- [Official rules](https://revenuecat-shipaton-2026.devpost.com/rules): the
-  source of truth for eligibility, deadlines, and legal terms; not captured in
-  `docs/sources/`.
+- [Official rules][rules]: the source of truth for eligibility, deadlines,
+  and legal terms; not captured in `docs/sources/`.
 
 [devpost]: /docs/sources/devpost.com/revenuecat-shipaton-2026.[].md
+[rules]: https://revenuecat-shipaton-2026.devpost.com/rules
