@@ -457,7 +457,7 @@ The captured sources leave these points open or disagree on them. Confirm
 them in the official rules, on Discord, or at `shipaton@revenuecat.com`. The
 context's
 [summary of the official rules](/docs/CONTEXT.md#what-the-official-rules-add)
-settles several of them and moves the winners date to October 21.
+settles several of them and gives a different winners date.
 
 - **Official rules.** They are not captured, so the minimum age outside Next
   Gen, the full country list, IP ownership, taxes, disqualification terms,
