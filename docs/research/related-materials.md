@@ -722,8 +722,9 @@ Key facts:
   takes seven days or less, but can occasionally take longer."
   ([gp-testing-reqs])
 - Synthesis: the rule names only personal accounts, so an organization account,
-  which needs a D-U-N-S number, avoids the 14-day test. ([gp-testing-reqs];
-  [gp-account-type])
+  which needs a D-U-N-S number, may avoid the 14-day test. No Google page found
+  states the rule for organization accounts, so treat this as unconfirmed.
+  ([gp-testing-reqs]; [gp-account-type])
 - "An internal test can have up to 100 testers per app", and "You can start an
   internal test before completing app setup." Internal testers "need to pay for
   in-app purchases unless you add them to a license testers list."
