@@ -11,6 +11,8 @@ as of September 22, 2026.
 Contents:
 
 1.  [At a glance](#at-a-glance)
+1.  [Problem and audience](#problem-and-audience)
+1.  [What the app does](#what-the-app-does)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -35,6 +37,55 @@ Contents:
   PT; free for judges until judging ends on October 13.
 
 [ctx-review]: /docs/CONTEXT.md#getting-through-store-review
+
+## Problem and audience
+
+- **Who:** adults who play the day's word puzzles and want more than a few
+  minutes of them. The habit is proven: NYT Games has 293,384 US ratings, and
+  The New York Times Company says its Games team brings "millions of people
+  back to play every day". So is the genre: Akinator, which guesses what the
+  player is thinking, has 422,100.
+- **The gap:** in Akinator, the app asks the questions. The four apps found
+  that let the player question an AI have 3 to 19 ratings each, and their
+  reviews punish answers that contradict themselves or hedge: "It either is
+  nomadic or it isn't." None of them, and no 2026 gallery entry, pairs a
+  shared daily puzzle with questions in the player's own words.
+- **The field:** Best Game draws on 148 games in the gallery, but only 11
+  projects name the category, and word and trivia games are a thin genre,
+  with 15.
+
+The [evidence notes][ev-hunch] and the [gallery notes][gallery-other] have
+the sources.
+
+[ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
+[gallery-other]: /docs/research/gallery-2026.md#other-prize-categories
+
+## What the app does
+
+1.  **Open today's puzzle.** Everyone gets the same hidden thing and a
+    one-word hint, such as "An animal", with twenty questions to find it.
+1.  **Ask anything.** The player types a yes-or-no question in their own
+    words, and before they can type the next one, the Guessling nods for
+    Yes, shakes its head for No, or shrugs for Sometimes. A question Jev
+    can't settle gets "Ask another way", which doesn't count.
+1.  **Guess.** The server checks the guess against the puzzle's accepted
+    names, so the answer never ships in the app.
+1.  **Share and come back.** A spoiler-free card goes to any chat, and a new
+    puzzle arrives the next day.
+1.  **Want more?** "Play yesterday's?" opens the paywall, and Guessling+
+    opens the archive.
+
+- **The character:** the Guessling knows the answer and reacts to every
+  question. Its nod, head shake, shrug, and celebration give the game the
+  art direction and tone that Best Game judges ask for.
+- **Screens:** today's puzzle, the result and share card, the archive, the
+  paywall, and settings with Restore Purchases, the privacy policy, and the
+  terms. Every answer has "Report this answer", which sends it to the team
+  to fix the puzzle for the players who come after.
+- **The "aha":** the first question typed in the player's own words,
+  answered at once.
+- **Left out of the first version:** accounts, leaderboards, friends, packs,
+  push notifications, Android, and an iPad layout.
 
 ## See also
 
