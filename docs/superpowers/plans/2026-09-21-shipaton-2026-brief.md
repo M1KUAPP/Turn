@@ -539,9 +539,14 @@ for i, line in enumerate(lines, 1):
         err(i, 'heading without a space after #')
     if re.match(r'^\s*(=+|-{3,})\s*$', line) and i > 1 and lines[i - 2].strip() and not lines[i - 2].lstrip().startswith('|'):
         err(i, 'setext-style heading or ambiguous rule')
-    exempt = line.lstrip().startswith('|') or '](' in line or re.match(r'^ {0,3}\[[^\]]+\]:\s', line) or 'http' in line
+    exempt = line.lstrip().startswith('|') or re.match(r'^ {0,3}\[[^\]]+\]:\s', line)
     if len(line) > 80 and not exempt:
-        err(i, f'prose line is {len(line)} chars (> 80)')
+        # A link may run past column 80, but text beside it must wrap.
+        rest = re.sub(r'\[[^\]]*\]\([^)]*\)', '', line)
+        rest = re.sub(r'<?https?://[^\s`>]+>?', '', rest)
+        rest = re.sub(r'^\s*(?:[-*+]|\d+\.)?\s*', '', rest)
+        if re.sub(r'[\s.,;:!?()"\'`]', '', rest):
+            err(i, f'prose line is {len(line)} chars (> 80)')
     for bad in ('TBD', 'TODO', 'FIXME', 'XXX', '[TOC]', 'lorem'):
         if bad in re.sub(r'`[^`]*`', '', line):
             err(i, f'placeholder or forbidden token {bad!r}')
