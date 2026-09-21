@@ -675,14 +675,16 @@ fair new deduction puzzle every day."
 
 **Video, two minutes on a device:**
 
-1.  **0:00–0:10:** the Guessling and today's hint, "An animal". The player
-    types "Does it live in water?" and the Guessling shakes its head.
+1.  **0:00–0:10:** one line on screen, "Daily puzzles end in minutes. Ask
+    anything instead.", then the Guessling and today's hint, "An animal".
+    The player types "Does it live in water?" and the Guessling shakes its
+    head.
 1.  **0:10–0:40:** a real round. Two wordings of one question get the same
     answer, a question the bank doesn't cover gets "Ask another way" at no
     cost, and a correct guess ends in a celebration and a share card sent to
     Messages.
-1.  **0:40–1:05:** art direction and tone: the Guessling's reactions, the
-    reveal, and the streak.
+1.  **0:40–1:05:** art direction and tone: the Guessling's reactions and
+    the reveal.
 1.  **1:05–1:35:** "Play yesterday's?" opens the paywall, a purchase goes
     through, and the archive opens.
 1.  **1:35–2:00:** the numbers since launch, the consistency test's result,
@@ -693,8 +695,9 @@ minutes and 20-questions apps that contradict themselves; how answers stay
 the same for everyone; the money, with the free daily puzzle, the paid
 archive, prices, and paywall placement; the difference, with no app found
 pairing a shared daily object with questions in the player's own words; the
-numbers; the categories and why; and the AI tools used, credited openly. Jev
-is named only once TypeSafe consents.
+numbers; what changed after launch and what was learned, which the Grand
+Prize asks for; the categories and why; and the AI tools used, credited
+openly. Jev is named only once TypeSafe consents.
 
 **Category answers, first drafts:**
 
