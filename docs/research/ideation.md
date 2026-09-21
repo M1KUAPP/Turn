@@ -43,8 +43,9 @@ An idea that breaks one is out.
 - **C2. In review by September 24.** The brief's review target, September
   23, leaves no time to build. Apple reviews "90% of submissions" in under 24
   hours on average, so a submission on September 24 leaves time for one
-  rejection and for the day an approved app can take to appear. That means
-  one core loop and no backend beyond the thin one Jev needs.
+  rejection and for the day an approved app can take to appear, though it
+  gives up most of the one-week buffer the context advises keeping. That
+  means one core loop and no backend beyond the thin one Jev needs.
   ([review timing][brief-review])
 - **C3. Jev makes a decision users rely on.** The goal requires Jev in the
   project. Jev answers typed questions with a choice, a score, or a yes-or-no
@@ -60,8 +61,9 @@ An idea that breaks one is out.
 - **C6. Nothing that slows review.** An account only if the product needs
   one, since accounts need in-app deletion; no third-party login; explicit
   permission before personal data goes to a third-party AI such as Jev, under
-  guideline 5.1.2(i); and no feed of user-generated content.
-  ([Apple essentials][ctx-apple])
+  guideline 5.1.2(i); and, by the team's own choice, no feed of
+  user-generated content. ([Apple essentials][ctx-apple];
+  [guideline 5.1.2(i)][bp-apple])
 - **C7. At most one Influencer Award, and no creator's likeness.** The rules
   allow one per project, and a creator's name or image needs express written
   consent. ([official rules][ctx-rules])
@@ -72,10 +74,11 @@ An idea that breaks one is out.
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
 [ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
+[bp-apple]: /docs/research/best-practices.md#app-review-guidelines-for-a-subscription-app
 
 ### Assumptions
 
-The goal directive rules out asking, so these are assumed:
+Nobody could be asked during the ideation, so these are assumed:
 
 - The team is one to three people, starting from no code on September 22,
   2026, with an active Apple Developer Program membership.
@@ -239,9 +242,9 @@ Conditions carried forward:
 - Side Order and Lasted describe the additive approach without the creator's
   name for it (C7).
 
-Survivors: 20. The plan called for trimming to about twelve by gallery
-cluster size, but cluster sizes mislead here: they put Midstride among 46
-fitness apps though none centers on perimenopause, and Hunch among 15 word
+Survivors: 20. The plan as first written called for trimming to about twelve by
+gallery cluster size, but cluster sizes mislead here: they put Midstride among
+46 fitness apps though none centers on perimenopause, and Hunch among 15 word
 games though none takes free-form questions. So all 20 go on, and Round 4's
 Category fit and Differentiation scores weigh crowding idea by idea.
 
@@ -290,7 +293,7 @@ Scores two points apart, settled at the average with a reason:
 - **Sleep On It, monetization fit, 3 against 5:** a small savings app sells
   weakly, but the paywall lands right after "You kept $140". Settled at 4.
 - **Ebb, Jev centrality, 5 against 3:** a symptom checklist records the same
-  data, but free text turned into tags as she types is what keeps a diary
+  data, but free text turned into tags as the user types is what keeps a diary
   going. Settled at 4.
 
 What the scores show:
@@ -533,7 +536,9 @@ for: "a monetization model that fits the genre instead of fighting it".
 - **Packages:** two plans, the most common paywall layout. Yearly at $19.99
   with a 3-day free trial is the default; monthly is $2.99. That sits below
   NYT Games at $4.99 to $5.99 a month for a bundle, and above the $0.99 a
-  month of a single 20-questions rival.
+  month of a single 20-questions rival. Both prices sit below the context's
+  common ranges, $7.99 to $9.99 a month and $29.99 to $39.99 a year, which
+  span every category; a single daily game prices like its genre instead.
 - **Trial:** 3 days, because nearly all trials start on day 0 and a 7-day
   trial started after September 23 ends after the deadline. A trial started
   before 11:45 PM PT on September 27 converts before the Submission Period
@@ -595,9 +600,9 @@ context.
 
 - **App:** for a team that writes TypeScript, Expo with
   `react-native-purchases`, 10.10.1 on September 21, 2026, with RevenueCat
-  Paywalls. One language runs from the
-  app to the backend and Jev's official JavaScript SDK. A Swift team would
-  build the same screens in SwiftUI with purchases-ios.
+  Paywalls. One language runs from the app to the backend and Jev's official
+  JavaScript SDK. A Swift team would build the same screens in SwiftUI with
+  purchases-ios.
 - **Backend:** one Cloudflare Worker, with the key in the Worker's secrets
   and the model pinned to `jev-1.13.0`. Jev's JavaScript SDK declares Node 20
   or newer, so the first day tests it in a Worker; if it fails there, the
@@ -713,9 +718,8 @@ fair new deduction puzzle every day."
     The player types "Does it live in water?" and the Guessling shakes its
     head.
 1.  **0:10–0:40:** a real round. Two wordings of one question get the same
-    answer, a question the bank doesn't cover gets "Ask another way" at no
-    cost, and a correct guess ends in a celebration and a share card sent to
-    Messages.
+    answer, a question the bank doesn't cover is answered live, and a
+    correct guess ends in a celebration and a share card sent to Messages.
 1.  **0:40–1:05:** art direction and tone: the Guessling's reactions and
     the reveal.
 1.  **1:05–1:35:** "Play yesterday's?" opens the paywall, a purchase goes
@@ -772,7 +776,8 @@ numbers will rest on about a day live in the video, recorded on September
   recorded:** the video calls Jev "a hosted decision model". The write-up can
   still name Jev if consent arrives before the deadline.
 - **Throughout judging:** keep Jev's credits funded and watch for busy
-  responses until at least October 21, when winners are announced.
+  responses until at least October 22, the later of the dates given for the
+  winners.
 
 **Decision:** go. Guessling is the idea, and `docs/IDEA.md` states it.
 
