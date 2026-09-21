@@ -69,9 +69,10 @@ Contents:
 - Minors (under the age of majority where they live), and teams that include
   a minor, may compete only for the Next Gen Award. A minor must be at least
   13 and needs a parent's or legal guardian's consent to enter: the guardian
-  agrees to the official rules, and the submission includes the guardian's
-  name, email, and confirmation of consent. Signed written consent is
-  required before a minor can be announced as a winner.
+  agrees to the official rules and completes the
+  [guardian consent form][consent], and the submission includes the
+  guardian's name, email, and confirmation of consent. Signed written consent
+  is required before a minor can be announced as a winner.
 - Next Gen is for active students aged 13 and older with a verifiable
   academic email address (`.edu` or equivalent). They submit a demo video and
   a public open-source repository with a license instead of a store listing,
@@ -79,6 +80,8 @@ Contents:
   Next Gen and another category if they meet the requirements of both.
 - RevenueCat and sponsor employees take part through the non-cash Conflict of
   Interest Award, not the standard cash prizes.
+
+[consent]: https://docs.google.com/forms/d/e/1FAIpQLSe07xUpIPsdr2FawYnwNeW096BkHV5_lnDpmPUy8VK0UW70IA/viewform
 
 ### Which apps qualify
 
@@ -123,12 +126,14 @@ intake also checks the tenth, per the judging post:
 9.  Category-specific links, IDs, metrics, or explanations for every category
     you select. The sponsor categories ask for:
     - Ship Kotlin Everywhere: live links on both the App Store and Google
-      Play.
+      Play, and how you used Kotlin or Compose Multiplatform.
     - Most Viral App: a live app URL and your Noise account email.
     - Best App for Galaxy: a live app URL and how you optimized for Galaxy.
-    - Idea to Income: three social posts from different build stages, and
-      your Replit preview URL and username.
-    - Keep Them Coming Back: your OneSignal App ID.
+    - Idea to Income: three social posts from different build stages, your
+      Replit preview URL and username, and how Replit took you from idea to
+      income.
+    - Keep Them Coming Back: your OneSignal App ID and how you used
+      OneSignal.
     - Growth Loop: confirmation that the Layers SDK is installed, the growth
       loop, and what you learned.
     - Funnel Vision: the funnel URL and the Stripe Project ID.
