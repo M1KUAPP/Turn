@@ -56,17 +56,21 @@ Contents:
   bring millions of people back to play every day". So is the genre:
   Akinator, which guesses what the player is thinking, has 422,100.
 - **The gap:** in Akinator, the app asks the questions. The four apps found
-  that let the player question an AI have 3 to 19 ratings each, and one of
-  them draws reviews that punish answers that contradict themselves or
-  hedge: "It either is nomadic or it isn't." None of them pairs a shared
-  daily puzzle with questions in the player's own words, and no gallery
-  tagline read on September 22 does. The closest are Terravel, with a daily
-  hidden place, and Das Verhör, a daily German deduction game in which
-  on-device AI speaks for the suspects.
-- **The field:** on September 22, Best Game drew on 148 games in the
-  gallery, but only 11 projects named the category, and none of the 15 word
-  and trivia games, against 39 arcade and 35 puzzle games, took free-form
-  questions. The field will grow before the deadline.
+  that let the player question an AI have 3 to 19 ratings each, so that
+  format is unproven rather than rejected, and one of them draws reviews
+  that punish answers that contradict themselves or hedge: "It either is
+  nomadic or it isn't." None of them pairs a shared daily puzzle with
+  questions in the player's own words.
+- **The closest rival:** Das Verhör, in the 2026 gallery, already does:
+  "Each day one new case lands on the table", and "You question the
+  suspects in free text". It is in German and is an interrogation of
+  suspects. Guessling's difference is narrower than a new format: English,
+  twenty questions about one hidden thing, and answers kept the same across
+  wordings.
+- **The field:** on September 22, the gallery held 148 games, 11 projects
+  named Best Game, and none of the 15 word and trivia games, against 39
+  arcade and 35 puzzle games, took free-form questions by their taglines.
+  The field will grow before the deadline.
 
 The [evidence notes][ev-hunch] and the [gallery notes][gallery-other] have
 the sources.
@@ -433,16 +437,18 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
     sent 20 on.
 1.  [Round 4][r4] had two scorers, one of them blind, rank Hunch, Subtext,
     Flagged, SaySo, and Earshot highest.
-1.  [Round 5][r5] checked App Store rivals and harm data, which raised
-    Flagged's total and lowered the other four, Hunch's by one point.
+1.  [Round 5][r5] checked App Store rivals, gallery rivals, and harm data;
+    Das Verhör's daily free-text case lowered Hunch's differentiation, and
+    Flagged led, 82 to 81.5.
 1.  [Round 6][r6] had a red team find that Hunch could contradict itself,
     and the checked bank addressed it.
-1.  [Round 7][r7] re-scored the finalists with their fixes, 83 for Hunch
-    against 77 and 62, and named the winner Guessling.
+1.  [Round 7][r7] re-scored the finalists by one rule, 82 for Hunch against
+    80 and 64.5, explained why Hunch wins that thin margin, and named the
+    winner Guessling.
 1.  [Round 8][r8] chose a free daily puzzle and a paid archive.
 1.  [Round 9][r9] cut the scope to one loop, put the key in a Worker, and
     set the schedule to September 30.
-1.  [Round 10][r10] tested the pitch, gave a final score of 82.5, and set the
+1.  [Round 10][r10] tested the pitch, gave a final score of 81.5, and set the
     triggers listed under [Risks](#risks).
 
 [r1]: /docs/research/ideation.md#round-1-constraints-and-rubric
