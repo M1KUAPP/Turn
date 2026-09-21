@@ -366,9 +366,12 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
 - **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
   PT, making sure Devpost shows the entry as submitted. Keep the Worker
   running, Jev's credits funded, and a new puzzle each day through at least
-  October 22, the later of the dates given for the winners.
+  October 22, the later of the dates given for the winners, and then for as
+  long as any Guessling+ subscription runs, as the product's
+  [business model][product-money] explains.
 
 [brief-checklist]: /docs/BRIEF.md#submission-checklist
+[product-money]: /docs/PRODUCT.md#business-model
 
 ### Review-safety checklist
 
@@ -376,12 +379,15 @@ The context's [review essentials][ctx-apple] apply in full; these are the
 items specific to Guessling:
 
 - The permission notice comes before the first question goes to TypeSafe,
-  and the privacy label declares "Purchases" and the typed questions.
+  and the privacy label declares every data type the PRD's
+  [listing requirements][prd-store] name, not only "Purchases" and the
+  typed questions.
 - No accounts, so no deletion flow, and no third-party login.
 - The backend runs through review, and the review notes explain how to play.
 - The app stays out of the Kids category.
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[prd-store]: /docs/PRD.md#app-store-listing-and-review
 
 ## Launch and pitch
 
