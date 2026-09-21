@@ -15,6 +15,9 @@ Contents:
 1.  [What wins each category](#what-wins-each-category)
 1.  [Monetization and paywalls](#monetization-and-paywalls)
 1.  [Getting through store review](#getting-through-store-review)
+1.  [Store listing and discoverability](#store-listing-and-discoverability)
+1.  [Retention and push notifications](#retention-and-push-notifications)
+1.  [Demo video and write-up](#demo-video-and-write-up)
 1.  [See also](#see-also)
 
 ## What the official rules add
@@ -345,6 +348,94 @@ status and a supported SDK.
   purchases need a physical Galaxy device. RevenueCat's onboarding guide says
   to email your seller address to `rc.onboard@samsung.com` to speed up
   approval.
+
+## Store listing and discoverability
+
+- **Apple fields.** Name and subtitle take up to 30 characters each, keywords
+  up to 100 bytes, promotional text up to 170 characters, and the description
+  up to 4000. Promotional text changes "without requiring an updated
+  submission", which suits launch-week news. Don't repeat the app or company
+  name in keywords; both are already searchable.
+- **Apple copy.** The first sentence of the description is all users see
+  before tapping more; keep prices out of it. With no app preview, the first
+  one to three screenshots appear in search results.
+- **Custom product pages.** Up to 70 per app, once it's live. Apple reports a
+  2.5 percentage point average lift over the 1.6% conversion rate of default
+  pages. Synthesis: one page per launch channel is more useful this week than
+  an A/B test.
+- **Google Play fields.** The name takes 30 characters, the short description
+  80, and the full description 4000. A 512 × 512 icon and a 1024 × 500
+  feature graphic are required, with at least two screenshots; Google
+  recommends four at 1080 px or more. A preview video should show the app "as
+  early as possible within the first 10 seconds".
+- **Google Play policy.** Keep prices, promotions, rankings, and emojis out of
+  the listing, and words like "Free" and "No Ads" out of the title.
+- **Galaxy Store.** RevenueCat's guide lists the required metadata, including
+  a 512 × 512 icon and 4 to 8 screenshots at a 2:1 ratio. English must be the
+  default language when publishing to two or more countries.
+
+More in the [listing notes][bp-listing].
+
+[bp-listing]: /docs/research/best-practices.md#store-listing-and-discoverability
+
+## Retention and push notifications
+
+These rules matter most for Keep Them Coming Back, the OneSignal category;
+see [what wins each category](#what-wins-each-category).
+
+- **Apple 4.5.4.** Push can't be required for the app to work. Promotional
+  pushes need explicit opt-in through consent language in the app, plus an
+  in-app way to opt out. Apple's design guidelines add: never send marketing
+  as Time Sensitive.
+- **Ask after value.** The iOS system prompt can be shown once, Android's
+  twice. OneSignal calls prompting on first launch "the single biggest cause
+  of low opt-in rates". Start iOS users on provisional notifications, which
+  arrive quietly without a prompt, and use a soft prompt, which can be shown
+  again, before the system one.
+- **Journeys.** OneSignal's playbook starts with a welcome journey, then a
+  trial-to-paid journey: "Time pressure beats discount", and exit on
+  conversion. Its starting cadence is one message a day for the first 3
+  days, then one every 2–3 days.
+- **RevenueCat integration.** It keeps subscription tags current in
+  OneSignal. Set the OneSignal External ID and pass it to RevenueCat.
+- **Billing failures.** Nearly a third of Google Play cancellations are
+  involuntary billing failures, against 14% on the App Store. Turn on Apple's
+  Billing Grace Period.
+
+More in the [push notes][bp-push].
+
+[bp-push]: /docs/research/best-practices.md#retention-and-push-notifications
+
+## Demo video and write-up
+
+The brief has RevenueCat's [pitch advice](/docs/BRIEF.md#pitch-the-submission).
+Devpost's own guidance agrees on most points:
+
+- Say what the app does, and how it fits the hackathon, "in the first few
+  seconds": judges watch many videos back to back.
+- Write a script, rehearse, and show the app working instead of a marketing
+  video. Devpost suggests an emulator; Shipaton wants the app running on a
+  device, and its rules govern.
+- Uploads can take "several hours or more". Make the video public or
+  unlisted; one participant's tip is to mark it "Not for Kids" on YouTube so
+  judges can play it.
+- Judges look for video and text that complement each other, and for
+  entries "clearly considering the judging criteria".
+
+Mapped to Shipaton (synthesis):
+
+- State the problem and the app within 15 seconds, and finish the purchase
+  or ad flow before 2:00.
+- Put numbers and setup details in the write-up, organized by Shipaton's
+  list: problem, audience, money, difference, and categories.
+- Upload the final video by September 28, then keep editing the text until
+  the deadline.
+- Reuse the device recording for a 15 to 30 second App Store preview and a
+  Google Play video.
+
+More in the [pitch notes][bp-pitch].
+
+[bp-pitch]: /docs/research/best-practices.md#demo-video-and-write-up
 
 ## See also
 
