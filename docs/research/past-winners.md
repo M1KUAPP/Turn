@@ -692,9 +692,6 @@ Connor Burd, Payout's builder and a 2026 judge:
 - Today his site says "Payout hit $100K MRR in 5 months, completely
   bootstrapped, without hiring anyone" and "has now generated over $1M in
   revenue" ([busdownbonnor]).
-- On the App Store review claiming the app "came back with another name called
-  'Payout'" ([as-payout]): Connor already wrote "this one is called Payout" on
-  Aug 16, 2025 ([connor-x-name]), and no primary source shows a rename.
 
 Camilo Peñalver, Gurwi's founder and a 2026 judge:
 
@@ -1606,7 +1603,6 @@ means the page shows no date.
 | [connor-x-60k]           | Connor Burd                                        | Dec 5, 2025            | Post on 60K MRR                                       |
 | [connor-x-acquire]       | Connor Burd                                        | Jan 21, 2026           | Offer to sell Payout                                  |
 | [connor-x-gpt]           | Connor Burd                                        | May 9, 2026            | Post on how Payout was built                          |
-| [connor-x-name]          | Connor Burd                                        | Aug 16, 2025           | Reply naming Payout                                   |
 | [connor-x-55k]           | Connor Burd                                        | Oct 13, 2025           | Post on winning                                       |
 | [khristo-x]              | Mike Khristo                                       | Oct 13, 2025           | Reply on entry counts                                 |
 | [casper-x-217k]          | Casper Capital                                     | Jan 2, 2026            | Payout economics reply                                |
@@ -1876,7 +1872,6 @@ means the page shows no date.
 [connor-x-60k]: https://x.com/BusDownBonnor/status/1997086300349124761
 [connor-x-acquire]: https://x.com/BusDownBonnor/status/2014266787370500134
 [connor-x-gpt]: https://x.com/BusDownBonnor/status/2053223146690425335
-[connor-x-name]: https://x.com/BusDownBonnor/status/1956822765144854614
 [connor-x-55k]: https://x.com/BusDownBonnor/status/1977751899529945334
 [khristo-x]: https://x.com/MikeKhristo/status/1977840839708844150
 [casper-x-217k]: https://x.com/CapitalCasper/status/2007014444342415506
