@@ -13,6 +13,7 @@ Contents:
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 1.  [Round 3: screening](#round-3-screening)
 1.  [Round 4: scoring](#round-4-scoring)
+1.  [Round 5: evidence](#round-5-evidence)
 
 ## Round 1: constraints and rubric
 
@@ -300,3 +301,69 @@ What the scores show:
 
 **Decision:** Top five, in order: Hunch, Subtext, Flagged, SaySo, and
 Earshot. They go to Round 5.
+
+## Round 5: evidence
+
+**Question:** is there evidence for the top five?
+
+**Method:** a research subagent checked each idea's competing App Store apps
+and built-in iOS features, their reviews, demand from the people who have the
+problem, Jev's documented limits, and gallery overlap, from primary sources.
+The [evidence notes](idea-evidence.md) cite each finding; the log's author
+confirmed the two App Store rivals that move the ranking most. Scores move
+only where the evidence changes a criterion.
+
+- **Hunch.** For: Akinator has 422,100 US ratings and NYT Games 293,384, and
+  no app or gallery entry pairs a shared daily object with questions typed
+  in the player's own words. Against: four apps already let players question
+  an AI, one of them on Apple's on-device model, and their reviews punish
+  contradictory or hedged answers ("It either is nomadic or it isn't").
+  Jev's answers to a question and its negation needn't agree. Differentiation
+  goes from 4.5 to 4.
+- **Subtext.** For: autistic adults already use chatbots to read messages.
+  Against: "Subtext: Decode Messages", a free app "built for autistic
+  adults", launched on August 13, 2026, beside other message decoders, and
+  Goblin Tools checks tone for $1.99. Differentiation goes from 3 to 2 and
+  monetization fit from 4 to 3.
+- **Flagged.** For: the FTC counted 104,946 job-scam reports in 2024, the
+  FBI's IC3 logged $362.9 million in employment-scam losses in 2025, the
+  FTC's warning signs match its checks, and no iOS app found checks job
+  postings for scams. Against: security brands' free checkers already catch
+  fake job offers, and text that argues for its own legitimacy is Jev's
+  documented weak spot. The harm data make a Peace Prize case, so its
+  primary category moves there, with #BuildInPublic secondary, and category
+  fit goes from 3 to 3.5.
+- **SaySo.** For: no app found ranks a user's own phrases by meaning.
+  Against: Apple's Live Speech is free and saves phrases, AAC users reject
+  subscriptions for basic communication, the phrases must work offline, and
+  a phrasebook over 255 phrases needs two Choice steps. Differentiation goes
+  from 5 to 3, monetization fit from 3.5 to 2.5, and buildability from 4 to
+  3.5.
+- **Earshot.** For: no gallery entry serves Deaf users, and studies name
+  spoken announcements as a barrier. Against: Apple's free Name Recognition
+  alerts on the user's name, airline apps push gate changes, and loudspeaker
+  audio defeats captioning. Differentiation goes from 5 to 4 and buildability
+  from 3 to 2.5.
+
+| Idea    | Round 4 total | Round 5 total |
+| ------- | ------------- | ------------- |
+| Hunch   | 83.5          | 82.5          |
+| Flagged | 79.5          | 82            |
+| Subtext | 81            | 76            |
+| Earshot | 77.5          | 73.5          |
+| SaySo   | 78.5          | 69.5          |
+
+Take-Home, sixth in Round 4 with 76 and not checked here, ties Subtext; the
+tie goes to buildability, where Subtext has 4 and Take-Home 2.5.
+
+What the finalists carry forward:
+
+- **Hunch** must give every player the same answer to the same question:
+  cache the first answer per question and object, answer spelling and size
+  questions from the fact card in code, and test negated pairs before a card
+  ships.
+- **Flagged** asks narrow, literal questions per line, computes pay and
+  posting age in code, and never says "safe", only "no red flags found".
+- **Subtext** needs a new name and a sharper difference from free decoders.
+
+**Decision:** Top three: Hunch, Flagged, and Subtext go to Round 6.
