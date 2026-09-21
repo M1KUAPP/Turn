@@ -223,10 +223,10 @@ The moments that carry the product:
 - **Starters:** ten puzzles fill the archive on launch day, so Guessling+
   holds something from the start.
 - **Corrections:** a reported answer is fixed only after every round of the
-  puzzle's day has closed, so everyone who played that day got the same answers;
-  archive players get the fix. NYT learned this the hard way: in May 2022 it
-  swapped a Wordle answer mid-rollout and left some players on the old word
-  ([daily puzzle notes][daily-fair]).
+  puzzle's day has closed, so everyone who played that day got the same
+  answers; archive players get the fix. NYT learned this the hard way: in May
+  2022 it swapped a Wordle answer mid-rollout and left some players on the old
+  word ([daily puzzle notes][daily-fair]).
 
 [apple-rating]: /docs/research/apple-requirements.md#questionnaire-answers-for-guessling
 [daily-fair]: /docs/research/daily-puzzles.md#fairness-and-corrections
