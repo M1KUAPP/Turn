@@ -16,6 +16,7 @@ Contents:
 1.  [Round 5: evidence](#round-5-evidence)
 1.  [Round 6: red team](#round-6-red-team)
 1.  [Round 7: the choice](#round-7-the-choice)
+1.  [Round 8: monetization](#round-8-monetization)
 
 ## Round 1: constraints and rubric
 
@@ -494,3 +495,49 @@ for.
 
 **Decision:** Guessling, the daily 20-questions game formerly called Hunch,
 is the idea. Best Game is its primary category and HAMM its secondary.
+
+## Round 8: monetization
+
+**Question:** how does Guessling make money?
+
+**Method:** the context's [benchmarks and paywall rules][ctx-money-r8] and
+the evidence note's [rival prices][ev-hunch], shaped to what Best Game asks
+for: "a monetization model that fits the genre instead of fighting it".
+
+- **What stays free:** today's puzzle, every day, with its twenty questions
+  and share card. A daily game that locks its daily puzzle fights the genre.
+- **What's paid:** Guessling+, one entitlement, unlocks the archive of every
+  past puzzle: ten at launch, and one more each day as today's puzzle
+  retires. That is how NYT Games sells puzzles, and it promises nothing that
+  won't exist on launch day.
+- **Packages:** two plans, the most common paywall layout. Yearly at $19.99
+  with a 3-day free trial is the default; monthly is $2.99. That sits below
+  NYT Games at $4.99 to $5.99 a month for a bundle, and above the $0.99 a
+  month of a single 20-questions rival.
+- **Trial:** 3 days, because nearly all trials start on day 0 and a 7-day
+  trial started after September 23 ends after the deadline. Trials started
+  by September 27 convert before September 30, when revenue counts for the
+  Grand Prize shortlist "as reported in RevenueCat".
+- **Paywall moments:** right after today's result, as "Play yesterday's?",
+  and on tapping any locked archive puzzle. Both are placements of one
+  RevenueCat Paywall, configured remotely, so the offer can change without
+  an app update. The paywall can be dismissed, because the daily game stays
+  free.
+- **Paywall content:** the yearly price in full as the most prominent price,
+  the trial length, the renewal price, how to cancel, Restore Purchases, and
+  links to the Terms of Use and the privacy policy.
+- **Judges:** one-time-use Apple offer codes for a free month of Guessling+,
+  created once the app is live, since a never-released app's purchases fail
+  even with a code. A code redeemed on October 1 lasts past the end of
+  judging on October 13, and the free daily puzzle needs no code at all.
+- **What to measure for HAMM:** paywall views, trial starts, and
+  conversions from RevenueCat's charts, which count production purchases
+  only. No A/B tests: Experiments needs a paid plan, and launch week brings
+  too little traffic.
+
+**Decision:** free daily puzzle; Guessling+ archive at $19.99 a year with a
+3-day trial or $2.99 a month; paywall after today's result; one-month offer
+codes that cover judging to October 13.
+
+[ctx-money-r8]: /docs/CONTEXT.md#monetization-and-paywalls
+[ev-hunch]: idea-evidence.md#hunch-a-daily-20-questions-game
