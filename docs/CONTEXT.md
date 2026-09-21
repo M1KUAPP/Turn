@@ -30,31 +30,33 @@ Contents:
   "as reported in RevenueCat". See
   [What the official rules add](#what-the-official-rules-add).
 - **Ship to the App Store first.** Apple says 90% of submissions are reviewed
-  in under 24 hours on average. A new personal Google Play account can't
-  finish its test by September 30, and the Galaxy Store needs seller status
-  and a supported SDK. See
+  in under 24 hours on average. A new personal Google Play account that
+  hasn't started its closed test can't finish it by September 30, and the
+  Galaxy Store needs seller status and a supported SDK. See
   [Getting through store review](#getting-through-store-review).
 - **Submit the first purchase with the app.** The app version, the
   subscription group, and every subscription go in one draft submission,
   after the Paid Apps Agreement, tax, and banking. See
   [Apple App Store review essentials](#apple-app-store-review-essentials).
 - **Monetize from the first build.** Hard paywalls turn a median 10.7% of
-  downloads into payers within 35 days, against 2.1% for freemium, and trials
-  start on day 0. See [Monetization and paywalls](#monetization-and-paywalls).
-- **Revenue gets you shortlisted; the story wins.** Only 10 of the 30 2025
-  winners' write-ups gave numbers, and RevenueCat says polish lost to story.
-  See [Past winners](#past-winners).
-- **Enter categories you can prove.** Sponsor judges rewarded depth: Journeys
-  for OneSignal, community and open source for Kotlin, an observable loop for
-  Layers. See [What wins each category](#what-wins-each-category).
+  downloads into payers within 35 days, against 2.1% for freemium, and nearly
+  all trials start on day 0. See
+  [Monetization and paywalls](#monetization-and-paywalls).
+- **Revenue gets you shortlisted, not the prize.** Only 10 of the 30 2025
+  winners' write-ups gave numbers; the rest placed on the product, the story,
+  or deep use of a sponsor's tool. See [Past winners](#past-winners).
+- **Enter categories you can prove.** 2025's OneSignal judges rewarded depth,
+  such as Journeys, and 2026's Growth Loop requires a loop observable through
+  the Layers SDK. See [What wins each category](#what-wins-each-category).
 - **Win the first two minutes of video.** Name the problem and the app within
   15 seconds and show the purchase before 2:00. See
   [Demo video and write-up](#demo-video-and-write-up).
 - **Export two screenshot sizes:** the submission's 1179 × 2556 and the App
   Store's 6.9-inch or 6.5-inch set. See
   [Apple App Store review essentials](#apple-app-store-review-essentials).
-- **Don't count on an extension.** Past deadlines moved for slow review, but
-  only at the last minute. See [Past winners](#past-winners).
+- **Don't count on an extension.** Both past Shipaton deadlines moved, but
+  only at the last minute, and 2025's move was for slow review. See
+  [Past winners](#past-winners).
 - **Let the tools do the setup.** RevenueCat's AI Toolkit and MCP server help
   coding agents integrate the SDK, and the Test Store works before any store
   setup, but its key must never ship. See
@@ -71,12 +73,13 @@ weren't captured. The research read them on Devpost on September 21, 2026.
 They're headed "Updated August 31, 2026" and prevail over every other
 Shipaton page. What they add or change:
 
-- **Dates.** The Submission Period opens "Friday, July 31, 2026 at 8:00am PDT"
-  and closes September 30 at 11:45pm PDT. Judging runs from October 1 to
-  "Tuesday, October 13, 2026 at 12:00pm PDT", and "Winners announced: October
-  21st 2026", a day before the October 22 in the brief and the live FAQ.
-  RevenueCat lists the Shippies ceremony on October 20, 2026 and App Growth
-  Annual on October 21, 2026, both in New York.
+- **Dates.** The Submission Period opens "Friday, July 31, 2026 at 8:00am PDT",
+  where other sources say August 1, and closes September 30 at 11:45pm PDT.
+  Judging runs from October 1 to "Tuesday, October 13, 2026 at 12:00pm PDT",
+  and "Winners announced: October 21st 2026", a day before the October 22 in
+  the brief and the live FAQ. Separately, RevenueCat's App Growth Annual site
+  lists the Shippies ceremony on October 20, 2026 and the conference on
+  October 21, 2026, both in New York; the brief had no date for either.
 - **Who can enter.** Organizations, including corporations and limited
   liability companies, may enter through one "Representative". This settles
   the brief's question about companies.
@@ -123,6 +126,9 @@ internal testing instead of the stores.
 
 ### Lessons from the winners
 
+The counts are tallies from the past winners notes, and the lessons drawn
+from them are synthesis.
+
 - **Revenue builds the shortlist; it doesn't pick the winner.** Payout, the
   2025 Grand Prize, led its write-up with "17,000+ users", "$30,017 revenue",
   and "1750+ paid subscriptions", and had "Shipped v1 in 10 days". Its growth
@@ -134,18 +140,19 @@ internal testing instead of the stores.
   made "half of the total revenue".
 - **Most winners didn't lead with numbers.** Only 10 of the 30 2025 write-ups
   give user, revenue, or engagement figures; the rest placed on the product,
-  the story, or deep use of a sponsor's tool. RevenueCat: "there were apps that
-  made really highly polished content that didn't win and there were apps that
-  made not super highly polished content that did win. It was more about the
-  story".
-- **Deadlines moved for slow review.** The 2024 deadline moved by a day, and
-  in 2025 by 12 hours because "App Review has been moving a little slower than
-  usual this week". Synthesis: plan for slow review, not for an extension.
+  the story, or deep use of a sponsor's tool. On the content entrants posted,
+  RevenueCat said: "there were apps that made really highly polished content
+  that didn't win and there were apps that made not super highly polished
+  content that did win. It was more about the story".
+- **Deadlines moved at the last minute.** The 2024 deadline moved by a day,
+  and the 2025 deadline by 12 hours because "App Review has been moving a
+  little slower than usual this week". Plan for slow review, not for an
+  extension.
 - **Long videos didn't disqualify, but they gamble on the prescreen.** 12 of
   the 27 timed 2025 winning videos ran past the three minutes judges then had
   to watch. In 2026 that limit is two minutes; see the brief's
   [submission checklist](/docs/BRIEF.md#submission-checklist).
-- **Winners filed late with fresh numbers.** 26 of the 30 2025 Devpost pages
+- **Most winners filed in the final days.** 26 of the 30 2025 Devpost pages
   were started between September 28 and October 1, 2025, and Gurwi's team
   waited "to attach the most up to date app metrics and marketing results".
   Editing is allowed until the deadline, so a draft entered early can still
@@ -153,8 +160,10 @@ internal testing instead of the stores.
 - **AI-built apps win, credited openly.** At least 13 of the 30 2025
   write-ups credit AI tools, from Payout's "not one line of code written by
   hand" to Crystal Abyss and MaestLog.
-- **First apps can win.** Echo Reminder, ReadHim, Dripped, MaestLog, and Gurwi
-  were their builders' first shipped apps.
+- **Newcomers can win.** MaestLog's builder went from "zero mobile
+  development experience" to an app with RevenueCat subscriptions "in three
+  weeks", and Dripped's builder made a "first-ever internet dollar" during
+  Shipaton.
 
 ### Where the winners are now
 
@@ -167,7 +176,7 @@ As of September 21, 2026:
   months" and "has now generated over $1M in revenue", and its Google Play
   listing shows "100K+" downloads.
 - All nine 2024 winners are still listed. Of the seven Shipyard winners, only
-  Remy Reminders became an app its creator publishes.
+  Remy Reminders was found published by the creator whose brief it answered.
 - Synthesis: placing didn't guarantee traction; most winners were still small
   a year on.
 
@@ -194,18 +203,18 @@ past winners are synthesis.
   replies encouraging other builders.
 - **HAMM.** 2026 wants "a well-crafted paywall, thoughtful pricing and
   packaging, strong conversion, and monetization that genuinely fits the
-  product". Winners had a one-line model tied to the app's purpose, such as
-  Vector Guard's "1:50 Justice Model", where each subscription funds 50 free
-  accounts. Tactics from other winners fit too: a paywall right after sign-up
-  "gave us 50 new trials in just one single day" for Gurwi, and Remy Reminders
-  paired an onboarding trial with "a 50% off offer" to win back users who
-  skipped it.
+  product". Several winners had a one-line model tied to the app's purpose,
+  such as Vector Guard's "1:50 Justice Model", where each subscription funds
+  50 free accounts. Tactics from other winners fit too: a paywall right after
+  sign-up "gave us 50 new trials in just one single day" for Gurwi, and Remy
+  Reminders paired an onboarding trial with "a 50% off offer" to win back
+  users who skipped it.
 - **Design.** 2026 looks for "taste, care, and execution" and "A demo video
-  that clearly shows the app in motion". Each past winner had one signature
-  interaction built on platform frameworks, such as Dayloop's Vision-based
-  "Auto Face Alignment" and Flowmino's Screen Time blocking with "gentle
-  animations" and "haptics". Five of the six design winners were native Swift
-  apps.
+  that clearly shows the app in motion". Several past winners had one
+  signature interaction built on platform frameworks, such as Dayloop's
+  Vision-based "Auto Face Alignment" and Flowmino's Screen Time blocking with
+  "gentle animations" and "haptics". Five of the six design winners were
+  native Swift apps.
 - **Peace Prize.** 2026 asks "who the app helps, why the problem matters" and
   for "early evidence of usefulness, adoption, feedback, or real-world
   benefit". All three 2025 winners grew out of the builder's own family.
@@ -234,16 +243,17 @@ past winners are synthesis.
   Winners built the brief's core and cut the rest ("We said no to meal
   planning, social features, and community feeds"), answered the creator's
   named pain point, and designed monetization in. Only one, Remy Reminders,
-  became an app its creator publishes.
+  was found published by the creator whose brief it answered.
 
 ### Categories new in 2026
 
 - **Catvertising.** RevenueCat Ads is a beta that tracks ads served by AdMob
   or another network; it doesn't serve ads. Access is requested from the Ads
   page of the dashboard, and no source says how long it takes, so ask early.
-- **Best Game.** There was no game category before. The games that placed
-  were Party Animals, third in 2024's money award, picked after market
-  research on party games, and Crystal Abyss, 2025's staff award.
+- **Best Game.** There was no game category before. Games that placed
+  include Party Animals, third in 2024's money award, picked after market
+  research on party games; DrawIt, a draw-and-guess game fourth in 2025's
+  Kotlin award; and Crystal Abyss, 2025's staff award.
 - **Next Gen.** There was no student category before, but the 2025 Peace
   Prize winner, Heartbeat Hero, was rebuilt from a "WWDC Swift Student
   Challenge 2024 Distinguished Winner" app.
@@ -288,8 +298,8 @@ expect:
   become paid, 37.4% at 5–9 days, and 42.5% at 17–32 days.
 - **Common prices:** "$4.99–$6.99 weekly, $7.99–$9.99 monthly, and
   $29.99–$39.99 yearly". Two-plan paywalls are the most common layout.
-- **Early revenue is small.** Across categories, "17.3% hit $1K", and the
-  median is "58 days to $1K".
+- **Early revenue is small.** "If you're at ~$72/mo, you're at the overall
+  median 1 year post-launch."
 
 What RevenueCat and the stores ask of a paywall:
 
@@ -326,9 +336,9 @@ The brief covers [review timing](/docs/BRIEF.md#app-review-timing), account
 costs, and common rejections. The stores' own documents add the rules below,
 and the [best practices notes](/docs/research/best-practices.md) have the
 sources. Synthesis: for a team submitting this week, the App Store is the
-realistic first store. A new personal Google Play account can't finish its
-required test by September 30, and the Galaxy Store needs commercial seller
-status and a supported SDK.
+realistic first store. A new personal Google Play account that starts its
+required test now can't finish it by September 30, and the Galaxy Store needs
+commercial seller status and a supported SDK.
 
 ### Apple App Store review essentials
 
@@ -362,13 +372,14 @@ status and a supported SDK.
 
 ### Google Play review essentials
 
-- **New personal accounts can't make September 30.** Accounts created after
-  November 13, 2023 need at least 12 testers opted in for 14 days, then a
-  production access review that "usually takes seven days or less". A test
-  started on September 21 reaches 14 days on October 5.
-- **Review time.** Some accounts wait "up to seven days or longer", and a
-  change sent during a review can push the app "to the back of the app
-  review queue".
+- **A closed test started now ends too late.** Personal accounts created
+  after November 13, 2023 need at least 12 testers opted in for 14 days, then
+  a production access review that "usually takes seven days or less". A test
+  started on September 21 reaches 14 days on October 5; the brief's September
+  16 was the last start date that could end by the deadline.
+- **Review time.** Some accounts wait "up to seven days or longer in
+  exceptional cases", and a change sent during a review can push the app "to
+  the back of the app review queue".
 - **Target API level 36** is required for new apps since August 31, 2026; an
   extension to November 1, 2026 can be requested.
 - **Subscriptions.** Disclose the price, billing period, renewal, and trial
