@@ -891,8 +891,8 @@ export default {
 - Workers Logs keep each request's details unless `invocation_logs` is off,
   so it is off, and the Worker logs its own JSON events without text, IDs,
   or addresses (PRIV-3).
-- A player who declines the notice leaves round progress only: no stored
-  wordings and no counts (NOTICE-3).
+- A player who declines the notice leaves round progress, and any report
+  they choose to send, but no stored wordings and no counts (NOTICE-3).
 
 ## Reliability and observability
 
@@ -935,17 +935,27 @@ sends Jev one test question, and posts to the team's webhook if either
 fails (AVAIL-3). It also makes the first call to the next date's object with
 `locationHint: "wnam"`, so no player pays for creating it.
 
+### Service life
+
+The Worker, Jev's credits with auto-refill on, and a new puzzle each day run
+through at least October 22, 2026, and then for as long as any Guessling+
+subscription runs (AVAIL-1). The standing costs are small: Workers Paid is
+$5 a month, and RevenueCat's Pro plan is free below $2,500 of monthly
+tracked revenue.
+
 ## Testing
 
-| Layer                | What runs                                                                                                         | Proves                                          |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| Unit                 | Vitest on normalization, letter rules, guesses, dates and numbers, thresholds, and the share text                 | ASK-5, ASK-7, ASK-12, GUESS-2, TODAY-3, SHARE-1 |
-| Worker integration   | `@cloudflare/vitest-plugin` with Jev and RevenueCat mocked by `@msw/cloudflare`                                   | The pipeline, limits, retries, and access       |
-| Recorded Jev answers | Real match and live responses saved as fixtures from the test environment                                         | The request shapes and thresholds               |
-| Consistency          | `consistency.ts` on each category's paraphrase set                                                                | CONTENT-6                                       |
-| Purchases            | A TestFlight build with a sandbox account: trial, purchase, restore, offer code                                   | PAY, RELEASE-2                                  |
-| Devices              | The smallest and largest iPhones and an iPad simulator, VoiceOver, the largest text, Reduce Motion, airplane mode | COMPAT-3, A11Y, STATE-1                         |
-| Load                 | 30 questions a second for a minute at the test server, half of them repeats                                       | AVAIL-2                                         |
+| Layer                | What runs                                                                                                                                                     | Proves                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Unit                 | Vitest on normalization, letter rules, guesses, dates and numbers, thresholds, and the share text                                                             | ASK-5, ASK-7, ASK-12, GUESS-2, TODAY-3, SHARE-1 |
+| Worker integration   | `@cloudflare/vitest-plugin` with Jev and RevenueCat mocked by `@msw/cloudflare`                                                                               | The pipeline, limits, retries, and access       |
+| Recorded Jev answers | Real match and live responses saved as fixtures from the test environment                                                                                     | The request shapes and thresholds               |
+| Consistency          | `consistency.ts` on each category's paraphrase set                                                                                                            | CONTENT-6                                       |
+| Purchases            | A TestFlight build with a sandbox account: trial, purchase, restore, offer code                                                                               | PAY, RELEASE-2                                  |
+| Devices              | The smallest and largest iPhones and an iPad simulator, VoiceOver, the largest text, Reduce Motion, airplane mode                                             | COMPAT-3, A11Y, STATE-1                         |
+| Load                 | 30 questions a second for a minute at the test server, half of them repeats                                                                                   | AVAIL-2                                         |
+| Timing               | 50 questions timed in the app on the release build, and a cold start on the oldest iPhone the team has                                                        | PERF-1, PERF-2, PERF-3                          |
+| Deploy check         | On the first day, a deployed test Worker makes one real Jev call through the SDK; if it fails there, `fetch` calls the HTTP API directly, as the idea planned | The SDK in production                           |
 
 The Worker integration tests that matter most:
 
@@ -995,11 +1005,15 @@ Release steps for version 1.0, which the idea's
 3.  Run the release criteria on that build against the production server
     with sandbox purchases (RELEASE-1 to RELEASE-4).
 4.  Submit it for review with both subscriptions, the metadata, the privacy
-    answers, and the review notes, set to release automatically (STORE-1 to
-    STORE-8).
+    answers, and the review notes, set to release automatically, with Mac
+    and Apple Vision Pro availability turned off (STORE-1 to STORE-8,
+    COMPAT-4).
 5.  Once it's live: create the judges' offer code, wait for it to work,
     redeem it on a real device, and confirm a production purchase
     (RELEASE-5).
+6.  Before 11:45 PM PT on September 30, complete the brief's submission
+    checklist on Devpost with the App Store link, the RevenueCat project ID,
+    and the judges' code (RELEASE-6).
 
 A deployed Worker can be replaced by redeploying an earlier commit, but a
 released app can't be recalled, so behavior that might need changing during
@@ -1028,7 +1042,7 @@ Every PRD requirement, and the sections of this document that meet it:
 | PERF-1, PERF-2, PERF-3                                                                            | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Testing](#testing)                                             |
 | AVAIL-1, AVAIL-2, AVAIL-3                                                                         | [Reliability and observability](#reliability-and-observability), [Security and privacy](#security-and-privacy)                          |
 | PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                            | [Security and privacy](#security-and-privacy)                                                                                           |
-| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                 | [Security and privacy](#security-and-privacy), [Answer pipeline](#answer-pipeline)                                                      |
+| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                 | [Security and privacy](#security-and-privacy), [Answer pipeline](#answer-pipeline), [Worker API](#worker-api)                           |
 | A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6                                                    | [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                                  |
 | COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                            | [Stack and repository](#stack-and-repository), [The iPhone app](#the-iphone-app), [Environments and release](#environments-and-release) |
 | METRIC-1, METRIC-2, METRIC-3, METRIC-4, METRIC-5                                                  | [Reliability and observability](#reliability-and-observability), [Puzzle days and content tooling](#puzzle-days-and-content-tooling)    |
