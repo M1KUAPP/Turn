@@ -17,6 +17,8 @@ Contents:
 1.  [Monetization](#monetization)
 1.  [Categories to enter](#categories-to-enter)
 1.  [Build plan](#build-plan)
+1.  [Launch and pitch](#launch-and-pitch)
+1.  [Risks](#risks)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -303,6 +305,72 @@ From the context's [review essentials][ctx-apple]:
 - The app stays out of the Kids category.
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+
+## Launch and pitch
+
+The brief's [pitch advice][brief-pitch] and the context's
+[video guidance][ctx-video] apply; this is Guessling's version.
+
+- **First players, from Sunday, September 27:** the team's own network, the
+  Shipaton Discord, and puzzle communities such as r/wordle and
+  r/NYTConnections, within each community's rules on self-promotion. Every
+  share card invites another player.
+- **Numbers to report:** players, puzzles solved, questions asked, paywall
+  views, trial starts, conversions, and revenue as RevenueCat reports it,
+  plus the consistency test's results. With about three days live, rates
+  will say more than totals.
+- **Naming Jev:** only once TypeSafe consents; until then, "a hosted
+  decision model".
+
+The video, two minutes on an iPhone:
+
+1.  **0:00–0:10:** the Guessling and today's hint, "An animal". The player
+    types "Does it live in water?" and the Guessling shakes its head.
+1.  **0:10–0:40:** a real round. Two wordings of one question get the same
+    answer, a question the bank doesn't cover gets "Ask another way" at no
+    cost, and a correct guess ends in a celebration and a share card sent to
+    Messages.
+1.  **0:40–1:05:** art direction and tone: the Guessling's reactions, the
+    reveal, and the streak.
+1.  **1:05–1:35:** "Play yesterday's?" opens the paywall, a purchase goes
+    through, and the archive opens.
+1.  **1:35–2:00:** the numbers since launch, the consistency test's result,
+    and the two categories.
+
+The write-up, in order: the logline; the problem, daily puzzles that end in
+minutes and 20-questions apps that contradict themselves; how answers stay
+the same for everyone; the money; the difference; the numbers; the
+categories and why; and the AI tools used, credited openly.
+
+[brief-pitch]: /docs/BRIEF.md#pitch-the-submission
+[ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
+
+## Risks
+
+- **Answers contradict each other.** The checked bank and matching prevent
+  it. Trigger: on September 24, fewer than 90% of a test set of paraphrases
+  reach the same bank question, or a negated pair disagrees on any puzzle;
+  then grow the bank before submitting.
+- **No Jev key in time.** Request it on September 22, then write to
+  `support@typesafe.ai` and ask in TypeSafe's Discord. Trigger: no key by
+  noon PT on September 23; then people answer the bank by hand, questions
+  outside it get "Ask another way", and Jev joins on the Worker when the key
+  arrives, with no app update.
+- **App Review rejects the build.** The review-safety checklist covers the
+  common causes. Trigger: not approved by the end of September 26; then fix
+  only the cited guideline. Monday, September 28 is the last resubmission
+  that can still be live by the deadline.
+- **The game doesn't look finished.** The Guessling's reactions and the
+  reveal carry the art direction, and the video gives them 25 seconds
+  instead of explaining how answers work.
+- **Jev is busy or out of credits during judging.** Credits stay funded
+  through October 13, the SDK retries busy responses, the app shows a busy
+  state, and exact bank wordings are answered in code.
+- **TypeSafe doesn't consent to naming Jev.** Trigger: no consent by
+  September 29; then the video and the write-up call it "a hosted decision
+  model".
+- **Few numbers.** Posting starts on launch day, and the write-up leads with
+  rates and the consistency results rather than totals.
 
 ## See also
 
