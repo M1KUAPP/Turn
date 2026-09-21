@@ -599,7 +599,9 @@ context.
   day.
 - **Should:** a streak count, and haptics and sound.
 - **Won't, in the first version:** accounts, leaderboards, friends, packs,
-  push notifications, Android, and an iPad layout.
+  push notifications, Android, and iPad. The app runs on iPhone only, with
+  iPad support turned off, since iPad screenshots are "Required if app runs
+  on iPad".
 
 ### Stack and data flow
 
@@ -621,7 +623,9 @@ context.
   answers a player is waiting for, since every call spends Jev credits.
 - **Per question:** the app sends today's number and the question; the
   Worker sends Jev one request with a Choice over that category's bank
-  questions plus "none", and a Noul asking whether the text is a yes-or-no
+  questions and their negations, about 200 options plus "none", under the
+  255 a Choice allows, so a negated question reaches the negated entry and
+  its checked answer; and a Noul asking whether the text is a yes-or-no
   question about the hidden thing. A confident match returns the checked
   answer, and the match is cached for the day by wording. "None" gets a live
   Noul against the card: above 0.7 is Yes, below 0.3 is No, and anything
@@ -629,26 +633,30 @@ context.
   cached for the day too. Questions about letters or spelling are answered
   in code from the card, because Jev "does not count reliably". If Jev is
   busy or down, the Worker still answers exact bank wordings in code.
-- **Authoring:** a script runs Jev over every bank question and its negation
-  for each card and lists answers between 0.3 and 0.7 and negated pairs that
-  disagree; a person fixes them before the card ships. The bank starts at
-  about 100 questions per category, under the 255 a Choice allows. The first
-  two cards are a pilot that measures how many answers need a person; if
-  that's more than the time allows, the bank shrinks to its most common
-  questions rather than the launch set shrinking below 17 cards. The checked
-  bank, added in Round 6, is heavier work than the 30 fact cards Round 3
-  assumed, which is why the launch set is 17.
+- **Authoring:** a script runs Jev over every bank question and its negation for
+  each card and lists answers between 0.3 and 0.7 and negated pairs that
+  disagree; a person fixes them before the card ships. The bank starts at about
+  100 questions in each of four categories at launch, animals, foods, everyday
+  objects, and places. The first two cards are a pilot that measures how many
+  answers need a person; if that's more than the time allows, the bank shrinks
+  to its most common questions rather than the launch set shrinking below 17
+  cards. The checked bank, added in Round 6, is heavier work than the 30 fact
+  cards Round 3 assumed, which is why the launch set is 17.
 - **Data:** only the typed questions reach TypeSafe, after the player agrees
   to a notice that names it and asks them not to type personal information.
   The first build names TypeSafe in the notice and the privacy policy,
   because guideline 5.1.2(i) asks apps to "clearly disclose" third-party AI,
   TypeSafe's agreement makes the team give users the notices that TypeSafe's
-  use of their input needs (section 5), and section 16.4 allows what is
-  "required by Laws". The request to TypeSafe on September 22 asks it to
-  confirm this, and whether players under 18 may use the game, since
-  TypeSafe doesn't knowingly handle personal data from anyone under 18. The
-  Worker serves the notice's text, and the privacy policy is a web page, so
-  either can change without an app update. There are no accounts;
+  use of their input needs (section 5). Section 16.4's exception for what is
+  "required by Laws" may not cover an App Store rule, so the request to
+  TypeSafe on September 22 asks it to confirm the naming, and whether
+  players under 18 may use the game, since TypeSafe doesn't knowingly handle
+  personal data from anyone under 18. If TypeSafe objects, the notice says
+  the questions go to "a third-party AI service", and the privacy policy
+  describes it without the name. The Worker serves the notice's text, and
+  the privacy policy is a web page, so either can change without an app
+  update. A player who declines still plays: the Worker answers exact bank
+  wordings in code, and nothing reaches TypeSafe. There are no accounts;
   RevenueCat's anonymous IDs carry the purchase.
 
 ### Schedule
@@ -736,8 +744,9 @@ fair new deduction puzzle every day."
 minutes and 20-questions apps that contradict themselves; how answers stay the
 same for everyone; the money, with the free daily puzzle, the paid archive,
 prices, and paywall placement; the difference from Das Verhör's German daily
-interrogation, which is English, twenty questions about one hidden thing, and
-answers kept the same across wordings; the numbers; what changed after launch
+interrogation, which is English and yes-or-no questions about one hidden
+thing, with the consistency test's result as Guessling's own evidence of
+fairness; the numbers; what changed after launch
 and what was learned, which the Grand Prize asks for; the categories and why;
 and the AI tools used, credited openly. Jev is named only once TypeSafe
 consents.
@@ -771,12 +780,21 @@ numbers will rest on about a day live in the video, recorded on September
   App Completeness. September 26 is the latest first submission that leaves
   room for one rejection.
 - **Consistency gate before submitting on September 24:** at least 90% of a
-  test set of paraphrases must reach the same bank question, and every
-  negated pair must agree on every card. Otherwise, grow the bank before
-  shipping.
-- **Not approved by the end of Saturday, September 26:** fix only what the
-  rejection cites and resubmit. Monday, September 28 is the last
-  resubmission that can still be live by the deadline.
+  test set of paraphrases, including negated and implicitly negated
+  wordings, must reach the bank entry with the same meaning. Otherwise, grow
+  the bank before shipping.
+- **A rejection:** fix only what it cites and resubmit the same day. Monday,
+  September 28 is the last resubmission that can still be live by the
+  deadline; an app that isn't live by September 30 can't be entered, and
+  expedited review is off the table.
+- **TypeSafe objects to being named in the notice or the privacy policy:**
+  change the Worker-served notice and the web privacy policy the same day.
+- **The Guessling's art isn't ready by the end of September 23:** ship the
+  simplest reactions and polish them in an update.
+- **Any failed Jev call in the Worker's logs:** top up the credits and check
+  the limits.
+- **Small numbers on September 29:** the write-up's numbers lead with rates
+  and the consistency test's result rather than totals.
 - **No consent from TypeSafe by Monday, September 28, when the video is
   recorded:** the video calls Jev "a hosted decision model". The write-up can
   still name Jev if consent arrives before the deadline.
