@@ -16,6 +16,7 @@ Contents:
 1.  [How Jev fits](#how-jev-fits)
 1.  [Monetization](#monetization)
 1.  [Categories to enter](#categories-to-enter)
+1.  [Build plan](#build-plan)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -221,6 +222,87 @@ Left out, with the reason:
 - **Funnel Vision, Idea to Income, and Most Viral App:** they need a web
   funnel, a build on Replit, or Noise's $50 daily minimum.
 - **Next Gen and Conflict of Interest:** they're for students and for staff.
+
+## Build plan
+
+Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
+
+[log-r9]: /docs/research/ideation.md#round-9-scope-stack-and-schedule
+
+### Stack and data flow
+
+- **App:** Expo with TypeScript, `react-native-purchases` (10.10.1 on
+  September 21, 2026), and RevenueCat Paywalls. The same language runs in
+  the backend and in Jev's official SDK. A Swift team would build the same
+  screens in SwiftUI with purchases-ios.
+- **Backend:** one Cloudflare Worker that holds the Jev key, with Workers KV
+  for the puzzles' fact cards and accepted names, the checked bank answers,
+  the daily schedule, and each day's live answers. It sends the app the
+  hint, answers the questions, and checks the guesses, so the secret never
+  reaches the phone.
+- **Authoring:** a script runs Jev over the bank and its negations for each
+  puzzle, lists what a person must fix, and uploads the checked puzzle.
+- **Purchases:** RevenueCat's anonymous IDs carry them, with no accounts. The
+  Test Store key never ships.
+- **Coding agents:** RevenueCat's AI Toolkit and MCP server help them wire
+  the SDK, and TypeSafe's agent skill teaches them Jev's API.
+
+### Scope of the first version
+
+- **Must:** the daily puzzle loop; bank matching and live answers; "Ask
+  another way"; guesses checked on the server; the share card; the
+  Guessling's four reactions; the Guessling+ archive, paywall, and Restore
+  Purchases; the permission notice before the first question; busy and
+  offline states; "Report this answer"; the privacy policy and terms pages;
+  and 30 checked puzzles, enough for ten in the archive and a daily puzzle
+  through October 13.
+- **Should:** a streak count, haptics and sound, and an entitlement check on
+  the server as well as in the app.
+- **Won't:** accounts, leaderboards, friends, packs, push notifications,
+  Android, and an iPad layout.
+
+### Schedule to September 30
+
+- **Tuesday, September 22:** request the Jev key and ask TypeSafe's consent
+  to name Jev; sign the Paid Apps Agreement and finish tax and banking; set
+  up the RevenueCat project, the App Store Connect record, and the two
+  subscriptions; write the question bank and the first ten puzzles; stand up
+  the Worker.
+- **Wednesday, September 23:** the app's screens and the Guessling's art;
+  bank matching and live answers; the authoring script; puzzles up to 30; the
+  permission notice; the paywall and archive; the policy pages.
+- **Thursday, September 24:** fix the flagged answers; run the consistency
+  test; make the icon, the 6.9-inch screenshots, the 1179 × 2556 screenshot,
+  and the metadata; submit the first build with its subscriptions, set to
+  release automatically.
+- **Friday, September 25 and Saturday, September 26:** in review. A
+  rejection gets a fix for the cited guideline only and a same-day
+  resubmission. Draft the launch posts and the video script.
+- **Sunday, September 27:** live. Create the offer codes, confirm a
+  production purchase, and post the first public puzzle.
+- **Monday, September 28:** record the video on an iPhone and upload it.
+- **Tuesday, September 29:** write the Devpost description and category
+  answers with the numbers so far.
+- **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
+  PT. Keep the Worker running and Jev's credits funded through October 13.
+
+### Review-safety checklist
+
+From the context's [review essentials][ctx-apple]:
+
+- The subscriptions go in the same submission as the first build.
+- The paywall shows the billed amount first, the trial, the renewal, how to
+  cancel, and Restore Purchases, with links to the Terms of Use and the
+  privacy policy, which the metadata links too.
+- The permission notice comes before the first question goes to TypeSafe,
+  and the privacy label declares "Purchases" and the typed questions.
+- No accounts, so no deletion flow, and no third-party login.
+- The backend runs through review, and the review notes explain how to play.
+- Screenshots are final before submitting, because they can't change while
+  the app is "Waiting for Review".
+- The app stays out of the Kids category.
+
+[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
 
 ## See also
 
