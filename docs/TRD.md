@@ -18,6 +18,7 @@ Contents:
 1.  [Stack and repository](#stack-and-repository)
 1.  [Data model](#data-model)
 1.  [Worker API](#worker-api)
+1.  [Answer pipeline](#answer-pipeline)
 1.  [See also](#see-also)
 
 ## Overview
@@ -351,6 +352,163 @@ with the `ADMIN_TOKEN` secret:
   everywhere (CONTENT-8).
 - `GET /v1/admin/stats?from=YYYY-MM-DD&to=YYYY-MM-DD` returns the counts
   behind the idea's numbers (METRIC-5).
+
+## Answer pipeline
+
+The puzzle's Durable Object answers every question, so one object decides
+each wording once (ASK-5). It checks, in this order, and stops at the first
+step that answers:
+
+1.  **Limits.** The round must be playing, with turns left; a player past 40
+    answers that used no turn gets `rest` (ASK-10). A repeated `requestId`
+    gets the stored response again (STATE-2).
+2.  **Normalize.** Lowercase, trim, collapse spaces, drop a final `?`, `.`,
+    or `!`, and straighten curly quotes. The result is the _wording_.
+3.  **A named guess.** A wording shaped "is it a/an/the X" whose X,
+    normalized the same way, is an accepted name is `right` (GUESS-4).
+4.  **Letters.** A wording about the name's letters, such as its first or
+    last letter, a letter it contains, or its length, is answered in code
+    from `display` (ASK-7); one the rules can't parse is `rephrase`.
+5.  **An exact bank wording.** A wording equal to a bank question, or its
+    negation, after normalization gets the checked answer, with no Jev call.
+    A `bankId` from the list takes the same path (ASK-9).
+6.  **Stored.** A wording in `answers` gets the stored answer (ASK-5).
+7.  **No AI.** With `X-Guessling-AI: off`, or `aiEnabled` false, stop with
+    `pick`, and store nothing (NOTICE-3, ASK-9).
+8.  **Jev.** The match request, then, if nothing matched, the live request;
+    both below.
+9.  **Store.** Insert the answer under the wording if no answer is there
+    yet, and return what storage then holds, `rephrase` and `not_question`
+    included.
+
+### Sharing one Jev call per wording
+
+A `fetch` inside a Durable Object lets other requests run while it waits, so
+two players who send the same new wording at once could each start a Jev
+call and get different answers; the Cloudflare note's local test did
+exactly that ([Cloudflare notes][cf-concurrency]). The object therefore
+keeps pending calls in memory, keyed by wording, and a second request awaits
+the first one's promise:
+
+```ts
+private inflight = new Map<string, Promise<Answer>>()
+
+private answerViaJev(wording: string, text: string): Promise<Answer> {
+  let pending = this.inflight.get(wording)
+  if (pending === undefined) {
+    pending = this.askJev(text) // the match request, then the live request
+      .then((answer) => {
+        this.sql.exec(
+          'INSERT OR IGNORE INTO answers (wording, answer, source, bank_id, p, model, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+          wording, answer.answer, answer.source, answer.bankId, answer.p, MODEL, Date.now()
+        )
+        return this.stored(wording) ?? answer // everyone gets what storage holds
+      })
+      .finally(() => this.inflight.delete(wording))
+    this.inflight.set(wording, pending)
+  }
+  return pending
+}
+```
+
+Losing the map when the object is evicted is safe, since answered wordings
+are in storage. A failed call rejects every waiting request, which the app
+shows as busy.
+
+[cf-concurrency]: /docs/research/cloudflare-workers.md#concurrent-first-answers-to-a-new-wording
+
+### The match request
+
+The first request's state is the player's question. A Choice picks the bank
+entry that asks the same thing, and a Noul checks that it's a yes-or-no
+question at all. With at most 127 questions, their negations, and "none",
+the Choice stays within its 255 options.
+
+```json
+{
+  "model": "jev-1.13.0",
+  "state": "Is it something that lives in the sea?",
+  "questions": {
+    "match": {
+      "type": "choice",
+      "instructions": "Which question asks the same thing as the text? Choose none if no question does.",
+      "criteria": {
+        "q017": "Does it live in water?",
+        "q017_not": "Does it live out of water?",
+        "none": "No question here asks the same thing"
+      }
+    },
+    "is_question": {
+      "type": "noul",
+      "instructions": "The text is a question that can be answered yes or no",
+      "criteria": {
+        "true": "A yes-or-no question, such as 'Does it fly?' or 'Is it bigger than a car?'",
+        "false": "A statement, a command, an open question such as 'What color is it?', or not a question"
+      }
+    }
+  }
+}
+```
+
+- `is_question` below 0.5 gives `not_question` (ASK-4).
+- Otherwise, a `match` choice other than `none` whose probability is at
+  least `MATCH_MIN` gives that entry's checked answer (ASK-6). `MATCH_MIN`
+  starts at 0.6, and the consistency test sets it on September 24:
+  at least 90% of paraphrases must reach the right entry and at most 5% of
+  questions outside the bank may match (CONTENT-6).
+
+### The live request
+
+When nothing matched, the second request's state is the puzzle's card, and
+one Noul asks the player's question as written:
+
+```json
+{
+  "model": "jev-1.13.0",
+  "state": {
+    "thing": "octopus",
+    "facts": ["An octopus lives in the sea.", "An octopus has eight arms."]
+  },
+  "questions": {
+    "answer": { "type": "noul", "instructions": "Is it something that lives in the sea?" }
+  }
+}
+```
+
+- Above 0.7 is `yes`, below 0.3 is `no`, and anything between is
+  `rephrase`, the idea's thresholds (ASK-12).
+- Neither request carries the player's ID, device, or address (PRIV-2).
+
+### Timeouts, retries, and the Jev budget
+
+The SDK's defaults, 10 seconds per attempt and two retries, could hold a
+player for about 31.5 seconds, so the Worker sets every option in code and
+bounds the whole question ([Cloudflare notes][cf-sdk]):
+
+```ts
+const client = new TypeSafeClient({
+  apiKey: env.TYPESAFE_API_KEY,
+  defaultModel: 'jev-1.13.0',
+  logLevel: 'off', // at 'debug' it would log request bodies, which hold the card
+  timeout: 1500, // per attempt
+  retry: { maxRetries: 1 }
+})
+
+// One budget for the match and live requests together.
+const budget = AbortSignal.timeout(3000)
+const match = await client.systemOne(matchRequest, { signal: budget })
+```
+
+- Past the budget, the Worker answers `busy` and stores nothing, so the
+  next attempt can still reach Jev (STATE-3, PERF-2).
+- Each object counts its Jev calls per minute in memory and answers `busy`
+  for new wordings past 600, so the two or three live dates stay under
+  TypeSafe's 1,200 requests a minute (AVAIL-2, SEC-3).
+- Errors are logged by class and status only, never by message, since an
+  open issue reports the key echoed into the SDK's connection errors
+  (SEC-4).
+
+[cf-sdk]: /docs/research/cloudflare-workers.md#the-sdk-under-workerd
 
 ## See also
 
