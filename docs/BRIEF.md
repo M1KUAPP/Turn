@@ -66,12 +66,12 @@ Contents:
   New this year, residents of Quebec and Brazil may take part. Residents of
   Cuba, Iran, North Korea, Crimea, and Russia "may be excluded from
   participation or prize eligibility".
-- Minors, and teams that include a minor, may compete only for the Next Gen
-  Award. Students must be at least 13 and need a parent's or legal
-  guardian's consent to enter: the guardian agrees to the official rules, and
-  the submission includes the guardian's name, email, and confirmation of
-  consent. Signed written consent is required before a minor can be
-  announced as a winner.
+- Minors (under the age of majority where they live), and teams that include
+  a minor, may compete only for the Next Gen Award. A minor must be at least
+  13 and needs a parent's or legal guardian's consent to enter: the guardian
+  agrees to the official rules, and the submission includes the guardian's
+  name, email, and confirmation of consent. Signed written consent is
+  required before a minor can be announced as a winner.
 - Next Gen is for active students aged 13 and older with a verifiable
   academic email address (`.edu` or equivalent). They submit a demo video and
   a public open-source repository with a license instead of a store listing,
@@ -91,8 +91,8 @@ Contents:
   then makes the app ineligible.
 - The app must be live on the store. An app still in review doesn't qualify,
   and a TestFlight or testing-track build doesn't count.
-- The app must be downloadable in the United States, work as shown in the
-  video and description, and everything submitted must be in English.
+- The app must be downloadable in the United States and work as shown in the
+  video and description.
 - You can submit more than one app, but each entry must be "unique and
   substantially different".
 
@@ -153,13 +153,15 @@ Also:
   aim to be live a day or two before the deadline.
 - New personal Google Play accounts created after Nov 13, 2023 must run a
   closed test with at least 12 testers for 14 days before they can apply for
-  production access. The Discord channel `#looking-for-google-play-tester`
-  helps find testers.
+  production access. A test that starts after September 16, 2026 can't
+  finish by the deadline, so such accounts should consider another store.
+  The Discord channel `#looking-for-google-play-tester` helps find testers.
 - Developer accounts cost $99 per year for Apple and a one-time $25 for Google
   Play. Organization accounts may need a D-U-N-S number.
 - If there isn't time for two reviews, ship monetization in the first build,
   and test purchases in the sandbox first.
-- RevenueCat's official guidance is not to use expedited review.
+- RevenueCat's official guidance is not to use expedited review to make the
+  Shipaton deadline; Apple doesn't say that hackathon timelines qualify.
 - Avoid common rejections: a privacy policy that matches your privacy
   declaration, Terms of Use links for subscriptions, no "beta" or "number 1"
   claims, a reviewer account without 2FA or an active entitlement, and Sign in
@@ -213,8 +215,9 @@ What this means for an entry:
   blog post, and a media spotlight on 9to5Mac and 9to5Google.
 - **Other first places:** cash plus an invitation to App Growth Annual, a
   Times Square billboard, a Shippy trophy, a blog post, and the media
-  spotlight. The #BuildInPublic first place gets travel instead of an
-  invitation.
+  spotlight. The exceptions: the #BuildInPublic first place gets travel
+  instead of an invitation, Best App for Galaxy has no cash, and Conflict of
+  Interest gets only a blog post and a billboard.
 - **Second and third places:** cash and a blog post featuring the winners.
 - **Entering:** every eligible project can be considered for the Grand Prize.
   Choose other categories in the Devpost "Additional info" step and answer
@@ -376,7 +379,8 @@ Shipyard 2026, a separate hackathon built on creator briefs. None of them are
   the closest precedent for the 2026 Influencer Awards, which are also fixed
   creator briefs.
 
-Patterns across these winners:
+Patterns the research notes draw from the full winner lists, not only the
+winners above:
 
 - A specific problem, often a personal one, with an origin story.
 - Building in public on several channels, with feedback visibly changing the
@@ -480,8 +484,8 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
 - **Companies.** Team size is unlimited, but no source says whether a company
   can enter.
 - **Early betas.** Building and promoting before August 1 is allowed, but no
-  source says whether a public beta before then counts as a release. The
-  safe default is no public build before August 1.
+  source says whether a public beta before then counts as a release. If your
+  app had one, confirm its eligibility with the organizers.
 - **Freshness.** No capture is dated, and prizes can change: "Check DevPost
   for official, up-to-date prizes."
 
