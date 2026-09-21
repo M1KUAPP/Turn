@@ -340,11 +340,12 @@ What RevenueCat and the stores ask of a paywall:
   as a monthly price as a violation.
 - Judges need a free trial or a promo code (see the
   [submission checklist](/docs/BRIEF.md#submission-checklist)), and the rules
-  require free access for them until judging ends on October 13. Apple offer
-  codes and Google Play promo codes cover this; pick a free period that lasts
-  past October 13 (Google Play's allow "between 3 and 90 days"). Create them
-  once the app is live: RevenueCat notes that a never-released app's
-  purchases fail in production "even if you download with a code".
+  require free access for them until judging ends on October 13. A short
+  user trial ends long before that, so give judges Apple offer codes or
+  Google Play promo codes with a free period of a month or longer; Google
+  Play's promo codes allow "between 3 and 90 days". Create them once the app
+  is live: RevenueCat notes that a never-released app's purchases fail in
+  production "even if you download with a code".
 
 For the deadline (synthesis): where revenue counts, as on the Grand Prize
 shortlist, a hard or onboarding paywall brings money in before September 30.
@@ -384,7 +385,8 @@ Store needs commercial seller status and a supported SDK.
   after it is approved by App Review"; an app in "Pending Developer Release"
   isn't live. RevenueCat's launch checklist suggests you "choose to manually
   release the version and wait ~24 hours" when products are new, which uses
-  part of the deadline buffer.
+  part of the deadline buffer. Synthesis: choose "Automatic" unless you will
+  verify production purchases first.
 - **Subscription screen.** Show the subscription's name and duration, the
   full renewal price, and a way to restore purchases. Link the Terms of Use
   and the privacy policy in the app and in the metadata; without a custom
