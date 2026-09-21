@@ -517,13 +517,13 @@ const match = await client.systemOne(matchRequest, { signal: budget })
   next attempt can still reach Jev (STATE-3, PERF-2).
 - Every Jev request in play first takes a token from one Durable Object,
   `jev-budget`, which hands out at most 1,000 a minute across all puzzles. The
-  SDK's injected `fetch` asks for a token before each attempt, so a retry counts
-  too, and a new wording without one gets `busy`. The count lives in memory,
-  since losing it on eviction only resets one minute's window. The scripts cap
-  themselves at 100 a minute and the daily check sends one question, so
-  everything stays under TypeSafe's 1,200 requests a minute (AVAIL-2, SEC-3). A
-  cap per puzzle couldn't: three dates can be live at once, besides rounds past
-  midnight and archive puzzles.
+  SDK's injected `fetch` asks for a token before each attempt, so a retry
+  counts too, and a new wording without one gets `busy`. The count lives in
+  memory, since losing it on eviction only resets one minute's window. The
+  scripts cap themselves at 100 a minute and the daily check sends one
+  question, so everything stays under TypeSafe's 1,200 requests a minute
+  (AVAIL-2, SEC-3). A cap per puzzle couldn't: three dates can be live at
+  once, besides rounds past midnight and archive puzzles.
 - Cloudflare warns that one object for a global counter "funnels all
   traffic through a single instance"; at 1,000 a minute, about 17 a
   second, the budget stays far under an object's guidance of 500 to 1,000
