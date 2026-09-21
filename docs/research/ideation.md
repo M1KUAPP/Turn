@@ -15,6 +15,7 @@ Contents:
 1.  [Round 4: scoring](#round-4-scoring)
 1.  [Round 5: evidence](#round-5-evidence)
 1.  [Round 6: red team](#round-6-red-team)
+1.  [Round 7: the choice](#round-7-the-choice)
 
 ## Round 1: constraints and rubric
 
@@ -444,3 +445,52 @@ Fixes:
 
 **Decision:** the panel ranks Hunch first, Flagged second, and Subtext
 third. Round 7 re-scores them with the accepted fixes.
+
+## Round 7: the choice
+
+**Question:** which idea, and how can it be sharper?
+
+**Method:** the finalists are re-scored with the fixes Round 6 accepted, the
+highest total wins, and ties go to buildability. The winner then takes the
+runners-up's best parts and a name.
+
+| Finalist | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
+| -------- | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
+| Hunch    | 4   | 3.5   | 5   | 4     | 5    | 4      | 4        | 83    |
+| Flagged  | 3.5 | 4     | 4   | 3.5   | 4.5  | 4      | 4        | 77    |
+| Subtext  | 2.5 | 3.5   | 3.5 | 3     | 4    | 2      | 4        | 62    |
+
+What moved:
+
+- **Hunch:** category fit rises from 3.5 to 4, because the checked bank and
+  the art direction answer the judge's two reasons to reject it, and HAMM is
+  a secondary it can meet without another SDK. Buildability falls from 4 to
+  3.5 for the bank review and the art.
+- **Flagged:** buildability, Jev centrality, and monetization fit each fall
+  by half a point, for the labeled test set, text written to look
+  legitimate, and a monthly-only price on a safety tool.
+- **Subtext:** category fit falls from 4 to 2.5, Jev centrality from 5 to
+  3.5, and buildability from 4 to 3.5, since the free rival came first,
+  reading tone is Jev's weakest task, and co-design takes time.
+
+Borrowed from the runners-up:
+
+- **From Subtext's "can't tell":** when Jev can't settle a question the bank
+  doesn't cover, the answer is "Ask another way", and the question doesn't
+  count against the twenty.
+- **From Flagged's accuracy test:** before launch, measure how often
+  paraphrases reach the same bank question and negated pairs agree, and
+  report the figures in the write-up.
+- **From Flagged's "Jev got this wrong" button:** a "Report this answer"
+  button sends a question and its answer to the team, who fix the card for
+  the players who come after.
+
+**Name:** Guessling. No App Store title found through Apple's iTunes Search
+API on September 22, 2026 matches it, and no gallery project uses it. The
+store name "Guessling: Daily 20 Questions" has 29 characters, within the
+limit of 30. The Guessling is also the game's character, who answers with a
+nod, a head shake, or a shrug; that gives the game the tone Best Game asks
+for.
+
+**Decision:** Guessling, the daily 20-questions game formerly called Hunch,
+is the idea. Best Game is its primary category and HAMM its secondary.
