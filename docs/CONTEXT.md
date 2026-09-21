@@ -43,9 +43,9 @@ Contents:
   downloads into payers within 35 days, against 2.1% for freemium, and nearly
   all trials start on day 0. See
   [Monetization and paywalls](#monetization-and-paywalls).
-- **Revenue gets you shortlisted, not the prize.** Only 10 of the 30 2025
-  winners' write-ups gave numbers; the rest placed on the product, the story,
-  or deep use of a sponsor's tool. See [Past winners](#past-winners).
+- **For the Grand Prize, revenue gets you shortlisted, not the prize.**
+  Elsewhere, numbers mattered most in growth categories: only 10 of the 30
+  2025 public write-ups gave any. See [Past winners](#past-winners).
 - **Enter categories you can prove.** 2025's OneSignal judges rewarded depth,
   such as Journeys, and 2026's Growth Loop requires a loop observable through
   the Layers SDK. See [What wins each category](#what-wins-each-category).
@@ -153,9 +153,12 @@ from them are synthesis.
   in the final stage". In 2024, Payout's builder, now a 2026 judge, didn't
   place in the money award with an app that, by the builder's own account,
   made "half of the total revenue".
-- **Most winners didn't lead with numbers.** Only 10 of the 30 2025 write-ups
-  give user, revenue, or engagement figures; the rest placed on the product,
-  the story, or deep use of a sponsor's tool. On the content entrants posted,
+- **Numbers matter most in growth categories.** Only 10 of the 30 2025
+  public write-ups give user, revenue, or engagement figures. The private
+  category answers aren't public, and for the Grand Prize they had to include
+  "any relevant numbers". The big traction claims came from growth awards:
+  the Grand Prize, Buzziest Launch, and OneSignal Boost. This refines the
+  brief's "concrete numbers" pattern. On the content entrants posted,
   RevenueCat said: "there were apps that made really highly polished content
   that didn't win and there were apps that made not super highly polished
   content that did win. It was more about the story".
