@@ -13,6 +13,8 @@ Contents:
 1.  [What the official rules add](#what-the-official-rules-add)
 1.  [Past winners](#past-winners)
 1.  [What wins each category](#what-wins-each-category)
+1.  [Monetization and paywalls](#monetization-and-paywalls)
+1.  [Getting through store review](#getting-through-store-review)
 1.  [See also](#see-also)
 
 ## What the official rules add
@@ -222,6 +224,127 @@ past winners are synthesis.
   RevenueCat Pro and need a connected payment provider, and Stripe Projects
   can provision RevenueCat from the Stripe CLI. The "Stripe Project ID" the
   rules ask for is undefined.
+
+## Monetization and paywalls
+
+RevenueCat's State of Subscription Apps 2026, the newest edition, covers
+"over 115,000 apps" using 2025 data. Its medians show what a new app can
+expect:
+
+- **Hard paywalls convert more, sooner.** The median hard-paywall app turns
+  10.7% of downloads into paying users within 35 days, against 2.1% for
+  freemium, and earns $2.32 per install by day 14, against $0.27. After a
+  year, retention on yearly plans is about equal: 27% against 28%.
+- **Trials start on day 0.** "Nearly all trial starts happen on Day 0".
+  Longer trials convert better: a median 25.5% of trials of 4 days or less
+  become paid, 37.4% at 5–9 days, and 42.5% at 17–32 days.
+- **Common prices:** "$4.99–$6.99 weekly, $7.99–$9.99 monthly, and
+  $29.99–$39.99 yearly". Two-plan paywalls are the most common layout.
+- **Early revenue is small.** Across categories, "17.3% hit $1K", and the
+  median is "58 days to $1K".
+
+What RevenueCat and the stores ask of a paywall:
+
+- Before a hard paywall, give users "sufficient context about what your app
+  offers"; unlock everything with one entitlement, and offer a restore
+  option. A freemium paywall should be a prompt users can dismiss.
+- RevenueCat's placement examples are the end of onboarding and the moment a
+  user tries a paywalled feature. RevenueCat Paywalls are configured
+  remotely, so an offer can change without an app update.
+- Make the billed amount "the most prominent pricing element" (Apple). State
+  the trial length, the renewal price, and how to cancel, and link the Terms
+  of Use and the privacy policy. Google Play lists an annual plan shown mainly
+  as a monthly price as a violation.
+- Judges need a free trial or a promo code (see the
+  [submission checklist](/docs/BRIEF.md#submission-checklist)). Apple offer
+  codes and Google Play promo codes cover this. Create them once the app is
+  live: RevenueCat notes that a never-released app's purchases fail in
+  production "even if you download with a code".
+
+For the deadline (synthesis): where revenue counts, as on the Grand Prize
+shortlist, a hard or onboarding paywall brings money in before September 30.
+A 7-day trial started after September 23 ends after the deadline, so a 3-day
+trial or a paid introductory offer shows conversions sooner. Skip A/B tests:
+Experiments needs a Pro or Enterprise plan, and a launch week brings little
+traffic.
+
+More in the [monetization notes][bp-money].
+
+[bp-money]: /docs/research/best-practices.md#monetization-and-paywall-benchmarks
+
+## Getting through store review
+
+The brief covers [review timing](/docs/BRIEF.md#app-review-timing), account
+costs, and common rejections. The stores' own documents add the rules below,
+and the [best practices notes](/docs/research/best-practices.md) have the
+sources. Synthesis: for a team submitting this week, the App Store is the
+realistic first store. A new personal Google Play account can't finish its
+required test by September 30, and the Galaxy Store needs commercial seller
+status and a supported SDK.
+
+### Apple App Store review essentials
+
+- **Speed.** "On average, 90% of submissions are reviewed in less than 24
+  hours", and over 40% of unresolved issues fall under guideline 2.1, App
+  Completeness. It's an average, so keep the brief's one-week buffer.
+- **First purchase.** Sign the Paid Apps Agreement, then finish tax and
+  banking; sandbox testing needs the signed agreement. Put the app version,
+  the subscription group, and every subscription in one draft submission:
+  "All items submitted together must be Accepted". RevenueCat warns that
+  purchases can take 24 hours to work after a first launch.
+- **Build.** Since April 28, 2026, uploads must be built with Xcode 26 or
+  later, using an iOS 26 SDK.
+- **Subscription screen.** Show the subscription's name and duration, the
+  full renewal price, and a way to restore purchases. Link the Terms of Use
+  and the privacy policy in the app and in the metadata; without a custom
+  EULA, Apple's standard EULA applies.
+- **Accounts.** An app that creates accounts must let users delete them in
+  the app (5.1.1(v)). An app with a social login must also offer a login that
+  limits data to name and email, can hide the email, and doesn't track for
+  ads (4.8). Sign in with Apple meets this, but 4.8 doesn't name it.
+- **Web checkout.** On the US storefront, apps may include buttons and links
+  to web purchases (3.1.1(a)). Elsewhere, such links need one of Apple's
+  entitlements or aren't allowed.
+- **Screenshots.** App Store Connect needs 6.9-inch or 6.5-inch iPhone
+  screenshots. The 1179 × 2556 screenshot the Shipaton submission asks for
+  is Apple's 6.3-inch size, so prepare both.
+- **Privacy label.** With RevenueCat, declare that the app collects
+  "Purchases" data.
+
+### Google Play review essentials
+
+- **New personal accounts can't make September 30.** Accounts created after
+  November 13, 2023 need at least 12 testers opted in for 14 days, then a
+  production access review that "usually takes seven days or less". A test
+  started on September 21 reaches 14 days on October 5.
+- **Review time.** Some accounts wait "up to seven days or longer", and a
+  change sent during a review can push the app "to the back of the app
+  review queue".
+- **Target API level 36** is required for new apps since August 31, 2026; an
+  extension to November 1, 2026 can be requested.
+- **Subscriptions.** Disclose the price, billing period, renewal, and trial
+  terms, and give an easy way to cancel, such as a link to Google Play's
+  subscription center.
+- **App content.** Complete the Data safety form (RevenueCat collects
+  purchase history). An app that creates accounts must offer deletion in the
+  app and through a web link.
+- **Testing purchases.** Make testers license testers; other testers are
+  charged for real.
+
+### Galaxy Store review essentials
+
+- **Seller status.** Publishing, even a free app, needs commercial seller
+  status. Samsung reviews a private seller's request in "about 4 business
+  days"; D-U-N-S and bank verification can each take "up to 10 business
+  days". Publishing is free.
+- **Review.** Pre-Review comes first, and sales begin when it ends; a Device
+  Test follows. Give test login and payment details, and don't submit trial
+  or beta builds. No Samsung page says how long Pre-Review takes.
+- **RevenueCat.** Galaxy Store purchases work only with the Android SDK
+  10.7.0 and later and the React Native SDK 10.3.0 and later, and test
+  purchases need a physical Galaxy device. RevenueCat's onboarding guide says
+  to email your seller address to `rc.onboard@samsung.com` to speed up
+  approval.
 
 ## See also
 
