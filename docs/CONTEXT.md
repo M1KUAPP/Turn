@@ -47,9 +47,10 @@ These are synthesis from the sections they link to.
   downloads into payers within 35 days, against 2.1% for freemium, and nearly
   all trials start on day 0. See
   [Monetization and paywalls](#monetization-and-paywalls).
-- **For the Grand Prize, revenue gets you shortlisted, not the prize.**
-  Elsewhere, numbers mattered most in growth categories: only 10 of the 30
-  2025 public write-ups gave any. See [Past winners](#past-winners).
+- **For the Grand Prize, revenue gets you shortlisted, not the prize.** The
+  big 2025 traction claims came from growth awards; give numbers wherever a
+  2026 category asks for them, as HAMM does with "strong conversion". See
+  [Past winners](#past-winners).
 - **Enter categories you can prove.** 2025's OneSignal judges rewarded depth,
   such as Journeys, and 2026's Growth Loop requires a loop observable through
   the Layers SDK. See [What wins each category](#what-wins-each-category).
@@ -161,15 +162,15 @@ from them are synthesis.
   in the final stage". In 2024, Payout's builder, now a 2026 judge, didn't
   place in the money award with an app that, by the builder's own account,
   made "half of the total revenue".
-- **Numbers matter most in growth categories.** Only 10 of the 30 2025
+- **Give numbers where the category asks for them.** Only 10 of the 30 2025
   public write-ups give user, revenue, or engagement figures. The private
   category answers aren't public, and for the Grand Prize they had to include
-  "any relevant numbers". The big traction claims came from growth awards:
-  the Grand Prize, Buzziest Launch, and OneSignal Boost. This refines the
-  brief's "Concrete numbers in the write-up" pattern. On the content entrants
-  posted, RevenueCat said: "there were apps that made really highly polished
-  content that didn't win and there were apps that made not super highly
-  polished content that did win. It was more about the story".
+  "any relevant numbers". The biggest traction claims came from 2025's growth
+  awards: the Grand Prize, Buzziest Launch, and OneSignal Boost. This refines
+  the brief's "Concrete numbers in the write-up" pattern. On the content
+  entrants posted, RevenueCat said: "there were apps that made really highly
+  polished content that didn't win and there were apps that made not super
+  highly polished content that did win. It was more about the story".
 - **Deadlines moved at the last minute.** The 2024 deadline moved by a day,
   and the 2025 deadline by 12 hours because "App Review has been moving a
   little slower than usual this week". Plan for slow review, not for an
@@ -186,10 +187,10 @@ from them are synthesis.
 - **AI-built apps win, credited openly.** At least 13 of the 30 2025
   write-ups credit AI tools, from Payout's "not one line of code written by
   hand" to Crystal Abyss and MaestLog.
-- **Newcomers can win.** MaestLog's builder went from "zero mobile
-  development experience" to an app with RevenueCat subscriptions "in three
-  weeks", and Dripped's builder made a "first-ever internet dollar" during
-  Shipaton.
+- **Newcomers can win.** Among 2025's Best Vibes winners, MaestLog's builder
+  went from "zero mobile development experience" to an app with RevenueCat
+  subscriptions "in three weeks", and Dripped's builder made a "first-ever
+  internet dollar" during Shipaton 2025.
 
 ### Where the winners are now
 
