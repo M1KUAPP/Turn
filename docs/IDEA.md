@@ -13,6 +13,7 @@ Contents:
 1.  [At a glance](#at-a-glance)
 1.  [Problem and audience](#problem-and-audience)
 1.  [What the app does](#what-the-app-does)
+1.  [How Jev fits](#how-jev-fits)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -86,6 +87,75 @@ the sources.
   answered at once.
 - **Left out of the first version:** accounts, leaderboards, friends, packs,
   push notifications, Android, and an iPad layout.
+
+## How Jev fits
+
+Jev is TypeSafe's hosted decision model. It answers typed questions about
+text, as a Choice among options, a Score on a scale, or a yes-or-no Noul,
+with probabilities, in about 100 to 150 ms, and it never writes text
+([Jev notes][jev-what]). In Guessling it does three jobs, all through the
+team's backend:
+
+1.  **It checks each puzzle before the puzzle ships.** A script asks Jev
+    every question in a bank of common questions, and each one's negation,
+    with the puzzle's fact card as the state. A person fixes every answer
+    between 0.3 and 0.7 and every pair whose answers disagree.
+1.  **It matches the player's question to the bank.** A Choice over the
+    category's bank questions, plus "none", picks the question the player
+    meant, so two wordings get one answer. A Choice takes at most 255
+    options.
+1.  **It answers what the bank doesn't cover.** A live Noul against the fact
+    card gives Yes above 0.7, No below 0.3, and "Ask another way" in between.
+    A second Noul turns away anything that isn't a yes-or-no question about
+    the hidden thing. A live answer is cached for the day, so every player
+    gets the same one.
+
+Why Jev fits the game:
+
+- **It can't give the answer away.** Jev returns only numbers, so it can't
+  spell out the secret, as a generative model could in its own words.
+- **It's fast enough to feel like a conversation.** TypeSafe's cookbooks
+  measured Jev at 111 and 114 ms a round trip, against 826 ms to 13.9 s for
+  the language models they compared ([latency][jev-latency]).
+- **It reads wordings nobody wrote down.** A hand-built table answers only
+  the questions its authors predicted.
+
+How it's wired:
+
+- **The key stays on the server.** Jev has no mobile SDK, and TypeSafe's
+  agreement requires the key to stay confidential. The app calls one
+  Cloudflare Worker, which calls Jev through `@typesafe-ai/sdk` 0.6.0 with
+  the model pinned to `jev-1.13.0`, because an alias "moves when a new
+  release ships".
+- **Busy or down:** the SDK retries busy responses (429 and 529) with
+  backoff, the app shows a busy state, and the Worker still answers, in
+  code, any wording that exactly matches a bank question.
+- **Cost:** at $0.042 per million input tokens, a call the size of
+  TypeSafe's quickstart costs about $0.000016, so cost won't limit the game
+  ([prices][jev-prices]). Early access and the limit of 1,200 requests per
+  minute matter more, so the key is the first thing to request.
+
+Data, consent, and terms:
+
+- Only the typed questions go to TypeSafe, whose services are hosted in the
+  United States, and Jev "is not trained on customer requests or
+  responses".
+- Before the first question, a notice names TypeSafe and asks permission,
+  as guideline 5.1.2(i) requires before personal data goes to a third-party
+  AI. The privacy policy names TypeSafe too, and there are no accounts.
+- TypeSafe says no part of its services "is directed to children", so
+  Guessling stays out of the Kids category ([store review][jev-store]).
+- TypeSafe's agreement allows the API inside the team's own app (section
+  2.2) but not as "a standalone service"; Guessling is a game, not a relay.
+  Section 16.4 bars announcing the relationship without TypeSafe's consent,
+  so the team asks before naming Jev in the video or the write-up
+  ([terms][jev-terms]).
+
+[jev-what]: /docs/research/jev.md#what-jev-is
+[jev-latency]: /docs/research/jev.md#rate-limits-context-length-and-latency
+[jev-prices]: /docs/research/jev.md#jev-prices
+[jev-store]: /docs/research/jev.md#store-review-and-jev
+[jev-terms]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
 
 ## See also
 
