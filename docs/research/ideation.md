@@ -256,30 +256,31 @@ their conditions.
 reason per score. The log's author scored first; a subagent then scored
 blind, from the same write-ups, the rubric, the Jev notes, the gallery notes,
 and the category pages, without seeing the first scores. Each criterion's
-score is the average of the two, and ties go to buildability.
+score is the average of the two, and ties go to buildability. The last two
+columns are each scorer's own total.
 
-| Rank | #   | Idea          | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
-| ---- | --- | ------------- | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
-| 1    | 19  | Hunch         | 3.5 | 4     | 5   | 4     | 5    | 4.5    | 4        | 83.5  |
-| 2    | 23  | Subtext       | 4   | 4     | 5   | 4     | 4    | 3      | 4        | 81    |
-| 3    | 20  | Flagged       | 3   | 4.5   | 4.5 | 4     | 4.5  | 4      | 4        | 79.5  |
-| 4    | 21  | SaySo         | 4   | 4     | 3.5 | 3.5   | 4.5  | 5      | 2.5      | 78.5  |
-| 5    | 13  | Earshot       | 4   | 3     | 4.5 | 3     | 5    | 5      | 3        | 77.5  |
-| 6    | 16  | Take-Home     | 4.5 | 2.5   | 4.5 | 3.5   | 4    | 4      | 3.5      | 76    |
-| 7    | 3   | Side Order    | 4   | 3.5   | 4   | 3.5   | 4.5  | 3.5    | 2.5      | 75    |
-| 8    | 2   | Cannery       | 3.5 | 4     | 3.5 | 4     | 4    | 3.5    | 3        | 74    |
-| 9    | 6   | Pocket Studio | 4   | 4     | 3.5 | 3.5   | 4    | 3      | 2.5      | 73.5  |
-| 10   | 5   | Midstride     | 4   | 3     | 3.5 | 4     | 4    | 3.5    | 3.5      | 73    |
-| 11   | 4   | Lasted        | 4   | 4     | 3.5 | 3.5   | 3    | 3.5    | 2.5      | 72.5  |
-| 12   | 12  | Sift          | 3   | 3     | 4.5 | 3.5   | 5    | 4      | 3        | 72    |
-| 13   | 14  | Judgy         | 3   | 4     | 3.5 | 3     | 4    | 4      | 3        | 69.5  |
-| 14   | 15  | Sleep On It   | 4   | 3     | 2.5 | 4     | 3    | 4      | 4        | 69.5  |
-| 15   | 17  | Ebb           | 3   | 2     | 4   | 4     | 4    | 4.5    | 4        | 68    |
-| 16   | 27  | Stillwake     | 3.5 | 3     | 2.5 | 4     | 4    | 3.5    | 3        | 67    |
-| 17   | 1   | Blanks        | 3   | 2.5   | 3.5 | 4     | 4    | 4      | 2.5      | 66    |
-| 18   | 8   | Hold the Line | 2.5 | 3     | 4.5 | 3.5   | 4    | 2      | 3        | 63.5  |
-| 19   | 9   | Pinchlist     | 3.5 | 3     | 2   | 3     | 3    | 3.5    | 4        | 61.5  |
-| 20   | 7   | Preflight     | 3   | 2     | 4.5 | 4     | 3.5  | 1.5    | 3        | 61.5  |
+| Rank | #   | Idea          | Fit | Build | Jev | Money | Demo | Differ | Traction | Total | Author | Blind |
+| ---- | --- | ------------- | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- | ------ | ----- |
+| 1    | 19  | Hunch         | 3.5 | 4     | 5   | 4     | 5    | 4.5    | 4        | 83.5  | 82     | 85    |
+| 2    | 23  | Subtext       | 4   | 4     | 5   | 4     | 4    | 3      | 4        | 81    | 81     | 81    |
+| 3    | 20  | Flagged       | 3   | 4.5   | 4.5 | 4     | 4.5  | 4      | 4        | 79.5  | 78     | 81    |
+| 4    | 21  | SaySo         | 4   | 4     | 3.5 | 3.5   | 4.5  | 5      | 2.5      | 78.5  | 80     | 77    |
+| 5    | 13  | Earshot       | 4   | 3     | 4.5 | 3     | 5    | 5      | 3        | 77.5  | 79     | 76    |
+| 6    | 16  | Take-Home     | 4.5 | 2.5   | 4.5 | 3.5   | 4    | 4      | 3.5      | 76    | 76     | 76    |
+| 7    | 3   | Side Order    | 4   | 3.5   | 4   | 3.5   | 4.5  | 3.5    | 2.5      | 75    | 75     | 75    |
+| 8    | 2   | Cannery       | 3.5 | 4     | 3.5 | 4     | 4    | 3.5    | 3        | 74    | 72     | 76    |
+| 9    | 6   | Pocket Studio | 4   | 4     | 3.5 | 3.5   | 4    | 3      | 2.5      | 73.5  | 74     | 73    |
+| 10   | 5   | Midstride     | 4   | 3     | 3.5 | 4     | 4    | 3.5    | 3.5      | 73    | 76     | 70    |
+| 11   | 4   | Lasted        | 4   | 4     | 3.5 | 3.5   | 3    | 3.5    | 2.5      | 72.5  | 74     | 71    |
+| 12   | 12  | Sift          | 3   | 3     | 4.5 | 3.5   | 5    | 4      | 3        | 72    | 72     | 72    |
+| 13   | 14  | Judgy         | 3   | 4     | 3.5 | 3     | 4    | 4      | 3        | 69.5  | 71     | 68    |
+| 14   | 15  | Sleep On It   | 4   | 3     | 2.5 | 4     | 3    | 4      | 4        | 69.5  | 68     | 71    |
+| 15   | 17  | Ebb           | 3   | 2     | 4   | 4     | 4    | 4.5    | 4        | 68    | 72     | 64    |
+| 16   | 27  | Stillwake     | 3.5 | 3     | 2.5 | 4     | 4    | 3.5    | 3        | 67    | 67     | 67    |
+| 17   | 1   | Blanks        | 3   | 2.5   | 3.5 | 4     | 4    | 4      | 2.5      | 66    | 66     | 66    |
+| 18   | 8   | Hold the Line | 2.5 | 3     | 4.5 | 3.5   | 4    | 2      | 3        | 63.5  | 69     | 58    |
+| 19   | 9   | Pinchlist     | 3.5 | 3     | 2   | 3     | 3    | 3.5    | 4        | 61.5  | 65     | 58    |
+| 20   | 7   | Preflight     | 3   | 2     | 4.5 | 4     | 3.5  | 1.5    | 3        | 61.5  | 65     | 58    |
 
 Scores two points apart, settled at the average with a reason:
 
@@ -319,12 +320,15 @@ confirmed the two App Store rivals that move the ranking most. Scores move
 only where the evidence changes a criterion.
 
 - **Hunch.** For: Akinator has 422,100 US ratings and NYT Games 293,384, and
-  no app or gallery entry pairs a shared daily object with questions typed
-  in the player's own words. Against: four apps already let players question
-  an AI, one of them on Apple's on-device model, and their reviews punish
-  contradictory or hedged answers ("It either is nomadic or it isn't").
-  Jev's answers to a question and its negation needn't agree. Differentiation
-  goes from 4.5 to 4.
+  no app found pairs a shared daily object with questions typed in the
+  player's own words in English. Against: Das Verhör, a German entry in the
+  gallery, already runs a daily case that players question in free text;
+  four apps already let players question an AI, one of them on Apple's
+  on-device model, and reviews of one punish contradictory or hedged answers
+  ("It either is nomadic or it isn't"); and Jev's answers to a question and
+  its negation needn't agree. Differentiation goes from 4.5 to 3.5. Das
+  Verhör's free-text questioning comes from its project page, which the
+  first review of this work read; the scores here include it.
 - **Subtext.** For: autistic adults already use chatbots to read messages.
   Against: "Subtext: Decode Messages", a free app "built for autistic
   adults", launched on August 13, 2026, beside other message decoders, and
@@ -352,8 +356,8 @@ only where the evidence changes a criterion.
 
 | Idea    | Round 4 total | Round 5 total |
 | ------- | ------------- | ------------- |
-| Hunch   | 83.5          | 82.5          |
 | Flagged | 79.5          | 82            |
+| Hunch   | 83.5          | 81.5          |
 | Subtext | 81            | 76            |
 | Earshot | 77.5          | 73.5          |
 | SaySo   | 78.5          | 69.5          |
@@ -371,7 +375,7 @@ What the finalists carry forward:
   posting age in code, and never says "safe", only "no red flags found".
 - **Subtext** needs a new name and a sharper difference from free decoders.
 
-**Decision:** Top three: Hunch, Flagged, and Subtext go to Round 6.
+**Decision:** Top three: Flagged, Hunch, and Subtext go to Round 6.
 
 ## Round 6: red team
 
@@ -453,28 +457,41 @@ third. Round 7 re-scores them with the accepted fixes.
 
 **Question:** which idea, and how can it be sharper?
 
-**Method:** the finalists are re-scored with the fixes Round 6 accepted, the
-highest total wins, and ties go to buildability. The winner then takes the
-runners-up's best parts and a name.
+**Method:** the finalists are re-scored with the fixes Round 6 accepted, by
+one rule for all three. Category fit ends half a point above the panel's
+average for the primary category, because each accepted fix answers that
+category's main objection. Buildability falls half a point for each fix's
+extra work. Other scores move only for weaknesses Round 5 hadn't scored.
+The highest total wins, and ties go to buildability. The winner then takes
+the runners-up's best parts and a name.
 
 | Finalist | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
 | -------- | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
-| Hunch    | 4   | 3.5   | 5   | 4     | 5    | 4      | 4        | 83    |
-| Flagged  | 3.5 | 4     | 4   | 3.5   | 4.5  | 4      | 4        | 77    |
-| Subtext  | 2.5 | 3.5   | 3.5 | 3     | 4    | 2      | 4        | 62    |
+| Hunch    | 4   | 3.5   | 5   | 4     | 5    | 3.5    | 4        | 82    |
+| Flagged  | 3.5 | 4     | 4.5 | 4     | 4.5  | 4      | 4        | 80    |
+| Subtext  | 3   | 3.5   | 3.5 | 3     | 4    | 2      | 4        | 64.5  |
 
 What moved:
 
-- **Hunch:** category fit rises from 3.5 to 4, because the checked bank and
-  the art direction answer the judge's two reasons to reject it, and HAMM is
-  a secondary it can meet without another SDK. Buildability falls from 4 to
-  3.5 for the bank review and the art.
-- **Flagged:** buildability, Jev centrality, and monetization fit each fall
-  by half a point, for the labeled test set, text written to look
-  legitimate, and a monthly-only price on a safety tool.
-- **Subtext:** category fit falls from 4 to 2.5, Jev centrality from 5 to
-  3.5, and buildability from 4 to 3.5, since the free rival came first,
-  reading tone is Jev's weakest task, and co-design takes time.
+- **Hunch:** the panel averaged 3.5 for Best Game, so category fit ends at
+  4, with HAMM as a secondary it can meet without another SDK. Buildability
+  falls from 4 to 3.5 for the bank review and the art.
+- **Flagged:** the panel averaged 3 for the Peace Prize, so category fit
+  stays at 3.5. Buildability falls from 4.5 to 4 for the labeled test set.
+  Jev centrality and monetization fit hold: Round 5 had already counted text
+  written to look legitimate, and dropping the weekly pass removes a
+  liability.
+- **Subtext:** the panel averaged 2.5 for the Peace Prize, so category fit
+  ends at 3. Buildability falls from 4 to 3.5 for co-design, and Jev
+  centrality from 5 to 3.5, because the panel found that reading tone is
+  Jev's weakest task, which Round 5 hadn't scored.
+
+The margin is two points, and it is thin: had Flagged's accuracy test
+earned a full point of category fit instead of half, Flagged would lead 82.5
+to 82. Hunch stays the choice for three reasons outside the totals: the
+panel ranked it first by its odds of placing; Jev is its whole game, which
+suits the goal of including Jev; and 11 gallery projects name Best Game,
+against 39 for the Peace Prize.
 
 Borrowed from the runners-up:
 
@@ -492,9 +509,8 @@ Borrowed from the runners-up:
 API on September 22, 2026 matches it, and no gallery project uses it. The
 store name "Guessling: Daily 20 Questions" has 29 characters, within the
 limit of 30, and the subtitle "Ask anything. Guess the thing." has 30. The
-Guessling is also the game's character, who answers with a
-nod, a head shake, or a shrug; that gives the game the tone Best Game asks
-for.
+Guessling is also the game's character, who answers with a nod, a head
+shake, or a shrug; that gives the game the tone Best Game asks for.
 
 **Decision:** Guessling, the daily 20-questions game formerly called Hunch,
 is the idea. Best Game is its primary category and HAMM its secondary.
@@ -691,13 +707,14 @@ fair new deduction puzzle every day."
     and the two categories, Best Game and HAMM.
 
 **Write-up outline:** the logline; the problem, daily puzzles that end in
-minutes and 20-questions apps that contradict themselves; how answers stay
-the same for everyone; the money, with the free daily puzzle, the paid
-archive, prices, and paywall placement; the difference, with no app found
-pairing a shared daily object with questions in the player's own words; the
-numbers; what changed after launch and what was learned, which the Grand
-Prize asks for; the categories and why; and the AI tools used, credited
-openly. Jev is named only once TypeSafe consents.
+minutes and 20-questions apps that contradict themselves; how answers stay the
+same for everyone; the money, with the free daily puzzle, the paid archive,
+prices, and paywall placement; the difference from Das Verhör's German daily
+interrogation, which is English, twenty questions about one hidden thing, and
+answers kept the same across wordings; the numbers; what changed after launch
+and what was learned, which the Grand Prize asks for; the categories and why;
+and the AI tools used, credited openly. Jev is named only once TypeSafe
+consents.
 
 **Category answers, first drafts:**
 
@@ -709,13 +726,13 @@ openly. Jev is named only once TypeSafe consents.
   Paywall configured remotely, offer codes for judges, and the conversion
   numbers from RevenueCat's charts.
 
-**Final score:** 82.5. Early traction falls from 4 to 3.5, because the
+**Final score:** 81.5. Early traction falls from 4 to 3.5, because the
 numbers will rest on about a day live in the video, recorded on September
 28, and about three in the write-up; every other score holds.
 
 | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
 | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
-| 4   | 3.5   | 5   | 4     | 5    | 4      | 3.5      | 82.5  |
+| 4   | 3.5   | 5   | 4     | 5    | 3.5    | 3.5      | 81.5  |
 
 **Go and no-go triggers:**
 
