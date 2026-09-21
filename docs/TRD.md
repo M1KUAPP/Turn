@@ -561,11 +561,10 @@ take a puzzle from draft to published:
 1.  **`check.ts <n>`** asks Jev every bank question and its negation, with
     the card as the state, several questions per request and at most eight
     requests at once, since TypeSafe's own cookbook notes the public
-    endpoint "rate-limits above roughly eight" ([Cloudflare notes][cf-fetch]).
-    It writes
-    `content/review/<n>.csv` with each probability and flags every answer
-    between 0.3 and 0.7 and every pair whose answers agree when they should
-    differ (CONTENT-4).
+    endpoint "rate-limits above roughly eight"
+    ([Cloudflare notes][cf-fetch]). It writes `content/review/<n>.csv` with
+    each probability and flags every answer between 0.3 and 0.7 and every
+    pair whose answers agree when they should differ (CONTENT-4).
 2.  **A person** fills in `checked` for every flagged entry and copies the
     clear answers as they stand.
 3.  **`publish.ts <n>`** refuses a puzzle unless every bank id and negation
