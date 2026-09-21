@@ -18,6 +18,8 @@ Contents:
 1.  [Product principles](#product-principles)
 1.  [The experience](#the-experience)
 1.  [The Guessling character](#the-guessling-character)
+1.  [Puzzles](#puzzles)
+1.  [Business model](#business-model)
 1.  [See also](#see-also)
 
 ## Guessling in brief
@@ -195,6 +197,67 @@ The moments that carry the product:
   player can turn off; they're a Should for version 1.0.
 
 [idea-open]: /docs/IDEA.md#assumptions-and-open-questions
+
+## Puzzles
+
+- **What a puzzle is made of:** the hidden thing; a hint that names its
+  category, such as "An animal"; its accepted names, including plurals and
+  common variants; a fact card, the short list of facts Jev reads; and the
+  category's bank of common questions, each with an answer a person has
+  checked for this puzzle.
+- **Launch categories:** animals, foods, everyday objects, and places, each
+  with a bank of about 100 questions.
+- **A good hidden thing** is known by name to most English-speaking adults,
+  has settled facts rather than matters of opinion, and has one clear name.
+  It isn't a person or a brand. Weapons, alcohol, tobacco, drugs, horror,
+  and medical topics stay out of puzzles and hints, which keeps the age
+  rating at a likely 4+; a single "knife" or "beer" puzzle would raise it
+  ([Apple notes on the questionnaire][apple-rating]).
+- **Rhythm:** a new puzzle every day, and the category changes from one day
+  to the next.
+- **Starters:** ten puzzles fill the archive on launch day, so Guessling+
+  holds something from the start.
+- **Corrections:** a reported answer is fixed once the puzzle's day has
+  ended everywhere, so everyone who played that day got the same answers;
+  archive players get the fix. NYT learned this the hard way: in May 2022 it
+  swapped a Wordle answer mid-rollout and left some players on the old word
+  ([daily puzzle notes][daily-fair]).
+
+[apple-rating]: /docs/research/apple-requirements.md#questionnaire-answers-for-guessling
+[daily-fair]: /docs/research/daily-puzzles.md#fairness-and-corrections
+
+## Business model
+
+| What                      | Free | Guessling+ |
+| ------------------------- | ---- | ---------- |
+| Today's puzzle, every day | Yes  | Yes        |
+| Every past daily puzzle   | No   | Yes        |
+| The ten starter puzzles   | No   | Yes        |
+
+- **Prices:** $19.99 a year with a 3-day free trial, the default, or $2.99 a
+  month. The idea's [monetization][idea-money] section has the reasoning and
+  the benchmarks.
+- **What it never sells:** an advantage in today's puzzle, ads, or players'
+  data.
+- **When it asks:** after today's result, as "Play yesterday's?", and on any
+  locked archive puzzle. The paywall can always be closed.
+- **Judges:** a free month of Guessling+ through Apple's offer codes,
+  created once the app is live, covers judging to October 13; the PRD's
+  [purchase requirements][prd-pay] say how.
+- **Where the money is counted:** every sale goes through RevenueCat, whose
+  numbers the Grand Prize shortlist uses.
+- **What a subscription promises:** the Paid Apps Agreement requires "the
+  full amount of content" for the whole subscription, so the archive, the
+  server, and a new puzzle every day run for as long as any Guessling+
+  subscription does, not only through October 22 as the idea's schedule
+  says. Stopping means removing
+  Guessling+ from sale at least 31 days ahead and keeping the archive open
+  until the last subscription ends
+  ([Apple notes on subscriptions][apple-subs]).
+
+[idea-money]: /docs/IDEA.md#monetization
+[prd-pay]: /docs/PRD.md#the-paywall-and-purchases
+[apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
 
 ## See also
 
