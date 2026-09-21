@@ -202,10 +202,19 @@ last two sell daily puzzles.
   "You write the clue. A language model has to guess the word."
   ([project list][gallery-list])
 - The ideation log placed Hunch "among 15 word games though none takes
-  free-form questions" ([ideation log][ideation-r3]).
-- Synthesis: Terravel already has the daily hidden answer and Das Verhör an
-  AI that answers a player's questioning, so Hunch's demo has to show a typed
-  question answered in its first seconds.
+  free-form questions" ([ideation log][ideation-r3]); that rests on taglines.
+- Das Verhör's own project page, read on September 22, 2026, goes further
+  than its tagline: "Each day one new case lands on the table", and "You
+  question the suspects in free text". It is a "daily deduction game for
+  iPhone, in German", in which "Apple's on-device Foundation Models only
+  _phrase_ what the engine has already decided", with "39 cases, one a day,
+  23 September through 31 October 2026" ([Das Verhör][h-dasverhor]).
+- Synthesis: Terravel already has the daily hidden answer, and Das Verhör
+  already has a daily puzzle questioned in free text, though in German and
+  as an interrogation of suspects rather than a hunt for a thing. Hunch's
+  difference is narrower than a new format: English, twenty questions about
+  one hidden thing, and answers kept the same across wordings. Its demo has
+  to show a typed question answered in its first seconds.
 
 [h-akinator]: https://apps.apple.com/us/app/akinator/id933135994
 [h-akinator-vip]: https://apps.apple.com/us/app/akinator-vip/id484090401
@@ -232,6 +241,7 @@ last two sell daily puzzles.
 [h-wp-wordle]: https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Wordle/monthly/2025090100/2026083100
 [gallery-totals]: /docs/research/gallery-2026.md#gallery-totals
 [ideation-r3]: /docs/research/ideation.md#round-3-screening
+[h-dasverhor]: https://devpost.com/software/das-verhor-the-interrogation
 
 ## Subtext, tone tags for autistic and ADHD adults
 
@@ -917,11 +927,13 @@ then the recommended move against the Round 4 order, where the fifth idea
 scored 77.5 and the sixth, Take-Home, 76 ([ideation log][ideation-r4]).
 
 - **Hunch.** For: Akinator's 422,100 ratings and the daily-puzzle habit
-  show the appetite, and no app or gallery entry pairs a shared daily object
-  with free-form questions. Against: players punish contradictory or hedged
-  answers, Jev's negation pairs and borderline flips can produce both, and a
-  $0.99-a-month rival answers on the device. Synthesis: hold at first, and
-  build and test answer consistency before anything else.
+  show the appetite, and no app found pairs a shared daily object with
+  free-form questions in English. Against: Das Verhör, a German entry in the
+  gallery, already runs a daily case questioned in free text; players punish
+  contradictory or hedged answers, Jev's negation pairs and borderline flips
+  can produce both, and a $0.99-a-month rival answers on the device.
+  Synthesis: hold at first, and build and test answer consistency before
+  anything else.
 - **Subtext.** For: the need is documented, autistic adults already use
   chatbots to read messages, and r/ADHD and r/autism each draw about 100 new
   posts a day. Against: a free app built for autistic adults, with the same
