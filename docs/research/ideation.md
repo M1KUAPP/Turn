@@ -485,13 +485,14 @@ Borrowed from the runners-up:
   paraphrases reach the same bank question and negated pairs agree, and
   report the figures in the write-up.
 - **From Flagged's "Jev got this wrong" button:** a "Report this answer"
-  button sends a question and its answer to the team, who fix the card for
-  the players who come after.
+  button sends a question and its answer to the team, who fix the card once
+  the day ends, so everyone gets the same answers that day.
 
 **Name:** Guessling. No App Store title found through Apple's iTunes Search
 API on September 22, 2026 matches it, and no gallery project uses it. The
 store name "Guessling: Daily 20 Questions" has 29 characters, within the
-limit of 30. The Guessling is also the game's character, who answers with a
+limit of 30, and the subtitle "Ask anything. Guess the thing." has 30. The
+Guessling is also the game's character, who answers with a
 nod, a head shake, or a shrug; that gives the game the tone Best Game asks
 for.
 
@@ -573,28 +574,39 @@ context.
 
 ### Stack and data flow
 
-- **App:** Expo with TypeScript and `react-native-purchases`, 10.10.1 on
+- **App:** for a team that writes TypeScript, Expo with
+  `react-native-purchases`, 10.10.1 on
   September 21, 2026, with RevenueCat Paywalls. One language runs from the
   app to the backend and Jev's official JavaScript SDK. A Swift team would
   build the same screens in SwiftUI with purchases-ios.
-- **Backend:** one Cloudflare Worker, one of the runtimes that Jev's
-  JavaScript SDK detects, with the key in the Worker's secrets and the model
-  pinned to `jev-1.13.0`. Workers KV holds the cards, their checked bank
-  answers, the daily schedule, and each day's live answers. The secret never
-  ships in the app: the Worker sends the hint and checks guesses.
+- **Backend:** one Cloudflare Worker, with the key in the Worker's secrets
+  and the model pinned to `jev-1.13.0`. Jev's JavaScript SDK declares Node 20
+  or newer, so the first day tests it in a Worker; if it fails there, the
+  Worker calls the HTTP API directly, with backoff. SDK error text never
+  reaches the app, since an open issue reports the key echoed into
+  connection errors. Workers KV holds the cards, their checked bank answers,
+  the daily schedule, and each day's answers. The secret never ships in the
+  app: the Worker sends the hint and checks guesses.
 - **Per question:** the app sends today's number and the question; the
   Worker sends Jev one request with a Choice over that category's bank
   questions plus "none", and a Noul asking whether the text is a yes-or-no
   question about the hidden thing. A confident match returns the checked
-  answer. "None" gets a live Noul against the card: above 0.7 is Yes, below
-  0.3 is No, and anything between is "Ask another way", which costs no
-  question. A live answer is cached for the day.
+  answer, and the match is cached for the day by wording. "None" gets a live
+  Noul against the card: above 0.7 is Yes, below 0.3 is No, and anything
+  between is "Ask another way", which costs no question. A live answer is
+  cached for the day too. Questions about letters or spelling are answered
+  in code from the card, because Jev "does not count reliably". If Jev is
+  busy or down, the Worker still answers exact bank wordings in code.
 - **Authoring:** a script runs Jev over every bank question and its negation
   for each card and lists answers between 0.3 and 0.7 and negated pairs that
   disagree; a person fixes them before the card ships.
 - **Data:** only the typed questions reach TypeSafe, after the player agrees
-  to a notice that names it. There are no accounts; RevenueCat's anonymous
-  IDs carry the purchase.
+  to a notice that names it and asks them not to type personal information.
+  TypeSafe doesn't knowingly handle personal data from anyone under 18, so
+  the request to TypeSafe on September 22 also asks whether younger players
+  may use the game, and whether the notice and the privacy policy may name
+  TypeSafe. There are no accounts; RevenueCat's anonymous IDs carry the
+  purchase.
 
 ### Schedule
 
@@ -630,9 +642,9 @@ context.
 From the context's [review essentials][ctx-apple-r9]:
 
 - The subscriptions go in the same submission as the first build.
-- The paywall shows the billed amount first, the trial, the renewal, how to
-  cancel, Restore Purchases, and links to the Terms of Use and the privacy
-  policy, which also appear in the metadata.
+- The paywall makes the billed amount the most prominent price and shows
+  the trial, the renewal, how to cancel, Restore Purchases, and links to the
+  Terms of Use and the privacy policy, which also appear in the metadata.
 - Permission comes before the first question goes to TypeSafe (5.1.2(i)),
   and the privacy label declares "Purchases" and the typed questions.
 - No accounts, so no deletion flow, and no third-party login.
