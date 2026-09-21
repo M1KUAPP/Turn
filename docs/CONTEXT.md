@@ -729,6 +729,8 @@ before relying on an answer; the brief's
 
 - [Brief](/docs/BRIEF.md): what Shipaton 2026 requires, its dates, prizes,
   and judging.
+- [Idea](/docs/IDEA.md): the app chosen for Shipaton 2026 through ten rounds
+  of ideation, with Jev built in.
 - [Official rules][rules]: the binding terms, on Devpost.
 - [Past winners notes](/docs/research/past-winners.md): every placed entry of
   the 2024 Ship-a-ton, Shipaton 2025, and Shipyard 2026, with sources.
