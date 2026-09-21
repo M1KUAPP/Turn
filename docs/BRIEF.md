@@ -12,6 +12,8 @@ Contents:
 1.  [Submission checklist](#submission-checklist)
 1.  [Judging process](#judging-process)
 1.  [Prizes and categories](#prizes-and-categories)
+1.  [Rules to watch](#rules-to-watch)
+1.  [Resources and perks](#resources-and-perks)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -255,6 +257,76 @@ What this means for an entry:
 [cat-layers]: /docs/sources/www.shipathon.com/[]-categories-growth-loop-award.md
 [cat-stripe]: /docs/sources/www.shipathon.com/[]-categories-funnel-vision-award.md
 [cat-coi]: /docs/sources/www.shipathon.com/[]-categories-conflict-of-interest-award.md
+
+## Rules to watch
+
+- Read the [official rules](https://revenuecat-shipaton-2026.devpost.com/rules)
+  before submitting. They govern eligibility, deadlines, and legal terms. The
+  captured sources say nothing about IP ownership, taxes, or disqualification,
+  so check those there.
+- The demo video carries at most 2 minutes of essential footage, is public or
+  unlisted on YouTube or Vimeo, and has no third-party trademarks or
+  copyrighted music unless you have permission to use them.
+- For the Influencer Awards, "do not use the likeness or brand of the
+  influencers". Get express written consent before using a creator's name,
+  image, voice, logo, or likeness in the product, store listing, or
+  marketing.
+- Everything you submit must be in English, or come with an English
+  translation.
+- AI-built apps are welcome ("Any AI tool. Any app idea. Just ship it."), but
+  "don't let AI write your whole description."
+- Enter a sponsor category only once the integration works and you have every
+  detail it asks for.
+- The app must work as the video shows; a RevenueCat developer advocate checks
+  before the winners are final.
+- Winners' app icons and a screenshot are used in marketing, including the
+  Times Square billboard, and demo videos become public when the winners are
+  published.
+- Prize money is sent directly to the winner's bank account. Attending in New
+  York is not required: you may send someone on your behalf or receive the
+  award and prize fully remotely.
+
+## Resources and perks
+
+- **Ship Kit:** 28 sponsor perks, most of which unlock at five milestones:
+  registration complete, RevenueCat project created, first test purchase,
+  first store API call, and first real purchase. RevenueCat tracks progress
+  and emails each perk. Allow 3 to 5 business days after registering; after 7
+  days, write to `shipkit@revenuecat.com` or ask in `#shipkit-support` on
+  Discord. Examples: no Paddle fees on your first $100k in transaction volume,
+  500 Codemagic build minutes per month, $250 in Stripe credits, and $100 in
+  Sentry credits.
+- **Builder resources:** the "Zero to Ship" quest at
+  https://revenuecat.github.io/start/, the RevenueCat SDK quickstart and
+  codelabs, docs for Android, iOS, React Native with Expo, Kotlin
+  Multiplatform, and Flutter, and the AI Toolkits for RevenueCat SDK at
+  https://github.com/RevenueCat/ai-toolkit, which help coding assistants
+  integrate RevenueCat correctly.
+- **#ShipatonSale:** a directory of 42 community deals on tools and services,
+  each with its own dates. Examples for the final stretch: AcceptMyApp review
+  prep at 30% off with `SHIP30`, Marquee App Store screenshots at 100% off
+  with `SHIPATON26` (500 redemptions), and Lingue's Starter plan free through
+  September 30. You can also list a sale on your own app with the
+  #ShipatonSale hashtag to reach other participants.
+- **Livestreams:** twice a week, with expert guests and live Q&A; the calendar
+  is at https://luma.com/shipaton-live. The last three are "ASO in the age of
+  AI agents" (Tuesday, September 22), a "Final AMA" (Friday, September 25),
+  and a wrap-up celebration (Tuesday, September 29), all at 9AM PT.
+- **Community:** the official Discord at https://discord.gg/shipaton26 for
+  teammates, feedback, and help, with channels such as `#shipkit-support`,
+  `#post-engagement-boost` for build-in-public content, and
+  `#looking-for-google-play-tester`.
+- **IRL events:** local meetups run with partner communities around the
+  world, listed on the Shipaton events page. You can apply to host one;
+  approved organizers get a Meetup-in-a-box kit with swag and an event
+  playbook.
+- **Build-in-public partners:** r/androiddev, HackerNoon (an extra $2,500
+  prize pool for Build-in-Public stories), Product Hunt, and r/AppBusiness.
+- **Students:** besides Next Gen, a campus leaderboard ranks schools, and the
+  school with the most submissions wins a Learning Party sponsored by
+  RevenueCat.
+- **Media kit:** official Shipaton logos, mascot art, wordmarks, and brand
+  colors for videos, social posts, and events.
 
 ## See also
 
