@@ -14,6 +14,8 @@ Contents:
 1.  [Problem and audience](#problem-and-audience)
 1.  [What the app does](#what-the-app-does)
 1.  [How Jev fits](#how-jev-fits)
+1.  [Monetization](#monetization)
+1.  [Categories to enter](#categories-to-enter)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -156,6 +158,69 @@ Data, consent, and terms:
 [jev-prices]: /docs/research/jev.md#jev-prices
 [jev-store]: /docs/research/jev.md#store-review-and-jev
 [jev-terms]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
+
+## Monetization
+
+The context has the [benchmarks and paywall rules][ctx-money]; this is how
+Guessling applies them.
+
+- **Free:** today's puzzle, every day. A daily game that locks its daily
+  puzzle fights its genre.
+- **Guessling+:** one entitlement that opens the archive of every past
+  puzzle: ten at launch, and one more each day. That's how NYT Games sells
+  puzzles, and nothing it promises is missing on launch day.
+- **Plans:** yearly at $19.99 with a 3-day free trial, shown first, and
+  monthly at $2.99. That's below NYT Games' $4.99 to $5.99 a month for a
+  bundle, and above a single 20-questions rival's $0.99 a month.
+- **Paywall:** one RevenueCat Paywall, configured remotely and dismissible,
+  shown after today's result as "Play yesterday's?" and on any locked
+  archive puzzle.
+- **Trial length:** trials started by September 27 convert before September
+  30, while revenue still counts toward the Grand Prize shortlist.
+- **Judges:** one-time-use Apple offer codes for a free month of Guessling+,
+  created once the app is live. A code redeemed on October 1 lasts past the
+  end of judging on October 13, and the daily puzzle needs no code.
+- **What to measure:** paywall views, trial starts, and conversions from
+  RevenueCat's charts, which count production purchases only.
+
+[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+
+## Categories to enter
+
+The brief warns "don't try to jam your app into every prize category", so
+Guessling enters two and the Grand Prize considers it anyway.
+
+- **Best Game, first.** Judges want "strong gameplay, a clear art direction,
+  and a monetization model that fits the genre instead of fighting it", in a
+  game that is "coherent, playable, and convincing as a shipped experience".
+  Guessling brings a proven loop made new by questions in the player's own
+  words, the Guessling's art and tone, and a free daily puzzle with a paid
+  archive. The video shows real play on an iPhone.
+- **HAMM, second.** Judges want "a well-crafted paywall, thoughtful pricing
+  and packaging, strong conversion, and monetization that genuinely fits the
+  product". Guessling brings a paywall at the moment a player wants more,
+  two plans with the yearly first, a trial timed to the deadline, and its
+  conversion numbers.
+- **Grand Prize, automatically.** Its shortlist counts revenue as reported
+  in RevenueCat, so every sale goes through RevenueCat.
+
+Left out, with the reason:
+
+- **Growth Loop and #BuildInPublic:** the red team scored both 2 or lower,
+  and Layers would add a tracking prompt to the one submission that can't
+  afford a rejection.
+- **Keep Them Coming Back:** it needs OneSignal and push notifications, which
+  the first version leaves out.
+- **Design and Peace Prize:** the Guessling's art is judged under Best Game,
+  and a game isn't a social-good app.
+- **The five Influencer Awards:** each is a fixed brief, and none asks for a
+  game; the Gaming brief asks for a game backlog.
+- **Catvertising:** Guessling shows no ads.
+- **Ship Kotlin Everywhere and Best App for Galaxy:** they need Google Play
+  or the Galaxy Store.
+- **Funnel Vision, Idea to Income, and Most Viral App:** they need a web
+  funnel, a build on Replit, or Noise's $50 daily minimum.
+- **Next Gen and Conflict of Interest:** they're for students and for staff.
 
 ## See also
 
