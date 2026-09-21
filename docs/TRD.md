@@ -19,6 +19,8 @@ Contents:
 1.  [Data model](#data-model)
 1.  [Worker API](#worker-api)
 1.  [Answer pipeline](#answer-pipeline)
+1.  [Puzzle days and content tooling](#puzzle-days-and-content-tooling)
+1.  [Purchases and entitlements](#purchases-and-entitlements)
 1.  [See also](#see-also)
 
 ## Overview
@@ -509,6 +511,191 @@ const match = await client.systemOne(matchRequest, { signal: budget })
   (SEC-4).
 
 [cf-sdk]: /docs/research/cloudflare-workers.md#the-sdk-under-workerd
+
+## Puzzle days and content tooling
+
+### Dates and numbers
+
+- **Numbering.** Starters are #1 to #10 and have no date. Daily puzzle `n`,
+  from #11 on, belongs to September 13, 2026 plus `n` days, so #11 is
+  Thursday, September 24 and #17 is Wednesday, September 30 (TODAY-3).
+- **Today.** The app sends the device's local date (TODAY-2). A date is
+  today somewhere from 10:00 UTC the day before until 12:00 UTC the day
+  after, about 50 hours, so the Worker accepts a date only in that window
+  ([Cloudflare notes][cf-dates]):
+
+```ts
+function isPlayableDate(localDate: string, now = Date.now()): boolean {
+  const earliest = new Date(now - 12 * 3_600_000).toISOString().slice(0, 10)
+  const latest = new Date(now + 14 * 3_600_000).toISOString().slice(0, 10)
+  return /^\d{4}-\d{2}-\d{2}$/.test(localDate) && localDate >= earliest && localDate <= latest
+}
+```
+
+- **Past midnight.** A player with a round still `playing` on puzzle `n`
+  may keep taking turns on it, without Guessling+, until 12:00 UTC two days
+  after `n`'s date. That's at least 24 hours after their local midnight in
+  every time zone (TODAY-5).
+- **The archive.** For a player, the archive is the starters plus every
+  daily puzzle dated before their device's date (ARCHIVE-1).
+- **A day ends everywhere** at 12:00 UTC on the day after the puzzle's date,
+  when UTC−12 reaches midnight. Only then can a stored answer change
+  (CONTENT-8).
+- **The clock.** In a deployed Worker, `Date.now()` moves only on I/O,
+  which is close enough for choosing a date.
+
+[cf-dates]: /docs/research/cloudflare-workers.md#choosing-todays-puzzle-for-a-players-date
+
+### From draft to published puzzle
+
+The content lives in the repository as JSON, and the scripts, run with Bun,
+take a puzzle from draft to published:
+
+1.  **`check.ts <n>`** asks Jev every bank question and its negation, with
+    the card as the state, several questions per request and at most eight
+    requests at once, since TypeSafe's own cookbook notes the public
+    endpoint "rate-limits above roughly eight" ([Cloudflare notes][cf-fetch]).
+    It writes
+    `content/review/<n>.csv` with each probability and flags every answer
+    between 0.3 and 0.7 and every pair whose answers agree when they should
+    differ (CONTENT-4).
+2.  **A person** fills in `checked` for every flagged entry and copies the
+    clear answers as they stand.
+3.  **`publish.ts <n>`** refuses a puzzle unless every bank id and negation
+    is checked, the names are normalized, the date matches the number, the
+    card has at most 40 facts, and the bank at most 127 questions
+    (CONTENT-3, CONTENT-5). It then writes `puzzle:<n>:<rev>` and points
+    `live:<n>` at it, with `wrangler kv key put --remote`, since Wrangler 4
+    writes to local storage without that flag. A daily puzzle goes up at
+    least two days before its date (CONTENT-2).
+4.  **`consistency.ts <category>`** sends the category's paraphrase set
+    through the match request and reports the share that reach the right
+    entry and the share of questions outside the bank that match anything,
+    saved with the date, the model, and the bank version (CONTENT-6,
+    METRIC-4).
+
+The first two puzzles are the pilot: they show how many answers a person
+must fix, and the idea's [bank rule][idea-stack] applies if that's too
+many. The schedule is reviewed against the content rules before each
+puzzle is published (CONTENT-7, CONTENT-9).
+
+[cf-fetch]: /docs/research/cloudflare-workers.md#calling-the-system-one-api-with-fetch
+[idea-stack]: /docs/IDEA.md#stack-and-data-flow
+
+### Fixing a puzzle after its day
+
+1.  `reports.ts <n>` lists a puzzle's reports from the admin route
+    (REPORT-2).
+2.  A person corrects `checked` or the card, reruns `check.ts`, and
+    publishes a new revision; `live:<n>` moves only after the day has ended
+    everywhere.
+3.  `forget.ts <n> <wording>...` deletes the corrected wordings' stored
+    answers, which the Worker allows only once the day has ended
+    everywhere. Archive players then get the fixed answer (ARCHIVE-3).
+
+## Purchases and entitlements
+
+### RevenueCat and App Store Connect setup
+
+| Item                | Value                                                                    |
+| ------------------- | ------------------------------------------------------------------------ |
+| Entitlement         | lookup key `plus`, shown to players as Guessling+                        |
+| Products            | `guessling_plus_yearly` at $19.99 and `guessling_plus_monthly` at $2.99  |
+| Subscription group  | Guessling+, with both products at the same level                         |
+| Introductory offer  | a 3-day free trial on the yearly product                                 |
+| Offering            | `default`, with the `$rc_annual` and `$rc_monthly` packages              |
+| Paywall             | one RevenueCat Paywall on `default`, yearly preselected (PAY-1, PAY-2)   |
+| In-App Purchase Key | uploaded to RevenueCat, which StoreKit 2 needs to record transactions    |
+| Sandbox access      | "Anybody", at least until approval, since App Review buys in the sandbox |
+
+- The paywall is built in RevenueCat's editor with Close ("Navigate back"),
+  Restore Purchases, Terms of Use, and Privacy Policy buttons, since
+  current paywalls ignore `displayCloseButton` (PAY-3). Keeping both
+  products at one level means an offer code on either is never a
+  downgrade.
+- The Worker needs the entitlement's object ID, such as `entla1b2c3d4e5`,
+  not its lookup key; `GET /v2/projects/{project_id}/entitlements` lists
+  both ([RevenueCat notes][rc-v2-ids]).
+
+[rc-v2-ids]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+
+### Purchases in the app
+
+- `Purchases.configure({ apiKey })` runs once at launch with the public
+  `appl_` key from `EXPO_PUBLIC_RC_IOS_KEY`; with no `appUserID`, the SDK
+  makes an anonymous ID, `$RCAnonymousID:` and 32 lowercase hex
+  characters, which the app sends as `X-Guessling-Player`.
+- `Purchases.addCustomerInfoUpdateListener` keeps an `isPlus` flag, true
+  while `customerInfo.entitlements.active.plus` exists. It drives the locks
+  in the archive; the Worker still decides access (ARCHIVE-4).
+- "Play yesterday's?" and a locked archive puzzle call
+  `RevenueCatUI.presentPaywall()` (PAY-4). On `PURCHASED` or `RESTORED`,
+  the app sends its next archive request with `X-Guessling-Refresh: 1` and
+  opens the puzzle (PAY-5).
+- Settings calls `Purchases.restorePurchases()` only from the Restore
+  Purchases tap, since a programmatic restore can prompt for sign-in
+  (PAY-6). Redeem Code calls `Purchases.presentCodeRedemptionSheet()`
+  (PAY-8).
+- When the app returns to the foreground, it calls `getCustomerInfo()`, so
+  a code redeemed through its link shows up without a restart; Restore
+  Purchases is the fallback (PAY-7).
+- A reinstall gets a new anonymous ID; Restore Purchases, with RevenueCat's
+  default transfer behavior, merges the old and new IDs.
+
+### The server's entitlement check
+
+The Worker asks RevenueCat's API v2 for the player's active entitlements,
+with a v2 secret key limited to `customer_information:customers:read`,
+which allows 480 requests a minute. API v1 would create a customer for any
+unknown ID, and a v2 `404` means RevenueCat has never seen the ID
+([RevenueCat notes][rc-v2]).
+
+```ts
+const ANONYMOUS_ID = /^\$RCAnonymousID:[a-z0-9]{32}$/
+
+export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boolean> {
+  if (!ANONYMOUS_ID.test(appUserId)) return false
+  const url =
+    `https://api.revenuecat.com/v2/projects/${env.RC_PROJECT_ID}` +
+    `/customers/${encodeURIComponent(appUserId)}/active_entitlements`
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${env.RC_SECRET_KEY}` } })
+  if (res.status === 404) return false // RevenueCat has never seen this ID
+  if (!res.ok) throw new Unconfirmed(res.status) // answered as 503 unconfirmed (STATE-5)
+  const body = (await res.json()) as { items: { entitlement_id: string; expires_at: number | null }[] }
+  return body.items.some(
+    (e) => e.entitlement_id === env.RC_ENTITLEMENT_ID && (e.expires_at === null || e.expires_at > Date.now())
+  )
+}
+```
+
+- A yes is cached, by the hashed ID, until the entitlement expires or for
+  15 minutes, whichever comes first; a no for 1 minute. The refresh header
+  skips the cache.
+- An app user ID works like a bearer value: nothing ties it to a device.
+  Guessing one is impractical, but a player who shares theirs shares
+  Guessling+, which the team accepts.
+
+[rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+
+### The judges' offer code
+
+- Once the app is Ready for Sale, the team creates a custom offer code on
+  the monthly product: one month free, auto-renewal off, open to new,
+  existing, and expired subscribers, with a redemption limit of a few
+  dozen. Codes can take up to an hour to work (PAY-7).
+- Judges get the redemption link, in the format RevenueCat documents,
+  rather than the in-app sheet, which RevenueCat calls "extremely
+  unstable":
+
+```text
+https://apps.apple.com/redeem?ctx=offercodes&id={apple_app_id}&code={code}
+```
+
+- Before approval, sandbox codes, created in batches of 10 or more, test
+  the same flow in a TestFlight build through the Sandbox Account settings
+  (RELEASE-2) ([RevenueCat notes on offer codes][rc-codes]).
+
+[rc-codes]: /docs/research/revenuecat-expo.md#apple-offer-codes
 
 ## See also
 
