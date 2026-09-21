@@ -645,7 +645,7 @@ corpus = ' '.join(
 
 MONTHS = 'January|February|March|April|May|June|July|August|September|October|November|December'
 patterns = [
-    r'\$\s?\d[\d,]*(?:\.\d+)?\s?(?:[kKmM]\b|million|billion)?',
+    r'\$\s?\d(?:[\d,]*\d)?(?:\.\d+)?\s?(?:[kKmM]\b|million|billion)?',
     r'\d+(?:\.\d+)?\s?%',
     r'\b\d{1,2}(?::\d{2})?\s?(?:AM|PM|am|pm|a\.m\.|p\.m\.)',
     rf'\b(?:{MONTHS})\s\d{{1,2}}(?:st|nd|rd|th)?\b',
