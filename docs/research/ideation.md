@@ -12,6 +12,7 @@ Contents:
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 1.  [Round 3: screening](#round-3-screening)
+1.  [Round 4: scoring](#round-4-scoring)
 
 ## Round 1: constraints and rubric
 
@@ -240,3 +241,62 @@ Category fit and Differentiation scores weigh crowding idea by idea.
 
 **Decision:** 1 to 9, 12 to 17, 19 to 21, 23, and 27 go to Round 4 with
 their conditions.
+
+## Round 4: scoring
+
+**Question:** which survivors are strongest?
+
+**Method:** two scorers rated the 20 survivors on the rubric, with a one-line
+reason per score. The log's author scored first; a subagent then scored
+blind, from the same write-ups, the rubric, the Jev notes, the gallery notes,
+and the category pages, without seeing the first scores. Each criterion's
+score is the average of the two, and ties go to buildability.
+
+| Rank | #   | Idea          | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
+| ---- | --- | ------------- | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
+| 1    | 19  | Hunch         | 3.5 | 4     | 5   | 4     | 5    | 4.5    | 4        | 83.5  |
+| 2    | 23  | Subtext       | 4   | 4     | 5   | 4     | 4    | 3      | 4        | 81    |
+| 3    | 20  | Flagged       | 3   | 4.5   | 4.5 | 4     | 4.5  | 4      | 4        | 79.5  |
+| 4    | 21  | SaySo         | 4   | 4     | 3.5 | 3.5   | 4.5  | 5      | 2.5      | 78.5  |
+| 5    | 13  | Earshot       | 4   | 3     | 4.5 | 3     | 5    | 5      | 3        | 77.5  |
+| 6    | 16  | Take-Home     | 4.5 | 2.5   | 4.5 | 3.5   | 4    | 4      | 3.5      | 76    |
+| 7    | 3   | Side Order    | 4   | 3.5   | 4   | 3.5   | 4.5  | 3.5    | 2.5      | 75    |
+| 8    | 2   | Cannery       | 3.5 | 4     | 3.5 | 4     | 4    | 3.5    | 3        | 74    |
+| 9    | 6   | Pocket Studio | 4   | 4     | 3.5 | 3.5   | 4    | 3      | 2.5      | 73.5  |
+| 10   | 5   | Midstride     | 4   | 3     | 3.5 | 4     | 4    | 3.5    | 3.5      | 73    |
+| 11   | 4   | Lasted        | 4   | 4     | 3.5 | 3.5   | 3    | 3.5    | 2.5      | 72.5  |
+| 12   | 12  | Sift          | 3   | 3     | 4.5 | 3.5   | 5    | 4      | 3        | 72    |
+| 13   | 14  | Judgy         | 3   | 4     | 3.5 | 3     | 4    | 4      | 3        | 69.5  |
+| 14   | 15  | Sleep On It   | 4   | 3     | 2.5 | 4     | 3    | 4      | 4        | 69.5  |
+| 15   | 17  | Ebb           | 3   | 2     | 4   | 4     | 4    | 4.5    | 4        | 68    |
+| 16   | 27  | Stillwake     | 3.5 | 3     | 2.5 | 4     | 4    | 3.5    | 3        | 67    |
+| 17   | 1   | Blanks        | 3   | 2.5   | 3.5 | 4     | 4    | 4      | 2.5      | 66    |
+| 18   | 8   | Hold the Line | 2.5 | 3     | 4.5 | 3.5   | 4    | 2      | 3        | 63.5  |
+| 19   | 9   | Pinchlist     | 3.5 | 3     | 2   | 3     | 3    | 3.5    | 4        | 61.5  |
+| 20   | 7   | Preflight     | 3   | 2     | 4.5 | 4     | 3.5  | 1.5    | 3        | 61.5  |
+
+Scores two points apart, settled at the average with a reason:
+
+- **Side Order, Jev centrality, 5 against 3:** a list of food words tags
+  most menu lines, but Jev reads the dishes and wording such a list misses.
+  Settled at 4.
+- **Sleep On It, monetization fit, 3 against 5:** a small savings app sells
+  weakly, but the paywall lands right after "You kept $140". Settled at 4.
+- **Ebb, Jev centrality, 5 against 3:** a symptom checklist records the same
+  data, but free text turned into tags as she types is what keeps a diary
+  going. Settled at 4.
+
+What the scores show:
+
+- The two scorers agreed on four of the top five: Hunch, Subtext, Flagged,
+  and SaySo. The fifth place split between Earshot and Take-Home.
+- Only Hunch and Subtext have no workable stand-in for Jev; both scorers gave
+  them a 5 for Jev centrality.
+- No Influencer Award idea reached the top five. Two briefs are crowded
+  (Career Coaching and Productivity), and in the other three a short form
+  could do much of Jev's job.
+- Three of the top five target the Peace Prize, so at most one of them can be
+  the entry.
+
+**Decision:** Top five, in order: Hunch, Subtext, Flagged, SaySo, and
+Earshot. They go to Round 5.
