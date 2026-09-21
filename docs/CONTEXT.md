@@ -10,6 +10,7 @@ cite a source for each claim; their web sources were read on September 21, 2026.
 
 Contents:
 
+1.  [Key takeaways](#key-takeaways)
 1.  [What the official rules add](#what-the-official-rules-add)
 1.  [Past winners](#past-winners)
 1.  [What wins each category](#what-wins-each-category)
@@ -19,7 +20,49 @@ Contents:
 1.  [Retention and push notifications](#retention-and-push-notifications)
 1.  [Demo video and write-up](#demo-video-and-write-up)
 1.  [Related materials](#related-materials)
+1.  [Open questions](#open-questions)
 1.  [See also](#see-also)
+
+## Key takeaways
+
+- **The official rules settle several open points.** Winners are announced
+  October 21, companies may enter, and the Grand Prize shortlist uses revenue
+  "as reported in RevenueCat". See
+  [What the official rules add](#what-the-official-rules-add).
+- **Ship to the App Store first.** Apple says 90% of submissions are reviewed
+  in under 24 hours on average. A new personal Google Play account can't
+  finish its test by September 30, and the Galaxy Store needs seller status
+  and a supported SDK. See
+  [Getting through store review](#getting-through-store-review).
+- **Submit the first purchase with the app.** The app version, the
+  subscription group, and every subscription go in one draft submission,
+  after the Paid Apps Agreement, tax, and banking. See
+  [Apple App Store review essentials](#apple-app-store-review-essentials).
+- **Monetize from the first build.** Hard paywalls turn a median 10.7% of
+  downloads into payers within 35 days, against 2.1% for freemium, and trials
+  start on day 0. See [Monetization and paywalls](#monetization-and-paywalls).
+- **Revenue gets you shortlisted; the story wins.** Only 10 of the 30 2025
+  winners' write-ups gave numbers, and RevenueCat says polish lost to story.
+  See [Past winners](#past-winners).
+- **Enter categories you can prove.** Sponsor judges rewarded depth: Journeys
+  for OneSignal, community and open source for Kotlin, an observable loop for
+  Layers. See [What wins each category](#what-wins-each-category).
+- **Win the first two minutes of video.** Name the problem and the app within
+  15 seconds and show the purchase before 2:00. See
+  [Demo video and write-up](#demo-video-and-write-up).
+- **Export two screenshot sizes:** the submission's 1179 × 2556 and the App
+  Store's 6.9-inch or 6.5-inch set. See
+  [Apple App Store review essentials](#apple-app-store-review-essentials).
+- **Don't count on an extension.** Past deadlines moved for slow review, but
+  only at the last minute. See [Past winners](#past-winners).
+- **Let the tools do the setup.** RevenueCat's AI Toolkit and MCP server help
+  coding agents integrate the SDK, and the Test Store works before any store
+  setup, but its key must never ship. See
+  [Related materials](#related-materials).
+- **Avoid the policy traps:** in-app account deletion, explicit opt-in for
+  promotional pushes, the "Purchases" privacy label, and Google Play's Data
+  safety form. See
+  [Retention and push notifications](#retention-and-push-notifications).
 
 ## What the official rules add
 
@@ -45,7 +88,7 @@ Shipaton page. What they add or change:
   device-specific hardware". Ties go to "the tied Submission with the highest
   score in the first applicable criterion".
 - **Prize limits.** A project may enter only one Influencer Award, and the
-  rules set no other cap.
+  rules set no other cap; see [Open questions](#open-questions).
 - **Travel.** "Only the Grand Prize and 1st Place: #BuildInPublic Award
   include travel and accommodation."
 - **Category fields.** The rules ask for the Stripe Project ID, the Replit
@@ -218,7 +261,8 @@ past winners are synthesis.
   Replit, so Replit apps ship on iOS, which RevenueCat also advises. Replit's
   Agent can create the RevenueCat project and wire up purchases. The "Replit
   preview URL" the rules ask for is undefined, and Replit's development URLs
-  "can change each time you reopen the app".
+  "can change each time you reopen the app"; see
+  [Open questions](#open-questions).
 - **Growth Loop.** The Layers SDK is required "because the loop has to be
   observable to be judged", and the installation must be verifiable before
   judging. Layers Pro is free for entrants "through the end of Shipaton on
@@ -227,7 +271,7 @@ past winners are synthesis.
   release a new version of your app at all." Funnels are included in
   RevenueCat Pro and need a connected payment provider, and Stripe Projects
   can provision RevenueCat from the Stripe CLI. The "Stripe Project ID" the
-  rules ask for is undefined.
+  rules ask for is undefined; see [Open questions](#open-questions).
 
 ## Monetization and paywalls
 
@@ -305,7 +349,8 @@ status and a supported SDK.
 - **Accounts.** An app that creates accounts must let users delete them in
   the app (5.1.1(v)). An app with a social login must also offer a login that
   limits data to name and email, can hide the email, and doesn't track for
-  ads (4.8). Sign in with Apple meets this, but 4.8 doesn't name it.
+  ads (4.8). Sign in with Apple meets this, but 4.8 doesn't name it; see
+  [Open questions](#open-questions).
 - **Web checkout.** On the US storefront, apps may include buttons and links
   to web purchases (3.1.1(a)). Elsewhere, such links need one of Apple's
   entitlements or aren't allowed.
@@ -585,6 +630,51 @@ or brand without "express written consent".
 [dp-2024-gallery]: https://revenuecat-ship-a-ton.devpost.com/project-gallery
 [dp-2025-gallery]: https://revenuecat-shipaton-2025.devpost.com/project-gallery
 [dp-shipyard-gallery]: https://revenuecat-shipyard-2026.devpost.com/project-gallery
+
+## Open questions
+
+The research left these open. Ask `shipaton@revenuecat.com` or the Discord
+before relying on an answer; the brief's
+[open questions](/docs/BRIEF.md#open-questions) list more.
+
+- **Prize limits.** The rules limit a project to one Influencer Award and set
+  no other cap, but JetBrains's page says "a single app can take home
+  one overall award". Safe default: enter every category that fits, and
+  expect at most one prize.
+- **Stripe Project ID.** Funnel Vision asks for it, and no Shipaton source
+  defines it. It most likely means the ID that `stripe projects list` prints
+  for the Stripe project that provisioned RevenueCat. Safe default: confirm
+  with the organizers.
+- **Replit preview URL.** Idea to Income asks for it, but neither the rules
+  nor Replit define it, and Replit's development URLs can change each time
+  the app reopens. Safe default: also give the App Store link, and ask which
+  URL judges want.
+- **Funnel Vision checkout.** The rules want "Stripe as the checkout
+  provider", but no source says whether a RevenueCat Billing funnel, which
+  runs on Stripe, counts, or over what period payment volume is measured.
+  Safe default: ask, and report volume from launch to the deadline.
+- **Sign in with Apple.** The brief's source calls it a requirement whenever
+  an app offers third-party login, while guideline 4.8 asks only for an
+  equivalent private login. Safe default: add Sign in with Apple.
+- **Expedited review.** Apple allows it for an event "you're directly
+  associated with", but RevenueCat's guidance is not to use it for Shipaton.
+  Safe default: don't plan on it.
+- **Dismissing a hard paywall.** RevenueCat's guide says users shouldn't be
+  able to dismiss one; Google Play lists a missing or hidden dismiss button as
+  a violation when users could use the app without subscribing. Safe default:
+  on Google Play, show a clear dismiss button whenever any part of the app is
+  free.
+- **Galaxy seller type.** RevenueCat's guide says to register as a Corporate
+  Seller with a D-U-N-S number, but Samsung also accepts private sellers. Safe
+  default: apply through whichever route you can finish fastest.
+- **Organization accounts on Google Play.** The 14-day test rule names only
+  personal accounts, and no Google page states the rule for organizations,
+  which need a D-U-N-S number. Safe default: don't rely on the difference.
+- **RevenueCat Ads access.** No source says how long access takes. Safe
+  default: request it now if you're entering Catvertising.
+- **Past winners' figures.** Traction numbers in past write-ups are
+  self-reported and unaudited. Safe default: treat them as claims, not
+  benchmarks.
 
 ## See also
 
