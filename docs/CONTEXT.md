@@ -25,6 +25,8 @@ Contents:
 
 ## Key takeaways
 
+These are synthesis from the sections they link to.
+
 - **The official rules settle several open points.** Winners are announced
   October 21, companies may enter, judges need free access until judging ends
   on October 13, and the Grand Prize shortlist uses revenue "as reported in
@@ -65,6 +67,7 @@ Contents:
 - **Avoid the policy traps:** in-app account deletion, explicit opt-in for
   promotional pushes, the "Purchases" privacy label, and Google Play's Data
   safety form. See
+  [Getting through store review](#getting-through-store-review) and
   [Retention and push notifications](#retention-and-push-notifications).
 
 ## What the official rules add
@@ -158,10 +161,10 @@ from them are synthesis.
   category answers aren't public, and for the Grand Prize they had to include
   "any relevant numbers". The big traction claims came from growth awards:
   the Grand Prize, Buzziest Launch, and OneSignal Boost. This refines the
-  brief's "concrete numbers" pattern. On the content entrants posted,
-  RevenueCat said: "there were apps that made really highly polished content
-  that didn't win and there were apps that made not super highly polished
-  content that did win. It was more about the story".
+  brief's "Concrete numbers in the write-up" pattern. On the content entrants
+  posted, RevenueCat said: "there were apps that made really highly polished
+  content that didn't win and there were apps that made not super highly
+  polished content that did win. It was more about the story".
 - **Deadlines moved at the last minute.** The 2024 deadline moved by a day,
   and the 2025 deadline by 12 hours because "App Review has been moving a
   little slower than usual this week". Plan for slow review, not for an
@@ -215,24 +218,24 @@ past winners are synthesis.
 - **#BuildInPublic.** 2026: "Audience size does not matter. The quality and
   usefulness of the journey does." Judges check "whether public feedback led
   to changes". Past winners posted daily or nearly daily and showed changes
-  that came from the public, such as a slow paywall "flagged by three users".
-  Small accounts placed: Tomo Japan's X account had "65+ Followers". What put
-  Gurwi "over the edge" was tutorials, an open-sourced implementation, and
-  replies encouraging other builders.
+  that came from the public, such as a slow paywall "flagged by three users"
+  in Tomo Japan (2025). Small accounts placed: Tomo Japan's X account had
+  "65+ Followers". What put Gurwi (2025) "over the edge" was tutorials, an
+  open-sourced implementation, and replies encouraging other builders.
 - **HAMM.** 2026 wants "a well-crafted paywall, thoughtful pricing and
   packaging, strong conversion, and monetization that genuinely fits the
   product". Several winners had a one-line model tied to the app's purpose,
-  such as Vector Guard's "1:50 Justice Model", where each subscription funds
-  50 free accounts. Tactics from other winners fit too: a paywall right after
-  sign-up "gave us 50 new trials in just one single day" for Gurwi, and Remy
-  Reminders paired an onboarding trial with "a 50% off offer" to win back
-  users who skipped it.
+  such as Vector Guard's "1:50 Justice Model" (2025), where each subscription
+  funds 50 free accounts. Tactics from other winners fit too: a paywall right
+  after sign-up "gave us 50 new trials in just one single day" for Gurwi
+  (2025), and Remy Reminders (Shipyard 2026) paired an onboarding trial with
+  "a 50% off offer" to win back users who skipped it.
 - **Design.** 2026 looks for "taste, care, and execution" and "A demo video
   that clearly shows the app in motion". Several past winners had one
   signature interaction built on platform frameworks, such as Dayloop's
-  Vision-based "Auto Face Alignment" and Flowmino's Screen Time blocking with
-  "gentle animations" and "haptics". Five of the six design winners were
-  native Swift apps.
+  Vision-based "Auto Face Alignment" (2025) and Flowmino's Screen Time
+  blocking with "gentle animations" and "haptics" (2024). Five of the six
+  design winners were native Swift apps.
 - **Peace Prize.** 2026 asks "who the app helps, why the problem matters" and
   for "early evidence of usefulness, adoption, feedback, or real-world
   benefit". All three 2025 winners grew out of the builder's own family.
@@ -355,10 +358,11 @@ More in the [monetization notes][bp-money].
 The brief covers [review timing](/docs/BRIEF.md#app-review-timing), account
 costs, and common rejections. The stores' own documents add the rules below,
 and the [best practices notes](/docs/research/best-practices.md) have the
-sources. Synthesis: for a team submitting this week, the App Store is the
-realistic first store. A new personal Google Play account that starts its
-required test now can't finish it by September 30, and the Galaxy Store needs
-commercial seller status and a supported SDK.
+sources. Synthesis: for a team submitting in the last week of September, the
+App Store is the realistic first store. A new personal Google Play account
+that starts its required test after September 16 can't finish it by
+September 30, and the Galaxy Store needs commercial seller status and a
+supported SDK.
 
 ### Apple App Store review essentials
 
@@ -392,11 +396,12 @@ commercial seller status and a supported SDK.
 
 ### Google Play review essentials
 
-- **A closed test started now ends too late.** Personal accounts created
-  after November 13, 2023 need at least 12 testers opted in for 14 days, then
-  a production access review that "usually takes seven days or less". A test
-  started on September 21 reaches 14 days on October 5; the brief's September
-  16 was the last start date that could end by the deadline.
+- **A closed test started after September 16 ends too late.** Personal
+  accounts created after November 13, 2023 need at least 12 testers opted in
+  for 14 days, then a production access review that "usually takes seven days
+  or less". A test started on September 21 reaches 14 days on October 5; the
+  brief's September 16 was the last start date that could end by the
+  deadline.
 - **Review time.** Some accounts wait "up to seven days or longer in
   exceptional cases", and a change sent during a review can push the app "to
   the back of the app review queue".
@@ -438,8 +443,8 @@ commercial seller status and a supported SDK.
   one to three screenshots appear in search results.
 - **Custom product pages.** Up to 70 per app, once it's live. Apple reports a
   2.5 percentage point average lift over the 1.6% conversion rate of default
-  pages. Synthesis: one page per launch channel is more useful this week than
-  an A/B test.
+  pages. Synthesis: one page per launch channel is more useful before the
+  deadline than an A/B test.
 - **Google Play fields.** The name takes 30 characters, the short description
   80, and the full description 4000. A 512 × 512 icon and a 1024 × 500
   feature graphic are required, with at least two screenshots; Google
@@ -702,7 +707,7 @@ before relying on an answer; the brief's
   personal accounts, and no Google page states the rule for organizations,
   which need a D-U-N-S number. Safe default: don't rely on the difference.
 - **RevenueCat Ads access.** No source says how long access takes. Safe
-  default: request it now if you're entering Catvertising.
+  default: request it as early as you can if you're entering Catvertising.
 - **Past winners' figures.** Traction numbers in past write-ups are
   self-reported and unaudited. Safe default: treat them as claims, not
   benchmarks.
