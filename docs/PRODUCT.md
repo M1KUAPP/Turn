@@ -16,6 +16,8 @@ Contents:
 1.  [Players](#players)
 1.  [Positioning](#positioning)
 1.  [Product principles](#product-principles)
+1.  [The experience](#the-experience)
+1.  [The Guessling character](#the-guessling-character)
 1.  [See also](#see-also)
 
 ## Guessling in brief
@@ -143,6 +145,56 @@ requirements.
 - **Private by default.** No accounts and no tracking. Typed questions reach
   TypeSafe only with the player's permission, and never with anything that
   identifies the player.
+
+## The experience
+
+The daily loop, as a player lives it; the PRD's
+[functional requirements][prd-functional] set every step's rules:
+
+1.  **Open** today's puzzle: the Guessling, the hint, and twenty turns.
+1.  **Choose, the first time only,** after a short notice that says who
+    answers the questions.
+1.  **Ask.** The Guessling nods, shakes its head, or shrugs before the next
+    question can be typed.
+1.  **Guess.** A right guess ends the round with a celebration and the
+    reveal; after twenty turns, the reveal comes anyway.
+1.  **Share** a spoiler-free result, and come back tomorrow.
+1.  **Want more?** Yesterday's puzzle, and every one before it, are a tap
+    away with Guessling+.
+
+The moments that carry the product:
+
+- **The first answer**, the "aha": a question typed in the player's own
+  words, answered at once.
+- **The reveal**: the same answer for everyone, shown the moment the round
+  ends.
+- **The share**: a result that invites a friend without spoiling anything.
+- **The paywall moment**: "Play yesterday's?", offered when a player wants
+  more, never before today's round.
+
+[prd-functional]: /docs/PRD.md#functional-requirements
+
+## The Guessling character
+
+- **Role:** the Guessling knows the day's answer and answers with its whole
+  body: a nod for Yes, a head shake for No, a shrug for "Ask another way",
+  and a celebration when the player finds it. These four reactions are the
+  game's art direction.
+- **Personality:** curious and good-natured. It enjoys being asked, and it
+  never mocks a wrong guess.
+- **Voice:** the answer is always one of three fixed phrases, "Yes", "No",
+  or "Ask another way", so nobody has to read a joke to learn the answer. The
+  humor lives in the character and in the words around the answers, such as
+  the hint and the reveal, and those words stay short and plain.
+- **Art direction:** one simple, expressive character with a silhouette that
+  reads at small sizes. Motion carries the meaning, and every reaction also
+  shows its word, so a round works with the sound off and with Reduce
+  Motion. AI-assisted art is fine, credited openly, as the idea's
+  [safe default][idea-open] says.
+- **Sound and haptics:** a short, distinct cue for each answer, which the
+  player can turn off; they're a Should for version 1.0.
+
+[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
 
 ## See also
 
