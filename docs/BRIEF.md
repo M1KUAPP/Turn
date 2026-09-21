@@ -500,6 +500,8 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
 
 - [Research notes](/docs/research/shipaton-2026.md): per-claim citations and
   the full perk, event, and livestream tables.
+- [Context](/docs/CONTEXT.md): what past winners did, best practices from
+  primary sources, and related materials.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
