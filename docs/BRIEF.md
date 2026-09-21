@@ -14,6 +14,8 @@ Contents:
 1.  [Prizes and categories](#prizes-and-categories)
 1.  [Rules to watch](#rules-to-watch)
 1.  [Resources and perks](#resources-and-perks)
+1.  [Lessons from past winners](#lessons-from-past-winners)
+1.  [Winning playbook](#winning-playbook)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -327,6 +329,100 @@ What this means for an entry:
   RevenueCat.
 - **Media kit:** official Shipaton logos, mascot art, wordmarks, and brand
   colors for videos, social posts, and events.
+
+## Lessons from past winners
+
+These come from earlier editions: the 2024 Ship-a-ton, Shipaton 2025, and
+Shipyard 2026, a separate hackathon built on creator briefs. None of them are
+2026 rules.
+
+- **Payout, 2025 Grand Prize:** finds class-action settlements its users
+  qualify for. "The entire app — design, code, and assets — was produced
+  through AI-assisted development using Claude Code and Cursor."
+- **Gurwi – Learn Anything, 2025 #BuildInPublic:** "over 13,000 users", "more
+  than 1,000 app store reviews", and a "4.9 rating". Its founder posted almost
+  daily, from a separate English X account where RevenueCat's team and the
+  judges were most active.
+- **ReadHim, 2025 Buzziest Launch:** a meme account and a TikTok partner drove
+  a launch that "achieved $1,100 in MRR" in ten days.
+- **Vector Guard, 2025 HAMM:** a "1:50 Justice Model", where every $2.99
+  premium subscription funds 50 free accounts in high-risk ZIP codes.
+- **Karo, 2024 most likely to make money:** tasks sent like chat messages,
+  with a "Blinkist style paywall" and a limited free tier.
+- **Meshing, 2024 #buildinpublic:** Rudrank Riyam tweeted and posted YouTube
+  videos daily, built most features from community suggestions, and put the
+  paywall on the payoff: exporting a gradient as a wallpaper.
+- **Shipyard 2026:** the winning apps "had something in common: focus". It is
+  the closest precedent for the 2026 Influencer Awards, which are also fixed
+  creator briefs.
+
+Patterns across these winners:
+
+- A specific problem, often a personal one, with an origin story.
+- Building in public on several channels, with feedback visibly changing the
+  app.
+- Concrete numbers in the write-up: users, reviews, MRR, installs, revenue.
+- Monetization designed into the product, such as a paywall at the moment of
+  value.
+- AI-assisted building, credited openly.
+- Deep use of the sponsor's tool in sponsor awards.
+
+## Winning playbook
+
+Tips from RevenueCat's "How to win Shipaton" series, written for 2025, and
+from the 2026 guides. Each tip notes which edition it comes from.
+
+### Pick the idea
+
+- "Solve a real problem", "For real people", "In a way that delivers delight
+  or an 'aha' moment" (2025).
+- Start from the problem, talk to people "just to listen", and solve one
+  problem first. Monetizing is a requirement, so ask early users what they
+  would pay (2025).
+- Aim for a Minimum Lovable Product: cut scope ruthlessly but keep the
+  delight (2025). A "small, single-purpose app that solves one thing" can win
+  (2026).
+- For an Influencer Award, pick the brief first and talk to its audience,
+  instead of bending an existing idea to fit (Shipyard 2026).
+
+### Build fast
+
+- The "4-8-24 approach": 4 hours for a first version, 8 hours to polish it
+  enough for real users, and 24 hours over three days to refine, package, and
+  release (2025).
+- Ship 1.0 as quickly as possible to get through app review, then push
+  updates (2026), aiming for weekly ones (2025).
+- "It's okay to be embarrassed about the version you're going to launch"
+  (2025).
+- Use AI for speed, but "The trick is not to ship AI output untouched" (2025).
+
+### Grow after launch
+
+- Aim for "100 paying customers during Shipaton", which the 2025 series calls
+  "ambitious but realistic".
+- Start with your own network, then niche Reddit, Discord, and forum
+  communities, micro-influencers, other participants on the Shipaton Discord,
+  and people at IRL events (2025).
+- Work on discoverability: ASO keywords, benefit-led screenshots and copy,
+  reviews from early users, and specific release notes (2025).
+- "Winning Shipaton isn't just about hitting the biggest numbers. It's about
+  showing clear signs of growth and proving that you've hustled" (2025).
+
+### Pitch the submission
+
+- "A Devpost submission isn't just a checklist of features. It's a pitch."
+  Structure the story with Dan Harmon's Story Circle (2025).
+- Video: "proof first, polish second". Open with the problem, show the app on
+  the device, and show numbers as a before-and-after (2025). Keep the
+  essential part within 2 minutes; the 2025 series allowed three.
+- Description: open with a logline, "For \[who\], \[App Name\] helps \[job to
+  be done\] by \[distinct approach\], so they can \[valuable outcome\]." Then
+  write one paragraph each on the problem, how the app works, and the
+  evidence (2025).
+- Don't write the video and description on the last night; they "are the two
+  things the judges will be scrutinizing the hardest" (Shipyard 2026).
+- Submit early and keep the entry current: edits are allowed until the
+  deadline, so update the numbers before it closes (2026).
 
 ## See also
 
