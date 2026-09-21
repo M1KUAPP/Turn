@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 81 files · ~153,673 words
+- 87 files · ~218,890 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 1164 nodes · 1085 edges · 102 communities (96 shown, 3 thin omitted)
+- 1289 nodes · 1207 edges · 106 communities (100 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `f7a5cace`
+- Built from commit: `b3b987a6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -119,19 +119,23 @@
 - Submission requirements
 - Judging process and criteria
 - Eligibility rules
+- Shipaton 2026 ideation log
+- Tasks
+- How Jev is used
+- Shipaton 2026 idea
 
 ## God Nodes (most connected - your core abstractions)
 
 1. `Prizes` - 58 edges
 2. `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` - 44 edges
 3. `Shipaton assets` - 23 edges
-4. `Shipaton 2025 recordings` - 17 edges
-5. `Markdown style guide` - 15 edges
-6. `RevenueCat Shipaton 2026` - 15 edges
-7. `Shipaton 2026 recordings` - 15 edges
-8. `Shipaton 2026 research notes` - 14 edges
-9. `RevenueCat Shipaton 2026 brief` - 13 edges
-10. `Shipaton 2026 context` - 13 edges
+4. `Tasks` - 21 edges
+5. `Shipaton 2025 recordings` - 17 edges
+6. `Markdown style guide` - 15 edges
+7. `RevenueCat Shipaton 2026` - 15 edges
+8. `Shipaton 2026 recordings` - 15 edges
+9. `Shipaton 2026 research notes` - 14 edges
+10. `RevenueCat Shipaton 2026 brief` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -141,7 +145,7 @@
 
 - None detected.
 
-## Communities (102 total, 3 thin omitted)
+## Communities (106 total, 3 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -623,10 +627,30 @@ Nodes (5): Judges on Devpost and the site, Judging criteria sources, Judging fun
 Cohesion: 0.67
 Nodes (3): Eligibility rules, Which apps qualify, Who may enter
 
+### Community 102 - "Shipaton 2026 ideation log"
+
+Cohesion: 0.04
+Nodes (41): Career Coaching brief (Leadership Heather), Full project list, Gallery totals, Gaming brief (Lewis Blogs Gaming), Idea clusters by count, Influencer Award briefs, Limitations, Method and coverage (+33 more)
+
+### Community 103 - "Tasks"
+
+Cohesion: 0.06
+Nodes (31): Appendix: check scripts, Assumptions, Design, Global constraints, Rejected alternatives, Rubric, Sections of the idea, Shipaton 2026 idea implementation plan (+23 more)
+
+### Community 104 - "How Jev is used"
+
+Cohesion: 0.07
+Nodes (30): Conflicts between sources, Cookbooks and demos, Free tier, credits, and programs, Gaps, Gotchas in the API and SDKs, How Jev is used, Ideas that fit Jev's shape, Installing an SDK and authenticating (+22 more)
+
+### Community 105 - "Shipaton 2026 idea"
+
+Cohesion: 0.11
+Nodes (17): Assumptions and open questions, At a glance, Build plan, Categories to enter, How Jev fits, How the idea was chosen, Launch and pitch, Monetization (+9 more)
+
 ## Knowledge Gaps
 
-- **895 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+890 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 972 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **998 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+993 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1077 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -634,13 +658,13 @@ Nodes (3): Eligibility rules, Which apps qualify, Who may enter
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Demo video and write-up`, `Samsung Galaxy Store review`, `Apple App Store review`, `Monetization and paywall benchmarks`, `Google Play review`, `Store listing and discoverability`, `Retention and push notifications`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **Why does `RevenueCat Shipaton 2026` connect `RevenueCat Shipaton 2026` to `Prizes`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _895 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _998 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
