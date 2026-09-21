@@ -11408,7 +11408,7 @@
       "node_kind": "heading",
       "norm_label": "app review timing",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L135"
+      "source_location": "L153"
     },
     {
       "id": "docs_brief_at_a_glance",
@@ -11432,7 +11432,7 @@
       "node_kind": "heading",
       "norm_label": "build fast",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L395"
+      "source_location": "L415"
     },
     {
       "id": "docs_brief_eligibility",
@@ -11456,7 +11456,7 @@
       "node_kind": "heading",
       "norm_label": "grow after launch",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L406"
+      "source_location": "L426"
     },
     {
       "id": "docs_brief_judging_process",
@@ -11468,7 +11468,7 @@
       "node_kind": "heading",
       "norm_label": "judging process",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L158"
+      "source_location": "L180"
     },
     {
       "id": "docs_brief_key_dates",
@@ -11492,7 +11492,7 @@
       "node_kind": "heading",
       "norm_label": "lessons from past winners",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L340"
+      "source_location": "L359"
     },
     {
       "id": "docs_brief_open_questions",
@@ -11504,7 +11504,7 @@
       "node_kind": "heading",
       "norm_label": "open questions",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L434"
+      "source_location": "L454"
     },
     {
       "id": "docs_brief_pick_the_idea",
@@ -11516,7 +11516,7 @@
       "node_kind": "heading",
       "norm_label": "pick the idea",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L382"
+      "source_location": "L402"
     },
     {
       "id": "docs_brief_pitch_the_submission",
@@ -11528,7 +11528,7 @@
       "node_kind": "heading",
       "norm_label": "pitch the submission",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L418"
+      "source_location": "L438"
     },
     {
       "id": "docs_brief_prizes_and_categories",
@@ -11540,7 +11540,7 @@
       "node_kind": "heading",
       "norm_label": "prizes and categories",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L196"
+      "source_location": "L218"
     },
     {
       "id": "docs_brief_resources_and_perks",
@@ -11552,7 +11552,7 @@
       "node_kind": "heading",
       "norm_label": "resources and perks",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L298"
+      "source_location": "L315"
     },
     {
       "id": "docs_brief_revenuecat_shipaton_2026_brief",
@@ -11576,7 +11576,7 @@
       "node_kind": "heading",
       "norm_label": "rules to watch",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L268"
+      "source_location": "L289"
     },
     {
       "id": "docs_brief_see_also",
@@ -11588,7 +11588,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L474"
+      "source_location": "L499"
     },
     {
       "id": "docs_brief_submission_checklist",
@@ -11600,7 +11600,7 @@
       "node_kind": "heading",
       "norm_label": "submission checklist",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L99"
+      "source_location": "L102"
     },
     {
       "id": "docs_brief_which_apps_qualify",
@@ -11612,7 +11612,7 @@
       "node_kind": "heading",
       "norm_label": "which apps qualify",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L83"
+      "source_location": "L86"
     },
     {
       "id": "docs_brief_who_may_enter",
@@ -11636,7 +11636,7 @@
       "node_kind": "heading",
       "norm_label": "winning playbook",
       "source_file": "docs/BRIEF.md",
-      "source_location": "L377"
+      "source_location": "L397"
     },
     {
       "id": "docs_superpowers_plans_2026_09_21_shipaton_2026_brief",
@@ -12178,7 +12178,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L83",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_brief_revenuecat_shipaton_2026_brief",
+      "target": "docs_brief_submission_checklist",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/BRIEF.md",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -12189,7 +12200,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L158",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -12200,7 +12211,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L196",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -12222,7 +12233,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L268",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -12233,7 +12244,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L298",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -12244,7 +12255,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L340",
+      "source_location": "L359",
       "weight": 1.0
     },
     {
@@ -12255,7 +12266,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L377",
+      "source_location": "L397",
       "weight": 1.0
     },
     {
@@ -12277,7 +12288,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L434",
+      "source_location": "L454",
       "weight": 1.0
     },
     {
@@ -12288,7 +12299,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L474",
+      "source_location": "L499",
       "weight": 1.0
     },
     {
@@ -12303,17 +12314,6 @@
       "weight": 1.0
     },
     {
-      "source": "docs_brief_revenuecat_shipaton_2026_brief",
-      "target": "docs_brief_submission_checklist",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/BRIEF.md",
-      "source_location": "L99",
-      "weight": 1.0
-    },
-    {
       "source": "docs_brief_submission_checklist",
       "target": "docs_brief_app_review_timing",
       "relation": "contains",
@@ -12321,7 +12321,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L135",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -12332,7 +12332,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L382",
+      "source_location": "L402",
       "weight": 1.0
     },
     {
@@ -12343,7 +12343,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L395",
+      "source_location": "L415",
       "weight": 1.0
     },
     {
@@ -12354,7 +12354,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L406",
+      "source_location": "L426",
       "weight": 1.0
     },
     {
@@ -12365,7 +12365,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/BRIEF.md",
-      "source_location": "L418",
+      "source_location": "L438",
       "weight": 1.0
     },
     {
@@ -21995,5 +21995,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "74e23b2b673b8c63804353ab8190709d11012d88"
+  "built_at_commit": "00bc28bfe4a3122cf42f6f0ecb6a3ba8c7f7d109"
 }
