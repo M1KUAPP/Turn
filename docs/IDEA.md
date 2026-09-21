@@ -124,10 +124,11 @@ team's backend:
     with the puzzle's fact card as the state. A person fixes every answer
     between 0.3 and 0.7 and every pair whose answers disagree.
 1.  **It matches the player's question to the bank.** A Choice over the
-    category's bank questions, plus "none", picks the bank question that
-    asks the same thing. A confident match returns the checked answer, and
-    the match is cached for the day by wording, so two wordings get one
-    answer. A Choice takes at most 255 options.
+    category's bank questions and their negations, about 200 options plus
+    "none", under the 255 a Choice allows, picks the entry that asks the
+    same thing, so a negated question gets the negated entry's answer. A
+    confident match returns the checked answer, and the match is cached for
+    the day by wording, so two wordings get one answer.
 1.  **It answers what the bank doesn't cover.** A live Noul against the fact
     card gives Yes above 0.7, No below 0.3, and "Ask another way" in between.
     In the same request as the match, a Noul turns away anything that isn't
@@ -187,12 +188,16 @@ Data, consent, and terms:
 - Before the first question, a notice names TypeSafe and asks permission,
   as guideline 5.1.2(i) requires before personal data goes to a third-party
   AI, and the privacy policy names TypeSafe too. The first build names it
-  because 5.1.2(i) asks apps to "clearly disclose" third-party AI,
+  because 5.1.2(i) asks apps to "clearly disclose" third-party AI, and
   TypeSafe's agreement makes the team give users the notices that
-  TypeSafe's use of their input needs (section 5), and section 16.4 allows
-  what is "required by Laws". The Worker serves the notice's text, and the
-  privacy policy is a web page, so either can change without an app update.
-  There are no accounts.
+  TypeSafe's use of their input needs (section 5). Section 16.4's exception
+  for what is "required by Laws" may not cover an App Store rule, so
+  TypeSafe is asked to confirm; if it objects, the notice says the
+  questions go to "a third-party AI service", and the privacy policy
+  describes it without the name. The Worker serves the notice's text, and
+  the privacy policy is a web page, so either can change without an app
+  update. A player who declines still plays: the Worker answers exact bank
+  wordings in code, and nothing reaches TypeSafe. There are no accounts.
 - TypeSafe says no part of its services "is directed to children" and
   doesn't knowingly handle personal data from anyone under 18. So Guessling
   stays out of the Kids category, the notice asks players not to type
@@ -307,11 +312,12 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   Guessling+ entitlement before serving an archive puzzle, since every call
   spends Jev credits.
 - **Authoring:** a script runs Jev over the bank and its negations for each
-  puzzle, lists what a person must fix, and uploads the checked puzzle. The
-  bank starts at about 100 questions per category, under the 255 a Choice
-  allows. The first two puzzles are a pilot that measures how many answers
-  need a person; if that's more than the time allows, the bank shrinks to
-  its most common questions rather than the launch set shrinking.
+  puzzle, lists what a person must fix, and uploads the checked puzzle. The bank
+  starts at about 100 questions in each of four categories at launch: animals,
+  foods, everyday objects, and places. The first two puzzles are a pilot that
+  measures how many answers need a person; if that's more than the time allows,
+  the bank shrinks to its most common questions rather than the launch set
+  shrinking.
 - **Purchases:** RevenueCat's anonymous IDs carry them, with no accounts. The
   Test Store key never ships.
 - **Coding agents:** RevenueCat's AI Toolkit and MCP server help them wire
@@ -329,7 +335,8 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   one more a day, since Guessling+ promises one more each day.
 - **Should:** a streak count, and haptics and sound.
 - **Won't:** accounts, leaderboards, friends, packs, push notifications,
-  Android, and an iPad layout.
+  Android, and iPad. The app runs on iPhone only, with iPad support turned
+  off, since iPad screenshots are "Required if app runs on iPad".
 
 ### Schedule to September 30
 
@@ -423,8 +430,8 @@ why; and the AI tools used, credited openly.
 - **Answers contradict each other.** The checked bank and matching reduce
   it, though Jev reads wording literally and a question and its negation
   needn't agree. Trigger: on September 24, fewer than 90% of a test set of
-  paraphrases reach the same bank question, or a negated pair disagrees on
-  any puzzle; then grow the bank before submitting.
+  paraphrases, including negated wordings, reach the bank entry with the
+  same meaning; then grow the bank before submitting.
 - **No Jev key in time.** Request it on September 22, then write to
   `support@typesafe.ai` and ask in TypeSafe's Discord. Trigger: no key by
   noon PT on September 23; then people answer the bank by hand, questions
@@ -523,9 +530,10 @@ Still open, each with a safe default:
   Output". Safe default: buy credits on day one, turn auto-refill on, and
   watch usage through at least October 22.
 - **Naming Jev.** No source says how to get TypeSafe's consent under section
-  16.4. Safe default: ask TypeSafe on September 22, covering the notice and
-  the privacy policy as well as the video and the write-up, and say "a
-  hosted decision model" until it answers.
+  16.4. Safe default: name TypeSafe in the notice and the privacy policy
+  from the first build, ask TypeSafe on September 22 to confirm that and to
+  consent to the video and the write-up, and say "a hosted decision model"
+  in those two until it does.
 - **The Guessling's art.** Whether the team can draw the character in a day
   is unknown. Safe default: AI-assisted art, credited openly, as past
   winners did.
