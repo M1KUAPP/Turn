@@ -97,8 +97,8 @@ Each scenario must work end to end on the release build.
     gets a free month of Guessling+, and plays archive puzzles until judging
     ends on October 13.
 8.  **A wrong answer.** A player reports an answer they think is wrong.
-    Players that day keep getting the same answer, and after the day ends,
-    archive players get the corrected one.
+    Players that day keep getting the same answer, and once the puzzle
+    closes, archive players get the corrected one.
 9.  **Two time zones.** Players in Tokyo and in San Francisco each play the
     same puzzle on their own Friday and get the same answers to the same
     questions.
@@ -349,10 +349,10 @@ https://apps.apple.com/app/id<APP_ID>
   answer", which sends the puzzle number, the question, the answer, and an
   optional reason, "Wrong" or "Unclear", to the server, with nothing that
   identifies the player. Check: a report reaches the server's report list.
-- **REPORT-2, Must.** A report never changes an answer during its puzzle
-  day; the team reviews reports every day and fixes confirmed errors once
-  the day has ended everywhere (CONTENT-8). Check: a reported wording keeps
-  its answer until the day ends.
+- **REPORT-2, Must.** A report never changes an answer while anyone can
+  still play the puzzle's day; the team reviews reports every day and fixes
+  confirmed errors once the puzzle closes (CONTENT-8). Check: a reported
+  wording keeps its answer until then.
 - **REPORT-3, Must.** The app confirms each report, and each answer can be
   reported once per device. Check: the button turns into "Reported".
 
@@ -419,9 +419,11 @@ https://apps.apple.com/app/id<APP_ID>
 - **CONTENT-7, Must.** Weapons, alcohol, tobacco, drugs, horror, and medical
   topics stay out of every hidden thing and hint, which keeps the age rating
   at a likely 4+ (STORE-4). Check: the schedule reviewed against the list.
-- **CONTENT-8, Must.** A published puzzle changes only once its puzzle day
-  has ended everywhere, and the change is checked again before it's
-  republished. Check: the server refuses to forget answers earlier.
+- **CONTENT-8, Must.** A published daily puzzle changes only once it
+  closes, at 12:00 UTC two days after its date, when its date has ended
+  everywhere and every round begun on it has had the 24 hours TODAY-5
+  allows; the change is checked again before it's republished. Check: the
+  server refuses to forget answers earlier.
 - **CONTENT-9, Should.** No category runs two days in a row. Check: the
   schedule of dates and categories.
 
