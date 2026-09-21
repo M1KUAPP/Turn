@@ -301,6 +301,83 @@ https://apps.apple.com/app/id<APP_ID>
   confirming the player's Guessling+ entitlement with RevenueCat. Check: a
   request without the entitlement is refused.
 
+### The paywall and purchases
+
+- **PAY-1, Must.** One RevenueCat Paywall, configured remotely, offers
+  Guessling+ yearly at $19.99 with a 3-day free trial, preselected, and
+  monthly at $2.99. Check: the sandbox paywall shows both, yearly selected.
+- **PAY-2, Must.** The paywall says what Guessling+ holds today, such as the
+  number of archive puzzles, as guideline 3.1.2(c) asks; makes the billed
+  amount its most prominent price; and shows the trial's length, the
+  renewal price and period, and how to cancel. Check: against the context's
+  [paywall rules][ctx-money].
+- **PAY-3, Must.** The paywall has visible Close, Restore Purchases, Terms
+  of Use, and Privacy Policy buttons, each added in RevenueCat's paywall
+  editor, since current paywalls ignore the SDK's close-button flag
+  ([RevenueCat notes][rc-buttons]). Check: all four work on a device.
+- **PAY-4, Must.** The paywall appears only from "Play yesterday's?" and a
+  locked archive puzzle, and closing it returns to where the player was.
+  Check: no other screen opens it.
+- **PAY-5, Must.** A purchase or a restore unlocks the archive at once, with
+  no restart. Check: after a sandbox purchase, the archive opens.
+- **PAY-6, Must.** Settings has Restore Purchases, which restores
+  Guessling+ bought with the same Apple Account. Check: on a second device.
+- **PAY-7, Must.** Judges get a free month of Guessling+ through an Apple
+  offer code: a custom code with a small redemption limit, for one month
+  free with auto-renewal off, open to new, existing, and expired
+  subscribers, sent as a redemption link. A judge whose Guessling+ doesn't
+  unlock taps Restore Purchases. Check: a code redeemed on the live app
+  unlocks the archive within the hour Apple allows for new codes.
+- **PAY-8, Should.** Settings has Redeem Code, which opens Apple's offer
+  code sheet, and Manage Subscription, which opens the App Store's
+  subscription settings. Check: both open.
+
+[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[rc-buttons]: /docs/research/revenuecat-expo.md#close-restore-and-legal-buttons
+
+### Reporting an answer
+
+- **REPORT-1, Must.** Every answer in the round's history has "Report this
+  answer", which sends the puzzle number, the question, the answer, and an
+  optional reason, "Wrong" or "Unclear", to the server, with nothing that
+  identifies the player. Check: a report reaches the server's report list.
+- **REPORT-2, Must.** A report never changes an answer during its puzzle
+  day; the team reviews reports every day and fixes confirmed errors once
+  the day has ended everywhere (CONTENT-8). Check: a reported wording keeps
+  its answer until the day ends.
+- **REPORT-3, Must.** The app confirms each report, and each answer can be
+  reported once per device. Check: the button turns into "Reported".
+
+### Settings
+
+- **SET-1, Must.** Settings has AI answers on or off, Restore Purchases, the
+  privacy policy, the Terms of Use, a support link, and the app's version.
+  The two policy pages open in Safari, not in a browser inside the app.
+  Check: each item works.
+- **SET-2, Should.** Settings has switches for sound and haptics, both on
+  by default. Sounds follow the silent switch and let other apps' music keep
+  playing. Check: each switch silences its cue, and music keeps playing
+  during a round.
+
+### Offline and busy states
+
+- **STATE-1, Must.** Without a network, the app says it's offline, keeps
+  the round and the unsent question, and offers to send it again; an unsent
+  question never uses a turn. Check: in airplane mode.
+- **STATE-2, Must.** A question the app sends twice, as a retry, uses at
+  most one turn and gets one answer. Check: replaying a request.
+- **STATE-3, Must.** When the AI is busy or down, the server still answers
+  bank wordings and wordings already answered for the puzzle; for anything
+  else, the app says the Guessling is busy, offers the question list
+  (ASK-9) and a retry, and uses no turn. Check: with Jev switched off on a
+  test server.
+- **STATE-4, Must.** When today's puzzle can't be loaded, the app says so
+  and retries, and never shows an empty screen. Check: with the server
+  unreachable.
+- **STATE-5, Must.** When the server can't confirm Guessling+, the app says
+  so and offers a retry, instead of showing a subscriber the paywall. Check:
+  with RevenueCat's API unreachable from a test server.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why.
