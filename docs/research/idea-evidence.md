@@ -204,16 +204,23 @@ last two sell daily puzzles.
 - The ideation log placed Hunch "among 15 word games though none takes
   free-form questions" ([ideation log][ideation-r3]); that rests on taglines.
 - Das Verhör's own project page, read on September 22, 2026, goes further
-  than its tagline: "Each day one new case lands on the table", and "You
-  question the suspects in free text". It is a "daily deduction game for
-  iPhone, in German", in which "Apple's on-device Foundation Models only
-  _phrase_ what the engine has already decided", with "39 cases, one a day,
-  23 September through 31 October 2026" ([Das Verhör][h-dasverhor]).
+  than its tagline: "Each day one new case lands on the table: one location,
+  three suspects, fourteen questions — and a single contradiction that
+  decides everything", and "You question the suspects in free text". It is a
+  "daily deduction game for iPhone, in German", in which "Apple's on-device
+  Foundation Models only _phrase_ what the engine has already decided", with
+  "39 cases, one a day, 23 September through 31 October 2026". Fairness is
+  its headline: the builder asked how to "ship a _provably fair_ one, every
+  day, forever", and "A deterministic Swift engine owns everything that
+  matters — the facts, the timeline, every contradiction, the verdict". The
+  page doesn't say whether reworded questions get the same answer
+  ([Das Verhör][h-dasverhor]).
 - Synthesis: Terravel already has the daily hidden answer, and Das Verhör
-  already has a daily puzzle questioned in free text, though in German and
-  as an interrogation of suspects rather than a hunt for a thing. Hunch's
-  difference is narrower than a new format: English, twenty questions about
-  one hidden thing, and answers kept the same across wordings. Its demo has
+  already has a daily puzzle questioned in free text, built for fairness,
+  though in German and as fourteen questions to three suspects. Hunch's
+  difference is narrower than a new format: English, and yes-or-no questions
+  about one hidden thing. Consistent answers are something Hunch has to
+  measure and show, not something the rival is known to lack. Its demo has
   to show a typed question answered in its first seconds.
 
 [h-akinator]: https://apps.apple.com/us/app/akinator/id933135994
