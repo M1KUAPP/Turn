@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 87 files · ~220,452 words
+- 95 files · ~278,160 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 1289 nodes · 1207 edges · 106 communities (100 shown, 3 thin omitted)
+- 1578 nodes · 1488 edges · 114 communities (108 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `8767637a`
+- Built from commit: `8a6ddc99`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -123,19 +123,27 @@
 - Tasks
 - How Jev is used
 - Shipaton 2026 idea
+- Guessling technical requirements
+- Cloudflare Workers research notes
+- RevenueCat and Expo research notes
+- Apple requirements for Guessling
+- Tasks
+- Functional requirements
+- Daily puzzles research notes
+- Guessling product
 
 ## God Nodes (most connected - your core abstractions)
 
 1. `Prizes` - 58 edges
 2. `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` - 44 edges
 3. `Shipaton assets` - 23 edges
-4. `Tasks` - 21 edges
-5. `Shipaton 2025 recordings` - 17 edges
-6. `Markdown style guide` - 15 edges
-7. `RevenueCat Shipaton 2026` - 15 edges
-8. `Shipaton 2026 recordings` - 15 edges
-9. `Shipaton 2026 research notes` - 14 edges
-10. `RevenueCat Shipaton 2026 brief` - 13 edges
+4. `Tasks` - 22 edges
+5. `Tasks` - 21 edges
+6. `Guessling technical requirements` - 17 edges
+7. `Cloudflare Workers research notes` - 17 edges
+8. `Shipaton 2025 recordings` - 17 edges
+9. `Markdown style guide` - 15 edges
+10. `RevenueCat Shipaton 2026` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -145,7 +153,7 @@
 
 - None detected.
 
-## Communities (106 total, 3 thin omitted)
+## Communities (114 total, 3 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -647,10 +655,50 @@ Nodes (30): Conflicts between sources, Cookbooks and demos, Free tier, credits, 
 Cohesion: 0.11
 Nodes (17): Assumptions and open questions, At a glance, Build plan, Categories to enter, How Jev fits, How the idea was chosen, Launch and pitch, Monetization (+9 more)
 
+### Community 106 - "Guessling technical requirements"
+
+Cohesion: 0.04
+Nodes (47): Accessibility, Answer pipeline, Build configuration, Data inventory, Data model, Dates and numbers, Environments and release, Failure modes (+39 more)
+
+### Community 107 - "Cloudflare Workers research notes"
+
+Cohesion: 0.05
+Nodes (43): Alarms, lifecycle, and Durable Object limits, Calling the System One API with fetch, Choosing today's puzzle for a player's date, Cloudflare Workers research notes, Concurrent first answers to a new wording, Config files and compatibility dates, Conflicts between sources, Counting in a Durable Object (+35 more)
+
+### Community 108 - "RevenueCat and Expo research notes"
+
+Cohesion: 0.05
+Nodes (41): Anonymous App User IDs, App Privacy label and the SDK privacy manifest, Apple offer codes, Checking entitlements from a server, Close, restore, and legal buttons, Configuring the SDK and API keys, Conflicts between sources, Customer Center in React Native (+33 more)
+
+### Community 109 - "Apple requirements for Guessling"
+
+Cohesion: 0.05
+Nodes (40): Accessibility Nutrition Labels, Age assurance laws in US states, Age ratings, App Privacy details, App Review Guidelines that Guessling triggers, Apple requirements for Guessling, Auto-renewable subscription rules, Choosing storefronts for a new app (+32 more)
+
+### Community 110 - "Tasks"
+
+Cohesion: 0.05
+Nodes (36): Appendix: check scripts, Assumptions, Decisions the documents record, Design, Global constraints, Guessling product, PRD, and TRD implementation plan, Rejected alternatives, Requirement format and IDs (+28 more)
+
+### Community 111 - "Functional requirements"
+
+Cohesion: 0.06
+Nodes (31): Accessibility, Analytics requirements, App Store listing and review, Asking a question, Availability, Compatibility, Dependencies and assumptions, Functional requirements (+23 more)
+
+### Community 112 - "Daily puzzles research notes"
+
+Cohesion: 0.07
+Nodes (29): A round in progress at midnight, Apple News+ release time, Apple News+ streak window, Conflicts between sources, Countdowns and reminders, Daily puzzles research notes, End-of-round screens, Fairness and corrections (+21 more)
+
+### Community 113 - "Guessling product"
+
+Cohesion: 0.13
+Nodes (14): Business model, Guessling in brief, Guessling product, Players, Positioning, Product principles, Puzzles, Roadmap (+6 more)
+
 ## Knowledge Gaps
 
-- **998 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+993 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1077 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1232 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1227 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1319 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -658,16 +706,16 @@ Nodes (17): Assumptions and open questions, At a glance, Build plan, Categories 
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Demo video and write-up`, `Samsung Galaxy Store review`, `Apple App Store review`, `Monetization and paywall benchmarks`, `Google Play review`, `Store listing and discoverability`, `Retention and push notifications`?**
-  _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `RevenueCat Shipaton 2026` connect `RevenueCat Shipaton 2026` to `Prizes`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `Jev research notes` connect `How Jev is used` to `Shipaton 2026 ideation log`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _998 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1232 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
+- **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
+  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
