@@ -75,7 +75,7 @@ interviewed yet.
   that fits the same chats. NYT Games alone has 293,384 US ratings.
 - **The 20-questions fan** knows the game, or knows Akinator, where the app
   asks the questions. They want to be the one asking, and answers that don't
-  contradict each other; reviews of the apps that let players ask punish
+  contradict each other; reviews of one app that lets players ask punish
   hedged answers: "It either is nomadic or it isn't." Guessling gives them
   their own words and answers a person has checked.
 - **The friend who got a result** sees a spoiler-free result in a chat and
@@ -96,31 +96,28 @@ For people who play the day's word puzzles and want more than a few minutes
 of them, Guessling is the daily 20-questions game in which they ask the
 questions, in their own words, and every player gets the same answers.
 
-The alternatives players already have, from the idea's
-[evidence notes][ev-hunch]:
+The alternatives players already have, and how Guessling differs from
+each; the idea's [problem and audience][idea-audience] section and the
+[evidence notes][ev-hunch] have the ratings, prices, and quotes:
 
-- **NYT Games** offers Wordle, Connections, and more, with a Games
-  subscription at $4.99 or $5.99 a month on the App Store. Guessling is one
-  deduction puzzle a day, asked in the player's words, with its archive at
-  $2.99 a month.
-- **Apple News+** includes "daily and archived" puzzles in a subscription of
-  $12.99 a month. Guessling is a single game, priced like one.
-- **Akinator** "can read your mind" by asking the player questions. In
-  Guessling, the player asks.
-- **Four apps that let the player question an AI** have 3 to 19 US ratings
-  each, and none mentions a daily or shared puzzle in its description. One
-  answers on the device with Apple's model, at no cost per question, and its
-  premium plan costs $0.99 a month, which weakens both the case for Jev and
-  Guessling's monthly price.
+- **NYT Games and Apple News+** sell daily puzzles in bundles, archives
+  included. Guessling is one deduction puzzle a day, priced like a single
+  game.
+- **Akinator** asks the player the questions. In Guessling, the player asks.
+- **Apps that let the player question an AI** mention no daily or shared
+  puzzle in their descriptions. One answers on the device at no cost per
+  question, which weakens the case for Jev and for Guessling's monthly
+  price.
 - **Das Verhör**, in the 2026 gallery, is a daily case in German, questioned
-  in free text and built to be "provably fair". Guessling is in English and
-  asks yes-or-no questions about one hidden thing.
+  in free text and built to be "provably fair". Guessling is in English,
+  with yes-or-no questions about one hidden thing.
 
 The difference is narrow: a shared daily puzzle, in English, questioned in
 the player's own words, with answers a person has checked in advance.
 Consistent answers are something Guessling must measure and show, not
 something its rivals are known to lack.
 
+[idea-audience]: /docs/IDEA.md#problem-and-audience
 [ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
 
 ## Product principles
@@ -251,14 +248,12 @@ The moments that carry the product:
   [purchase requirements][prd-pay] say how.
 - **Where the money is counted:** every sale goes through RevenueCat, whose
   numbers the Grand Prize shortlist uses.
-- **What a subscription promises:** the Paid Apps Agreement requires "the
-  full amount of content" for the whole subscription, so the archive, the
-  server, and a new puzzle every day run for as long as any Guessling+
-  subscription does, not only through October 22 as the idea's schedule
-  says. Stopping means removing
-  Guessling+ from sale at least 31 days ahead and keeping the archive open
-  until the last subscription ends
-  ([Apple notes on subscriptions][apple-subs]).
+- **What a subscription promises:** the Paid Apps Agreement requires "the full
+  amount of content" for the whole subscription, so the archive, the server,
+  and a new puzzle every day run for as long as any Guessling+ subscription
+  does, not only through October 22. Stopping means removing Guessling+ from
+  sale at least 31 days ahead and keeping the archive open until the last
+  subscription ends ([Apple notes on subscriptions][apple-subs]).
 
 [idea-money]: /docs/IDEA.md#monetization
 [prd-pay]: /docs/PRD.md#the-paywall-and-purchases
@@ -274,7 +269,8 @@ The targets below are decisions this document sets, except where a source
 is named; the rest are watched and reported as rates, as the idea's
 [launch plan][idea-launch] says.
 
-- **Engagement**, counted on the server:
+- **Engagement**, counted on the server, which counts only players who
+  allowed AI answers (NOTICE-3 in the PRD):
   - Players: distinct players who open the day's puzzle.
   - Finish rate: finishers divided by players who asked at least one
     question.
@@ -286,8 +282,9 @@ is named; the rest are watched and reported as rates, as the idea's
     idea's [risk trigger][idea-risks] sets this bar.
   - "Ask another way": at most one answer in ten, since each one is a small
     break in the promise to "ask anything".
-  - Speed: the answer arrives within two seconds for 95% of questions; see
-    the PRD's [performance requirements][prd-perf].
+  - Speed: on Wi-Fi or LTE in the United States, the answer arrives within
+    two seconds for 95% of questions; see the PRD's
+    [performance requirements][prd-perf].
   - Reports: every reported answer is triaged within a day.
 - **Business**, from RevenueCat's charts, which count production purchases
   only: paywall views, trial starts, and conversions from the Paywall
