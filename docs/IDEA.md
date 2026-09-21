@@ -67,10 +67,12 @@ Contents:
   questions in the player's own words.
 - **The closest rival:** Das Verhör, in the 2026 gallery, already does:
   "Each day one new case lands on the table", and "You question the
-  suspects in free text". It is in German and is an interrogation of
-  suspects. Guessling's difference is narrower than a new format: English,
-  twenty questions about one hidden thing, and answers kept the same across
-  wordings.
+  suspects in free text". It is in German, with fourteen questions to three
+  suspects, and a "deterministic Swift engine" built for fairness.
+  Guessling's difference is narrower than a new format: English, and
+  yes-or-no questions about one hidden thing. Consistent answers are
+  something Guessling has to measure and show, not something the rival
+  lacks.
 - **The field:** on September 22, the gallery held 148 games, 11 projects
   named Best Game, and none of the 15 word and trivia games, against 39
   arcade and 35 puzzle games, took free-form questions by their taglines.
@@ -474,13 +476,13 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
     Flagged led, 82 to 81.5.
 1.  [Round 6][r6] had a red team find that Hunch could contradict itself,
     and the checked bank addressed it.
-1.  [Round 7][r7] re-scored the finalists by one rule, 82 for Hunch against
-    80 and 64.5, explained why Hunch wins that thin margin, and named the
-    winner Guessling.
+1.  [Round 7][r7] re-scored the finalists by one rule, which tied Hunch and
+    Flagged at 80; the red team's ranking broke the tie, and the winner was
+    named Guessling.
 1.  [Round 8][r8] chose a free daily puzzle and a paid archive.
 1.  [Round 9][r9] cut the scope to one loop, put the key in a Worker, and
     set the schedule to September 30.
-1.  [Round 10][r10] tested the pitch, gave a final score of 81.5, and set the
+1.  [Round 10][r10] tested the pitch, gave a final score of 79.5, and set the
     triggers listed under [Risks](#risks).
 
 [r1]: /docs/research/ideation.md#round-1-constraints-and-rubric
