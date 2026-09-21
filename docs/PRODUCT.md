@@ -20,6 +20,9 @@ Contents:
 1.  [The Guessling character](#the-guessling-character)
 1.  [Puzzles](#puzzles)
 1.  [Business model](#business-model)
+1.  [Success metrics](#success-metrics)
+1.  [Roadmap](#roadmap)
+1.  [What Guessling is not](#what-guessling-is-not)
 1.  [See also](#see-also)
 
 ## Guessling in brief
@@ -258,6 +261,78 @@ The moments that carry the product:
 [idea-money]: /docs/IDEA.md#monetization
 [prd-pay]: /docs/PRD.md#the-paywall-and-purchases
 [apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
+
+## Success metrics
+
+The **north star** is daily finishers: players who finish the day's puzzle,
+with a right guess or twenty turns, on its date. It measures the habit the
+product exists for, and it grows only if rounds are fair and fun.
+
+The targets below are decisions this document sets, except where a source
+is named; the rest are watched and reported as rates, as the idea's
+[launch plan][idea-launch] says.
+
+- **Engagement**, counted on the server:
+  - Players: distinct players who open the day's puzzle.
+  - Finish rate: finishers divided by players who asked at least one
+    question.
+  - Solve rate: right guesses divided by finishers.
+  - Return rate: players of one day's puzzle who open the next day's.
+- **Quality guardrails:**
+  - Consistency: at least 90% of a test set of paraphrases, negated
+    wordings included, reach the bank entry with the same meaning; the
+    idea's [risk trigger][idea-risks] sets this bar.
+  - "Ask another way": at most one answer in ten, since each one is a small
+    break in the promise to "ask anything".
+  - Speed: the answer arrives within two seconds for 95% of questions; see
+    the PRD's [performance requirements][prd-perf].
+  - Reports: every reported answer is triaged within a day.
+- **Business**, from RevenueCat's charts, which count production purchases
+  only: paywall views, trial starts, and conversions from the Paywall
+  Conversion chart, and revenue. The context's [benchmarks][ctx-money] give
+  a reference: a median 25.5% of trials of 4 days or less become paid.
+
+[idea-launch]: /docs/IDEA.md#launch-and-pitch
+[idea-risks]: /docs/IDEA.md#risks
+[prd-perf]: /docs/PRD.md#performance
+[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+
+## Roadmap
+
+- **Version 1.0, in App Review on September 24, 2026:** the PRD's Must
+  requirements.
+- **Updates after launch:** the PRD's Should requirements, such as the
+  streak, haptics, and sound, and fixes from reported answers. A new puzzle
+  arrives every day with no app update, for as long as Guessling+ is sold.
+- **Later, if players stay:** candidates, each with the signal that would
+  justify it.
+  - Android, from the same Expo code, if players reach Guessling from
+    Android phones and ask for it.
+  - Accounts and sync, if players ask to keep their streak across devices.
+    Accounts bring in-app account deletion with them; see the context's
+    [review essentials][ctx-apple].
+  - Reminders, if the return rate falls, with explicit opt-in as Apple's
+    rules on push require; see [retention][ctx-push].
+  - More categories and themed weeks, if solve rates stay healthy.
+  - An iPad layout, if iPad players ask; the iPhone layout already runs
+    there.
+  - Other languages, once Jev's accuracy outside English is known; English
+    is "where accuracy is currently best" ([Jev notes][jev-lang]).
+  - Leaderboards and friends, only in a form that can't spoil a puzzle.
+
+[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[ctx-push]: /docs/CONTEXT.md#retention-and-push-notifications
+[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
+
+## What Guessling is not
+
+- **Not a chatbot.** The Guessling never writes text: Jev returns
+  probabilities, and every answer is one of three fixed phrases.
+- **Not a race.** No timers, and no scores against other players.
+- **Not ad-supported, and not a data business.**
+- **Not for children.** It stays out of the Kids category.
+- **Not a social network.** No profiles, feeds, or player content shown to
+  other players.
 
 ## See also
 
