@@ -517,9 +517,12 @@ for: "a monetization model that fits the genre instead of fighting it".
   NYT Games at $4.99 to $5.99 a month for a bundle, and above the $0.99 a
   month of a single 20-questions rival.
 - **Trial:** 3 days, because nearly all trials start on day 0 and a 7-day
-  trial started after September 23 ends after the deadline. Trials started
-  by September 27 convert before September 30, when revenue counts for the
-  Grand Prize shortlist "as reported in RevenueCat".
+  trial started after September 23 ends after the deadline. A trial started
+  before 11:45 PM PT on September 27 converts before the Submission Period
+  closes on September 30, and the Grand Prize shortlist counts revenue
+  "during the Submission Period, as reported in RevenueCat". The cost: a
+  median 25.5% of trials of 4 days or less become paid, against 37.4% at 5–9
+  days.
 - **Paywall moments:** right after today's result, as "Play yesterday's?",
   and on tapping any locked archive puzzle. Both are placements of one
   RevenueCat Paywall, configured remotely, so the offer can change without
@@ -609,14 +612,17 @@ context.
 - **Friday, September 25 and Saturday, September 26:** in review. A
   rejection gets a fix for the cited guideline only and a resubmission the
   same day. Draft the launch posts and the video script.
-- **Sunday, September 27:** live. Create the offer codes, confirm a
-  production purchase, and post the first public puzzle to puzzle
-  communities.
+- **Sunday, September 27, at the latest:** live, since the build releases
+  automatically once approved. Create the offer codes, confirm a production
+  purchase, which RevenueCat warns can take 24 hours to work after a first
+  launch, and post the first public puzzle to puzzle communities.
 - **Monday, September 28:** record the video on a device and upload it.
 - **Tuesday, September 29:** write the Devpost description and the category
   answers with the numbers so far.
 - **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
-  PT. Keep the Worker running and Jev's credits funded through October 13.
+  PT. Keep the Worker running and Jev's credits funded through at least
+  October 21, when winners are announced, since the judging dates are
+  subject to change.
 
 ### Review-safety checklist
 
@@ -688,8 +694,8 @@ is named only once TypeSafe consents.
   numbers from RevenueCat's charts.
 
 **Final score:** 82.5. Early traction falls from 4 to 3.5, because the
-video's numbers beat will rest on about three days live; every other score
-holds.
+numbers will rest on about a day live in the video, recorded on September
+28, and about three in the write-up; every other score holds.
 
 | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
 | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
@@ -700,7 +706,11 @@ holds.
 - **No Jev key by noon PT on Wednesday, September 23:** write to
   `support@typesafe.ai` and ask in TypeSafe's Discord. Keep building: people
   answer the bank by hand, questions outside it get "Ask another way", and
-  Jev joins on the Worker when the key arrives, with no app update.
+  Jev joins on the Worker when the key arrives, with no app update. Submit
+  only once live answers work: a build that matches only exact wordings
+  would answer most questions with "Ask another way" and risk guideline 2.1,
+  App Completeness. September 26 is the latest first submission that leaves
+  room for one rejection.
 - **Consistency gate before submitting on September 24:** at least 90% of a
   test set of paraphrases must reach the same bank question, and every
   negated pair must agree on every card. Otherwise, grow the bank before
@@ -708,11 +718,11 @@ holds.
 - **Not approved by the end of Saturday, September 26:** fix only what the
   rejection cites and resubmit. Monday, September 28 is the last
   resubmission that can still be live by the deadline.
-- **No consent from TypeSafe by Tuesday, September 29:** describe Jev as "a
-  hosted decision model" in public, and leave its name out of the video and
-  the write-up.
+- **No consent from TypeSafe by Monday, September 28, when the video is
+  recorded:** the video calls Jev "a hosted decision model". The write-up can
+  still name Jev if consent arrives before the deadline.
 - **Throughout judging:** keep Jev's credits funded and watch for busy
-  responses until October 13.
+  responses until at least October 21, when winners are announced.
 
 **Decision:** go. Guessling is the idea, and `docs/IDEA.md` states it.
 
