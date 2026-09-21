@@ -24,6 +24,10 @@ Contents:
 1.  [The iPhone app](#the-iphone-app)
 1.  [Security and privacy](#security-and-privacy)
 1.  [Reliability and observability](#reliability-and-observability)
+1.  [Testing](#testing)
+1.  [Environments and release](#environments-and-release)
+1.  [Requirements traceability](#requirements-traceability)
+1.  [Open technical questions](#open-technical-questions)
 1.  [See also](#see-also)
 
 ## Overview
@@ -908,6 +912,131 @@ today in UTC+14, confirms that `live:<n>` exists for the next two dates,
 sends Jev one test question, and posts to the team's webhook if either
 fails (AVAIL-3). It also makes the first call to the next date's object with
 `locationHint: "wnam"`, so no player pays for creating it.
+
+## Testing
+
+| Layer                | What runs                                                                                                         | Proves                                          |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Unit                 | Vitest on normalization, letter rules, guesses, dates and numbers, thresholds, and the share text                 | ASK-5, ASK-7, ASK-12, GUESS-2, TODAY-3, SHARE-1 |
+| Worker integration   | `@cloudflare/vitest-plugin` with Jev and RevenueCat mocked by `@msw/cloudflare`                                   | The pipeline, limits, retries, and access       |
+| Recorded Jev answers | Real match and live responses saved as fixtures from the test environment                                         | The request shapes and thresholds               |
+| Consistency          | `consistency.ts` on each category's paraphrase set                                                                | CONTENT-6                                       |
+| Purchases            | A TestFlight build with a sandbox account: trial, purchase, restore, offer code                                   | PAY, RELEASE-2                                  |
+| Devices              | The smallest and largest iPhones and an iPad simulator, VoiceOver, the largest text, Reduce Motion, airplane mode | COMPAT-3, A11Y, STATE-1                         |
+| Load                 | 30 questions a second for a minute at the test server, half of them repeats                                       | AVAIL-2                                         |
+
+The Worker integration tests that matter most:
+
+- Two simultaneous first requests for one wording make one Jev call, and
+  both players get the stored answer (ASK-5).
+- A repeated `requestId` returns the first response and uses no second turn
+  (STATE-2).
+- The 41st free answer returns `rest`, and a guess still works (ASK-10).
+- With `X-Guessling-AI: off`, no Jev call happens, nothing is stored, and no
+  count is written (NOTICE-3).
+- An archive request without the entitlement gets `needs_plus`, and with
+  RevenueCat failing, `unconfirmed` (ARCHIVE-4, STATE-5).
+- `forget` refuses before the day ends everywhere (CONTENT-8).
+
+The plugin injects its own Node.js compatibility flags, unlike production
+from 2026-08-04, and Vitest's fake timers don't reach the KV simulator, so
+date logic takes the clock as a parameter
+([Cloudflare notes][cf-tests]). Before each submission, the context's
+[review essentials][ctx-apple] and RevenueCat's launch checklist are the
+pre-flight (RELEASE-1).
+
+[cf-tests]: /docs/research/cloudflare-workers.md#local-development-and-tests
+[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+
+## Environments and release
+
+| Environment | Worker                                   | App build                             | RevenueCat key | Purchases  |
+| ----------- | ---------------------------------------- | ------------------------------------- | -------------- | ---------- |
+| Local       | `wrangler dev`, simulated KV and objects | EAS `development` profile, dev client | `test_`        | Test Store |
+| Test        | `guessling-api-test` on the domain       | EAS `preview` profile, TestFlight     | `appl_`        | Sandbox    |
+| Production  | `guessling-api` on the domain            | EAS `production` profile, App Store   | `appl_`        | Real       |
+
+- The test Worker has its own KV namespace and objects, and a fake Jev
+  switch for the busy and down checks (STATE-3).
+- EAS keeps `EXPO_PUBLIC_API_URL` and `EXPO_PUBLIC_RC_IOS_KEY` per
+  environment. The production profile pins the build image, and its submit
+  profile names the App Store Connect record's `ascAppId`, since that
+  record exists from September 22 for the subscriptions.
+
+Release steps for version 1.0, which the idea's
+[schedule](/docs/IDEA.md#schedule-to-september-30) dates:
+
+1.  Deploy the production Worker, publish the 17 puzzles and the config,
+    and check them through the API (CONTENT-1).
+2.  Build with the `production` profile and upload with `eas submit`; the
+    build appears in TestFlight after processing.
+3.  Run the release criteria on that build against the production server
+    with sandbox purchases (RELEASE-1 to RELEASE-4).
+4.  Submit it for review with both subscriptions, the metadata, the privacy
+    answers, and the review notes, set to release automatically (STORE-1 to
+    STORE-8).
+5.  Once it's live: create the judges' offer code, wait for it to work,
+    redeem it on a real device, and confirm a production purchase
+    (RELEASE-5).
+
+A deployed Worker can be replaced by redeploying an earlier commit, but a
+released app can't be recalled, so behavior that might need changing during
+judging, such as the notice, the policy pages, and live answers, sits behind
+the config and the static pages.
+
+## Requirements traceability
+
+Every PRD requirement, and the sections of this document that meet it:
+
+| Requirements                                                                                      | Met in                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| NOTICE-1, NOTICE-2, NOTICE-3, NOTICE-4, NOTICE-5                                                  | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
+| TODAY-1, TODAY-2, TODAY-3, TODAY-4, TODAY-5                                                       | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [The iPhone app](#the-iphone-app)                                  |
+| ASK-1, ASK-2, ASK-3, ASK-4, ASK-5, ASK-6, ASK-7, ASK-8, ASK-9, ASK-10, ASK-11, ASK-12             | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
+| GUESS-1, GUESS-2, GUESS-3, GUESS-4                                                                | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline)                                                                          |
+| END-1, END-2, END-3, END-4, END-5                                                                 | [Worker API](#worker-api), [The iPhone app](#the-iphone-app)                                                                            |
+| SHARE-1, SHARE-2, SHARE-3                                                                         | [The iPhone app](#the-iphone-app)                                                                                                       |
+| STREAK-1, STREAK-2                                                                                | [The iPhone app](#the-iphone-app)                                                                                                       |
+| ARCHIVE-1, ARCHIVE-2, ARCHIVE-3, ARCHIVE-4                                                        | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [Purchases and entitlements](#purchases-and-entitlements)          |
+| PAY-1, PAY-2, PAY-3, PAY-4, PAY-5, PAY-6, PAY-7, PAY-8                                            | [Purchases and entitlements](#purchases-and-entitlements), [The iPhone app](#the-iphone-app)                                            |
+| REPORT-1, REPORT-2, REPORT-3                                                                      | [Data model](#data-model), [Worker API](#worker-api), [Puzzle days and content tooling](#puzzle-days-and-content-tooling)               |
+| SET-1, SET-2                                                                                      | [The iPhone app](#the-iphone-app)                                                                                                       |
+| STATE-1, STATE-2, STATE-3, STATE-4, STATE-5                                                       | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Reliability and observability](#reliability-and-observability) |
+| CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5, CONTENT-6, CONTENT-7, CONTENT-8, CONTENT-9 | [Puzzle days and content tooling](#puzzle-days-and-content-tooling)                                                                     |
+| PERF-1, PERF-2, PERF-3                                                                            | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Testing](#testing)                                             |
+| AVAIL-1, AVAIL-2, AVAIL-3                                                                         | [Reliability and observability](#reliability-and-observability), [Security and privacy](#security-and-privacy)                          |
+| PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                            | [Security and privacy](#security-and-privacy)                                                                                           |
+| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                 | [Security and privacy](#security-and-privacy), [Answer pipeline](#answer-pipeline)                                                      |
+| A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6                                                    | [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                                  |
+| COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                            | [Stack and repository](#stack-and-repository), [The iPhone app](#the-iphone-app), [Environments and release](#environments-and-release) |
+| METRIC-1, METRIC-2, METRIC-3, METRIC-4, METRIC-5                                                  | [Reliability and observability](#reliability-and-observability), [Puzzle days and content tooling](#puzzle-days-and-content-tooling)    |
+| STORE-1, STORE-2, STORE-3, STORE-4, STORE-5, STORE-6, STORE-7, STORE-8                            | [Environments and release](#environments-and-release), [Security and privacy](#security-and-privacy)                                    |
+| RELEASE-1, RELEASE-2, RELEASE-3, RELEASE-4, RELEASE-5, RELEASE-6                                  | [Testing](#testing), [Environments and release](#environments-and-release)                                                              |
+
+## Open technical questions
+
+Each with a safe default; the PRD's [open questions][prd-open] cover the
+product and legal ones.
+
+- **Jev's rate-limit scope.** No TypeSafe page says whether 1,200 requests
+  a minute apply per key or per account. Safe default: one key, with the
+  per-object cap of 600 a minute.
+- **Jev out of credits.** No TypeSafe page says what the API returns when
+  credits run out. Safe default: treat any unexpected `4xx` as busy, alert,
+  and keep auto-refill on.
+- **Where far players wait.** An object created in western North America
+  adds an ocean crossing for players in Asia and Europe, and Cloudflare
+  publishes no latency figures between regions. Safe default: measure it
+  with `request.cf.colo` in the logs, and keep PERF-1's target to the
+  United States.
+- **Sampled counts.** Analytics Engine may sample at high volume, which
+  would make distinct-player counts estimates. Safe default: report them as
+  estimates if `_sample_interval` ever exceeds 1.
+- **Propagation.** KV gives no upper bound on how long a change takes to
+  appear everywhere. Safe default: publish two days ahead (CONTENT-2) and
+  never rewrite a revision.
+
+[prd-open]: /docs/PRD.md#open-questions
 
 ## See also
 
