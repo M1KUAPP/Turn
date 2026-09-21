@@ -6,7 +6,8 @@ monetization, store review, listings, retention, and the pitch, and where the
 official docs live. The [brief](/docs/BRIEF.md) covers the contest's
 requirements, dates, and prizes, so this document links to it instead of
 repeating them. Facts come from the research notes in `docs/research/`, which
-cite a source for each claim; their web sources were read on September 21, 2026.
+cite a source for each claim; their web sources were read on September 21 and
+22, 2026.
 
 Contents:
 
@@ -74,9 +75,9 @@ These are synthesis from the sections they link to.
 ## What the official rules add
 
 The brief lists the [official rules][rules] as an open question because they
-weren't captured. The research read them on Devpost on September 21, 2026.
-They're headed "Updated August 31, 2026" and prevail over every other
-Shipaton page. What they add or change:
+weren't captured. The research read them on Devpost on September 21 and
+September 22, 2026. They're headed "Updated August 31, 2026" and prevail over
+every other Shipaton page. What they add or change:
 
 - **Dates.** The Submission Period opens "Friday, July 31, 2026 at 8:00am PDT",
   where other sources say August 1, and closes September 30 at 11:45pm PDT.
@@ -104,15 +105,18 @@ Shipaton page. What they add or change:
   Sponsor, Administrator and Judges until the Judging Period ends", on
   October 13. Synthesis: a judge's free trial or promo code has to last that
   long.
-- **Eligibility.** Individuals must be "at least the age of majority where
-  they reside as of the time of entry", apart from the brief's Next Gen
-  exception for minors. Residents of places where US or local law prohibits
-  taking part are excluded, including Russia, Crimea, Cuba, Iran, and North
-  Korea.
-- **Ownership and taxes.** "All Submissions remain the intellectual property
-  of the individuals or organizations that developed them", and the Sponsor
-  gets a non-exclusive license to use entries for judging. Winners may need a
-  W-9 (US residents) or a W-8BEN form (other countries).
+- **Excluded countries.** Beyond the countries the brief's
+  [eligibility](/docs/BRIEF.md#who-may-enter) section names, the rules also
+  exclude "any other country designated by the United States Treasury's
+  Office of Foreign Assets Control".
+- **Ownership and publicity.** "All Submissions remain the intellectual
+  property of the individuals or organizations that developed them", with a
+  non-exclusive license to the Sponsor for judging. The rules also give the
+  sponsor and Devpost the right to "use the name, likeness, voice and image
+  of all individuals contributing to a Submission" to promote the hackathon
+  "for three years thereafter".
+- **Taxes.** Winners may need a W-9 (US residents) or a W-8BEN form (other
+  countries).
 - **Category fields.** The rules ask for the Stripe Project ID, the Replit
   preview URL and username, the OneSignal App ID, the Noise account email, and
   a live Galaxy Store URL, and the Layers installation "must be in place and
