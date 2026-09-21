@@ -138,9 +138,11 @@ your code can use directly." ([ts-intro])
   ([ts-js-config]) The SDK source's error reads: "TypeSafeClient is running in a
   browser, which would expose your API key to anyone using the page. Call the
   API from a server instead" ([gh-js-client]).
-- **Server runtimes.** The JS SDK's runtime detection names Bun, Deno, Vercel
-  Edge (`vercel-edge`), Cloudflare Workers (`cloudflare-workers`), and Node
-  ([gh-js-runtime]).
+- **Server runtimes.** The JS SDK's runtime detection, which fills its
+  `X-TypeSafe-Runtime` request header, names Bun, Deno, Vercel Edge
+  (`vercel-edge`), Cloudflare Workers (`cloudflare-workers`), and Node
+  ([gh-js-runtime]). The package itself declares `"node": ">=20"`
+  ([npm-registry-060]), matching the docs' "Node.js 20 or newer".
 - **Mobile platforms.** The docs index has no page on Swift or iOS, Kotlin or
   Android, React Native or Expo, or Flutter ([ts-llms]). Turning down a
   community .NET port on September 20, 2026, a maintainer wrote that TypeSafe
@@ -167,6 +169,7 @@ your code can use directly." ([ts-intro])
 [pub-ts-dart]: https://pub.dev/packages/typesafe_ai_sdk
 [gh-jevswiftsdk]: https://github.com/NSStudent/JevSwiftSDK
 [gh-jev4k]: https://github.com/pambrose/jev4k
+[npm-registry-060]: https://registry.npmjs.org/@typesafe-ai/sdk/0.6.0
 
 ### Installing an SDK and authenticating
 
@@ -611,10 +614,11 @@ matter for an app sold through a store:
 - **End-user claims (13.2).** The customer defends TypeSafe against claims
   "brought by an End User and related to the subject matter of this Agreement"
   ([ts-mca]).
-- **Publicity (16.4).** "neither Party may publicly announce that the Parties
-  have entered into the Agreement, except with the other Party's prior consent
-  or as required by Laws", while TypeSafe may list the customer's name and logo
-  ([ts-mca]).
+- **Publicity (16.4).** "Nothing in this Agreement grants either Party the
+  right to use the name, brand, or logo of the other Party, and neither Party
+  may publicly announce that the Parties have entered into the Agreement,
+  except with the other Party's prior consent or as required by Laws", while
+  TypeSafe may list the customer's name and logo ([ts-mca]).
 - **Law and export (16.2, 16.12).** California law with San Francisco venue,
   disputes in JAMS arbitration, and U.S. export rules apply ([ts-mca]).
 - **Age.** The MCA has no age clause. The privacy policy says: "We do not
