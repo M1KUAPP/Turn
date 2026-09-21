@@ -12,6 +12,7 @@ Contents:
 
 1.  [What the official rules add](#what-the-official-rules-add)
 1.  [Past winners](#past-winners)
+1.  [What wins each category](#what-wins-each-category)
 1.  [See also](#see-also)
 
 ## What the official rules add
@@ -120,6 +121,107 @@ As of September 21, 2026:
   Remy Reminders became an app its creator publishes.
 - Synthesis: placing didn't guarantee traction; most winners were still small
   a year on.
+
+## What wins each category
+
+What 2026 judges ask for comes from the category pages, summarized in the
+brief's [prize table](/docs/BRIEF.md#prizes-and-categories); what worked
+comes from past winners and the sponsors' own docs. The lessons drawn from
+past winners are synthesis.
+
+### Categories with a precedent
+
+- **Grand Prize.** 2026 rewards "the strongest user traction and growth
+  momentum". Payout, the 2025 winner, shipped in days, then kept "A/B testing
+  pricing" and targeting "high value keywords", and its write-up quantified
+  users, revenue, paid subscriptions, and reach. Synthesis: send every sale
+  through RevenueCat, since the shortlist counts only what RevenueCat reports.
+- **#BuildInPublic.** 2026: "Audience size does not matter. The quality and
+  usefulness of the journey does." Judges check "whether public feedback led
+  to changes". Past winners posted daily or nearly daily and showed changes
+  that came from the public, such as a slow paywall "flagged by three users".
+  Small accounts placed: Tomo Japan's X account had "65+ Followers". What put
+  Gurwi "over the edge" was tutorials, an open-sourced implementation, and
+  replies encouraging other builders.
+- **HAMM.** 2026 wants "a well-crafted paywall, thoughtful pricing and
+  packaging, strong conversion, and monetization that genuinely fits the
+  product". Winners had a one-line model tied to the app's purpose, such as
+  Vector Guard's "1:50 Justice Model", where each subscription funds 50 free
+  accounts. Tactics from other winners fit too: a paywall right after sign-up
+  "gave us 50 new trials in just one single day" for Gurwi, and Remy Reminders
+  paired an onboarding trial with "a 50% off offer" to win back users who
+  skipped it.
+- **Design.** 2026 looks for "taste, care, and execution" and "A demo video
+  that clearly shows the app in motion". Each past winner had one signature
+  interaction built on platform frameworks, such as Dayloop's Vision-based
+  "Auto Face Alignment" and Flowmino's Screen Time blocking with "gentle
+  animations" and "haptics". Five of the six design winners were native Swift
+  apps.
+- **Peace Prize.** 2026 asks "who the app helps, why the problem matters" and
+  for "early evidence of usefulness, adoption, feedback, or real-world
+  benefit". All three 2025 winners grew out of the builder's own family.
+  Heartbeat Hero and Hearing Buddy kept their core help free, and
+  accessibility and offline use were presented as features. Modest evidence
+  was enough, such as "dozens of positive comments" on Reddit.
+- **Keep Them Coming Back.** 2026 judges "Implementation", "User value",
+  "Resourcefulness", and "Depth". The rules: "A single deployed message is
+  sufficient for eligibility, but more thoughtful use of the platform may
+  receive stronger consideration." 2025's OneSignal winners tied messages to
+  the app's core habit, and judges named Journeys, transactional messaging,
+  and omnichannel messaging. Voicetree published the most copyable playbook:
+  segments keyed to RevenueCat subscription states, "an extended paid trial
+  ($5 for the first month)" after a cancelled trial, and a push prompt only
+  after "more than 3 sessions".
+- **Ship Kotlin Everywhere.** 2026 requires both stores and judges
+  "Cross-platform quality — required", with community interaction and giving
+  back optional. 2025 winners shared Compose UI but went native where quality
+  needed it, such as Momental's audio players, and gave back through open
+  source, weekly videos, and community boards. Synthesis: keep both listings
+  live through judging; one 2025 winner's Google Play page is gone.
+- **Conflict of Interest.** The 2025 precedent, Crystal Abyss, was a small,
+  polished SpriteKit puzzle game built with Claude and Codex.
+- **Influencer Awards.** Shipyard is the closest precedent: creators chose
+  from "the top 10–15" entries, and "Audience Fit (30%)" weighed the most.
+  Winners built the brief's core and cut the rest ("We said no to meal
+  planning, social features, and community feeds"), answered the creator's
+  named pain point, and designed monetization in. Only one, Remy Reminders,
+  became an app its creator publishes.
+
+### Categories new in 2026
+
+- **Catvertising.** RevenueCat Ads is a beta that tracks ads served by AdMob
+  or another network; it doesn't serve ads. Access is requested from the Ads
+  page of the dashboard, and no source says how long it takes, so ask early.
+- **Best Game.** There was no game category before. The games that placed
+  were Party Animals, third in 2024's money award, picked after market
+  research on party games, and Crystal Abyss, 2025's staff award.
+- **Next Gen.** There was no student category before, but the 2025 Peace
+  Prize winner, Heartbeat Hero, was rebuilt from a "WWDC Swift Student
+  Challenge 2024 Distinguished Winner" app.
+- **Most Viral App.** Noise is a creator platform for user-generated content
+  campaigns: "The minimum daily budget is $50", and nothing is charged until
+  creators earn views. Creators need to see the paid features, through a
+  public TestFlight link or a shared test login. The closest precedent is
+  2025's Buzziest Launch, won by ReadHim.
+- **Best App for Galaxy.** Galaxy optimization is 20% of the score. Samsung's
+  foldable guidance covers multi-window resizing, aspect ratios, app
+  continuity, and Flex mode, and its free Remote Test Lab offers real Galaxy
+  devices. RevenueCat supports the Galaxy Store only in some SDKs; see the
+  store review section below.
+- **Idea to Income.** "Publishing to Google Play is not yet supported" in
+  Replit, so Replit apps ship on iOS, which RevenueCat also advises. Replit's
+  Agent can create the RevenueCat project and wire up purchases. The "Replit
+  preview URL" the rules ask for is undefined, and Replit's development URLs
+  "can change each time you reopen the app".
+- **Growth Loop.** The Layers SDK is required "because the loop has to be
+  observable to be judged", and the installation must be verifiable before
+  judging. Layers Pro is free for entrants "through the end of Shipaton on
+  October 1".
+- **Funnel Vision.** RevenueCat's advice: "you most likely don't need to
+  release a new version of your app at all." Funnels are included in
+  RevenueCat Pro and need a connected payment provider, and Stripe Projects
+  can provision RevenueCat from the Stripe CLI. The "Stripe Project ID" the
+  rules ask for is undefined.
 
 ## See also
 
