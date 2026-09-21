@@ -137,7 +137,8 @@ python3 "$CHECKS/check_links.py" docs/CONTEXT.md
   research notes. Each miss must be fixed, or explained in the commit message
   body when it is a derived value.
 - `check_links.py` lists external links that don't return HTTP 2xx. Devpost
-  answers scripted requests with 403, so open those by hand; any other
+  answers scripted requests with 403 and YouTube with 429, so open those by
+  hand (YouTube's oEmbed endpoint confirms that a video exists); any other
   failure is a broken link to fix.
 
 Each task also has its own assertions, run as a failing test first:
