@@ -19,6 +19,8 @@ Contents:
 1.  [Build plan](#build-plan)
 1.  [Launch and pitch](#launch-and-pitch)
 1.  [Risks](#risks)
+1.  [How the idea was chosen](#how-the-idea-was-chosen)
+1.  [Assumptions and open questions](#assumptions-and-open-questions)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -371,6 +373,83 @@ categories and why; and the AI tools used, credited openly.
   model".
 - **Few numbers.** Posting starts on launch day, and the write-up leads with
   rates and the consistency results rather than totals.
+
+## How the idea was chosen
+
+Ten rounds, from wide to narrow, each logged with its method and decision:
+
+1.  [Round 1][r1] set seven hard constraints, such as being in App Store
+    review by September 24, and a weighted rubric.
+1.  [Round 2][r2] had three subagents write 30 ideas through creator briefs,
+    categories, and Jev-first lenses; 26 were distinct.
+1.  [Round 3][r3] failed six on the constraints, five of them on time, and
+    sent 20 on.
+1.  [Round 4][r4] had two scorers, one of them blind, rank Hunch, Subtext,
+    Flagged, SaySo, and Earshot highest.
+1.  [Round 5][r5] checked App Store rivals and harm data, which moved Flagged
+    up and the other three down.
+1.  [Round 6][r6] had a red team find that Hunch could contradict itself,
+    and the checked bank fixed it.
+1.  [Round 7][r7] re-scored the finalists with their fixes, 83 for Hunch
+    against 77 and 62, and named the winner Guessling.
+1.  [Round 8][r8] chose a free daily puzzle and a paid archive.
+1.  [Round 9][r9] cut the scope to one loop, put the key in a Worker, and
+    set the schedule to September 30.
+1.  [Round 10][r10] tested the pitch, gave a final score of 82.5, and set the
+    triggers listed under [Risks](#risks).
+
+[r1]: /docs/research/ideation.md#round-1-constraints-and-rubric
+[r2]: /docs/research/ideation.md#round-2-thirty-candidates
+[r3]: /docs/research/ideation.md#round-3-screening
+[r4]: /docs/research/ideation.md#round-4-scoring
+[r5]: /docs/research/ideation.md#round-5-evidence
+[r6]: /docs/research/ideation.md#round-6-red-team
+[r7]: /docs/research/ideation.md#round-7-the-choice
+[r8]: /docs/research/ideation.md#round-8-monetization
+[r9]: /docs/research/ideation.md#round-9-scope-stack-and-schedule
+[r10]: /docs/research/ideation.md#round-10-pitch-test
+
+## Assumptions and open questions
+
+The goal directive rules out asking, so the plan assumes:
+
+- A team of one to three people, starting from no code on September 22,
+  2026, with an active Apple Developer Program membership, who write
+  TypeScript.
+- No Google Play account with production access and no Galaxy Store seller
+  status, which leaves the App Store.
+- A team that isn't all students and isn't RevenueCat or sponsor staff, with
+  a small launch budget.
+- A Jev API key on September 22, 2026, and TypeSafe's consent before Jev is
+  named in public.
+- That "include Jev in this project" means Jev makes a decision players rely
+  on in the shipped app, not only in the build tools.
+
+Still open, each with a safe default:
+
+- **Jev access.** Jev is in early access, and no source says how soon a new
+  account gets a working key. Safe default: request it first and follow the
+  no-key trigger under [Risks](#risks).
+- **Jev credits.** No free tier or hackathon credit is documented, and no
+  TypeSafe page says what the API returns when credits run out; with
+  auto-refill off and a zero balance, TypeSafe "may decline to generate
+  Output". Safe default: buy credits on day one, turn auto-refill on, and
+  watch usage through October 13.
+- **Naming Jev.** No source says how to get TypeSafe's consent under section
+  16.4. Safe default: ask TypeSafe on September 22 and say "a hosted
+  decision model" until it answers.
+- **The Guessling's art.** Whether the team can draw the character in a day
+  is unknown. Safe default: AI-assisted art, credited openly, as past
+  winners did.
+- **"20 Questions" in the name.** Several App Store apps use it, but no
+  source here says whether it is free to use. Safe default: keep it as a
+  description after the brand name.
+- **Age rating.** TypeSafe's services aren't directed to children, and no
+  source here names the right App Store age rating. Safe default: answer
+  Apple's questionnaire honestly and stay out of the Kids category.
+- **More than one prize.** The context's
+  [open questions](/docs/CONTEXT.md#open-questions) apply. Safe default:
+  expect at most one prize.
 
 ## See also
 
