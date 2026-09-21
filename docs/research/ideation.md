@@ -330,8 +330,9 @@ only where the evidence changes a criterion.
   on-device model, and reviews of one punish contradictory or hedged answers
   ("It either is nomadic or it isn't"); and Jev's answers to a question and
   its negation needn't agree. Differentiation goes from 4.5 to 3.5. Das
-  Verhör's free-text questioning comes from its project page, which the
-  first review of this work read; the scores here include it.
+  Verhör's free-text questioning comes from its project page, read on
+  September 22, 2026 after the gallery check, which went by taglines; the
+  scores here include it.
 - **Subtext.** For: autistic adults already use chatbots to read messages.
   Against: "Subtext: Decode Messages", a free app "built for autistic
   adults", launched on August 13, 2026, beside other message decoders, and
@@ -465,12 +466,15 @@ one rule for all three. Category fit ends half a point above the panel's
 average for the primary category, because each accepted fix answers that
 category's main objection. Buildability falls half a point for each fix's
 extra work. Other scores move only for weaknesses Round 5 hadn't scored.
-The highest total wins, and ties go to buildability. The winner then takes
+The highest total wins, but totals within 3 points count as a tie: the two
+Round 4 scorers differed by 3 points on both finalists, 82 and 85 for Hunch
+and 78 and 81 for Flagged. The red team's ranking breaks a tie, since
+buildability already carries a fifth of every total. The winner then takes
 the runners-up's best parts and a name.
 
 | Finalist | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
 | -------- | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
-| Hunch    | 4   | 3.5   | 5   | 4     | 5    | 3.5    | 4        | 82    |
+| Hunch    | 4   | 3     | 5   | 4     | 5    | 3.5    | 4        | 80    |
 | Flagged  | 3.5 | 4     | 4.5 | 4     | 4.5  | 4      | 4        | 80    |
 | Subtext  | 3   | 3.5   | 3.5 | 3     | 4    | 2      | 4        | 64.5  |
 
@@ -478,7 +482,8 @@ What moved:
 
 - **Hunch:** the panel averaged 3.5 for Best Game, so category fit ends at
   4, with HAMM as a secondary it can meet without another SDK. Buildability
-  falls from 4 to 3.5 for the bank review and the art.
+  falls from 4 to 3 for its two fixes with real work, the checked bank and
+  the art; filling the archive is part of the bank's puzzle work.
 - **Flagged:** the panel averaged 3 for the Peace Prize, so category fit
   stays at 3.5. Buildability falls from 4.5 to 4 for the labeled test set.
   Jev centrality and monetization fit hold: Round 5 had already counted text
@@ -489,12 +494,12 @@ What moved:
   centrality from 5 to 3.5, because the panel found that reading tone is
   Jev's weakest task, which Round 5 hadn't scored.
 
-The margin is two points, and it is thin: had Flagged's accuracy test
-earned a full point of category fit instead of half, Flagged would lead 82.5
-to 82. Hunch stays the choice for three reasons outside the totals: the
-panel ranked it first by its odds of placing; Jev is its whole game, which
-suits the goal of including Jev; and 11 gallery projects name Best Game,
-against 39 for the Peace Prize.
+Hunch and Flagged tie at 80, so the red team's ranking decides it: the
+panel ranked Hunch first by its odds of placing and Flagged second, because
+Flagged proves the harm but not the app, in a Peace field that already holds
+several scam checkers. The plan's first tie-break, buildability, would have
+picked Flagged; it gave way because buildability is already in every total.
+Jev is also Hunch's whole game, which suits the goal of including Jev.
 
 Borrowed from the runners-up:
 
@@ -747,13 +752,13 @@ consents.
   Paywall configured remotely, offer codes for judges, and the conversion
   numbers from RevenueCat's charts.
 
-**Final score:** 81.5. Early traction falls from 4 to 3.5, because the
+**Final score:** 79.5. Early traction falls from 4 to 3.5, because the
 numbers will rest on about a day live in the video, recorded on September
 28, and about three in the write-up; every other score holds.
 
 | Fit | Build | Jev | Money | Demo | Differ | Traction | Total |
 | --- | ----- | --- | ----- | ---- | ------ | -------- | ----- |
-| 4   | 3.5   | 5   | 4     | 5    | 3.5    | 3.5      | 81.5  |
+| 4   | 3     | 5   | 4     | 5    | 3.5    | 3.5      | 79.5  |
 
 **Go and no-go triggers:**
 
