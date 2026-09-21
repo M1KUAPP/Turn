@@ -17,6 +17,7 @@ Contents:
 1.  [Round 6: red team](#round-6-red-team)
 1.  [Round 7: the choice](#round-7-the-choice)
 1.  [Round 8: monetization](#round-8-monetization)
+1.  [Round 9: scope, stack, and schedule](#round-9-scope-stack-and-schedule)
 
 ## Round 1: constraints and rubric
 
@@ -541,3 +542,99 @@ codes that cover judging to October 13.
 
 [ctx-money-r8]: /docs/CONTEXT.md#monetization-and-paywalls
 [ev-hunch]: idea-evidence.md#hunch-a-daily-20-questions-game
+
+## Round 9: scope, stack, and schedule
+
+**Question:** what ships by when?
+
+**Method:** cut Guessling to one loop that can be in review by September 24,
+pick a stack that keeps Jev's key off the phone, and schedule each day to
+September 30. The dates and review rules come from the brief and the
+context.
+
+### Scope of the first version
+
+- **Must:** today's puzzle with its hint; questions typed in the player's
+  words and answered from the checked bank or live; "Ask another way"; the
+  twenty-question count; guesses checked in code; a spoiler-free share card;
+  the Guessling's nod, head shake, shrug, and celebration; the Guessling+
+  archive, paywall, and Restore Purchases; the permission notice before the
+  first question; offline and busy states; "Report this answer"; the privacy
+  policy and terms pages; and 30 checked cards.
+- **Should:** a streak count, haptics and sound, and checking the
+  entitlement on the server as well as in the app.
+- **Won't, in the first version:** accounts, leaderboards, friends, packs,
+  push notifications, Android, and an iPad layout.
+
+### Stack and data flow
+
+- **App:** Expo with TypeScript and `react-native-purchases`, 10.10.1 on
+  September 21, 2026, with RevenueCat Paywalls. One language runs from the
+  app to the backend and Jev's official JavaScript SDK. A Swift team would
+  build the same screens in SwiftUI with purchases-ios.
+- **Backend:** one Cloudflare Worker, one of the runtimes that Jev's
+  JavaScript SDK detects, with the key in the Worker's secrets and the model
+  pinned to `jev-1.13.0`. Workers KV holds the cards, their checked bank
+  answers, the daily schedule, and each day's live answers. The secret never
+  ships in the app: the Worker sends the hint and checks guesses.
+- **Per question:** the app sends today's number and the question; the
+  Worker sends Jev one request with a Choice over that category's bank
+  questions plus "none", and a Noul asking whether the text is a yes-or-no
+  question about the hidden thing. A confident match returns the checked
+  answer. "None" gets a live Noul against the card: above 0.7 is Yes, below
+  0.3 is No, and anything between is "Ask another way", which costs no
+  question. A live answer is cached for the day.
+- **Authoring:** a script runs Jev over every bank question and its negation
+  for each card and lists answers between 0.3 and 0.7 and negated pairs that
+  disagree; a person fixes them before the card ships.
+- **Data:** only the typed questions reach TypeSafe, after the player agrees
+  to a notice that names it. There are no accounts; RevenueCat's anonymous
+  IDs carry the purchase.
+
+### Schedule
+
+- **Tuesday, September 22:** request the Jev key and ask TypeSafe's consent
+  to name Jev; sign the Paid Apps Agreement and finish tax and banking; set
+  up the RevenueCat project, the App Store Connect record, and the two
+  subscriptions; write the question bank and the first ten cards; stand up
+  the Worker.
+- **Wednesday, September 23:** the app's screens and the Guessling's art;
+  bank matching and the live fallback; the authoring script; cards up to 30;
+  the permission notice; the paywall and archive; the policy pages.
+- **Thursday, September 24:** fix the flagged answers; run the consistency
+  test; the icon, the 6.9-inch screenshots and the 1179 × 2556 one, and the
+  metadata; submit the first build with its subscriptions, set to release
+  automatically.
+- **Friday, September 25 and Saturday, September 26:** in review. A
+  rejection gets a fix for the cited guideline only and a resubmission the
+  same day. Draft the launch posts and the video script.
+- **Sunday, September 27:** live. Create the offer codes, confirm a
+  production purchase, and post the first public puzzle to puzzle
+  communities.
+- **Monday, September 28:** record the video on a device and upload it.
+- **Tuesday, September 29:** write the Devpost description and the category
+  answers with the numbers so far.
+- **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
+  PT. Keep the Worker running and Jev's credits funded through October 13.
+
+### Review-safety checklist
+
+From the context's [review essentials][ctx-apple-r9]:
+
+- The subscriptions go in the same submission as the first build.
+- The paywall shows the billed amount first, the trial, the renewal, how to
+  cancel, Restore Purchases, and links to the Terms of Use and the privacy
+  policy, which also appear in the metadata.
+- Permission comes before the first question goes to TypeSafe (5.1.2(i)),
+  and the privacy label declares "Purchases" and the typed questions.
+- No accounts, so no deletion flow, and no third-party login.
+- The Test Store key never ships, the backend runs through review, and the
+  review notes explain how to play.
+- Screenshots are final before submitting, because they can't change while
+  the app is "Waiting for Review".
+- Not in the Kids category.
+
+[ctx-apple-r9]: /docs/CONTEXT.md#apple-app-store-review-essentials
+
+**Decision:** in review by the end of Thursday, September 24, live by Sunday,
+September 27, and submitted to Devpost on September 30.
