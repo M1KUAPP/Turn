@@ -41,12 +41,16 @@ Contents:
 - **Jev's job:** Jev checks every puzzle's answers before it ships, matches
   each typed question to a checked answer, and answers the rest live.
 - **Dates:** in App Store review by Thursday, September 24, a day after the
-  brief's suggested date, which the ideation's constraint C2 accepts; live
-  as soon as it's approved, and by Sunday, September 27 at the latest;
-  submitted on Devpost by Wednesday, September 30 at 11:45 PM PT; free for
-  judges until judging ends on October 13.
+  brief's [suggested date][brief-dates], which the ideation's
+  [constraint C2][log-r1] accepts; live as soon as it's approved, and by
+  Sunday, September 27 at the latest; submitted on Devpost by Wednesday,
+  September 30 at 11:45 PM PT; free for judges until judging ends on
+  October 13, under the [official rules][ctx-rules].
 
 [ctx-review]: /docs/CONTEXT.md#getting-through-store-review
+[brief-dates]: /docs/BRIEF.md#key-dates
+[log-r1]: /docs/research/ideation.md#round-1-constraints-and-rubric
+[ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
 
 ## Problem and audience
 
@@ -179,7 +183,13 @@ Data, consent, and terms:
   responses".
 - Before the first question, a notice names TypeSafe and asks permission,
   as guideline 5.1.2(i) requires before personal data goes to a third-party
-  AI. The privacy policy names TypeSafe too, and there are no accounts.
+  AI, and the privacy policy names TypeSafe too. The first build names it
+  because 5.1.2(i) asks apps to "clearly disclose" third-party AI,
+  TypeSafe's agreement makes the team give users the notices that
+  TypeSafe's use of their input needs (section 5), and section 16.4 allows
+  what is "required by Laws". The Worker serves the notice's text, and the
+  privacy policy is a web page, so either can change without an app update.
+  There are no accounts.
 - TypeSafe says no part of its services "is directed to children" and
   doesn't knowingly handle personal data from anyone under 18. So Guessling
   stays out of the Kids category, the notice asks players not to type
@@ -189,8 +199,9 @@ Data, consent, and terms:
   2.2) but not as "a standalone service"; Guessling is a game, not a relay.
   Section 16.4 grants no "right to use the name, brand, or logo of the
   other Party" and bars announcing the relationship without consent, so the
-  request to TypeSafe on September 22 covers the notice, the privacy policy,
-  the video, and the write-up ([terms][jev-terms]).
+  request to TypeSafe on September 22 asks for consent to name Jev in the
+  video and the write-up, and asks it to confirm the notice and the privacy
+  policy ([terms][jev-terms]).
 
 [jev-what]: /docs/research/jev.md#what-jev-is
 [jev-latency]: /docs/research/jev.md#rate-limits-context-length-and-latency
@@ -245,8 +256,8 @@ Guessling enters two and the Grand Prize considers it anyway.
   at some cost in conversion, and its conversion numbers.
 - **Grand Prize, automatically.** Its shortlist counts revenue as reported
   in RevenueCat, so every sale goes through RevenueCat. Revenue builds the
-  shortlist but "does not decide the winner", so the write-up also says what
-  changed after launch and what was learned.
+  shortlist but "does not decide the winner" ([judging][brief-judging]), so
+  the write-up also says what changed after launch and what was learned.
 
 Left out, with the reason:
 
@@ -266,6 +277,8 @@ Left out, with the reason:
   funnel, a build on Replit, or Noise's $50 daily minimum.
 - **Next Gen and Conflict of Interest:** they're for students and for staff.
 
+[brief-judging]: /docs/BRIEF.md#judging-process
+
 ## Build plan
 
 Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
@@ -280,11 +293,19 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   screens in SwiftUI with purchases-ios.
 - **Backend:** one Cloudflare Worker that holds the Jev key, with Workers KV
   for the puzzles' fact cards and accepted names, the checked bank answers,
-  the daily schedule, and each day's live answers. It sends the app the
-  hint, answers the questions, and checks the guesses, so the secret never
-  reaches the phone.
+  and the daily schedule, and one Durable Object for each day's answers, so
+  two players can't get different answers to the same new wording. It sends
+  the app the hint, answers the questions, and checks the guesses, so the
+  secret never reaches the phone. It limits requests per device, caps
+  retries and timeouts on answers a player is waiting for, and checks the
+  Guessling+ entitlement before serving an archive puzzle, since every call
+  spends Jev credits.
 - **Authoring:** a script runs Jev over the bank and its negations for each
-  puzzle, lists what a person must fix, and uploads the checked puzzle.
+  puzzle, lists what a person must fix, and uploads the checked puzzle. The
+  bank starts at about 100 questions per category, under the 255 a Choice
+  allows. The first two puzzles are a pilot that measures how many answers
+  need a person; if that's more than the time allows, the bank shrinks to
+  its most common questions rather than the launch set shrinking.
 - **Purchases:** RevenueCat's anonymous IDs carry them, with no accounts. The
   Test Store key never ships.
 - **Coding agents:** RevenueCat's AI Toolkit and MCP server help them wire
@@ -297,10 +318,10 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   Guessling's four reactions; the Guessling+ archive, paywall, and Restore
   Purchases; the permission notice before the first question; busy and
   offline states; "Report this answer"; the privacy policy and terms pages;
-  and 30 checked puzzles, enough for ten in the archive and a daily puzzle
-  through October 13.
-- **Should:** a streak count, haptics and sound, and an entitlement check on
-  the server as well as in the app.
+  the entitlement check on the server; and 17 checked puzzles by
+  submission, ten for the archive and a week of daily ones, then at least
+  one more a day, since Guessling+ promises one more each day.
+- **Should:** a streak count, and haptics and sound.
 - **Won't:** accounts, leaderboards, friends, packs, push notifications,
   Android, and an iPad layout.
 
@@ -309,11 +330,11 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
 - **Tuesday, September 22:** request the Jev key and ask TypeSafe's consent
   to name Jev; sign the Paid Apps Agreement and finish tax and banking; set
   up the RevenueCat project, the App Store Connect record, and the two
-  subscriptions; write the question bank and the first ten puzzles; stand up
-  the Worker.
+  subscriptions; write the question bank and the authoring script; check
+  the first two puzzles as the pilot; stand up the Worker.
 - **Wednesday, September 23:** the app's screens and the Guessling's art;
-  bank matching and live answers; the authoring script; puzzles up to 30; the
-  permission notice; the paywall and archive; the policy pages.
+  bank matching and live answers; puzzles up to 17; the permission notice;
+  the paywall and archive; the policy pages.
 - **Thursday, September 24:** fix the flagged answers; run the consistency
   test; make the icon, the 6.9-inch screenshots, the 1179 × 2556 screenshot,
   and the metadata; submit the first build with its subscriptions, set to
@@ -327,25 +348,24 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   launch, and post the first public puzzle.
 - **Monday, September 28:** record the video on an iPhone and upload it.
 - **Tuesday, September 29:** write the Devpost description and category
-  answers with the numbers so far.
+  answers with the numbers so far, and go through the brief's
+  [submission checklist][brief-checklist].
 - **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
-  PT. Keep the Worker running and Jev's credits funded through at least
-  October 21, when winners are announced.
+  PT, making sure Devpost shows the entry as submitted. Keep the Worker
+  running, Jev's credits funded, and a new puzzle each day through at least
+  October 22, the later of the dates given for the winners.
+
+[brief-checklist]: /docs/BRIEF.md#submission-checklist
 
 ### Review-safety checklist
 
-From the context's [review essentials][ctx-apple]:
+The context's [review essentials][ctx-apple] apply in full; these are the
+items specific to Guessling:
 
-- The subscriptions go in the same submission as the first build.
-- The paywall makes the billed amount the most prominent price and shows
-  the trial, the renewal, how to cancel, and Restore Purchases, with links
-  to the Terms of Use and the privacy policy, which the metadata links too.
 - The permission notice comes before the first question goes to TypeSafe,
   and the privacy label declares "Purchases" and the typed questions.
 - No accounts, so no deletion flow, and no third-party login.
 - The backend runs through review, and the review notes explain how to play.
-- Screenshots are final before submitting, because they can't change while
-  the app is "Waiting for Review".
 - The app stays out of the Kids category.
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
