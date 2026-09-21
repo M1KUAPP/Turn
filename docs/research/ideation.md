@@ -14,6 +14,7 @@ Contents:
 1.  [Round 3: screening](#round-3-screening)
 1.  [Round 4: scoring](#round-4-scoring)
 1.  [Round 5: evidence](#round-5-evidence)
+1.  [Round 6: red team](#round-6-red-team)
 
 ## Round 1: constraints and rubric
 
@@ -367,3 +368,79 @@ What the finalists carry forward:
 - **Subtext** needs a new name and a sharper difference from free decoders.
 
 **Decision:** Top three: Hunch, Flagged, and Subtext go to Round 6.
+
+## Round 6: red team
+
+**Question:** why would each finalist lose?
+
+**Method:** a subagent played three roles against each finalist's pitch,
+loop, Jev questions, prices, categories, and planned video beats: a
+RevenueCat screener who watches two minutes and reads the write-up, the
+primary category's judge applying its page, and an App Store reviewer
+applying the context's review rules. It used the evidence notes and Jev's
+documented limits, and was told to be adversarial.
+
+| Finalist | Category            | Screener | Category judge |
+| -------- | ------------------- | -------- | -------------- |
+| Hunch    | Best Game (primary) | 4        | 3              |
+| Hunch    | Growth Loop         | 2        | 2              |
+| Hunch    | #BuildInPublic      | 2        | 1              |
+| Flagged  | Peace Prize         | 3        | 3              |
+| Flagged  | #BuildInPublic      | 3        | 2              |
+| Subtext  | Peace Prize         | 3        | 2              |
+| Subtext  | Design              | 2        | 2              |
+
+Likeliest reasons each one loses:
+
+- **Hunch.** The judge's own round contradicts itself: the cache locks in
+  wording, not meaning, so "Does it fly?" and "Can it fly?" can disagree,
+  and a wrong first answer becomes everyone's answer for the day. A text
+  field with three answer labels doesn't look like a polished game among
+  148, and the video's "how it works" beat is something Best Game doesn't
+  score. A review rejection could leave no time to resubmit: "Play
+  yesterday's?" has no yesterday on launch day, and packs without cards are
+  placeholders.
+- **Flagged.** It proves the harm but not the app: after about five days
+  live it has no user outcomes and no accuracy figures, in a Peace field that
+  already holds several scam checkers. A judge's test posting that it misses,
+  or a big company's listing it flags, sinks a safety app. A weekly pass for
+  job seekers argues against the Peace story.
+- **Subtext.** A free app built with autistic advisors, with the same name
+  and promise, came first; the audience is punishing subscriptions; and
+  reading tone in a message that argues for its own tone is Jev's weakest
+  task.
+
+Shared risks: Jev is in early access and TypeSafe documents no free tier, so
+credits must last through judging on October 13; the `jev-1.13.0` version
+must be pinned, because an alias moves when a new release ships; and naming
+Jev anywhere needs TypeSafe's consent under section 16.4 of its agreement.
+
+Fixes:
+
+- **Accepted for Hunch:**
+  - Answer from a checked bank. Before a card ships, Jev answers a fixed
+    bank of common questions and their negations against it, and a person
+    fixes every answer between 0.3 and 0.7 and every negated pair that
+    disagrees. In play, Jev matches the player's words to the nearest bank
+    question, with a "none" option; only "none" gets a live answer.
+  - Give it art direction and tone, and show them in the video instead of
+    the "how it works" beat.
+  - Launch with the archive filled and no packs or "unlimited" claims.
+  - Check guesses in code against each card's accepted names, so a guess
+    can't argue its way to a match.
+  - Ask permission before the first question goes to TypeSafe, show offline
+    and busy states, and keep the app out of the Kids category.
+  - Replace Growth Loop and #BuildInPublic with HAMM as the secondary: a
+    free daily puzzle with a paid archive is how NYT Games sells puzzles,
+    and it needs no Layers SDK and no tracking prompt.
+- **Accepted for Flagged:** publish an accuracy test on labeled real scams
+  and real postings before September 30, drop the weekly pass, and say who
+  it's for in the first 15 seconds.
+- **Accepted for Subtext:** bring in at least ten autistic and ADHD adults to
+  set its tags, threshold, and price. Accepted, but unlikely in the time
+  left.
+- **Rejected:** publishing the exact wording of Flagged's checks in a public
+  changelog, which would show scammers how to get around them.
+
+**Decision:** the panel ranks Hunch first, Flagged second, and Subtext
+third. Round 7 re-scores them with the accepted fixes.
