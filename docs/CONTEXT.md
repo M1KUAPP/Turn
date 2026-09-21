@@ -33,9 +33,10 @@ These are synthesis from the sections they link to.
   RevenueCat". See
   [What the official rules add](#what-the-official-rules-add).
 - **Ship to the App Store first.** Apple says 90% of submissions are reviewed
-  in under 24 hours on average. A new personal Google Play account that
-  hasn't started its closed test can't finish it by September 30, and the
-  Galaxy Store needs seller status and a supported SDK. See
+  in under 24 hours on average. A new personal Google Play account whose
+  closed test ends after the brief's September 23 review target should use
+  another store, and the Galaxy Store needs seller status and a supported
+  SDK. See
   [Getting through store review](#getting-through-store-review).
 - **Submit the first purchase with the app.** The app version, the
   subscription group, and every subscription go in one draft submission,
@@ -359,9 +360,9 @@ costs, and common rejections. The stores' own documents add the rules below,
 and the [best practices notes](/docs/research/best-practices.md) have the
 sources. Synthesis: for a team submitting in the last week of September, the
 App Store is the realistic first store. A new personal Google Play account
-that starts its required test after September 16 can't finish it by
-September 30, and the Galaxy Store needs commercial seller status and a
-supported SDK.
+still needs production access and review after its 14-day test, so a test
+ending after the brief's September 23 review target is too late. The Galaxy
+Store needs commercial seller status and a supported SDK.
 
 ### Apple App Store review essentials
 
@@ -401,12 +402,12 @@ supported SDK.
 
 ### Google Play review essentials
 
-- **A closed test started after September 16 ends too late.** Personal
+- **A closed test ending after September 23 is too late.** Personal
   accounts created after November 13, 2023 need at least 12 testers opted in
   for 14 days, then a production access review that "usually takes seven days
-  or less". A test started on September 21 reaches 14 days on October 5; the
-  brief's September 16 was the last start date that could end by the
-  deadline.
+  or less", then app review. A test started on September 21 reaches 14 days
+  on October 5. The brief's September 16 was only the last start date that
+  could end the test itself by September 30.
 - **Review time.** Some accounts wait "up to seven days or longer in
   exceptional cases", and a change sent during a review can push the app "to
   the back of the app review queue".
