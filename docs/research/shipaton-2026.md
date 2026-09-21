@@ -784,7 +784,7 @@ Each influencer award is a fixed product brief with its own judging list.
   volume" and "Funnel design and implementation" ([cat-stripe]); [devpost]
   (Categories) says "the qualifying web payment volume processed during the
   measurement period". "No additional sponsor-specific submission fields
-  have been announced." ([cat-stripe]) The later submission guide asks for
+  have been announced." ([cat-stripe]) The submission guide asks for
   more: "launch a live web-to-app funnel using RevenueCat Funnels with
   Stripe. Include the funnel URL and Stripe Project ID." ([blog-submit],
   Sponsor awards)
@@ -1589,8 +1589,8 @@ Authority order used here: the official rules (not captured) > [devpost] >
   them; the Devpost form itself is the final word.
 - **Funnel Vision fields.** [cat-stripe]: "No additional sponsor-specific
   submission fields have been announced." [blog-submit] (Aug 27, 2026):
-  "Include the funnel URL and Stripe Project ID." The later post is more
-  specific; include both.
+  "Include the funnel URL and Stripe Project ID." The category page is
+  undated, so which came first is unknown; include both.
 - **Video length (2025 vs 2026).** [win-4] (2025) says judges watch "max
   three minutes"; the 2026 rule is "no longer than 2 minutes of essential
   footage — **judges are not required to watch beyond two minutes.**"
