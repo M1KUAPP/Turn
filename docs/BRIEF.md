@@ -250,10 +250,8 @@ What this means for an entry:
 | [Conflict of Interest][cat-coi]         | RevenueCat         | No cash; blog post and billboard                                  | The best app from RevenueCat or sponsor employees                       |
 
 - Amounts follow the Devpost prize list, which Devpost calls "the official
-  details of prizes". Its summary promises "$20,000" to the first place of
-  every other category, but the list pays $15,000 in five sponsor categories
-  and no cash for Best App for Galaxy, which Devpost lists with a single
-  winner.
+  details of prizes". Its summary disagrees for some categories; see
+  [Open questions](#open-questions).
 - The five Influencer Awards are fixed product briefs for each creator's
   audience. Building for that audience doesn't allow you to use the creator's
   name, image, voice, logo, or likeness.
@@ -284,14 +282,11 @@ What this means for an entry:
 ## Rules to watch
 
 - Read the [official rules](https://revenuecat-shipaton-2026.devpost.com/rules)
-  before submitting. They govern eligibility, deadlines, and legal terms. No
-  2026 Shipaton source covers IP ownership, taxes, or disqualification terms;
-  Shipyard's rules covered IP and disqualification, but that was a different
-  hackathon.
-- The demo video carries at most 2 minutes of essential footage, is publicly
-  visible on YouTube or Vimeo (unlisted YouTube is fine, private is not), and
-  has no third-party trademarks or copyrighted music unless you have
-  permission to use them.
+  before submitting. They govern eligibility, deadlines, and legal terms, and
+  they aren't captured here; see [Open questions](#open-questions) for what
+  that leaves open.
+- The demo video has hard limits on length, visibility, and licensed
+  content; see item 4 of the [submission checklist](#submission-checklist).
 - For the Influencer Awards, "do not use the likeness or brand of the
   influencers". Get express written consent before using a creator's name,
   image, voice, logo, or likeness in the product, store listing, or
@@ -337,8 +332,9 @@ What this means for an entry:
   is at https://luma.com/shipaton-live. The last three are "ASO in the age of
   AI agents" (Tuesday, September 22), a "Final AMA" (Friday, September 25),
   and a wrap-up celebration (Tuesday, September 29), all at 9AM PT.
-- **Community:** the official Discord at https://discord.gg/shipaton26 for
-  teammates, feedback, and help, with channels such as `#shipkit-support`,
+- **Community:** the official Discord at https://discord.gg/shipaton26
+  (Devpost links https://discord.gg/X95EwqBxQT) for teammates, feedback, and
+  help, with channels such as `#shipkit-support`,
   `#post-engagement-boost` for build-in-public content, and
   `#looking-for-google-play-tester`.
 - **IRL events:** local meetups run with partner communities around the
@@ -455,9 +451,11 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
 
 - **Official rules.** They are not captured, so the minimum age outside Next
   Gen, the full country list, IP ownership, taxes, disqualification terms,
-  and the "full judging criteria" are not covered here.
+  and the "full judging criteria" are not covered here. Shipyard's rules
+  covered IP and disqualification, but that was a different hackathon.
 - **Multiple prizes.** You can enter several categories, but no 2026 source
-  says whether one app can win more than one prize.
+  says whether one app can win more than one prize. Enter the categories that
+  fit, and don't count on more than one prize.
 - **Purchase or transaction.** Devpost asks the SDK to "power at least one
   in-app purchase", while the vibe code page says "Get one sale, even from a
   friend or family member, or run a single ad." The safe default is at least
@@ -468,6 +466,7 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
   prize list.
 - **Best App for Galaxy places.** Devpost lists a single winner, but the
   category page also lists a 2nd and 3rd place, each with a blog feature.
+  Follow Devpost and plan for a single winner.
 - **Required items.** Devpost lists six; the submission guide lists nine,
   adding the tagline, the RevenueCat project ID, and category-specific
   details, and intake also checks the bundle ID or package name. Provide all
@@ -479,10 +478,11 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
 - **Travel.** Devpost's overview lists "Flights to New York City" for the
   Shippies ceremony, but its prize list gives travel only to the Grand Prize
   and the #BuildInPublic first place; other first places get an invitation.
-- **Discord invite.** The FAQ links https://discord.gg/shipaton26, and
-  Devpost links https://discord.gg/X95EwqBxQT.
+- **Discord invite.** The FAQ and other site pages link one invite, and
+  Devpost links another; both are listed under
+  [Resources and perks](#resources-and-perks). If one fails, try the other.
 - **Companies.** Team size is unlimited, but no source says whether a company
-  can enter.
+  can enter. Ask the organizers before entering as a company.
 - **Early betas.** Building and promoting before August 1 is allowed, but no
   source says whether a public beta before then counts as a release. If your
   app had one, confirm its eligibility with the organizers.
@@ -496,7 +496,7 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules](https://revenuecat-shipaton-2026.devpost.com/rules): the
-  source of truth for eligibility, deadlines, and legal terms. The Devpost
-  page links them, but they are not captured in `docs/sources/`.
+  source of truth for eligibility, deadlines, and legal terms; not captured in
+  `docs/sources/`.
 
 [devpost]: /docs/sources/devpost.com/revenuecat-shipaton-2026.[].md
