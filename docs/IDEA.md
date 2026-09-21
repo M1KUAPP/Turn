@@ -240,13 +240,16 @@ Guessling applies them.
   converts before the Submission Period closes on September 30, while
   revenue still counts toward the Grand Prize shortlist. The cost: a median
   25.5% of trials of 4 days or less become paid, against 37.4% at 5–9 days.
-- **Judges:** one-time-use Apple offer codes for a free month of Guessling+,
-  created once the app is live. A code redeemed on October 1 lasts past the
-  end of judging on October 13, and the daily puzzle needs no code.
+- **Judges:** an Apple offer code for a free month of Guessling+, created
+  once the app is live: a custom code with a small redemption limit, since
+  one-time-use codes come in batches of at least 500 (PAY-7 in the
+  [PRD][prd-pay]). A code redeemed on October 1 lasts past the end of
+  judging on October 13, and the daily puzzle needs no code.
 - **What to measure:** paywall views, trial starts, and conversions from
   RevenueCat's charts, which count production purchases only.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[prd-pay]: /docs/PRD.md#the-paywall-and-purchases
 
 ## Categories to enter
 
@@ -304,13 +307,13 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   screens in SwiftUI with purchases-ios.
 - **Backend:** one Cloudflare Worker that holds the Jev key, with Workers KV
   for the puzzles' fact cards and accepted names, the checked bank answers,
-  and the daily schedule, and one Durable Object for each day's answers, so
+  and the daily schedule, and one Durable Object for each puzzle's answers, so
   two players can't get different answers to the same new wording. It sends
   the app the hint, answers the questions, and checks the guesses, so the
-  secret never reaches the phone. It limits requests per device, caps
-  retries and timeouts on answers a player is waiting for, and checks the
-  Guessling+ entitlement before serving an archive puzzle, since every call
-  spends Jev credits.
+  secret never reaches the phone. It limits requests per device, caps retries
+  and timeouts on answers a player is waiting for, and checks the Guessling+
+  entitlement before serving an archive puzzle, since every call spends Jev
+  credits.
 - **Authoring:** a script runs Jev over the bank and its negations for each
   puzzle, lists what a person must fix, and uploads the checked puzzle. The bank
   starts at about 100 questions in each of four categories at launch: animals,
