@@ -65,7 +65,6 @@ Contents:
 The [evidence notes][ev-hunch] and the [gallery notes][gallery-other] have
 the sources.
 
-[ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
 [gallery-other]: /docs/research/gallery-2026.md#other-prize-categories
 
 ## What the app does
@@ -74,8 +73,8 @@ the sources.
     one-word hint, such as "An animal", with twenty questions to find it.
 1.  **Ask anything.** The player types a yes-or-no question in their own
     words, and before they can type the next one, the Guessling nods for
-    Yes, shakes its head for No, or shrugs for Sometimes. A question Jev
-    can't settle gets "Ask another way", which doesn't count.
+    Yes or shakes its head for No. When a question can't be settled, it
+    shrugs and says "Ask another way", and the question doesn't count.
 1.  **Guess.** The server checks the guess against the puzzle's accepted
     names, so the answer never ships in the app.
 1.  **Share and come back.** A spoiler-free card goes to any chat, and a new
@@ -88,8 +87,9 @@ the sources.
   art direction and tone that Best Game judges ask for.
 - **Screens:** today's puzzle, the result and share card, the archive, the
   paywall, and settings with Restore Purchases, the privacy policy, and the
-  terms. Every answer has "Report this answer", which sends it to the team
-  to fix the puzzle for the players who come after.
+  terms. Every answer has "Report this answer", which sends it to the team,
+  who fix the puzzle once the day ends, so everyone gets the same answers
+  that day.
 - **The "aha":** the first question typed in the player's own words,
   answered at once.
 - **Left out of the first version:** accounts, leaderboards, friends, packs,
@@ -97,9 +97,9 @@ the sources.
 
 ## How Jev fits
 
-Jev is TypeSafe's hosted decision model. It answers typed questions about
-text, as a Choice among options, a Score on a scale, or a yes-or-no Noul,
-with probabilities, in about 100 to 150 ms, and it never writes text
+Jev is TypeSafe's hosted decision model, in early access. It answers typed
+questions about text, as a Choice among options, a Score on a scale, or a
+yes-or-no Noul, with probabilities, and it never writes text
 ([Jev notes][jev-what]). In Guessling it does three jobs, all through the
 team's backend:
 
@@ -108,24 +108,36 @@ team's backend:
     with the puzzle's fact card as the state. A person fixes every answer
     between 0.3 and 0.7 and every pair whose answers disagree.
 1.  **It matches the player's question to the bank.** A Choice over the
-    category's bank questions, plus "none", picks the question the player
-    meant, so two wordings get one answer. A Choice takes at most 255
-    options.
+    category's bank questions, plus "none", picks the bank question that
+    asks the same thing. A confident match returns the checked answer, and
+    the match is cached for the day by wording, so two wordings get one
+    answer. A Choice takes at most 255 options.
 1.  **It answers what the bank doesn't cover.** A live Noul against the fact
     card gives Yes above 0.7, No below 0.3, and "Ask another way" in between.
-    A second Noul turns away anything that isn't a yes-or-no question about
-    the hidden thing. A live answer is cached for the day, so every player
-    gets the same one.
+    In the same request as the match, a Noul turns away anything that isn't
+    a yes-or-no question about the hidden thing. A live answer is cached for
+    the day, so every player gets the same one.
+
+Questions about letters or spelling are answered in code from the card,
+because Jev "does not count reliably". Jev also reads wording literally, and
+"answers the question you wrote, not the one you meant", so the bank and the
+consistency test carry the weight.
 
 Why Jev fits the game:
 
-- **It can't give the answer away.** Jev returns only numbers, so it can't
-  spell out the secret, as a generative model could in its own words.
-- **It's fast enough to feel like a conversation.** TypeSafe's cookbooks
-  measured Jev at 111 and 114 ms a round trip, against 826 ms to 13.9 s for
-  the language models they compared ([latency][jev-latency]).
+- **It can't give the answer away.** Jev returns probabilities and the
+  option keys the Worker supplied, never free text, so it can't spell out
+  the secret, as a generative model could in its own words.
+- **It's fast enough to feel like a conversation.** TypeSafe says most
+  queries complete in about 100 ms, and its cookbooks measured mean round
+  trips of 111 and 114 ms, against 826 ms to 13.9 s for the language models
+  they compared ([latency][jev-latency]). The phone's trip to the Worker
+  comes on top.
 - **It reads wordings nobody wrote down.** A hand-built table answers only
   the questions its authors predicted.
+- **The caveat:** one rival already answers players' questions on the
+  device with Apple's model, at no cost per question, which weakens both the
+  case for Jev and a $2.99 monthly price ([evidence notes][ev-hunch]).
 
 How it's wired:
 
@@ -134,13 +146,21 @@ How it's wired:
   Cloudflare Worker, which calls Jev through `@typesafe-ai/sdk` 0.6.0 with
   the model pinned to `jev-1.13.0`, because an alias "moves when a new
   release ships".
+- **The SDK in a Worker:** the SDK declares Node 20 or newer, so the first
+  day tests it in a Worker, with direct calls to the HTTP API as the
+  fallback. SDK error text never reaches the app, since an open issue
+  reports the key echoed into connection errors.
+- **The pinned version:** no source says how long it stays available, so a
+  move to `jev-latest` means running the consistency test again.
 - **Busy or down:** the SDK retries busy responses (429 and 529) with
   backoff, the app shows a busy state, and the Worker still answers, in
   code, any wording that exactly matches a bank question.
 - **Cost:** at $0.042 per million input tokens, a call the size of
-  TypeSafe's quickstart costs about $0.000016, so cost won't limit the game
-  ([prices][jev-prices]). Early access and the limit of 1,200 requests per
-  minute matter more, so the key is the first thing to request.
+  TypeSafe's quickstart costs about $0.000016 ([prices][jev-prices]). Even a
+  Choice over a full bank, many times that size, costs a fraction of a cent,
+  so cost is unlikely to limit the game. Early access and a limit of 1,200
+  requests per minute, which "can change without notice", matter more, so
+  the key is the first thing to request.
 
 Data, consent, and terms:
 
@@ -150,13 +170,17 @@ Data, consent, and terms:
 - Before the first question, a notice names TypeSafe and asks permission,
   as guideline 5.1.2(i) requires before personal data goes to a third-party
   AI. The privacy policy names TypeSafe too, and there are no accounts.
-- TypeSafe says no part of its services "is directed to children", so
-  Guessling stays out of the Kids category ([store review][jev-store]).
+- TypeSafe says no part of its services "is directed to children" and
+  doesn't knowingly handle personal data from anyone under 18. So Guessling
+  stays out of the Kids category, the notice asks players not to type
+  personal information, and the team asks TypeSafe whether younger players
+  may use the game ([store review][jev-store]).
 - TypeSafe's agreement allows the API inside the team's own app (section
   2.2) but not as "a standalone service"; Guessling is a game, not a relay.
-  Section 16.4 bars announcing the relationship without TypeSafe's consent,
-  so the team asks before naming Jev in the video or the write-up
-  ([terms][jev-terms]).
+  Section 16.4 grants no "right to use the name, brand, or logo of the
+  other Party" and bars announcing the relationship without consent, so the
+  request to TypeSafe on September 22 covers the notice, the privacy policy,
+  the video, and the write-up ([terms][jev-terms]).
 
 [jev-what]: /docs/research/jev.md#what-jev-is
 [jev-latency]: /docs/research/jev.md#rate-limits-context-length-and-latency
@@ -465,3 +489,5 @@ Still open, each with a safe default:
   2026 gallery on September 22, 2026.
 - [Evidence notes](/docs/research/idea-evidence.md): rivals, reviews, and
   demand for the five finalists.
+
+[ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
