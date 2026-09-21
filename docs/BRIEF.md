@@ -508,6 +508,12 @@ settles several of them and gives a different winners date.
   materials.
 - [Idea](/docs/IDEA.md): the app chosen for Shipaton 2026 through ten rounds
   of ideation, with Jev built in.
+- [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why, with
+  its principles, metrics, and roadmap.
+- [Product requirements](/docs/PRD.md): what version 1.0 must do, as
+  numbered requirements with checks.
+- [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
+  to the product requirements.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
