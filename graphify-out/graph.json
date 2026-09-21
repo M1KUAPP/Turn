@@ -1015,7 +1015,7 @@
       "node_kind": "heading",
       "norm_label": "earshot, announcement alerts for deaf and hard-of-hearing travelers",
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L754"
+      "source_location": "L771"
     },
     {
       "id": "docs_research_idea_evidence_evidence_for_the_top_five_ideas",
@@ -1039,7 +1039,7 @@
       "node_kind": "heading",
       "norm_label": "flagged, a job-posting red-flag checker",
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L425"
+      "source_location": "L442"
     },
     {
       "id": "docs_research_idea_evidence_hunch_a_daily_20_questions_game",
@@ -1075,7 +1075,7 @@
       "node_kind": "heading",
       "norm_label": "sayso, an aac phrase finder",
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L592"
+      "source_location": "L609"
     },
     {
       "id": "docs_research_idea_evidence_subtext_tone_tags_for_autistic_and_adhd_adults",
@@ -1087,7 +1087,7 @@
       "node_kind": "heading",
       "norm_label": "subtext, tone tags for autistic and adhd adults",
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L236"
+      "source_location": "L253"
     },
     {
       "id": "docs_research_idea_evidence_summary",
@@ -1099,7 +1099,7 @@
       "node_kind": "heading",
       "norm_label": "summary",
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L913"
+      "source_location": "L930"
     },
     {
       "id": "docs_research_ideation",
@@ -1123,7 +1123,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L76"
+      "source_location": "L79"
     },
     {
       "id": "docs_research_ideation_hard_constraints",
@@ -1147,7 +1147,7 @@
       "node_kind": "heading",
       "norm_label": "review-safety checklist",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L640"
+      "source_location": "L691"
     },
     {
       "id": "docs_research_ideation_round_10_pitch_test",
@@ -1159,7 +1159,7 @@
       "node_kind": "heading",
       "norm_label": "round 10: pitch test",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L662"
+      "source_location": "L713"
     },
     {
       "id": "docs_research_ideation_round_1_constraints_and_rubric",
@@ -1183,7 +1183,7 @@
       "node_kind": "heading",
       "norm_label": "round 2: thirty candidates",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L116"
+      "source_location": "L119"
     },
     {
       "id": "docs_research_ideation_round_3_screening",
@@ -1195,7 +1195,7 @@
       "node_kind": "heading",
       "norm_label": "round 3: screening",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L196"
+      "source_location": "L199"
     },
     {
       "id": "docs_research_ideation_round_4_scoring",
@@ -1207,7 +1207,7 @@
       "node_kind": "heading",
       "norm_label": "round 4: scoring",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L251"
+      "source_location": "L254"
     },
     {
       "id": "docs_research_ideation_round_5_evidence",
@@ -1219,7 +1219,7 @@
       "node_kind": "heading",
       "norm_label": "round 5: evidence",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L310"
+      "source_location": "L314"
     },
     {
       "id": "docs_research_ideation_round_6_red_team",
@@ -1231,7 +1231,7 @@
       "node_kind": "heading",
       "norm_label": "round 6: red team",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L376"
+      "source_location": "L384"
     },
     {
       "id": "docs_research_ideation_round_7_the_choice",
@@ -1243,7 +1243,7 @@
       "node_kind": "heading",
       "norm_label": "round 7: the choice",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L452"
+      "source_location": "L460"
     },
     {
       "id": "docs_research_ideation_round_8_monetization",
@@ -1255,7 +1255,7 @@
       "node_kind": "heading",
       "norm_label": "round 8: monetization",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L502"
+      "source_location": "L526"
     },
     {
       "id": "docs_research_ideation_round_9_scope_stack_and_schedule",
@@ -1267,7 +1267,7 @@
       "node_kind": "heading",
       "norm_label": "round 9: scope, stack, and schedule",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L552"
+      "source_location": "L578"
     },
     {
       "id": "docs_research_ideation_rubric",
@@ -1279,7 +1279,7 @@
       "node_kind": "heading",
       "norm_label": "rubric",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L96"
+      "source_location": "L99"
     },
     {
       "id": "docs_research_ideation_schedule",
@@ -1291,7 +1291,7 @@
       "node_kind": "heading",
       "norm_label": "schedule",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L611"
+      "source_location": "L662"
     },
     {
       "id": "docs_research_ideation_scope_of_the_first_version",
@@ -1303,7 +1303,7 @@
       "node_kind": "heading",
       "norm_label": "scope of the first version",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L561"
+      "source_location": "L587"
     },
     {
       "id": "docs_research_ideation_shipaton_2026_ideation_log",
@@ -1327,7 +1327,7 @@
       "node_kind": "heading",
       "norm_label": "stack and data flow",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L575"
+      "source_location": "L606"
     },
     {
       "id": "docs_research_jev",
@@ -1363,7 +1363,7 @@
       "node_kind": "heading",
       "norm_label": "appendix: check scripts",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L857"
+      "source_location": "L861"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_assumptions",
@@ -1459,7 +1459,7 @@
       "node_kind": "heading",
       "norm_label": "task 10: round 9, scope, stack, and schedule",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L568"
+      "source_location": "L572"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_11_round_10_pitch_test",
@@ -1471,7 +1471,7 @@
       "node_kind": "heading",
       "norm_label": "task 11: round 10, pitch test",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L595"
+      "source_location": "L599"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_12_frame_at_a_glance_and_see_also",
@@ -1483,7 +1483,7 @@
       "node_kind": "heading",
       "norm_label": "task 12: frame, at a glance, and see also",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L618"
+      "source_location": "L622"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_13_problem_audience_and_the_app",
@@ -1495,7 +1495,7 @@
       "node_kind": "heading",
       "norm_label": "task 13: problem, audience, and the app",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L657"
+      "source_location": "L661"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_14_how_jev_fits",
@@ -1507,7 +1507,7 @@
       "node_kind": "heading",
       "norm_label": "task 14: how jev fits",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L679"
+      "source_location": "L683"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_15_monetization_and_categories",
@@ -1519,7 +1519,7 @@
       "node_kind": "heading",
       "norm_label": "task 15: monetization and categories",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L699"
+      "source_location": "L703"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_16_build_plan",
@@ -1531,7 +1531,7 @@
       "node_kind": "heading",
       "norm_label": "task 16: build plan",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L721"
+      "source_location": "L725"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_17_launch_pitch_and_risks",
@@ -1543,7 +1543,7 @@
       "node_kind": "heading",
       "norm_label": "task 17: launch, pitch, and risks",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L740"
+      "source_location": "L744"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_18_the_rounds_and_the_assumptions",
@@ -1555,7 +1555,7 @@
       "node_kind": "heading",
       "norm_label": "task 18: the rounds and the assumptions",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L758"
+      "source_location": "L762"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_19_pointers_whole_document_review_and_graph_refresh",
@@ -1567,7 +1567,7 @@
       "node_kind": "heading",
       "norm_label": "task 19: pointers, whole-document review, and graph refresh",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L782"
+      "source_location": "L786"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_1_research_notes",
@@ -1591,7 +1591,7 @@
       "node_kind": "heading",
       "norm_label": "task 20: pull request, review, and merge",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L828"
+      "source_location": "L832"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_task_2_round_1_constraints_and_rubric",
@@ -1687,7 +1687,7 @@
       "node_kind": "heading",
       "norm_label": "task 9: round 8, monetization",
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L544"
+      "source_location": "L548"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_shipaton_2026_idea_tasks",
@@ -2107,7 +2107,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions and open questions",
       "source_file": "docs/IDEA.md",
-      "source_location": "L459"
+      "source_location": "L506"
     },
     {
       "id": "docs_idea_at_a_glance",
@@ -2131,7 +2131,7 @@
       "node_kind": "heading",
       "norm_label": "build plan",
       "source_file": "docs/IDEA.md",
-      "source_location": "L265"
+      "source_location": "L293"
     },
     {
       "id": "docs_idea_categories_to_enter",
@@ -2143,7 +2143,7 @@
       "node_kind": "heading",
       "norm_label": "categories to enter",
       "source_file": "docs/IDEA.md",
-      "source_location": "L226"
+      "source_location": "L251"
     },
     {
       "id": "docs_idea_how_jev_fits",
@@ -2155,7 +2155,7 @@
       "node_kind": "heading",
       "norm_label": "how jev fits",
       "source_file": "docs/IDEA.md",
-      "source_location": "L104"
+      "source_location": "L114"
     },
     {
       "id": "docs_idea_how_the_idea_was_chosen",
@@ -2167,7 +2167,7 @@
       "node_kind": "heading",
       "norm_label": "how the idea was chosen",
       "source_file": "docs/IDEA.md",
-      "source_location": "L424"
+      "source_location": "L469"
     },
     {
       "id": "docs_idea_launch_and_pitch",
@@ -2179,7 +2179,7 @@
       "node_kind": "heading",
       "norm_label": "launch and pitch",
       "source_file": "docs/IDEA.md",
-      "source_location": "L349"
+      "source_location": "L386"
     },
     {
       "id": "docs_idea_monetization",
@@ -2191,7 +2191,7 @@
       "node_kind": "heading",
       "norm_label": "monetization",
       "source_file": "docs/IDEA.md",
-      "source_location": "L197"
+      "source_location": "L220"
     },
     {
       "id": "docs_idea_problem_and_audience",
@@ -2203,7 +2203,7 @@
       "node_kind": "heading",
       "norm_label": "problem and audience",
       "source_file": "docs/IDEA.md",
-      "source_location": "L51"
+      "source_location": "L55"
     },
     {
       "id": "docs_idea_review_safety_checklist",
@@ -2215,7 +2215,7 @@
       "node_kind": "heading",
       "norm_label": "review-safety checklist",
       "source_file": "docs/IDEA.md",
-      "source_location": "L331"
+      "source_location": "L373"
     },
     {
       "id": "docs_idea_risks",
@@ -2227,7 +2227,7 @@
       "node_kind": "heading",
       "norm_label": "risks",
       "source_file": "docs/IDEA.md",
-      "source_location": "L392"
+      "source_location": "L428"
     },
     {
       "id": "docs_idea_schedule_to_september_30",
@@ -2239,7 +2239,7 @@
       "node_kind": "heading",
       "norm_label": "schedule to september 30",
       "source_file": "docs/IDEA.md",
-      "source_location": "L303"
+      "source_location": "L341"
     },
     {
       "id": "docs_idea_scope_of_the_first_version",
@@ -2251,7 +2251,7 @@
       "node_kind": "heading",
       "norm_label": "scope of the first version",
       "source_file": "docs/IDEA.md",
-      "source_location": "L289"
+      "source_location": "L326"
     },
     {
       "id": "docs_idea_see_also",
@@ -2263,7 +2263,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/IDEA.md",
-      "source_location": "L504"
+      "source_location": "L552"
     },
     {
       "id": "docs_idea_shipaton_2026_idea",
@@ -2287,7 +2287,7 @@
       "node_kind": "heading",
       "norm_label": "stack and data flow",
       "source_file": "docs/IDEA.md",
-      "source_location": "L271"
+      "source_location": "L299"
     },
     {
       "id": "docs_idea_what_the_app_does",
@@ -2299,7 +2299,7 @@
       "node_kind": "heading",
       "norm_label": "what the app does",
       "source_file": "docs/IDEA.md",
-      "source_location": "L76"
+      "source_location": "L86"
     },
     {
       "id": "docs_agents_skills",
@@ -16357,7 +16357,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L271",
+      "source_location": "L299",
       "weight": 1.0
     },
     {
@@ -16368,7 +16368,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L289",
+      "source_location": "L326",
       "weight": 1.0
     },
     {
@@ -16379,7 +16379,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L303",
+      "source_location": "L341",
       "weight": 1.0
     },
     {
@@ -16390,7 +16390,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L331",
+      "source_location": "L373",
       "weight": 1.0
     },
     {
@@ -16401,7 +16401,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L104",
+      "source_location": "L114",
       "weight": 1.0
     },
     {
@@ -16412,7 +16412,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L197",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -16423,7 +16423,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L226",
+      "source_location": "L251",
       "weight": 1.0
     },
     {
@@ -16445,7 +16445,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L265",
+      "source_location": "L293",
       "weight": 1.0
     },
     {
@@ -16456,7 +16456,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L349",
+      "source_location": "L386",
       "weight": 1.0
     },
     {
@@ -16467,7 +16467,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L392",
+      "source_location": "L428",
       "weight": 1.0
     },
     {
@@ -16478,7 +16478,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L424",
+      "source_location": "L469",
       "weight": 1.0
     },
     {
@@ -16489,18 +16489,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L459",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_idea_shipaton_2026_idea",
-      "target": "docs_idea_see_also",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/IDEA.md",
-      "source_location": "L504",
+      "source_location": "L506",
       "weight": 1.0
     },
     {
@@ -16511,7 +16500,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L51",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_idea_shipaton_2026_idea",
+      "target": "docs_idea_see_also",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IDEA.md",
+      "source_location": "L552",
       "weight": 1.0
     },
     {
@@ -16522,7 +16522,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L76",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -17776,7 +17776,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L236",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -17787,7 +17787,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L425",
+      "source_location": "L442",
       "weight": 1.0
     },
     {
@@ -17798,7 +17798,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L592",
+      "source_location": "L609",
       "weight": 1.0
     },
     {
@@ -17820,7 +17820,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L754",
+      "source_location": "L771",
       "weight": 1.0
     },
     {
@@ -17831,7 +17831,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L913",
+      "source_location": "L930",
       "weight": 1.0
     },
     {
@@ -17864,7 +17864,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L76",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -17875,7 +17875,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L96",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -17886,7 +17886,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L561",
+      "source_location": "L587",
       "weight": 1.0
     },
     {
@@ -17897,7 +17897,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L575",
+      "source_location": "L606",
       "weight": 1.0
     },
     {
@@ -17908,7 +17908,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L611",
+      "source_location": "L662",
       "weight": 1.0
     },
     {
@@ -17919,7 +17919,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L640",
+      "source_location": "L691",
       "weight": 1.0
     },
     {
@@ -17930,7 +17930,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L116",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -17941,7 +17941,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L196",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -17963,7 +17963,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L251",
+      "source_location": "L254",
       "weight": 1.0
     },
     {
@@ -17974,7 +17974,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L310",
+      "source_location": "L314",
       "weight": 1.0
     },
     {
@@ -17985,7 +17985,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L376",
+      "source_location": "L384",
       "weight": 1.0
     },
     {
@@ -17996,7 +17996,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L452",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -18007,7 +18007,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L502",
+      "source_location": "L526",
       "weight": 1.0
     },
     {
@@ -18018,7 +18018,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L552",
+      "source_location": "L578",
       "weight": 1.0
     },
     {
@@ -18029,7 +18029,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L662",
+      "source_location": "L713",
       "weight": 1.0
     },
     {
@@ -28523,7 +28523,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L857",
+      "source_location": "L861",
       "weight": 1.0
     },
     {
@@ -28622,7 +28622,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L544",
+      "source_location": "L548",
       "weight": 1.0
     },
     {
@@ -28633,7 +28633,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L568",
+      "source_location": "L572",
       "weight": 1.0
     },
     {
@@ -28644,7 +28644,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L595",
+      "source_location": "L599",
       "weight": 1.0
     },
     {
@@ -28655,7 +28655,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L618",
+      "source_location": "L622",
       "weight": 1.0
     },
     {
@@ -28666,7 +28666,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L657",
+      "source_location": "L661",
       "weight": 1.0
     },
     {
@@ -28677,7 +28677,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L679",
+      "source_location": "L683",
       "weight": 1.0
     },
     {
@@ -28688,7 +28688,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L699",
+      "source_location": "L703",
       "weight": 1.0
     },
     {
@@ -28699,7 +28699,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L721",
+      "source_location": "L725",
       "weight": 1.0
     },
     {
@@ -28710,7 +28710,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L740",
+      "source_location": "L744",
       "weight": 1.0
     },
     {
@@ -28721,7 +28721,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L758",
+      "source_location": "L762",
       "weight": 1.0
     },
     {
@@ -28732,7 +28732,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L782",
+      "source_location": "L786",
       "weight": 1.0
     },
     {
@@ -28743,7 +28743,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md",
-      "source_location": "L828",
+      "source_location": "L832",
       "weight": 1.0
     },
     {
@@ -28941,7 +28941,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L317",
+      "source_location": "L321",
       "weight": 1.0
     },
     {
@@ -28968,5 +28968,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b3b987a647471f3458c6ec1198c657df59b19219"
+  "built_at_commit": "8767637a969f300010732d6077a8694c334c274f"
 }
