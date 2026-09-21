@@ -435,8 +435,8 @@ Fixes:
   - Ask permission before the first question goes to TypeSafe, show offline
     and busy states, and keep the app out of the Kids category.
   - Replace Growth Loop and #BuildInPublic with HAMM as the secondary: a
-    free daily puzzle with a paid archive is how NYT Games sells puzzles,
-    and it needs no Layers SDK and no tracking prompt.
+    free daily puzzle with a paid archive fits the genre, and it needs no
+    Layers SDK and no tracking prompt.
 - **Accepted for Flagged:** publish an accuracy test on labeled real scams
   and real postings before September 30, drop the weekly pass, and say who
   it's for in the first 15 seconds.
@@ -510,7 +510,8 @@ for: "a monetization model that fits the genre instead of fighting it".
   and share card. A daily game that locks its daily puzzle fights the genre.
 - **What's paid:** Guessling+, one entitlement, unlocks the archive of every
   past puzzle: ten at launch, and one more each day as today's puzzle
-  retires. That is how NYT Games sells puzzles, and it promises nothing that
+  retires. Puzzle subscriptions already sell archives, as Apple News+ does
+  with its "daily and archived" puzzles, and this one promises nothing that
   won't exist on launch day.
 - **Packages:** two plans, the most common paywall layout. Yearly at $19.99
   with a 3-day free trial is the default; monthly is $2.99. That sits below
