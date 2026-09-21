@@ -225,6 +225,82 @@ says how each is built.
 
 [daily-rules]: /docs/research/daily-puzzles.md#rules-of-the-classic-game
 
+### The end of a round
+
+- **END-1, Must.** A round ends with a right guess, solved, or after the
+  twentieth turn, not solved. Check: the twentieth wrong turn ends the
+  round.
+- **END-2, Must.** Only when a round ends does the server send the answer's
+  name, and the app shows it with the Guessling's celebration if solved, the
+  turns used, and a countdown to the next puzzle. Check: the answer never
+  appears in the app's traffic before the round ends.
+- **END-3, Must.** The end screen offers Share and "Play yesterday's?",
+  which opens the paywall for a player without Guessling+ and yesterday's
+  puzzle for a player with it. Check: both paths, with and without
+  Guessling+.
+- **END-4, Must.** A finished puzzle can't be played again, and opening the
+  app shows its end screen until the next puzzle starts. Check: reopen after
+  finishing.
+- **END-5, Should.** The end screen shows the player's statistics: puzzles
+  played, the share solved, the current streak, and the longest streak, the
+  set NYT and LinkedIn show ([daily puzzle notes][daily-end]). Check: the
+  counts after three rounds.
+
+[daily-end]: /docs/research/daily-puzzles.md#end-of-round-screens
+
+### Sharing a result
+
+- **SHARE-1, Must.** Share opens the iOS share sheet with a text result: a
+  first line with the puzzle number and the turns used out of 20, or "X" if
+  not solved; the hint; one symbol per turn, ten to a row; and the App Store
+  link. It follows the shape of Wordle's and Strands's shares
+  ([daily puzzle notes][daily-share]). Check: a known round produces the
+  format below.
+- **SHARE-2, Must.** A shared result never includes a question or the
+  answer. Check: the format below has neither.
+- **SHARE-3, Must.** An archive result starts with a line saying "Archive"
+  and the puzzle's date, or "Archive" alone for a starter, as NYT's archive
+  shares do. Check: sharing an archive round.
+
+The format, with 🟩 for Yes, 🟥 for No, ❌ for a wrong guess, and 🎯 for the
+right one:
+
+```text
+Guessling #12 9/20
+“An animal”
+🟩🟥🟥🟩🟩🟥🟩🟩🎯
+https://apps.apple.com/app/id<APP_ID>
+```
+
+[daily-share]: /docs/research/daily-puzzles.md#nyt-share-formats
+
+### Streak
+
+- **STREAK-1, Should.** The app counts the current streak, consecutive
+  puzzle days whose daily puzzle the player solved on its date, and the
+  longest streak; a loss or a day missed resets the current streak, and a
+  round finished after midnight (TODAY-5) doesn't extend it, as in Wordle.
+  Check: solve two days, skip one, and the current streak is zero.
+- **STREAK-2, Should.** Archive rounds never change the streak. Check:
+  solving an archive puzzle leaves both counts unchanged.
+
+### The archive
+
+- **ARCHIVE-1, Must.** The archive lists the starter puzzles and every
+  daily puzzle dated before the device's date, newest first, each with its
+  number, its date if it has one, its hint, and the player's result if
+  played. Check: on September 27, the list shows #11 to #13 and #1 to #10.
+- **ARCHIVE-2, Must.** Without Guessling+, every archive puzzle shows as
+  locked, and tapping one opens the paywall. Check: a free player sees
+  locks.
+- **ARCHIVE-3, Must.** With Guessling+, any archive puzzle opens and plays
+  by the same rules as today's, with the answers its day's players got and
+  any fixes made since. Check: an archive round matches a recorded day's
+  answers.
+- **ARCHIVE-4, Must.** The server serves an archive puzzle only after
+  confirming the player's Guessling+ entitlement with RevenueCat. Check: a
+  request without the entitlement is refused.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why.
