@@ -241,9 +241,11 @@ The four new notes supply the facts behind them.
 4.  **Limits.** Questions up to 140 characters and guesses up to 60; at most
     40 answers that don't use a turn per player per puzzle; a burst limit
     per player through Cloudflare's rate-limiting binding, not per address,
-    since mobile networks share addresses; and each puzzle's object caps its
-    own Jev calls at 600 a minute, so the two or three live dates stay under
-    TypeSafe's 1,200.
+    since mobile networks share addresses; and one shared budget caps Jev
+    requests in play at 1,000 a minute, with the scripts at 100, so every
+    caller together stays under TypeSafe's 1,200. A cap per puzzle couldn't,
+    since three dates, rounds past midnight, and archive puzzles can all
+    call Jev at once.
 5.  **One player ID.** RevenueCat's anonymous app user ID identifies a
     player to the Worker, which stores only a salted hash of it. No second
     install ID.

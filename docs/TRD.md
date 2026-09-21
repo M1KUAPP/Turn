@@ -41,9 +41,11 @@ Contents:
   - One Cloudflare Worker is the only backend. Workers KV holds what the
     team publishes, and one Durable Object per puzzle holds what players
     generate: answers, progress, and reports.
-  - Jev, pinned to `jev-1.13.0`, is called only from the Durable Object,
-    with the key as a Worker secret, so neither the key nor the answer
-    reaches the phone.
+  - Jev, pinned to `jev-1.13.0`, is called in play only from the puzzles'
+    Durable Objects, with the key as a Worker secret, so neither the key
+    nor the answer reaches the phone. The daily check and the team's
+    scripts are its only other callers, and one shared budget covers them
+    all.
   - A question goes through code rules, exact bank wordings, stored
     answers, Jev's match, and only then Jev's live answer; the first step
     that answers wins, and the answer is stored for everyone.
@@ -85,8 +87,11 @@ What each part owns:
   puzzle, the archive list, and the policy pages.
 - **The Durable Object** for each puzzle runs the answer pipeline, keeps the
   puzzle's answers, players' progress, and reports, and is the only caller
-  of Jev. It's created with `locationHint: "wnam"`, near TypeSafe's servers
-  in AWS us-west-2 ([Cloudflare notes][cf-latency]).
+  of Jev in play. It's created with `locationHint: "wnam"`, near where
+  `api.typesafe.ai` resolved on September 22, 2026, AWS us-west-2 by DNS
+  alone ([Cloudflare notes][cf-latency]).
+- **The Jev budget**, one more Durable Object, hands out tokens for Jev
+  requests, so every caller together stays under TypeSafe's limit.
 - **Workers KV** holds the published puzzles, the banks, and the config.
 - **Jev** matches questions to the bank and answers the rest.
 - **RevenueCat** runs purchases, the paywall, entitlements, and the charts.
@@ -510,14 +515,26 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 
 - Past the budget, the Worker answers `busy` and stores nothing, so the
   next attempt can still reach Jev (STATE-3, PERF-2).
-- Each object counts its Jev calls per minute in memory and answers `busy`
-  for new wordings past 600, so the two or three live dates stay under
-  TypeSafe's 1,200 requests a minute (AVAIL-2, SEC-3).
+- Every Jev request in play first takes a token from one Durable Object,
+  `jev-budget`, which hands out at most 1,000 a minute across all puzzles.
+  The SDK's injected `fetch` asks for a token before each attempt, so a
+  retry counts too, and a new wording without one gets `busy`. The count
+  lives in memory, since losing it on eviction only resets one minute's
+  window. The scripts
+  cap themselves at 100 a minute and the daily check sends one question,
+  so everything stays under TypeSafe's 1,200 requests a minute (AVAIL-2,
+  SEC-3). A cap per puzzle couldn't: three dates can be live at once,
+  besides rounds past midnight and archive puzzles.
+- Cloudflare warns that one object for a global counter "funnels all
+  traffic through a single instance"; at 1,000 a minute, about 17 a
+  second, the budget stays far under an object's guidance of 500 to 1,000
+  requests a second ([Cloudflare notes][cf-counting]).
 - Errors are logged by class and status only, never by message, since an
   open issue reports the key echoed into the SDK's connection errors
   (SEC-4).
 
 [cf-sdk]: /docs/research/cloudflare-workers.md#the-sdk-under-workerd
+[cf-counting]: /docs/research/cloudflare-workers.md#counting-in-a-durable-object
 
 ## Puzzle days and content tooling
 
@@ -560,8 +577,8 @@ take a puzzle from draft to published:
 
 1.  **`check.ts <n>`** asks Jev every bank question and its negation, with
     the card as the state, several questions per request and at most eight
-    requests at once, since TypeSafe's own cookbook notes the public
-    endpoint "rate-limits above roughly eight"
+    requests at once and 100 a minute, since TypeSafe's own cookbook notes
+    the public endpoint "rate-limits above roughly eight"
     ([Cloudflare notes][cf-fetch]). It writes `content/review/<n>.csv` with
     each probability and flags every answer between 0.3 and 0.7 and every
     pair whose answers agree when they should differ (CONTENT-4).
@@ -841,10 +858,11 @@ export default {
   keyed by the hashed player ID. Cloudflare calls the binding "permissive"
   and advises against keying on addresses, which many mobile users share
   ([Cloudflare notes][cf-ratelimit]).
-- Exact caps live in the puzzle's object: 20 turns and 40 free answers per
-  player (ASK-10), and 600 Jev calls a minute per object (AVAIL-2).
-- A client that makes up new IDs escapes the per-player limits; the
-  per-object Jev cap is the backstop.
+- Exact caps live in Durable Objects: 20 turns and 40 free answers per
+  player in the puzzle's object (ASK-10), and 1,000 Jev requests a minute
+  in `jev-budget` (AVAIL-2).
+- A client that makes up new IDs escapes the per-player limits; the shared
+  Jev budget is the backstop.
 
 [cf-ratelimit]: /docs/research/cloudflare-workers.md#limiting-requests-per-device
 
@@ -1019,7 +1037,7 @@ product and legal ones.
 
 - **Jev's rate-limit scope.** No TypeSafe page says whether 1,200 requests
   a minute apply per key or per account. Safe default: one key, with the
-  per-object cap of 600 a minute.
+  shared budget of 1,000 a minute in play and 100 for the scripts.
 - **Jev out of credits.** No TypeSafe page says what the API returns when
   credits run out. Safe default: treat any unexpected `4xx` as busy, alert,
   and keep auto-refill on.
