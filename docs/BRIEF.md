@@ -16,6 +16,7 @@ Contents:
 1.  [Resources and perks](#resources-and-perks)
 1.  [Lessons from past winners](#lessons-from-past-winners)
 1.  [Winning playbook](#winning-playbook)
+1.  [Open questions](#open-questions)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -423,6 +424,44 @@ from the 2026 guides. Each tip notes which edition it comes from.
   things the judges will be scrutinizing the hardest" (Shipyard 2026).
 - Submit early and keep the entry current: edits are allowed until the
   deadline, so update the numbers before it closes (2026).
+
+## Open questions
+
+The captured sources leave these points open or disagree on them. Confirm
+them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
+
+- **Official rules.** They are not captured, so the minimum age outside Next
+  Gen, the full country list, IP ownership, taxes, disqualification terms,
+  and the "full judging criteria" are not covered here.
+- **Multiple prizes.** You can enter several categories, but no 2026 source
+  says whether one app can win more than one prize.
+- **Purchase or transaction.** Devpost asks the SDK to "power at least one
+  in-app purchase", while the vibe code page says "Get one sale, even from a
+  friend or family member, or run a single ad." The safe default is at least
+  one real purchase or ad.
+- **First-place cash.** The Devpost summary gives "$20,000" to the first place
+  of every other category, but its prize list pays $15,000 in five sponsor
+  categories and no cash for Best App for Galaxy. This brief follows the
+  prize list.
+- **Required items.** Devpost lists six; the submission guide lists nine,
+  adding the tagline, the RevenueCat project ID, and category-specific
+  details. Provide all nine.
+- **Funnel Vision.** Its "measurement period" for web payment volume is not
+  defined. The category page says no extra fields were announced, but the
+  later submission guide asks for the funnel URL and the Stripe Project ID;
+  include both.
+- **Travel.** Devpost's overview lists "Flights to New York City" for the
+  Shippies ceremony, but its prize list gives travel only to the Grand Prize
+  and the #BuildInPublic first place; other first places get an invitation.
+- **Discord invite.** The FAQ links https://discord.gg/shipaton26, and
+  Devpost links https://discord.gg/X95EwqBxQT.
+- **Companies.** Team size is unlimited, but no source says whether a company
+  can enter.
+- **Early betas.** Building and promoting before August 1 is allowed, but no
+  source says whether a public beta before then counts as a release. The
+  safe default is no public build before August 1.
+- **Freshness.** No capture is dated, and prizes can change: "Check DevPost
+  for official, up-to-date prizes."
 
 ## See also
 
