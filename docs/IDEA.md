@@ -555,6 +555,12 @@ Still open, each with a safe default:
   and judging.
 - [Context](/docs/CONTEXT.md): the official rules, past winners, store
   review, monetization, and pitch guidance.
+- [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why, with
+  its principles, metrics, and roadmap.
+- [Product requirements](/docs/PRD.md): what version 1.0 must do, as
+  numbered requirements with checks.
+- [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
+  to the product requirements.
 - [Ideation log](/docs/research/ideation.md): the ten rounds that chose
   Guessling, with their scores.
 - [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
