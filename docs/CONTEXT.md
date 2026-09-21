@@ -265,8 +265,8 @@ past winners are synthesis.
 - **Best App for Galaxy.** Galaxy optimization is 20% of the score. Samsung's
   foldable guidance covers multi-window resizing, aspect ratios, app
   continuity, and Flex mode, and its free Remote Test Lab offers real Galaxy
-  devices. RevenueCat supports the Galaxy Store only in some SDKs; see the
-  store review section below.
+  devices. RevenueCat supports the Galaxy Store only in some SDKs; see
+  [Galaxy Store review essentials](#galaxy-store-review-essentials).
 - **Idea to Income.** "Publishing to Google Play is not yet supported" in
   Replit, so Replit apps ship on iOS, which RevenueCat also advises. Replit's
   Agent can create the RevenueCat project and wire up purchases. The "Replit
