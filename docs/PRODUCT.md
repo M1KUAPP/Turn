@@ -131,7 +131,7 @@ requirements.
 - **Same puzzle, same answers.** Everyone gets the same hidden thing on the
   same date, and the same question gets the same answer all day. So answers
   are checked before a puzzle ships, every answer is kept for the day, and a
-  wrong one is fixed only after the day ends everywhere.
+  wrong one is fixed only after every round of that day has closed.
 - **Today is always free.** Guessling+ sells more puzzles, never today's. So
   nothing stands between a player and today's round: no account, no paywall,
   no ad.
@@ -220,8 +220,8 @@ The moments that carry the product:
   to the next.
 - **Starters:** ten puzzles fill the archive on launch day, so Guessling+
   holds something from the start.
-- **Corrections:** a reported answer is fixed once the puzzle's day has
-  ended everywhere, so everyone who played that day got the same answers;
+- **Corrections:** a reported answer is fixed only after every round of the
+  puzzle's day has closed, so everyone who played that day got the same answers;
   archive players get the fix. NYT learned this the hard way: in May 2022 it
   swapped a Wordle answer mid-rollout and left some players on the old word
   ([daily puzzle notes][daily-fair]).

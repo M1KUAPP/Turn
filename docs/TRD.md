@@ -363,8 +363,7 @@ with the `ADMIN_TOKEN` secret:
 
 - `GET /v1/admin/reports?number=<n>` lists a puzzle's reports (REPORT-2).
 - `POST /v1/admin/puzzles/<n>/forget` deletes stored answers for given
-  wordings after a fix, and refuses while the puzzle's day hasn't ended
-  everywhere (CONTENT-8).
+  wordings after a fix, and refuses until the puzzle closes (CONTENT-8).
 - `GET /v1/admin/stats?from=YYYY-MM-DD&to=YYYY-MM-DD` returns the counts
   behind the idea's numbers (METRIC-5).
 
@@ -562,9 +561,10 @@ function isPlayableDate(localDate: string, now = Date.now()): boolean {
   every time zone (TODAY-5).
 - **The archive.** For a player, the archive is the starters plus every
   daily puzzle dated before their device's date (ARCHIVE-1).
-- **A day ends everywhere** at 12:00 UTC on the day after the puzzle's date,
-  when UTC−12 reaches midnight. Only then can a stored answer change
-  (CONTENT-8).
+- **A puzzle closes** at 12:00 UTC two days after its date: its date ended
+  everywhere a day earlier, when UTC−12 reached midnight, and every round
+  begun on it has had the 24 hours TODAY-5 allows. Only then can a stored
+  answer change (CONTENT-8).
 - **The clock.** In a deployed Worker, `Date.now()` moves only on I/O,
   which is close enough for choosing a date.
 
@@ -610,11 +610,11 @@ puzzle is published (CONTENT-7, CONTENT-9).
 1.  `reports.ts <n>` lists a puzzle's reports from the admin route
     (REPORT-2).
 2.  A person corrects `checked` or the card, reruns `check.ts`, and
-    publishes a new revision; `live:<n>` moves only after the day has ended
-    everywhere.
+    publishes a new revision; `live:<n>` moves only once the puzzle
+    closes.
 3.  `forget.ts <n> <wording>...` deletes the corrected wordings' stored
-    answers, which the Worker allows only once the day has ended
-    everywhere. Archive players then get the fixed answer (ARCHIVE-3).
+    answers, which the Worker allows only once the puzzle closes. Archive
+    players then get the fixed answer (ARCHIVE-3).
 
 ## Purchases and entitlements
 
@@ -958,7 +958,7 @@ The Worker integration tests that matter most:
   count is written (NOTICE-3).
 - An archive request without the entitlement gets `needs_plus`, and with
   RevenueCat failing, `unconfirmed` (ARCHIVE-4, STATE-5).
-- `forget` refuses before the day ends everywhere (CONTENT-8).
+- `forget` refuses before the puzzle closes (CONTENT-8).
 
 The plugin injects its own Node.js compatibility flags, unlike production
 from 2026-08-04, and Vitest's fake timers don't reach the KV simulator, so
