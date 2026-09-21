@@ -10,6 +10,7 @@ builds on.
 Contents:
 
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
+1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 
 ## Round 1: constraints and rubric
 
@@ -103,3 +104,83 @@ monetization, and the first two minutes of video) and what the date allows
 
 **Decision:** Round 3 screens with C1 to C7, and Rounds 4 and 10 score with
 this rubric.
+
+## Round 2: thirty candidates
+
+**Question:** what could we build?
+
+**Method:** three subagents wrote ten ideas each, in parallel and without
+seeing each other's work, after reading Round 1, the Jev notes, the gallery
+notes, the brief, the context, and the category pages. Each took one lens:
+
+- **A, creator briefs:** two ideas for each of the five Influencer Award
+  briefs.
+- **B, RevenueCat and sponsor categories:** HAMM, Design, Peace Prize, Best
+  Game, Keep Them Coming Back, Growth Loop, Funnel Vision, Idea to Income, and
+  #BuildInPublic.
+- **C, Jev first:** ideas that start from what Jev does well, aimed at the
+  gallery's open spaces.
+
+Each idea came back with a logline, its evidence, a three-step loop, the
+questions Jev is asked, prices and the paywall moment, categories, crowding,
+and its riskiest part. The table keeps a one-line pitch.
+
+| #   | Idea             | Pitch                                                                        | Lens | Primary category           | Jev's job                                            |
+| --- | ---------------- | ---------------------------------------------------------------------------- | ---- | -------------------------- | ---------------------------------------------------- |
+| 1   | Blanks           | Fills any form from the user's saved text, images, and files                 | A    | Productivity               | Choice matches each form field to a saved item       |
+| 2   | Cannery          | Picks the saved reply and files for an incoming client message               | A    | Productivity               | Choice picks the reply; a Noul per file              |
+| 3   | Side Order       | Points to the item on this menu that makes the chosen dish more filling      | A    | Nutrition & Healthy Eating | Nouls check the dish; Choice picks a menu line       |
+| 4   | Lasted           | Learns which real meals kept the user satisfied, from notes and a check-in   | A    | Nutrition & Healthy Eating | Nouls tag the meal; Score reads satisfaction         |
+| 5   | Midstride        | Turns a one-line perimenopause check-in into one session for today           | A    | Yoga & Fitness             | Scores read the check-in; Choice picks a session     |
+| 6   | Pocket Studio    | Picks today's session from the classes the user already saved                | A    | Yoga & Fitness             | Choice over the user's saved sessions                |
+| 7   | Preflight        | A written, branching rehearsal where the other person reacts to the manager  | A    | Career Coaching            | Choice routes to the next written line               |
+| 8   | Hold the Line    | Five spoken pushback drills a day, judged on the spot                        | A    | Career Coaching            | Choice labels the reply; Score rates steadiness      |
+| 9   | Pinchlist        | A game bucket list shared by link, with a friend's games ranked for the user | A    | Gaming                     | Score ranks a friend's games                         |
+| 10  | Hype Haul        | Pulls every game in a shared showcase recap into the bucket list             | A    | Gaming                     | Choice picks titles from candidates                  |
+| 11  | Overturn         | Reads a health-insurance denial letter and unlocks the matching appeal kit   | B    | HAMM                       | Choices read the reason, plan, and deadline          |
+| 12  | Sift             | Collapses an exported group chat into the few messages that need the user    | B    | Design                     | A Choice and Nouls label every message               |
+| 13  | Earshot          | Alerts Deaf and hard-of-hearing travelers to announcements about their trip  | B    | Peace Prize                | Nouls, a Choice, and a Score judge each announcement |
+| 14  | Judgy            | A referee that rules on every answer in a party category game                | B    | Best Game                  | Nouls and a Score rule on each answer                |
+| 15  | Sleep On It      | Times one "still want it?" push to the reason for an impulse buy             | B    | Keep Them Coming Back      | Nouls and a Score read the reason                    |
+| 16  | Take-Home        | Sorts a school newsletter down to what one class needs this week             | B    | Growth Loop                | A Choice and a Noul per line                         |
+| 17  | Ebb              | Tags evening notes against a perimenopause symptom list for a doctor         | B    | Funnel Vision              | About 30 Nouls per note, and a Score per symptom     |
+| 18  | Dismissed        | Reads a parking ticket and the driver's story to pick grounds for appeal     | B    | Funnel Vision              | Choices pull ticket fields; Nouls test the grounds   |
+| 19  | Hunch            | A daily 20-questions game that answers any yes-or-no question                | B    | Best Game                  | A Noul answers each question from a fact card        |
+| 20  | Flagged          | Checks a job posting for fake, ghost, and bait-and-switch red flags          | B    | #BuildInPublic             | A Noul per red flag; a Choice finds the line         |
+| 21  | SaySo            | An AAC app that ranks the user's own phrases as they type a few letters      | C    | Peace Prize                | Choice over the phrasebook, with a none option       |
+| 22  | Called           | Merged into 13                                                               | C    | Peace Prize                | —                                                    |
+| 23  | Subtext          | Tags the tone of each message for autistic and ADHD adults                   | C    | Peace Prize                | A Choice, a Score, and Nouls per message             |
+| 24  | Answered         | Plays a family member's recorded answer to a repeated dementia question      | C    | Peace Prize                | Choice picks a recording or none                     |
+| 25  | Stepwise         | Matches an older adult's phone problem to a checked picture guide            | C    | Peace Prize                | Choice over the guide library                        |
+| 26  | Ebb (daily plan) | Merged into 5                                                                | C    | Yoga & Fitness             | —                                                    |
+| 27  | Stillwake        | At 3 a.m., reads one sentence and picks one back-to-sleep technique          | C    | Design                     | Choice picks the technique; Nouls gate safety        |
+| 28  | Twenty Asks      | Merged into 19                                                               | C    | Best Game                  | —                                                    |
+| 29  | Shout Three      | Merged into 14                                                               | C    | Best Game                  | —                                                    |
+| 30  | Hollow Pines     | A text adventure where any typed action maps to an authored one              | C    | Best Game                  | Choice maps the input to the scene's actions         |
+
+Merged duplicates, each kept under the lower number:
+
+- **22 into 13:** both alert Deaf and hard-of-hearing people to announcements.
+  Earshot keeps a traveler's own alerts free; Called's name calls at clinics
+  and counters become a paid watch.
+- **26 into 5:** both turn a perimenopause check-in into today's session for
+  Simone's brief. Ebb's safety question joins Midstride.
+- **28 into 19:** both are a daily 20-questions game. Best Game becomes
+  Hunch's primary category; Idea to Income, lens B's choice, would need the
+  app built on Replit.
+- **29 into 14:** both make Jev the referee of a party word game. The spoken,
+  five-second version stays an option.
+
+Patterns across the thirty:
+
+- Every idea keeps Jev choosing among things people wrote: replies,
+  sessions, scenario lines, guides, or verdicts. No idea shows users
+  generated text.
+- The most common price was $7.99 a month, in 15 of the 30 ideas; yearly
+  plans ran from $19.99 to $39.99, and 20 ideas offered a 3-day trial. Every
+  idea gives judges offer codes.
+- The risks cluster in authored content (scenarios, sessions, guides, fact
+  cards) and in review: consent under 5.1.2(i), microphone and
+  speech-recognition prompts, and health data.
+
+**Decision:** the 26 distinct ideas go to Round 3.
