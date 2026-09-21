@@ -14,6 +14,11 @@ Contents:
 1.  [Functional requirements](#functional-requirements)
 1.  [Puzzle content requirements](#puzzle-content-requirements)
 1.  [Non-functional requirements](#non-functional-requirements)
+1.  [Analytics requirements](#analytics-requirements)
+1.  [App Store listing and review](#app-store-listing-and-review)
+1.  [Release criteria](#release-criteria)
+1.  [Dependencies and assumptions](#dependencies-and-assumptions)
+1.  [Open questions](#open-questions)
 1.  [See also](#see-also)
 
 ## Overview
@@ -528,6 +533,157 @@ https://apps.apple.com/app/id<APP_ID>
   simulators.
 - **COMPAT-4, Must.** The app isn't offered on Apple silicon Macs or Apple
   Vision Pro. Check: App Store Connect's availability settings.
+
+## Analytics requirements
+
+- **METRIC-1, Must.** For players who allowed AI answers, the server counts,
+  per puzzle and day: players who opened it, questions by answer and by
+  source, guesses, rounds solved and not solved, reports, and busy answers
+  (NOTICE-3). Check: the counts after a test round.
+- **METRIC-2, Must.** The counts give distinct players per day and the
+  return rate without storing any question text with a player's ID. Check:
+  the stored fields.
+- **METRIC-3, Must.** Paywall views, trial starts, and conversions come
+  from RevenueCat's Paywall Conversion chart, and revenue from its charts,
+  with no analytics SDK in the app; TestFlight counts as sandbox, so only
+  the live app's numbers appear ([RevenueCat notes][rc-report]). Check:
+  the chart after the first production views.
+- **METRIC-4, Must.** Each consistency test run is saved with its date, the
+  model, the bank version, and its results. Check: the file after a run.
+- **METRIC-5, Must.** One script prints the server's numbers for the idea's
+  launch plan: players, puzzles solved, questions asked, and the latest
+  consistency results. Check: it runs on September 29.
+
+[rc-report]: /docs/research/revenuecat-expo.md#paywall-reporting
+
+## App Store listing and review
+
+The context's [review essentials][ctx-apple] and store listing guidance
+apply; these are Guessling's own.
+
+- **STORE-1, Must.** The listing uses the name "Guessling: Daily 20
+  Questions" and the subtitle "Ask anything. Guess the thing.", in the Games
+  category. Its description's first sentence says what the game is, without
+  prices, and its keywords don't repeat the name. Check: App Store Connect.
+- **STORE-2, Must.** The screenshots are final before submission: the
+  6.9-inch iPhone set for the listing and one 1179 × 2556 screenshot for
+  Devpost; the app's iPhone-only build needs no iPad set. Check: App Store
+  Connect accepts them.
+- **STORE-3, Must.** The privacy policy URL, the Terms of Use, which rely on
+  Apple's standard license agreement and set no minimum age, and a support
+  URL with contact details are in the metadata and live on the server.
+  Check: each link opens.
+- **STORE-4, Must.** The age rating questionnaire is answered honestly:
+  in-app controls none, unrestricted web access no, user-generated content
+  no, messaging and advertising no, contests none, and every content
+  descriptor none, which likely yields 4+
+  ([Apple notes on ratings][apple-rating]). The app stays out of the Kids
+  category. Check: the rating App Store Connect calculates.
+- **STORE-5, Must.** The App Privacy answers declare Other User Content and
+  Gameplay Content, Customer Support, User ID, Purchase History, and
+  Product Interaction, none used for tracking, as the TRD's data inventory
+  classifies them ([Apple notes on privacy][apple-privacy]). Check: against
+  the inventory.
+- **STORE-6, Must.** The two subscriptions, their group, the yearly plan's
+  free trial, and their review screenshots go in the same submission as
+  version 1.0, which releases automatically once approved. Check: the
+  submission page.
+- **STORE-7, Must.** The review notes say how to play, that answers come
+  from the team's server so the device needs a network, how to test both
+  notice choices, what "Report this answer" does, how to reach the archive
+  and buy Guessling+ in the sandbox, and today's answers for the review
+  days, within the 4,000 bytes the field allows. Check: a teammate follows
+  them on a clean install.
+- **STORE-8, Must.** The app is offered in the United States and other
+  storefronts, except China mainland and Vietnam, which need game licenses,
+  and the EU's 27 until the team decides to complete trader verification,
+  which publishes its contact details on EU product pages
+  ([Apple notes on storefronts][apple-eu]). The subscriptions use the same
+  storefronts. Check: the availability settings.
+
+[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[apple-rating]: /docs/research/apple-requirements.md#questionnaire-answers-for-guessling
+[apple-privacy]: /docs/research/apple-requirements.md#guesslings-data-classified
+[apple-eu]: /docs/research/apple-requirements.md#eu-trader-status-and-storefronts
+
+## Release criteria
+
+Before submitting to App Review on September 24, 2026:
+
+- **RELEASE-1, Must.** Every Must requirement passes its check on a
+  TestFlight build that uses the production server and sandbox purchases.
+  Check: the checklist, signed off.
+- **RELEASE-2, Must.** A sandbox purchase, restore, and trial work end to
+  end, and a sandbox offer code redeems. Check: on a device with a sandbox
+  account.
+- **RELEASE-3, Must.** The consistency test passes (CONTENT-6), and the 17
+  puzzles are published (CONTENT-1). Check: the saved results and the
+  server.
+- **RELEASE-4, Must.** Jev's credits are funded with auto-refill on, the
+  In-App Purchase Key is uploaded to RevenueCat, and RevenueCat's sandbox
+  access stays open to anybody, because App Review buys in the sandbox.
+  Check: each setting.
+
+After approval, and before the Devpost deadline on September 30, 2026:
+
+- **RELEASE-5, Must.** The app is live in the United States, a production
+  purchase goes through, and the judges' offer code redeems (PAY-7). Check:
+  on a real device, with a real Apple Account.
+- **RELEASE-6, Must.** The brief's [submission checklist][brief-checklist]
+  is complete. Check: Devpost shows the entry as submitted.
+
+[brief-checklist]: /docs/BRIEF.md#submission-checklist
+
+## Dependencies and assumptions
+
+What version 1.0 depends on, each owned by the team:
+
+- **TypeSafe:** a Jev API key and funded credits, and answers on naming
+  TypeSafe in the notice and on players under 18, as the idea's
+  [open questions][idea-open] say.
+- **Apple:** the Developer Program membership, the Paid Apps Agreement, tax
+  and banking, the In-App Purchase Key, and a trader status declaration,
+  which Apple asks for even outside the EU.
+- **RevenueCat:** a project on the Pro plan, free below $2,500 of monthly
+  tracked revenue.
+- **Cloudflare:** Workers Paid at $5 a month and a domain for the server's
+  address, which ships inside the app.
+- **Expo:** an account for EAS builds and submission.
+
+The idea's [assumptions][idea-open] hold, and this document adds one: the
+team can publish a checked puzzle every day for as long as Guessling+ is
+sold (AVAIL-1).
+
+[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
+
+## Open questions
+
+The idea's [open questions][idea-open-q] still apply. New ones, each with a
+safe default:
+
+- **Age checks under US state laws.** Texas, Utah, and Louisiana now expect
+  developers to check users' ages through Apple's Declared Age Range API,
+  and no source covers calling it from Expo
+  ([Apple notes][apple-age-laws]). Safe default: ask counsel before launch;
+  if an age check is required, players in an under-18 range get the
+  question list only, so nothing reaches TypeSafe.
+- **The paywall's policy buttons.** No source says whether RevenueCat's
+  Privacy Policy and Terms buttons open a browser inside the app, which
+  could change the web-access answer in STORE-4. Safe default: check on the
+  TestFlight build, and answer the questionnaire from what it does.
+- **A judge who cancelled mid-trial.** Apple's offer code eligibility
+  doesn't clearly cover a subscriber who cancelled a trial that hasn't
+  ended. Safe default: tell judges to redeem the code before starting a
+  trial.
+- **The export report.** HTTPS through the system is exempt from export
+  documentation, but a year-end self-classification report may still
+  apply. Safe default: ask counsel.
+- **A year of daily puzzles.** Selling a yearly plan commits the team to a
+  new puzzle every day until the last subscription ends. Safe default: keep
+  a buffer of at least a week of checked puzzles from October 2026 on.
+
+[idea-open-q]: /docs/IDEA.md#assumptions-and-open-questions
+[apple-age-laws]: /docs/research/apple-requirements.md#age-assurance-laws-in-us-states
 
 ## See also
 
