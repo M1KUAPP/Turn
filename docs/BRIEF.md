@@ -67,8 +67,10 @@ Contents:
   Cuba, Iran, North Korea, Crimea, and Russia "may be excluded from
   participation or prize eligibility".
 - Minors, and teams that include a minor, may compete only for the Next Gen
-  Award. Students must be at least 13, and a parent or legal guardian must
-  accept the official rules and sign a consent form before a minor can be
+  Award. Students must be at least 13 and need a parent's or legal
+  guardian's consent to enter: the guardian agrees to the official rules, and
+  the submission includes the guardian's name, email, and confirmation of
+  consent. Signed written consent is required before a minor can be
   announced as a winner.
 - Next Gen is for active students aged 13 and older with a verifiable
   academic email address (`.edu` or equivalent). They submit a demo video and
@@ -105,10 +107,11 @@ will make your app not eligible for judging":
     target and why. Don't let AI write the whole description.
 3.  A public App Store, Google Play, Mac App Store, or Galaxy Store URL that
     works in the US.
-4.  A public YouTube or Vimeo demo video; unlisted is fine, private is not.
-    Keep the essential footage within 2 minutes, because judges are not
-    required to watch beyond two minutes. Show the app running on its device,
-    including the purchase or ad flow. Leave out copyrighted music and
+4.  A demo video on YouTube or Vimeo. Devpost asks for it to be "publicly
+    visible"; the guide adds that unlisted YouTube videos are fine and private
+    ones are not. Keep the essential footage within 2 minutes, because judges
+    are not required to watch beyond two minutes. Show the app running on its
+    device, including the purchase or ad flow. Leave out copyrighted music and
     third-party trademarks unless you have permission to use them.
 5.  A 1024 × 1024 app icon.
 6.  At least one 1179 × 2556 screenshot without a device frame.
@@ -233,7 +236,8 @@ What this means for an entry:
 - Amounts follow the Devpost prize list, which Devpost calls "the official
   details of prizes". Its summary promises "$20,000" to the first place of
   every other category, but the list pays $15,000 in five sponsor categories
-  and no cash for Best App for Galaxy, which has a single winner.
+  and no cash for Best App for Galaxy, which Devpost lists with a single
+  winner.
 - The five Influencer Awards are fixed product briefs for each creator's
   audience. Building for that audience doesn't allow you to use the creator's
   name, image, voice, logo, or likeness.
@@ -264,12 +268,14 @@ What this means for an entry:
 ## Rules to watch
 
 - Read the [official rules](https://revenuecat-shipaton-2026.devpost.com/rules)
-  before submitting. They govern eligibility, deadlines, and legal terms. The
-  captured sources say nothing about IP ownership, taxes, or disqualification,
-  so check those there.
-- The demo video carries at most 2 minutes of essential footage, is public or
-  unlisted on YouTube or Vimeo, and has no third-party trademarks or
-  copyrighted music unless you have permission to use them.
+  before submitting. They govern eligibility, deadlines, and legal terms. No
+  2026 Shipaton source covers IP ownership, taxes, or disqualification terms;
+  Shipyard's rules covered IP and disqualification, but that was a different
+  hackathon.
+- The demo video carries at most 2 minutes of essential footage, is publicly
+  visible on YouTube or Vimeo (unlisted YouTube is fine, private is not), and
+  has no third-party trademarks or copyrighted music unless you have
+  permission to use them.
 - For the Influencer Awards, "do not use the likeness or brand of the
   influencers". Get express written consent before using a creator's name,
   image, voice, logo, or likeness in the product, store listing, or
@@ -342,8 +348,8 @@ Shipyard 2026, a separate hackathon built on creator briefs. None of them are
   through AI-assisted development using Claude Code and Cursor."
 - **Gurwi – Learn Anything, 2025 #BuildInPublic:** "over 13,000 users", "more
   than 1,000 app store reviews", and a "4.9 rating". Its founder posted almost
-  daily, from a separate English X account where RevenueCat's team and the
-  judges were most active.
+  daily while building it, and for Shipaton opened a separate English X
+  account, where RevenueCat's team and the judges were most active.
 - **ReadHim, 2025 Buzziest Launch:** a meme account and a TikTok partner drove
   a launch that "achieved $1,100 in MRR" in ten days.
 - **Vector Guard, 2025 HAMM:** a "1:50 Justice Model", where every $2.99
@@ -443,13 +449,15 @@ them in the official rules, on Discord, or at `shipaton@revenuecat.com`.
   of every other category, but its prize list pays $15,000 in five sponsor
   categories and no cash for Best App for Galaxy. This brief follows the
   prize list.
+- **Best App for Galaxy places.** Devpost lists a single winner, but the
+  category page also lists a 2nd and 3rd place, each with a blog feature.
 - **Required items.** Devpost lists six; the submission guide lists nine,
   adding the tagline, the RevenueCat project ID, and category-specific
   details. Provide all nine.
 - **Funnel Vision.** Its "measurement period" for web payment volume is not
   defined. The category page says no extra fields were announced, but the
-  later submission guide asks for the funnel URL and the Stripe Project ID;
-  include both.
+  submission guide asks for the funnel URL and the Stripe Project ID; include
+  both.
 - **Travel.** Devpost's overview lists "Flights to New York City" for the
   Shippies ceremony, but its prize list gives travel only to the Grand Prize
   and the #BuildInPublic first place; other first places get an invitation.
