@@ -143,10 +143,11 @@ Why Jev fits the game:
   option keys the Worker supplied, never free text, so it can't spell out
   the secret, as a generative model could in its own words.
 - **It's fast enough to feel like a conversation.** TypeSafe says most
-  queries complete in about 100 ms, and its cookbooks measured mean round
-  trips of 111 and 114 ms, against 826 ms to 13.9 s for the language models
-  they compared ([latency][jev-latency]). The phone's trip to the Worker
-  comes on top.
+  queries complete in about 100 ms, and its cookbooks, most of them run on
+  `jev-1.12`, measured mean round trips of 111 and 114 ms, against 826 ms to
+  13.9 s for the language models they compared ([latency][jev-latency]). The
+  phone's trip to the Worker, and the Worker's trip to TypeSafe on the US
+  West Coast, come on top.
 - **It reads wordings nobody wrote down.** A hand-built table answers only
   the questions its authors predicted.
 - **The caveat:** one rival already answers players' questions on the
@@ -222,7 +223,9 @@ Guessling applies them.
   and nothing Guessling+ promises is missing on launch day.
 - **Plans:** yearly at $19.99 with a 3-day free trial, as the default, and
   monthly at $2.99. That's below NYT Games' $4.99 to $5.99 a month for a
-  bundle, and above a single 20-questions rival's $0.99 a month.
+  bundle, and above a single 20-questions rival's $0.99 a month. Both prices
+  sit below the context's common ranges, which span every category; a
+  single daily game prices like its genre instead.
 - **Paywall:** one RevenueCat Paywall, configured remotely and dismissible,
   shown after today's result as "Play yesterday's?" and on any locked
   archive puzzle.
@@ -266,8 +269,9 @@ Left out, with the reason:
   afford a rejection.
 - **Keep Them Coming Back:** it needs a working OneSignal integration and
   campaign, which the first version leaves out.
-- **Design and Peace Prize:** the Guessling's art is judged under Best Game,
-  and a game isn't a social-good app.
+- **Design and Peace Prize:** five of the six past Design winners were
+  native Swift apps, where Guessling is built with Expo, and a game isn't a
+  social-good app.
 - **The five Influencer Awards:** each is a fixed brief, and none asks for a
   game; the Gaming brief asks for a game backlog.
 - **Catvertising:** Guessling shows no ads.
@@ -394,9 +398,8 @@ The video, two minutes on an iPhone:
     The player types "Does it live in water?" and the Guessling shakes its
     head.
 1.  **0:10–0:40:** a real round. Two wordings of one question get the same
-    answer, a question the bank doesn't cover gets "Ask another way" at no
-    cost, and a correct guess ends in a celebration and a share card sent to
-    Messages.
+    answer, a question the bank doesn't cover is answered live, and a
+    correct guess ends in a celebration and a share card sent to Messages.
 1.  **0:40–1:05:** art direction and tone: the Guessling's reactions and
     the reveal.
 1.  **1:05–1:35:** "Play yesterday's?" opens the paywall, a purchase goes
@@ -428,22 +431,31 @@ why; and the AI tools used, credited openly.
   that matches only exact wordings would answer most questions with "Ask
   another way" and risk guideline 2.1, App Completeness. September 26 is the
   latest first submission that leaves room for one rejection.
-- **App Review rejects the build.** The review-safety checklist covers the
-  common causes. Trigger: not approved by the end of September 26; then fix
-  only the cited guideline. Monday, September 28 is the last resubmission
-  that can still be live by the deadline.
+- **App Review rejects the build.** The review essentials cover the common
+  causes. Trigger: a rejection; then fix only the cited guideline and
+  resubmit the same day. Monday, September 28 is the last resubmission that
+  can still be live by the deadline, an app that isn't live by September 30
+  can't be entered, and expedited review is off the table.
+- **TypeSafe objects to being named in the notice or the privacy policy.**
+  Trigger: its answer; then change the Worker-served notice and the web
+  privacy policy the same day, with no app update.
 - **The game doesn't look finished.** The Guessling's reactions and the
   reveal carry the art direction, and the video gives them 25 seconds
-  instead of explaining how answers work.
+  instead of explaining how answers work. Trigger: the art isn't ready by
+  the end of September 23; then ship the simplest reactions and polish them
+  in an update.
 - **Jev is busy or out of credits during judging.** Credits stay funded
-  through at least October 21, the SDK retries busy responses, the app shows
-  a busy state, and exact bank wordings are answered in code.
+  through at least October 22, the SDK retries busy responses, the app shows
+  a busy state, and exact bank wordings are answered in code. Trigger: any
+  failed call in the Worker's logs; then top up the credits and check the
+  limits.
 - **TypeSafe doesn't consent to naming Jev.** Trigger: no consent by
   September 28, when the video is recorded; then the video calls it "a
   hosted decision model", and the write-up names Jev only if consent arrives
   before the deadline.
-- **Few numbers.** Posting starts on launch day, and the write-up's numbers
-  lead with rates and the consistency results rather than totals.
+- **Few numbers.** Posting starts on launch day. Trigger: small numbers on
+  September 29; then the write-up's numbers lead with rates and the
+  consistency results rather than totals.
 
 ## How the idea was chosen
 
@@ -484,7 +496,7 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
 
 ## Assumptions and open questions
 
-The goal directive rules out asking, so the plan assumes:
+Nobody could be asked while this was written, so the plan assumes:
 
 - A team of one to three people, starting from no code on September 22,
   2026, with an active Apple Developer Program membership, who write
@@ -507,7 +519,7 @@ Still open, each with a safe default:
   TypeSafe page says what the API returns when credits run out; with
   auto-refill off and a zero balance, TypeSafe "may decline to generate
   Output". Safe default: buy credits on day one, turn auto-refill on, and
-  watch usage through at least October 21.
+  watch usage through at least October 22.
 - **Naming Jev.** No source says how to get TypeSafe's consent under section
   16.4. Safe default: ask TypeSafe on September 22, covering the notice and
   the privacy policy as well as the video and the write-up, and say "a
