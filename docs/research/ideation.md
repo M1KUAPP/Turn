@@ -11,6 +11,7 @@ Contents:
 
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
+1.  [Round 3: screening](#round-3-screening)
 
 ## Round 1: constraints and rubric
 
@@ -184,3 +185,58 @@ Patterns across the thirty:
   speech-recognition prompts, and health data.
 
 **Decision:** the 26 distinct ideas go to Round 3.
+
+## Round 3: screening
+
+**Question:** which ideas can ship in time?
+
+**Method:** each of the 26 distinct ideas is checked against C1 to C7 in
+order, and a failure names the first constraint it breaks. The reasons for
+failing come from the riskiest part each generator reported.
+
+| #   | Idea          | Result   | Reason                                                                                     |
+| --- | ------------- | -------- | ------------------------------------------------------------------------------------------ |
+| 1   | Blanks        | Pass     | Forms come in as screenshots or PDFs, read on the device                                   |
+| 2   | Cannery       | Pass     | Messages come in by paste or share                                                         |
+| 3   | Side Order    | Pass     | Menus are read on the device; the reasons are a short written list                         |
+| 4   | Lasted        | Pass     | The check-in is a local notification; review needs sample history                          |
+| 5   | Midstride     | Pass     | A starter set of written sessions is enough                                                |
+| 6   | Pocket Studio | Pass     | Only if classes are saved by pasting a link, with the share extension left for an update   |
+| 7   | Preflight     | Pass     | Only with a small scenario set: two free and a few paid                                    |
+| 8   | Hold the Line | Pass     | Only with two decks at launch                                                              |
+| 9   | Pinchlist     | Pass     | Lists travel in a link, with no accounts                                                   |
+| 10  | Hype Haul     | Fails C2 | The core needs a Safari extension that reads arbitrary pages, tuned on real recaps         |
+| 11  | Overturn      | Fails C2 | About ten accurate appeal letters across four kinds of plans can't be written and checked  |
+| 12  | Sift          | Pass     | The chat export arrives as a file; a sample chat covers review                             |
+| 13  | Earshot       | Pass     | Listening stays in the foreground; a demo mode plays recorded announcements                |
+| 14  | Judgy         | Pass     | No personal data; the work is in the timer, hand-off, and reveal                           |
+| 15  | Sleep On It   | Pass     | The backend's only extra job is one OneSignal call per item                                |
+| 16  | Take-Home     | Pass     | Children's names are removed on the device before any text leaves it                       |
+| 17  | Ebb           | Pass     | The web funnel is RevenueCat's; the app must handle Redemption Links                       |
+| 18  | Dismissed     | Fails C2 | Tickets differ by city, and the scan and appeals need testing on real tickets from several |
+| 19  | Hunch         | Pass     | About 30 fact cards are enough to launch                                                   |
+| 20  | Flagged       | Pass     | Pasted text only; the highlighted-line view answers the minimum-functionality risk         |
+| 21  | SaySo         | Pass     | A starter phrasebook covers review; a local match covers a slow network                    |
+| 23  | Subtext       | Pass     | Messages come in by paste; the share extension can wait                                    |
+| 24  | Answered      | Fails C6 | The person whose words go to Jev may not be able to give the permission 5.1.2(i) requires  |
+| 25  | Stepwise      | Fails C2 | 40 to 60 checked guides with screenshots are the bottleneck                                |
+| 27  | Stillwake     | Pass     | Technique cards are short text with haptics; crisis resources are written in               |
+| 30  | Hollow Pines  | Fails C2 | A written, playtested mystery with finished paid chapters is the bottleneck                |
+
+Conditions carried forward:
+
+- Health-adjacent text in Midstride, Ebb, and Stillwake needs the 5.1.2(i)
+  consent screen and "not medical advice" wording (C6).
+- Other people's words reach Jev in Cannery, Sift, Earshot, and Subtext, so
+  consent comes before any text leaves the phone (C6).
+- Side Order and Lasted describe the additive approach without the creator's
+  name for it (C7).
+
+Survivors: 20. The plan called for trimming to about twelve by gallery
+cluster size, but cluster sizes mislead here: they put Midstride among 46
+fitness apps though none centers on perimenopause, and Hunch among 15 word
+games though none takes free-form questions. So all 20 go on, and Round 4's
+Category fit and Differentiation scores weigh crowding idea by idea.
+
+**Decision:** 1 to 9, 12 to 17, 19 to 21, 23, and 27 go to Round 4 with
+their conditions.
