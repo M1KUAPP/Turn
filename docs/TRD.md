@@ -22,6 +22,8 @@ Contents:
 1.  [Puzzle days and content tooling](#puzzle-days-and-content-tooling)
 1.  [Purchases and entitlements](#purchases-and-entitlements)
 1.  [The iPhone app](#the-iphone-app)
+1.  [Security and privacy](#security-and-privacy)
+1.  [Reliability and observability](#reliability-and-observability)
 1.  [See also](#see-also)
 
 ## Overview
@@ -801,6 +803,111 @@ export default {
   (COMPAT-3).
 
 [rc-pm]: /docs/research/revenuecat-expo.md#privacy-manifests-in-expo
+
+## Security and privacy
+
+### Secrets and configuration
+
+| Name                     | Kind          | Holds                                                 |
+| ------------------------ | ------------- | ----------------------------------------------------- |
+| `TYPESAFE_API_KEY`       | Worker secret | Jev's key (SEC-1)                                     |
+| `RC_SECRET_KEY`          | Worker secret | RevenueCat v2 key, read-only on customers (SEC-1)     |
+| `PLAYER_SALT`            | Worker secret | The salt for hashing player IDs                       |
+| `ADMIN_TOKEN`            | Worker secret | The admin routes' bearer token                        |
+| `ALERT_WEBHOOK_URL`      | Worker secret | Where the daily check posts a failure (AVAIL-3)       |
+| `RC_PROJECT_ID`          | Worker var    | RevenueCat's project ID                               |
+| `RC_ENTITLEMENT_ID`      | Worker var    | The Guessling+ entitlement's object ID                |
+| `MATCH_MIN`              | Worker var    | The match threshold, 0.6 until the consistency test   |
+| `EXPO_PUBLIC_API_URL`    | App, public   | The Worker's address on the team's domain             |
+| `EXPO_PUBLIC_RC_IOS_KEY` | App, public   | RevenueCat's `appl_` key; `test_` only in development |
+
+- The five secrets are listed in `wrangler.jsonc` under `secrets.required`,
+  so a deploy without one fails. `EXPO_PUBLIC_` values are "visible in
+  plain-text in your compiled application", so nothing secret goes there.
+- The EAS development profile is the only one with the `test_` key;
+  preview, TestFlight, and review builds are release builds, which crash on
+  purpose with it, and a build script refuses a release build whose key
+  starts with `test_` (SEC-5).
+
+### Validation and abuse limits
+
+- The Worker refuses a request without its headers, text over its length
+  limit, or a player ID that isn't an anonymous RevenueCat ID, before any
+  KV read or Jev call (SEC-3).
+- A Rate Limiting binding allows each player 10 requests in 10 seconds,
+  keyed by the hashed player ID. Cloudflare calls the binding "permissive"
+  and advises against keying on addresses, which many mobile users share
+  ([Cloudflare notes][cf-ratelimit]).
+- Exact caps live in the puzzle's object: 20 turns and 40 free answers per
+  player (ASK-10), and 600 Jev calls a minute per object (AVAIL-2).
+- A client that makes up new IDs escapes the per-player limits; the
+  per-object Jev cap is the backstop.
+
+[cf-ratelimit]: /docs/research/cloudflare-workers.md#limiting-requests-per-device
+
+### Data inventory
+
+| Data                                   | Where it's kept                            | Linked to a player | Kept for                        | App Privacy type                     |
+| -------------------------------------- | ------------------------------------------ | ------------------ | ------------------------------- | ------------------------------------ |
+| Typed questions, with AI answers on    | `answers` in the puzzle's object; TypeSafe | No                 | As long as the puzzle is served | Other User Content, Gameplay Content |
+| Round progress: turns and status       | `players`, under a salted hash of the ID   | Yes                | As long as the puzzle is served | Gameplay Content                     |
+| RevenueCat app user ID                 | RevenueCat; hashed on the server           | Yes                | RevenueCat's retention          | User ID                              |
+| Purchases                              | RevenueCat and Apple                       | Yes                | RevenueCat's retention          | Purchase History                     |
+| Counts of plays, questions, and solves | Analytics Engine, indexed by the hash      | Yes                | Three months                    | Product Interaction                  |
+| Reports                                | `reports` in the puzzle's object           | No                 | Until triaged, then 30 days     | Customer Support                     |
+| Logs                                   | Workers Logs, with no text and no IDs      | No                 | Seven days on Workers Paid      | Not collected                        |
+
+- None of it is used for tracking, so there's no tracking prompt (PRIV-1),
+  and the App Privacy answers follow the last column (STORE-5, PRIV-5).
+- TypeSafe receives only wordings, cards, and bank questions (PRIV-2);
+  RevenueCat receives the app user ID and purchases through its SDK and the
+  Worker's entitlement checks; Cloudflare runs all of the Worker's traffic.
+  The privacy policy names all three (PRIV-4).
+- Workers Logs keep each request's details unless `invocation_logs` is off,
+  so it is off, and the Worker logs its own JSON events without text, IDs,
+  or addresses (PRIV-3).
+- A player who declines the notice leaves round progress only: no stored
+  wordings and no counts (NOTICE-3).
+
+## Reliability and observability
+
+### Failure modes
+
+| Failure                           | What the player sees                                | What the system does                                             |
+| --------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------- |
+| Jev slow, `429`, or `529`         | An answer, or busy with the question list (STATE-3) | One retry inside the 3-second budget; stored answers still work  |
+| Jev down or out of credits        | Busy with the question list                         | The daily check alerts; `aiEnabled` can switch live answers off  |
+| RevenueCat's API down             | "Couldn't confirm Guessling+" and a retry (STATE-5) | Cached yes answers keep subscribers playing for up to 15 minutes |
+| A puzzle missing from KV          | "Today's puzzle is late" and a retry (STATE-4)      | The daily check alerts two days ahead (AVAIL-3)                  |
+| An overloaded or restarted object | Busy                                                | One retry on a new stub for idempotent reads                     |
+| No network on the phone           | Offline, with the question kept (STATE-1)           | Nothing is sent, so no turn is used                              |
+| A player leaves mid-question      | The answer on return, by the same `requestId`       | The object stores the answer as soon as Jev returns              |
+
+### Logs and counts
+
+- **Logs.** Workers Logs, enabled in `wrangler.jsonc`, with one JSON event
+  per question: the step that answered, Jev's latency and status, and the
+  outcome.
+- **Counts.** Workers Analytics Engine, one data point per event, for
+  players who allowed AI answers: puzzle opened, question answered, with
+  its answer and source, guess, round solved or lost, report, and busy. The
+  index is the hashed player ID, so distinct players and the return rate
+  are `count(DISTINCT index1)` queries; at high volume the data is sampled,
+  so totals use `SUM(_sample_interval)` (METRIC-1, METRIC-2)
+  ([Cloudflare notes][cf-ae]).
+- **Numbers for the write-up.** `stats.ts` queries the SQL API and prints
+  the idea's numbers with the latest consistency results (METRIC-5);
+  RevenueCat's charts give the money (METRIC-3).
+
+[cf-ae]: /docs/research/cloudflare-workers.md#workers-analytics-engine
+
+### The daily check
+
+A Cron Trigger at 09:00 UTC, an hour before the next date first becomes
+today in UTC+14, confirms that `live:<n>` exists for the next two dates,
+sends Jev one test question, and posts to the team's webhook if either
+fails (AVAIL-3). It also makes the first call to the next date's object with
+`locationHint: "wnam"`, so no player pays for creating it.
 
 ## See also
 
