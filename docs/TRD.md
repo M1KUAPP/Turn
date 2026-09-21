@@ -16,6 +16,8 @@ Contents:
 1.  [Overview](#overview)
 1.  [System architecture](#system-architecture)
 1.  [Stack and repository](#stack-and-repository)
+1.  [Data model](#data-model)
+1.  [Worker API](#worker-api)
 1.  [See also](#see-also)
 
 ## Overview
@@ -142,6 +144,213 @@ content/
   tests/      The paraphrase sets for the consistency test
 scripts/      check.ts, publish.ts, consistency.ts, reports.ts, forget.ts, stats.ts
 ```
+
+## Data model
+
+Three stores hold everything: Workers KV for what the team publishes, one
+Durable Object per puzzle for what players generate, and the device for the
+player's own round. The types below are the contract between the scripts,
+the Worker, and the app.
+
+### Published data in Workers KV
+
+KV can take "up to 60 seconds or more" to show a change everywhere, caches
+missing keys too, and allows one write a second per key
+([Cloudflare notes][cf-kv-publish]). So a published puzzle revision never
+changes: a fix is a new revision, and a small pointer names the live one.
+
+| Key                     | Value                              | Written by            |
+| ----------------------- | ---------------------------------- | --------------------- |
+| `puzzle:<n>:<rev>`      | `Puzzle`, as JSON; never rewritten | `publish.ts`          |
+| `live:<n>`              | The live revision of puzzle `n`    | `publish.ts`          |
+| `bank:<category>:<ver>` | `Bank`, as JSON; never rewritten   | `publish.ts`          |
+| `config`                | `AppConfig`, as JSON               | `publish.ts --config` |
+
+The Worker reads revisions with a `cacheTtl` of a day, and pointers and the
+config with the default 60 seconds.
+
+```ts
+type Category = 'animal' | 'food' | 'object' | 'place'
+
+interface Bank {
+  category: Category
+  version: number // a Puzzle names the version it was checked against
+  questions: { id: string; text: string; not: string }[] // at most 127 (CONTENT-5)
+}
+
+interface Puzzle {
+  number: number // 1–10 are starters; 11 is 2026-09-24 (TODAY-3)
+  date: string | null // YYYY-MM-DD for a daily puzzle, null for a starter
+  category: Category
+  hint: string // "An animal"
+  display: string // the name the reveal shows: "Octopus"
+  names: string[] // accepted names, normalized: ["octopus", "octopuses", "octopi"]
+  card: { thing: string; facts: string[] } // the state Jev reads; at most 40 facts
+  bankVersion: number
+  checked: Record<string, 'yes' | 'no'> // every bank id and `${id}_not` (CONTENT-4)
+}
+
+interface AppConfig {
+  notice: { version: number; provider: string; title: string; body: string } // NOTICE-2, NOTICE-5
+  links: { privacy: string; terms: string; support: string }
+  aiEnabled: boolean // the kill switch for live answers
+  minAppVersion: string
+}
+```
+
+[cf-kv-publish]: /docs/research/cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
+
+### Player data in each puzzle's Durable Object
+
+One object per puzzle number, named `puzzle-<n>`, keeps that puzzle's
+answers, players' progress, and reports in its SQLite storage, which new
+namespaces must use:
+
+```sql
+CREATE TABLE answers (
+  wording    TEXT PRIMARY KEY, -- the normalized question, with no player ID
+  answer     TEXT NOT NULL,    -- 'yes' | 'no' | 'rephrase' | 'not_question'
+  source     TEXT NOT NULL,    -- 'bank' | 'live'
+  bank_id    TEXT,             -- the matched entry, such as 'q017' or 'q017_not'
+  p          REAL,             -- the probability that decided it
+  model      TEXT NOT NULL,    -- 'jev-1.13.0'
+  created_at INTEGER NOT NULL
+);
+
+CREATE TABLE players (
+  player        TEXT PRIMARY KEY, -- SHA-256 of PLAYER_SALT and the app user ID
+  turns         INTEGER NOT NULL DEFAULT 0,
+  free_inputs   INTEGER NOT NULL DEFAULT 0, -- answers that used no turn (ASK-10)
+  status        TEXT NOT NULL DEFAULT 'playing', -- 'playing' | 'solved' | 'lost'
+  last_request  TEXT,  -- the last request ID, for retries (STATE-2)
+  last_response TEXT,  -- the JSON sent for it
+  created_at    INTEGER NOT NULL,
+  updated_at    INTEGER NOT NULL
+);
+
+CREATE TABLE reports (
+  id         INTEGER PRIMARY KEY,
+  wording    TEXT NOT NULL,
+  answer     TEXT NOT NULL,
+  reason     TEXT,             -- 'wrong' | 'unclear' | NULL
+  created_at INTEGER NOT NULL
+);
+```
+
+- Only wordings from players who allowed AI answers go into `answers`
+  (NOTICE-3). Code-rule answers, such as letter questions, aren't stored,
+  since code gives the same answer every time.
+- No table holds question text next to a player: `players` has counts, and
+  `answers` and `reports` have wordings without IDs (PRIV-3).
+
+### What the device keeps
+
+The app keeps these in a key-value store on the device, never on the
+server:
+
+| Key            | Value                                                    |
+| -------------- | -------------------------------------------------------- |
+| `consent`      | `{ choice: 'on' \| 'off', version: number }` (NOTICE-4)  |
+| `round:<n>`    | The round's questions, answers, turns, and status        |
+| `streak`       | `{ current, best, lastSolved: 'YYYY-MM-DD' }` (STREAK-1) |
+| `stats`        | `{ played, solved }` (END-5)                             |
+| `settings`     | `{ sound: boolean, haptics: boolean }` (SET-2)           |
+| `reported:<n>` | The wordings reported on puzzle `n` (REPORT-3)           |
+
+## Worker API
+
+The app talks only to the Worker, over HTTPS, in JSON. Every request carries
+these headers:
+
+- `X-Guessling-Player`: the RevenueCat app user ID; the Worker hashes it
+  before storing anything.
+- `X-Guessling-AI`: `on` or `off`, the player's notice choice (NOTICE-3).
+- `X-Guessling-Version`: the app's version, so the Worker can ask an old
+  build to update.
+- `X-Guessling-Refresh: 1`, only on the first archive request after a
+  purchase or restore, to skip the entitlement cache (PAY-5).
+
+| Method and path                      | What it does                                        | Guessling+  |
+| ------------------------------------ | --------------------------------------------------- | ----------- |
+| `GET /v1/config`                     | The notice, the policy links, and the kill switch   | No          |
+| `GET /v1/today?date=YYYY-MM-DD`      | Today's puzzle for the device's date, with progress | No          |
+| `GET /v1/archive`                    | Every past puzzle's number, date, and hint          | No          |
+| `GET /v1/puzzles/<n>`                | An archive puzzle, with progress                    | Yes         |
+| `GET /v1/puzzles/<n>/bank`           | The category's bank questions, for the list         | For archive |
+| `POST /v1/puzzles/<n>/ask`           | Answers a question                                  | For archive |
+| `POST /v1/puzzles/<n>/guess`         | Decides a guess                                     | For archive |
+| `POST /v1/puzzles/<n>/reports`       | Stores a report                                     | No          |
+| `GET /privacy`, `/terms`, `/support` | The policy and support pages, as static assets      | No          |
+
+"For archive" means the Worker confirms Guessling+ when `n` isn't today's
+puzzle for the player and isn't a round they started before midnight
+(TODAY-5). A puzzle's view never includes `names` or `card`; the end of a
+round adds `reveal`:
+
+```ts
+interface PuzzleView {
+  number: number
+  date: string | null
+  hint: string
+  turnsLeft: number // 20 minus turns used
+  status: 'playing' | 'solved' | 'lost'
+  reveal?: { display: string } // only once status isn't 'playing' (END-2)
+}
+```
+
+Asking and guessing:
+
+```ts
+// POST /v1/puzzles/<n>/ask
+interface AskRequest {
+  requestId: string // a UUID per question; a retry resends the same one (STATE-2)
+  text?: string // 1–140 characters (ASK-1)
+  bankId?: string // instead of text, a question picked from the list (ASK-9)
+}
+
+// POST /v1/puzzles/<n>/guess
+interface GuessRequest {
+  requestId: string
+  text: string // 1–60 characters (GUESS-1)
+}
+
+interface TurnResponse {
+  answer: 'yes' | 'no' | 'rephrase' | 'not_question' | 'pick' | 'rest' | 'right' | 'wrong'
+  turnsLeft: number
+  status: 'playing' | 'solved' | 'lost'
+  reveal?: { display: string }
+}
+```
+
+- `rephrase` shows "Ask another way", `not_question` shows "Ask a yes-or-no
+  question", `pick` brings up the question list for a player with AI
+  answers off, and `rest` says the player has used the 40 answers that
+  don't use a turn (ASK-10). None of the four uses a turn.
+- `right` and `wrong` answer a guess, or a question that names an accepted
+  name (GUESS-4); both use a turn.
+
+Errors come back as `{ "error": { "code": string, "message": string } }`:
+
+| Status | Code          | When                                                            |
+| ------ | ------------- | --------------------------------------------------------------- |
+| 400    | `bad_request` | A missing header, or text over its limit                        |
+| 403    | `needs_plus`  | An archive puzzle without a confirmed Guessling+                |
+| 404    | `not_found`   | A puzzle that isn't published, or a date not yet today anywhere |
+| 409    | `finished`    | A turn on a round that has ended                                |
+| 426    | `update`      | An app version below `minAppVersion`                            |
+| 429    | `slow_down`   | A player over the burst limit (SEC-3)                           |
+| 503    | `busy`        | Jev didn't answer in time and no stored answer fits (STATE-3)   |
+| 503    | `unconfirmed` | RevenueCat couldn't confirm Guessling+ (STATE-5)                |
+
+Admin routes, for the team's scripts only, need `Authorization: Bearer`
+with the `ADMIN_TOKEN` secret:
+
+- `GET /v1/admin/reports?number=<n>` lists a puzzle's reports (REPORT-2).
+- `POST /v1/admin/puzzles/<n>/forget` deletes stored answers for given
+  wordings after a fix, and refuses while the puzzle's day hasn't ended
+  everywhere (CONTENT-8).
+- `GET /v1/admin/stats?from=YYYY-MM-DD&to=YYYY-MM-DD` returns the counts
+  behind the idea's numbers (METRIC-5).
 
 ## See also
 
