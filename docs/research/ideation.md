@@ -582,17 +582,20 @@ context.
   the Guessling's nod, head shake, shrug, and celebration; the Guessling+
   archive, paywall, and Restore Purchases; the permission notice before the
   first question; offline and busy states; "Report this answer"; the privacy
-  policy and terms pages; and 30 checked cards.
-- **Should:** a streak count, haptics and sound, and checking the
-  entitlement on the server as well as in the app.
+  policy and terms pages; an entitlement check on the server before an
+  archive puzzle is served; and 17 checked cards by submission, ten for the
+  archive and a week of daily puzzles. The rest follow in Workers KV with no
+  app update, at least one a day, since Guessling+ promises one more each
+  day.
+- **Should:** a streak count, and haptics and sound.
 - **Won't, in the first version:** accounts, leaderboards, friends, packs,
   push notifications, Android, and an iPad layout.
 
 ### Stack and data flow
 
 - **App:** for a team that writes TypeScript, Expo with
-  `react-native-purchases`, 10.10.1 on
-  September 21, 2026, with RevenueCat Paywalls. One language runs from the
+  `react-native-purchases`, 10.10.1 on September 21, 2026, with RevenueCat
+  Paywalls. One language runs from the
   app to the backend and Jev's official JavaScript SDK. A Swift team would
   build the same screens in SwiftUI with purchases-ios.
 - **Backend:** one Cloudflare Worker, with the key in the Worker's secrets
@@ -601,8 +604,11 @@ context.
   Worker calls the HTTP API directly, with backoff. SDK error text never
   reaches the app, since an open issue reports the key echoed into
   connection errors. Workers KV holds the cards, their checked bank answers,
-  the daily schedule, and each day's answers. The secret never ships in the
-  app: the Worker sends the hint and checks guesses.
+  and the daily schedule; each day's answers live in one Durable Object, so
+  two players can't get different answers to the same new wording. The
+  secret never ships in the app: the Worker sends the hint and checks
+  guesses. It limits requests per device and caps retries and timeouts on
+  answers a player is waiting for, since every call spends Jev credits.
 - **Per question:** the app sends today's number and the question; the
   Worker sends Jev one request with a Choice over that category's bank
   questions plus "none", and a Noul asking whether the text is a yes-or-no
@@ -615,25 +621,36 @@ context.
   busy or down, the Worker still answers exact bank wordings in code.
 - **Authoring:** a script runs Jev over every bank question and its negation
   for each card and lists answers between 0.3 and 0.7 and negated pairs that
-  disagree; a person fixes them before the card ships.
+  disagree; a person fixes them before the card ships. The bank starts at
+  about 100 questions per category, under the 255 a Choice allows. The first
+  two cards are a pilot that measures how many answers need a person; if
+  that's more than the time allows, the bank shrinks to its most common
+  questions rather than the launch set shrinking below 17 cards. The checked
+  bank, added in Round 6, is heavier work than the 30 fact cards Round 3
+  assumed, which is why the launch set is 17.
 - **Data:** only the typed questions reach TypeSafe, after the player agrees
   to a notice that names it and asks them not to type personal information.
-  TypeSafe doesn't knowingly handle personal data from anyone under 18, so
-  the request to TypeSafe on September 22 also asks whether younger players
-  may use the game, and whether the notice and the privacy policy may name
-  TypeSafe. There are no accounts; RevenueCat's anonymous IDs carry the
-  purchase.
+  The first build names TypeSafe in the notice and the privacy policy,
+  because guideline 5.1.2(i) asks apps to "clearly disclose" third-party AI,
+  TypeSafe's agreement makes the team give users the notices that TypeSafe's
+  use of their input needs (section 5), and section 16.4 allows what is
+  "required by Laws". The request to TypeSafe on September 22 asks it to
+  confirm this, and whether players under 18 may use the game, since
+  TypeSafe doesn't knowingly handle personal data from anyone under 18. The
+  Worker serves the notice's text, and the privacy policy is a web page, so
+  either can change without an app update. There are no accounts;
+  RevenueCat's anonymous IDs carry the purchase.
 
 ### Schedule
 
 - **Tuesday, September 22:** request the Jev key and ask TypeSafe's consent
   to name Jev; sign the Paid Apps Agreement and finish tax and banking; set
   up the RevenueCat project, the App Store Connect record, and the two
-  subscriptions; write the question bank and the first ten cards; stand up
-  the Worker.
+  subscriptions; write the question bank and the authoring script; check
+  the first two cards as the pilot; stand up the Worker.
 - **Wednesday, September 23:** the app's screens and the Guessling's art;
-  bank matching and the live fallback; the authoring script; cards up to 30;
-  the permission notice; the paywall and archive; the policy pages.
+  bank matching and the live fallback; cards up to 17; the permission
+  notice; the paywall and archive; the policy pages.
 - **Thursday, September 24:** fix the flagged answers; run the consistency
   test; the icon, the 6.9-inch screenshots and the 1179 × 2556 one, and the
   metadata; submit the first build with its subscriptions, set to release
@@ -649,9 +666,9 @@ context.
 - **Tuesday, September 29:** write the Devpost description and the category
   answers with the numbers so far.
 - **Wednesday, September 30:** refresh the numbers and submit before 11:45 PM
-  PT. Keep the Worker running and Jev's credits funded through at least
-  October 21, when winners are announced, since the judging dates are
-  subject to change.
+  PT. Keep the Worker running, Jev's credits funded, and a new card each day
+  through at least October 22, the later of the dates given for the winners,
+  since the judging dates are subject to change.
 
 ### Review-safety checklist
 
