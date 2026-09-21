@@ -506,6 +506,8 @@ settles several of them and gives a different winners date.
 - [Context](/docs/CONTEXT.md): what the official rules settle or change,
   what past winners did, best practices from primary sources, and related
   materials.
+- [Idea](/docs/IDEA.md): the app chosen for Shipaton 2026 through ten rounds
+  of ideation, with Jev built in.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
