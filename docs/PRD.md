@@ -199,9 +199,11 @@ says how each is built.
   as "Does it start with B?" or "Does its name have five letters?", get
   correct answers worked out from the name, never from the AI. Check: a
   test list of letter questions against a known puzzle.
-- **ASK-8, Must.** The question field stays disabled while an answer is
-  pending, so each answer arrives before the next question. Check: the
-  field can't be used until the answer or an error shows.
+- **ASK-8, Must.** The question field, the Guess button, and the question
+  list stay disabled while an answer is pending, and after a timeout the
+  only way on is to send the same question again, so each turn is settled
+  before the next. Check: none of the three can be used until the answer
+  or an error shows, and after a timeout only "Send again" is offered.
 - **ASK-9, Must.** With AI answers off, the app offers the category's bank
   questions as a searchable list. A picked question gets its checked
   answer. A typed question gets an answer only if it matches a bank
