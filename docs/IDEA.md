@@ -16,6 +16,7 @@ Contents:
 1.  [Problem and audience](#problem-and-audience)
 1.  [What the app does](#what-the-app-does)
 1.  [How it works](#how-it-works)
+1.  [How Jev fits](#how-jev-fits)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -152,7 +153,118 @@ What makes it more than one screen around one model call:
 
 [tech-speech]: /docs/research/next-gen-tech.md#speechanalyzer-and-speechtranscriber
 [ev-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
-[ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
+
+## How Jev fits
+
+Jev is TypeSafe's hosted decision model, in early access. It answers typed
+questions about text as a Choice among options, a Score on a scale, or a
+yes-or-no Noul, with probabilities, and it never writes text
+([Jev notes][jev-what]). In Turn it makes the decision the product depends
+on: which of the user's own phrases answer what the partner just said.
+
+**The request.** For each partner line, the relay sends Jev one request. The
+state holds the line, with names swapped for tags, the place, and the 40
+candidates. The questions:
+
+- a Choice for the kind of question: yes-or-no, a choice between options,
+  open, or not a question;
+- a Choice for the topic, among the phrase bank's categories;
+- one Noul per candidate: "this phrase answers what the partner just said".
+
+TypeSafe says "Every question is evaluated in parallel and in isolation
+against the same state in one go", so 42 questions cost one round trip
+([limits][jev-limits]).
+
+Why Jev decides this way:
+
+- **Nouls, not one big Choice.** A Choice over the whole bank would sit at
+  the "roughly 240" options TypeSafe calls reliable, and a Choice's
+  probabilities "always add up to 1, so a line ranks first even when none
+  answer the query". Per-phrase Nouls can all come back low, which tells
+  Turn to change nothing ([Choice size][jp-choice]).
+- **A steady row.** Over TypeSafe's repeat tests, a Noul's probability had a
+  standard deviation of about 0.01, while a Choice's top answer flipped on 2
+  of 8 questions ([consistency][jp-consistency]). Buttons users learn by
+  position shouldn't move for noise.
+- **Confidence bars.** One big button needs more than 0.85, the bar
+  TypeSafe's routing example sets for acting without asking; six buttons
+  need at least 0.6, its floor; below that the row holds
+  ([confidence routing][jp-routing]).
+- **Not a generator.** "System One models do not write replies, produce
+  code, or generate explanations of their reasoning", so Jev can only choose
+  among the user's words, which is what sets Turn apart from generated
+  replies ([store review][jev-store]).
+- **Not the on-device model.** Apple's Foundation Models can be made to pick
+  from a list, but it returns no probabilities and "may take a few
+  seconds", on iPhone 15 Pro and later only ([simpler methods][ev-simpler]).
+- **Not only embeddings.** Embeddings measure how alike two strings are, not
+  whether one answers the other, and "How was physio?" shares no word with
+  "It was hard". The evaluation tests this, and if Jev trails embeddings,
+  it re-ranks an embedding shortlist instead, as TypeSafe's own cookbooks do
+  ([Turn without Jev][ev-without]).
+- **Fast enough for a conversation.** TypeSafe says "Most queries complete
+  in about 100 ms", and its cookbooks measured mean round trips of 111 and
+  114 ms. The phone's trip to the relay, and the relay's to TypeSafe on the
+  US West Coast, come on top ([limits][jev-limits]).
+- **Cheap enough to run on every line.** At $0.042 per million input
+  tokens, a request of about 1,500 tokens costs about $0.00006
+  ([round 8][log-r8]).
+
+How it's wired:
+
+- **The key stays in the relay.** Jev has no mobile SDK, and TypeSafe's
+  agreement requires keys to stay confidential. The relay, a Cloudflare
+  Worker, builds the questions itself, so the app can't use it as a way into
+  Jev, and Turn stays an app that uses the API rather than "a standalone
+  service", which the agreement bars ([terms][jev-terms]).
+- **A pinned model.** Requests name `jev-1.13.0`, because an alias "moves when
+  a new release ships" ([gotchas][jev-gotchas]).
+- **Few requests in flight.** Cookbook authors hit rate limits at about eight
+  requests in flight on one key, so each device keeps one, and answers older
+  than the latest line are dropped, never retried
+  ([concurrency][jp-concurrency]).
+- **Busy or down.** The phone ranks by itself, as it does offline, and the
+  app says Listen mode is degraded.
+- **English only.** "English is the primary training language and where
+  accuracy is currently best" ([languages][jev-lang]).
+
+Data, consent, and terms:
+
+- **What leaves the phone:** per request, the partner's line with names
+  swapped for tags, the place, and 40 of the user's phrases. TypeSafe hosts
+  Jev in the United States, and "Jev is not trained on customer requests or
+  responses", but it keeps rights "in perpetuity" to use the data for
+  telemetry and abuse monitoring ([data handling][jev-data]).
+- **The partner's consent.** TypeSafe's agreement makes the team give the
+  notices its use of input needs (section 5). The consent card names
+  TypeSafe and asks the partner before listening starts, the privacy notice
+  names it too, and the user can pause at any time.
+- **No minors' data.** TypeSafe's services aren't "directed to children",
+  and it doesn't knowingly handle personal data from anyone under 18, so
+  Turn is for adults, and the under-18 switch keeps a younger partner's
+  words from reaching Jev ([ages and accounts][ng-minors]).
+- **Naming Jev.** Section 16.4 bars announcing the relationship without
+  consent, so the team asks TypeSafe on September 22 before naming Jev in the
+  video and the description ([terms][jev-terms]).
+- **Open source.** TypeSafe's SDKs are MIT-licensed, and its only key advice
+  is "Keep API credentials server-side in web apps." The repository holds
+  the relay's code but never its key ([keys in open source][jp-keys]).
+
+[jev-what]: /docs/research/jev.md#what-jev-is
+[jev-limits]: /docs/research/jev.md#rate-limits-context-length-and-latency
+[jp-choice]: /docs/research/jev-patterns.md#choice-size-and-high-cardinality-decisions
+[jp-consistency]: /docs/research/jev-patterns.md#consistency-results
+[jp-routing]: /docs/research/jev-patterns.md#confidence-gated-routing-pattern
+[jev-store]: /docs/research/jev.md#store-review-and-jev
+[ev-without]: /docs/research/next-gen-evidence.md#turn-without-jev
+[jev-terms]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
+[jev-gotchas]: /docs/research/jev.md#gotchas-in-the-api-and-sdks
+[jp-concurrency]: /docs/research/jev-patterns.md#concurrency-in-the-cookbooks
+[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
+[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
+[jp-keys]: /docs/research/jev-patterns.md#keys-in-open-source-code
+[ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
+[log-r8]: /docs/research/next-gen-ideation.md#round-8-monetization
 
 ## See also
 
@@ -177,3 +289,4 @@ What makes it more than one screen around one model call:
 
 [guessling]: /docs/archive/guessling-idea.md
 [log]: /docs/research/next-gen-ideation.md
+[ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
