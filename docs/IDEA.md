@@ -20,6 +20,10 @@ Contents:
 1.  [Monetization](#monetization)
 1.  [Categories to enter](#categories-to-enter)
 1.  [Build plan](#build-plan)
+1.  [Pitch](#pitch)
+1.  [Risks](#risks)
+1.  [How the idea was chosen](#how-the-idea-was-chosen)
+1.  [Assumptions and open questions](#assumptions-and-open-questions)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -48,7 +52,6 @@ Contents:
 
 [brief-dates]: /docs/BRIEF.md#key-dates
 [ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
 
 ## Problem and audience
 
@@ -423,6 +426,167 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
 
 [brief-checklist]: /docs/BRIEF.md#submission-checklist
 
+## Pitch
+
+The brief's [pitch advice][brief-pitch] and the context's
+[video guidance][ctx-video] apply; round 10 of the log
+[tests this pitch][log-r10].
+
+The video, two minutes on an iPhone:
+
+1.  **0:00–0:15:** a partner asks "How was physio?"; the row offers "It was
+    hard"; a tap speaks it. On screen: "Turn: your own words, in time for
+    your turn", and the Next Gen Award.
+1.  **0:15–0:35:** the problem: aided speech at 8 to 10 words a minute
+    against 125 to 185 spoken, and a reply typed too late.
+1.  **0:35–1:05:** how it works: the consent card and the listening light, a
+    yes-or-no question answered with the fixed buttons, and the row holding
+    steady while nothing speaks until the user taps.
+1.  **1:05–1:25:** why Jev: the evaluation's table, and "Jev never writes
+    words: every phrase is the user's own."
+1.  **1:25–1:45:** the purchase: the free lines run out, the paywall opens,
+    a Test Store purchase unlocks Listen mode, and speaking stays free.
+1.  **1:45–2:00:** the repository, its license, the Simulator path, and the
+    student team.
+
+The description, in order: what the team built, what it does, and why it
+matters, in the [category page's][ng-submit] words; the evaluation; the
+purchase and why speech is free; the technical choices; privacy and consent;
+the AI tools used, credited openly; and the award named, as RevenueCat's
+September 18 update asks: "Name the awards you're going for".
+
+The repository's front page opens with the same logline, a short clip of the
+"aha", and the evaluation's table, since judges may score from the video and
+description alone and read the code to check them.
+
+[brief-pitch]: /docs/BRIEF.md#pitch-the-submission
+[log-r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
+[ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
+
+## Risks
+
+- **Jev doesn't beat embeddings.** Trigger: on September 25, Jev's top-6
+  accuracy trails embeddings on the 80 lines; then Jev re-ranks an embedding
+  shortlist and the evaluation runs again. If Jev still trails, the README
+  says so, and the pitch rests on "none" and steady rows.
+- **No Jev key in time.** Request it on September 22. Trigger: no key by noon
+  PT on September 23; then write to `support@typesafe.ai` and TypeSafe's
+  Discord, and build on the phone's own ranking meanwhile, since Jev joins
+  at the relay with no app change. No key by September 26 means the video
+  can't show Jev, and the team decides whether to enter without it.
+- **Live transcription fails on the device.** Trigger: not working by the end
+  of September 24; then switch to `expo-speech-recognition` and its older
+  recognizer.
+- **Test Store can't sell a one-time product.** RevenueCat's Test Store page
+  describes products by identifier, price, and duration without saying
+  whether a one-time product can be made. Trigger: the dashboard offers none
+  on September 22; then the demo sells Listen as a yearly Test Store product,
+  which renews at most five times before it ends, and the one-time design
+  stays for a store release ([round 8][log-r8]).
+- **A wrong reply.** A mis-ranked row costs time more than words, since
+  nothing speaks until the user taps, but a wrong tap on a question about
+  pain or consent matters. Yes-or-no questions get the fixed Yes, No, and
+  Not sure buttons, and the grid is always one tap away
+  ([harm][ev-harm]).
+- **The partner's privacy.** AAC users asked "how they could turn off the
+  system from hearing the conversations all the time", and California bars
+  recording "confidential communication" without the consent of all
+  parties; whether live transcription counts is unsettled. The consent card,
+  the light, and pause answer both, and no audio is stored.
+- **No clinical eyes.** Trigger: no clinic review by September 27; then the
+  description says no clinician has reviewed Turn yet.
+- **TypeSafe doesn't consent to being named.** Trigger: no answer by
+  September 28, when the video is recorded; then the video calls Jev "a
+  hosted decision model", and the description names it only if consent
+  arrives before the deadline.
+- **The wrong phone.** Personal Voice needs an iPhone 15 Pro or later by one
+  Apple page. Trigger: no such phone for the video; then a system voice
+  speaks.
+- **The relay fails during judging.** Credits run out or Jev is down between
+  October 1 and 13. Trigger: any failed call in the relay's logs; then top up
+  the credits, and the phone's own ranking keeps Turn usable meanwhile.
+
+[ev-harm]: /docs/research/next-gen-evidence.md#harm-from-a-wrong-turn-decision
+
+## How the idea was chosen
+
+Ten rounds, from wide to narrow, each logged with its method and decision:
+
+1.  [Round 1][r1] set seven hard constraints, such as a purchase through Test
+    Store and no personal data from minors reaching Jev, and a rubric split
+    from the rules' four Next Gen criteria, with Guessling as the control.
+1.  [Round 2][r2] had three subagents write 30 ideas through students'
+    problems, new phone technology, and Jev-only lenses; 23 were distinct.
+1.  [Round 3][r3] failed one on the constraints and sent 22 on.
+1.  [Round 4][r4] had two scorers, one of them blind, rank Turn,
+    Scenekeeper, Bench, Chorus, and Same Boat highest; Guessling tied for
+    18th.
+1.  [Round 5][r5] checked rivals, need, devices, and simpler methods; Rejoin
+    Voice lowered Turn's originality, but Turn kept the lead at 80.
+1.  [Round 6][r6] had a red team attack the top three; Turn's fixes were all
+    design and evaluation.
+1.  [Round 7][r7] re-scored the finalists and chose Turn at 82, 16.5 points
+    above Guessling.
+1.  [Round 8][r8] made speech free and Listen mode a one-time purchase.
+1.  [Round 9][r9] cut the scope to one loop and set the schedule to
+    September 30.
+1.  [Round 10][r10] tested the pitch and set the triggers under
+    [Risks](#risks).
+
+[r1]: /docs/research/next-gen-ideation.md#round-1-constraints-and-rubric
+[r2]: /docs/research/next-gen-ideation.md#round-2-thirty-candidates
+[r3]: /docs/research/next-gen-ideation.md#round-3-screening
+[r4]: /docs/research/next-gen-ideation.md#round-4-scoring
+[r5]: /docs/research/next-gen-ideation.md#round-5-evidence
+[r6]: /docs/research/next-gen-ideation.md#round-6-red-team
+[r7]: /docs/research/next-gen-ideation.md#round-7-the-choice
+[r8]: /docs/research/next-gen-ideation.md#round-8-monetization
+[r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
+[r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
+
+## Assumptions and open questions
+
+Nobody could be asked while this was written, so the plan assumes:
+
+- Every team member is an active student with an academic email, and the
+  team enters Next Gen only. An adult member holds the TypeSafe, RevenueCat,
+  and Apple accounts, and any minor has a guardian's consent.
+- The team is two to four students starting on September 22, 2026, with a
+  Mac, at least one recent iPhone, and TypeScript, and no paid Apple
+  Developer Program membership.
+- The team can get a Jev API key on September 22, 2026.
+- "Include Jev" means Jev makes a decision the app depends on at run time.
+- "Too simple" is about the product: the idea needs parts that work
+  together, with Jev as one of them.
+- No team member's personal link to AAC is assumed. If one exists, the pitch
+  leads with it, as past winners' origin stories did.
+
+Still open, each with a safe default:
+
+- **Test Store and one-time products.** Safe default: the yearly fallback
+  under [Risks](#risks).
+- **The Test Store key in a public repository.** No RevenueCat page says
+  whether it may be committed. Safe default: commit only the public Test
+  Store key, and rotate it if RevenueCat objects.
+- **Jev credits.** No free tier or student program exists, and no page says
+  what the API returns when credits run out. Safe default: buy credits on
+  September 22, turn on auto-refill, and watch usage through the winners'
+  announcement ([programs][jp-programs]).
+- **Naming Jev.** Safe default: ask TypeSafe on September 22, and follow the
+  trigger under [Risks](#risks).
+- **Personal Voice devices.** Apple's iOS 27 guide says iPhone 15 Pro and
+  later, and another Apple page says iPhone 12. Safe default: plan the video
+  on an iPhone 15 Pro or later.
+- **Listening and the law.** Whether live transcription that stores no audio
+  counts as recording under California's all-party consent law is a legal
+  question no source here settles. Safe default: the consent card, every
+  time.
+- **More than one prize.** The context's
+  [open questions](/docs/CONTEXT.md#open-questions) apply. Safe default:
+  expect at most one.
+
+[jp-programs]: /docs/research/jev-patterns.md#programs-and-credits
+
 ## See also
 
 - [Brief](/docs/BRIEF.md): what Shipaton 2026 requires, its dates, prizes,
@@ -447,5 +611,6 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
 [guessling]: /docs/archive/guessling-idea.md
 [log]: /docs/research/next-gen-ideation.md
 [log-r8]: /docs/research/next-gen-ideation.md#round-8-monetization
+[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
 [ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
 [ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
