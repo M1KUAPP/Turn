@@ -476,19 +476,19 @@ which would take a 34-point title to about 121 points at the largest
 accessibility size, where Apple's Large Title is 60 ([iOS notes on text
 scaling][ios-scaling]).
 
-| Token         | Used for                                   | `dynamicTypeRamp` | At AX5 |
-| ------------- | ------------------------------------------ | ----------------- | ------ |
-| `reply`       | The Guessling's words in the speech bubble | `title1`          | 58/68  |
-| `reveal`      | The answer's name on the card              | `largeTitle`      | 60/70  |
-| `hint`        | The hint on the notepad                    | `title2`          | 56/66  |
-| `title`       | Titles in the app's own views              | `title1`          | 58/68  |
-| `body`        | Questions, the notice, and list rows       | `body`            | 53/62  |
-| `body-strong` | Row titles and emphasis                    | `headline`        | 53/62  |
-| `button`      | Button labels                              | `headline`        | 53/62  |
-| `chip`        | Answer chips                               | `subheadline`     | 49/58  |
-| `meta`        | The date, turns left, labels, and footers  | `footnote`        | 44/52  |
-| `count`       | The countdown and the statistics           | `title2`          | 56/66  |
-| `caption`     | Legal lines                                | `caption1`        | 43/51  |
+| Token         | Used for                                     | `dynamicTypeRamp` | At AX5 |
+| ------------- | -------------------------------------------- | ----------------- | ------ |
+| `reply`       | The Guessling's words of up to 15 characters | `title1`          | 58/68  |
+| `reveal`      | The answer's name on the card                | `largeTitle`      | 60/70  |
+| `hint`        | The hint, and the Guessling's longer words   | `title2`          | 56/66  |
+| `title`       | Titles in the app's own views                | `title1`          | 58/68  |
+| `body`        | Questions, the notice, and list rows         | `body`            | 53/62  |
+| `body-strong` | Row titles and emphasis                      | `headline`        | 53/62  |
+| `button`      | Button labels                                | `headline`        | 53/62  |
+| `chip`        | Answer chips                                 | `subheadline`     | 49/58  |
+| `meta`        | The date, turns left, labels, and footers    | `footnote`        | 44/52  |
+| `count`       | The countdown and the statistics             | `title2`          | 56/66  |
+| `caption`     | Legal lines                                  | `caption1`        | 43/51  |
 
 - **Never cut off.** No text sets `allowFontScaling={false}`,
   `numberOfLines`, or a fixed height, and from AX1, when the font scale
@@ -604,9 +604,11 @@ rounded:
   full: 9999px
 ```
 
-- **Capsules** for buttons, chips, the composer, and the speech bubble,
-  with "a radius that's half the height"
-  ([iOS notes on glass in controls][ios-glass-controls]).
+- **Capsules** for buttons, chips, and the composer, with "a radius that's
+  half the height" ([iOS notes on glass in controls][ios-glass-controls]).
+- **Cards for words that wrap.** The speech bubble and banners are cards
+  with `lg` corners, and any capsule whose content wraps, such as the
+  composer from AX1, becomes one.
 - **Cards.** The notepad has `lg` corners at the top and runs off the
   bottom of the screen; list groups are `lg`; the answer card is `md`.
 - **Pips** are `pip`.
@@ -753,8 +755,9 @@ property for.
   takes at most two lines at the default size. Before the first question
   the bubble says "I’m thinking of something." in `hint`, Ballpoint, with
   no badge.
-- **Growing.** The bubble grows to fit its words and never truncates them;
-  at large text, the stage scrolls with the screen.
+- **Growing.** The bubble is at least two `hint` lines tall, so the notepad
+  doesn't jump as replies change size, and grows to fit its words, never
+  truncating them; at large text, the stage scrolls with the screen.
 - **Waiting.** After 300 ms without an answer, three dots in Stone pulse in
   opacity, which isn't motion, until the answer comes (ASK-8).
 - **For VoiceOver.** The Guessling and its bubble are one element, labeled
@@ -767,6 +770,10 @@ property for.
   points and semibold, then the words in `chip`.
 - **Styles.** `chip-yes` for Yes, `chip-no` for No and for "Not it",
   `chip-unsure` for the free replies, and `chip-right` for "You got it!".
+- **Short labels.** The three replies too long for a chip get short labels:
+  "Not a question" for "Ask a yes-or-no question", "Pick one" for picking,
+  and "Resting" for the rest. The bubble keeps the full words, which are
+  also the chip's VoiceOver label.
   The glyphs are the ones in [Answer colors](#answer-colors).
 - **Pending.** A question just sent shows a Stone chip with "…" until the
   answer arrives, and after a timeout the chip becomes a "Send again"
@@ -828,9 +835,9 @@ property for.
   question list are disabled (ASK-8).
 - **AI answers off.** With the field empty, a Questions button with
   `list.bullet` replaces send and opens the searchable list (ASK-9).
-- **Large text.** From AX1 the composer stacks: the field on its own line,
-  growing with its text, and under it Guess, with its symbol and word, and
-  send.
+- **Large text.** From AX1 the composer stacks, as a card with `lg`
+  corners: the field on its own line, growing with its text, and under it
+  Guess, with its symbol and word, and send.
 - **Surface.** Glass, or its fallback; see [Elevation](#elevation).
 
 ### Symbols
@@ -869,10 +876,12 @@ Type:
 
 ### Banners
 
-- **What.** One line above the composer for a state that isn't an answer:
-  offline, busy, a timeout, or an error. It's a Stone capsule with its
-  symbol, its words from the state table under Screens, and its action,
-  such as "Send again".
+- **What.** A card above the composer for a state that isn't an answer:
+  offline, busy, a timeout, or an error. It's Stone (`unsure-tint`) with
+  `lg` corners: its symbol and its words from the state table under
+  Screens, in `body`, Stone (`unsure-ink`), wrapping as needed; then its
+  actions, such as "Send again", on a row of their own as secondary
+  buttons.
 - **Rules.** One banner at a time; it stays until its state ends, with no
   timer; VoiceOver announces it when it appears.
 
@@ -1058,7 +1067,7 @@ Each answer from the Worker's `TurnResponse`, and each state that isn't an
 answer, has one pose, one line of words, and one set of cues. A pip is
 added only when a turn is used.
 
-| Answer         | Words in the bubble and chip                     | Glyph          | The Guessling | Turn | Pip         | Haptic  | Sound |
+| Answer         | Words in the bubble                              | Glyph          | The Guessling | Turn | Pip         | Haptic  | Sound |
 | -------------- | ------------------------------------------------ | -------------- | ------------- | ---- | ----------- | ------- | ----- |
 | `yes`          | Yes                                              | `checkmark`    | Nod           | Used | Yes         | Light   | Yes   |
 | `no`           | No                                               | `xmark`        | Head shake    | Used | No          | Light   | No    |
@@ -1218,6 +1227,7 @@ phrases. The PRD quotes some strings; this section fixes the rest.
 | The three answers                  | Yes · No · Ask another way                                       | ASK-2         |
 | Not a question                     | Ask a yes-or-no question                                         | ASK-4         |
 | The guesses                        | You got it! · Not it                                             | This document |
+| Short chip labels                  | Not a question · Pick one · Resting                              | This document |
 | The notice's buttons               | Allow AI answers · Not now                                       | NOTICE-1      |
 | The notice's title                 | Before you ask                                                   | This document |
 | A row's action                     | Report this answer · Wrong · Unclear                             | REPORT-1      |
