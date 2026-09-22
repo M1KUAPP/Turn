@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 111 files · ~409,445 words
+- 111 files · ~411,500 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 2091 nodes · 1994 edges · 154 communities (146 shown, 4 thin omitted)
+- 2091 nodes · 1984 edges · 154 communities (147 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `ca944ed4`
+- Built from commit: `485b2254`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -164,6 +164,7 @@
 - Guessling idea
 - How Jev is used
 - triage-labels.md
+- Pricing, limits, and terms
 - Shipaton 2026 ideation log
 - Evidence for the top five ideas
 - Round 9: scope, stack, and schedule
@@ -676,7 +677,7 @@ Nodes (3): Eligibility rules, Which apps qualify, Who may enter
 
 ### Community 102 - "Shipaton 2026 gallery landscape"
 
-Cohesion: 0.13
+Cohesion: 0.12
 Nodes (15): Career Coaching brief (Leadership Heather), Full project list, Gallery totals, Gaming brief (Lewis Blogs Gaming), Idea clusters by count, Influencer Award briefs, Limitations, Method and coverage (+7 more)
 
 ### Community 103 - "Tasks"
@@ -686,8 +687,8 @@ Nodes (31): Appendix: check scripts, Assumptions, Design, Global constraints, Re
 
 ### Community 104 - "Jev research notes"
 
-Cohesion: 0.20
-Nodes (10): Conflicts between sources, Free tier, credits, and programs, Gaps, Jev prices, Jev research notes, Latest versions as of September 22, 2026, Master Customer Agreement terms for apps, Pricing, limits, and terms (+2 more)
+Cohesion: 0.22
+Nodes (6): Conflicts between sources, Gaps, Jev research notes, Latest versions as of September 22, 2026, Store review and Jev, What Jev is
 
 ### Community 105 - "Shipaton 2026 idea"
 
@@ -881,7 +882,7 @@ Nodes (29): Assumptions, Design, Global constraints, Next Gen idea implementatio
 
 ### Community 143 - "Next Gen ideation log"
 
-Cohesion: 0.10
+Cohesion: 0.09
 Nodes (21): Assumptions, Failures every finalist shares, Hard constraints, Next Gen ideation log, Round 10: pitch test, Round 1: constraints and rubric, Round 2: thirty candidates, Round 3: screening (+13 more)
 
 ### Community 144 - "Guessling idea"
@@ -893,6 +894,11 @@ Nodes (17): Assumptions and open questions, At a glance, Build plan, Categories 
 
 Cohesion: 0.20
 Nodes (10): How Jev is used, Installing an SDK and authenticating, JavaScript SDK methods, Jev platform and language support, Jev product surfaces, Key Jev concepts and terms, Offline behavior and data handling, Python SDK methods (+2 more)
+
+### Community 147 - "Pricing, limits, and terms"
+
+Cohesion: 0.50
+Nodes (4): Free tier, credits, and programs, Jev prices, Master Customer Agreement terms for apps, Pricing, limits, and terms
 
 ### Community 148 - "Shipaton 2026 ideation log"
 
@@ -927,19 +933,19 @@ Nodes (4): Assumptions, Hard constraints, Round 1: constraints and rubric, Rubri
 ## Knowledge Gaps
 
 - **1649 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1644 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1745 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1753 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Next Gen technology research notes` connect `Next Gen technology research notes` to `next-gen-ideation.md`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `Cloudflare Workers research notes` connect `Cloudflare Workers research notes` to `next-gen-ideation.md`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `Next Gen Award research notes` connect `Next Gen Award research notes` to `next-gen-ideation.md`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `iOS design research notes` connect `iOS design research notes` to `RevenueCat Paywalls styling`, `App icon and launch screen`, `SF Symbols`, `Motion and haptics`, `Liquid Glass`, `Typography`, `Color`, `Store and pitch assets`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Demo video and write-up`, `Samsung Galaxy Store review`, `Apple App Store review`, `Monetization and paywall benchmarks`, `Google Play review`, `Store listing and discoverability`, `Retention and push notifications`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Eligibility rules`, `Resources, perks, and programs`, `Winning playbook`, `Prize categories and prize structure`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
   _1649 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
