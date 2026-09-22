@@ -729,16 +729,12 @@ before relying on an answer; the brief's
 
 - [Brief](/docs/BRIEF.md): what Shipaton 2026 requires, its dates, prizes,
   and judging.
-- [Idea](/docs/IDEA.md): the app chosen for Shipaton 2026 through ten rounds
-  of ideation, with Jev built in.
-- [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why, with
-  its principles, metrics, and roadmap.
-- [Product requirements](/docs/PRD.md): what version 1.0 must do, as
-  numbered requirements with checks.
-- [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
-  to the product requirements.
-- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
-  tokens and rules a coding agent can follow.
+- [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten
+  rounds of ideation, with Jev built in.
+- [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
+  Turn superseded, with the [product](/docs/PRODUCT.md),
+  [product requirements](/docs/PRD.md), [technical requirements](/docs/TRD.md),
+  and [design](/docs/DESIGN.md) documents built on it.
 - [Official rules][rules]: the binding terms, on Devpost.
 - [Past winners notes](/docs/research/past-winners.md): every placed entry of
   the 2024 Ship-a-ton, Shipaton 2025, and Shipyard 2026, with sources.
