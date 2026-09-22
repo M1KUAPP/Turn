@@ -603,9 +603,11 @@ says how each is built.
   the response.
 - **SEC-5, Must.** The relay stops calling Jev after 10,000 calls in a UTC
   day, retries included, and answers as it does when Jev is busy until
-  midnight UTC, so minted IDs can't drain Jev's credits; a line ID already
-  used for a free line gets no second call. Check: lower the budget to 3 in a
-  test and send 4 lines, then resend a used line ID.
+  midnight UTC, so minted IDs can't drain Jev's credits. Check: lower the
+  budget to 3 in a test and send 4 lines.
+- **SEC-6, Must.** A line ID already used for a free line gets no second call
+  to Jev, so an ID can't be reused past the free lines. Check: resend a used
+  line ID with new text, and the relay answers `409`.
 
 ### Accessibility
 

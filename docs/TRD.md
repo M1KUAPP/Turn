@@ -254,13 +254,13 @@ CREATE TABLE entitlement (
 ```
 
 - **Claiming a free line.** Inside `transactionSync()`, a line ID already in
-  `free_lines` is a duplicate, which gets `409` and no call to Jev, so an ID
-  can't be reused for a new line; a new ID below 20 rows is inserted as a
+  `free_lines` is a duplicate, which gets `409` and no call to Jev (SEC-6), so
+  an ID can't be reused for a new line; a new ID below 20 rows is inserted as a
   free line; and at 20 rows the line needs the entitlement. In the services
-  notes' local test, this claim counted exactly 20 of 25 simultaneous lines
-  for one device, and ten copies of one line ID once
-  ([services notes][svc-count]). If Jev fails, the object deletes the row,
-  so only answered lines count (PAY-1).
+  notes' local test, this claim counted exactly 20 of 25 simultaneous lines for
+  one device, and ten copies of one line ID once ([services notes][svc-count]).
+  If Jev fails, the object deletes the row, so only answered lines count
+  (PAY-1).
 - **The entitlement row** caches RevenueCat's answer: a yes for 24 hours,
   since `listen` is a one-time purchase, and a no for 1 minute.
 - **The name.** The Worker reaches the object with `getByName()` on the
@@ -1306,7 +1306,7 @@ how the team does it:
 | PERF-1, PERF-2, PERF-3, PERF-4, PERF-5                                                              | [Decision pipeline], [Evaluation], [Testing]                                                               |
 | AVAIL-1, AVAIL-2                                                                                    | [Reliability and observability]                                                                            |
 | PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                              | [Security and privacy], [Data model], [Listening and speaking on the phone], [Purchases and entitlements]  |
-| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                   | [Security and privacy], [Relay API], [Reliability and observability]                                       |
+| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5, SEC-6                                                            | [Security and privacy], [Relay API], [Reliability and observability]                                       |
 | A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6, A11Y-7, A11Y-8                                      | [The iPhone app], [Testing]                                                                                |
 | COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                              | [Stack and repository], [Environments and release]                                                         |
 | METRIC-1, METRIC-2, METRIC-3, METRIC-4                                                              | [Reliability and observability], [The iPhone app], [Purchases and entitlements]                            |
