@@ -1175,12 +1175,10 @@ is the whole inventory ([trends notes][ft-proposals]).
   no more than five seconds a line, so it stays inside WCAG 2.2.2's five
   seconds; a light that pulses all session is the ambient loop that criterion
   asks to pause ([motionsites notes][ms-motion]).
-- **One flag.** A store reads `AccessibilityInfo.isReduceMotionEnabled()` at
-  launch and follows `reduceMotionChanged`, and every animation reads it,
-  because Reanimated's `useReducedMotion()` reports only the setting at launch
-  and its CSS animations ignore it ([trends notes][ft-reanimated]). Each
-  animation sets `reduceMotion: ReduceMotion.Never`, so the flag, not
-  Reanimated, decides.
+- **One flag.** Every animation follows the Reduce Motion flag of the TRD's
+  [accessibility settings store][trd-a11y], not Reanimated's own, since
+  `useReducedMotion()` reports only the setting at launch and CSS animations
+  ignore it ([trends notes][ft-reanimated]).
 - **No symbol effects.** The light's fade is Reanimated's, not an SF Symbols
   effect, since `expo-symbols` never reads Reduce Motion
   ([iOS notes][ios-light]).
@@ -1637,21 +1635,12 @@ listing, since each label has published criteria
 
 ### Keeping code in step
 
-- **The theme file.** `app/src/constants/theme.ts` exports each color as
-  `DynamicColorIOS({ light, dark, highContrastLight, highContrastDark })` from
-  the yaml's four values; each text style with its size, leading, weight, Bold
-  Text weight, and `dynamicTypeRamp`; and the spacing and corners.
-- **Its test.** A unit test reads this file's yaml and fails when `theme.ts`
-  differs, and recomputes every pair in the [contrast table](#contrast) and
-  every pair a component names, in all four appearances.
-- **One accessibility store.** It reads Reduce Motion, Bold Text, Reduce
-  Transparency, Increase Contrast, and the text size at launch and follows
-  each change event, and motion, weight, and layout read from it
-  ([iOS notes][ios-rn-settings]).
-- **Direction.** A change starts here, then reaches `theme.ts`, never the
-  other way.
-
-[ios-rn-settings]: /docs/research/turn-ios-design.md#colors-and-settings-in-react-native-086
+- **Where the code lives.** The TRD's [accessibility in the app][trd-a11y]
+  builds this file's tokens into `app/src/constants/theme.ts`, tests the
+  theme against the yaml and the [contrast table](#contrast), and keeps the
+  store of accessibility settings that motion, weight, and layout read.
+- **Direction.** A change starts here, then reaches the theme, never the other
+  way.
 
 ### Checks before a screen ships
 
