@@ -1008,6 +1008,12 @@ What no source settled on September 22, 2026:
   ([rc-sandbox]; [apple-storekit-stages]). WaterGuard reports that getting
   "Test Store dialogs to render at all required switching from a lightweight
   ATD emulator to a full Google Play system image" ([p-waterguard]).
+- **One-time products in Test Store.** RevenueCat's Test Store page says
+  "You cannot edit an existing product's identifier, duration, or price" once
+  a product is saved, and its product steps say only "Enter a product
+  identifier and configure pricing"; neither says whether a one-time,
+  non-subscription product can be made there ([rc-test-store];
+  [rc-products]).
 - **Committing a Test Store key.** RevenueCat says public keys configure the
   SDK and secret keys stay off GitHub, but not whether a public or Test Store
   key may sit in a public repository ([rc-auth]).
@@ -1058,3 +1064,6 @@ What no source settled on September 22, 2026:
 [students]: https://www.shipaton.com/students
 [campus-data]: https://gist.githubusercontent.com/austboston/5a196bb60feebf7fcb10d54637e32e2d/raw/shipaton-campus-leaderboard.json
 [notes-ship-kit]: /docs/research/shipaton-2026.md#ship-kit-perks
+[rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
+[rc-sandbox]: https://www.revenuecat.com/docs/test-and-launch/sandbox
+[rc-products]: https://www.revenuecat.com/docs/offerings/products-overview
