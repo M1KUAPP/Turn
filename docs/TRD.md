@@ -139,6 +139,7 @@ The path of one partner line:
 | `expo-speech`                   | 57.0.3                 | speech with a chosen voice                                               |
 | `expo-speech-recognition`       | 57.1.0                 | the last fallback recognizer                                             |
 | `expo-sqlite`                   | 57.0.3                 | the phrase bank                                                          |
+| `react-native-reanimated`       | 4.5.1                  | the design's fades, with `react-native-worklets` 0.10.1, as SDK 57 pins  |
 | `minisearch`                    | 7.2.0                  | BM25+ keyword ranking in the shared code                                 |
 | `create-expo-module`            | 57.0.1                 | scaffolds the two local modules                                          |
 | `@typesafe-ai/sdk`              | 0.6.0                  | in the relay and the evaluation; runs under workerd                      |
@@ -148,10 +149,12 @@ The path of one partner line:
 | `@revenuecat/cli`               | 0.1.3                  | headless Test Store purchases for the relay's tests                      |
 
 The iPhone build notes have the dates and licenses of the Expo libraries
-and MiniSearch, all MIT ([iPhone build notes][ios-libs]).
+and MiniSearch, all MIT ([iPhone build notes][ios-libs]), and the iOS design
+notes have Reanimated's pins in SDK 57 ([iOS design notes][ios-rea]).
 
 [rc-expo]: /docs/research/revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [ios-libs]: /docs/research/turn-ios.md#libraries-on-september-22-2026
+[ios-rea]: /docs/research/ios-design.md#reanimated-4-in-sdk-57
 
 ### Repository layout
 
@@ -854,6 +857,18 @@ Expo Router, with routes under `app/src/app/`:
 
 The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
+- **The home screen** has no header, and its bands follow the
+  [design's home screen][design-home]: only the grid scrolls, except on short
+  screens and from AX1, where everything under the top bar scrolls as one
+  column.
+- **The permission step** is a `formSheet` that sets
+  `headerTransparent: false` and a solid background, since Expo Router makes
+  form sheets transparent where Liquid Glass is available
+  ([iOS design notes][ios-glass-expo]).
+
+[design-home]: /docs/DESIGN.md#the-home-screen
+[ios-glass-expo]: /docs/research/turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
+
 ### State and storage
 
 - **One store** holds the row, the Listen state, the free lines left, and
@@ -876,10 +891,11 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 ### Flows on the phone
 
-- **Typing (SPEAK-3).** The keyboard sheet takes up to 500 characters and
-  speaks them on Speak. Text of up to 200 characters that the bank doesn't
-  already hold, compared after trimming and ignoring case, goes into the
-  Typed category, which the app creates on first use and counts among the 12.
+- **Typing (SPEAK-3).** The composer, docked above the keyboard, takes up to
+  500 characters and speaks them on Speak. Text of up to 200 characters that
+  the bank doesn't already hold, compared after trimming and ignoring case,
+  goes into the Typed category, which the app creates on first use and counts
+  among the 12.
 - **Repeat (SPEAK-6).** The last spoken text stays in memory, and Repeat
   speaks it again.
 - **Undo (BANK-9).** A deleted phrase stays hidden, with an Undo button,
@@ -903,7 +919,11 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **A steady row.** The six slots have fixed sizes and are keyed by slot
   position, since slots never move and only their phrases change, and the
   big button fills the same area (ROW-1, A11Y-1)
-  ([iPhone build notes][ios-row]).
+  ([iPhone build notes][ios-row]). A slot's height follows the text size and
+  the width, never its phrase: its text takes `numberOfLines={2}`, steps down
+  to the `headline` size before it ends with an ellipsis, and keeps the whole
+  phrase as its label (A11Y-4), as the [design's row][design-row] sets. An
+  answer that would change a slot waits while a finger is on it.
 - **Labels and roles.** Each phrase is a `Pressable` with
   `accessibilityRole="button"`, the only role besides `togglebutton` that
   becomes the iOS button trait, and its visible text as its label, which
@@ -921,15 +941,33 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **No detection.** `AccessibilityInfo` reports VoiceOver and Reduce Motion
   but not Switch Control or Voice Control, so the app works the same for
   every input method.
-- **Text.** Font scaling stays on, phrase text wraps, and the grid scrolls
-  at the largest sizes (A11Y-4).
-- **Motion.** `AccessibilityInfo.isReduceMotionEnabled` turns off the
-  light's pulse and the row's animations (A11Y-6).
+- **Text.** Every text style comes from the theme with its
+  `dynamicTypeRamp`, font scaling stays on, and phrase text wraps everywhere
+  but the row's slots; from AX1, when `PixelRatio.getFontScale()` reaches
+  1.786, the row, the strip, and the grid take one column each (A11Y-4).
+- **Accessibility settings.** A store reads Reduce Motion, Bold Text, Reduce
+  Transparency, Increase Contrast, and the text size at launch and follows
+  each change event, since Reanimated reads Reduce Motion only at launch.
+  Reduce Motion stills the light's pulse and the row's fades, which run with
+  `ReduceMotion.Never` so the store decides, and Bold Text moves each text
+  style to its heavier weight (A11Y-6) ([iOS design notes][ios-rn-settings]).
+- **The theme.** `app/src/constants/theme.ts` holds the design's tokens:
+  each color as a `DynamicColorIOS` with its four values, and each text style
+  with its size, leading, weights, and ramp. A unit test compares it with the
+  design's `yaml` and recomputes every pair's contrast
+  ([design][design-code]).
+- **Feedback.** Speech is the only sound: no earcons and no haptics, and
+  `allowHapticsAndSystemSoundsDuringRecording` stays false
+  ([design][design-sound]).
 - **Testing.** "VoiceOver isn't available via the simulator", so
   VoiceOver, Switch Control, and Voice Control are tested on a phone.
 
 [ios-row]: /docs/research/turn-ios.md#a-steady-row-in-react-native
+[design-row]: /docs/DESIGN.md#the-row
 [aac-rn]: /docs/research/aac-practice.md#react-natives-accessibility-api
+[ios-rn-settings]: /docs/research/turn-ios-design.md#colors-and-settings-in-react-native-086
+[design-code]: /docs/DESIGN.md#keeping-code-in-step
+[design-sound]: /docs/DESIGN.md#sound-and-haptics
 
 ### Build configuration
 
@@ -944,11 +982,22 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   support, enabled with the ios.enableSceneSupport property of
   expo-build-properties" ([technology notes][tech-expo]).
 - **`ios.supportsTablet`:** `false`, and `orientation` `portrait`.
+- **`userInterfaceStyle`:** `'automatic'`, so the app follows the system's
+  appearance; without it, Expo writes the light style into Info.plist
+  ([iOS design notes][ios-launch]).
+- **`ios.icon`:** `./assets/turn.icon`, the design's Icon Composer file
+  ([design][design-icon]).
+- **`expo-splash-screen`:** the board's color, `#F2F2F7`, and `#000000` in
+  dark, with no image ([design][design-launch]).
 - **`ios.infoPlist`:** `NSMicrophoneUsageDescription`, worded for the user
   and the partner, and `NSSpeechRecognitionUsageDescription` for the last
   fallback; no location key (PLACE-2).
 - **`extra`:** the relay's URL, the Test Store public key, and the build's
   kind, `device` or `simulator`, for `X-Turn-Build`.
+
+[ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
+[design-icon]: /docs/DESIGN.md#the-app-icon
+[design-launch]: /docs/DESIGN.md#launch
 
 ## Security and privacy
 
