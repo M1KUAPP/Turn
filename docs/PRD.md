@@ -204,8 +204,10 @@ says how each is built.
   phone: nothing syncs, and only what ROW-2 sends leaves it, per partner
   line. Check: a capture of the app's traffic shows no other
   phrase text.
-- **BANK-9, Should.** Deleting a phrase can be undone for five seconds. Check:
-  delete a phrase and tap Undo.
+- **BANK-9, Should.** A deleted phrase can be restored with Undo until the
+  user leaves the editor, with no time limit (A11Y-5), since a mistaken
+  delete loses the user's own words. Check: delete a phrase, wait a minute,
+  and tap Undo.
 - **BANK-10, Should.** Starter phrases are the team's words until the user
   keeps them, so the first launch invites the user, or whoever helps them,
   to review the starter bank category by category, and the editor marks
