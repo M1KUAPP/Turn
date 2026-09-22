@@ -1,15 +1,14 @@
 # Turn product
 
-Turn is an augmentative and alternative communication (AAC) app for iPhone,
-for adults who can't rely on speech. It speaks the user's saved phrases and
-typed words, and in Listen mode it hears what a partner says and offers
-replies in the user's own saved words, with Jev deciding which of them answer.
-This document says what Turn is, who it's for, the principles behind its
-decisions, and where it goes after the first version. The
-[idea](/docs/IDEA.md) records why the team chose it for the Next Gen Award,
-the [product requirements](/docs/PRD.md) say what the first version must do,
-and the [technical requirements](/docs/TRD.md) say how it's built. Facts are
-as of September 22, 2026.
+Turn is an augmentative and alternative communication (AAC) app for iPhone
+that speaks the saved phrases and typed words of adults who can't rely on
+speech, and in Listen mode offers replies from those phrases to what a
+partner says, with Jev deciding which answer. This document says who Turn is
+for, the principles behind its decisions, and where it goes after the first
+version, as of September 22, 2026. The [idea](/docs/IDEA.md) records why the
+team chose it for the Next Gen Award, the [product requirements](/docs/PRD.md)
+what the first version must do, and the [technical requirements](/docs/TRD.md)
+how it's built.
 
 Contents:
 
