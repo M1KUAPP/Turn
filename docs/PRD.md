@@ -627,12 +627,16 @@ apply; these are Guessling's own.
 
 Before submitting to App Review on September 24, 2026:
 
-- **RELEASE-1, Must.** Every Must requirement passes its check on a
-  TestFlight build that uses the production server and sandbox purchases.
+- **RELEASE-1, Must.** Every other Must requirement whose check can run
+  before release passes it on a TestFlight build that uses the production
+  server and sandbox purchases. The checks of AVAIL-1, METRIC-3, METRIC-5,
+  PAY-6's production restore, and PAY-7 run after release, under RELEASE-5.
   Check: the checklist, signed off.
 - **RELEASE-2, Must.** A sandbox purchase, restore, and trial work end to
   end, and a sandbox offer code redeems. Check: on a device with a sandbox
-  account.
+  account, restoring without reinstalling first, since RevenueCat's
+  anonymous IDs can't restore after a reinstall in the sandbox until
+  another purchase.
 - **RELEASE-3, Must.** The consistency test passes (CONTENT-6), and the 17
   puzzles are published (CONTENT-1). Check: the saved results and the
   server.
@@ -645,8 +649,9 @@ Before submitting to App Review on September 24, 2026:
 After approval, and before the Devpost deadline on September 30, 2026:
 
 - **RELEASE-5, Must.** The app is live in the United States, a production
-  purchase goes through, and the judges' offer code redeems (PAY-7). Check:
-  on a real device, with a real Apple Account.
+  purchase goes through, and the checks RELEASE-1 leaves for after release
+  pass, the judges' offer code (PAY-7) among them. Check: on a real device,
+  with a real Apple Account.
 - **RELEASE-6, Must.** The brief's [submission checklist][brief-checklist]
   is complete. Check: Devpost shows the entry as submitted.
 
