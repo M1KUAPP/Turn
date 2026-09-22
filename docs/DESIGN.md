@@ -153,7 +153,7 @@ note that holds its sources.
 | Google's DESIGN.md format       | Tokens and prose that a linter checks          | Adopts it, with four appearances per color ([trends notes][ft-sample])                                       |
 | AI generators of native apps    | Fast first screens                             | Sketches only: generated screens fail on contrast and labels first ([trends notes][ft-studies])              |
 | React Native component kits     | Ready-made controls                            | Rejects them: none handles Increase Contrast ([trends notes][ft-kits])                                       |
-| Apple's Liquid Glass            | Glass controls that float over content         | Adapts it: glass stays in the system's chrome ([iOS notes][ios-glass-content])                               |
+| Apple's Liquid Glass            | Glass controls that float over content         | Adapts it: glass stays in the system's chrome ([Turn's iOS design notes][ios-glass-content])                 |
 | Google's Material 3 Expressive  | Large, contained buttons with labels           | Adopts the buttons and labels, not the springy motion ([trends notes][ft-m3e])                               |
 | Calm technology                 | Attention only when something matters          | Adopts it for the light and the row ([trends notes][ft-calm])                                                |
 | Text AAC apps                   | Message windows, phrases, and show views       | Adopts fixed places and plain text, and keeps more in view than any rival ([AAC design notes][aac-patterns]) |
@@ -310,10 +310,10 @@ colors:
   orange only on the light, so no color means two things.
 - **Marker blue passes under white text.** Apple's system blue gives white
   text only 3.52 to 1, so every fill under white text is Turn's own
-  ([iOS notes][ios-grays]).
+  ([Turn's iOS design notes][ios-grays]).
 - **The orange echoes iOS.** iOS shows an orange dot while an app uses the
   microphone, so the light's orange says the same thing, never the camera's
-  green ([iOS notes][ios-light]).
+  green ([Turn's iOS design notes][ios-light]).
 - **Solid, never faint.** No text takes its color from opacity: white text at
   under 45% opacity fails 4.5 to 1 on near-black, and a gray that passes in
   one appearance can fail in the other ([motionsites notes][ms-contrast]).
@@ -442,7 +442,7 @@ typography:
 ```
 
 Sizes and leading are Apple's defaults at the Large text size, and the weights
-are its regular and emphasized ones ([earlier iOS notes][ios-dt]).
+are its regular and emphasized ones ([iOS design notes][ios-dt]).
 
 | Token                    | Used for                                                     | `dynamicTypeRamp` | With Bold Text | At AX5 |
 | ------------------------ | ------------------------------------------------------------ | ----------------- | -------------- | ------ |
@@ -460,14 +460,15 @@ are its regular and emphasized ones ([earlier iOS notes][ios-dt]).
 - **Ramps.** Each text style sets its `dynamicTypeRamp`, so it grows the way
   the system's text does: without one, React Native multiplies every size by
   one factor, taking a 17-point Body to 60.7 points at AX5, where Apple's is
-  53 ([iOS notes][ios-scale]).
+  53 ([Turn's iOS design notes][ios-scale]).
 - **Never shrunk by code.** No text sets `allowFontScaling={false}`,
   `maxFontSizeMultiplier`, or a fixed height, and only the row's slots and the
   caption set `numberOfLines`; see [the row](#the-row) and
   [the caption](#the-caption).
 - **Bold Text.** React Native's font code ignores the setting, so one hook
   swaps each token to its Bold Text weight on `boldTextChanged`, for system
-  text too, since nothing says it thickens by itself ([iOS notes][ios-bold]).
+  text too, since nothing says it thickens by itself
+  ([Turn's iOS design notes][ios-bold]).
 - **Left, sentence case, upright.** Text is left-aligned, so each line starts
   where the last one did, which helps readers who lose part of their visual
   field after a stroke ([AAC design notes][aac-type]); in sentence case, since
@@ -483,7 +484,7 @@ are its regular and emphasized ones ([earlier iOS notes][ios-dt]).
   draws it, in screenshots and recordings of Turn. The video's titles, the
   Devpost thumbnail, the gallery's captions, and text in the README's images
   are set in Atkinson Hyperlegible Next, under the SIL Open Font License
-  ([iOS notes][ios-pitch-fonts]).
+  ([Turn's iOS design notes][ios-pitch-fonts]).
 
 [aac-type]: /docs/research/aac-design.md#text-size-line-length-and-fonts
 [ios-dt]: /docs/research/ios-design.md#dynamic-type-sizes
@@ -563,8 +564,8 @@ bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
   the home indicator, and content stays inside the safe areas.
 - **What doesn't scroll.** The top bar, the caption, the strip, the row, the
   tabs, and the bottom bar sit outside the grid's scroll view, so nothing
-  collapses or slides them away ([iOS notes][ios-bars]); only the grid
-  scrolls.
+  collapses or slides them away ([Turn's iOS design notes][ios-bars]); only the
+  grid scrolls.
 - **The thumb's band.** The strip and the row fill the middle of the screen,
   where one thumb reaches best, and the top bar holds only what isn't speech
   ([AAC design notes][aac-reach]).
@@ -576,8 +577,8 @@ bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
 
 Turn lays out by the width it's given, not by the device, since an app built
 with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
-([iOS notes][ios-resize]). A phrase column needs at least 154 points, about
-13 characters of `title3-emphasized` inside 12-point padding.
+([Turn's iOS design notes][ios-resize]). A phrase column needs at least 154
+points, about 13 characters of `title3-emphasized` inside 12-point padding.
 
 | Width available      | The row                    | The strip                           | The grid    |
 | -------------------- | -------------------------- | ----------------------------------- | ----------- |
@@ -601,7 +602,7 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 - **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip,
   and the grid take one column each, and everything between the top bar and
   the bottom bar scrolls as one column, as on short screens. Apple advises
-  fewer columns as text grows ([iOS notes][ios-dt-turn]).
+  fewer columns as text grows ([Turn's iOS design notes][ios-dt-turn]).
 - **Heights follow the text size and the screen, never the content.** A
   slot's height is two lines of `title3-emphasized` at the current size plus
   its padding, and never less than 78 points, or 64 on short screens; so at
@@ -627,23 +628,24 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 - **Liquid Glass from the system only.** Bars, sheets, alerts, and switches
   turn to glass by themselves, and Xcode 27 ignores
   `UIDesignRequiresCompatibility`, so an app can no longer opt out
-  ([iOS notes][ios-key]). Turn draws no glass of its own and renders no
-  `GlassView`: phrases, the caption, notes, and the consent card are content,
-  where Apple says not to use glass ([iOS notes][ios-glass-content]).
+  ([Turn's iOS design notes][ios-key]). Turn draws no glass of its own and
+  renders no `GlassView`: phrases, the caption, notes, and the consent card are
+  content, where Apple says not to use glass
+  ([Turn's iOS design notes][ios-glass-content]).
 - **Where the system's glass shows.** Settings' and the editor's navigation
   bars, the permission step's sheet, RevenueCat's paywall sheet, alerts, and
-  the under-18 switch ([iOS notes][ios-chrome]). The home screen has no
-  navigation bar, and the composer above the keyboard is solid, like every
-  other place that holds words.
+  the under-18 switch ([Turn's iOS design notes][ios-chrome]). The home screen
+  has no navigation bar, and the composer above the keyboard is solid, like
+  every other place that holds words.
 - **Sheets that hold reading text set a background.** Expo Router makes a
   form sheet's header and content transparent where glass is available, so the
   permission step sets `headerTransparent: false` and a `surface` background
-  ([iOS notes][ios-glass-expo]).
+  ([Turn's iOS design notes][ios-glass-expo]).
 - **Every glass setting leaves the words readable.** Reduce Transparency and
   the Liquid Glass slider, from clear to tinted, change only the system's
   chrome, which follows them with no code from Turn; Increase Contrast also
   moves Turn's own colors to their `-hc` values
-  ([iOS notes][ios-glass-settings]).
+  ([Turn's iOS design notes][ios-glass-settings]).
 
 [ios-key]: /docs/research/turn-ios-design.md#the-compatibility-key-under-xcode-27
 [ios-chrome]: /docs/research/turn-ios-design.md#turns-chrome-that-turns-to-glass
@@ -664,7 +666,7 @@ rounded:
   button, larger, takes `lg`.
 - **Capsules** for controls that hold one word or two: the Listen control,
   the place picker, tabs, and the caption's and the composer's buttons take
-  `full`, "a radius that's half the height" ([earlier iOS notes][ios-capsule]).
+  `full`, "a radius that's half the height" ([iOS design notes][ios-capsule]).
 - **Edges.** Cards and secondary buttons have a 2-point `edge`; Yes, No, and
   Not sure a 3-point edge in their own color; the selected tab and marker-blue
   fills need none.
@@ -998,8 +1000,9 @@ The row's height and its six slots are fixed for the text size and the screen
 - **Yes, No, and Not sure.** In slots 1 to 3 for a yes-or-no question (ROW-4),
   as `yes`, `no`, and `unsure`: the word in `title3-emphasized`, `ink`, on its
   tint, inside a 3-point edge of its color, with no symbol, since `checkmark`
-  and `xmark` already mean Done and Cancel in iOS ([iOS notes][ios-symbols]).
-  The Quick category shows them the same way.
+  and `xmark` already mean Done and Cancel in iOS
+  ([Turn's iOS design notes][ios-symbols]). The Quick category shows them the
+  same way.
 - **A row that holds.** When a line gets no phrase above the floor, nothing in
   the row changes (ROW-3), and the caption says which line the replies still
   answer, rather than dimming them ([AAC design notes][aac-stale]).
@@ -1142,7 +1145,7 @@ A 52-point bar above the home indicator, with four capsule buttons in
 - **Equal pairs.** "Allow" and "Not now", and "They agreed" and "They said no",
   are two secondary buttons of one size and style, side by side, stacked from
   AX1: Apple marks a preferred choice by "style — not size", and neither of
-  these is preferred ([iOS notes][ios-hig-changes]).
+  these is preferred ([Turn's iOS design notes][ios-hig-changes]).
 - **Lists.** Settings and the editor use grouped rows at least 52 points tall
   on the board, with `body` text and `link` for links.
 - **Symbol buttons.** At least 44 by 44 points, each with a label.
@@ -1170,7 +1173,7 @@ is the whole inventory ([trends notes][ft-proposals]).
   ([motionsites notes][ms-app]).
 - **Fades, not slides.** A new phrase appears in its slot's frame, with no
   movement or scaling, so it stays where a finger, a pointer, or a gaze left it
-  ([iOS notes][ios-put]).
+  ([Turn's iOS design notes][ios-put]).
 - **The light's fade has an end.** It runs only while words arrive, and for
   no more than five seconds a line, so it stays inside WCAG 2.2.2's five
   seconds; a light that pulses all session is the ambient loop that criterion
@@ -1181,7 +1184,7 @@ is the whole inventory ([trends notes][ft-proposals]).
   ignore it ([trends notes][ft-reanimated]).
 - **No symbol effects.** The light's fade is Reanimated's, not an SF Symbols
   effect, since `expo-symbols` never reads Reduce Motion
-  ([iOS notes][ios-light]).
+  ([Turn's iOS design notes][ios-light]).
 
 [ft-proposals]: /docs/research/turn-frontend-trends.md#modes-motion-and-accessibility-in-open-proposals
 [ios-put]: /docs/research/turn-ios-design.md#motion-when-buttons-stay-put
@@ -1196,7 +1199,7 @@ is the whole inventory ([trends notes][ft-proposals]).
   `allowHapticsAndSystemSoundsDuringRecording` defaults to false, and a
   vibration could disrupt the microphone during Listen mode; elsewhere a
   phrase's feedback is its pressed fill and its speech, so a haptic would carry
-  no meaning ([iOS notes][ios-haptics]).
+  no meaning ([Turn's iOS design notes][ios-haptics]).
 - **Volume and route.** Speech follows the phone's volume and plays from the
   loudspeaker in Listen mode, as VOICE-4 and the
   [TRD's audio session](/docs/TRD.md#the-audio-session) set.
@@ -1252,7 +1255,7 @@ keeps what it showed.
 - A link to the privacy notice, which reads with no network (SET-2).
 - "Allow" and "Not now" as an equal pair at the bottom.
 - Every word is text, never an image, so Accessibility Reader and VoiceOver
-  read it ([iOS notes][ios-reader]).
+  read it ([Turn's iOS design notes][ios-reader]).
 
 [ios-reader]: /docs/research/turn-ios-design.md#accessibility-features-in-ios-26-and-27
 
@@ -1339,16 +1342,16 @@ editor to match:
   Purchases, the legal links, and the close button.
 - **Nothing that moves.** No images, carousel, video, or transitions, since
   paywalls keep carousels and component transitions moving under Reduce
-  Motion ([iOS notes][ios-paywall-a11y]).
-- **Colors and type.** The tokens' light and dark values, since paywalls have
-  no increased-contrast values, each pair at 4.5 to 1 or more without
-  Increase Contrast; the system font, since Apple's license bars uploading SF
-  Pro; and sizes that follow Dynamic Type, which paywalls do unless the
-  dashboard turns it off ([iOS notes][ios-paywall-limits];
-  [iOS notes][ios-paywall-a11y]).
+  Motion ([Turn's iOS design notes][ios-paywall-a11y]).
+- **Colors and type.** The tokens' light and dark values, each pair at 4.5 to
+  1 or more without Increase Contrast, since paywalls have no
+  increased-contrast values ([Turn's iOS design notes][ios-paywall-limits]); the
+  system font, since Apple's license bars uploading SF Pro; and sizes that
+  follow Dynamic Type, which paywalls do unless the dashboard turns it off
+  ([Turn's iOS design notes on paywall accessibility][ios-paywall-a11y]).
 - **Test Store's alert.** Test Store's purchase alert is UIKit's own, so
   there's nothing to design, and the video names it as a test purchase
-  ([iOS notes][ios-test-store]).
+  ([Turn's iOS design notes][ios-test-store]).
 
 [ios-paywall-a11y]: /docs/research/turn-ios-design.md#dynamic-type-voiceover-and-reduce-motion-in-paywalls
 [ios-paywall-limits]: /docs/research/turn-ios-design.md#limits-on-matching-turns-design
@@ -1358,7 +1361,7 @@ editor to match:
 
 The launch screen is the `board` color in each appearance, with no image,
 since Apple says to "Avoid using a launch screen as a branding opportunity"
-([iOS notes][ios-launch]); the grid follows within two seconds.
+([Turn's iOS design notes][ios-launch]); the grid follows within two seconds.
 
 [ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
 
@@ -1495,7 +1498,7 @@ How the design meets each accessibility requirement; the TRD's
 
 Apple's Accessibility Nutrition Labels make a test plan even without a store
 listing, since each label has published criteria
-([iOS notes][ios-labels]):
+([Turn's iOS design notes][ios-labels]):
 
 | Label                             | What Turn must pass                                                            |
 | --------------------------------- | ------------------------------------------------------------------------------ |
@@ -1528,7 +1531,7 @@ listing, since each label has published criteria
   speak, in the app's own ink. No text, no SF Symbol, and no face.
 - **The file.** One Icon Composer `.icon` file in two vector layers, the field
   and the mark, set as `ios.icon`, which Expo takes from SDK 54
-  ([iOS notes][ios-icon]).
+  ([Turn's iOS design notes][ios-icon]).
 - **Appearances.** Default; dark, where the field deepens to a near-black blue
   and the mark stays white; and mono, from the mark layer, for the clear and
   tinted looks.
@@ -1542,7 +1545,7 @@ listing, since each label has published criteria
   which an iPhone 16 simulator on iOS 27 draws at native size, captured in
   Device Hub with the status bar set to 9:41 by `simctl`. It shows the row
   mid-answer: the caption with "How was physio?" and "It was hard" among the
-  replies ([iOS notes][ios-devpost]).
+  replies ([Turn's iOS design notes][ios-devpost]).
 - **The thumbnail.** 3:2, typographic: Turn's line, "Your own words, in time
   for your turn.", in Atkinson Hyperlegible Next, and one big reply button in
   marker blue, legible at the 333 by 222 pixels the gallery shows it. A
@@ -1571,7 +1574,7 @@ listing, since each label has published criteria
 ### The video
 
 - **Frame.** 16:9, with the portrait screen inside it, under two minutes
-  (SUBMIT-4) ([iOS notes][ios-youtube]).
+  (SUBMIT-4) ([Turn's iOS design notes][ios-youtube]).
 - **Title cards.** Two short lines in Atkinson Hyperlegible Next, one word in
   marker blue, on the board's color; each fades in once and rests
   ([motionsites notes][ms-video]).
@@ -1581,10 +1584,10 @@ listing, since each label has published criteria
 - **Captions.** A caption file written from the script that names "Partner"
   and "Turn", since automatic captions can garble synthetic speech, and the key
   exchange burned in on a plate of at least 54% black
-  ([motionsites notes][ms-video]; [iOS notes][ios-youtube]).
+  ([motionsites notes][ms-video]; [Turn's iOS design notes][ios-youtube]).
 - **Filming.** Listen mode on the demo iPhone itself, since Device Hub blocks
   a mirrored iPhone's microphone; Simulator scenes on an iPhone 16 simulator
-  ([iOS notes][ios-capture]).
+  ([Turn's iOS design notes][ios-capture]).
 - **Sound.** Turn's speech and the partner's voice, with no music under them;
   Jev and TypeSafe go unnamed until TypeSafe agrees (SUBMIT-6).
 
@@ -1677,7 +1680,7 @@ Each has a safe default, which this document follows until someone decides.
   better.
 - **iPhone Duo.** It reaches buyers on October 23, after judging, and nobody
   has tested a portrait-locked iPhone app on its inner display. Safe default:
-  the width rules above ([iOS notes][ios-resize]).
+  the width rules above ([Turn's iOS design notes][ios-resize]).
 
 [aac-partner]: /docs/research/aac-design.md#displays-that-face-the-partner
 [aac-guards]: /docs/research/aac-design.md#guards-against-accidental-activation
