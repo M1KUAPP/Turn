@@ -528,10 +528,12 @@ Sizes are points: the format's `px` means a point on the iPhone.
   looks smaller, as Apple asks.
 - **Today in three bands**, top to bottom:
   - **The table**: the top bar, then the stage, where the Guessling stands
-    beside its speech bubble.
+    above its speech bubble.
   - **The notepad**: the hint, the turn meter, and the history, which
     scrolls.
   - **The composer**, pinned above the keyboard or the home indicator.
+- **Short screens.** On screens under 700 points tall, the Guessling is
+  120 points tall instead of 160.
 - **With the keyboard up**, the stage turns compact: the Guessling shrinks
   to 64 points in one row with its bubble, so the newest answers stay in
   view above the composer.
@@ -631,7 +633,7 @@ components:
     backgroundColor: '{colors.card}'
     textColor: '{colors.ink}'
     typography: '{typography.reply}'
-    rounded: '{rounded.full}'
+    rounded: '{rounded.lg}'
     padding: 12px
   notepad:
     backgroundColor: '{colors.card}'
@@ -729,13 +731,20 @@ property for.
 
 ### The speech bubble
 
-- **Where.** An Index white capsule on the table beside the Guessling, with
-  a small tail toward it; below it on screens too narrow for both.
+- **Where.** An Index white card with `lg` corners, as wide as the stage,
+  under the Guessling, with a small tail pointing up to it. In the compact
+  stage it sits beside the Guessling, with its tail to the side.
 - **What it holds.** The latest reply: a 22-point badge, a circle in the
-  answer's color with the glyph in Index white, then the words in `reply`,
-  colored `yes-ink`, `no-ink`, or `unsure-ink`, or Ballpoint beside
-  Marigold for a right guess. Before the first question it says "I’m
-  thinking of something." in Ballpoint, with no badge.
+  answer's color with the glyph in Index white, then the words, colored
+  `yes-ink`, `no-ink`, or `unsure-ink`, or Ballpoint for a right guess.
+- **Two sizes of words.** Replies of up to 15 characters, such as "Yes",
+  "Not it", and "Ask another way", are set in `reply`; longer ones, such as
+  "Ask a yes-or-no question" and the resting reply, in `hint`, so a reply
+  takes at most two lines at the default size. Before the first question
+  the bubble says "I’m thinking of something." in `hint`, Ballpoint, with
+  no badge.
+- **Growing.** The bubble grows to fit its words and never truncates them;
+  at large text, the stage scrolls with the screen.
 - **Waiting.** After 300 ms without an answer, three dots in Stone pulse in
   opacity, which isn't motion, until the answer comes (ASK-8).
 - **For VoiceOver.** The Guessling and its bubble are one element, labeled
@@ -1013,8 +1022,8 @@ each one shows, top to bottom.
     Chalk, such as "#12 · Friday, September 25", or "#3 · Starter"; then
     the Archive (`calendar`) and Settings (`gearshape`) buttons on the
     trailing side.
-1.  **The stage**, on the table: the Guessling, 160 points tall, and its
-    speech bubble beside it, with the latest reply.
+1.  **The stage**, on the table: the Guessling, 160 points tall, with its
+    speech bubble under it holding the latest reply.
 1.  **The notepad**: the hint, the turn meter, the Margin pink line, and the
     history.
 1.  **The composer**, over the notepad's lower edge.
