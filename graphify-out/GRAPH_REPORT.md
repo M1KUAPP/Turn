@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 104 files · ~350,861 words
+- 104 files · ~350,708 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 1864 nodes · 1765 edges · 147 communities (141 shown, 4 thin omitted)
+- 1856 nodes · 1757 edges · 139 communities (132 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `5091f447`
+- Built from commit: `02ff4866`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,8 +32,6 @@
 - graphify.md
 - rtk.md
 - skills.md
-- Agent skills
-- Agent skills
 - Vibe Code an App: From Prompt to Real Store Launch
 - Announcing Shipaton 2026: Ship an app, win big, join the fun
 - RevenueCat Shipaton 2026
@@ -123,7 +121,7 @@
 - Eligibility rules
 - Shipaton 2026 ideation log
 - Tasks
-- Jev research notes
+- How Jev is used
 - Shipaton 2026 idea
 - Guessling technical requirements
 - Cloudflare Workers research notes
@@ -155,15 +153,8 @@
 - Overview
 - App icon and launch screen
 - SF Symbols
-- How Jev is used
-- Shipaton 2026 gallery landscape
-- Evidence for the top five ideas
 - Issue tracker: GitHub
 - Domain docs
-- Influencer Award briefs
-- Round 9: scope, stack, and schedule
-- What teams can build with Jev
-- Integration effort and limitations
 - triage-labels.md
 
 ## God Nodes (most connected - your core abstractions)
@@ -187,7 +178,7 @@
 
 - None detected.
 
-## Communities (147 total, 4 thin omitted)
+## Communities (139 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -233,16 +224,6 @@ Nodes (5): printWidth, $schema, semi, singleQuote, trailingComma
 
 Cohesion: 0.07
 Nodes (27): Add the public app link, Add your demo video, Add your technology tags, Can i enter the next gen award and another category?, Can i participate without an Apple or Google developer account?, Can i submit more than one app?, Completing the Devpost submission, Does every submission need to use RevenueCat? (+19 more)
-
-### Community 12 - "Agent skills"
-
-Cohesion: 0.40
-Nodes (4): Agent skills, Domain docs, Issue tracker, Triage labels
-
-### Community 14 - "Agent skills"
-
-Cohesion: 0.40
-Nodes (4): Agent skills, Domain docs, Issue tracker, Triage labels
 
 ### Community 15 - "Vibe Code an App: From Prompt to Real Store Launch"
 
@@ -681,18 +662,18 @@ Nodes (3): Eligibility rules, Which apps qualify, Who may enter
 
 ### Community 102 - "Shipaton 2026 ideation log"
 
-Cohesion: 0.15
-Nodes (13): Assumptions, Hard constraints, Round 10: pitch test, Round 1: constraints and rubric, Round 2: thirty candidates, Round 3: screening, Round 4: scoring, Round 5: evidence (+5 more)
+Cohesion: 0.04
+Nodes (41): Career Coaching brief (Leadership Heather), Full project list, Gallery totals, Gaming brief (Lewis Blogs Gaming), Idea clusters by count, Influencer Award briefs, Limitations, Method and coverage (+33 more)
 
 ### Community 103 - "Tasks"
 
 Cohesion: 0.06
 Nodes (31): Appendix: check scripts, Assumptions, Design, Global constraints, Rejected alternatives, Rubric, Sections of the idea, Shipaton 2026 idea implementation plan (+23 more)
 
-### Community 104 - "Jev research notes"
+### Community 104 - "How Jev is used"
 
-Cohesion: 0.20
-Nodes (10): Conflicts between sources, Free tier, credits, and programs, Gaps, Jev prices, Jev research notes, Latest versions as of September 22, 2026, Master Customer Agreement terms for apps, Pricing, limits, and terms (+2 more)
+Cohesion: 0.07
+Nodes (30): Conflicts between sources, Cookbooks and demos, Free tier, credits, and programs, Gaps, Gotchas in the API and SDKs, How Jev is used, Ideas that fit Jev's shape, Installing an SDK and authenticating (+22 more)
 
 ### Community 105 - "Shipaton 2026 idea"
 
@@ -849,21 +830,6 @@ Nodes (4): App icon and launch screen, Icons in Expo, iOS 26 icons and Icon Comp
 Cohesion: 0.50
 Nodes (4): expo-symbols in SDK 57, SF Symbols, SF Symbols license terms, Symbol animations and iOS versions
 
-### Community 136 - "How Jev is used"
-
-Cohesion: 0.20
-Nodes (10): How Jev is used, Installing an SDK and authenticating, JavaScript SDK methods, Jev platform and language support, Jev product surfaces, Key Jev concepts and terms, Offline behavior and data handling, Python SDK methods (+2 more)
-
-### Community 137 - "Shipaton 2026 gallery landscape"
-
-Cohesion: 0.22
-Nodes (9): Full project list, Gallery totals, Idea clusters by count, Limitations, Method and coverage, Open idea spaces, Other prize categories, Saturated idea spaces (+1 more)
-
-### Community 138 - "Evidence for the top five ideas"
-
-Cohesion: 0.25
-Nodes (8): Earshot, announcement alerts for Deaf and hard-of-hearing travelers, Evidence for the top five ideas, Flagged, a job-posting red-flag checker, Hunch, a daily 20-questions game, Method and coverage, SaySo, an AAC phrase finder, Subtext, tone tags for autistic and ADHD adults, Summary
-
 ### Community 139 - "Issue tracker: GitHub"
 
 Cohesion: 0.29
@@ -874,42 +840,20 @@ Nodes (6): Conventions, Issue tracker: GitHub, Pull requests as a triage surface
 Cohesion: 0.33
 Nodes (5): Before exploring, read these, Domain docs, File structure, Flag ADR conflicts, Use the glossary's vocabulary
 
-### Community 141 - "Influencer Award briefs"
-
-Cohesion: 0.33
-Nodes (6): Career Coaching brief (Leadership Heather), Gaming brief (Lewis Blogs Gaming), Influencer Award briefs, Nutrition & Healthy Eating brief (Abbey's Kitchen), Productivity brief (Christopher Lawley), Yoga & Fitness brief (Simone Sharice)
-
-### Community 142 - "Round 9: scope, stack, and schedule"
-
-Cohesion: 0.40
-Nodes (5): Review-safety checklist, Round 9: scope, stack, and schedule, Schedule, Scope of the first version, Stack and data flow
-
-### Community 143 - "What teams can build with Jev"
-
-Cohesion: 0.40
-Nodes (5): Cookbooks and demos, Ideas that fit Jev's shape, Integrations named in the sources, Use cases the docs list, What teams can build with Jev
-
-### Community 144 - "Integration effort and limitations"
-
-Cohesion: 0.40
-Nodes (5): Gotchas in the API and SDKs, Integration effort and limitations, Known limitations on the jaggedness page, Open issues on TypeSafe's repositories, Quickstart steps and effort
-
 ## Knowledge Gaps
 
-- **1466 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1461 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1562 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1460 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1455 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1556 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Jev research notes` connect `Jev research notes` to `How Jev is used`, `ideation.md`, `Integration effort and limitations`, `What teams can build with Jev`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Shipaton 2026 gallery landscape` connect `Shipaton 2026 gallery landscape` to `ideation.md`, `Influencer Award briefs`?**
+- **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _1466 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1460 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
@@ -918,3 +862,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
 - **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
   _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
+- **Should `Shipaton 2025 recordings` be split into smaller, more focused modules?**
+  _Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected._
