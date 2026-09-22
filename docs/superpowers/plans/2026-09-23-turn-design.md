@@ -221,9 +221,10 @@ reasons given, and each is stated as a decision in the document.
     grid so it never needs a swipe). There's no navigation bar, and the strip
     and the row sit outside the grid's scroll view.
 1.  **The row.** Six slots in two columns of three, each 78 points tall, at
-    least 12 mm on every iPhone Turn runs on, with 12 points between them, so
-    a slot holds about 14 characters a line. Heights follow the text size and
-    the width, never the content. From AX1, and under 352 points wide, one
+    least 12 mm on every iPhone Turn runs on, or A11Y-1's 64 on short screens
+    such as an iPhone SE's, with 12 points between them, so a slot holds about
+    14 characters a line. Heights follow the text size and the screen, never
+    the content. From AX1, and under 352 points wide, one
     column; wider windows keep two. A phrase takes up to two
     lines at `title3-emphasized`, then two at `headline`'s size, and past
     that the slot ends with an ellipsis, while VoiceOver and speech give the
@@ -239,9 +240,9 @@ reasons given, and each is stated as a decision in the document.
     "Something's wrong" adds a warning symbol. Short role labels were
     rejected, since A11Y-2 and A11Y-8 ask a phrase button to read, and be
     named, as its text.
-1.  **The grid and the tabs.** Phrase buttons at least 78 points tall, whole
-    text, in an even number of columns from the width, two on a phone and one
-    from AX1. The tabs show the categories in their order, with an All
+1.  **The grid and the tabs.** Phrase buttons at least 78 points tall, or 64
+    on short screens, whole text, in two columns, and one from AX1 and under
+    352 points wide. The tabs show the categories in their order, with an All
     button that lists every name at once, since older adults miss sideways
     scrolling; the tab ROW-9 marks takes a dot and a heavier weight, never
     color alone.
@@ -272,8 +273,9 @@ reasons given, and each is stated as a decision in the document.
     carry no meaning elsewhere.
 1.  **Words.** Plain, calm, adult, in sentence case, with no exclamation
     marks, no "smart", "magic", or sparkles, "AI" only in the words
-    CONSENT-1 fixes, and no pity. The caption labels speakers "They said"
-    and "You said". Jev and TypeSafe go unnamed until TypeSafe agrees
+    CONSENT-1 fixes, and no pity. The caption labels the partner's words
+    "They said" or "They're saying". Jev and TypeSafe go unnamed until TypeSafe
+    agrees
     (CONSENT-7, SUBMIT-6). A table fixes every string the PRD leaves open.
 1.  **Icon and pitch assets.** One Icon Composer `.icon` file: an open speech
     bubble drawn as one stroke that curls back like a turn arrow, white on
