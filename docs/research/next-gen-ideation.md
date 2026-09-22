@@ -220,34 +220,38 @@ the phone, Jev deciding per event, and state shared between phones.
 **Question:** which of the 23 distinct candidates meet N1 to N7?
 
 **Method:** each candidate was checked against every hard constraint, pass
-or fail. A fail names the constraint it breaks; a pass that depends on a cut
-its generator proposed names the cut, which later rounds carry forward.
+or fail. Every one is a native app with a RevenueCat purchase and Jev deciding
+at run time through a relay (N1 to N3). The table shows the parts that meet
+N6, the "too simple" test, and the reason names whichever of N4, N5, and N7
+the case turned on. A fail names the constraint it breaks; a pass that
+depends on a cut its generator proposed names the cut, which later rounds
+carry forward.
 
-| #   | Candidate    | Result | Reason                                                                                                          |
-| --- | ------------ | ------ | --------------------------------------------------------------------------------------------------------------- |
-| 1   | Chorus       | Pass   | Each phone transcribes only its owner, and every speaker joins, so N7 holds                                     |
-| 2   | Qualified    | Pass   | The student's own paragraph and answers, after a consent notice                                                 |
-| 3   | Same Boat    | Pass   | Typed questions from students who join the session                                                              |
-| 4   | Headcount    | Fail   | N4: alerting a friend whose phone is in a pocket needs push notifications, which a free Apple account can't use |
-| 5   | Lull         | Pass   | Only sound labels and levels leave the phones, never audio or words                                             |
-| 6   | Finders      | Pass   | Image input needs Xcode 27 and an iPhone 15 Pro or newer; the generator's cut, typed descriptions, remains      |
-| 7   | Fair Game    | Pass   | The student's own résumé text, notes, and banner text                                                           |
-| 8   | Porchlight   | Pass   | Adults only, and crisis language goes to resources for the writer, never to friends                             |
-| 9   | Bench        | Pass   | The student's own voice, on a single phone                                                                      |
-| 10  | Backed       | Pass   | The student's own essay and sources                                                                             |
-| 15  | Cue          | Pass   | The cast consents before rehearsal                                                                              |
-| 17  | Proof        | Pass   | Descriptions name objects, never people; image input as for 6                                                   |
-| 18  | Range        | Pass   | The patient's own remarks, with consent                                                                         |
-| 19  | Rattle       | Pass   | A car's sounds and the driver's own answers                                                                     |
-| 20  | Plainly      | Pass   | The user's own notices, after a consent notice                                                                  |
-| 21  | Scenekeeper  | Pass   | Players consent when they join                                                                                  |
-| 22  | Crewline     | Pass   | Volunteers keep the app open, since a free account can't push                                                   |
-| 23  | Turn         | Pass   | Only a consenting partner's speech is transcribed; otherwise the place and typed letters rank the phrases       |
-| 24  | Gavel        | Pass   | The meeting starts once every member present has joined                                                         |
-| 25  | Close Enough | Pass   | Players may be 13, but only anonymous trivia answers reach Jev, per N5                                          |
-| 28  | Orders       | Pass   | Players may be 13, but only orders and game state reach Jev, per N5                                             |
-| 29  | Waypoint     | Pass   | Only the text of signs reaches Jev                                                                              |
-| 30  | Flowsheet    | Pass   | Speakers consent before each round                                                                              |
+| #   | Candidate    | Result | N6: parts that work together                                 | Reason                                                                                                          |
+| --- | ------------ | ------ | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| 1   | Chorus       | Pass   | Live speech on each phone, merged into one shared transcript | Each phone transcribes only its owner, and every speaker joins, so N7 holds                                     |
+| 2   | Qualified    | Pass   | Decisions that chain: each answer re-screens every award     | The student's own paragraph and answers, after a consent notice                                                 |
+| 3   | Same Boat    | Pass   | Questions from many phones, merged live in shared state      | Typed questions from students who join the session                                                              |
+| 4   | Headcount    | Fail   | Motion and check-ins from several phones                     | N4: alerting a friend whose phone is in a pocket needs push notifications, which a free Apple account can't use |
+| 5   | Lull         | Pass   | Sound labels from phones in rooms, matched to profiles       | Only sound labels and levels leave the phones, never audio or words                                             |
+| 6   | Finders      | Pass   | Image description, matching, then a check of the owner       | Image input needs Xcode 27 and an iPhone 15 Pro or newer; the generator's cut, typed descriptions, remains      |
+| 7   | Fair Game    | Pass   | Fit scores, banner reading, and memos that re-plan the route | The student's own résumé text, notes, and banner text                                                           |
+| 8   | Porchlight   | Pass   | Check-ins tracked over time, and nudges to friends           | Adults only, and crisis language goes to resources for the writer, never to friends                             |
+| 9   | Bench        | Pass   | Document reading, live speech, and a step checklist          | The student's own voice, on a single phone                                                                      |
+| 10  | Backed       | Pass   | Retrieval from sources, then a check of each sentence        | The student's own essay and sources                                                                             |
+| 15  | Cue          | Pass   | Script reading, live speech, and the script's position       | The cast consents before rehearsal                                                                              |
+| 17  | Proof        | Pass   | Image description, clues shared by teams, and a jury         | Descriptions name objects, never people; image input as for 6                                                   |
+| 18  | Range        | Pass   | Motion sensing, speech, and the physio's rules               | The patient's own remarks, with consent                                                                         |
+| 19  | Rattle       | Pass   | Sound, motion, and a question loop where each answer chains  | A car's sounds and the driver's own answers                                                                     |
+| 20  | Plainly      | Pass   | Text written on the device, checked by Jev, then rewritten   | The user's own notices, after a consent notice                                                                  |
+| 21  | Scenekeeper  | Pass   | Live speech driving music and light                          | Players consent when they join                                                                                  |
+| 22  | Crewline     | Pass   | Speech from many phones and one shared ticket board          | Volunteers keep the app open, since a free account can't push                                                   |
+| 23  | Turn         | Pass   | Live speech, a shortlist, and a steady row of replies        | Only a consenting partner's speech is transcribed; otherwise the place and typed letters rank the phrases       |
+| 24  | Gavel        | Pass   | Live speech and a motion state machine on every phone        | The meeting starts once every member present has joined                                                         |
+| 25  | Close Enough | Pass   | A room of phones graded at once and shown together           | Players may be 13, but only anonymous trivia answers reach Jev, per N5                                          |
+| 28  | Orders       | Pass   | A game simulation driven by spoken orders                    | Players may be 13, but only orders and game state reach Jev, per N5                                             |
+| 29  | Waypoint     | Pass   | Live text reading while walking, and speech back             | Only the text of signs reaches Jev                                                                              |
+| 30  | Flowsheet    | Pass   | Speech on two phones and a graph of arguments                | Speakers consent before each round                                                                              |
 
 **Decision:** 22 candidates go to scoring, with Guessling as the control.
 Headcount is out: without push, its core loop, a friend's phone buzzing in a
@@ -260,13 +264,14 @@ Guessling?
 
 **Method:** two scorers rated the 22 survivors and Guessling on the rubric.
 The log's author scored first; a subagent then scored blind, from the same
-write-ups, round 1, and the four notes, without seeing the first scores. It
-was told to be harsh on six days of student work with a free Apple account,
-on jobs that plain code or Apple's on-device model could do in Jev's place,
-on paywalls that feel wrong for their audience, and on ideas where a wrong
-decision could hurt someone. Each criterion's score is the average of the
-two, and ties go to the idea score, as the rules break ties. The last two
-columns are each scorer's own total.
+write-ups, round 1, and the four notes, without seeing the first scores. The
+plan had it see only the candidates and the rubric; reading the notes too
+put both scorers on the same evidence. It was told to be harsh on six days of
+student work with a free Apple account, on jobs that plain code or Apple's
+on-device model could do in Jev's place, on paywalls that feel wrong for their
+audience, and on ideas where a wrong decision could hurt someone. Each
+criterion's score is the average of the two, and ties go to the idea score, as
+the rules break ties. The last two columns are each scorer's own total.
 
 | Rank | #   | Candidate    | Idea | Orig | Work | Demo | RC  | Tech | Craft | Jev | Total | Author | Blind |
 | ---- | --- | ------------ | ---- | ---- | ---- | ---- | --- | ---- | ----- | --- | ----- | ------ | ----- |
@@ -293,6 +298,34 @@ columns are each scorer's own total.
 | 21   | 8   | Porchlight   | 3    | 3.5  | 4    | 3.5  | 2.5 | 3    | 3     | 3.5 | 64.5  | 67     | 62    |
 | 22   | 18  | Range        | 3    | 3.5  | 2.5  | 4    | 3.5 | 4    | 3     | 2.5 | 63.5  | 70     | 57    |
 | 23   | 5   | Lull         | 3    | 4.5  | 2.5  | 3    | 3   | 4    | 3     | 2.5 | 63    | 68     | 58    |
+
+Each scorer's own scores, the author's first, in the same order:
+
+| #   | Candidate    | Idea | Orig | Work | Demo | RC  | Tech | Craft | Jev |
+| --- | ------------ | ---- | ---- | ---- | ---- | --- | ---- | ----- | --- |
+| 23  | Turn         | 5/5  | 4/5  | 3/4  | 5/5  | 3/3 | 4/4  | 4/4   | 5/5 |
+| 21  | Scenekeeper  | 3/3  | 5/4  | 3/3  | 5/5  | 4/4 | 4/5  | 4/3   | 5/5 |
+| 9   | Bench        | 4/3  | 5/4  | 3/2  | 5/4  | 4/4 | 4/5  | 4/3   | 5/4 |
+| 1   | Chorus       | 5/4  | 4/4  | 2/2  | 5/4  | 3/2 | 5/5  | 3/3   | 5/4 |
+| 3   | Same Boat    | 4/4  | 4/4  | 3/4  | 4/4  | 3/3 | 4/4  | 4/4   | 5/3 |
+| 10  | Backed       | 4/3  | 4/4  | 3/3  | 4/4  | 4/4 | 4/3  | 4/4   | 5/4 |
+| 2   | Qualified    | 4/4  | 4/4  | 3/4  | 4/4  | 4/2 | 3/3  | 4/4   | 5/4 |
+| 25  | Close Enough | 3/3  | 4/3  | 4/4  | 5/4  | 4/4 | 4/3  | 4/4   | 5/3 |
+| 20  | Plainly      | 4/3  | 4/4  | 3/4  | 4/4  | 3/3 | 4/4  | 4/4   | 5/3 |
+| 15  | Cue          | 3/2  | 5/5  | 3/2  | 5/5  | 3/4 | 4/5  | 4/3   | 5/4 |
+| 22  | Crewline     | 4/2  | 5/4  | 2/2  | 4/4  | 3/4 | 5/5  | 3/3   | 5/4 |
+| 29  | Waypoint     | 4/3  | 4/3  | 2/3  | 4/4  | 3/2 | 5/5  | 3/3   | 5/4 |
+| 28  | Orders       | 3/3  | 5/3  | 2/2  | 5/4  | 4/4 | 4/4  | 3/3   | 5/3 |
+| 24  | Gavel        | 3/3  | 5/5  | 3/3  | 4/4  | 3/3 | 4/4  | 4/4   | 4/2 |
+| 19  | Rattle       | 3/2  | 4/3  | 3/3  | 4/4  | 4/4 | 4/4  | 3/3   | 5/3 |
+| 17  | Proof        | 3/3  | 5/3  | 3/2  | 4/4  | 4/4 | 4/4  | 3/3   | 4/2 |
+| 30  | Flowsheet    | 3/2  | 5/4  | 2/2  | 4/3  | 3/3 | 4/5  | 3/3   | 5/4 |
+| G0  | Guessling    | 3/3  | 3/3  | 4/5  | 4/3  | 4/4 | 2/2  | 3/4   | 3/3 |
+| 7   | Fair Game    | 3/3  | 4/4  | 2/3  | 3/4  | 3/3 | 4/4  | 3/3   | 4/3 |
+| 6   | Finders      | 3/3  | 4/4  | 3/3  | 4/4  | 2/2 | 4/4  | 3/3   | 4/3 |
+| 8   | Porchlight   | 4/2  | 3/4  | 4/4  | 3/4  | 2/3 | 3/3  | 3/3   | 4/3 |
+| 18  | Range        | 4/2  | 4/3  | 2/3  | 4/4  | 4/3 | 4/4  | 3/3   | 3/2 |
+| 5   | Lull         | 4/2  | 5/4  | 2/3  | 3/3  | 3/3 | 4/4  | 3/3   | 3/2 |
 
 Where the scorers were 2 points apart, each score was settled at the
 average:
