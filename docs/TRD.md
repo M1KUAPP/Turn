@@ -875,6 +875,10 @@ Expo Router, with one stack:
 
 ### Reactions, sound, and haptics
 
+The [design](/docs/DESIGN.md) draws the Guessling's parts and poses, times
+each reaction, and specifies the sounds; this section says how they're
+built.
+
 - The Guessling is four poses, nod, head shake, shrug, and celebration,
   animated with Reanimated. With Reduce Motion on, each reaction becomes a
   fade to its pose, and every such fade sets its `reduceMotion` option to
@@ -944,13 +948,22 @@ export default {
   ios: {
     bundleIdentifier: 'com.<team>.guessling',
     supportsTablet: false, // iPhone only, the default (COMPAT-1)
+    icon: './assets/guessling.icon', // one Icon Composer file
     config: { usesNonExemptEncryption: false } // HTTPS through the system only
   },
-  plugins: ['expo-router', ['expo-audio', { enableBackgroundPlayback: false, microphonePermission: false }]]
+  plugins: [
+    'expo-router',
+    ['expo-audio', { enableBackgroundPlayback: false, microphonePermission: false }],
+    ['expo-splash-screen', { backgroundColor: '#2E5BD8', dark: { backgroundColor: '#0D1B40' } }]
+  ]
 }
 ```
 
 - `ios.deploymentTarget` stays at SDK 57's 16.4 (COMPAT-1).
+- The icon and the launch screen follow the design's
+  [app icon][design-icon] and [launch][design-launch] sections: Xcode builds
+  the images for iOS 18 and earlier from the `.icon` file, and the launch
+  screen is the table's solid blue in each appearance.
 - Expo aggregates its modules' privacy manifests; if Apple emails about a
   missing required reason after an upload, the reason goes into
   `ios.privacyManifests` ([RevenueCat notes on privacy manifests][rc-pm]).
@@ -959,6 +972,8 @@ export default {
   (COMPAT-3).
 
 [rc-pm]: /docs/research/revenuecat-expo.md#privacy-manifests-in-expo
+[design-icon]: /docs/DESIGN.md#the-app-icon
+[design-launch]: /docs/DESIGN.md#launch
 
 ## Security and privacy
 
