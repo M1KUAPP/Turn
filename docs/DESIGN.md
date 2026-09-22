@@ -60,8 +60,9 @@ the test that shows it holds. The rest of this document says how.
     caption the partner's words, and then VoiceOver gives the whole text
     (A11Y-4). Test: every screen at AX5.
 5.  **Targets for unsteady hands.** Phrase buttons in the row and the grid are
-    at least 78 points tall, the strip's at least 48, and every other control
-    at least 44 by 44 (A11Y-1). Test: the Accessibility Inspector.
+    at least 78 points tall, or 64 on short screens, the strip's at least 48,
+    and every other control at least 44 by 44 (A11Y-1). Test: the
+    Accessibility Inspector.
 6.  **Only a tap speaks.** Nothing speaks without a tap, nothing acts on
     touch-down, and nothing needs a long press, a swipe, or a drag: the grid
     scrolls, and page buttons do the same with a tap (ROW-6, A11Y-5, A11Y-8).
@@ -588,17 +589,21 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 ### Short screens and large text
 
 - **Short screens.** Where the space between the top bar and the screen's
-  bottom is under 700 points, as on an iPhone SE, the caption, the strip, the
-  row, the tabs, and the grid scroll together as one column, and only the top
-  bar and the bottom bar stay put.
+  bottom is under 700 points, as on an iPhone SE, the row's slots and the
+  grid's buttons take A11Y-1's 64 points, with phrases in `headline` inside
+  10-point padding and 8 points between slots, and the caption shows one line
+  of words. That leaves the grid's first row on screen at launch (SPEAK-1),
+  and the caption, the strip, the row, the tabs, and the grid scroll together
+  as one column between the top bar and the bottom bar.
 - **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip,
   and the grid take one column each, and everything between the top bar and
   the bottom bar scrolls as one column, as on short screens. Apple advises
   fewer columns as text grows ([iOS notes][ios-dt-turn]).
-- **Heights follow the text size, never the content.** A slot's height is two
-  lines of `title3-emphasized` at the current size plus its padding, and never
-  less than 78 points; so at AX5 a slot is 154 points tall, and the row holds
-  its height whatever it shows.
+- **Heights follow the text size and the screen, never the content.** A
+  slot's height is two lines of `title3-emphasized` at the current size plus
+  its padding, and never less than 78 points, or 64 on short screens; so at
+  AX5 a slot is 154 points tall, and the row holds its height whatever it
+  shows.
 
 [ios-dt-turn]: /docs/research/turn-ios-design.md#dynamic-type-sizes-for-turns-styles
 
@@ -963,7 +968,7 @@ components:
 
 ### The row
 
-The row's height and its six slots are fixed for the text size and the width
+The row's height and its six slots are fixed for the text size and the screen
 (ROW-1); only what's in a slot changes.
 
 - **Filling.** Replies fill slots from the first, as ROW-5 moves them; an empty
@@ -1446,9 +1451,9 @@ The longer texts, where `{service}` is as above:
 How the design meets each accessibility requirement; the TRD's
 [accessibility in the app][trd-a11y] says how it's built.
 
-- **A11Y-1, targets.** Phrase buttons 78 points tall, the strip's cells 48,
-  and every other control 44 by 44; the big button fills the row
-  ([Layout](#layout)).
+- **A11Y-1, targets.** Phrase buttons 78 points tall, or 64 on short
+  screens, the strip's cells 48, and every other control 44 by 44; the big
+  button fills the row ([Layout](#layout)).
 - **A11Y-2, VoiceOver.** Each phrase button reads as its text with the button
   trait; the light reads "Listening", with the hint "Pauses listening"; and a
   changed row is announced once, as the number of replies, queued so it
