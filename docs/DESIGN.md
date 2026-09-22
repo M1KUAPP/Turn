@@ -114,8 +114,9 @@ being said, and nothing to wait for.
   icon and launch screen, the Devpost images, the README's images, and the
   look of the demo video.
 - **Out:** a website, since no Next Gen item needs one and the privacy notice
-  ships in the app ([motionsites notes][ms-web]); a partner view that flips
-  the last phrase toward the partner, an
+  ships in the app ([motionsites notes][ms-web]); an iPad layout, a non-goal
+  of the PRD, though an iPad's window follows the same [width rules](#widths);
+  a partner view that flips the last phrase toward the partner, an
   [open question](#open-questions); and any appearance setting inside the app.
 
 [ms-web]: /docs/research/turn-motionsites.md#a-one-page-website
