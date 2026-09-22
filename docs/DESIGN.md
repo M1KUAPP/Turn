@@ -70,7 +70,7 @@ the test that shows it holds. The rest of this document says how.
     light while the partner's words arrive move anything, and Reduce Motion,
     read live, stills them all (A11Y-6). Test: turn Reduce Motion on
     mid-session.
-8.  **No glass behind words.** Phrases, the line, notes, and the consent card
+8.  **No glass behind words.** Phrases, the caption, notes, and the consent card
     sit on solid fills; Liquid Glass stays in the system's bars, sheets, and
     alerts. Test: both ends of the Liquid Glass slider.
 9.  **The system decides the look.** Turn follows the iPhone's appearance,
@@ -265,25 +265,25 @@ colors:
 
 ### Color roles
 
-| Token            | Name                 | Role                                                               |
-| ---------------- | -------------------- | ------------------------------------------------------------------ |
-| `board`          | Board                | The home screen's background, and Settings' and the editor's       |
-| `surface`        | Card                 | Phrase buttons, the line, tabs, list rows, and sheets' backgrounds |
-| `pressed`        | Card, pressed        | A card while a finger is on it                                     |
-| `ink`            | Marker black         | Phrases and every other text on cards and on the board             |
-| `ink-secondary`  | Pencil               | Speaker labels, counts, placeholders, and notes                    |
-| `edge`           | Card edge            | The edge of every card and secondary button                        |
-| `accent`         | Marker blue          | The big button, Speak, links, and the dot on a marked tab          |
-| `accent-pressed` | Marker blue, pressed | The big button and Speak while pressed                             |
-| `on-accent`      | On blue              | Text and symbols on marker blue                                    |
-| `yes-fill`       | Yes                  | Yes's fill, in the row and in the Quick category                   |
-| `yes-edge`       | Yes, edge            | Yes's edge                                                         |
-| `no-fill`        | No                   | No's fill                                                          |
-| `no-edge`        | No, edge             | No's edge                                                          |
-| `unsure-fill`    | Not sure             | Not sure's fill                                                    |
-| `unsure-edge`    | Not sure, edge       | Not sure's edge                                                    |
-| `listen`         | Listening orange     | The light while the microphone is on                               |
-| `on-listen`      | On orange            | "Listening" and its symbol                                         |
+| Token            | Name                 | Role                                                                  |
+| ---------------- | -------------------- | --------------------------------------------------------------------- |
+| `board`          | Board                | The home screen's background, and Settings' and the editor's          |
+| `surface`        | Card                 | Phrase buttons, the caption, tabs, list rows, and sheets' backgrounds |
+| `pressed`        | Card, pressed        | A card while a finger is on it                                        |
+| `ink`            | Marker black         | Phrases and every other text on cards and on the board                |
+| `ink-secondary`  | Pencil               | Speaker labels, counts, placeholders, and notes                       |
+| `edge`           | Card edge            | The edge of every card and secondary button                           |
+| `accent`         | Marker blue          | The big button, Speak, links, and the dot on a marked tab             |
+| `accent-pressed` | Marker blue, pressed | The big button and Speak while pressed                                |
+| `on-accent`      | On blue              | Text and symbols on marker blue                                       |
+| `yes-fill`       | Yes                  | Yes's fill, in the row and in the Quick category                      |
+| `yes-edge`       | Yes, edge            | Yes's edge                                                            |
+| `no-fill`        | No                   | No's fill                                                             |
+| `no-edge`        | No, edge             | No's edge                                                             |
+| `unsure-fill`    | Not sure             | Not sure's fill                                                       |
+| `unsure-edge`    | Not sure, edge       | Not sure's edge                                                       |
+| `listen`         | Listening orange     | The light while the microphone is on                                  |
+| `on-listen`      | On orange            | "Listening" and its symbol                                            |
 
 - **Four inks, fixed jobs.** Blue is Turn's own: its actions and the one reply
   it's sure of, never Yes or No. Green and red appear only on Yes and No, and
@@ -316,7 +316,7 @@ them (A11Y-7).
 
 | Text or mark    | On               | Used for                                   | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
 | --------------- | ---------------- | ------------------------------------------ | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`           | `surface`        | Phrases, the line, and labels on cards     | 17.0:1 | 15.6:1 | 21.0:1               | 17.0:1              | 7:1      |
+| `ink`           | `surface`        | Phrases, the caption, and labels on cards  | 17.0:1 | 15.6:1 | 21.0:1               | 17.0:1              | 7:1      |
 | `ink`           | `pressed`        | A card under a finger                      | 13.0:1 | 10.4:1 | 14.5:1               | 9.1:1               | 7:1      |
 | `ink`           | `board`          | Text on the board                          | 15.2:1 | 19.2:1 | 18.8:1               | 21.0:1              | 7:1      |
 | `on-accent`     | `accent`         | The big button, Speak, and paywall buttons | 7.9:1  | 8.6:1  | 9.9:1                | 13.0:1              | 7:1      |
@@ -429,7 +429,7 @@ are its regular and emphasized ones ([earlier iOS notes][ios-dt]).
 | `largeTitle-emphasized`  | The consent card's lead sentence                             | `largeTitle`      | 800            | 60/70  |
 | `title1-emphasized`      | The big button's phrase                                      | `title1`          | 800            | 58/68  |
 | `title2`                 | The consent card's facts, and "Listening" as a session opens | `title2`          | 600            | 56/66  |
-| `title3`                 | The partner's words in the line                              | `title3`          | 600            | 55/65  |
+| `title3`                 | The partner's words in the caption                           | `title3`          | 600            | 55/65  |
 | `title3-emphasized`      | Phrases in the row and the grid, and Yes, No, and Not sure   | `title3`          | 700            | 55/65  |
 | `headline`               | Buttons, tabs, the Listen control, and a long phrase's step  | `headline`        | 700            | 53/62  |
 | `body`                   | Settings, the permission step, the editor, and the notice    | `body`            | 600            | 53/62  |
@@ -443,7 +443,8 @@ are its regular and emphasized ones ([earlier iOS notes][ios-dt]).
   53 ([iOS notes][ios-scale]).
 - **Never shrunk by code.** No text sets `allowFontScaling={false}`,
   `maxFontSizeMultiplier`, or a fixed height, and only the row's slots and the
-  line set `numberOfLines`; see [the row](#the-row) and [the line](#the-line).
+  caption set `numberOfLines`; see [the row](#the-row) and
+  [the caption](#the-caption).
 - **Bold Text.** React Native's font code ignores the setting, so one hook
   swaps each token to its Bold Text weight on `boldTextChanged`, for system
   text too, since nothing says it thickens by itself ([iOS notes][ios-bold]).
@@ -509,7 +510,7 @@ top to bottom (SPEAK-1):
 
 ```text
 top bar     Settings  ·  place  ·  Listen control
-the line    They said                                             Done or Clear
+the caption They said                                             Done or Clear
             "How was physio?"
 the strip   Wait, I'm typing  |  Sorry, say that again  |  And you?
             I use this app to talk. Please give me time.  |  Something's wrong
@@ -521,15 +522,15 @@ the grid    phrase  |  phrase                                        (scrolls)
 bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
 ```
 
-| Band       | Height at the default text size | What sets it                                                       |
-| ---------- | ------------------------------- | ------------------------------------------------------------------ |
-| Top bar    | 52 points                       | `bar`                                                              |
-| The line   | 86 points                       | A label and two lines of `title3`, with one button beside them     |
-| The strip  | About 120 points                | Two rows of cells whose phrases wrap to two lines on a phone       |
-| The row    | 258 points                      | Three rows of 78-point slots and two 12-point gaps                 |
-| Tabs       | 44 points                       | `target`                                                           |
-| The grid   | The rest                        | About 100 points, one row, on a 6.1-inch iPhone; 200 on a 6.9-inch |
-| Bottom bar | 52 points                       | `bar`, above the home indicator                                    |
+| Band        | Height at the default text size | What sets it                                                       |
+| ----------- | ------------------------------- | ------------------------------------------------------------------ |
+| Top bar     | 52 points                       | `bar`                                                              |
+| The caption | 86 points                       | A label and two lines of `title3`, with one button beside them     |
+| The strip   | About 120 points                | Two rows of cells whose phrases wrap to two lines on a phone       |
+| The row     | 258 points                      | Three rows of 78-point slots and two 12-point gaps                 |
+| Tabs        | 44 points                       | `target`                                                           |
+| The grid    | The rest                        | About 100 points, one row, on a 6.1-inch iPhone; 200 on a 6.9-inch |
+| Bottom bar  | 52 points                       | `bar`, above the home indicator                                    |
 
 - **The grid gets what's left.** The PRD puts the strip and the row above the
   grid, and the row's 12-mm slots take their room, so on a 6.1-inch iPhone
@@ -539,7 +540,7 @@ bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
 - **Gaps.** 8 points between bands, 12 inside the row and the grid, and 16
   from the screen's edges; the board's color runs under the status bar and
   the home indicator, and content stays inside the safe areas.
-- **What doesn't scroll.** The top bar, the line, the strip, the row, the
+- **What doesn't scroll.** The top bar, the caption, the strip, the row, the
   tabs, and the bottom bar sit outside the grid's scroll view, so nothing
   collapses or slides them away ([iOS notes][ios-bars]); only the grid
   scrolls.
@@ -571,7 +572,7 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 ### Short screens and large text
 
 - **Short screens.** Where the space between the top bar and the screen's
-  bottom is under 700 points, as on an iPhone SE, the line, the strip, the
+  bottom is under 700 points, as on an iPhone SE, the caption, the strip, the
   row, the tabs, and the grid scroll together as one column, and only the top
   bar and the bottom bar stay put.
 - **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip,
@@ -589,7 +590,7 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 
 - The composer docks above the keyboard; the tabs, the grid, and the bottom
   bar slip under it.
-- The line's words move into the composer's label, "Replying to", so the
+- The caption's words move into the composer's label, "Replying to", so the
   top bar, the strip, and the row stay in view above the composer.
 - Where they don't fit, as on an iPhone SE, the space above the composer
   scrolls, the row first.
@@ -603,7 +604,7 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
   turn to glass by themselves, and Xcode 27 ignores
   `UIDesignRequiresCompatibility`, so an app can no longer opt out
   ([iOS notes][ios-key]). Turn draws no glass of its own and renders no
-  `GlassView`: phrases, the line, notes, and the consent card are content,
+  `GlassView`: phrases, the caption, notes, and the consent card are content,
   where Apple says not to use glass ([iOS notes][ios-glass-content]).
 - **Where the system's glass shows.** Settings' and the editor's navigation
   bars, the permission step's sheet, RevenueCat's paywall sheet, alerts, and
@@ -635,10 +636,10 @@ rounded:
   full: 9999px
 ```
 
-- **Cards** for phrases, the line, Yes, No, and Not sure take `md`; the big
+- **Cards** for phrases, the caption, Yes, No, and Not sure take `md`; the big
   button, larger, takes `lg`.
 - **Capsules** for controls that hold one word or two: the Listen control,
-  the place picker, tabs, and the line's and the composer's buttons take
+  the place picker, tabs, and the caption's and the composer's buttons take
   `full`, "a radius that's half the height" ([earlier iOS notes][ios-capsule]).
 - **Edges.** Cards and secondary buttons have a 2-point `edge`; Yes, No, and
   Not sure a 3-point edge in their own color; the selected tab and marker-blue
@@ -714,14 +715,14 @@ components:
     rounded: '{rounded.md}'
     padding: 8px
     height: 48px
-  line:
+  caption:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.title3}'
     rounded: '{rounded.md}'
     padding: 8px
     height: 92px
-  line-label:
+  caption-label:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink-secondary.light}'
     typography: '{typography.subheadline}'
@@ -847,13 +848,13 @@ components:
   unsure-dark-hc:
     backgroundColor: '{colors.unsure-fill.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
-  line-label-dark:
+  caption-label-dark:
     backgroundColor: '{colors.surface.dark}'
     textColor: '{colors.ink-secondary.dark}'
-  line-label-light-hc:
+  caption-label-light-hc:
     backgroundColor: '{colors.surface.light-hc}'
     textColor: '{colors.ink-secondary.light-hc}'
-  line-label-dark-hc:
+  caption-label-dark-hc:
     backgroundColor: '{colors.surface.dark-hc}'
     textColor: '{colors.ink-secondary.dark-hc}'
   note-dark:
@@ -971,7 +972,7 @@ The row's height and its six slots are fixed for the text size and the width
   and `xmark` already mean Done and Cancel in iOS ([iOS notes][ios-symbols]).
   The Quick category shows them the same way.
 - **A row that holds.** When a line gets no phrase above the floor, nothing in
-  the row changes (ROW-3), and the line says which line the replies still
+  the row changes (ROW-3), and the caption says which line the replies still
   answer, rather than dimming them ([AAC design notes][aac-stale]).
 - **No confidence shown.** No percentages, bars, sparkles, or badges: the row's
   three states, one big button, up to six phrases, or no change, already say
@@ -1004,12 +1005,12 @@ The row's height and its six slots are fixed for the text size and the width
   trade for keeping the grid on screen; they're wider than tall, and the
   [open questions](#open-questions) keep the choice open.
 
-### The line
+### The caption
 
-The line shows what's being said: the partner's words in Listen mode, and the
+The caption shows what's being said: the partner's words in Listen mode, and the
 user's last spoken phrase outside it.
 
-- **Look.** A `line` card across the screen, 86 points tall at the default
+- **Look.** A `caption` card across the screen, 86 points tall at the default
   size: a speaker label in `subheadline`, `ink-secondary`, then up to two lines
   of words in `title3`, `ink`, with one capsule button at its trailing edge.
 - **Words.** A long partner line shows its last two lines, cut at the start
@@ -1038,14 +1039,14 @@ word:
 | Locked    | A card capsule: `lock`, "Listen", and "Unlock"              | Opens the paywall (PAY-2)                                             |
 | Listening | The `light`: an orange capsule, `mic.fill`, and "Listening" | Pauses (CONSENT-5)                                                    |
 | Paused    | A card capsule: `mic.slash`, "Paused", with End beside it   | Resumes without the card; End stops Listen mode and clears the row    |
-| Mic off   | A card capsule: `mic.slash`, "Mic off", with End beside it  | Nothing: the line says why (CONSENT-6, LISTEN-9); End stops it        |
+| Mic off   | A card capsule: `mic.slash`, "Mic off", with End beside it  | Nothing: the caption says why (CONSENT-6, LISTEN-9); End stops it     |
 
 - **The light.** Its symbol fades in and out while the partner's words
   arrive, for at most five seconds a line, and holds still otherwise, and
   always under Reduce Motion; a word and a symbol carry its meaning, and the
   color is a third cue
   ([AAC design notes][aac-light]).
-- **Large at first.** When a session starts, the line says "Listening" in
+- **Large at first.** When a session starts, the caption says "Listening" in
   `title2` until the first words arrive, since small lights go unnoticed
   ([AAC design notes][aac-light]).
 - **Free lines.** The count, "20 free", sits under "Listen" in `subheadline`,
@@ -1126,14 +1127,14 @@ Motion answers someone: the user, the partner, or a reply arriving. The format
 has no motion tokens, and its maintainer points motion to prose, so this table
 is the whole inventory ([trends notes][ft-proposals]).
 
-| What moves         | When                             | How                                                                      | Under Reduce Motion |
-| ------------------ | -------------------------------- | ------------------------------------------------------------------------ | ------------------- |
-| A slot's phrase    | A new answer changes the slot    | The old phrase fades out and the new one in, 150 ms                      | Swaps at once       |
-| The big button     | It appears or leaves             | Cross-fades over the six slots' frame, 200 ms                            | Swaps at once       |
-| The light's symbol | While the partner's words arrive | Opacity from 100% to 35% and back, 1.2 s a cycle, for at most 5 s a line | Holds at 100%       |
-| A pressed control  | While a finger is on it          | Its fill changes at once                                                 | The same            |
-| The line's words   | As the partner speaks            | Words appear as they're heard, with no animation                         | The same            |
-| Sheets and menus   | They open or close               | The system's own                                                         | The system's own    |
+| What moves          | When                             | How                                                                      | Under Reduce Motion |
+| ------------------- | -------------------------------- | ------------------------------------------------------------------------ | ------------------- |
+| A slot's phrase     | A new answer changes the slot    | The old phrase fades out and the new one in, 150 ms                      | Swaps at once       |
+| The big button      | It appears or leaves             | Cross-fades over the six slots' frame, 200 ms                            | Swaps at once       |
+| The light's symbol  | While the partner's words arrive | Opacity from 100% to 35% and back, 1.2 s a cycle, for at most 5 s a line | Holds at 100%       |
+| A pressed control   | While a finger is on it          | Its fill changes at once                                                 | The same            |
+| The caption's words | As the partner speaks            | Words appear as they're heard, with no animation                         | The same            |
+| Sheets and menus    | They open or close               | The system's own                                                         | The system's own    |
 
 - **Nothing else moves.** No entrances, staggers, springs, parallax, shimmer,
   skeletons, or loops; the grid never animates; and a press changes the fill,
@@ -1183,13 +1184,13 @@ Each screen uses the components above; the TRD's
 
 ### The home screen, state by state
 
-| State                 | The line                                                 | The row                                             | The Listen control      |
+| State                 | The caption                                              | The row                                             | The Listen control      |
 | --------------------- | -------------------------------------------------------- | --------------------------------------------------- | ----------------------- |
 | First launch          | "You said" and "Nothing said yet."                       | Empty, with its note                                | Off, "20 free"          |
 | Listen mode off       | "You said" and the last phrase spoken                    | Typing's matches while the keyboard is up (SPEAK-4) | Off                     |
 | A session opening     | "Listening", large                                       | Empty                                               | Listening               |
 | A partner speaking    | "They're saying", the words so far, and Done             | As it was                                           | Listening, symbol fades |
-| Replies ready         | "They said", the line, and Clear                         | Up to six, the big button, or Yes, No, Not sure     | Listening               |
+| Replies ready         | "They said", their line, and Clear                       | Up to six, the big button, or Yes, No, Not sure     | Listening               |
 | Nothing fits          | "They said", the new line, and "Still answering" note    | As it was (ROW-3)                                   | Listening               |
 | Ranked on the phone   | A "Ranked on this phone" note (STATE-1, STATE-2)         | The phone's replies                                 | Listening               |
 | Degraded              | A "Listen mode is degraded" note (STATE-2, STATE-3)      | The phone's replies                                 | Listening               |
@@ -1199,7 +1200,7 @@ Each screen uses the components above; the TRD's
 | Turn speaking         | As it was                                                | The spoken phrase's card shows its speaker symbol   | As it was               |
 | Free lines used up    | Unchanged                                                | Empty                                               | Locked                  |
 
-- **Stopping Listen mode** clears the row (ROW-10) and returns the line to
+- **Stopping Listen mode** clears the row (ROW-10) and returns the caption to
   "You said".
 - **While Turn speaks,** the bottom bar's Repeat becomes Stop (SPEAK-2).
 - **Leaving the app** pauses listening, and on return the control shows Paused
@@ -1211,7 +1212,7 @@ The composer docks above the keyboard, with "Replying to" and the partner's
 line above the field in Listen mode; the row shows the phrases matching the
 letters typed (SPEAK-4) and returns to its last answer when the keyboard
 closes. Speak says the text and adds it to Typed (SPEAK-3); outside Listen
-mode, the line then shows it as "You said", and in Listen mode it keeps the
+mode, the caption then shows it as "You said", and in Listen mode it keeps the
 partner's line.
 
 ### The permission step
@@ -1345,7 +1346,7 @@ seconds.
 - **The words are the user's.** Turn never hedges, labels, or rates a phrase,
   and never calls a reply suggested, smart, or AI; "AI" appears only in the
   words CONSENT-1 fixes.
-- **Speaker labels by role.** The line labels speakers "They said" and "You
+- **Speaker labels by role.** The caption labels speakers "They said" and "You
   said", never "Partner" or "User".
 - **Unnamed until agreed.** Jev and TypeSafe appear in no string until
   TypeSafe agrees, and the texts follow the relay's setting (CONSENT-7,
@@ -1363,39 +1364,39 @@ The PRD fixes the strip's phrases, the Quick category's, "Listening", "Allow",
 "Not now", "They agreed", "They said no", "My partner is under 18", "What did
 they say?", and the names of buttons and settings; these are the rest.
 
-| Where                         | Words                                                                                                                                                                                                                     | For                           |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| The Listen control            | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                                                                        | PAY-1, PAY-2                  |
-| Paused, and its End           | "Paused" and "End"                                                                                                                                                                                                        | CONSENT-5                     |
-| Under 18                      | "Mic off"                                                                                                                                                                                                                 | CONSENT-6                     |
-| The line, before speech       | "You said" and "Nothing said yet."                                                                                                                                                                                        | SPEAK-1                       |
-| The line, while hearing       | "They're saying"                                                                                                                                                                                                          | LISTEN-1                      |
-| The line, after a line        | "They said"                                                                                                                                                                                                               | LISTEN-1                      |
-| The line, when the row holds  | "Still answering “How was physio?”"                                                                                                                                                                                       | ROW-3                         |
-| Notes                         | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                                                                                                                                  | STATE-1 to STATE-3, CONSENT-6 |
-| No live transcription         | "Live transcription isn't available here. Tap here to type what they say."                                                                                                                                                | LISTEN-9                      |
-| The speech model              | "Getting Apple's English speech model", with its progress                                                                                                                                                                 | LISTEN-1                      |
-| The empty row                 | "Replies to your partner appear here."                                                                                                                                                                                    | ROW-1                         |
-| The empty row, under 18       | "Listen mode is off for this partner."                                                                                                                                                                                    | CONSENT-6                     |
-| A changed row, to VoiceOver   | "3 replies", or "1 reply"                                                                                                                                                                                                 | A11Y-2                        |
-| The composer                  | "Type what to say", "Speak", and "Replying to “How was physio?”"                                                                                                                                                          | SPEAK-3                       |
-| The partner's composer        | "Send"                                                                                                                                                                                                                    | LISTEN-4                      |
-| The tabs and the bottom bar   | "All"; "Type", "Repeat", "Stop", "Up", and "Down"                                                                                                                                                                         | ROW-9, SPEAK-1                |
-| The permission step's title   | "Before Listen mode starts"                                                                                                                                                                                               | CONSENT-1                     |
-| The consent card's lead       | "Can my phone listen while we talk?"                                                                                                                                                                                      | CONSENT-4                     |
-| The consent card's facts      | "It turns your words into text on this phone." "Your words, with any names it recognizes swapped for tags, go to {service} to pick my replies from my own phrases." "No audio is recorded." "I can pause it at any time." | CONSENT-4                     |
-| The consent card's button     | "Read aloud"                                                                                                                                                                                                              | CONSENT-4                     |
-| The paywall                   | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"                                                                                                                       | PAY-2                         |
-| After a purchase              | "Listen mode is unlocked."                                                                                                                                                                                                | PAY-4                         |
-| A purchase that fails         | "The purchase didn't go through. Listen mode is still locked."                                                                                                                                                            | PAY-5                         |
-| Restore, with nothing to find | "No purchase found for this phone. Listen mode is still locked."                                                                                                                                                          | PAY-6                         |
-| Personal Voice refused        | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                                                                   | VOICE-2                       |
-| Personal Voice unavailable    | "There's no Personal Voice on this iPhone that Turn can use, so it keeps the system voice."                                                                                                                               | VOICE-2                       |
-| Erase all data                | "Erase all data?", "This deletes your phrases, places, tap counts, and settings, and brings back the starter phrases.", "Erase", and "Cancel"                                                                             | SET-3                         |
-| Deleting a category           | "Where should its phrases go?"                                                                                                                                                                                            | BANK-2                        |
-| Undo                          | "Deleted." and "Undo"                                                                                                                                                                                                     | BANK-9                        |
-| The starter card              | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"                                                                                                                     | BANK-10                       |
-| A starter phrase              | "Starter"                                                                                                                                                                                                                 | BANK-10                       |
+| Where                           | Words                                                                                                                                                                                                                     | For                           |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| The Listen control              | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                                                                        | PAY-1, PAY-2                  |
+| Paused, and its End             | "Paused" and "End"                                                                                                                                                                                                        | CONSENT-5                     |
+| Under 18                        | "Mic off"                                                                                                                                                                                                                 | CONSENT-6                     |
+| The caption, before speech      | "You said" and "Nothing said yet."                                                                                                                                                                                        | SPEAK-1                       |
+| The caption, while hearing      | "They're saying"                                                                                                                                                                                                          | LISTEN-1                      |
+| The caption, after a line       | "They said"                                                                                                                                                                                                               | LISTEN-1                      |
+| The caption, when the row holds | "Still answering “How was physio?”"                                                                                                                                                                                       | ROW-3                         |
+| Notes                           | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                                                                                                                                  | STATE-1 to STATE-3, CONSENT-6 |
+| No live transcription           | "Live transcription isn't available here. Tap here to type what they say."                                                                                                                                                | LISTEN-9                      |
+| The speech model                | "Getting Apple's English speech model", with its progress                                                                                                                                                                 | LISTEN-1                      |
+| The empty row                   | "Replies to your partner appear here."                                                                                                                                                                                    | ROW-1                         |
+| The empty row, under 18         | "Listen mode is off for this partner."                                                                                                                                                                                    | CONSENT-6                     |
+| A changed row, to VoiceOver     | "3 replies", or "1 reply"                                                                                                                                                                                                 | A11Y-2                        |
+| The composer                    | "Type what to say", "Speak", and "Replying to “How was physio?”"                                                                                                                                                          | SPEAK-3                       |
+| The partner's composer          | "Send"                                                                                                                                                                                                                    | LISTEN-4                      |
+| The tabs and the bottom bar     | "All"; "Type", "Repeat", "Stop", "Up", and "Down"                                                                                                                                                                         | ROW-9, SPEAK-1                |
+| The permission step's title     | "Before Listen mode starts"                                                                                                                                                                                               | CONSENT-1                     |
+| The consent card's lead         | "Can my phone listen while we talk?"                                                                                                                                                                                      | CONSENT-4                     |
+| The consent card's facts        | "It turns your words into text on this phone." "Your words, with any names it recognizes swapped for tags, go to {service} to pick my replies from my own phrases." "No audio is recorded." "I can pause it at any time." | CONSENT-4                     |
+| The consent card's button       | "Read aloud"                                                                                                                                                                                                              | CONSENT-4                     |
+| The paywall                     | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"                                                                                                                       | PAY-2                         |
+| After a purchase                | "Listen mode is unlocked."                                                                                                                                                                                                | PAY-4                         |
+| A purchase that fails           | "The purchase didn't go through. Listen mode is still locked."                                                                                                                                                            | PAY-5                         |
+| Restore, with nothing to find   | "No purchase found for this phone. Listen mode is still locked."                                                                                                                                                          | PAY-6                         |
+| Personal Voice refused          | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                                                                   | VOICE-2                       |
+| Personal Voice unavailable      | "There's no Personal Voice on this iPhone that Turn can use, so it keeps the system voice."                                                                                                                               | VOICE-2                       |
+| Erase all data                  | "Erase all data?", "This deletes your phrases, places, tap counts, and settings, and brings back the starter phrases.", "Erase", and "Cancel"                                                                             | SET-3                         |
+| Deleting a category             | "Where should its phrases go?"                                                                                                                                                                                            | BANK-2                        |
+| Undo                            | "Deleted." and "Undo"                                                                                                                                                                                                     | BANK-9                        |
+| The starter card                | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"                                                                                                                     | BANK-10                       |
+| A starter phrase                | "Starter"                                                                                                                                                                                                                 | BANK-10                       |
 
 - **Starter phrases** put their key words first and stay under about 30
   characters where they can, so most fit a slot at the default size without an
@@ -1414,15 +1415,15 @@ How the design meets each accessibility requirement; the TRD's
   changed row is announced once, as the number of replies, queued so it
   doesn't cut off Turn's own speech.
 - **A11Y-3, Switch Control and Voice Control.** Layout order is focus order:
-  the top bar, the line, the strip, the row, the tabs, the grid, and the
+  the top bar, the caption, the strip, the row, the tabs, the grid, and the
   bottom bar, so a switch reaches the row before the grid, and nothing depends
   on detecting either feature.
 - **A11Y-4, large text.** Every style follows its ramp to AX5, from AX1
   everything between the top bar and the bottom bar scrolls as one column, and
   only the row may end a phrase with an ellipsis, with the whole phrase in
-  VoiceOver, in speech, and in the grid ([the row](#the-row)); the line, which
-  holds the partner's words rather than phrases, cuts them the same way
-  ([the line](#the-line)).
+  VoiceOver, in speech, and in the grid ([the row](#the-row)); the caption,
+  which holds the partner's words rather than phrases, cuts them the same way
+  ([the caption](#the-caption)).
 - **A11Y-5, taps and time.** Everything works with single taps, including the
   speech rate, reordering, and the grid's Up and Down, and no note, card, or
   Undo times out.
@@ -1446,12 +1447,12 @@ listing, since each label has published criteria
 | --------------------------------- | ------------------------------------------------------------------------------ |
 | VoiceOver                         | Every phrase, the row's announcement, the light, the consent card, the paywall |
 | Voice Control                     | "Tap It was hard", and dictation into both composers                           |
-| Larger Text                       | Every screen and the paywall at AX5, cut only in the row and the line          |
+| Larger Text                       | Every screen and the paywall at AX5, cut only in the row and the caption       |
 | Dark Interface                    | Every screen, the paywall, and the launch screen                               |
 | Differentiate Without Color Alone | Row states, the light, and the marked tab in grayscale                         |
 | Sufficient Contrast               | The contrast table, in all four appearances                                    |
 | Reduced Motion                    | No moving slot, no fading light, and a still paywall                           |
-| Captions                          | The partner's words in the line, and the last phrase spoken                    |
+| Captions                          | The partner's words in the caption, and the last phrase spoken                 |
 
 - **Settings to try.** Light and dark, each with Increase Contrast; Reduce
   Transparency; both ends of the Liquid Glass slider; Reduce Motion turned on
@@ -1486,7 +1487,7 @@ listing, since each label has published criteria
 - **The required screenshot.** 1179 by 2556 pixels without a device frame,
   which an iPhone 16 simulator on iOS 27 draws at native size, captured in
   Device Hub with the status bar set to 9:41 by `simctl`. It shows the row
-  mid-answer: the line with "How was physio?" and "It was hard" among the
+  mid-answer: the caption with "How was physio?" and "It was hard" among the
   replies ([iOS notes][ios-devpost]).
 - **The thumbnail.** 3:2, typographic: Turn's line, "Your own words, in time
   for your turn.", in Atkinson Hyperlegible Next, and one big reply button in
@@ -1603,7 +1604,7 @@ listing, since each label has published criteria
   in Device Hub to 320, 375, 402, and 440 points wide.
 - **Settings.** Everything in [the test plan](#the-test-plan).
 - **Real words.** The longest starter phrase in a slot and in the grid, a
-  300-character partner line in the line, and the strip at AX5.
+  300-character partner line in the caption, and the strip at AX5.
 - **Colors.** After any color change, `check_contrast.py`, from the
   [design plan's appendix][plan-checks], still prints `OK`.
 
@@ -1612,10 +1613,10 @@ listing, since each label has published criteria
 ### If the days run short
 
 Ship first what the rules need: the tokens, the row and its states, the strip,
-the line, the light, the consent card, the ramps, and Reduce Motion. These can
-follow in an update: three-column widths for iPads, the All sheet while the
-categories fit on one line, the README's GIF, and the gallery's composites
-beyond the required screenshot. Never cut a rule.
+the caption, the light, the consent card, the ramps, the page buttons, and
+Reduce Motion. These can follow in an update: three-column widths for iPads,
+the All sheet while the categories fit on one line, the README's GIF, and the
+gallery's composites beyond the required screenshot. Never cut a rule.
 
 ## Open questions
 
@@ -1624,7 +1625,7 @@ Each has a safe default, which this document follows until someone decides.
 - **A show view for the partner.** Seven of twelve rival apps can put the
   last phrase in large type or flip it toward the partner in a tap or two, and
   the PRD has no such view ([AAC design notes][aac-partner]). Safe default:
-  none in the first version; outside Listen mode the line shows the last
+  none in the first version; outside Listen mode the caption shows the last
   phrase spoken, and the PRD can add a Should.
 - **Finishing a phrase first.** SPEAK-2 lets a stray tap cut off a phrase
   mid-speech, which a tremor's second tap can do, and two rivals offer a
