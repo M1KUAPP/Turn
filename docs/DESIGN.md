@@ -18,6 +18,8 @@ Contents:
 1.  [Colors](#colors)
 1.  [Typography](#typography)
 1.  [Layout](#layout)
+1.  [Elevation](#elevation)
+1.  [Shapes](#shapes)
 1.  [See also](#see-also)
 
 ## Overview
@@ -527,6 +529,63 @@ Sizes are points: the format's `px` means a point on the iPhone.
   iPhone, and on an iPad at phone size (COMPAT-3).
 - **Safe areas.** Content stays inside them, and the table's color runs
   under the status bar and the home indicator.
+
+## Elevation
+
+- **Depth by color.** The table is the floor; the notepad and the speech
+  bubble are Index white on it; the answer card sits highest, with the only
+  large shadow.
+- **Shadows.** Two, tinted with Ballpoint, never gray: the answer card's,
+  `0 8 24` at 25%, and the composer's fallback, `0 2 8` at 12%.
+- **Liquid Glass from the system.** Navigation bars, sheets, alerts, menus,
+  and the keyboard take it on iOS 26 and 27 by themselves. The app sets no
+  opt-out, since Apple ignores `UIDesignRequiresCompatibility` once an app
+  builds for iOS 27 ([iOS notes on the key][ios-key]).
+- **Liquid Glass in Guessling's views.** Only the composer, a capsule of
+  regular `GlassView` from `expo-glass-effect` on iOS 26 and later, which
+  floats over the notepad. Its send button is the one colored thing on it,
+  in Marigold, since Apple says "To emphasize primary actions, apply color
+  to the background rather than to symbols or text."
+- **The fallback.** On iOS 16.4 to 18, where `GlassView` draws nothing, and
+  whenever `AccessibilityInfo.isReduceTransparencyEnabled()` is true, the
+  composer is an Index white capsule with a 1-point Pencil border and its
+  shadow; the app follows `reduceTransparencyChanged`.
+- **Never fade glass.** Opacity under 1 on a `GlassView` or any parent stops
+  the glass from drawing, so the composer leaves by moving, never by fading
+  ([iOS notes on glass views][ios-glass-views]).
+- **Never glass on content.** Not on the Guessling, the hint, the notepad,
+  the chips, or the answer card: "Don't use Liquid Glass in the content
+  layer."
+- **Headers.** Today draws its own top bar on the table. Archive and
+  Settings use the native large-title header over the table: transparent,
+  with the system's scroll edge effect, on iOS 26 and later, and opaque in
+  the table's color below iOS 26, with the title and items in Chalk either
+  way ([iOS notes on headers][ios-headers]).
+
+[ios-key]: /docs/research/ios-design.md#the-compatibility-key
+[ios-glass-views]: /docs/research/ios-design.md#glass-views-in-expo
+[ios-headers]: /docs/research/ios-design.md#headers-sheets-and-tabs-in-expo-router
+
+## Shapes
+
+```yaml
+rounded:
+  pip: 4px
+  sm: 8px
+  md: 12px
+  lg: 20px
+  full: 9999px
+```
+
+- **Capsules** for buttons, chips, the composer, and the speech bubble,
+  with "a radius that's half the height".
+- **Cards.** The notepad has `lg` corners at the top and runs off the
+  bottom of the screen; list groups are `lg`; the answer card is `md`.
+- **Pips** are `pip`.
+- **Concentric.** A shape inside another takes the outer radius minus the
+  padding between them, as Apple's layouts do.
+- **Soft everywhere.** No sharp corners, and no square and round corners
+  in the same view.
 
 ## See also
 
