@@ -15,6 +15,9 @@ Contents:
 1.  [Colors](#colors)
 1.  [Typography](#typography)
 1.  [Layout](#layout)
+1.  [Elevation](#elevation)
+1.  [Shapes](#shapes)
+1.  [Components](#components)
 1.  [See also](#see-also)
 
 ## Overview
@@ -145,7 +148,6 @@ note that holds its sources.
 [ft-sample]: /docs/research/turn-frontend-trends.md#a-turn-shaped-sample-through-the-linter
 [ft-studies]: /docs/research/turn-frontend-trends.md#studies-of-ai-generated-interfaces
 [ft-kits]: /docs/research/turn-frontend-trends.md#styling-and-component-kits
-[ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
 [ft-m3e]: /docs/research/turn-frontend-trends.md#material-3-expressive-and-older-users
 [aac-patterns]: /docs/research/aac-design.md#patterns-across-the-apps
 [ft-bans]: /docs/research/turn-frontend-trends.md#bans-that-suit-an-aac-app
@@ -576,6 +578,520 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 - Where they don't fit, as on an iPhone SE, the space above the composer
   scrolls, the row first.
 
+## Elevation
+
+- **Depth by color and edges.** The board is the floor, cards sit on it with a
+  2-point `edge`, and the big button stands out by its marker blue; nothing
+  casts a shadow.
+- **Liquid Glass from the system only.** Bars, sheets, alerts, switches, and
+  the keyboard turn to glass by themselves, and Xcode 27 ignores
+  `UIDesignRequiresCompatibility`, so an app can no longer opt out
+  ([iOS notes][ios-key]). Turn draws no glass of its own and renders no
+  `GlassView`: phrases, the line, notes, and the consent card are content,
+  where Apple says not to use glass ([iOS notes][ios-glass-content]).
+- **Where the system's glass shows.** Settings' and the editor's navigation
+  bars, the permission step's sheet, RevenueCat's paywall sheet, alerts, the
+  under-18 switch, and the keyboard ([iOS notes][ios-chrome]). The home screen
+  has no navigation bar.
+- **Sheets that hold reading text set a background.** Expo Router makes a
+  form sheet's header and content transparent where glass is available, so the
+  permission step sets `headerTransparent: false` and a `surface` background
+  ([iOS notes][ios-glass-expo]).
+- **Every glass setting leaves the words alone.** Reduce Transparency, Increase
+  Contrast, and the Liquid Glass slider from clear to tinted change only the
+  system's chrome, which follows them with no code from Turn
+  ([iOS notes][ios-glass-settings]).
+
+[ios-key]: /docs/research/turn-ios-design.md#the-compatibility-key-under-xcode-27
+[ios-chrome]: /docs/research/turn-ios-design.md#turns-chrome-that-turns-to-glass
+[ios-glass-expo]: /docs/research/turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
+[ios-glass-settings]: /docs/research/turn-ios-design.md#settings-that-change-glass
+
+## Shapes
+
+```yaml
+rounded:
+  sm: 8px
+  md: 12px
+  lg: 16px
+  full: 9999px
+```
+
+- **Cards** for phrases, the line, Yes, No, and Not sure take `md`; the big
+  button, larger, takes `lg`.
+- **Capsules** for controls that hold one word or two: the Listen control,
+  the place picker, tabs, and the line's and the composer's buttons take
+  `full`, "a radius that's half the height" ([earlier iOS notes][ios-capsule]).
+- **Edges.** Cards and secondary buttons have a 2-point `edge`; Yes, No, and
+  Not sure a 3-point edge in their own color; the selected tab and marker-blue
+  fills need none.
+- **Concentric.** A shape inside another takes the outer radius minus the
+  padding between them; `sm` is for small marks inside cards, such as the
+  speaking symbol.
+
+[ios-capsule]: /docs/research/ios-design.md#glass-in-custom-controls
+
+## Components
+
+Each component below is written for the light appearance. For every pair of
+text and background colors, one component also appears as `-dark`,
+`-light-hc`, and `-dark-hc`, naming that appearance's colors, so the linter
+checks all four; edges appear the same way, and every other property is the
+light entry's. The format has no border property, so an edge is a component of
+its own whose `height` is its width.
+
+```yaml
+components:
+  phrase:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.title3-emphasized}'
+    rounded: '{rounded.md}'
+    padding: 12px
+    height: 78px
+  phrase-pressed:
+    backgroundColor: '{colors.pressed.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.title3-emphasized}'
+    rounded: '{rounded.md}'
+    padding: 12px
+    height: 78px
+  big:
+    backgroundColor: '{colors.accent.light}'
+    textColor: '{colors.on-accent.light}'
+    typography: '{typography.title1-emphasized}'
+    rounded: '{rounded.lg}'
+    padding: 16px
+  big-pressed:
+    backgroundColor: '{colors.accent-pressed.light}'
+    textColor: '{colors.on-accent.light}'
+    typography: '{typography.title1-emphasized}'
+    rounded: '{rounded.lg}'
+    padding: 16px
+  yes:
+    backgroundColor: '{colors.yes-fill.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.title3-emphasized}'
+    rounded: '{rounded.md}'
+    padding: 12px
+    height: 78px
+  no:
+    backgroundColor: '{colors.no-fill.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.title3-emphasized}'
+    rounded: '{rounded.md}'
+    padding: 12px
+    height: 78px
+  unsure:
+    backgroundColor: '{colors.unsure-fill.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.title3-emphasized}'
+    rounded: '{rounded.md}'
+    padding: 12px
+    height: 78px
+  strip-phrase:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.subheadline-emphasized}'
+    rounded: '{rounded.md}'
+    padding: 8px
+    height: 48px
+  line:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.title3}'
+    rounded: '{rounded.md}'
+    padding: 8px
+    height: 92px
+  line-label:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink-secondary.light}'
+    typography: '{typography.subheadline}'
+  note:
+    backgroundColor: '{colors.board.light}'
+    textColor: '{colors.ink-secondary.light}'
+    typography: '{typography.subheadline}'
+  light:
+    backgroundColor: '{colors.listen.light}'
+    textColor: '{colors.on-listen.light}'
+    typography: '{typography.headline}'
+    rounded: '{rounded.full}'
+    padding: 12px
+    height: 44px
+  tab:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.headline}'
+    rounded: '{rounded.full}'
+    padding: 12px
+    height: 44px
+  tab-selected:
+    backgroundColor: '{colors.ink.light}'
+    textColor: '{colors.surface.light}'
+    typography: '{typography.headline}'
+    rounded: '{rounded.full}'
+    padding: 12px
+    height: 44px
+  button-primary:
+    backgroundColor: '{colors.accent.light}'
+    textColor: '{colors.on-accent.light}'
+    typography: '{typography.headline}'
+    rounded: '{rounded.full}'
+    padding: 16px
+    height: 52px
+  button-secondary:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.headline}'
+    rounded: '{rounded.full}'
+    padding: 16px
+    height: 52px
+  link:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.accent.light}'
+    typography: '{typography.body}'
+  consent-lead:
+    backgroundColor: '{colors.board.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.largeTitle-emphasized}'
+  edge:
+    backgroundColor: '{colors.edge.light}'
+    height: 2px
+  yes-edge:
+    backgroundColor: '{colors.yes-edge.light}'
+    height: 3px
+  no-edge:
+    backgroundColor: '{colors.no-edge.light}'
+    height: 3px
+  unsure-edge:
+    backgroundColor: '{colors.unsure-edge.light}'
+    height: 3px
+  phrase-dark:
+    backgroundColor: '{colors.surface.dark}'
+    textColor: '{colors.ink.dark}'
+  phrase-light-hc:
+    backgroundColor: '{colors.surface.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  phrase-dark-hc:
+    backgroundColor: '{colors.surface.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
+  phrase-pressed-dark:
+    backgroundColor: '{colors.pressed.dark}'
+    textColor: '{colors.ink.dark}'
+  phrase-pressed-light-hc:
+    backgroundColor: '{colors.pressed.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  phrase-pressed-dark-hc:
+    backgroundColor: '{colors.pressed.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
+  big-dark:
+    backgroundColor: '{colors.accent.dark}'
+    textColor: '{colors.on-accent.dark}'
+  big-light-hc:
+    backgroundColor: '{colors.accent.light-hc}'
+    textColor: '{colors.on-accent.light-hc}'
+  big-dark-hc:
+    backgroundColor: '{colors.accent.dark-hc}'
+    textColor: '{colors.on-accent.dark-hc}'
+  big-pressed-dark:
+    backgroundColor: '{colors.accent-pressed.dark}'
+    textColor: '{colors.on-accent.dark}'
+  big-pressed-light-hc:
+    backgroundColor: '{colors.accent-pressed.light-hc}'
+    textColor: '{colors.on-accent.light-hc}'
+  big-pressed-dark-hc:
+    backgroundColor: '{colors.accent-pressed.dark-hc}'
+    textColor: '{colors.on-accent.dark-hc}'
+  yes-dark:
+    backgroundColor: '{colors.yes-fill.dark}'
+    textColor: '{colors.ink.dark}'
+  yes-light-hc:
+    backgroundColor: '{colors.yes-fill.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  yes-dark-hc:
+    backgroundColor: '{colors.yes-fill.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
+  no-dark:
+    backgroundColor: '{colors.no-fill.dark}'
+    textColor: '{colors.ink.dark}'
+  no-light-hc:
+    backgroundColor: '{colors.no-fill.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  no-dark-hc:
+    backgroundColor: '{colors.no-fill.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
+  unsure-dark:
+    backgroundColor: '{colors.unsure-fill.dark}'
+    textColor: '{colors.ink.dark}'
+  unsure-light-hc:
+    backgroundColor: '{colors.unsure-fill.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  unsure-dark-hc:
+    backgroundColor: '{colors.unsure-fill.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
+  line-label-dark:
+    backgroundColor: '{colors.surface.dark}'
+    textColor: '{colors.ink-secondary.dark}'
+  line-label-light-hc:
+    backgroundColor: '{colors.surface.light-hc}'
+    textColor: '{colors.ink-secondary.light-hc}'
+  line-label-dark-hc:
+    backgroundColor: '{colors.surface.dark-hc}'
+    textColor: '{colors.ink-secondary.dark-hc}'
+  note-dark:
+    backgroundColor: '{colors.board.dark}'
+    textColor: '{colors.ink-secondary.dark}'
+  note-light-hc:
+    backgroundColor: '{colors.board.light-hc}'
+    textColor: '{colors.ink-secondary.light-hc}'
+  note-dark-hc:
+    backgroundColor: '{colors.board.dark-hc}'
+    textColor: '{colors.ink-secondary.dark-hc}'
+  light-dark:
+    backgroundColor: '{colors.listen.dark}'
+    textColor: '{colors.on-listen.dark}'
+  light-light-hc:
+    backgroundColor: '{colors.listen.light-hc}'
+    textColor: '{colors.on-listen.light-hc}'
+  light-dark-hc:
+    backgroundColor: '{colors.listen.dark-hc}'
+    textColor: '{colors.on-listen.dark-hc}'
+  tab-selected-dark:
+    backgroundColor: '{colors.ink.dark}'
+    textColor: '{colors.surface.dark}'
+  tab-selected-light-hc:
+    backgroundColor: '{colors.ink.light-hc}'
+    textColor: '{colors.surface.light-hc}'
+  tab-selected-dark-hc:
+    backgroundColor: '{colors.ink.dark-hc}'
+    textColor: '{colors.surface.dark-hc}'
+  link-dark:
+    backgroundColor: '{colors.surface.dark}'
+    textColor: '{colors.accent.dark}'
+  link-light-hc:
+    backgroundColor: '{colors.surface.light-hc}'
+    textColor: '{colors.accent.light-hc}'
+  link-dark-hc:
+    backgroundColor: '{colors.surface.dark-hc}'
+    textColor: '{colors.accent.dark-hc}'
+  consent-lead-dark:
+    backgroundColor: '{colors.board.dark}'
+    textColor: '{colors.ink.dark}'
+  consent-lead-light-hc:
+    backgroundColor: '{colors.board.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  consent-lead-dark-hc:
+    backgroundColor: '{colors.board.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
+  edge-dark:
+    backgroundColor: '{colors.edge.dark}'
+  edge-light-hc:
+    backgroundColor: '{colors.edge.light-hc}'
+  edge-dark-hc:
+    backgroundColor: '{colors.edge.dark-hc}'
+  yes-edge-dark:
+    backgroundColor: '{colors.yes-edge.dark}'
+  yes-edge-light-hc:
+    backgroundColor: '{colors.yes-edge.light-hc}'
+  yes-edge-dark-hc:
+    backgroundColor: '{colors.yes-edge.dark-hc}'
+  no-edge-dark:
+    backgroundColor: '{colors.no-edge.dark}'
+  no-edge-light-hc:
+    backgroundColor: '{colors.no-edge.light-hc}'
+  no-edge-dark-hc:
+    backgroundColor: '{colors.no-edge.dark-hc}'
+  unsure-edge-dark:
+    backgroundColor: '{colors.unsure-edge.dark}'
+  unsure-edge-light-hc:
+    backgroundColor: '{colors.unsure-edge.light-hc}'
+  unsure-edge-dark-hc:
+    backgroundColor: '{colors.unsure-edge.dark-hc}'
+```
+
+### The phrase button
+
+- **Look.** A `surface` card with a 2-point `edge`, `md` corners, 12-point
+  padding, and the phrase in `title3-emphasized`, `ink`, left-aligned and
+  wrapped; at least 78 points tall and as wide as its column. The whole card is
+  the target.
+- **Press.** The fill turns `pressed` at once and back on release, with no
+  change of size; the phrase speaks on release, and sliding off cancels
+  ([motionsites notes][ms-app]).
+- **Speaking.** While its phrase speaks, the card shows `speaker.wave.2` at its
+  top trailing corner, in `ink`.
+- **Accessibility.** Its label is its text and its trait is button, and Edit
+  and Move are named actions, never long presses (A11Y-2, A11Y-8)
+  ([TRD][trd-a11y]).
+
+[ms-app]: /docs/research/turn-motionsites.md#the-native-iphone-app
+[trd-a11y]: /docs/TRD.md#accessibility-in-the-app
+
+### The row
+
+The row's height and its six slots are fixed for the text size and the width
+(ROW-1); only what's in a slot changes.
+
+- **Filling.** Replies fill slots from the first, as ROW-5 moves them; an empty
+  slot shows the board, with no frame, so it doesn't look like a button. When
+  all six are empty, the first two slots' space shows a note in `subheadline`,
+  `ink-secondary`: "Replies to your partner appear here."
+- **A phrase too long for its slot.** A slot holds two lines of
+  `title3-emphasized`; a longer phrase steps down to `headline`'s size, still
+  two lines, and past that ends with an ellipsis. VoiceOver reads the whole
+  phrase, a tap speaks the whole phrase, and the grid shows it whole (A11Y-4).
+  Phrases short enough to fit, with their key words first, choose faster
+  ([AAC design notes][aac-cost]).
+- **The big button.** When ROW-3 shows one, it fills the frame of all six
+  slots: marker blue, `lg` corners, 16-point padding, and the phrase in
+  `title1-emphasized`, `on-accent`, left-aligned at the top. It's still just a
+  phrase: no label, no badge, and it speaks only on a tap (ROW-6). Its phrase
+  moves to the first free slot afterward if it stays at or above the floor
+  (ROW-5).
+- **Yes, No, and Not sure.** In slots 1 to 3 for a yes-or-no question (ROW-4),
+  as `yes`, `no`, and `unsure`: the word in `title3-emphasized`, `ink`, on its
+  tint, inside a 3-point edge of its color, with no symbol, since `checkmark`
+  and `xmark` already mean Done and Cancel in iOS ([iOS notes][ios-symbols]).
+  The Quick category shows them the same way.
+- **A row that holds.** When a line gets no phrase above the floor, nothing in
+  the row changes (ROW-3), and the line says which line the replies still
+  answer, rather than dimming them ([AAC design notes][aac-stale]).
+- **No confidence shown.** No percentages, bars, sparkles, or badges: the row's
+  three states, one big button, up to six phrases, or no change, already say
+  how sure Turn is, as Apple's and Google's guides advise
+  ([AAC design notes][aac-confidence]).
+- **The press guard.** A new answer that would change a slot waits while a
+  finger is on it, and lands when the finger lifts
+  ([AAC design notes][aac-stale]).
+- **Announcing.** A changed row is announced once, as the number of replies:
+  "3 replies", or "1 reply" for the big button (A11Y-2).
+
+[aac-cost]: /docs/research/aac-design.md#what-prediction-displays-cost
+[ios-symbols]: /docs/research/turn-ios-design.md#symbols-for-speaking-listening-and-answering
+[aac-stale]: /docs/research/aac-design.md#stale-rows-empty-rows-and-targets-that-move
+[aac-confidence]: /docs/research/aac-design.md#whether-to-show-confidence
+
+### The strip
+
+- **Look.** Five `strip-phrase` cards in a fixed order: "Wait, I'm typing",
+  "Sorry, say that again", and "And you?" in the first row, and "I use this
+  app to talk. Please give me time.", spanning two columns, and "Something's
+  wrong" in the second (SPEAK-7). Text in `subheadline-emphasized` wraps and
+  is never cut; cells are at least 48 points tall, with 8 points between them.
+- **"Something's wrong"** leads with `exclamationmark.triangle`, in `ink`, the
+  strip's one symbol.
+- **Why whole phrases.** A11Y-2 and A11Y-8 ask a phrase button to read, and be
+  named, as its text, so the strip shows each phrase in full rather than a
+  short label. Reworded phrases keep their places, and the strip's height
+  follows its words only when the user rewords one.
+- **Why 48 points.** The strip's cells fall short of the 12 mm the row gets, a
+  trade for keeping the grid on screen; they're wider than tall, and the
+  [open questions](#open-questions) keep the choice open.
+
+### The line
+
+The line shows what's being said: the partner's words in Listen mode, and the
+user's last spoken phrase outside it.
+
+- **Look.** A `line` card across the screen, 92 points tall at the default
+  size: a speaker label in `subheadline`, `ink-secondary`, then up to two lines
+  of words in `title3`, `ink`, with two capsule buttons stacked at its trailing
+  edge.
+- **Words.** A long partner line shows its last two lines, cut at the start
+  with an ellipsis, since the newest words matter most; the words live only in
+  memory and clear as LISTEN-8 says.
+- **Buttons.** The upper one is Done while a partner line is open (LISTEN-2),
+  and Clear when the row holds replies (ROW-10). The lower one is Repeat when
+  there's something to repeat (SPEAK-6), and Stop while Turn speaks (SPEAK-2).
+  Neither moves, so a hand learns both.
+- **Notes.** A note replaces the speaker label's right half, with its symbol:
+  the phone ranked the replies (STATE-1), Listen mode is degraded (STATE-2,
+  STATE-3), Listen mode is off for this partner (CONSENT-6), live
+  transcription isn't available (LISTEN-9), or the speech model is
+  downloading, with a progress bar under the words (LISTEN-1).
+- **Tap.** In Listen mode, a tap on the words opens the composer for the
+  partner's words (LISTEN-4).
+
+### The Listen control
+
+The top bar's trailing control, in `headline`, with its symbol before its
+word:
+
+| State     | Looks                                                       | A tap                                                                 |
+| --------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
+| Off       | A card capsule: `ear`, "Listen", and the free lines left    | Starts Listen mode: the permission step the first time, then the card |
+| Locked    | A card capsule: `lock`, "Listen", and "Unlock"              | Opens the paywall (PAY-2)                                             |
+| Listening | The `light`: an orange capsule, `mic.fill`, and "Listening" | Pauses (CONSENT-5)                                                    |
+| Paused    | A card capsule: `mic.slash`, "Paused", with End beside it   | Resumes without the card; End stops Listen mode and clears the row    |
+| Mic off   | A card capsule: `mic.slash`, "Mic off", with End beside it  | Nothing: the line says why (CONSENT-6); End stops Listen mode         |
+
+- **The light.** Its symbol fades in and out while the partner's words arrive
+  and holds still otherwise, and always under Reduce Motion; a word and a
+  symbol carry its meaning, and the color is a third cue
+  ([AAC design notes][aac-light]).
+- **Large at first.** When a session starts, the line says "Listening" in
+  `title2` until the first words arrive, since small lights go unnoticed
+  ([AAC design notes][aac-light]).
+- **Free lines.** The count, "20 free", sits under "Listen" in `subheadline`,
+  in tabular figures, until Turn Listen is bought (PAY-1).
+
+[aac-light]: /docs/research/aac-design.md#showing-a-bystander-that-a-device-listens
+
+### The place picker
+
+A card capsule in the top bar with `mappin.and.ellipse` and the place's name.
+A tap opens iOS's own menu of the user's places, and one tap on a place
+chooses it (PLACE-1).
+
+### The tabs
+
+- **Look.** One capsule per category, in the bank's order with Quick first
+  (BANK-5), as `tab`; the selected one is `tab-selected`, `surface` words on an
+  `ink` fill.
+- **The mark.** The tab ROW-9 marks adds a marker-blue dot before its name and
+  steps its text up to Bold, with "suggested" as its accessibility value; the
+  tabs never scroll or reorder to show it.
+- **All and Type.** The tabs scroll sideways when they don't fit, but All,
+  fixed at the trailing end, lists every category at once, the marked one with
+  its dot, since older adults miss sideways scrolling
+  ([AAC design notes][aac-grid]); Type, a keyboard symbol labeled "Type",
+  opens the composer.
+
+[aac-grid]: /docs/research/aac-design.md#grid-size-scrolling-and-navigation
+
+### The grid
+
+- **Look.** The selected category's phrases as phrase buttons, in the bank's
+  order (BANK-4), in the columns [Widths](#widths) gives; every button in a
+  grid row takes the row's tallest height, and text is never cut.
+- **Scrolling.** Up and down only, with the system's scroll indicator.
+
+### The composer
+
+- **Your words.** Docked above the keyboard: a field in `body` that grows to
+  four lines and then scrolls, "Replying to" and the partner's line above it in
+  Listen mode, and Speak as `button-primary` (SPEAK-3). While Turn speaks,
+  Speak becomes Stop. Within 50 characters of the 500-character limit, a count
+  in `subheadline` says how many are left.
+- **Their words.** The same composer, labeled "What did they say?" (LISTEN-4),
+  with Send as `button-secondary`, never marker blue, so a partner's words
+  can't be mistaken for the user's.
+
+### Buttons and lists
+
+- **Primary.** `button-primary`: a marker-blue capsule, 52 points tall, its
+  word in `headline`, `on-accent`; at most one to a screen.
+- **Secondary.** `button-secondary`: a card capsule with a 2-point edge.
+- **Equal pairs.** "Allow" and "Not now", and "They agreed" and "They said no",
+  are two secondary buttons of one size and style, side by side, stacked from
+  AX1: Apple marks a preferred choice by "style — not size", and neither of
+  these is preferred ([iOS notes][ios-hig-changes]).
+- **Lists.** Settings and the editor use grouped rows at least 52 points tall
+  on the board, with `body` text and `link` for links.
+- **Symbol buttons.** At least 44 by 44 points, each with a label.
+
+[ios-hig-changes]: /docs/research/turn-ios-design.md#hig-changes-since-june-2025
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): who Turn is for, and the principles this
@@ -599,4 +1115,5 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 [product-principles]: /docs/PRODUCT.md#product-principles
 [ft-tokens]: /docs/research/turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
 [ft-calm]: /docs/research/turn-frontend-trends.md#calm-technology
+[ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
 [ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
