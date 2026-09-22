@@ -1087,11 +1087,15 @@ Release steps for version 1.0, which the idea's
     trader verification, which starts that day (STORE-8). The subscriptions
     get the same storefronts.
 2.  Deploy the production Worker, publish the 17 puzzles and the config,
-    and check them through the API (CONTENT-1).
+    and check them in KV with `wrangler kv key get --remote`, since the API
+    serves a daily puzzle only once its date is today somewhere
+    (CONTENT-1).
 3.  Build with the `production` profile and upload with `eas submit`; the
     build appears in TestFlight after processing.
 4.  Run the release criteria on that build against the production server
-    with sandbox purchases (RELEASE-1 to RELEASE-4).
+    with sandbox purchases, and the calendar-bound checks on a `preview`
+    build against the test Worker, as RELEASE-1 says (RELEASE-1 to
+    RELEASE-4).
 5.  Add the final screenshots (STORE-2), the age rating answers (STORE-4),
     the privacy answers (STORE-5), and the review notes STORE-7 lists, then
     submit with both subscriptions (STORE-6), set to release automatically,

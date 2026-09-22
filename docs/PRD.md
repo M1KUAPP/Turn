@@ -253,7 +253,7 @@ says how each is built.
   puzzle for a player with it. When no daily puzzle is dated before today,
   as on September 24, 2026, the button reads "Play another?" and opens the
   newest starter, #10. Check: both paths, with and without Guessling+, on
-  September 24 and on a later date.
+  the first daily date and on a later one.
 - **END-4, Must.** A finished puzzle can't be played again, and opening the
   app shows its end screen until the next puzzle starts. Check: reopen after
   finishing.
@@ -306,7 +306,8 @@ https://apps.apple.com/app/id<APP_ID>
 - **ARCHIVE-1, Must.** The archive lists the starter puzzles and every
   daily puzzle dated before the device's date, newest first, each with its
   number, its date if it has one, its hint, and the player's result if
-  played. Check: on September 27, the list shows #11 to #13 and #1 to #10.
+  played. Check: three days after the first daily date, the list shows #11
+  to #13 and #1 to #10.
 - **ARCHIVE-2, Must.** Without Guessling+, every archive puzzle shows as
   locked, and tapping one opens the paywall. Check: a free player sees
   locks.
@@ -316,8 +317,8 @@ https://apps.apple.com/app/id<APP_ID>
   answers.
 - **ARCHIVE-4, Must.** The server serves an archive puzzle only after
   confirming the player's Guessling+ entitlement with RevenueCat. Check:
-  with the device's date set to September 27, a request for #13, dated
-  September 26, without the entitlement is refused.
+  on the test Worker, with the device's date set to the day after #13's,
+  a player who never played #13 and has no entitlement is refused it.
 
 ### The paywall and purchases
 
@@ -406,7 +407,9 @@ https://apps.apple.com/app/id<APP_ID>
 
 - **CONTENT-1, Must.** By submission on September 24, 2026, 17 checked
   puzzles are published: the ten starters, #1 to #10, and the daily
-  puzzles for September 24 to 30, #11 to #17. Check: the server serves all 17.
+  puzzles for September 24 to 30, #11 to #17. Check:
+  `wrangler kv key get --remote` finds `live:<n>` for all 17, since the API
+  serves a daily puzzle only once its date is today somewhere.
 - **CONTENT-2, Must.** Each later daily puzzle is published at least two
   days before its date, a margin over the day ahead the Cloudflare note
   advises, since a date is live somewhere for about 50 hours and a change
@@ -639,11 +642,15 @@ apply; these are Guessling's own.
 
 Before submitting to App Review on September 24, 2026:
 
-- **RELEASE-1, Must.** Every other Must requirement whose check can run
-  before release passes it on a TestFlight build that uses the production
-  server and sandbox purchases. The checks of AVAIL-1, METRIC-3, METRIC-5,
-  PAY-6's production restore, and PAY-7 run after release, under RELEASE-5.
-  Check: the checklist, signed off.
+- **RELEASE-1, Must.** Before submission, every other Must requirement's
+  check passes on the environment it names: checks that name the test
+  server run there; checks tied to the calendar run on a TestFlight build
+  pointed at the test Worker, whose first daily date is earlier; and the
+  rest run on a TestFlight build against the production server with
+  sandbox purchases. The checks of AVAIL-1, METRIC-3, METRIC-5, PAY-6's
+  production restore, and PAY-7 need the live app and run under
+  RELEASE-5. Check: the checklist, signed off, each line with its
+  environment.
 - **RELEASE-2, Must.** A sandbox purchase, restore, and trial work end to
   end, and a sandbox offer code redeems. Check: on a device with a sandbox
   account, restoring without reinstalling first, since RevenueCat's
