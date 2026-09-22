@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 95 files · ~280,179 words
+- 101 files · ~348,146 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 1578 nodes · 1488 edges · 114 communities (108 shown, 3 thin omitted)
+- 1840 nodes · 1744 edges · 136 communities (130 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `fd74dbb1`
+- Built from commit: `7e1fdcf2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -131,19 +131,41 @@
 - Functional requirements
 - Daily puzzles research notes
 - Guessling product
+- AI UI generators in September 2026
+- motionsites.ai research notes
+- Game and character design research notes
+- Tasks
+- Guessling design
+- Motion and haptics
+- Liquid Glass
+- Components
+- Screens
+- iOS design research notes
+- Typography
+- Color
+- The Guessling
+- Store and pitch assets
+- RevenueCat Paywalls styling
+- Colors
+- App icon and store assets
+- Guidance for coding agents
+- Motion
+- Overview
+- App icon and launch screen
+- SF Symbols
 
 ## God Nodes (most connected - your core abstractions)
 
 1. `Prizes` - 58 edges
 2. `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` - 44 edges
 3. `Shipaton assets` - 23 edges
-4. `Tasks` - 22 edges
-5. `Tasks` - 21 edges
-6. `Guessling technical requirements` - 17 edges
-7. `Cloudflare Workers research notes` - 17 edges
-8. `Shipaton 2025 recordings` - 17 edges
-9. `Markdown style guide` - 15 edges
-10. `RevenueCat Shipaton 2026` - 15 edges
+4. `Tasks` - 23 edges
+5. `Tasks` - 22 edges
+6. `Guessling design` - 21 edges
+7. `Tasks` - 21 edges
+8. `Guessling technical requirements` - 17 edges
+9. `Cloudflare Workers research notes` - 17 edges
+10. `Shipaton 2025 recordings` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -153,7 +175,7 @@
 
 - None detected.
 
-## Communities (114 total, 3 thin omitted)
+## Communities (136 total, 3 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -695,10 +717,120 @@ Nodes (29): A round in progress at midnight, Apple News+ release time, Apple New
 Cohesion: 0.13
 Nodes (14): Business model, Guessling in brief, Guessling product, Players, Positioning, Product principles, Puzzles, Roadmap (+6 more)
 
+### Community 114 - "AI UI generators in September 2026"
+
+Cohesion: 0.05
+Nodes (38): 21st.dev and its MCP server, 3D and shader tools, A DESIGN.md that follows this repo's style guide, AI UI generators in September 2026, Animation formats with native players, Animation libraries for the web, Anthropic's frontend-design skill, Apple's Liquid Glass (+30 more)
+
+### Community 115 - "motionsites.ai research notes"
+
+Cohesion: 0.05
+Nodes (36): AI builders the prompts target, Appendix: analysis script, Backgrounds, video, and glass, Conflicts between sources, Dates and the newest prompts, Design language in numbers, Findings for DESIGN.md, Folder prefixes and counts (+28 more)
+
+### Community 116 - "Game and character design research notes"
+
+Cohesion: 0.06
+Nodes (35): AI-assisted art and the rules, Akinator's genie, Anticipation, squash and stretch, and holds, Apple News+ puzzles, Apple on color and feedback, Brilliant, Finch, and Headspace, Character-led apps, Color-blind-safe feedback (+27 more)
+
+### Community 117 - "Tasks"
+
+Cohesion: 0.06
+Nodes (33): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Guessling design implementation plan, Rejected alternatives, Sections of the design document (+25 more)
+
+### Community 118 - "Guessling design"
+
+Cohesion: 0.14
+Nodes (13): Accessibility, Do's and don'ts, Elevation, Guessling design, Influences and trends, Layout, Open questions, See also (+5 more)
+
+### Community 119 - "Motion and haptics"
+
+Cohesion: 0.20
+Nodes (10): Apple's motion guidance, CSS animations and transitions, Drawing and animating the character, Gesture Handler in SDK 57, Haptics in Expo, Motion and haptics, Reanimated 4 in SDK 57, Reduce Motion in Reanimated (+2 more)
+
+### Community 120 - "Liquid Glass"
+
+Cohesion: 0.20
+Nodes (10): Color and controls on glass, Glass in custom controls, Glass views in Expo, Headers, sheets, and tabs in Expo Router, Liquid Glass, SwiftUI views through Expo UI, System components that adopt it, The compatibility key (+2 more)
+
+### Community 121 - "Components"
+
+Cohesion: 0.22
+Nodes (9): Answer chips, Banners, Buttons, Components, Symbols, The composer, The notepad, The speech bubble (+1 more)
+
+### Community 122 - "Screens"
+
+Cohesion: 0.22
+Nodes (9): Every answer, drawn, Launch, Screens, Settings, The archive, The end of a round, The notice, The paywall (+1 more)
+
+### Community 123 - "iOS design research notes"
+
+Cohesion: 0.25
+Nodes (7): Conflicts between sources, Findings for DESIGN.md, Gaps, iOS design research notes, Package versions in SDK 57, See also, Sources and method
+
+### Community 124 - "Typography"
+
+Cohesion: 0.29
+Nodes (7): Dynamic Type sizes, Fonts bundled with expo-font, How React Native scales text, System fonts and their licenses, System fonts in React Native, The SIL Open Font License, Typography
+
+### Community 125 - "Color"
+
+Cohesion: 0.33
+Nodes (6): Color, Colors in React Native, Contrast in the HIG, Dark Mode in the app config, Semantic and system colors, WCAG 2.2 contrast minimums
+
+### Community 126 - "The Guessling"
+
+Cohesion: 0.40
+Nodes (5): Making the art, Parts of the Guessling, Poses, The answer card, The Guessling
+
+### Community 127 - "Store and pitch assets"
+
+Cohesion: 0.40
+Nodes (5): App previews, App Store screenshots, Devpost gallery and thumbnail, Store and pitch assets, What screenshots and previews may show
+
+### Community 128 - "RevenueCat Paywalls styling"
+
+Cohesion: 0.40
+Nodes (5): Fonts and text size in paywalls, Limits on matching the app, Paywall localization, RevenueCat Paywalls styling, What the paywall editor sets
+
+### Community 129 - "Colors"
+
+Cohesion: 0.50
+Nodes (4): Answer colors, Colors, Colors in every appearance, Contrast
+
+### Community 130 - "App icon and store assets"
+
+Cohesion: 0.50
+Nodes (4): App icon and store assets, Devpost images and the video, Screenshots, The app icon
+
+### Community 131 - "Guidance for coding agents"
+
+Cohesion: 0.50
+Nodes (4): Checks before a screen ships, Guidance for coding agents, Keeping code in step, Using this file
+
+### Community 132 - "Motion"
+
+Cohesion: 0.50
+Nodes (4): Motion, Reactions, Reduce Motion, Screen motion
+
+### Community 133 - "Overview"
+
+Cohesion: 0.50
+Nodes (4): Overview, Principles, Scope, The reference
+
+### Community 134 - "App icon and launch screen"
+
+Cohesion: 0.50
+Nodes (4): App icon and launch screen, Icons in Expo, iOS 26 icons and Icon Composer, Launch screens
+
+### Community 135 - "SF Symbols"
+
+Cohesion: 0.50
+Nodes (4): expo-symbols in SDK 57, SF Symbols, SF Symbols license terms, Symbol animations and iOS versions
+
 ## Knowledge Gaps
 
-- **1232 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1227 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1319 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1449 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1444 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1542 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -706,11 +838,9 @@ Nodes (14): Business model, Guessling in brief, Guessling product, Players, Posi
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **Why does `Jev research notes` connect `How Jev is used` to `Shipaton 2026 ideation log`?**
-  _High betweenness centrality (0.002) - this node is a cross-community bridge._
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _1232 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1449 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
@@ -719,3 +849,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
 - **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
   _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
+- **Should `Shipaton 2025 recordings` be split into smaller, more focused modules?**
+  _Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected._
