@@ -254,10 +254,11 @@ CREATE TABLE entitlement (
 ```
 
 - **Claiming a free line.** Inside `transactionSync()`, a line ID already in
-  `free_lines` is a repeat and costs nothing, a new ID below 20 rows is
-  inserted as a free line, and at 20 rows the line needs the entitlement. In
-  the services notes' local test, this counted exactly 20 of 25 simultaneous
-  lines for one device, and ten copies of one line once
+  `free_lines` is a duplicate, which gets `409` and no call to Jev, so an ID
+  can't be reused for a new line; a new ID below 20 rows is inserted as a
+  free line; and at 20 rows the line needs the entitlement. In the services
+  notes' local test, this claim counted exactly 20 of 25 simultaneous lines
+  for one device, and ten copies of one line ID once
   ([services notes][svc-count]). If Jev fails, the object deletes the row,
   so only answered lines count (PAY-1).
 - **The entitlement row** caches RevenueCat's answer: a yes for 24 hours,
@@ -347,6 +348,7 @@ Errors return `{ "error": "<code>" }`:
 | Status | Code              | When                                           | The app                             |
 | ------ | ----------------- | ---------------------------------------------- | ----------------------------------- |
 | 400    | `invalid_request` | a header, field, or length outside the limits  | ranks on the phone; logs the bug    |
+| 409    | `duplicate`       | a line ID this user's free lines already hold  | ranks on the phone; logs the bug    |
 | 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
 | 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
 | 503    | `jev_off`         | the configuration turns Jev off (STATE-3)      | ranks on the phone; degraded notice |
@@ -786,9 +788,10 @@ The user's object checks only once the free lines are used (PAY-1, PAY-7):
 ```text
 on line(lineId, refresh)
   if the build is simulator and SIMULATOR_UNLIMITED is on: call Jev    # PAY-9
-  claim = claim(lineId)                  # free, repeat, or paid
-  if claim is free or repeat:
-    call Jev; if it fails and the claim was free: release(lineId)
+  claim = claim(lineId)                  # free, duplicate, or paid
+  if claim is duplicate: 409
+  else if claim is free:
+    call Jev; if it fails: release(lineId)
   else if the cached yes is under 24 hours old: call Jev
   else if the cached no is under 1 minute old
           and not (refresh and the last refresh is over 1 minute old): 402
@@ -1023,7 +1026,8 @@ ran under Wrangler 4.136.2:
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
   lines nor `listen` guards Jev's credits. One more Durable Object counts
-  Jev calls per UTC day, and past 10,000, about $0.80, the relay answers
+  Jev calls per UTC day, retries included, and past 10,000, about $0.80, the
+  relay answers
   `jev_unavailable` until midnight UTC ([services notes][svc-abuse]).
 - **The switch:** `JEV_ON` set to false stops every call to Jev at once
   (STATE-3).
