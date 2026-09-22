@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 119 files · ~482,222 words
+- 125 files · ~534,863 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 2392 nodes · 2277 edges · 171 communities (164 shown, 4 thin omitted)
+- 2646 nodes · 2525 edges · 193 communities (186 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `cf8714de`
+- Built from commit: `901b3d46`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -135,7 +135,7 @@
 - motionsites.ai research notes
 - Game and character design research notes
 - Tasks
-- Guessling design
+- Turn design
 - Motion and haptics
 - Liquid Glass
 - Components
@@ -143,13 +143,13 @@
 - iOS design research notes
 - Typography
 - Color
-- The Guessling
+- How text AAC apps look and behave
 - Store and pitch assets
 - RevenueCat Paywalls styling
 - Colors
-- App icon and store assets
+- App icon and pitch assets
 - Guidance for coding agents
-- Motion
+- Turn's frontend trends research notes
 - Overview
 - App icon and launch screen
 - SF Symbols
@@ -188,6 +188,28 @@
 - Reliability and observability
 - Purchases and entitlements
 - Stack and repository
+- motionsites.ai for Turn research notes
+- Tasks
+- Guessling design
+- Components
+- Screens
+- Turn's iOS design research notes
+- What Xcode 27 and the iOS 27 SDK change
+- Type for Turn
+- Guidance for coding agents
+- The Guessling
+- Layout
+- Motion and haptics for Turn
+- Pitch assets
+- Liquid Glass and accessibility settings
+- RevenueCat's paywall for Turn
+- Colors
+- App icon and store assets
+- Motion
+- Overview
+- Color for Turn
+- Words on screen
+- SF Symbols for Turn
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -198,9 +220,9 @@
 5. `Tasks` - 22 edges
 6. `Guessling design` - 21 edges
 7. `Tasks` - 21 edges
-8. `Turn technical requirements` - 18 edges
-9. `Guessling technical requirements` - 17 edges
-10. `Cloudflare Workers research notes` - 17 edges
+8. `Turn design` - 19 edges
+9. `Turn technical requirements` - 18 edges
+10. `Guessling technical requirements` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -210,7 +232,7 @@
 
 - None detected.
 
-## Communities (171 total, 4 thin omitted)
+## Communities (193 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -772,10 +794,10 @@ Nodes (35): AI-assisted art and the rules, Akinator's genie, Anticipation, squas
 Cohesion: 0.06
 Nodes (33): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Guessling design implementation plan, Rejected alternatives, Sections of the design document (+25 more)
 
-### Community 118 - "Guessling design"
+### Community 118 - "Turn design"
 
-Cohesion: 0.14
-Nodes (13): Accessibility, Do's and don'ts, Elevation, Guessling design, Influences and trends, Layout, Open questions, See also (+5 more)
+Cohesion: 0.15
+Nodes (12): Accessibility, Do's and don'ts, Elevation, Influences and trends, Motion, Open questions, See also, Shapes (+4 more)
 
 ### Community 119 - "Motion and haptics"
 
@@ -789,13 +811,13 @@ Nodes (10): Color and controls on glass, Glass in custom controls, Glass views i
 
 ### Community 121 - "Components"
 
-Cohesion: 0.22
-Nodes (9): Answer chips, Banners, Buttons, Components, Symbols, The composer, The notepad, The speech bubble (+1 more)
+Cohesion: 0.17
+Nodes (12): Buttons and lists, Components, The bottom bar, The caption, The composer, The grid, The Listen control, The phrase button (+4 more)
 
 ### Community 122 - "Screens"
 
-Cohesion: 0.22
-Nodes (9): Every answer, drawn, Launch, Screens, Settings, The archive, The end of a round, The notice, The paywall (+1 more)
+Cohesion: 0.20
+Nodes (10): Launch, Screens, Settings, The consent card, The first launch, The home screen, state by state, The paywall, The permission step (+2 more)
 
 ### Community 123 - "iOS design research notes"
 
@@ -812,10 +834,10 @@ Nodes (7): Dynamic Type sizes, Fonts bundled with expo-font, How React Native sc
 Cohesion: 0.33
 Nodes (6): Color, Colors in React Native, Contrast in the HIG, Dark Mode in the app config, Semantic and system colors, WCAG 2.2 contrast minimums
 
-### Community 126 - "The Guessling"
+### Community 126 - "How text AAC apps look and behave"
 
-Cohesion: 0.40
-Nodes (5): Making the art, Parts of the Guessling, Poses, The answer card, The Guessling
+Cohesion: 0.04
+Nodes (45): AAC interface design research notes, Color coding and backgrounds, Color, grids, and type on AAC displays, Comparison of twelve apps, Conflicts between sources, Consent notices people read, CoughDrop, Dark mode, contrast polarity, and glare (+37 more)
 
 ### Community 127 - "Store and pitch assets"
 
@@ -829,28 +851,28 @@ Nodes (5): Fonts and text size in paywalls, Limits on matching the app, Paywall 
 
 ### Community 129 - "Colors"
 
-Cohesion: 0.50
-Nodes (4): Answer colors, Colors, Colors in every appearance, Contrast
+Cohesion: 0.67
+Nodes (3): Color roles, Colors, Contrast
 
-### Community 130 - "App icon and store assets"
+### Community 130 - "App icon and pitch assets"
 
-Cohesion: 0.50
-Nodes (4): App icon and store assets, Devpost images and the video, Screenshots, The app icon
+Cohesion: 0.40
+Nodes (5): App icon and pitch assets, Screenshots and Devpost images, The app icon, The README's images, The video
 
 ### Community 131 - "Guidance for coding agents"
 
 Cohesion: 0.40
-Nodes (5): Checks before a screen ships, Guidance for coding agents, If the day runs short, Keeping code in step, Using this file
+Nodes (5): Checks before a screen ships, Guidance for coding agents, If the days run short, Keeping code in step, Using this file
 
-### Community 132 - "Motion"
+### Community 132 - "Turn's frontend trends research notes"
 
-Cohesion: 0.50
-Nodes (4): Motion, Reactions, Reduce Motion, Screen motion
+Cohesion: 0.05
+Nodes (39): A Turn-shaped sample through the linter, AI generators that build native apps, Appearances, contrast, and motion the format lacks, Bans that don't suit an AAC app, Bans that suit an AAC app, Bold, large, and variable type, Calm technology, Conflicts between sources (+31 more)
 
 ### Community 133 - "Overview"
 
 Cohesion: 0.50
-Nodes (4): Overview, Principles, Scope, The reference
+Nodes (4): Overview, Rules that don't bend, Scope, The reference
 
 ### Community 134 - "App icon and launch screen"
 
@@ -1032,27 +1054,137 @@ Nodes (4): Purchases and entitlements, Purchases in the app, RevenueCat setup, T
 Cohesion: 0.67
 Nodes (3): Repository layout, Stack and repository, Versions on September 22, 2026
 
+### Community 171 - "motionsites.ai for Turn research notes"
+
+Cohesion: 0.06
+Nodes (34): A one-page website, Accessibility guidance on the site, Accessibility mentions, Accessibility of the common patterns, Appendix: analysis script, Boundaries and states (1.4.11 and 1.4.1), Button sizes, Changes since September 22 (+26 more)
+
+### Community 172 - "Tasks"
+
+Cohesion: 0.10
+Nodes (20): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Rejected alternatives, Sections of the design document, Skills (+12 more)
+
+### Community 173 - "Guessling design"
+
+Cohesion: 0.14
+Nodes (13): Accessibility, Do's and don'ts, Elevation, Guessling design, Influences and trends, Layout, Open questions, See also (+5 more)
+
+### Community 174 - "Components"
+
+Cohesion: 0.22
+Nodes (9): Answer chips, Banners, Buttons, Components, Symbols, The composer, The notepad, The speech bubble (+1 more)
+
+### Community 175 - "Screens"
+
+Cohesion: 0.22
+Nodes (9): Every answer, drawn, Launch, Screens, Settings, The archive, The end of a round, The notice, The paywall (+1 more)
+
+### Community 176 - "Turn's iOS design research notes"
+
+Cohesion: 0.22
+Nodes (8): App icon and launch screen for Turn, Conflicts between sources, Findings for DESIGN.md, Gaps, Icon appearances and Icon Composer 2, See also, The launch screen in Expo SDK 57, Turn's iOS design research notes
+
+### Community 177 - "What Xcode 27 and the iOS 27 SDK change"
+
+Cohesion: 0.22
+Nodes (9): Accessibility features in iOS 26 and 27, Accessibility Nutrition Labels for Turn, Bars that minimize and new scroll edges, HIG changes since June 2025, Liquid Glass in iOS 27, Resizable iPhone apps and iPhone Duo, The compatibility key under Xcode 27, Typography changes in iOS 26 and 27 (+1 more)
+
+### Community 178 - "Type for Turn"
+
+Cohesion: 0.29
+Nodes (7): Atkinson Hyperlegible Next, Bold Text and custom fonts, Dynamic Type sizes for Turn's styles, Fonts in the video and gallery images, Scaling text in React Native 0.86, SF Pro, SF Pro Rounded, and New York, Type for Turn
+
+### Community 179 - "Guidance for coding agents"
+
+Cohesion: 0.40
+Nodes (5): Checks before a screen ships, Guidance for coding agents, If the day runs short, Keeping code in step, Using this file
+
+### Community 180 - "The Guessling"
+
+Cohesion: 0.40
+Nodes (5): Making the art, Parts of the Guessling, Poses, The answer card, The Guessling
+
+### Community 181 - "Layout"
+
+Cohesion: 0.40
+Nodes (5): Layout, Short screens and large text, The home screen, Widths, With the keyboard up
+
+### Community 182 - "Motion and haptics for Turn"
+
+Cohesion: 0.40
+Nodes (5): A pulsing listening light, Haptics while Turn listens or speaks, Motion and haptics for Turn, Motion when buttons stay put, Reduce Motion in Reanimated and React Native
+
+### Community 183 - "Pitch assets"
+
+Cohesion: 0.40
+Nodes (5): Clean status bars, Devpost images, Pitch assets, Simulator screenshots and recordings in Xcode 27, YouTube thumbnails and captions
+
+### Community 184 - "Liquid Glass and accessibility settings"
+
+Cohesion: 0.40
+Nodes (5): Content and controls on glass, Glass in Expo SDK 57 and how to avoid it, Liquid Glass and accessibility settings, Settings that change glass, Turn's chrome that turns to glass
+
+### Community 185 - "RevenueCat's paywall for Turn"
+
+Cohesion: 0.40
+Nodes (5): Dynamic Type, VoiceOver, and Reduce Motion in paywalls, Limits on matching Turn's design, RevenueCat's paywall for Turn, The paywall under Test Store, What the paywall editor styles
+
+### Community 186 - "Colors"
+
+Cohesion: 0.50
+Nodes (4): Answer colors, Colors, Colors in every appearance, Contrast
+
+### Community 187 - "App icon and store assets"
+
+Cohesion: 0.50
+Nodes (4): App icon and store assets, Devpost images and the video, Screenshots, The app icon
+
+### Community 188 - "Motion"
+
+Cohesion: 0.50
+Nodes (4): Motion, Reactions, Reduce Motion, Screen motion
+
+### Community 189 - "Overview"
+
+Cohesion: 0.50
+Nodes (4): Overview, Principles, Scope, The reference
+
+### Community 190 - "Color for Turn"
+
+Cohesion: 0.50
+Nodes (4): Color for Turn, Colors and settings in React Native 0.86, Show Borders, color alone, and Smart Invert, System colors and grays
+
+### Community 191 - "Words on screen"
+
+Cohesion: 0.67
+Nodes (3): Strings the PRD leaves open, Tone, Words on screen
+
+### Community 192 - "SF Symbols for Turn"
+
+Cohesion: 0.67
+Nodes (3): SF Symbols for Turn, Symbols for speaking, listening, and answering, The SF Symbols release for iOS 27
+
 ## Knowledge Gaps
 
-- **1893 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1888 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2005 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2099 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2094 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2217 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Guessling design` connect `Guessling design` to `Colors`, `App icon and store assets`, `Guidance for coding agents`, `Motion`, `Overview`, `Components`, `Screens`, `The Guessling`?**
+- **Why does `iOS design research notes` connect `iOS design research notes` to `RevenueCat Paywalls styling`, `App icon and launch screen`, `SF Symbols`, `Motion and haptics`, `Liquid Glass`, `Typography`, `Color`, `Store and pitch assets`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Jev research notes` connect `Jev research notes` to `Integration effort and limitations`, `How Jev is used`, `Pricing, limits, and terms`, `What teams can build with Jev`?**
+- **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _1893 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2099 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
-- **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
-  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
