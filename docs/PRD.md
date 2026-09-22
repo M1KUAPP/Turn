@@ -685,12 +685,12 @@ these are what it means for Turn.
   unlisted, follows the idea's [pitch][idea-pitch], shows the Test Store
   purchase, uses no copyrighted music, and shows only partners who agreed to
   be filmed. Check: watch it logged out.
-- **SUBMIT-5, Must.** The Devpost entry has the name and tagline, the
-  description in the idea's order, the repository's URL, the video, the
-  1024 × 1024 icon, a 1179 × 2556 screenshot without a device frame, the
-  RevenueCat project ID, the bundle ID, how judges reach Listen mode's paid
-  part, and the Next Gen Award named with the reason. Check: Devpost shows
-  the entry as submitted.
+- **SUBMIT-5, Must.** The Devpost entry has every item of the brief's
+  [submission checklist][brief-checklist] that applies to Next Gen. For
+  Turn, that means the description in the idea's order, the repository's URL
+  in place of a store link, the bundle ID, how judges reach Listen mode's
+  paid part, and the Next Gen Award named with the reason. Check: Devpost
+  shows the entry as submitted.
 - **SUBMIT-6, Must.** Jev and TypeSafe are named in the app, the video, the
   description, and the README only once TypeSafe has agreed; until then,
   "a hosted decision model", as the idea's [risks][idea-risks] say. Check:
