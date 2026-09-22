@@ -981,10 +981,12 @@ The row's height and its six slots are fixed for the text size and the width
   ([AAC design notes][aac-cost]).
 - **The big button.** When ROW-3 shows one, it fills the frame of all six
   slots: marker blue, `lg` corners, 16-point padding, and the phrase in
-  `title1-emphasized`, `on-accent`, left-aligned at the top. It's still just a
-  phrase: no label, no badge, and it speaks only on a tap (ROW-6). Its phrase
-  moves to the first free slot afterward if it stays at or above the floor
-  (ROW-5).
+  `title1-emphasized`, `on-accent`, left-aligned at the top. A phrase too
+  long for the frame at that size steps down to `title3-emphasized`'s size,
+  and past that ends with an ellipsis, as a slot's does, with the whole
+  phrase in VoiceOver and speech (A11Y-4). It's still just a phrase: no
+  label, no badge, and it speaks only on a tap (ROW-6). Its phrase moves to
+  the first free slot afterward if it stays at or above the floor (ROW-5).
 - **Yes, No, and Not sure.** In slots 1 to 3 for a yes-or-no question (ROW-4),
   as `yes`, `no`, and `unsure`: the word in `title3-emphasized`, `ink`, on its
   tint, inside a 3-point edge of its color, with no symbol, since `checkmark`
@@ -1268,9 +1270,9 @@ from across a table or beside a mounted phone (CONSENT-4)
   learns it.
 - **"They agreed" and "They said no"**, an equal pair at the bottom, within a
   thumb's reach; the microphone starts only after "They agreed".
-- **One decision.** The card asks one question, and its only other control
-  is the under-18 switch, so the partner can answer at a glance
-  ([AAC design notes][aac-consent]).
+- **One decision.** The card asks one question, and besides its two answers
+  it holds only the under-18 switch and Read aloud, so the partner can answer
+  at a glance ([AAC design notes][aac-consent]).
 
 [aac-mounted]: /docs/research/aac-design.md#mounted-phones-and-wheelchairs
 [aac-consent]: /docs/research/aac-design.md#consent-notices-people-read
