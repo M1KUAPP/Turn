@@ -199,7 +199,7 @@ interface Bank {
 
 interface Puzzle {
   number: number // 1–10 are starters; 11 is 2026-09-24 (TODAY-3)
-  date: string | null // YYYY-MM-DD for a daily puzzle, null for a starter
+  date: string | null // set by publish.ts from the target's FIRST_DAILY_DATE; null for a starter
   category: Category
   hint: string // "An animal"
   display: string // the name the reveal shows: "Octopus"
@@ -285,7 +285,10 @@ these headers:
 
 - `X-Guessling-Player`: the RevenueCat app user ID; the Worker hashes it
   before storing anything.
-- `X-Guessling-AI`: `on` or `off`, the player's notice choice (NOTICE-3).
+- `X-Guessling-AI`: `on:<version>`, with the notice version the player
+  accepted, or `off` (NOTICE-3). The Worker treats an older version than
+  the config's as `off`, so a long session can't keep sending questions
+  under an old notice (NOTICE-5).
 - `X-Guessling-Date`: the device's local date, `YYYY-MM-DD`, which the
   Worker accepts only while it's today somewhere on Earth; see
   [Dates and numbers](#dates-and-numbers).
@@ -308,12 +311,13 @@ these headers:
 | `GET /privacy`, `/terms`, `/support` | The policy and support pages, as static assets      | No          |
 
 "For archive" means the Worker confirms Guessling+ unless `n` is the daily
-puzzle dated `X-Guessling-Date`, or a round the player started that is
-still `playing` inside the window TODAY-5 allows (ARCHIVE-4). A player who
-sets their clock to another date that is still today somewhere can open
-that date's puzzle, as Wordle allows; the team accepts that. A puzzle's
-view never includes `names` or `card`, so the answer can't reach the app
-early (SEC-2); the end of a round adds `reveal`:
+puzzle dated `X-Guessling-Date`, or a round the player started, with at least
+one turn, that is still `playing` inside the window TODAY-5 allows
+(ARCHIVE-4). Opening a puzzle creates no player row; the first turn does. A
+player who sets their clock to another date that is still today somewhere can
+open that date's puzzle, as Wordle allows; the team accepts that. A puzzle's
+view never includes `names` or `card`, so the answer can't reach the app early
+(SEC-2); the end of a round adds `reveal`:
 
 ```ts
 interface PuzzleView {
@@ -345,7 +349,7 @@ interface GuessRequest {
 // POST /v1/puzzles/<n>/reports
 interface ReportRequest {
   text: string // the question as the player typed it
-  answer: 'yes' | 'no' | 'rephrase' | 'not_question'
+  answer: 'yes' | 'no' | 'rephrase' | 'not_question' | 'right' | 'wrong'
   reason?: 'wrong' | 'unclear' // REPORT-1
 }
 
@@ -367,22 +371,25 @@ interface TurnResponse {
 
 Errors come back as `{ "error": { "code": string, "message": string } }`:
 
-| Status | Code          | When                                                            |
-| ------ | ------------- | --------------------------------------------------------------- |
-| 400    | `bad_request` | A missing header, or text over its limit                        |
-| 403    | `needs_plus`  | An archive puzzle without a confirmed Guessling+                |
-| 404    | `not_found`   | A puzzle that isn't published, or a date not yet today anywhere |
-| 409    | `finished`    | A turn on a round that has ended                                |
-| 409    | `pending`     | A new turn while the player's earlier one is still pending      |
-| 426    | `update`      | An app version below `minAppVersion`                            |
-| 429    | `slow_down`   | A player over the burst limit (SEC-3)                           |
-| 503    | `busy`        | Jev didn't answer in time and no stored answer fits (STATE-3)   |
-| 503    | `unconfirmed` | RevenueCat couldn't confirm Guessling+ (STATE-5)                |
+| Status | Code          | When                                                                                        |
+| ------ | ------------- | ------------------------------------------------------------------------------------------- |
+| 400    | `bad_request` | A missing header, or text over its limit                                                    |
+| 400    | `bad_date`    | A device date that isn't today anywhere; the app asks the player to check the date and time |
+| 403    | `needs_plus`  | An archive puzzle without a confirmed Guessling+                                            |
+| 404    | `not_found`   | A puzzle that isn't published, or a date not yet today anywhere                             |
+| 409    | `finished`    | A turn on a round that has ended                                                            |
+| 409    | `pending`     | A new turn while the player's earlier one is still pending                                  |
+| 426    | `update`      | An app version below `minAppVersion`                                                        |
+| 429    | `slow_down`   | A player over the burst limit (SEC-3)                                                       |
+| 503    | `busy`        | Jev didn't answer in time and no stored answer fits (STATE-3)                               |
+| 503    | `unconfirmed` | RevenueCat couldn't confirm Guessling+ (STATE-5)                                            |
 
 Admin routes, for the team's scripts only, need `Authorization: Bearer`
 with the `ADMIN_TOKEN` secret:
 
 - `GET /v1/admin/reports?number=<n>` lists a puzzle's reports (REPORT-2).
+- `POST /v1/admin/players/forget` deletes one player's row, given their
+  RevenueCat ID, for a deletion request (PRIV-4).
 - `POST /v1/admin/puzzles/<n>/forget` deletes stored answers after a fix,
   by wording or by `bank_id`, which removes every paraphrase matched to
   that entry and its negation, and refuses until the puzzle closes
@@ -401,14 +408,17 @@ step that answers:
     or `!`, and straighten curly quotes. The result is the _wording_.
 3.  **A named guess.** A wording shaped "is it a/an/the X" whose X, in
     name form, is an accepted name is `right` (GUESS-4).
-4.  **Letters.** A wording about the name's letters, such as its first or
-    last letter, a letter it contains, or its length, is answered in code
-    from `display` (ASK-7); one the rules can't parse is `rephrase`.
+4.  **Letters.** A wording the code rules recognize as a question about the
+    name's letters, such as its first or last letter, a letter it
+    contains, or its length, is answered in code from `display` (ASK-7).
+    Letter questions the rules don't recognize are caught by the match
+    request's `about_letters` Noul, below.
 5.  **An exact bank wording.** A wording equal to a bank question, or its
     negation, after normalization gets the checked answer, with no Jev call.
     A `bankId` from the list takes the same path (ASK-9).
 6.  **Stored.** A wording in `answers` gets the stored answer (ASK-5).
-7.  **No AI.** With `X-Guessling-AI: off`, or `aiEnabled` false, stop with
+7.  **No AI.** With `X-Guessling-AI: off`, an outdated notice version, or
+    `aiEnabled` false, stop with
     `pick`, and store nothing (NOTICE-3, ASK-9).
 8.  **Jev.** The match request, then, if nothing matched, the live request;
     both below.
@@ -431,8 +441,8 @@ turn in flight at a time. The Guessling+ check's 1-second timeout and the
 3-second Jev budget keep the server's worst case under the app's 5 seconds.
 
 A guess takes the same limits and retry handling, and never reaches Jev.
-It's compared in _name form_: lowercase, trimmed, with punctuation dropped,
-spaces collapsed, and a leading "a", "an", or "the" removed, so "An
+It's compared in _name form_: lowercase, trimmed, with punctuation turned
+into spaces, spaces collapsed, and a leading "a", "an", or "the" removed, so "An
 Octopus!" becomes "octopus". `publish.ts` stores `names` in the same form,
 so a guess is right exactly when its name form is in `names` (GUESS-2).
 
@@ -572,7 +582,8 @@ const match = await client.systemOne(matchRequest, { signal: budget })
   too. Without a token, it returns a made-up `409`, a status the SDK
   doesn't retry, and the object answers `busy`. The count lives in memory,
   since losing it on eviction only resets one minute's window.
-- The scripts cap themselves at 100 a minute and the daily check sends one
+- The scripts share one cap of 100 a minute, so they run one at a time,
+  and the daily check sends one
   question, so production, the test environment, and the scripts together
   stay under TypeSafe's 1,200 requests a minute even on one key (AVAIL-2,
   SEC-3). A cap per puzzle couldn't: three dates can be live at once,
@@ -644,7 +655,8 @@ take a puzzle from draft to published:
 2.  **A person** fills in `checked` for every flagged entry and copies the
     clear answers as they stand.
 3.  **`publish.ts <n>`** refuses a puzzle unless every bank id and negation is
-    checked, the names are normalized, the date matches the number, the card
+    checked, the names are in name form, the date comes from the number and
+    the target's `FIRST_DAILY_DATE`, the card
     has at most 40 facts, and the bank at most 127 questions (CONTENT-3,
     CONTENT-5). It then writes `puzzle:<n>:<rev>` and points `live:<n>` at it,
     with `wrangler kv key put --remote`, since Wrangler 4 writes to local
@@ -981,6 +993,11 @@ export default {
   they choose to send, but no stored wordings and no counts (NOTICE-3).
   RevenueCat still records paywall views, as part of the purchase flow, and
   the privacy policy says so (PRIV-4).
+- A deletion request quotes the RevenueCat ID shown in Settings (SET-1).
+  `delete-player.ts <id>` asks every puzzle's object, through
+  `POST /v1/admin/players/forget`, to delete that player's row; the team
+  deletes the customer in RevenueCat; and the openings in Analytics Engine
+  age out after three months, which the privacy policy states (PRIV-4).
 
 ## Reliability and observability
 
