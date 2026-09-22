@@ -859,8 +859,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 - **The home screen** has no header, and its bands follow the
   [design's home screen][design-home]: only the grid scrolls, except on short
-  screens and from AX1, where everything under the top bar scrolls as one
-  column.
+  screens and from AX1, where everything between the top bar and the bottom
+  bar scrolls as one column.
 - **The permission step** is a `formSheet` that sets
   `headerTransparent: false` and a solid background, since Expo Router makes
   form sheets transparent where Liquid Glass is available
@@ -938,6 +938,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   it doesn't cut off Turn's own speech (A11Y-2).
 - **Order.** Layout order sets focus order, so the strip and the row come
   before the grid, and Switch Control reaches them first (A11Y-3).
+- **Paging.** The bottom bar's Up and Down scroll the grid by a screen, so it
+  works with taps alone (A11Y-5).
 - **No detection.** `AccessibilityInfo` reports VoiceOver and Reduce Motion
   but not Switch Control or Voice Control, so the app works the same for
   every input method.
