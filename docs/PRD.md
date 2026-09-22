@@ -124,7 +124,8 @@ says how each is built.
   player not to type personal information; it links the privacy policy; and
   it offers "Allow AI answers" and "Not now" with equal weight. Check: on a
   fresh install, the question field stays disabled until the player
-  chooses, and the notice matches the server's text.
+  chooses, the notice matches the server's text, the two buttons share one
+  size and style, and the privacy link opens.
 - **NOTICE-2, Must.** The notice names TypeSafe, unless TypeSafe objects, in
   which case the server's text says "a third-party AI service"; the idea's
   [Jev section][idea-jev] explains why. Check: changing the server's text
@@ -133,12 +134,13 @@ says how each is built.
   TypeSafe, the server stores none of their wordings, except in a report they
   choose to send, and counts none of their plays, and the player still plays
   everything, Guessling+ included, through the question list (ASK-9). Check:
-  with "Not now", the server's logs show no Jev call and no count for that
-  player.
+  with "Not now", the test server records no Jev request for that player's
+  questions, and Analytics Engine has no data point under their hash.
 - **NOTICE-4, Must.** The choice is kept on the device and can be changed
   both ways in Settings at any time; the app never asks again after each
   question. Check: switching AI answers off in Settings stops the next
-  question from reaching TypeSafe.
+  question from reaching TypeSafe, and switching them back on lets the next
+  one through.
 - **NOTICE-5, Must.** When the server's notice changes version, the app
   shows the new notice before the next question can reach TypeSafe. Check:
   raising the version on the server brings the notice back.
@@ -162,7 +164,9 @@ says how each is built.
   and reopening the app. Check: force-quit mid-round and reopen.
 - **TODAY-5, Must.** A round still open at local midnight can be finished,
   without Guessling+, for at least 24 hours after that midnight; the app
-  offers it until it ends, then shows the new day's puzzle. Check: scenario 10.
+  offers it until it ends, then shows the new day's puzzle. Check: a free
+  player's round left open at midnight accepts a turn 23 hours later, and
+  the server refuses turns on it after 12:00 UTC two days after its date.
 
 [daily-when]: /docs/research/daily-puzzles.md#when-a-new-puzzle-appears
 
@@ -204,10 +208,10 @@ says how each is built.
   turn is used. Check: with AI answers off, three picked questions get
   answers, a new wording brings up the list, and the server's logs show no
   call to Jev.
-- **ASK-10, Must.** On one puzzle, a player gets at most 40 answers that
-  don't use a turn. After that, the app says the Guessling needs a rest and
-  accepts only guesses. Check: the 41st such input is refused, and a guess
-  still works.
+- **ASK-10, Must.** On one puzzle, a player gets at most 40 answers that don't
+  use a turn, not counting prompts to pick from the list (ASK-9). After that,
+  the app says the Guessling needs a rest and accepts only guesses. Check: the
+  41st such input is refused, and a guess still works.
 - **ASK-11, Must.** The round shows every question so far with its answer,
   oldest first, with the newest in view. Check: after five questions, all
   five show in order.
@@ -323,8 +327,9 @@ https://apps.apple.com/app/id<APP_ID>
 - **PAY-2, Must.** The paywall says what Guessling+ holds today, such as the
   number of archive puzzles, as guideline 3.1.2(c) asks; makes the billed
   amount its most prominent price; and shows the trial's length, the
-  renewal price and period, and how to cancel. Check: against the context's
-  [paywall rules][ctx-money].
+  renewal price and period, and how to cancel, as the context's
+  [paywall rules][ctx-money] say. Check: each listed item shows on the
+  sandbox paywall.
 - **PAY-3, Must.** The paywall has visible Close, Restore Purchases, Terms
   of Use, and Privacy Policy buttons, each added in RevenueCat's paywall
   editor, since current paywalls ignore the SDK's close-button flag
@@ -335,9 +340,10 @@ https://apps.apple.com/app/id<APP_ID>
 - **PAY-5, Must.** A purchase or a restore unlocks the archive at once, with
   no restart. Check: after a sandbox purchase, the archive opens.
 - **PAY-6, Must.** Settings has Restore Purchases, which restores
-  Guessling+ bought with the same Apple Account. Check: on a second device
-  after launch; in the sandbox, RevenueCat's anonymous IDs restore only
-  after another purchase on that device.
+  Guessling+ bought with the same Apple Account. Check: after launch, both
+  after deleting and reinstalling the app and on a second device; in the
+  sandbox, RevenueCat's anonymous IDs restore after a reinstall only once
+  another purchase is made on that device.
 - **PAY-7, Must.** Judges get a free month of Guessling+ through an Apple
   offer code: a custom code with a small redemption limit, for one month
   free with auto-renewal off, open to new, existing, and expired
@@ -368,9 +374,10 @@ https://apps.apple.com/app/id<APP_ID>
 ### Settings
 
 - **SET-1, Must.** Settings has AI answers on or off, Restore Purchases, the
-  privacy policy, the Terms of Use, a support link, and the app's version.
-  The two policy pages open in Safari, not in a browser inside the app.
-  Check: each item works.
+  privacy policy, the Terms of Use, a support link, the app's version, and the
+  player's RevenueCat ID for support, which RevenueCat recommends showing. The
+  two policy pages open in Safari, not in a browser inside the app. Check:
+  each item works.
 - **SET-2, Should.** Settings has switches for sound and haptics, both on
   by default. Sounds follow the silent switch and let other apps' music keep
   playing. Check: each switch silences its cue, and music keeps playing
@@ -445,8 +452,9 @@ https://apps.apple.com/app/id<APP_ID>
 ### Performance
 
 - **PERF-1, Must.** On Wi-Fi or LTE in the United States, 95% of answers
-  appear within 2 seconds of Send, and half within 1 second. Check: 50
-  questions on the release build, timed in the app.
+  appear within 2 seconds of Send, and half within 1 second. Check: 50 new
+  wordings on the release build, half of them matching the bank and half
+  answered live, none of them repeats, timed in the app.
 - **PERF-2, Must.** No question waits longer than 5 seconds for an answer,
   the busy state, or the offline state. Check: with Jev delayed on a test
   server.
@@ -484,11 +492,12 @@ https://apps.apple.com/app/id<APP_ID>
   player's ID, and keeps no network address past a request. Check: the
   stored fields and the log settings.
 - **PRIV-4, Must.** The privacy policy, at a public URL, says what the app
-  collects, how, and every use; names TypeSafe, RevenueCat, and Cloudflare
-  and confirms they protect data as the policy does; gives retention for
-  each kind of data; and says how to withdraw AI consent in Settings and
-  how a player without an account asks for deletion, as guideline 5.1.1(i)
-  requires ([Apple notes][apple-policy]). Check: against 5.1.1(i).
+  collects, how, and every use; names TypeSafe, or "a third-party AI service"
+  if TypeSafe objects (NOTICE-2), RevenueCat, and Cloudflare, and confirms
+  they protect data as the policy does; gives retention for each kind of data;
+  and says how to withdraw AI consent in Settings and how a player without an
+  account asks for deletion, as guideline 5.1.1(i) requires
+  ([Apple notes][apple-policy]). Check: against 5.1.1(i).
 - **PRIV-5, Must.** The App Privacy answers match the TRD's data inventory
   (STORE-5). Check: side by side.
 
@@ -508,7 +517,8 @@ https://apps.apple.com/app/id<APP_ID>
   Check: a request with a bad key on the test server.
 - **SEC-5, Must.** A build that App Review or players can install never
   carries RevenueCat's Test Store key, which crashes release builds on
-  purpose ([RevenueCat notes][rc-keys]). Check: the build fails with it.
+  purpose ([RevenueCat notes][rc-keys]). Check: the TestFlight build
+  starts, which it wouldn't with that key.
 
 [rc-keys]: /docs/research/revenuecat-expo.md#configuring-the-sdk-and-api-keys
 
@@ -517,9 +527,10 @@ https://apps.apple.com/app/id<APP_ID>
 - **A11Y-1, Must.** VoiceOver reads each answer's word and announces it
   when it arrives, and every control, the paywall's included, has a label.
   Check: a round and a purchase with VoiceOver on.
-- **A11Y-2, Must.** Text follows Dynamic Type up to the largest
-  accessibility size without cutting off questions, answers, prices, or
-  buttons. Check: a round and the paywall at the largest size.
+- **A11Y-2, Must.** Text on the app's own screens follows Dynamic Type up
+  to the largest accessibility size without cutting off questions,
+  answers, or buttons; RevenueCat's paywall, which the team doesn't draw,
+  is checked under A11Y-6. Check: a round at the largest size.
 - **A11Y-3, Must.** With Reduce Motion on, each reaction becomes a fade or a
   still pose instead of disappearing. Check: a round with Reduce Motion on.
 - **A11Y-4, Must.** Color is never the only signal: each answer shows its
