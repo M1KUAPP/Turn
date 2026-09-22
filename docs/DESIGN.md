@@ -121,6 +121,21 @@ being said, and nothing to wait for.
 
 [ms-web]: /docs/research/turn-motionsites.md#a-one-page-website
 
+### Assumptions
+
+- **When.** The team builds the screens from September 23 to 27 and films on
+  September 28, 2026, on the idea's
+  [schedule](/docs/IDEA.md#schedule-to-september-30).
+- **The paywall's type.** Its text uses the system font, since Apple's
+  license bars uploading SF Pro, and its colors take the tokens' light and
+  dark values by hand in RevenueCat's editor.
+- **Who sees it.** Judges meet Turn mostly through the video, the Devpost
+  images, and the Simulator build on iOS 27, so those get the pitch assets'
+  care.
+- **Evidence.** No clinic has reviewed Turn yet, so its sizes follow studies of
+  other people with motor impairments, as the
+  [AAC design notes][aac-targets] say.
+
 ## Influences and trends
 
 What the four notes found, and what Turn takes from each. Every row cites the
@@ -501,8 +516,6 @@ height.
 - **Why wide, with gaps.** Keys should be "wider instead of taller" for older
   hands, and zero spacing was least accurate, so phrase buttons are wider than
   tall, with 12 points between them ([AAC design notes][aac-targets]).
-
-[aac-targets]: /docs/research/aac-design.md#target-size-and-spacing-for-tremor-and-weakness
 
 ### The home screen
 
@@ -1666,6 +1679,7 @@ Each has a safe default, which this document follows until someone decides.
 [ft-tokens]: /docs/research/turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
 [aac-stigma]: /docs/research/aac-design.md#social-acceptability-and-stigma
 [ft-calm]: /docs/research/turn-frontend-trends.md#calm-technology
+[aac-targets]: /docs/research/aac-design.md#target-size-and-spacing-for-tremor-and-weakness
 [ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
 [ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
 [ios-light]: /docs/research/turn-ios-design.md#a-pulsing-listening-light
