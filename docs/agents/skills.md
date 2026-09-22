@@ -9,7 +9,7 @@ leonxlnx/taste-skill
 - https://www.skills.sh/leonxlnx/taste-skill
 - https://github.com/leonxlnx/taste-skill
 
-obra/superpowers
+mattpocock/skills
 
-- https://www.skills.sh/obra/superpowers
-- https://github.com/obra/superpowers
+- https://www.skills.sh/mattpocock/skills
+- https://github.com/mattpocock/skills
