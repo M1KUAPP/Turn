@@ -350,22 +350,22 @@ pass. Text needs 4.5 to 1 in every appearance, and 7 to 1 for questions and
 body text, as Apple asks for small text; glyphs, pips, and the Guessling
 need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
 
-| Text or mark | On            | Used for                                             | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| ------------ | ------------- | ---------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`        | `card`        | Questions, body text, and the right-guess pip's ring | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
-| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips        | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
-| `link`       | `card`        | Links, and the switches' "on" track                  | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
-| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table        | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
-| `on-primary` | `primary`     | Primary buttons and the right-guess chip             | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
-| `yes-ink`    | `yes-tint`    | Yes chips                                            | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
-| `no-ink`     | `no-tint`     | No and wrong-guess chips                             | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
-| `unsure-ink` | `unsure-tint` | Free-reply chips                                     | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
-| `yes-ink`    | `card`        | "Yes" in the speech bubble                           | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
-| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble               | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
-| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges         | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
-| `card`       | `yes`         | A Yes pip's glyph, and the pip against the notepad   | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
-| `card`       | `no`          | A No pip's glyph and edge, and a wrong-guess ring    | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
-| `primary`    | `desk`        | The Guessling against the table                      | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
+| Text or mark | On            | Used for                                                               | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| ------------ | ------------- | ---------------------------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`        | `card`        | Questions, body text, and the right-guess pip's ring                   | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
+| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips                          | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
+| `link`       | `card`        | Links, and the switches' "on" track                                    | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
+| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table                          | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
+| `on-primary` | `primary`     | Primary buttons; the right-guess chip, badge, and pip; the Guess label | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
+| `yes-ink`    | `yes-tint`    | Yes chips                                                              | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
+| `no-ink`     | `no-tint`     | No and wrong-guess chips                                               | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
+| `unsure-ink` | `unsure-tint` | Free-reply chips and banners                                           | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
+| `yes-ink`    | `card`        | "Yes" in the speech bubble                                             | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
+| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble                                 | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
+| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges                           | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
+| `card`       | `yes`         | A Yes pip's or badge's glyph, and the pip against the notepad          | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
+| `card`       | `no`          | A No pip's or badge's glyph and edge, and a wrong-guess ring           | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
+| `primary`    | `desk`        | The Guessling against the table                                        | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
 
 [ios-wcag]: /docs/research/ios-design.md#wcag-22-contrast-minimums
 
@@ -742,7 +742,9 @@ property for.
   stage it sits beside the Guessling, with its tail to the side.
 - **What it holds.** The latest reply: a 22-point badge, a circle in the
   answer's color with the glyph in Index white, then the words, colored
-  `yes-ink`, `no-ink`, or `unsure-ink`, or Ballpoint for a right guess.
+  `yes-ink`, `no-ink`, or `unsure-ink`. For a right guess, the badge is
+  Marigold with its `target` in `on-primary` and a 1.5-point `ink` ring,
+  like the pip, and the words are Ballpoint.
 - **Two sizes of words.** Replies of up to 15 characters, such as "Yes",
   "Not it", and "Ask another way", are set in `reply`; longer ones, such as
   "Ask a yes-or-no question" and the resting reply, in `hint`, so a reply
@@ -812,8 +814,9 @@ property for.
   question"; and a Marigold send button with an `arrow.up` once there's
   text (ASK-1).
 - **Guessing.** Guess turns the field into "Name the thing", with a
-  Marigold "Guess" label inside it, a 60-character limit, and the line "A
-  guess uses a turn." above the composer; the send button shows a `target`.
+  "Guess" label inside it in the `chip-right` style, a 60-character limit,
+  and the line "A guess uses a turn." above the composer; the send button
+  shows a `target`.
   An `xmark.circle.fill` button returns to asking (GUESS-1, GUESS-3).
 - **Counts.** Characters left show in `meta` from 120 of 140 for a question
   and from 50 of 60 for a guess.
@@ -1388,6 +1391,10 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 - A unit test reads this file's yaml blocks and Colors table and fails when
   `theme.ts` differs, since a prose-only design file led different models to
   build different pages in Vercel's test ([trends notes][ft-agents]).
+- The same test computes the contrast of every text and glyph pair the
+  components use, in all four appearances, against the minimums in the
+  [contrast table](#contrast), so a pair used outside the table can't slip
+  through.
 - A change starts here, then reaches `theme.ts`, never the other way.
 
 [ft-agents]: /docs/research/frontend-trends.md#how-agents-are-meant-to-use-designmd
@@ -1401,8 +1408,11 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   and grayscale, through Color Filters.
 - **Screens.** 375 × 667 and 440 × 956 points, and an iPad at phone size
   (COMPAT-3).
-- **Colors.** After any color change, the contrast table is recomputed and
+- **Colors.** After any color change, the contrast table is recomputed with
+  `check_contrast.py`, from the [design plan's appendix][plan-checks], and
   still passes.
+
+[plan-checks]: /docs/superpowers/plans/2026-09-22-guessling-design.md#appendix-check-scripts
 
 ## Open questions
 
