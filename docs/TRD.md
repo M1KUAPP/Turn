@@ -53,6 +53,9 @@ Contents:
     late answer is stale.
   - No audio or transcript is stored anywhere, and the relay logs no text.
   - No analytics SDK: the relay's logs and the evaluation give the numbers.
+- **Values:** limits, timeouts, windows, caches, and budgets, such as a
+  cached no for 1 minute or one retry of 1.5 seconds, are decisions of this
+  document unless a source is named, as in the PRD.
 - **Changing it:** anything here that turns out wrong is fixed here, in the
   same change as the code.
 
@@ -95,8 +98,8 @@ What each part owns:
   entitlement it has confirmed, builds the Jev request, and calls Jev. It's
   created with `locationHint: "wnam"`, so a line crosses an ocean at most
   once, from the phone to the relay ([services notes][svc-placement]).
-- **Jev** answers the kind of question, the topic, and one Noul per
-  candidate.
+- **Jev** answers the kind of question, the topic, and one Noul, Jev's
+  yes-or-no question with a probability, per candidate.
 - **RevenueCat** runs the Test Store purchase, the paywall, and the
   entitlement.
 - **The evaluation** in `eval/` calls Jev and Workers AI directly with the
@@ -767,6 +770,8 @@ Listen mode says so and offers the typed-line field.
   API Key" and calls `fatalError` outside a Debug build, and
   `react-native-purchases` 10.10.1 exposes no way around it, so every build
   the team ships is a Debug build ([services notes][svc-key]).
+- **No attributes.** The app sets no RevenueCat customer attributes, so
+  RevenueCat receives only the app user ID and the purchase (PRIV-4).
 
 [svc-ids]: /docs/research/turn-services.md#identifiers-that-survive-a-reinstall
 
@@ -1169,6 +1174,17 @@ see ([evaluation notes][eval-scoring]):
 
 [eval-scoring]: /docs/research/turn-evaluation.md#a-scoring-scheme-for-turns-80-lines
 [eval-power]: /docs/research/turn-evaluation.md#what-80-lines-can-and-cant-detect
+
+### The replay test and script
+
+- **The replay test** checks timing on the phone (PERF-1, PERF-5) and tunes
+  the silence window: at least 50 recorded partner lines, each with its end
+  of speech marked by hand, play from a second device to the iPhone in
+  Listen mode, and the app logs each stage against `turn-listen`'s stamp of
+  the line's end. It counts lines cut off before the recording's marked end.
+- **The replay script** (EVAL-7) sends the same lines' text, in
+  conversation order, through the relay and the shared row rules, with no
+  microphone, and counts slot changes per line (ROW-5).
 
 ### The report
 
