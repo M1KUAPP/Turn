@@ -467,13 +467,13 @@ than the disagreement is impossible.
   disagreements (12.5 points of 80) reaches p = 0.041, and 27 to 13 of 40 (17.5
   points) reaches p = 0.039. A paired 95% interval on the gap is about ±10
   points at 80% agreement and ±12 points at 70%.
-- Synthesis: the idea's trigger, "Jev's top-6 accuracy trails embeddings on the
-  80 lines" ([idea-risks]), fires on noise. By the same enumeration, at 70% to
-  80% agreement Jev's observed top-6 trails on 45% to 46% of runs when the two
-  are truly equal, and on 13% to 18% of runs when Jev is truly 5 points better.
-  Define "trails" as a paired bootstrap interval for the gap lying wholly below
-  zero, report "no clear difference" otherwise, and do any power analysis before
-  the run, never from the observed gap.
+- Synthesis: the idea's first trigger, "Jev's top-6 accuracy trails embeddings
+  on the 80 lines" ([idea-risks]), would fire on noise. By the same enumeration,
+  at 70% to 80% agreement Jev's observed top-6 trails on 45% to 46% of runs when
+  the two are truly equal, and on 13% to 18% of runs when Jev is truly 5 points
+  better. Define "trails" as a paired bootstrap interval for the gap lying
+  wholly below zero, report "no clear difference" otherwise, and do any power
+  analysis before the run, never from the observed gap.
 
 ### Code for the evaluation script
 
