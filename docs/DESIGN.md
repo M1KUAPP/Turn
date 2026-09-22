@@ -17,6 +17,7 @@ Contents:
 1.  [The Guessling](#the-guessling)
 1.  [Colors](#colors)
 1.  [Typography](#typography)
+1.  [Layout](#layout)
 1.  [See also](#see-also)
 
 ## Overview
@@ -487,6 +488,45 @@ scaling][ios-scaling]).
 [ios-fonts]: /docs/research/ios-design.md#system-fonts-and-their-licenses
 [ios-scaling]: /docs/research/ios-design.md#how-react-native-scales-text
 [nunito]: https://github.com/google/fonts/tree/main/ofl/nunito
+
+## Layout
+
+```yaml
+spacing:
+  xxs: 2px
+  xs: 4px
+  sm: 8px
+  md: 12px
+  lg: 16px
+  xl: 24px
+  xxl: 32px
+  margin: 16px
+  hit: 44px
+```
+
+Sizes are points: the format's `px` means a point on the iPhone.
+
+- **Grid.** Everything sits on a 4-point grid, 16 points from the screen's
+  edges and inside cards.
+- **Hit targets.** Every control is at least 44 by 44 points, even when it
+  looks smaller, as Apple asks.
+- **Today in three bands**, top to bottom:
+  - **The table**: the top bar, then the stage, where the Guessling stands
+    beside its speech bubble.
+  - **The notepad**: the hint, the turn meter, and the history, which
+    scrolls.
+  - **The composer**, pinned above the keyboard or the home indicator.
+- **With the keyboard up**, the stage turns compact: the Guessling shrinks
+  to 64 points in one row with its bubble, so the newest answers stay in
+  view above the composer.
+- **Large text.** From AX1, the stage stays compact, history rows put the
+  chip under the question, and the whole screen scrolls; nothing truncates
+  (A11Y-2).
+- **Screens.** Laid out for 390 × 844 points and checked at 375 × 667, the
+  smallest iPhone that runs iOS 16.4, and at 440 × 956, the 6.9-inch
+  iPhone, and on an iPad at phone size (COMPAT-3).
+- **Safe areas.** Content stays inside them, and the table's color runs
+  under the status bar and the home indicator.
 
 ## See also
 
