@@ -340,6 +340,8 @@ is named; the rest are watched and reported as rates, as the idea's
 - [Product requirements](/docs/PRD.md): what version 1.0 must do, as
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built.
+- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
+  tokens and rules a coding agent can follow.
 - [Evidence notes](/docs/research/idea-evidence.md): rivals, reviews, and
   demand behind the idea.
 - [Daily puzzle notes](/docs/research/daily-puzzles.md): how other daily
