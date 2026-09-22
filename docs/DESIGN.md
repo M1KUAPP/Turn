@@ -1614,14 +1614,6 @@ listing, since each label has published criteria
 
 [plan-checks]: /docs/superpowers/plans/2026-09-23-turn-design.md#appendix-check-scripts
 
-### If the days run short
-
-Ship first what the rules need: the tokens, the row and its states, the strip,
-the caption, the light, the consent card, the ramps, the page buttons, and
-Reduce Motion. These can follow in an update: three-column widths for iPads,
-the All sheet while the categories fit on one line, the README's GIF, and the
-gallery's composites beyond the required screenshot. Never cut a rule.
-
 ## Open questions
 
 Each has a safe default, which this document follows until someone decides.
