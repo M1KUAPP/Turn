@@ -520,27 +520,33 @@ carries (ROW-3 to ROW-8):
 on answer(a)
   if a.seq < newest seq: drop it                                   # ROW-7
   P = a.policy
+  topic = the most likely topic
   yesNo = kind yes_no is the most likely kind, at P.floor or more
-  fixedOnly = yesNo, or the most likely topic is in P.fixedOnlyTopics
+  fixedTopic = topic is in P.fixedOnlyTopics
+  showFixed = yesNo or fixedTopic                                  # ROW-4
+  phrasesAllowed = not fixedTopic and (not yesNo or P.yesNoPhrases)
   fresh = candidates scoring P.floor or more, highest first
-  if not fixedOnly and fresh is empty: keep the row as it is      # ROW-3
-  if not fixedOnly and fresh[0] > P.bigAbove
-     and the most likely topic is not in P.noBigTopics:
-    show fresh[0] as the big button, remember it, and stop         # ROW-3
-  if the row was a big button: put its phrase in the first free slot
-    if it still scores P.floor or more                             # ROW-5
-  if fixedOnly: slots 1-3 = Yes, No, Not sure                     # ROW-4
-    if yesNo and P.yesNoPhrases: usable = slots 4-6
-    else: empty slots 4-6; usable = none                          # EVAL-5
-  else: empty the slots the fixed buttons held; usable = all six
-  each shown phrase takes its new score; below P.floor, it's stale
-  for each fresh phrase not shown, highest first:
-    if a usable slot is empty: take the first one
-    else if a usable slot is stale: take the lowest-scoring stale one
-    else if it beats the lowest shown by P.margin: take that slot  # ROW-5
-    else: stop
-  mark the topic's tab if the topic scores P.floor or more         # ROW-9
-  render; announce the number of replies to VoiceOver              # A11Y-2
+  if not showFixed and fresh is empty:
+    keep the row as it is                                          # ROW-3
+  else if not showFixed and fresh[0] > P.bigAbove
+          and topic is not in P.noBigTopics:
+    show fresh[0] as the big button and remember it                # ROW-3
+  else:
+    if the row was a big button: put its phrase in the first free slot
+      if it still scores P.floor or more                           # ROW-5
+    if showFixed:
+      slots 1-3 = Yes, No, Not sure                                # ROW-4
+      if phrasesAllowed: usable = slots 4-6
+      else: empty slots 4-6; usable = none                         # EVAL-5
+    else: empty the slots the fixed buttons held; usable = all six
+    each shown phrase takes its new score; below P.floor, it's stale
+    for each fresh phrase not shown, highest first:
+      if a usable slot is empty: take the first one
+      else if a usable slot is stale: take the lowest-scoring stale one
+      else if it beats the lowest shown by P.margin: take that slot  # ROW-5
+      else: stop
+  mark the topic's tab if it scores P.floor or more                # ROW-9
+  if the row changed: render; announce the number of replies       # A11Y-2
 ```
 
 - **Stale phrases stay visible** until a new phrase needs their slot, so a
