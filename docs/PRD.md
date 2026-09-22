@@ -31,8 +31,10 @@ Contents:
   September 28, and the entry is submitted by Wednesday, September 30, 2026,
   at 11:45 PM PT, under the idea's [schedule][idea-schedule].
 - **Scope:** the idea's [Must and Should lists][idea-scope], turned into
-  requirements, plus what the research notes add. The idea's Won't list is
-  this document's [non-goals](#goals-and-non-goals).
+  requirements, plus what the research notes add and a few conveniences
+  that the row's rules and the user's own words call for, each with its
+  reason. The idea's Won't list is this document's
+  [non-goals](#goals-and-non-goals).
 - **How to read a requirement:** each is one bullet with an ID, a priority,
   a statement, and a check. Must means the entry isn't submitted without it;
   Should means the first version or the weeks before October 22. IDs are
@@ -164,8 +166,9 @@ says how each is built.
 - **SPEAK-5, Must.** Speaking never waits on the network, the relay,
   RevenueCat, the paywall, or the consent flow. Check: in Airplane Mode, and
   with the relay's address blocked, every phrase and typed sentence speaks.
-- **SPEAK-6, Should.** A Repeat button speaks the last spoken text again.
-  Check: speak a phrase, then tap Repeat.
+- **SPEAK-6, Should.** A Repeat button speaks the last spoken text again,
+  since partners often miss synthesized speech. Check: speak a phrase, then
+  tap Repeat.
 - **SPEAK-7, Must.** The conversation strip holds five phrases that manage
   the conversation, always in the same place and never ranked: "Wait, I'm
   typing", "Sorry, say that again", "And you?", "I use this app to talk.
@@ -365,7 +368,8 @@ says how each is built.
   without scrolling or reordering it. Check: after "What do you want for
   lunch?", the food tab is marked.
 - **ROW-10, Must.** A Clear button empties the row, and stopping Listen mode
-  clears it too. Check: tap Clear.
+  clears it too, since a row that holds when nothing fits can keep replies
+  from an earlier line. Check: tap Clear.
 
 ### Offline and degraded states
 
@@ -440,9 +444,11 @@ says how each is built.
   Check: open it in Airplane Mode.
 - **SET-3, Should.** "Erase all data" deletes the bank, the places, the tap
   counts, and the settings after a confirmation, and restores the starter
-  bank. Check: erase, and the starter bank returns.
+  bank, so a phone can be passed on without the user's words. Check: erase,
+  and the starter bank returns.
 - **SET-4, Should.** "Stats on this phone" shows the measurements METRIC-3
-  names, and a button resets them. Check: after five lines, the counts
+  names, and a button resets them, so the team can count the product's
+  north star in rehearsals. Check: after five lines, the counts
   match.
 
 ## Content requirements
