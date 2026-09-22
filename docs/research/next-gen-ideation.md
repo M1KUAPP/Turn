@@ -21,6 +21,7 @@ Contents:
 1.  [Round 7: the choice](#round-7-the-choice)
 1.  [Round 8: monetization](#round-8-monetization)
 1.  [Round 9: scope, stack, and schedule](#round-9-scope-stack-and-schedule)
+1.  [Round 10: pitch test](#round-10-pitch-test)
 
 ## Round 1: constraints and rubric
 
@@ -731,5 +732,66 @@ from the video on September 28.
 
 **Decision:** one core loop, from the partner's line to a spoken reply, on
 the stack and schedule above.
+
+## Round 10: pitch test
+
+**Question:** does the pitch hold up in two minutes and one paragraph?
+
+**Method:** write the logline in the brief's form, the video's beats, and
+the description's outline; re-score Turn and the Guessling control; and set
+triggers with dates for what could still go wrong.
+
+**Logline:** "For adults who can't rely on speech, Turn helps them answer in
+conversation by listening to what the other person says and offering replies
+in their own saved words, so they can take their turn before the conversation
+moves on."
+
+The video, two minutes on an iPhone:
+
+1.  **0:00–0:15:** a partner asks "How was physio?"; the row offers "It was
+    hard", sharing no word with the question; a tap speaks it. On screen:
+    "Turn: your own words, in time for your turn", and the Next Gen Award.
+1.  **0:15–0:35:** the problem: aided speech at 8 to 10 words a minute
+    against 125 to 185 spoken, and a reply typed too late.
+1.  **0:35–1:05:** how it works: the consent card and the listening light, a
+    yes-or-no question answered with the fixed buttons, and the row holding
+    steady while nothing speaks until the user taps.
+1.  **1:05–1:25:** why Jev: the evaluation table, and "Jev never writes
+    words: every phrase is the user's own."
+1.  **1:25–1:45:** the purchase: the free lines run out, the paywall opens,
+    a Test Store purchase unlocks Listen mode, and speaking stays free.
+1.  **1:45–2:00:** the repository, its license, the Simulator path, and the
+    student team.
+
+The description, in order: what the team built, what it does, and why it
+matters, in the category page's words; the evaluation; the purchase and why
+speech is free; the technical choices; privacy and consent; the AI tools
+used, credited openly; and the award named, as RevenueCat's September 18
+update asks: "Name the awards you're going for".
+
+**Scores.** The pitch changes no score: Turn stays at 82 and Guessling at
+65.5.
+
+Triggers:
+
+- **No Jev key by noon PT on September 23:** write to `support@typesafe.ai`
+  and TypeSafe's Discord, and build on the phone's own ranking meanwhile,
+  since Jev joins at the relay with no app change. No key by September 26
+  means the video can't show Jev, and the team decides whether to enter
+  without it, which breaks this idea's goal.
+- **The evaluation on September 25:** if Jev's top-6 accuracy trails
+  embeddings, Jev re-ranks an embedding shortlist instead, and the evaluation
+  runs again. If Jev still trails, the README says so, and the pitch rests on
+  "none" and steady rows rather than accuracy.
+- **No live transcription on a device by the end of September 24:** switch to
+  `expo-speech-recognition` and its older recognizer.
+- **No clinic review by September 27:** the description says no clinician has
+  reviewed Turn yet.
+- **No consent from TypeSafe by September 28:** the video calls Jev "a hosted
+  decision model".
+- **No iPhone 15 Pro or later for the video:** a system voice speaks instead
+  of a Personal Voice.
+
+**Decision:** go. Turn is the idea, and `docs/IDEA.md` states it.
 
 [ng-purchase]: next-gen.md#the-purchase-requirement-for-next-gen
