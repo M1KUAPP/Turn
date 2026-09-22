@@ -737,6 +737,8 @@ before relying on an answer; the brief's
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
   to the product requirements.
+- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
+  tokens and rules a coding agent can follow.
 - [Official rules][rules]: the binding terms, on Devpost.
 - [Past winners notes](/docs/research/past-winners.md): every placed entry of
   the 2024 Ship-a-ton, Shipaton 2025, and Shipyard 2026, with sources.

@@ -571,6 +571,8 @@ Still open, each with a safe default:
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
   to the product requirements.
+- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
+  tokens and rules a coding agent can follow.
 - [Ideation log](/docs/research/ideation.md): the ten rounds that chose
   Guessling, with their scores.
 - [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,

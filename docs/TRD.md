@@ -1261,6 +1261,8 @@ product and legal ones.
 - [Product requirements](/docs/PRD.md): every requirement this document
   traces.
 - [Product](/docs/PRODUCT.md): what Guessling is and why.
+- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
+  tokens and rules a coding agent can follow.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
 - [RevenueCat notes][rc-notes], [Cloudflare notes][cf-notes],
   [Apple notes][apple-notes], and [daily puzzle notes][daily-notes]: the

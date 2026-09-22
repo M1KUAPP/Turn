@@ -514,6 +514,8 @@ settles several of them and gives a different winners date.
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
   to the product requirements.
+- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
+  tokens and rules a coding agent can follow.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
