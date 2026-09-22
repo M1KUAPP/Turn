@@ -56,9 +56,9 @@ the test that shows it holds. The rest of this document says how.
     Yes, No, and Not sure each carry a word or a shape as well as a color
     (A11Y-6). Test: every screen in grayscale, through Color Filters.
 4.  **Text follows Dynamic Type.** Every text style follows one of Apple's up
-    to AX5 and wraps; only the row may end a phrase with an ellipsis, and then
-    VoiceOver and speech give the whole phrase (A11Y-4). Test: every screen at
-    AX5.
+    to AX5 and wraps; only the row may cut a phrase short, and only the
+    caption the partner's words, and then VoiceOver gives the whole text
+    (A11Y-4). Test: every screen at AX5.
 5.  **Targets for unsteady hands.** Phrase buttons in the row and the grid are
     at least 78 points tall, the strip's at least 48, and every other control
     at least 44 by 44 (A11Y-1). Test: the Accessibility Inspector.
@@ -722,7 +722,7 @@ components:
     typography: '{typography.title3}'
     rounded: '{rounded.md}'
     padding: 8px
-    height: 92px
+    height: 86px
   caption-label:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink-secondary.light}'
@@ -1008,17 +1008,16 @@ The row's height and its six slots are fixed for the text size and the width
 
 ### The caption
 
-The caption shows what's being said: the partner's words in Listen mode, and the
-user's last spoken phrase outside it.
+The caption shows the partner's words in Listen mode; outside it, it says so:
+"Listen mode is off."
 
 - **Look.** A `caption` card across the screen, 86 points tall at the default
   size: a speaker label in `subheadline`, `ink-secondary`, then up to two lines
   of words in `title3`, `ink`, with one capsule button at its trailing edge.
 - **Words.** A long partner line shows its last two lines, cut at the start
-  with an ellipsis, since the newest words matter most, and a long "You said"
-  shows its first two, cut at the end; VoiceOver reads the whole text. The
-  words, and the partner's words that "Still answering" and "Replying to"
-  quote, live only in memory and clear as LISTEN-8 says.
+  with an ellipsis, since the newest words matter most, and VoiceOver reads
+  the whole line. The words, and the partner's words that "Still answering"
+  and "Replying to" quote, live only in memory and clear as LISTEN-8 says.
 - **The button.** Done while a partner line is open (LISTEN-2), and Clear when
   the row holds replies (ROW-10); it never moves, so a hand learns it.
 - **Notes.** A note replaces the speaker label's right half, with its symbol:
@@ -1187,8 +1186,8 @@ Each screen uses the components above; the TRD's
 
 | State                 | The caption                                              | The row                                             | The Listen control      |
 | --------------------- | -------------------------------------------------------- | --------------------------------------------------- | ----------------------- |
-| First launch          | "You said" and "Nothing said yet."                       | Empty, with its note                                | Off, "20 free"          |
-| Listen mode off       | "You said" and the last phrase spoken                    | Typing's matches while the keyboard is up (SPEAK-4) | Off                     |
+| First launch          | "Listen mode is off."                                    | Empty, with its note                                | Off, "20 free"          |
+| Listen mode off       | "Listen mode is off."                                    | Typing's matches while the keyboard is up (SPEAK-4) | Off                     |
 | A session opening     | "Listening", large                                       | Empty                                               | Listening               |
 | A partner speaking    | "They're saying", the words so far, and Done             | As it was                                           | Listening, symbol fades |
 | Replies ready         | "They said", their line, and Clear                       | Up to six, the big button, or Yes, No, Not sure     | Listening               |
@@ -1202,7 +1201,7 @@ Each screen uses the components above; the TRD's
 | Free lines used up    | Unchanged                                                | Empty                                               | Locked                  |
 
 - **Stopping Listen mode** clears the row (ROW-10) and returns the caption to
-  "You said".
+  "Listen mode is off."
 - **While Turn speaks,** the bottom bar's Repeat becomes Stop (SPEAK-2).
 - **Leaving the app** pauses listening, and on return the control shows Paused
   until a tap (LISTEN-7).
@@ -1212,9 +1211,8 @@ Each screen uses the components above; the TRD's
 The composer docks above the keyboard, with "Replying to" and the partner's
 line above the field in Listen mode; the row shows the phrases matching the
 letters typed (SPEAK-4) and returns to its last answer when the keyboard
-closes. Speak says the text and adds it to Typed (SPEAK-3); outside Listen
-mode, the caption then shows it as "You said", and in Listen mode it keeps the
-partner's line.
+closes. Speak says the text and adds it to Typed (SPEAK-3), and the caption
+keeps what it showed.
 
 ### The permission step
 
@@ -1347,8 +1345,8 @@ seconds.
 - **The words are the user's.** Turn never hedges, labels, or rates a phrase,
   and never calls a reply suggested, smart, or AI; "AI" appears only in the
   words CONSENT-1 fixes.
-- **Speaker labels by role.** The caption labels speakers "They said" and "You
-  said", never "Partner" or "User".
+- **Speaker labels by role.** The caption labels the partner's words "They
+  said" or "They're saying", never "Partner".
 - **Unnamed until agreed.** Jev and TypeSafe appear in no string until
   TypeSafe agrees, and the texts follow the relay's setting (CONSENT-7,
   SUBMIT-6); `{service}` below is "TypeSafe" or "a third-party AI service in
@@ -1370,7 +1368,7 @@ they say?", and the names of buttons and settings; these are the rest.
 | The Listen control              | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                                                                        | PAY-1, PAY-2                  |
 | Paused, and its End             | "Paused" and "End"                                                                                                                                                                                                        | CONSENT-5                     |
 | Under 18                        | "Mic off"                                                                                                                                                                                                                 | CONSENT-6                     |
-| The caption, before speech      | "You said" and "Nothing said yet."                                                                                                                                                                                        | SPEAK-1                       |
+| The caption, out of Listen mode | "Listen mode is off."                                                                                                                                                                                                     | LISTEN-1                      |
 | The caption, while hearing      | "They're saying"                                                                                                                                                                                                          | LISTEN-1                      |
 | The caption, after a line       | "They said"                                                                                                                                                                                                               | LISTEN-1                      |
 | The caption, when the row holds | "Still answering “How was physio?”"                                                                                                                                                                                       | ROW-3                         |
@@ -1453,7 +1451,7 @@ listing, since each label has published criteria
 | Differentiate Without Color Alone | Row states, the light, and the marked tab in grayscale                         |
 | Sufficient Contrast               | The contrast table, in all four appearances                                    |
 | Reduced Motion                    | No moving slot, no fading light, and a still paywall                           |
-| Captions                          | The partner's words in the caption, and the last phrase spoken                 |
+| Captions                          | The partner's words in the caption                                             |
 
 - **Settings to try.** Light and dark, each with Increase Contrast; Reduce
   Transparency; both ends of the Liquid Glass slider; Reduce Motion turned on
@@ -1626,8 +1624,7 @@ Each has a safe default, which this document follows until someone decides.
 - **A show view for the partner.** Seven of twelve rival apps can put the
   last phrase in large type or flip it toward the partner in a tap or two, and
   the PRD has no such view ([AAC design notes][aac-partner]). Safe default:
-  none in the first version; outside Listen mode the caption shows the last
-  phrase spoken, and the PRD can add a Should.
+  none in the first version, and the PRD can add a Should.
 - **Finishing a phrase first.** SPEAK-2 lets a stray tap cut off a phrase
   mid-speech, which a tremor's second tap can do, and two rivals offer a
   setting against it ([AAC design notes][aac-guards]). Safe default: SPEAK-2
