@@ -1,19 +1,20 @@
 # Guessling design
 
-> **Superseded on September 22, 2026.** This document describes Guessling,
-> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
-> Award, replaced it, and this document's links to the idea point at the
-> [archived Guessling idea](/docs/archive/guessling-idea.md).
+> **Superseded on September 22, 2026.** This document describes Guessling, the
+> team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen Award,
+> replaced it, and this document's links to Guessling's idea, product, PRD, and
+> TRD point at their archived copies in `docs/archive/`.
 
 How Guessling looks, moves, sounds, and reads: the design system and art
 direction for the iPhone app, the paywall's styling, the three web pages,
 the app icon, and the store and pitch assets. It follows Google's
 [DESIGN.md format][gdm], so design and coding agents can read its tokens,
-and it turns the [product's](/docs/PRODUCT.md) character into parts, poses,
-and timings that the [technical requirements](/docs/TRD.md) build and the
-[product requirements](/docs/PRD.md) test. Facts are as of September 22,
-2026; every color, size, and duration this document sets is a design
-decision.
+and it turns the [product's](/docs/archive/guessling-product.md) character into
+parts, poses, and timings that the
+[technical requirements](/docs/archive/guessling-trd.md) build and the
+[product requirements](/docs/archive/guessling-prd.md) test. Facts are as of
+September 22, 2026; every color, size, and duration this document sets is a
+design decision.
 
 Contents:
 
@@ -73,7 +74,7 @@ answer at the end. When the round ends, the Guessling turns the card over.
 
 [ft-gdm]: /docs/research/frontend-trends.md#sections-and-tokens-in-the-specification
 [ft-anthropic]: /docs/research/frontend-trends.md#anthropics-frontend-design-skill
-[product-principles]: /docs/PRODUCT.md#product-principles
+[product-principles]: /docs/archive/guessling-product.md#product-principles
 
 ### Principles
 
@@ -178,14 +179,14 @@ What Guessling does with them:
 
 [ms-findings]: /docs/research/motionsites.md#findings-for-designmd
 [ft-findings]: /docs/research/frontend-trends.md#findings-for-designmd
-[trd-app]: /docs/TRD.md#the-iphone-app
+[trd-app]: /docs/archive/guessling-trd.md#the-iphone-app
 [ios-findings]: /docs/research/ios-design.md#findings-for-designmd
 [ms-license]: /docs/research/motionsites.md#license-and-terms
 
 ## The Guessling
 
-The [product](/docs/PRODUCT.md#the-guessling-character) sets the
-Guessling's role, personality, and voice; this section draws it.
+The [product](/docs/archive/guessling-product.md#the-guessling-character) sets
+the Guessling's role, personality, and voice; this section draws it.
 
 ### Parts of the Guessling
 
@@ -1049,7 +1050,7 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 - **Switches.** Sound and Haptics in Settings, both on by default (SET-2).
   The round is complete without either.
 
-[trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
+[trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
 [ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
 [ios-haptics]: /docs/research/ios-design.md#haptics-in-expo
 
@@ -1058,7 +1059,7 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 The TRD's [screens and navigation][trd-screens] set the routes; this is what
 each one shows, top to bottom.
 
-[trd-screens]: /docs/TRD.md#screens-and-navigation
+[trd-screens]: /docs/archive/guessling-trd.md#screens-and-navigation
 
 ### Today
 
@@ -1269,7 +1270,7 @@ phrases. The PRD quotes some strings; this section fixes the rest.
 | The yearly plan's badge            | 3 days free                                                                                                              | This document |
 | Under the plans                    | Cancel anytime in Settings                                                                                               | This document |
 
-[product-character]: /docs/PRODUCT.md#the-guessling-character
+[product-character]: /docs/archive/guessling-product.md#the-guessling-character
 
 ## Accessibility
 
@@ -1340,7 +1341,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 - **Support.** The support email, where to find Your ID in Settings, and
   how to restore Guessling+.
 
-[trd-layout]: /docs/TRD.md#repository-layout
+[trd-layout]: /docs/archive/guessling-trd.md#repository-layout
 [css-ui-rounded]: https://www.w3.org/TR/css-fonts-4/#valdef-font-family-ui-rounded
 
 ## App icon and store assets
@@ -1508,9 +1509,12 @@ Each has a safe default, which this document follows until someone decides.
 
 ## See also
 
-- [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
-- [Product requirements](/docs/PRD.md): the checks this design must pass.
-- [Technical requirements](/docs/TRD.md): how the app draws and animates it.
+- [Product](/docs/archive/guessling-product.md): the Guessling's role,
+  personality, and voice.
+- [Product requirements](/docs/archive/guessling-prd.md): the checks this design
+  must pass.
+- [Technical requirements](/docs/archive/guessling-trd.md): how the app draws
+  and animates it.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the art risk,
   and the video.
 - [motionsites.ai notes](/docs/research/motionsites.md),

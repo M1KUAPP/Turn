@@ -1556,10 +1556,10 @@ if LIVE:
 [ms-lesson-ms]: https://motionsites.ai/lesson/build-animated-website-with-motionsites
 [ms-lesson-3d]: https://motionsites.ai/lesson/build-3d-scroll-animated-website-with-ai
 [rn-style]: https://reactnative.dev/docs/0.86/view-style-props
-[trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
-[trd-a11y]: /docs/TRD.md#accessibility
+[trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
+[trd-a11y]: /docs/archive/guessling-trd.md#accessibility
 [expo-video]: https://docs.expo.dev/versions/v57.0.0/sdk/video/
-[product-character]: /docs/PRODUCT.md#the-guessling-character
+[product-character]: /docs/archive/guessling-product.md#the-guessling-character
 [rc-paywalls]: /docs/research/revenuecat-expo.md#revenuecat-paywalls-and-customer-center-in-react-native
 [shipaton-cats]: /docs/research/shipaton-2026.md#revenuecat-core-category-requirements
 [cf-pages]: /docs/research/cloudflare-workers.md#hosting-the-privacy-policy-and-terms

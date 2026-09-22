@@ -1245,13 +1245,13 @@ monetization model that fits the genre" ([best-game]).
   on policy pages.
 
 [best-game]: https://www.shipaton.com/categories/best-game-award
-[product-character]: /docs/PRODUCT.md#the-guessling-character
-[trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
+[product-character]: /docs/archive/guessling-product.md#the-guessling-character
+[trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
 [rn-scheme]: https://reactnative.dev/docs/usecolorscheme
 [rn-a11y]: https://reactnative.dev/docs/accessibilityinfo
 [rn-text]: https://reactnative.dev/docs/0.86/text-style-props
 [hig-type]: https://developer.apple.com/design/human-interface-guidelines/typography
-[trd-versions]: /docs/TRD.md#versions-on-september-22-2026
+[trd-versions]: /docs/archive/guessling-trd.md#versions-on-september-22-2026
 [stitch-inline]: https://github.com/google-labs-code/stitch-skills/blob/main/plugins/stitch-design/skills/extract-static-html/scripts/extract_inline_html.ts
 
 ## Conflicts between sources
@@ -1372,11 +1372,12 @@ What the sources don't settle for DESIGN.md, as of September 22, 2026:
 
 ## See also
 
-- [The Guessling character](/docs/PRODUCT.md#the-guessling-character), the art
-  direction DESIGN.md will spell out.
+- [The Guessling character](/docs/archive/guessling-product.md#the-guessling-character),
+  the art direction DESIGN.md will spell out.
 - The TRD's
-  [reactions, sound, and haptics](/docs/TRD.md#reactions-sound-and-haptics) and
-  [accessibility](/docs/TRD.md#accessibility) requirements.
+  [reactions, sound, and haptics](/docs/archive/guessling-trd.md#reactions-sound-and-haptics)
+  and [accessibility](/docs/archive/guessling-trd.md#accessibility)
+  requirements.
 - [RevenueCat and Expo research notes](/docs/research/revenuecat-expo.md), on
   Expo SDK 57 and the EAS build image.
 - [Apple requirements for Guessling](/docs/research/apple-requirements.md),
