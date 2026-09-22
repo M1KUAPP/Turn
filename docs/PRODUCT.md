@@ -263,14 +263,9 @@ leaves the phone whole.
 | Listen mode after 20 partner lines               | No   | Yes         |
 | Suggestions from the letters typed, on the phone | Yes  | Yes         |
 
-- **Price:** $24.99, paid once, for the entitlement `listen`. The idea's
-  [monetization][idea-money] section has the reasoning: AAC users resent
-  paying for speech, the established text AAC apps sell once, and a one-time
-  price answers the fear of losing one's voice when a payment lapses.
-- **What a user costs:** a partner line comes to about 1,700 to 1,900 input
-  tokens, so at 200 lines a day for a year, Jev costs about $5.20 to $5.80,
-  and one payment covers over four years of Jev at that pace, with the
-  relay's hosting on top ([services notes][svc-billing]).
+- **Price:** $24.99, paid once, for the entitlement `listen`; the idea's
+  [monetization][idea-money] section has the reasoning and what a user
+  costs.
 - **When it asks:** when the free lines run out, or when the user turns
   Listen mode on after that. The paywall closes with one tap, and Settings
   offers Turn Listen and Restore Purchases, so a caregiver can buy from
@@ -286,7 +281,6 @@ leaves the phone whole.
   [open questions][prd-open].
 
 [idea-money]: /docs/IDEA.md#monetization
-[svc-billing]: /docs/research/turn-services.md#how-a-jev-request-is-billed
 [prd-pay]: /docs/PRD.md#the-paywall-and-purchases
 [prd-open]: /docs/PRD.md#open-questions
 

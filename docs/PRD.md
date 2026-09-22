@@ -413,8 +413,7 @@ says how each is built.
   paywall response.
 - **PAY-8, Must.** If the dashboard's form can't make a one-time Test Store
   product, the team makes it through RevenueCat's API, which supports one,
-  as the idea's [risks][idea-risks] plan. A yearly Test Store product is no
-  fallback, since it ends after five hours, mid-judging. Check: the
+  as the idea's [risks][idea-risks] plan. Check: the
   product's type in the dashboard on September 22.
 - **PAY-9, Must.** Judges can use Listen mode, free of charge and without
   restriction, until judging ends on October 13, 2026, as the
