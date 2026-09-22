@@ -596,10 +596,11 @@ says how each is built.
 - **SEC-4, Must.** The relay's responses and errors never carry keys,
   internal errors, or another user's data. Check: force each error and read
   the response.
-- **SEC-5, Must.** The relay stops calling Jev after 10,000 lines in a UTC
-  day and answers as it does when Jev is busy until midnight UTC, so minted
-  IDs can't drain Jev's credits. Check: lower the budget to 3 in a test and
-  send 4 lines.
+- **SEC-5, Must.** The relay stops calling Jev after 10,000 calls in a UTC
+  day, retries included, and answers as it does when Jev is busy until
+  midnight UTC, so minted IDs can't drain Jev's credits; a line ID already
+  used for a free line gets no second call. Check: lower the budget to 3 in a
+  test and send 4 lines, then resend a used line ID.
 
 ### Accessibility
 
