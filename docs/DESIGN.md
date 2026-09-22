@@ -25,6 +25,7 @@ Contents:
 1.  [Sound and haptics](#sound-and-haptics)
 1.  [Screens](#screens)
 1.  [Words on screen](#words-on-screen)
+1.  [Accessibility](#accessibility)
 1.  [See also](#see-also)
 
 ## Overview
@@ -1181,6 +1182,50 @@ phrases. The PRD quotes some strings; this section fixes the rest.
 | The paywall's title           | Every past puzzle, any day                | This document |
 
 [product-character]: /docs/PRODUCT.md#the-guessling-character
+
+## Accessibility
+
+How each part of the design meets the PRD's accessibility requirements, and
+what each iPhone setting changes.
+
+- **VoiceOver (A11Y-1).**
+  - The Guessling and its bubble are one element, labeled with the reply's
+    words, and each new answer is announced with the turns left: "No. 13
+    turns left."
+  - A history row reads as its question and answer, "Does it live in water?
+    No.", with the custom action "Report this answer".
+  - The turn meter is one element that counts the turns by answer.
+  - Every symbol button has a label: Archive, Settings, Guess, Send,
+    Questions, and Share.
+  - On the paywall, nothing lives only in an image.
+- **Larger Text (A11Y-2).** Every text style follows its `dynamicTypeRamp`;
+  from AX1, rows stack and the stage stays compact; screens scroll; symbols
+  and pips grow with the text; nothing truncates.
+- **Reduce Motion (A11Y-3).** Each reaction becomes a cross-fade to its key
+  pose, as in [Reduce Motion](#reduce-motion).
+- **Color (A11Y-4).** Every answer shows its words and its glyph, so a round
+  plays the same in grayscale.
+- **Dark Mode and contrast (A11Y-5).** Every color has a dark value, every
+  pair in the [contrast table](#contrast) passes in all four appearances,
+  and the app follows the system's appearance.
+- **Increase Contrast.** Colors switch to their "more contrast" values,
+  which `DynamicColorIOS` picks by itself.
+- **Reduce Transparency.** The composer uses its solid fallback.
+- **Bold Text.** Every weight steps up one level while it's on.
+- **Differentiate Without Color.** React Native can't read this setting, so
+  the glyphs are always on, which App Store Connect prefers anyway: a
+  setting should be "a last resort or stop-gap solution"
+  ([game notes on color][game-color]).
+- **Touch.** Every control has a 44-point hit area.
+- **Labels (A11Y-6).** The design aims at the Accessibility Nutrition Labels
+  for VoiceOver, Voice Control, Larger Text, Dark Interface, Differentiate
+  Without Color Alone, Sufficient Contrast, and Reduced Motion, which the
+  team claims only once each passes Apple's criteria
+  ([Apple notes][apple-labels]); the app has no video, so captions and
+  audio descriptions don't apply.
+
+[game-color]: /docs/research/game-design.md#apple-on-color-and-feedback
+[apple-labels]: /docs/research/apple-requirements.md#what-each-label-claims
 
 ## See also
 
