@@ -866,9 +866,9 @@ Type:
 ### Banners
 
 - **What.** One line above the composer for a state that isn't an answer:
-  offline, busy, resting, or an error. It's a Stone capsule
-  with its symbol, its words from Words on screen, and
-  its action, such as "Send again".
+  offline, busy, a timeout, or an error. It's a Stone capsule with its
+  symbol, its words from the state table under Screens, and its action,
+  such as "Send again".
 - **Rules.** One banner at a time; it stays until its state ends, with no
   timer; VoiceOver announces it when it appears.
 
@@ -1061,17 +1061,17 @@ added only when a turn is used.
 | `right`        | You got it!                                      | `target`       | Celebration   | Used | Right guess | Success | Solve |
 | `wrong`        | Not it                                           | `xmark`        | Head shake    | Used | Wrong guess | Light   | No    |
 
-| State                     | Banner                                               | The Guessling | Offers                         |
-| ------------------------- | ---------------------------------------------------- | ------------- | ------------------------------ |
-| No answer after 300 ms    | None; the bubble's dots pulse                        | Thinking      | Nothing; the composer waits    |
-| No answer after 5 seconds | The busy banner, or the offline one with no network  | Idle          | Send again (ASK-8, PERF-2)     |
-| Offline                   | You’re offline. Your question is saved.              | Idle          | Send again (STATE-1)           |
-| `busy`                    | The Guessling is busy. Pick a question or try again. | Thinking      | The list, Send again (STATE-3) |
-| `slow_down`               | One moment, then try again.                          | Idle          | Send again                     |
-| Today's puzzle can't load | Can’t reach the Guessling. Trying again.             | Idle          | Retries by itself (STATE-4)    |
-| `bad_date`                | Check your iPhone’s date and time.                   | Idle          | Try again (STATE-4)            |
-| `update`                  | Update Guessling to keep playing.                    | Idle          | Update, to the App Store       |
-| `unconfirmed`             | Couldn’t confirm Guessling+.                         | Idle          | Try again (STATE-5)            |
+| State                     | Banner                                               | The Guessling | Offers                          |
+| ------------------------- | ---------------------------------------------------- | ------------- | ------------------------------- |
+| No answer after 300 ms    | None; the bubble's dots pulse                        | Thinking      | Nothing; the composer waits     |
+| No answer after 5 seconds | The Guessling is busy. Send your question again.     | Idle          | Only Send again (ASK-8, PERF-2) |
+| Offline                   | You’re offline. Your question is saved.              | Idle          | Send again (STATE-1)            |
+| `busy`                    | The Guessling is busy. Pick a question or try again. | Thinking      | The list, Send again (STATE-3)  |
+| `slow_down`               | One moment, then try again.                          | Idle          | Send again                      |
+| Today's puzzle can't load | Can’t reach the Guessling. Trying again.             | Idle          | Retries by itself (STATE-4)     |
+| `bad_date`                | Check your iPhone’s date and time.                   | Idle          | Try again (STATE-4)             |
+| `update`                  | Update Guessling to keep playing.                    | Idle          | Update, to the App Store        |
+| `unconfirmed`             | Couldn’t confirm Guessling+.                         | Idle          | Try again (STATE-5)             |
 
 ### The end of a round
 
@@ -1430,6 +1430,11 @@ Each has a safe default, which this document follows until someone decides.
   the poses outgrow a rig, with a paid plan for exports.
 - **An app preview.** Safe default: none in version 1.0; the demo recording
   can become one with the first update.
+- **The busy state after a timeout.** PERF-2 calls the 5-second state "the
+  busy state", STATE-3's busy state offers the question list, and ASK-8
+  allows only "Send again" after a timeout. Safe default: a timeout shows a
+  busy banner with only "Send again", and the list appears only when the
+  Worker answers `busy`; the PRD can make the wording match.
 
 ## See also
 
