@@ -634,6 +634,12 @@ Still open, each with a safe default:
   and judging.
 - [Context](/docs/CONTEXT.md): the official rules, past winners,
   monetization, and pitch guidance.
+- [Product](/docs/PRODUCT.md): what Turn is, for whom, and why, with its
+  principles, metrics, and roadmap.
+- [Product requirements](/docs/PRD.md): what the first version must do, as
+  numbered requirements with checks.
+- [Technical requirements](/docs/TRD.md): how the first version is built,
+  traced to the product requirements.
 - [Next Gen ideation log][log]: the ten rounds that chose Turn, with their
   scores.
 - [Next Gen notes](/docs/research/next-gen.md): what the award asks of a
