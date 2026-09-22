@@ -164,8 +164,8 @@ What makes it more than one screen around one model call:
   Voice, since Expo's speech module never does
   ([Turn on students' devices][ev-devices]).
 - **A measured claim.** The repository's evaluation compares four ways to
-  rank the same 80 partner lines: the offline fallback, keyword ranking on
-  the partner's line, embeddings, and Jev.
+  rank the same 80 partner lines: the place's phrases alone, keyword ranking
+  on the partner's line, embeddings, and Jev.
 
 [tech-speech]: /docs/research/next-gen-tech.md#speechanalyzer-and-speechtranscriber
 [ev-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
@@ -378,8 +378,8 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
   and limits requests per device ([Workers secrets][cf-secrets]).
 - **Evaluation:** `eval/` holds 80 partner lines, each with its best replies
   from the starter bank, and a script that scores top-1 and top-6 accuracy,
-  "none" handling, and latency for four rankers: the fallback, keyword
-  ranking on the partner's line, embeddings from Workers AI, and Jev.
+  "none" handling, and latency for four rankers: the place's phrases alone,
+  keyword ranking on the partner's line, embeddings from Workers AI, and Jev.
 
 [tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
 [cf-secrets]: /docs/research/cloudflare-workers.md#secrets-configuration-and-wrangler
