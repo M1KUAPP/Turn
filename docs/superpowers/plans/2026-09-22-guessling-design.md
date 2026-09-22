@@ -283,7 +283,7 @@ On `docs/DESIGN.md`, from the task that adds Colors on, it also runs:
 
 ```shell
 bunx @google/design.md@0.4.0 lint docs/DESIGN.md > "$CHECKS/lint.json"
-python3 "$CHECKS/lint_summary.py" "$CHECKS/lint.json" orphaned-tokens
+python3 "$CHECKS/lint_summary.py" "$CHECKS/lint.json" missing-typography
 python3 "$CHECKS/check_contrast.py" docs/DESIGN.md
 ```
 
@@ -293,9 +293,11 @@ python3 "$CHECKS/check_contrast.py" docs/DESIGN.md
 - `fact_scan.py` misses are either fixed or design values the document
   states as decisions, and the commit body names those.
 - `check_links.py` failures are opened by hand before they're called broken.
-- The linter must report no errors. Until Components adds the component
-  tokens, colors no component references are allowed warnings; from then
-  on, `lint_summary.py` runs without `orphaned-tokens` and must print `OK`.
+- The linter must report no errors. The Colors commit may warn that no
+  type tokens exist yet (`missing-typography`); from the Typography commit
+  on, `lint_summary.py` runs with no allowed rule and must print `OK`. The
+  linter flags colors no component uses (`orphaned-tokens`) only once
+  components exist, and Components references every color.
 - `check_contrast.py` must print `OK`.
 
 Each task also has its own assertions, run first as a failing test:
@@ -468,7 +470,7 @@ answer colors and glyphs (decisions 3 and 4).
 
 - [ ] **Step 3: Run the gate, then commit**
 
-The linter's `orphaned-tokens` warnings are expected until the Components
+The linter's `missing-typography` warning is expected until the Typography
 task.
 
 ```shell
