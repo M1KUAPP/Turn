@@ -46,8 +46,9 @@ Contents:
     speaking to when they stop, or one line typed for them.
   - _Listen mode_ is the state in which Turn hears the partner, or takes
     typed partner lines, and suggests replies.
-  - The _row_ is the reply area above the grid: six _slots_ in two rows of
-    three, or one _big button_ across all of them.
+  - The _row_ is the reply area above the grid: six _slots_ in fixed places,
+    two across on a phone, as the [design](/docs/DESIGN.md#the-row) lays them
+    out, or one _big button_ across all of them.
   - The _fixed buttons_ are Yes, No, and Not sure.
   - A _candidate_ is one of the 40 phrases the phone sends with a partner
     line; the _shortlist_ is those 40.
@@ -632,12 +633,14 @@ says how each is built.
   button edges at 3:1, the WCAG 2.2 AA levels. Check: measure every color
   pair.
 - **A11Y-8, Must.** Every phrase button's accessibility name is its visible
-  text, so a Voice Control user can say "Tap" and the phrase; a phrase's
-  other actions, such as Edit, are named accessibility actions, not long
-  presses; nothing acts on touch-down; and reordering never needs dragging.
-  React Native can't tell when Switch Control or Voice Control is on, so the
-  app works for them without detecting them. Check: on an iPhone, say "Tap
-  It was hard", and reorder a phrase with Switch Control.
+  text, so a Voice Control user can say "Tap" and the phrase, or, for a
+  phrase the row ends with an ellipsis (A11Y-4), the whole phrase, which
+  begins with the visible text; a phrase's other actions, such as Edit, are
+  named accessibility actions, not long presses; nothing acts on touch-down;
+  and reordering never needs dragging. React Native can't tell when Switch
+  Control or Voice Control is on, so the app works for them without detecting
+  them. Check: on an iPhone, say "Tap It was hard", tap a cut-off phrase in
+  the row with Voice Control, and reorder a phrase with Switch Control.
 
 ### Compatibility
 
