@@ -795,6 +795,8 @@ safe default:
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why.
 - [Technical requirements](/docs/TRD.md): how the first version is built,
   with every requirement here traced.
+- [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and
+  rules a coding agent can follow.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
 - [AAC practice notes](/docs/research/aac-practice.md),
   [iPhone build notes](/docs/research/turn-ios.md),

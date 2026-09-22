@@ -1419,6 +1419,8 @@ product and legal ones.
 - [Product requirements](/docs/PRD.md): every requirement this document
   traces.
 - [Product](/docs/PRODUCT.md): what Turn is and why.
+- [Design](/docs/DESIGN.md): how the app looks, reads, and moves, which the
+  sections above build.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
 - [iPhone build notes][ios-notes], [relay and services notes][svc-notes],
   [evaluation notes][eval-notes], [Jev notes][jev-notes],

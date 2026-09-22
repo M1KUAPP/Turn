@@ -654,6 +654,8 @@ Still open, each with a safe default:
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how the first version is built,
   traced to the product requirements.
+- [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and
+  rules a coding agent can follow.
 - [Next Gen ideation log][log]: the ten rounds that chose Turn, with their
   scores.
 - [Next Gen notes](/docs/research/next-gen.md): what the award asks of a

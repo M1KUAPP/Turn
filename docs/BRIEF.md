@@ -514,6 +514,8 @@ settles several of them and gives a different winners date.
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how the first version is built,
   traced to the product requirements.
+- [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and
+  rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
   Turn superseded. The [product](/docs/archive/guessling-product.md),
   [product requirements](/docs/archive/guessling-prd.md),
