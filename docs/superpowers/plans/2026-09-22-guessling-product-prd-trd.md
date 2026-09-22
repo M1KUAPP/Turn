@@ -243,13 +243,14 @@ The four new notes supply the facts behind them.
     guess counts as one of the twenty. The answer is revealed when the round
     ends.
 4.  **Limits.** Questions up to 140 characters and guesses up to 60; at most
-    40 answers that don't use a turn per player per puzzle; a burst limit
-    per player through Cloudflare's rate-limiting binding, not per address,
-    since mobile networks share addresses; and one shared budget caps Jev
-    requests in play at 1,000 a minute, with the scripts at 100, so every
-    caller together stays under TypeSafe's 1,200. A cap per puzzle couldn't,
-    since three dates, rounds past midnight, and archive puzzles can all
-    call Jev at once.
+    40 answers that don't use a turn per player per puzzle; a burst limit per
+    player through Cloudflare's rate-limiting binding, not per address, since
+    mobile networks share addresses; and a budget object caps Jev requests in
+    play at 1,000 a minute in production and 50 in test, with the scripts
+    sharing 100, so every caller together stays under TypeSafe's 1,200; it
+    also caps RevenueCat lookups at 400. A cap per puzzle couldn't, since
+    three dates, rounds past midnight, and archive puzzles can all call Jev at
+    once.
 5.  **One player ID.** RevenueCat's anonymous app user ID identifies a
     player to the Worker, which stores only a salted hash of it. No second
     install ID.
@@ -278,9 +279,9 @@ The four new notes supply the facts behind them.
     seconds.
 11. **Entitlements.** The Worker asks RevenueCat's API v2 for the player's
     active entitlements with a read-only v2 key (480 requests a minute),
-    caches a yes for up to 15 minutes and a no for 1 minute, and skips the
-    cache right after a purchase. API v1 would create a customer for every
-    unknown ID.
+    caches a yes for up to 15 minutes and a no for 1 minute, and skips a
+    cached no right after a purchase, at most once a minute per player. API v1
+    would create a customer for every unknown ID.
 12. **Judges' access.** A custom offer code for a free month with
     auto-renewal off, a small redemption limit, and all three eligibility
     groups, sent as a redemption URL with Restore Purchases as the fallback.
@@ -324,8 +325,10 @@ The four new notes supply the facts behind them.
     static assets of the same Worker; each puzzle's Durable Object created
     with `locationHint: "wnam"`, near TypeSafe in AWS us-west-2.
 22. **Counts.** Workers Analytics Engine, one data point per event, with the
-    hashed player ID as the index; RevenueCat's Paywall Conversion chart for
-    paywall views, trial starts, and conversions. No analytics SDK.
+    hashed player ID as the index only on puzzle-opened events, so questions
+    and reports can't be lined up with a player; RevenueCat's Paywall
+    Conversion chart for paywall views, trial starts, and conversions. No
+    analytics SDK.
 23. **Kill switch.** A config flag turns live Jev answers off without an app
     update, leaving code, bank, and stored answers.
 24. **Code layout.** The app, the Worker, the content, and the scripts live

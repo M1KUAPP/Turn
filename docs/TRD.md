@@ -62,7 +62,9 @@ Contents:
 | RevenueCat SDK and     |------>| validate, rate-limit,        |      (Guessling+ check)
 | Paywalls               |       | confirm Guessling+, route    |----> Analytics Engine
 +-----------+------------+       | static /privacy /terms       |      (counts)
-            |                    | cron 09:00 UTC: daily check  |
+            |                    | reads KV: config, puzzles    |
+            |                    | cron 09:00 UTC: daily check, |
+            |                    | one test question to Jev     |
             v                    +--------------+---------------+
 +------------------------+                      | one object per puzzle, in wnam
 | App Store, RevenueCat  |       +--------------v---------------+       +--------------+
@@ -1151,30 +1153,30 @@ the config and the static pages.
 
 Every PRD requirement, and the sections of this document that meet it:
 
-| Requirements                                                                                      | Met in                                                                                                                                  |
-| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| NOTICE-1, NOTICE-2, NOTICE-3, NOTICE-4, NOTICE-5                                                  | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
-| TODAY-1, TODAY-2, TODAY-3, TODAY-4, TODAY-5                                                       | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [The iPhone app](#the-iphone-app)                                  |
-| ASK-1, ASK-2, ASK-3, ASK-4, ASK-5, ASK-6, ASK-7, ASK-8, ASK-9, ASK-10, ASK-11, ASK-12             | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
-| GUESS-1, GUESS-2, GUESS-3, GUESS-4                                                                | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline)                                                                          |
-| END-1, END-2, END-3, END-4, END-5                                                                 | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
-| SHARE-1, SHARE-2, SHARE-3                                                                         | [The iPhone app](#the-iphone-app)                                                                                                       |
-| STREAK-1, STREAK-2                                                                                | [The iPhone app](#the-iphone-app)                                                                                                       |
-| ARCHIVE-1, ARCHIVE-2, ARCHIVE-3, ARCHIVE-4                                                        | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [Purchases and entitlements](#purchases-and-entitlements)          |
-| PAY-1, PAY-2, PAY-3, PAY-4, PAY-5, PAY-6, PAY-7, PAY-8                                            | [Purchases and entitlements](#purchases-and-entitlements), [The iPhone app](#the-iphone-app)                                            |
-| REPORT-1, REPORT-2, REPORT-3                                                                      | [Data model](#data-model), [Worker API](#worker-api), [Puzzle days and content tooling](#puzzle-days-and-content-tooling)               |
-| SET-1, SET-2                                                                                      | [The iPhone app](#the-iphone-app)                                                                                                       |
-| STATE-1, STATE-2, STATE-3, STATE-4, STATE-5                                                       | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Reliability and observability](#reliability-and-observability) |
-| CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5, CONTENT-6, CONTENT-7, CONTENT-8, CONTENT-9 | [Puzzle days and content tooling](#puzzle-days-and-content-tooling)                                                                     |
-| PERF-1, PERF-2, PERF-3                                                                            | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Testing](#testing)                                             |
-| AVAIL-1, AVAIL-2, AVAIL-3                                                                         | [Reliability and observability](#reliability-and-observability), [Security and privacy](#security-and-privacy)                          |
-| PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                            | [Security and privacy](#security-and-privacy)                                                                                           |
-| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                 | [Security and privacy](#security-and-privacy), [Answer pipeline](#answer-pipeline), [Worker API](#worker-api)                           |
-| A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6                                                    | [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                                  |
-| COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                            | [Stack and repository](#stack-and-repository), [The iPhone app](#the-iphone-app), [Environments and release](#environments-and-release) |
-| METRIC-1, METRIC-2, METRIC-3, METRIC-4, METRIC-5                                                  | [Reliability and observability](#reliability-and-observability), [Puzzle days and content tooling](#puzzle-days-and-content-tooling)    |
-| STORE-1, STORE-2, STORE-3, STORE-4, STORE-5, STORE-6, STORE-7, STORE-8                            | [Environments and release](#environments-and-release), [Security and privacy](#security-and-privacy)                                    |
-| RELEASE-1, RELEASE-2, RELEASE-3, RELEASE-4, RELEASE-5, RELEASE-6                                  | [Testing](#testing), [Environments and release](#environments-and-release)                                                              |
+| Requirements                                                                                      | Met in                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| NOTICE-1, NOTICE-2, NOTICE-3, NOTICE-4, NOTICE-5                                                  | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Data model](#data-model)                                 |
+| TODAY-1, TODAY-2, TODAY-3, TODAY-4, TODAY-5                                                       | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [The iPhone app](#the-iphone-app)                                                       |
+| ASK-1, ASK-2, ASK-3, ASK-4, ASK-5, ASK-6, ASK-7, ASK-8, ASK-9, ASK-10, ASK-11, ASK-12             | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                                            |
+| GUESS-1, GUESS-2, GUESS-3, GUESS-4                                                                | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline)                                                                                               |
+| END-1, END-2, END-3, END-4, END-5                                                                 | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                                            |
+| SHARE-1, SHARE-2, SHARE-3                                                                         | [The iPhone app](#the-iphone-app)                                                                                                                            |
+| STREAK-1, STREAK-2                                                                                | [The iPhone app](#the-iphone-app)                                                                                                                            |
+| ARCHIVE-1, ARCHIVE-2, ARCHIVE-3, ARCHIVE-4                                                        | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [Purchases and entitlements](#purchases-and-entitlements)                               |
+| PAY-1, PAY-2, PAY-3, PAY-4, PAY-5, PAY-6, PAY-7, PAY-8                                            | [Purchases and entitlements](#purchases-and-entitlements), [The iPhone app](#the-iphone-app)                                                                 |
+| REPORT-1, REPORT-2, REPORT-3                                                                      | [Data model](#data-model), [Worker API](#worker-api), [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [The iPhone app](#the-iphone-app) |
+| SET-1, SET-2                                                                                      | [The iPhone app](#the-iphone-app)                                                                                                                            |
+| STATE-1, STATE-2, STATE-3, STATE-4, STATE-5                                                       | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Reliability and observability](#reliability-and-observability)                      |
+| CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5, CONTENT-6, CONTENT-7, CONTENT-8, CONTENT-9 | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [Environments and release](#environments-and-release)                                   |
+| PERF-1, PERF-2, PERF-3                                                                            | [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                  |
+| AVAIL-1, AVAIL-2, AVAIL-3                                                                         | [Reliability and observability](#reliability-and-observability), [Security and privacy](#security-and-privacy)                                               |
+| PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                            | [Security and privacy](#security-and-privacy)                                                                                                                |
+| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                 | [Security and privacy](#security-and-privacy), [Answer pipeline](#answer-pipeline), [Worker API](#worker-api)                                                |
+| A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6                                                    | [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                                                       |
+| COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                            | [Stack and repository](#stack-and-repository), [The iPhone app](#the-iphone-app), [Environments and release](#environments-and-release)                      |
+| METRIC-1, METRIC-2, METRIC-3, METRIC-4, METRIC-5                                                  | [Reliability and observability](#reliability-and-observability), [Puzzle days and content tooling](#puzzle-days-and-content-tooling)                         |
+| STORE-1, STORE-2, STORE-3, STORE-4, STORE-5, STORE-6, STORE-7, STORE-8                            | [Environments and release](#environments-and-release), [Security and privacy](#security-and-privacy)                                                         |
+| RELEASE-1, RELEASE-2, RELEASE-3, RELEASE-4, RELEASE-5, RELEASE-6                                  | [Testing](#testing), [Environments and release](#environments-and-release)                                                                                   |
 
 ## Open technical questions
 

@@ -128,8 +128,8 @@ says how each is built.
   size and style, and the privacy link opens.
 - **NOTICE-2, Must.** The notice names TypeSafe, unless TypeSafe objects, in
   which case the server's text says "a third-party AI service"; the idea's
-  [Jev section][idea-jev] explains why. Check: changing the server's text
-  changes the notice with no app update.
+  [Jev section][idea-jev] explains why. Check: the notice names TypeSafe, and
+  changing the server's text changes it with no app update.
 - **NOTICE-3, Must.** With "Not now", nothing the player types reaches
   TypeSafe, the server stores none of their wordings, except in a report they
   choose to send, and counts none of their plays, and the player still plays
@@ -528,7 +528,8 @@ https://apps.apple.com/app/id<APP_ID>
   the round ends (END-2). Check: the app's traffic during a round.
 - **SEC-3, Must.** The server limits bursts of requests per player and caps
   all its calls to Jev per minute, and refuses text over its limits.
-  Check: a burst over the limit gets a "slow down" error.
+  Check: a burst over the limit gets a "slow down" error, and new wordings
+  past the Jev budget get the busy state.
 - **SEC-4, Must.** No error text from Jev's SDK reaches the app or the logs.
   Check: a request with a bad key on the test server.
 - **SEC-5, Must.** A build that App Review or players can install never
