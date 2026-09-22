@@ -751,8 +751,8 @@ safe default:
   and why.
 - [Technical requirements](/docs/archive/guessling-trd.md): how version 1.0 is
   built, with every requirement here traced.
-- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
-  tokens and rules a coding agent can follow.
+- [Design](/docs/archive/guessling-design.md): how Guessling looks, moves,
+  and sounds, as tokens and rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,
   and the pitch.
 - [RevenueCat notes](/docs/research/revenuecat-expo.md),

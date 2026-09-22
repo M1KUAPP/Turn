@@ -667,10 +667,9 @@ Still open, each with a safe default:
   risks for the five finalists.
 - [Guessling idea][guessling]: the first idea, archived with the
   [product](/docs/archive/guessling-product.md),
-  [PRD](/docs/archive/guessling-prd.md), and
-  [TRD](/docs/archive/guessling-trd.md) built on it; the
-  [design](/docs/DESIGN.md) document built on it stays in `docs/`, marked
-  superseded.
+  [PRD](/docs/archive/guessling-prd.md),
+  [TRD](/docs/archive/guessling-trd.md), and
+  [design](/docs/archive/guessling-design.md) built on it.
 
 [guessling]: /docs/archive/guessling-idea.md
 [log]: /docs/research/next-gen-ideation.md

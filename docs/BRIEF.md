@@ -516,10 +516,10 @@ settles several of them and gives a different winners date.
   traced to the product requirements.
 - [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
   Turn superseded. The [product](/docs/archive/guessling-product.md),
-  [product requirements](/docs/archive/guessling-prd.md), and
-  [technical requirements](/docs/archive/guessling-trd.md) built on it are
-  archived with it, and the [design](/docs/DESIGN.md) document is superseded
-  too.
+  [product requirements](/docs/archive/guessling-prd.md),
+  [technical requirements](/docs/archive/guessling-trd.md), and
+  [design](/docs/archive/guessling-design.md) built on it are archived with
+  it.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
