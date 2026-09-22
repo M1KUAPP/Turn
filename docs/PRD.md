@@ -246,8 +246,10 @@ says how each is built.
   appears in the app's traffic before the round ends.
 - **END-3, Must.** The end screen offers Share and "Play yesterday's?",
   which opens the paywall for a player without Guessling+ and yesterday's
-  puzzle for a player with it. Check: both paths, with and without
-  Guessling+.
+  puzzle for a player with it. When no daily puzzle is dated before today,
+  as on September 24, 2026, the button reads "Play another?" and opens the
+  newest starter, #10. Check: both paths, with and without Guessling+, on
+  September 24 and on a later date.
 - **END-4, Must.** A finished puzzle can't be played again, and opening the
   app shows its end screen until the next puzzle starts. Check: reopen after
   finishing.

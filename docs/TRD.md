@@ -670,10 +670,11 @@ puzzle is published (CONTENT-7, CONTENT-9).
 - `Purchases.addCustomerInfoUpdateListener` keeps an `isPlus` flag, true
   while `customerInfo.entitlements.active.plus` exists. It drives the locks
   in the archive; the Worker still decides access (ARCHIVE-4).
-- "Play yesterday's?" and a locked archive puzzle call
-  `RevenueCatUI.presentPaywall()` (PAY-4). On `PURCHASED` or `RESTORED`,
-  the app sends its next archive request with `X-Guessling-Refresh: 1` and
-  opens the puzzle (PAY-5).
+- "Play yesterday's?", which reads "Play another?" and targets starter #10
+  while no daily puzzle is dated before today (END-3), and a locked archive
+  puzzle (ARCHIVE-2) call `RevenueCatUI.presentPaywall()` for a player without
+  Guessling+ (PAY-4). On `PURCHASED` or `RESTORED`, the app sends its next
+  archive request with `X-Guessling-Refresh: 1` and opens the puzzle (PAY-5).
 - Settings calls `Purchases.restorePurchases()` only from the Restore
   Purchases tap, since a programmatic restore can prompt for sign-in
   (PAY-6). Redeem Code calls `Purchases.presentCodeRedemptionSheet()`

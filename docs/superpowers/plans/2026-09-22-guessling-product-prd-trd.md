@@ -233,7 +233,8 @@ The four new notes supply the facts behind them.
 2.  **Numbers.** Starters are #1 to #10, undated, so the archive holds the
     ten puzzles the idea promises on launch day; daily puzzle #11 is
     Thursday, September 24, 2026, the day of the first submission, so App
-    Review plays a real daily puzzle.
+    Review plays a real daily puzzle. On that day, with no yesterday,
+    "Play yesterday's?" reads "Play another?" and opens starter #10.
 3.  **Turns.** Twenty. A Yes, a No, and every guess use one; "Ask another
     way" and non-questions don't. "Is it a/an/the X?" naming an accepted
     name counts as a right guess, and in classic Twenty Questions the final
