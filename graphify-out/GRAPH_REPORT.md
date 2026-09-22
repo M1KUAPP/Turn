@@ -1,20 +1,20 @@
-# Graph Report - revenuecat (2026-09-22)
+# Graph Report - revenuecat (2026-09-23)
 
 ## Corpus Check
 
-- 119 files · ~481,605 words
+- 119 files · ~482,222 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 2391 nodes · 2276 edges · 171 communities (164 shown, 4 thin omitted)
+- 2392 nodes · 2277 edges · 171 communities (164 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `8fe4673e`
+- Built from commit: `cf8714de`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -999,8 +999,8 @@ Nodes (7): Accessibility in the app, Build configuration, Flows on the phone, Ne
 
 ### Community 164 - "Evaluation"
 
-Cohesion: 0.40
-Nodes (5): Evaluation, Metrics, intervals, and thresholds, The evaluation data, The rankers, The report
+Cohesion: 0.33
+Nodes (6): Evaluation, Metrics, intervals, and thresholds, The evaluation data, The rankers, The replay script, The report
 
 ### Community 165 - "Listening and speaking on the phone"
 
@@ -1034,8 +1034,8 @@ Nodes (3): Repository layout, Stack and repository, Versions on September 22, 20
 
 ## Knowledge Gaps
 
-- **1892 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1887 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2004 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1893 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1888 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2005 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -1044,10 +1044,10 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Guessling design` connect `Guessling design` to `Colors`, `App icon and store assets`, `Guidance for coding agents`, `Motion`, `Overview`, `Components`, `Screens`, `The Guessling`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
+- **Why does `Jev research notes` connect `Jev research notes` to `Integration effort and limitations`, `How Jev is used`, `Pricing, limits, and terms`, `What teams can build with Jev`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _1892 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1893 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**

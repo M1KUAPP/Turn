@@ -253,7 +253,7 @@
         </div>
         <div id="legend"></div>
       </div>
-      <div id="stats">2391 nodes &middot; 2276 edges &middot; 171 communities</div>
+      <div id="stats">2392 nodes &middot; 2277 edges &middot; 171 communities</div>
     </div>
     <script>
       const RAW_NODES = [
@@ -17369,14 +17369,14 @@
           id: 'docs_trd_evaluation',
           label: 'Evaluation',
           color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
-          size: 12.6,
+          size: 13.1,
           font: { size: 0, color: '#ffffff' },
           title: 'Evaluation',
           community: 164,
           community_name: 'Evaluation',
           source_file: 'docs/TRD.md',
           file_type: 'document',
-          degree: 5
+          degree: 6
         },
         {
           id: 'docs_trd_metrics_intervals_and_thresholds',
@@ -17411,6 +17411,19 @@
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
           title: 'The rankers',
+          community: 164,
+          community_name: 'Evaluation',
+          source_file: 'docs/TRD.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_trd_the_replay_script',
+          label: 'The replay script',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'The replay script',
           community: 164,
           community_name: 'Evaluation',
           source_file: 'docs/TRD.md',
@@ -44177,6 +44190,16 @@
         },
         {
           from: 'docs_trd_evaluation',
+          to: 'docs_trd_the_replay_script',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_trd_evaluation',
           to: 'docs_trd_the_report',
           label: 'contains',
           title: 'contains [EXTRACTED]',
@@ -54321,7 +54344,7 @@
         { cid: 161, color: '#F28E2B', label: 'Guessling product', count: 15 },
         { cid: 162, color: '#E15759', label: 'Decision pipeline', count: 8 },
         { cid: 163, color: '#76B7B2', label: 'The iPhone app', count: 7 },
-        { cid: 164, color: '#59A14F', label: 'Evaluation', count: 5 },
+        { cid: 164, color: '#59A14F', label: 'Evaluation', count: 6 },
         { cid: 165, color: '#EDC948', label: 'Listening and speaking on the phone', count: 5 },
         { cid: 166, color: '#B07AA1', label: 'Security and privacy', count: 4 },
         { cid: 167, color: '#FF9DA7', label: 'Data model', count: 4 },

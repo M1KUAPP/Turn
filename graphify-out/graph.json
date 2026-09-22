@@ -1507,7 +1507,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions and open questions",
       "source_file": "docs/IDEA.md",
-      "source_location": "L582"
+      "source_location": "L581"
     },
     {
       "id": "docs_idea_at_a_glance",
@@ -1579,7 +1579,7 @@
       "node_kind": "heading",
       "norm_label": "how the idea was chosen",
       "source_file": "docs/IDEA.md",
-      "source_location": "L549"
+      "source_location": "L548"
     },
     {
       "id": "docs_idea_monetization",
@@ -1603,7 +1603,7 @@
       "node_kind": "heading",
       "norm_label": "pitch",
       "source_file": "docs/IDEA.md",
-      "source_location": "L453"
+      "source_location": "L452"
     },
     {
       "id": "docs_idea_problem_and_audience",
@@ -1627,7 +1627,7 @@
       "node_kind": "heading",
       "norm_label": "risks",
       "source_file": "docs/IDEA.md",
-      "source_location": "L491"
+      "source_location": "L490"
     },
     {
       "id": "docs_idea_schedule_to_september_30",
@@ -1663,7 +1663,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/IDEA.md",
-      "source_location": "L647"
+      "source_location": "L645"
     },
     {
       "id": "docs_idea_shipaton_2026_idea",
@@ -1735,7 +1735,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1210"
+      "source_location": "L1245"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -1747,7 +1747,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1278"
+      "source_location": "L1326"
     },
     {
       "id": "docs_trd_overview",
@@ -1771,7 +1771,7 @@
       "node_kind": "heading",
       "norm_label": "relay api",
       "source_file": "docs/TRD.md",
-      "source_location": "L281"
+      "source_location": "L285"
     },
     {
       "id": "docs_trd_requirements_traceability",
@@ -1783,7 +1783,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1248"
+      "source_location": "L1283"
     },
     {
       "id": "docs_trd_see_also",
@@ -1795,7 +1795,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1320"
+      "source_location": "L1368"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -1807,7 +1807,7 @@
       "node_kind": "heading",
       "norm_label": "system architecture",
       "source_file": "docs/TRD.md",
-      "source_location": "L59"
+      "source_location": "L62"
     },
     {
       "id": "docs_trd_testing",
@@ -1819,7 +1819,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1180"
+      "source_location": "L1210"
     },
     {
       "id": "docs_trd_turn_technical_requirements",
@@ -3847,7 +3847,7 @@
       "node_kind": "heading",
       "norm_label": "accessibility",
       "source_file": "docs/PRD.md",
-      "source_location": "L604"
+      "source_location": "L608"
     },
     {
       "id": "docs_prd_availability",
@@ -3859,7 +3859,7 @@
       "node_kind": "heading",
       "norm_label": "availability",
       "source_file": "docs/PRD.md",
-      "source_location": "L555"
+      "source_location": "L557"
     },
     {
       "id": "docs_prd_compatibility",
@@ -3871,7 +3871,7 @@
       "node_kind": "heading",
       "norm_label": "compatibility",
       "source_file": "docs/PRD.md",
-      "source_location": "L634"
+      "source_location": "L638"
     },
     {
       "id": "docs_prd_content_requirements",
@@ -3883,7 +3883,7 @@
       "node_kind": "heading",
       "norm_label": "content requirements",
       "source_file": "docs/PRD.md",
-      "source_location": "L449"
+      "source_location": "L453"
     },
     {
       "id": "docs_prd_dependencies_and_assumptions",
@@ -3895,7 +3895,7 @@
       "node_kind": "heading",
       "norm_label": "dependencies and assumptions",
       "source_file": "docs/PRD.md",
-      "source_location": "L727"
+      "source_location": "L731"
     },
     {
       "id": "docs_prd_evaluation_requirements",
@@ -3907,7 +3907,7 @@
       "node_kind": "heading",
       "norm_label": "evaluation requirements",
       "source_file": "docs/PRD.md",
-      "source_location": "L485"
+      "source_location": "L488"
     },
     {
       "id": "docs_prd_functional_requirements",
@@ -3919,7 +3919,7 @@
       "node_kind": "heading",
       "norm_label": "functional requirements",
       "source_file": "docs/PRD.md",
-      "source_location": "L138"
+      "source_location": "L140"
     },
     {
       "id": "docs_prd_goals_and_non_goals",
@@ -3931,7 +3931,7 @@
       "node_kind": "heading",
       "norm_label": "goals and non-goals",
       "source_file": "docs/PRD.md",
-      "source_location": "L66"
+      "source_location": "L68"
     },
     {
       "id": "docs_prd_listening",
@@ -3943,7 +3943,7 @@
       "node_kind": "heading",
       "norm_label": "listening",
       "source_file": "docs/PRD.md",
-      "source_location": "L289"
+      "source_location": "L293"
     },
     {
       "id": "docs_prd_measurement_requirements",
@@ -3955,7 +3955,7 @@
       "node_kind": "heading",
       "norm_label": "measurement requirements",
       "source_file": "docs/PRD.md",
-      "source_location": "L649"
+      "source_location": "L653"
     },
     {
       "id": "docs_prd_non_functional_requirements",
@@ -3967,7 +3967,7 @@
       "node_kind": "heading",
       "norm_label": "non-functional requirements",
       "source_file": "docs/PRD.md",
-      "source_location": "L537"
+      "source_location": "L539"
     },
     {
       "id": "docs_prd_offline_and_degraded_states",
@@ -3979,7 +3979,7 @@
       "node_kind": "heading",
       "norm_label": "offline and degraded states",
       "source_file": "docs/PRD.md",
-      "source_location": "L370"
+      "source_location": "L374"
     },
     {
       "id": "docs_prd_open_questions",
@@ -3991,7 +3991,7 @@
       "node_kind": "heading",
       "norm_label": "open questions",
       "source_file": "docs/PRD.md",
-      "source_location": "L745"
+      "source_location": "L750"
     },
     {
       "id": "docs_prd_overview",
@@ -4015,7 +4015,7 @@
       "node_kind": "heading",
       "norm_label": "performance",
       "source_file": "docs/PRD.md",
-      "source_location": "L539"
+      "source_location": "L541"
     },
     {
       "id": "docs_prd_permission_and_consent",
@@ -4027,7 +4027,7 @@
       "node_kind": "heading",
       "norm_label": "permission and consent",
       "source_file": "docs/PRD.md",
-      "source_location": "L247"
+      "source_location": "L252"
     },
     {
       "id": "docs_prd_places",
@@ -4039,7 +4039,7 @@
       "node_kind": "heading",
       "norm_label": "places",
       "source_file": "docs/PRD.md",
-      "source_location": "L215"
+      "source_location": "L220"
     },
     {
       "id": "docs_prd_privacy",
@@ -4051,7 +4051,7 @@
       "node_kind": "heading",
       "norm_label": "privacy",
       "source_file": "docs/PRD.md",
-      "source_location": "L564"
+      "source_location": "L566"
     },
     {
       "id": "docs_prd_release_criteria",
@@ -4063,7 +4063,7 @@
       "node_kind": "heading",
       "norm_label": "release criteria",
       "source_file": "docs/PRD.md",
-      "source_location": "L700"
+      "source_location": "L704"
     },
     {
       "id": "docs_prd_security",
@@ -4075,7 +4075,7 @@
       "node_kind": "heading",
       "norm_label": "security",
       "source_file": "docs/PRD.md",
-      "source_location": "L582"
+      "source_location": "L583"
     },
     {
       "id": "docs_prd_see_also",
@@ -4087,7 +4087,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/PRD.md",
-      "source_location": "L784"
+      "source_location": "L789"
     },
     {
       "id": "docs_prd_settings",
@@ -4099,7 +4099,7 @@
       "node_kind": "heading",
       "norm_label": "settings",
       "source_file": "docs/PRD.md",
-      "source_location": "L432"
+      "source_location": "L435"
     },
     {
       "id": "docs_prd_submission_requirements",
@@ -4111,7 +4111,7 @@
       "node_kind": "heading",
       "norm_label": "submission requirements",
       "source_file": "docs/PRD.md",
-      "source_location": "L666"
+      "source_location": "L670"
     },
     {
       "id": "docs_prd_the_paywall_and_purchases",
@@ -4123,7 +4123,7 @@
       "node_kind": "heading",
       "norm_label": "the paywall and purchases",
       "source_file": "docs/PRD.md",
-      "source_location": "L388"
+      "source_location": "L392"
     },
     {
       "id": "docs_prd_the_phrase_bank",
@@ -4135,7 +4135,7 @@
       "node_kind": "heading",
       "norm_label": "the phrase bank",
       "source_file": "docs/PRD.md",
-      "source_location": "L176"
+      "source_location": "L179"
     },
     {
       "id": "docs_prd_the_reply_row",
@@ -4147,7 +4147,7 @@
       "node_kind": "heading",
       "norm_label": "the reply row",
       "source_file": "docs/PRD.md",
-      "source_location": "L326"
+      "source_location": "L329"
     },
     {
       "id": "docs_prd_the_speaking_grid",
@@ -4159,7 +4159,7 @@
       "node_kind": "heading",
       "norm_label": "the speaking grid",
       "source_file": "docs/PRD.md",
-      "source_location": "L145"
+      "source_location": "L147"
     },
     {
       "id": "docs_prd_turn_product_requirements",
@@ -4183,7 +4183,7 @@
       "node_kind": "heading",
       "norm_label": "user scenarios",
       "source_file": "docs/PRD.md",
-      "source_location": "L97"
+      "source_location": "L99"
     },
     {
       "id": "docs_prd_voices",
@@ -4195,7 +4195,7 @@
       "node_kind": "heading",
       "norm_label": "voices",
       "source_file": "docs/PRD.md",
-      "source_location": "L228"
+      "source_location": "L233"
     },
     {
       "id": "docs_research_daily_puzzles",
@@ -4579,7 +4579,7 @@
       "node_kind": "heading",
       "norm_label": "business model",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L256"
+      "source_location": "L255"
     },
     {
       "id": "docs_product_positioning",
@@ -4591,7 +4591,7 @@
       "node_kind": "heading",
       "norm_label": "positioning",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L116"
+      "source_location": "L115"
     },
     {
       "id": "docs_product_product_principles",
@@ -4603,7 +4603,7 @@
       "node_kind": "heading",
       "norm_label": "product principles",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L150"
+      "source_location": "L149"
     },
     {
       "id": "docs_product_roadmap",
@@ -4615,7 +4615,7 @@
       "node_kind": "heading",
       "norm_label": "roadmap",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L337"
+      "source_location": "L330"
     },
     {
       "id": "docs_product_see_also",
@@ -4627,7 +4627,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L375"
+      "source_location": "L368"
     },
     {
       "id": "docs_product_success_metrics",
@@ -4639,7 +4639,7 @@
       "node_kind": "heading",
       "norm_label": "success metrics",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L293"
+      "source_location": "L286"
     },
     {
       "id": "docs_product_the_experience",
@@ -4651,7 +4651,7 @@
       "node_kind": "heading",
       "norm_label": "the experience",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L187"
+      "source_location": "L186"
     },
     {
       "id": "docs_product_the_phrase_bank",
@@ -4663,7 +4663,7 @@
       "node_kind": "heading",
       "norm_label": "the phrase bank",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L226"
+      "source_location": "L225"
     },
     {
       "id": "docs_product_turn_in_brief",
@@ -4675,7 +4675,7 @@
       "node_kind": "heading",
       "norm_label": "turn in brief",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L29"
+      "source_location": "L28"
     },
     {
       "id": "docs_product_turn_product",
@@ -4699,7 +4699,7 @@
       "node_kind": "heading",
       "norm_label": "users and partners",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L72"
+      "source_location": "L71"
     },
     {
       "id": "docs_product_vision",
@@ -4711,7 +4711,7 @@
       "node_kind": "heading",
       "norm_label": "vision",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L55"
+      "source_location": "L54"
     },
     {
       "id": "docs_product_what_turn_is_not",
@@ -4723,7 +4723,7 @@
       "node_kind": "heading",
       "norm_label": "what turn is not",
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L365"
+      "source_location": "L358"
     },
     {
       "id": "docs_research_frontend_trends",
@@ -13642,7 +13642,7 @@
       "node_kind": "heading",
       "norm_label": "gaps",
       "source_file": "docs/research/turn-services.md",
-      "source_location": "L1253"
+      "source_location": "L1256"
     },
     {
       "id": "docs_research_turn_services_how_a_jev_request_is_billed",
@@ -15146,7 +15146,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L437"
+      "source_location": "L445"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_decisions_the_documents_record",
@@ -15194,7 +15194,7 @@
       "node_kind": "heading",
       "norm_label": "rejected alternatives",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L473"
+      "source_location": "L483"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_requirement_format_and_ids",
@@ -15266,7 +15266,7 @@
       "node_kind": "heading",
       "norm_label": "task 1: research notes",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L552"
+      "source_location": "L562"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_2_this_plan",
@@ -15278,7 +15278,7 @@
       "node_kind": "heading",
       "norm_label": "task 2: this plan",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L579"
+      "source_location": "L589"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_3_archive_the_guessling_product_prd_and_trd",
@@ -15290,7 +15290,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: archive the guessling product, prd, and trd",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L588"
+      "source_location": "L598"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_4_the_product_document",
@@ -15302,7 +15302,7 @@
       "node_kind": "heading",
       "norm_label": "task 4: the product document",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L612"
+      "source_location": "L622"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_5_the_prd",
@@ -15314,7 +15314,7 @@
       "node_kind": "heading",
       "norm_label": "task 5: the prd",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L625"
+      "source_location": "L635"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_6_the_trd",
@@ -15326,7 +15326,7 @@
       "node_kind": "heading",
       "norm_label": "task 6: the trd",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L645"
+      "source_location": "L655"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_7_pointers_and_the_idea",
@@ -15338,7 +15338,7 @@
       "node_kind": "heading",
       "norm_label": "task 7: pointers and the idea",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L661"
+      "source_location": "L671"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_task_8_fact_check_graph_and_pull_request",
@@ -15350,7 +15350,7 @@
       "node_kind": "heading",
       "norm_label": "task 8: fact check, graph, and pull request",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L682"
+      "source_location": "L692"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_tasks",
@@ -15362,7 +15362,7 @@
       "node_kind": "heading",
       "norm_label": "tasks",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L538"
+      "source_location": "L548"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_the_guessling_documents",
@@ -15374,7 +15374,7 @@
       "node_kind": "heading",
       "norm_label": "the guessling documents",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L451"
+      "source_location": "L461"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_turn_product_prd_and_trd_implementation_plan",
@@ -15398,7 +15398,7 @@
       "node_kind": "heading",
       "norm_label": "verification gate",
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L489"
+      "source_location": "L499"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_turn_product_prd_trd_what_each_document_is_for",
@@ -15614,7 +15614,7 @@
       "node_kind": "heading",
       "norm_label": "decision pipeline",
       "source_file": "docs/TRD.md",
-      "source_location": "L353"
+      "source_location": "L360"
     },
     {
       "id": "docs_trd_from_probabilities_to_the_row",
@@ -15626,7 +15626,7 @@
       "node_kind": "heading",
       "norm_label": "from probabilities to the row",
       "source_file": "docs/TRD.md",
-      "source_location": "L506"
+      "source_location": "L518"
     },
     {
       "id": "docs_trd_names_as_tags",
@@ -15638,7 +15638,7 @@
       "node_kind": "heading",
       "norm_label": "names as tags",
       "source_file": "docs/TRD.md",
-      "source_location": "L379"
+      "source_location": "L387"
     },
     {
       "id": "docs_trd_the_end_of_a_line",
@@ -15650,7 +15650,7 @@
       "node_kind": "heading",
       "norm_label": "the end of a line",
       "source_file": "docs/TRD.md",
-      "source_location": "L355"
+      "source_location": "L362"
     },
     {
       "id": "docs_trd_the_jev_request",
@@ -15662,7 +15662,7 @@
       "node_kind": "heading",
       "norm_label": "the jev request",
       "source_file": "docs/TRD.md",
-      "source_location": "L430"
+      "source_location": "L442"
     },
     {
       "id": "docs_trd_the_phone_s_own_ranking",
@@ -15674,7 +15674,7 @@
       "node_kind": "heading",
       "norm_label": "the phone's own ranking",
       "source_file": "docs/TRD.md",
-      "source_location": "L556"
+      "source_location": "L575"
     },
     {
       "id": "docs_trd_the_shortlist",
@@ -15686,7 +15686,7 @@
       "node_kind": "heading",
       "norm_label": "the shortlist",
       "source_file": "docs/TRD.md",
-      "source_location": "L403"
+      "source_location": "L415"
     },
     {
       "id": "docs_trd_timeouts_sequence_numbers_and_fallbacks",
@@ -15698,7 +15698,7 @@
       "node_kind": "heading",
       "norm_label": "timeouts, sequence numbers, and fallbacks",
       "source_file": "docs/TRD.md",
-      "source_location": "L543"
+      "source_location": "L562"
     },
     {
       "id": "docs_trd_accessibility_in_the_app",
@@ -15710,7 +15710,7 @@
       "node_kind": "heading",
       "norm_label": "accessibility in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L876"
+      "source_location": "L901"
     },
     {
       "id": "docs_trd_build_configuration",
@@ -15722,7 +15722,7 @@
       "node_kind": "heading",
       "norm_label": "build configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L909"
+      "source_location": "L934"
     },
     {
       "id": "docs_trd_flows_on_the_phone",
@@ -15734,7 +15734,7 @@
       "node_kind": "heading",
       "norm_label": "flows on the phone",
       "source_file": "docs/TRD.md",
-      "source_location": "L853"
+      "source_location": "L877"
     },
     {
       "id": "docs_trd_networking",
@@ -15746,7 +15746,7 @@
       "node_kind": "heading",
       "norm_label": "networking",
       "source_file": "docs/TRD.md",
-      "source_location": "L845"
+      "source_location": "L868"
     },
     {
       "id": "docs_trd_screens_and_navigation",
@@ -15758,7 +15758,7 @@
       "node_kind": "heading",
       "norm_label": "screens and navigation",
       "source_file": "docs/TRD.md",
-      "source_location": "L820"
+      "source_location": "L843"
     },
     {
       "id": "docs_trd_state_and_storage",
@@ -15770,7 +15770,7 @@
       "node_kind": "heading",
       "norm_label": "state and storage",
       "source_file": "docs/TRD.md",
-      "source_location": "L834"
+      "source_location": "L857"
     },
     {
       "id": "docs_trd_the_iphone_app",
@@ -15782,7 +15782,7 @@
       "node_kind": "heading",
       "norm_label": "the iphone app",
       "source_file": "docs/TRD.md",
-      "source_location": "L818"
+      "source_location": "L841"
     },
     {
       "id": "docs_trd_evaluation",
@@ -15794,7 +15794,7 @@
       "node_kind": "heading",
       "norm_label": "evaluation",
       "source_file": "docs/TRD.md",
-      "source_location": "L1085"
+      "source_location": "L1110"
     },
     {
       "id": "docs_trd_metrics_intervals_and_thresholds",
@@ -15806,7 +15806,7 @@
       "node_kind": "heading",
       "norm_label": "metrics, intervals, and thresholds",
       "source_file": "docs/TRD.md",
-      "source_location": "L1130"
+      "source_location": "L1155"
     },
     {
       "id": "docs_trd_the_evaluation_data",
@@ -15818,7 +15818,7 @@
       "node_kind": "heading",
       "norm_label": "the evaluation data",
       "source_file": "docs/TRD.md",
-      "source_location": "L1087"
+      "source_location": "L1112"
     },
     {
       "id": "docs_trd_the_rankers",
@@ -15830,7 +15830,19 @@
       "node_kind": "heading",
       "norm_label": "the rankers",
       "source_file": "docs/TRD.md",
-      "source_location": "L1108"
+      "source_location": "L1133"
+    },
+    {
+      "id": "docs_trd_the_replay_script",
+      "label": "The replay script",
+      "_origin": "ast",
+      "community": 164,
+      "community_name": "Evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the replay script",
+      "source_file": "docs/TRD.md",
+      "source_location": "L1197"
     },
     {
       "id": "docs_trd_the_report",
@@ -15842,7 +15854,7 @@
       "node_kind": "heading",
       "norm_label": "the report",
       "source_file": "docs/TRD.md",
-      "source_location": "L1173"
+      "source_location": "L1203"
     },
     {
       "id": "docs_trd_listening_and_speaking_on_the_phone",
@@ -15854,7 +15866,7 @@
       "node_kind": "heading",
       "norm_label": "listening and speaking on the phone",
       "source_file": "docs/TRD.md",
-      "source_location": "L569"
+      "source_location": "L588"
     },
     {
       "id": "docs_trd_the_audio_session",
@@ -15866,7 +15878,7 @@
       "node_kind": "heading",
       "norm_label": "the audio session",
       "source_file": "docs/TRD.md",
-      "source_location": "L620"
+      "source_location": "L639"
     },
     {
       "id": "docs_trd_the_turn_listen_module",
@@ -15878,7 +15890,7 @@
       "node_kind": "heading",
       "norm_label": "the turn-listen module",
       "source_file": "docs/TRD.md",
-      "source_location": "L571"
+      "source_location": "L590"
     },
     {
       "id": "docs_trd_the_turn_voice_module",
@@ -15890,7 +15902,7 @@
       "node_kind": "heading",
       "norm_label": "the turn-voice module",
       "source_file": "docs/TRD.md",
-      "source_location": "L655"
+      "source_location": "L674"
     },
     {
       "id": "docs_trd_when_transcription_isn_t_available",
@@ -15902,7 +15914,7 @@
       "node_kind": "heading",
       "norm_label": "when transcription isn't available",
       "source_file": "docs/TRD.md",
-      "source_location": "L681"
+      "source_location": "L700"
     },
     {
       "id": "docs_trd_data_inventory",
@@ -15914,7 +15926,7 @@
       "node_kind": "heading",
       "norm_label": "data inventory",
       "source_file": "docs/TRD.md",
-      "source_location": "L1024"
+      "source_location": "L1049"
     },
     {
       "id": "docs_trd_secrets_and_configuration",
@@ -15926,7 +15938,7 @@
       "node_kind": "heading",
       "norm_label": "secrets and configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L930"
+      "source_location": "L955"
     },
     {
       "id": "docs_trd_security_and_privacy",
@@ -15938,7 +15950,7 @@
       "node_kind": "heading",
       "norm_label": "security and privacy",
       "source_file": "docs/TRD.md",
-      "source_location": "L928"
+      "source_location": "L953"
     },
     {
       "id": "docs_trd_validation_and_abuse_limits",
@@ -15950,7 +15962,7 @@
       "node_kind": "heading",
       "norm_label": "validation and abuse limits",
       "source_file": "docs/TRD.md",
-      "source_location": "L1000"
+      "source_location": "L1025"
     },
     {
       "id": "docs_trd_data_model",
@@ -15962,7 +15974,7 @@
       "node_kind": "heading",
       "norm_label": "data model",
       "source_file": "docs/TRD.md",
-      "source_location": "L183"
+      "source_location": "L186"
     },
     {
       "id": "docs_trd_the_phone_s_database",
@@ -15974,7 +15986,7 @@
       "node_kind": "heading",
       "norm_label": "the phone's database",
       "source_file": "docs/TRD.md",
-      "source_location": "L185"
+      "source_location": "L188"
     },
     {
       "id": "docs_trd_the_relay_s_storage",
@@ -15986,7 +15998,7 @@
       "node_kind": "heading",
       "norm_label": "the relay's storage",
       "source_file": "docs/TRD.md",
-      "source_location": "L238"
+      "source_location": "L241"
     },
     {
       "id": "docs_trd_what_is_never_stored",
@@ -15998,7 +16010,7 @@
       "node_kind": "heading",
       "norm_label": "what is never stored",
       "source_file": "docs/TRD.md",
-      "source_location": "L271"
+      "source_location": "L275"
     },
     {
       "id": "docs_trd_failure_modes",
@@ -16010,7 +16022,7 @@
       "node_kind": "heading",
       "norm_label": "failure modes",
       "source_file": "docs/TRD.md",
-      "source_location": "L1045"
+      "source_location": "L1070"
     },
     {
       "id": "docs_trd_logs_and_counts",
@@ -16022,7 +16034,7 @@
       "node_kind": "heading",
       "norm_label": "logs and counts",
       "source_file": "docs/TRD.md",
-      "source_location": "L1060"
+      "source_location": "L1085"
     },
     {
       "id": "docs_trd_reliability_and_observability",
@@ -16034,7 +16046,7 @@
       "node_kind": "heading",
       "norm_label": "reliability and observability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1043"
+      "source_location": "L1068"
     },
     {
       "id": "docs_trd_service_life",
@@ -16046,7 +16058,7 @@
       "node_kind": "heading",
       "norm_label": "service life",
       "source_file": "docs/TRD.md",
-      "source_location": "L1079"
+      "source_location": "L1104"
     },
     {
       "id": "docs_trd_purchases_and_entitlements",
@@ -16058,7 +16070,7 @@
       "node_kind": "heading",
       "norm_label": "purchases and entitlements",
       "source_file": "docs/TRD.md",
-      "source_location": "L703"
+      "source_location": "L722"
     },
     {
       "id": "docs_trd_purchases_in_the_app",
@@ -16070,7 +16082,7 @@
       "node_kind": "heading",
       "norm_label": "purchases in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L736"
+      "source_location": "L755"
     },
     {
       "id": "docs_trd_revenuecat_setup",
@@ -16082,7 +16094,7 @@
       "node_kind": "heading",
       "norm_label": "revenuecat setup",
       "source_file": "docs/TRD.md",
-      "source_location": "L705"
+      "source_location": "L724"
     },
     {
       "id": "docs_trd_the_relay_s_entitlement_check",
@@ -16094,7 +16106,7 @@
       "node_kind": "heading",
       "norm_label": "the relay's entitlement check",
       "source_file": "docs/TRD.md",
-      "source_location": "L773"
+      "source_location": "L795"
     },
     {
       "id": "docs_sources_devpost_com_revenuecat_shipaton_2026",
@@ -16310,7 +16322,7 @@
       "node_kind": "heading",
       "norm_label": "repository layout",
       "source_file": "docs/TRD.md",
-      "source_location": "L153"
+      "source_location": "L156"
     },
     {
       "id": "docs_trd_stack_and_repository",
@@ -16322,7 +16334,7 @@
       "node_kind": "heading",
       "norm_label": "stack and repository",
       "source_file": "docs/TRD.md",
-      "source_location": "L124"
+      "source_location": "L127"
     },
     {
       "id": "docs_trd_versions_on_september_22_2026",
@@ -16334,7 +16346,7 @@
       "node_kind": "heading",
       "norm_label": "versions on september 22, 2026",
       "source_file": "docs/TRD.md",
-      "source_location": "L126"
+      "source_location": "L129"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_shipyard_2026_winners",
@@ -31649,7 +31661,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L453",
+      "source_location": "L452",
       "weight": 1.0
     },
     {
@@ -31660,7 +31672,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L491",
+      "source_location": "L490",
       "weight": 1.0
     },
     {
@@ -31671,7 +31683,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L549",
+      "source_location": "L548",
       "weight": 1.0
     },
     {
@@ -31693,7 +31705,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L582",
+      "source_location": "L581",
       "weight": 1.0
     },
     {
@@ -31704,7 +31716,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L647",
+      "source_location": "L645",
       "weight": 1.0
     },
     {
@@ -31737,7 +31749,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L145",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -31748,7 +31760,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L176",
+      "source_location": "L179",
       "weight": 1.0
     },
     {
@@ -31759,7 +31771,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L215",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -31770,7 +31782,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L228",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -31781,7 +31793,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L247",
+      "source_location": "L252",
       "weight": 1.0
     },
     {
@@ -31792,7 +31804,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L289",
+      "source_location": "L293",
       "weight": 1.0
     },
     {
@@ -31803,7 +31815,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L326",
+      "source_location": "L329",
       "weight": 1.0
     },
     {
@@ -31814,7 +31826,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L370",
+      "source_location": "L374",
       "weight": 1.0
     },
     {
@@ -31825,7 +31837,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L388",
+      "source_location": "L392",
       "weight": 1.0
     },
     {
@@ -31836,7 +31848,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L432",
+      "source_location": "L435",
       "weight": 1.0
     },
     {
@@ -31847,7 +31859,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L539",
+      "source_location": "L541",
       "weight": 1.0
     },
     {
@@ -31858,7 +31870,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L555",
+      "source_location": "L557",
       "weight": 1.0
     },
     {
@@ -31869,7 +31881,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L564",
+      "source_location": "L566",
       "weight": 1.0
     },
     {
@@ -31880,7 +31892,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L582",
+      "source_location": "L583",
       "weight": 1.0
     },
     {
@@ -31891,7 +31903,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L604",
+      "source_location": "L608",
       "weight": 1.0
     },
     {
@@ -31902,7 +31914,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L634",
+      "source_location": "L638",
       "weight": 1.0
     },
     {
@@ -31913,7 +31925,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L138",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -31935,7 +31947,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L449",
+      "source_location": "L453",
       "weight": 1.0
     },
     {
@@ -31946,7 +31958,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L485",
+      "source_location": "L488",
       "weight": 1.0
     },
     {
@@ -31957,7 +31969,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L537",
+      "source_location": "L539",
       "weight": 1.0
     },
     {
@@ -31968,18 +31980,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L649",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_prd_turn_product_requirements",
-      "target": "docs_prd_goals_and_non_goals",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/PRD.md",
-      "source_location": "L66",
+      "source_location": "L653",
       "weight": 1.0
     },
     {
@@ -31990,7 +31991,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L666",
+      "source_location": "L670",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_prd_turn_product_requirements",
+      "target": "docs_prd_goals_and_non_goals",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PRD.md",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -32001,7 +32013,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L700",
+      "source_location": "L704",
       "weight": 1.0
     },
     {
@@ -32012,7 +32024,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L727",
+      "source_location": "L731",
       "weight": 1.0
     },
     {
@@ -32023,7 +32035,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L745",
+      "source_location": "L750",
       "weight": 1.0
     },
     {
@@ -32034,7 +32046,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L784",
+      "source_location": "L789",
       "weight": 1.0
     },
     {
@@ -32045,7 +32057,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRD.md",
-      "source_location": "L97",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -32067,7 +32079,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L116",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -32078,7 +32090,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L150",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -32089,7 +32101,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L187",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -32100,7 +32112,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L226",
+      "source_location": "L225",
       "weight": 1.0
     },
     {
@@ -32111,7 +32123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L256",
+      "source_location": "L255",
       "weight": 1.0
     },
     {
@@ -32122,7 +32134,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L29",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -32133,7 +32145,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L293",
+      "source_location": "L286",
       "weight": 1.0
     },
     {
@@ -32144,7 +32156,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L337",
+      "source_location": "L330",
       "weight": 1.0
     },
     {
@@ -32155,7 +32167,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L365",
+      "source_location": "L358",
       "weight": 1.0
     },
     {
@@ -32166,7 +32178,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L375",
+      "source_location": "L368",
       "weight": 1.0
     },
     {
@@ -32177,7 +32189,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L55",
+      "source_location": "L54",
       "weight": 1.0
     },
     {
@@ -32188,7 +32200,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/PRODUCT.md",
-      "source_location": "L72",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -42869,7 +42881,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/turn-services.md",
-      "source_location": "L1253",
+      "source_location": "L1256",
       "weight": 1.0
     },
     {
@@ -52989,7 +53001,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L437",
+      "source_location": "L445",
       "weight": 1.0
     },
     {
@@ -53000,7 +53012,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L451",
+      "source_location": "L461",
       "weight": 1.0
     },
     {
@@ -53011,7 +53023,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L473",
+      "source_location": "L483",
       "weight": 1.0
     },
     {
@@ -53022,7 +53034,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L552",
+      "source_location": "L562",
       "weight": 1.0
     },
     {
@@ -53033,7 +53045,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L579",
+      "source_location": "L589",
       "weight": 1.0
     },
     {
@@ -53044,7 +53056,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L588",
+      "source_location": "L598",
       "weight": 1.0
     },
     {
@@ -53055,7 +53067,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L612",
+      "source_location": "L622",
       "weight": 1.0
     },
     {
@@ -53066,7 +53078,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L625",
+      "source_location": "L635",
       "weight": 1.0
     },
     {
@@ -53077,7 +53089,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L645",
+      "source_location": "L655",
       "weight": 1.0
     },
     {
@@ -53088,7 +53100,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L661",
+      "source_location": "L671",
       "weight": 1.0
     },
     {
@@ -53099,7 +53111,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L682",
+      "source_location": "L692",
       "weight": 1.0
     },
     {
@@ -53132,7 +53144,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L489",
+      "source_location": "L499",
       "weight": 1.0
     },
     {
@@ -53143,7 +53155,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-turn-product-prd-trd.md",
-      "source_location": "L538",
+      "source_location": "L548",
       "weight": 1.0
     },
     {
@@ -53176,7 +53188,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L185",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -53187,7 +53199,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L238",
+      "source_location": "L241",
       "weight": 1.0
     },
     {
@@ -53198,7 +53210,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L271",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -53209,7 +53221,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L355",
+      "source_location": "L362",
       "weight": 1.0
     },
     {
@@ -53220,7 +53232,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L379",
+      "source_location": "L387",
       "weight": 1.0
     },
     {
@@ -53231,7 +53243,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L403",
+      "source_location": "L415",
       "weight": 1.0
     },
     {
@@ -53242,7 +53254,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L430",
+      "source_location": "L442",
       "weight": 1.0
     },
     {
@@ -53253,7 +53265,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L506",
+      "source_location": "L518",
       "weight": 1.0
     },
     {
@@ -53264,7 +53276,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L543",
+      "source_location": "L562",
       "weight": 1.0
     },
     {
@@ -53275,7 +53287,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L556",
+      "source_location": "L575",
       "weight": 1.0
     },
     {
@@ -53286,7 +53298,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1087",
+      "source_location": "L1112",
       "weight": 1.0
     },
     {
@@ -53297,7 +53309,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1108",
+      "source_location": "L1133",
       "weight": 1.0
     },
     {
@@ -53308,7 +53320,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1130",
+      "source_location": "L1155",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_evaluation",
+      "target": "docs_trd_the_replay_script",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L1197",
       "weight": 1.0
     },
     {
@@ -53319,7 +53342,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1173",
+      "source_location": "L1203",
       "weight": 1.0
     },
     {
@@ -53330,7 +53353,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L571",
+      "source_location": "L590",
       "weight": 1.0
     },
     {
@@ -53341,7 +53364,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L620",
+      "source_location": "L639",
       "weight": 1.0
     },
     {
@@ -53352,7 +53375,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L655",
+      "source_location": "L674",
       "weight": 1.0
     },
     {
@@ -53363,7 +53386,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L681",
+      "source_location": "L700",
       "weight": 1.0
     },
     {
@@ -53374,7 +53397,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L705",
+      "source_location": "L724",
       "weight": 1.0
     },
     {
@@ -53385,7 +53408,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L736",
+      "source_location": "L755",
       "weight": 1.0
     },
     {
@@ -53396,7 +53419,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L773",
+      "source_location": "L795",
       "weight": 1.0
     },
     {
@@ -53407,7 +53430,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1045",
+      "source_location": "L1070",
       "weight": 1.0
     },
     {
@@ -53418,7 +53441,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1060",
+      "source_location": "L1085",
       "weight": 1.0
     },
     {
@@ -53429,7 +53452,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1079",
+      "source_location": "L1104",
       "weight": 1.0
     },
     {
@@ -53440,7 +53463,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1000",
+      "source_location": "L1025",
       "weight": 1.0
     },
     {
@@ -53451,7 +53474,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1024",
+      "source_location": "L1049",
       "weight": 1.0
     },
     {
@@ -53462,7 +53485,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L930",
+      "source_location": "L955",
       "weight": 1.0
     },
     {
@@ -53473,7 +53496,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L126",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -53484,7 +53507,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L153",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -53495,7 +53518,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L820",
+      "source_location": "L843",
       "weight": 1.0
     },
     {
@@ -53506,7 +53529,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L834",
+      "source_location": "L857",
       "weight": 1.0
     },
     {
@@ -53517,7 +53540,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L845",
+      "source_location": "L868",
       "weight": 1.0
     },
     {
@@ -53528,7 +53551,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L853",
+      "source_location": "L877",
       "weight": 1.0
     },
     {
@@ -53539,7 +53562,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L876",
+      "source_location": "L901",
       "weight": 1.0
     },
     {
@@ -53550,7 +53573,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L909",
+      "source_location": "L934",
       "weight": 1.0
     },
     {
@@ -53561,7 +53584,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1043",
+      "source_location": "L1068",
       "weight": 1.0
     },
     {
@@ -53572,7 +53595,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1085",
+      "source_location": "L1110",
       "weight": 1.0
     },
     {
@@ -53583,7 +53606,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1180",
+      "source_location": "L1210",
       "weight": 1.0
     },
     {
@@ -53594,7 +53617,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1210",
+      "source_location": "L1245",
       "weight": 1.0
     },
     {
@@ -53605,7 +53628,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L124",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -53616,7 +53639,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1248",
+      "source_location": "L1283",
       "weight": 1.0
     },
     {
@@ -53627,7 +53650,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1278",
+      "source_location": "L1326",
       "weight": 1.0
     },
     {
@@ -53638,7 +53661,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1320",
+      "source_location": "L1368",
       "weight": 1.0
     },
     {
@@ -53649,7 +53672,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L183",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -53660,7 +53683,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L281",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -53682,7 +53705,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L353",
+      "source_location": "L360",
       "weight": 1.0
     },
     {
@@ -53693,7 +53716,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L569",
+      "source_location": "L588",
       "weight": 1.0
     },
     {
@@ -53704,7 +53727,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L59",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -53715,7 +53738,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L703",
+      "source_location": "L722",
       "weight": 1.0
     },
     {
@@ -53726,7 +53749,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L818",
+      "source_location": "L841",
       "weight": 1.0
     },
     {
@@ -53737,7 +53760,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L928",
+      "source_location": "L953",
       "weight": 1.0
     },
     {
@@ -53951,5 +53974,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8fe4673eaa7e4f3addc97fda0577fea66c5ff58f"
+  "built_at_commit": "cf8714de4b9e2899abf743c0faa0f3db889e2f66"
 }
