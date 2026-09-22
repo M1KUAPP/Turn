@@ -17,6 +17,9 @@ Contents:
 1.  [What the app does](#what-the-app-does)
 1.  [How it works](#how-it-works)
 1.  [How Jev fits](#how-jev-fits)
+1.  [Monetization](#monetization)
+1.  [Categories to enter](#categories-to-enter)
+1.  [Build plan](#build-plan)
 1.  [See also](#see-also)
 
 ## At a glance
@@ -46,7 +49,6 @@ Contents:
 [brief-dates]: /docs/BRIEF.md#key-dates
 [ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
 [ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
-[ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
 
 ## Problem and audience
 
@@ -264,7 +266,162 @@ Data, consent, and terms:
 [jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
 [jp-keys]: /docs/research/jev-patterns.md#keys-in-open-source-code
 [ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
-[log-r8]: /docs/research/next-gen-ideation.md#round-8-monetization
+
+## Monetization
+
+The context has the [paywall rules][ctx-money], and round 8 of the log has
+the [reasoning][log-r8]; this is how Turn applies them.
+
+- **Speech is never sold.** The grid, saved phrases, typing, and Personal
+  Voice stay free. One AAC app's reviewer calls "paying an ongoing
+  subscription fee in order to access basic communication" repugnant, and
+  Rejoin Voice promises "Everything you need to speak is free, forever".
+- **Listen mode is what's sold.** It is the part that costs the team money
+  on every partner line, and the part rivals charge for: Rejoin+ costs $12.99
+  a month or $99.99.
+- **One price, paid once.** Turn Listen is a one-time purchase of $24.99 that
+  grants the entitlement `listen`. The established text AAC apps also sell
+  once, from $24.99 to $159.99, and a one-time price answers the fear of
+  losing one's voice when a payment lapses.
+- **What a user costs.** At 200 partner lines a day for a year, Jev costs
+  about $4.60, so one payment covers about five years of Jev at that pace,
+  with the relay's hosting on top.
+- **Trying first.** Listen mode is free for the first 20 partner lines,
+  counted by the relay, so the user sees it work before the paywall.
+- **The paywall.** A RevenueCat Paywall, configured remotely, opens when the
+  free lines run out, or when the user turns Listen mode on after that. It
+  shows the one-time price, says speaking stays free, and closes with one
+  tap. Settings holds Restore Purchases, and a caregiver can buy from there.
+- **The relay checks.** Past the free lines, the relay checks the `listen`
+  entitlement through RevenueCat's REST API before it calls Jev, with a short
+  cache ([server checks][expo-server]).
+- **For Next Gen.** The purchase runs through RevenueCat's Test Store, which
+  the organizers accept for Next Gen. The video shows the Test Store sheet, a
+  simulated successful purchase, and Listen mode unlocking, and judges can
+  repeat it in a debug build ([purchase paths][ng-purchase]). Test Store
+  purchases count as sandbox data, so the entry reports no revenue.
+- **Left out:** subscriptions, which AAC users resent; web purchases, which
+  need a Stripe account; and ads, which have no place in someone's voice.
+
+[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[expo-server]: /docs/research/revenuecat-expo.md#checking-entitlements-from-a-server
+[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
+
+## Categories to enter
+
+- **Next Gen, alone.** The rules judge it on four criteria, unweighted: the
+  idea, "meaningful progress toward a working app", the use of RevenueCat,
+  and "thoughtful technical choices, product thinking, and care"; the idea
+  breaks ties. Turn brings a documented need, a working loop on a phone, a
+  purchase that never touches speech, and an evaluation in the repository.
+  The category video asks for "a fully realized app", with "a settings page"
+  and "a paywall", and the first version has both ([criteria][ng-criteria]).
+- **The Grand Prize, by the rules only.** Every eligible entry is
+  considered, but its shortlist counts revenue "as reported in RevenueCat",
+  and a Test Store purchase moves no money ([other prizes][ng-prizes]).
+- **Every other category is left out.** Each needs a store release, which a
+  team without a paid developer account can't make, and a team with a minor
+  may enter only Next Gen.
+
+[ng-prizes]: /docs/research/next-gen.md#next-gen-and-the-other-prizes
+
+## Build plan
+
+Round 9 of the log has the [reasoning][log-r9] behind this plan.
+
+[log-r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
+
+### Stack and data flow
+
+- **App:** Expo SDK 57, at 57.0.23 or later with `ios.enableSceneSupport`
+  turned on, since "Apps built with the iOS 27 SDK must use the UIKit
+  scene-based life cycle, or they do not launch correctly on iOS 27". It's
+  written in TypeScript, with `react-native-purchases` and its Paywalls UI,
+  and built locally with Xcode 27 under a free Apple account, as debug builds
+  only ([Expo and Xcode 27][tech-expo]).
+- **Two Swift modules,** written with the Expo Modules API: live
+  transcription through `SpeechTranscriber`, and Personal Voice
+  authorization. `expo-speech` then speaks with the authorized voice, and
+  `expo-speech-recognition` is the fallback for transcription.
+- **Shortlist on the phone:** keyword ranking picks 40 phrases in
+  TypeScript, so only those 40 leave the phone, per request.
+- **Relay:** one Cloudflare Worker holds the Jev key and a RevenueCat secret
+  key. It builds the fixed questions, calls Jev through TypeSafe's
+  JavaScript SDK or its HTTP API, counts free lines, checks the entitlement,
+  and limits requests per device ([Workers secrets][cf-secrets]).
+- **Evaluation:** `eval/` holds 80 partner lines, each with its best replies
+  from the starter bank, and a script that scores top-1 and top-6 accuracy,
+  "none" handling, and latency for four rankers: the fallback, keyword
+  ranking on the partner's line, embeddings from Workers AI, and Jev.
+
+[tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
+[cf-secrets]: /docs/research/cloudflare-workers.md#secrets-configuration-and-wrangler
+
+### Scope of the first version
+
+- **Must:** the grid, typing, and saved phrases, with about 150 editable
+  starter phrases and every typed reply saved; Personal Voice, else a system
+  voice; Listen mode with live transcription and a typed-line field; the
+  consent card, the listening light, pause, and the under-18 switch; names
+  swapped for tags; the shortlist and Jev's decisions; steady slots, the
+  confidence bars, and the Yes, No, and Not sure buttons; the offline
+  fallback; the paywall, the Test Store purchase, and Restore Purchases;
+  Settings; the relay; the evaluation; and the README, the license, and a
+  Simulator build.
+- **Should:** the replay script of recorded partner lines, a review by a
+  campus speech-language pathology clinic, and an alert when Jev's credits
+  run low.
+- **Won't:** the items under [What the app does](#what-the-app-does) that the
+  first version leaves out.
+
+### The repository
+
+- **Layout:** `app/`, `modules/`, `worker/`, and `eval/`, with an MIT
+  `LICENSE` at the root, where GitHub can detect it, as the rules ask
+  ([license][ng-license]).
+- **README:** setup; the Test Store purchase; a path through the paid
+  feature in the Simulator, by typing the partner's line, since live
+  transcription needs a physical iPhone; and the evaluation's table.
+- **Running it without the team's keys:** the app's config points at the
+  team's relay, which runs until judging ends on October 13. The Test Store
+  public SDK key is committed for debug builds; no secret key is. A
+  Simulator build goes in the repository's releases, since building for iOS
+  needs a Mac with Xcode 27 on macOS Tahoe 26.6 or later
+  ([what a judge needs][ng-judge]).
+
+[ng-license]: /docs/research/next-gen.md#open-source-license-and-setup-instructions
+[ng-judge]: /docs/research/next-gen.md#what-a-judge-needs-to-run-the-app
+
+### Schedule to September 30
+
+- **Tuesday, September 22:** request the Jev key and TypeSafe's consent to
+  name Jev; create the RevenueCat project, the Test Store product, the
+  entitlement, and the offering; start the Expo app with scene support;
+  write the starter phrases and the 80 evaluation lines; stand up the relay.
+- **Wednesday, September 23:** the grid, typing, the phrase bank, and
+  speech with Personal Voice; the relay's Jev request with its fixed
+  questions and pinned model; the shortlist on the phone.
+- **Thursday, September 24:** Listen mode, with the transcription module and
+  the typed-line field; the consent card, the listening light, pause, and the
+  under-18 switch; steady slots and the fixed buttons; ask the campus clinic
+  for a review.
+- **Friday, September 25:** run the evaluation and set the thresholds; the
+  paywall, the Test Store purchase, Restore, and the relay's free-line count
+  and entitlement check; Settings.
+- **Saturday, September 26:** the clinic's review, if booked, and its fixes;
+  the README, the license, the Simulator build, and the replay script.
+- **Sunday, September 27:** polish; the 1024 × 1024 icon and the 1179 × 2556
+  screenshot the [submission checklist][brief-checklist] asks for; rehearse
+  the video with a partner who has agreed to it.
+- **Monday, September 28:** record the video on an iPhone 15 Pro or later,
+  and upload it.
+- **Tuesday, September 29:** write the Devpost description and answers, and
+  collect a guardian's consent for any minor on the team.
+- **Wednesday, September 30:** submit before 11:45 PM PT, and make sure
+  Devpost shows the entry as submitted. Keep the relay running and Jev's
+  credits funded until the winners are announced.
+
+[brief-checklist]: /docs/BRIEF.md#submission-checklist
 
 ## See also
 
@@ -289,4 +446,6 @@ Data, consent, and terms:
 
 [guessling]: /docs/archive/guessling-idea.md
 [log]: /docs/research/next-gen-ideation.md
+[log-r8]: /docs/research/next-gen-ideation.md#round-8-monetization
 [ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
+[ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
