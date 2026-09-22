@@ -586,12 +586,13 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 ### Dates and numbers
 
 - **Numbering.** Starters are #1 to #10 and have no date. Daily puzzle `n`,
-  from #11 on, belongs to `FIRST_DAILY_DATE` plus `n` − 11 days. In
-  production that date is 2026-09-24, so #11 is Thursday, September 24 and
-  #17 is Wednesday, September 30 (TODAY-3); the test environment sets an
-  earlier date, so it has a today before launch. For a date before
-  `FIRST_DAILY_DATE`, `GET /v1/today` answers `not_found`, and the app
-  says the first puzzle arrives on September 24.
+  from #11 on, belongs to `FIRST_DAILY_DATE` plus `n` − 11 days. In production
+  that date is 2026-09-24, so #11 is Thursday, September 24 and #17 is
+  Wednesday, September 30 (TODAY-3); the test environment sets an earlier
+  date, so it has a today before launch. For a date before `FIRST_DAILY_DATE`,
+  `GET /v1/today` serves #11 early, so App Review can finish a round in every
+  time zone before September 24; nobody else is playing yet, so nobody gets
+  different answers.
 - **Today.** The app sends the device's local date with every request
   (TODAY-2). A date is today somewhere from 10:00 UTC the day before until
   12:00 UTC the day after, about 50 hours, so the Worker accepts a date
