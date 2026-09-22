@@ -22,6 +22,8 @@ Contents:
 1.  [Sound and haptics](#sound-and-haptics)
 1.  [Screens](#screens)
 1.  [Words on screen](#words-on-screen)
+1.  [Accessibility](#accessibility)
+1.  [App icon and pitch assets](#app-icon-and-pitch-assets)
 1.  [See also](#see-also)
 
 ## Overview
@@ -926,8 +928,6 @@ components:
   and Move are named actions, never long presses (A11Y-2, A11Y-8)
   ([TRD][trd-a11y]).
 
-[trd-a11y]: /docs/TRD.md#accessibility-in-the-app
-
 ### The row
 
 The row's height and its six slots are fixed for the text size and the width
@@ -1366,6 +1366,139 @@ they say?", and the names of buttons and settings; these are the rest.
   characters where they can, so most fit a slot at the default size without an
   ellipsis; CONTENT-1's limit of 120 still holds.
 
+## Accessibility
+
+How the design meets each accessibility requirement; the TRD's
+[accessibility in the app][trd-a11y] says how it's built.
+
+- **A11Y-1, targets.** Phrase buttons 78 points tall, the strip's cells 48,
+  and every other control 44 by 44; the big button fills the row
+  ([Layout](#layout)).
+- **A11Y-2, VoiceOver.** Each phrase button reads as its text with the button
+  trait; the light reads "Listening", with the hint "Pauses listening"; and a
+  changed row is announced once, as the number of replies, queued so it
+  doesn't cut off Turn's own speech.
+- **A11Y-3, Switch Control and Voice Control.** Layout order is focus order:
+  the top bar, the line, the strip, the row, the tabs, and the grid, so a
+  switch reaches the row before the grid, and nothing depends on detecting
+  either feature.
+- **A11Y-4, large text.** Every style follows its ramp to AX5, from AX1
+  everything under the top bar scrolls as one column, and only the row may end
+  a phrase with an ellipsis, with the whole phrase in VoiceOver, in speech,
+  and in the grid ([the row](#the-row)).
+- **A11Y-5, taps and time.** Everything works with single taps, including the
+  speech rate and reordering, and no note, card, or Undo times out.
+- **A11Y-6, motion and color.** Reduce Motion stills every animation in the
+  [Motion](#motion) table, read live; and every state carries a word or a
+  shape.
+- **A11Y-7, contrast.** Every pair in the [contrast table](#contrast), in all
+  four appearances.
+- **A11Y-8, names and actions.** Every name is the visible text, other actions
+  are named accessibility actions, nothing acts on touch-down, and reordering
+  never drags.
+
+### The test plan
+
+Apple's Accessibility Nutrition Labels make a test plan even without a store
+listing, since each label has published criteria
+([iOS notes][ios-labels]):
+
+| Label                             | What Turn must pass                                                            |
+| --------------------------------- | ------------------------------------------------------------------------------ |
+| VoiceOver                         | Every phrase, the row's announcement, the light, the consent card, the paywall |
+| Voice Control                     | "Tap It was hard", and dictation into both composers                           |
+| Larger Text                       | Every screen and the paywall at AX5, with only the row's ellipsis              |
+| Dark Interface                    | Every screen, the paywall, and the launch screen                               |
+| Differentiate Without Color Alone | Row states, the light, and the marked tab in grayscale                         |
+| Sufficient Contrast               | The contrast table, in all four appearances                                    |
+| Reduced Motion                    | No moving slot, no fading light, and a still paywall                           |
+| Captions                          | The partner's words in the line, and the last phrase spoken                    |
+
+- **Settings to try.** Light and dark, each with Increase Contrast; Reduce
+  Transparency; both ends of the Liquid Glass slider; Reduce Motion turned on
+  mid-session; Bold Text; AX5; grayscale through Color Filters; and Touch
+  Accommodations' Hold Duration and Ignore Repeat, which Turn leaves to iOS
+  rather than rebuilding ([AAC design notes][aac-touch]).
+- **Where.** An iPhone on iOS 26 and the iOS 27 simulator; VoiceOver, Switch
+  Control, and Voice Control on the iPhone, since the simulator lacks them.
+
+[ios-labels]: /docs/research/turn-ios-design.md#accessibility-nutrition-labels-for-turn
+[aac-touch]: /docs/research/aac-design.md#touch-settings-in-ios-27
+
+## App icon and pitch assets
+
+### The app icon
+
+- **The mark.** An open speech bubble drawn as one thick stroke whose tail
+  curls back like a turn arrow, in white on a marker-blue field: a turn to
+  speak, in the app's own ink. No text, no SF Symbol, and no face.
+- **The file.** One Icon Composer `.icon` file in two vector layers, the field
+  and the mark, set as `ios.icon`, which Expo takes from SDK 54
+  ([iOS notes][ios-icon]).
+- **Appearances.** Default; dark, where the field deepens to a near-black blue
+  and the mark stays white; and mono, from the mark layer, for the clear and
+  tinted looks.
+- **Shipaton's icon.** Icon Composer's flattened 1024 by 1024 export.
+
+[ios-icon]: /docs/research/turn-ios-design.md#icon-appearances-and-icon-composer-2
+
+### Screenshots and Devpost images
+
+- **The required screenshot.** 1179 by 2556 pixels without a device frame,
+  which an iPhone 16 simulator on iOS 27 draws at native size, captured in
+  Device Hub with the status bar set to 9:41 by `simctl`. It shows the row
+  mid-answer: the line with "How was physio?" and "It was hard" among the
+  replies ([iOS notes][ios-devpost]).
+- **The thumbnail.** 3:2, typographic: the logline, "Your own words, in time
+  for your turn.", in Atkinson Hyperlegible Next, and one big reply button in
+  marker blue, legible at the 333 by 222 pixels the gallery shows it. A
+  screenshot would crop to a sliver ([motionsites notes][ms-devpost]).
+- **Gallery images.** 3:2 composites of two or three screens side by side on
+  the board's color, each with a one-line caption in Atkinson Hyperlegible
+  Next, since Devpost shows a portrait screenshot alone at 264 by 573 pixels
+  ([motionsites notes][ms-devpost]).
+
+[ios-devpost]: /docs/research/turn-ios-design.md#devpost-images
+[ms-devpost]: /docs/research/turn-motionsites.md#devpost-gallery-images-and-thumbnail
+
+### The README's images
+
+- **The hero.** One image in light and dark versions through GitHub's
+  `<picture>` element and `prefers-color-scheme`, with alt text; the logline
+  and the evaluation's table stay text, not pixels
+  ([motionsites notes][ms-readme]).
+- **The "aha".** A short GIF of the scenario the idea's
+  [pitch](/docs/IDEA.md#pitch) opens with, whose first frame tells the story,
+  since GitHub pauses GIFs for people who reduce motion.
+- **Social preview.** 1280 by 640 pixels, the thumbnail's type on the board's
+  color.
+
+[ms-readme]: /docs/research/turn-motionsites.md#the-readme-on-github
+
+### The video
+
+- **Frame.** 16:9, with the portrait screen inside it, under two minutes
+  (SUBMIT-4) ([iOS notes][ios-youtube]).
+- **Title cards.** Two short lines in Atkinson Hyperlegible Next, one word in
+  marker blue, on the board's color; each fades in once and rests
+  ([motionsites notes][ms-video]).
+- **Text size.** On-screen text at least 54 pixels tall at 1080p, since
+  Devpost's player shows the video at about a third of that size
+  ([motionsites notes][ms-video]).
+- **Captions.** A caption file written from the script that names "Partner"
+  and "Turn", since automatic captions can garble synthetic speech, and the key
+  exchange burned in on a plate of at least 54% black
+  ([motionsites notes][ms-video]; [iOS notes][ios-youtube]).
+- **Filming.** Listen mode on the demo iPhone itself, since Device Hub blocks
+  a mirrored iPhone's microphone; Simulator scenes on an iPhone 16 simulator
+  ([iOS notes][ios-capture]).
+- **Sound.** Turn's speech and the partner's voice, with no music under them;
+  Jev and TypeSafe go unnamed until TypeSafe agrees (SUBMIT-6).
+
+[ios-youtube]: /docs/research/turn-ios-design.md#youtube-thumbnails-and-captions
+[ms-video]: /docs/research/turn-motionsites.md#the-demo-video
+[ios-capture]: /docs/research/turn-ios-design.md#simulator-screenshots-and-recordings-in-xcode-27
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): who Turn is for, and the principles this
@@ -1394,3 +1527,4 @@ they say?", and the names of buttons and settings; these are the rest.
 [ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
 [ios-light]: /docs/research/turn-ios-design.md#a-pulsing-listening-light
 [ms-app]: /docs/research/turn-motionsites.md#the-native-iphone-app
+[trd-a11y]: /docs/TRD.md#accessibility-in-the-app
