@@ -731,6 +731,12 @@ before relying on an answer; the brief's
   and judging.
 - [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten
   rounds of ideation, with Jev built in.
+- [Product](/docs/PRODUCT.md): what Turn is, for whom, and why, with its
+  principles, metrics, and roadmap.
+- [Product requirements](/docs/PRD.md): what the first version must do, as
+  numbered requirements with checks.
+- [Technical requirements](/docs/TRD.md): how the first version is built,
+  traced to the product requirements.
 - [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
   Turn superseded. The [product](/docs/archive/guessling-product.md),
   [product requirements](/docs/archive/guessling-prd.md), and
