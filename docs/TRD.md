@@ -21,6 +21,9 @@ Contents:
 1.  [Relay API](#relay-api)
 1.  [Decision pipeline](#decision-pipeline)
 1.  [Listening and speaking on the phone](#listening-and-speaking-on-the-phone)
+1.  [Purchases and entitlements](#purchases-and-entitlements)
+1.  [The iPhone app](#the-iphone-app)
+1.  [Security and privacy](#security-and-privacy)
 1.  [See also](#see-also)
 
 ## Overview
@@ -680,6 +683,321 @@ With none of them, or in the Simulator, where Apple's sample doesn't run,
 Listen mode says so and offers the typed-line field.
 
 [idea-risks]: /docs/IDEA.md#risks
+
+## Purchases and entitlements
+
+### RevenueCat setup
+
+- **Test Store** comes with a new RevenueCat project, with its API key,
+  which starts with `test_`; the In-App Purchase capability, which needs the
+  paid program, isn't needed ([services notes][svc-setup]).
+- **The product:** `turn_listen`, a one-time Test Store product at $24.99,
+  made under Product catalog, Products, on the Test Store tab. Test Store's
+  docs never name a one-time type, but REST API v2 and purchases-ios both
+  handle non-consumable Test Store products, so if the dashboard's form
+  offers none on September 22, the team creates it with
+  `POST /v2/projects/{project_id}/products` and `"type": "non_consumable"`,
+  using a key with `project_configuration:products:read_write` (PAY-3,
+  PAY-8). A saved product's price can't be edited; a new product replaces
+  it in the package.
+- **Not a yearly product.** The idea's fallback, a yearly Test Store
+  product, renews every hour and ends after five hours, which would lock
+  Listen mode mid-judging ([services notes][svc-one-time]).
+- **Entitlement:** `listen`, with the Test Store product attached.
+- **Offering:** `default`, with one package for the product, and a Paywall
+  built in the dashboard that shows the price once and says speaking stays
+  free (PAY-2, PAY-3).
+- **Sandbox Testing Access** stays at "Anybody", its default, so "All
+  non-production purchases (Test Store and platform sandbox) will grant
+  access to entitlements" ([RevenueCat notes][rc-sandbox]).
+- **The relay's key:** a v2 secret key with only
+  `customer_information:customers:read`.
+
+[svc-setup]: /docs/research/turn-services.md#setting-up-test-store-in-the-dashboard
+[svc-one-time]: /docs/research/turn-services.md#one-time-products-in-test-store
+[rc-sandbox]: /docs/research/revenuecat-expo.md#recommended-backend-pattern
+
+### Purchases in the app
+
+- **The ID.** On first launch, the app creates a random version 4 UUID,
+  keeps it with `expo-secure-store`, and passes it to `Purchases.configure`
+  as the `appUserID`, with the Test Store key. RevenueCat recommends "A
+  non-guessable pseudo-random ID, like a UUID", and Expo says Keychain data
+  usually survives a reinstall with the same bundle ID but that "you should
+  never rely on this implementation detail"; when it survives, the free
+  lines and the purchase do too (PAY-10) ([services notes][svc-ids]).
+- **The paywall.** On a `402`, or when Listen mode is turned on with no
+  free lines left, the app presents RevenueCat's paywall for `listen`
+  (PAY-2); setup and the paywall never block the grid (SPEAK-5):
+
+  ```ts
+  await RevenueCatUI.presentPaywallIfNeeded({
+    requiredEntitlementIdentifier: 'listen'
+  })
+  ```
+
+- **The sheet.** Test Store shows an alert titled "Test Store Purchase"
+  with "Test valid purchase", "Test failed purchase", and "Cancel". Success
+  resolves with the new customer info, a failure rejects with code `42`,
+  and a cancel sets `userCancelled`; the app shows Listen mode unlocked, the
+  failure with a retry, or the paywall again (PAY-4, PAY-5).
+- **After a purchase,** the next line carries `refresh: true`, so the relay
+  skips a cached no (PAY-4).
+- **Restore.** Under Test Store, `restorePurchases` only returns the current
+  customer: "Restoring purchases not available in Test Store." Settings
+  keeps the button, which refreshes the customer and says whether `listen`
+  is active (PAY-6).
+- **Release builds crash** with a Test Store key: purchases-ios shows "Wrong
+  API Key" and calls `fatalError` outside a Debug build, and
+  `react-native-purchases` 10.10.1 exposes no way around it, so every build
+  the team ships is a Debug build ([services notes][svc-key]).
+
+[svc-ids]: /docs/research/turn-services.md#identifiers-that-survive-a-reinstall
+[svc-key]: /docs/research/turn-services.md#the-test-store-api-key
+
+### The relay's entitlement check
+
+The user's object checks only once the free lines are used (PAY-1, PAY-7):
+
+```text
+on line(lineId, refresh)
+  if the build is simulator and SIMULATOR_UNLIMITED is on: call Jev    # PAY-9
+  claim = claim(lineId)                  # free, repeat, or paid
+  if claim is free or repeat:
+    call Jev; if it fails and the claim was free: release(lineId)
+  else if the cached yes is under 24 hours old: call Jev
+  else if the cached no is under 1 minute old
+          and not (refresh and the last refresh is over 1 minute old): 402
+  else: ask RevenueCat; cache the answer; call Jev or answer 402
+```
+
+- **The call** uses the secret key; a `404` means RevenueCat has never seen
+  the ID, so the answer is no ([RevenueCat notes][rc-v2]):
+
+  ```text
+  GET https://api.revenuecat.com/v2/projects/{project_id}/customers/{customer_id}/active_entitlements
+  ```
+
+- **The match** compares each item's `entitlement_id` with the entitlement's
+  object id in the relay's configuration, since the API returns ids, not
+  the `listen` lookup key, and accepts an `expires_at` that is `null` or
+  still ahead.
+- **Test Store counts.** Active entitlements carry no store or
+  environment, so the check can't tell a Test Store unlock from a real one;
+  for Next Gen it accepts both, with Sandbox Testing Access left at
+  "Anybody" through October 13, 2026 ([services notes][svc-server]).
+- **Tests without a phone.** `rc customers simulate-purchase` from
+  `@revenuecat/cli` makes a headless Test Store purchase for a test ID, so
+  the relay's check can be tested from a script.
+- **The limit.** RevenueCat allows 480 requests a minute for customer
+  information, far above the entry's traffic.
+- **Judges in the Simulator.** If the check on September 25 finds that Test
+  Store can't buy in the Simulator, the relay's `SIMULATOR_UNLIMITED` switch
+  skips the count for requests marked `simulator` until judging ends on
+  October 13 (PAY-9). The header can be forged, which costs only Jev
+  credits, and the per-ID rate limit still applies.
+
+[rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+[svc-server]: /docs/research/turn-services.md#test-store-purchases-on-the-server
+
+## The iPhone app
+
+### Screens and navigation
+
+Expo Router, with routes under `app/src/app/`:
+
+| Route              | Screen                                                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `/`                | the grid, the row, the conversation strip, the place picker, the Listen button, the light, the caption, and the keyboard |
+| `/permission`      | the user's permission step, as a sheet (CONSENT-1)                                                                       |
+| `/consent`         | the consent card, full screen (CONSENT-4)                                                                                |
+| `/settings`        | Settings (SET-1), with voice, places, bank, privacy, licenses, and stats                                                 |
+| `/bank/[category]` | the phrase bank editor for one category (BANK-2)                                                                         |
+
+The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
+
+### State and storage
+
+- **One store** holds the row, the Listen state, the free lines left, and
+  the cached configuration in memory, and writes settings through to SQLite.
+- **The grid** reads the bank from SQLite at launch and after each edit, and
+  never reorders itself (BANK-4).
+- **Taps** write one row per phrase and day (BANK-6).
+- **Typing takes the row.** While the keyboard is open, the row shows the
+  phrases matching the letters typed (SPEAK-4); when it closes, the row
+  returns to its last answer.
+
+### Networking
+
+- **Only the relay** is called by the app's own code, with `fetch`, a
+  3-second abort, and no retry (STATE-2).
+- **The configuration** is fetched at launch and when Listen mode starts,
+  and the last copy is kept; without one, the texts don't name TypeSafe
+  (CONSENT-7).
+
+### Accessibility in the app
+
+- **A steady row.** The six slots have fixed sizes and are keyed by slot
+  position, since slots never move and only their phrases change, and the
+  big button fills the same area (ROW-1, A11Y-1)
+  ([iPhone build notes][ios-row]).
+- **Labels and roles.** Each phrase is a `Pressable` with
+  `accessibilityRole="button"`, the only role besides `togglebutton` that
+  becomes the iOS button trait, and its visible text as its label, which
+  also gives Voice Control its name, since React Native 0.86 has no separate
+  Voice Control names; the light is a button labeled "Listening" with a hint
+  to pause (A11Y-2, A11Y-8) ([AAC notes][aac-rn]).
+- **Actions.** Edit and Move are labeled `accessibilityActions`, not long
+  presses; `onPress` fires on release; and the editor reorders with Move up
+  and Move down, never by dragging (A11Y-8).
+- **Announcements.** A changed row is announced once, as the number of
+  replies, with `announceForAccessibilityWithOptions` and `queue: true`, so
+  it doesn't cut off Turn's own speech (A11Y-2).
+- **Order.** Layout order sets focus order, so the strip and the row come
+  before the grid, and Switch Control reaches them first (A11Y-3).
+- **No detection.** `AccessibilityInfo` reports VoiceOver and Reduce Motion
+  but not Switch Control or Voice Control, so the app works the same for
+  every input method.
+- **Text.** Font scaling stays on, phrase text wraps, and the grid scrolls
+  at the largest sizes (A11Y-4).
+- **Motion.** `AccessibilityInfo.isReduceMotionEnabled` turns off the
+  light's pulse and the row's animations (A11Y-6).
+- **Testing.** "VoiceOver isn't available via the simulator", so
+  VoiceOver, Switch Control, and Voice Control are tested on a phone.
+
+[ios-row]: /docs/research/turn-ios.md#a-steady-row-in-react-native
+[aac-rn]: /docs/research/aac-practice.md#react-natives-accessibility-api
+
+### Build configuration
+
+`app/app.config.ts` sets ([iPhone build notes][ios-modules]):
+
+- **`ios.bundleIdentifier`:** one ID, chosen on September 22 and never
+  changed, since the Devpost entry names it (SUBMIT-5).
+- **`ios.deploymentTarget`:** `"26"`, the built-in property that replaced
+  the build-properties setting in SDK 56 (COMPAT-1).
+- **`ios.enableSceneSupport`:** `true`, for the iOS 27 SDK.
+- **`ios.supportsTablet`:** `false`, and `orientation` `portrait`.
+- **`ios.infoPlist`:** `NSMicrophoneUsageDescription`, worded for the user
+  and the partner, and `NSSpeechRecognitionUsageDescription` for the last
+  fallback; no location key (PLACE-2).
+- **`extra`:** the relay's URL, the Test Store public key, and the build's
+  kind, `device` or `simulator`, for `X-Turn-Build`.
+
+## Security and privacy
+
+### Secrets and configuration
+
+| Name                                 | Kind   | Where            | Purpose                                     |
+| ------------------------------------ | ------ | ---------------- | ------------------------------------------- |
+| `TYPESAFE_API_KEY`                   | secret | the relay        | calls Jev                                   |
+| `RC_SECRET_KEY`                      | secret | the relay        | the v2 entitlement check                    |
+| `ID_SALT`                            | secret | the relay        | hashes app user IDs                         |
+| `JEV_MODEL`                          | var    | the relay        | `jev-1.13.0`                                |
+| `JEV_ON`                             | var    | the relay        | the switch that turns Jev off (STATE-3)     |
+| `TYPESAFE_NAMED`                     | var    | the relay        | whether the texts name TypeSafe (CONSENT-7) |
+| `FREE_LINES`                         | var    | the relay        | 20 (PAY-1)                                  |
+| `POLICY`                             | var    | the relay        | the row's policy, as JSON (ROW-8)           |
+| `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
+| `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
+| Test Store public key                | public | the app's config | RevenueCat's SDK in debug builds            |
+| Relay URL                            | public | the app's config | the relay's address                         |
+
+The relay's `wrangler.jsonc`, in the shape the services notes' local test
+ran under Wrangler 4.136.2:
+
+```jsonc
+{
+  "name": "turn-relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-22",
+  "placement": { "region": "aws:us-west-2" },
+  "durable_objects": {
+    "bindings": [
+      { "name": "DEVICE", "class_name": "Device" },
+      { "name": "BUDGET", "class_name": "Budget" }
+    ]
+  },
+  "exports": {
+    "Device": { "type": "durable-object", "storage": "sqlite" },
+    "Budget": { "type": "durable-object", "storage": "sqlite" }
+  },
+  "ratelimits": [
+    {
+      "name": "USER_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 30, "period": 60 }
+    },
+    {
+      "name": "ADDRESS_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 120, "period": 60 }
+    }
+  ],
+  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+  "secrets": { "required": ["TYPESAFE_API_KEY", "RC_SECRET_KEY", "ID_SALT"] },
+  "vars": { "JEV_MODEL": "jev-1.13.0", "JEV_ON": "true", "FREE_LINES": "20" }
+}
+```
+
+- **Secrets** are set with Wrangler and listed under `secrets.required`, so
+  a deploy without them fails. For local work they live
+  in `worker/.dev.vars`, which Git ignores, and a committed
+  `.dev.vars.example` names them for anyone who runs the relay with their
+  own keys (SEC-1) ([services notes][svc-secrets]).
+- **The Test Store key** is the only RevenueCat key the app carries, and it
+  sits in the app's committed configuration so judges can build from source.
+  RevenueCat's blogs keep test keys out of version control and advise
+  rotating them, while its docs say nothing; every build a judge runs
+  carries the key anyway, so the team commits it for judging and rotates it
+  after the winners are announced (SEC-1).
+- **No secret key** is in the repository or its history, which a secret
+  scan checks before it goes public (SUBMIT-1).
+
+[svc-secrets]: /docs/research/turn-services.md#secrets-and-wranglerjsonc-for-the-relay
+
+### Validation and abuse limits
+
+- **Headers:** `X-Turn-User` must be a lowercase version 4 UUID, and
+  `X-Turn-Build` `device` or `simulator`; anything else gets `400`.
+- **Lengths:** as in [Relay API](#relay-api), checked before any count or
+  call (SEC-2).
+- **Rate:** 30 requests a minute per ID hash, through Cloudflare's rate
+  limiting binding with a 60-second period, and 120 a minute per address as
+  a backstop only, since mobile networks share addresses (SEC-3). The
+  binding counts per Cloudflare location and is "permissive, eventually
+  consistent"; with the relay placed in one region, its counters act almost
+  like global ones ([services notes][svc-ratelimit]).
+- **A daily budget.** Anyone can mint new IDs, since the relay's code and
+  address are public and a Test Store purchase is free, so neither the free
+  lines nor `listen` guards Jev's credits. One more Durable Object counts
+  Jev calls per UTC day, and past 10,000, about $0.80, the relay answers
+  `jev_unavailable` until midnight UTC ([services notes][svc-abuse]).
+- **The switch:** `JEV_ON` set to false stops every call to Jev at once
+  (STATE-3).
+- **Errors** carry only the codes above (SEC-4).
+
+[svc-ratelimit]: /docs/research/turn-services.md#the-rate-limiting-binding-for-turn
+[svc-abuse]: /docs/research/turn-services.md#limiting-abuse-of-the-free-lines
+
+### Data inventory
+
+| Data                                    | Where                     | Kept                             | Leaves to                                                |
+| --------------------------------------- | ------------------------- | -------------------------------- | -------------------------------------------------------- |
+| The phrase bank, places, taps, settings | the phone's SQLite        | until the user erases them       | 40 tagged candidates per line, to the relay and TypeSafe |
+| Audio                                   | `turn-listen`'s buffers   | never stored                     | nowhere                                                  |
+| A partner line                          | the phone's memory        | the caption, at most two minutes | the relay and TypeSafe, tagged, with the place's name    |
+| The app user ID                         | RevenueCat's SDK          | the SDK's own storage            | RevenueCat, and the relay, which stores its hash         |
+| Free lines used, the cached entitlement | the user's Durable Object | until the relay is deleted       | nowhere                                                  |
+| Request logs                            | Workers Logs              | 3 days on the Free plan          | Cloudflare                                               |
+| Purchases                               | RevenueCat                | RevenueCat's retention           | RevenueCat                                               |
+
+TypeSafe keeps rights "in perpetuity" to use requests for telemetry and abuse
+monitoring, and "Jev is not trained on customer requests or responses"
+([Jev notes][jev-data]); the permission step and the privacy notice say so
+(CONSENT-1, CONTENT-4).
+
+[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
 
 ## See also
 
