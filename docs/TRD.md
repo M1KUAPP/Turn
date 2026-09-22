@@ -17,6 +17,8 @@ Contents:
 1.  [Overview](#overview)
 1.  [System architecture](#system-architecture)
 1.  [Stack and repository](#stack-and-repository)
+1.  [Data model](#data-model)
+1.  [Relay API](#relay-api)
 1.  [See also](#see-also)
 
 ## Overview
@@ -169,6 +171,175 @@ The code lives in this repository, as Bun workspaces, next to `docs/`:
   app loads on first launch and the evaluation reads (CONTENT-1).
 
 [ios-modules]: /docs/research/turn-ios.md#two-local-swift-modules-in-expo
+
+## Data model
+
+### The phone's database
+
+`expo-sqlite` holds everything the phone keeps (BANK-8):
+
+```sql
+CREATE TABLE category (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL CHECK (length(name) BETWEEN 1 AND 40),
+  position INTEGER NOT NULL,
+  fixed INTEGER NOT NULL DEFAULT 0          -- 1 for Quick, which stays first
+);
+CREATE TABLE phrase (
+  id TEXT PRIMARY KEY,
+  category_id TEXT NOT NULL REFERENCES category (id),
+  text TEXT NOT NULL CHECK (length(text) BETWEEN 1 AND 200),
+  position INTEGER NOT NULL,
+  fixed INTEGER NOT NULL DEFAULT 0,         -- 1 for Yes, No, and Not sure
+  reviewed INTEGER NOT NULL DEFAULT 1,      -- 0 for starter phrases not yet reviewed
+  created_at INTEGER NOT NULL
+);
+CREATE TABLE place (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL CHECK (length(name) BETWEEN 1 AND 40),
+  position INTEGER NOT NULL
+);
+CREATE TABLE phrase_place (
+  phrase_id TEXT NOT NULL REFERENCES phrase (id) ON DELETE CASCADE,
+  place_id TEXT NOT NULL REFERENCES place (id) ON DELETE CASCADE,
+  PRIMARY KEY (phrase_id, place_id)
+);
+CREATE TABLE tap (
+  phrase_id TEXT NOT NULL REFERENCES phrase (id) ON DELETE CASCADE,
+  day INTEGER NOT NULL,                     -- days since 1970-01-01, local
+  count INTEGER NOT NULL,
+  PRIMARY KEY (phrase_id, day)
+);
+CREATE TABLE setting (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+```
+
+- **Counts by day** let the shortlist take the most-tapped replies of the
+  last 30 days (BANK-6), and older rows are deleted on launch.
+- **The conversation strip's** five phrases live in their own fixed
+  category, which the grid doesn't show and the shortlist never uses
+  (SPEAK-7); their text can change, their positions can't.
+- **Starter phrases** carry a `reviewed` flag, set when the user keeps,
+  edits, or reviews them (BANK-10).
+- **Settings** hold the voice and its rate, the place, the user's permission
+  and its date, the under-18 switch, the cached configuration, and the stats
+  of METRIC-3.
+- **Limits** match the PRD: phrases of 200 characters (BANK-3), and places
+  of 40, at most 12 (PLACE-1); the app enforces the counts.
+
+### The relay's storage
+
+Each user's Durable Object, backed by SQLite, keeps two small tables and
+nothing else:
+
+```sql
+CREATE TABLE free_lines (line_id TEXT PRIMARY KEY, at INTEGER NOT NULL);
+CREATE TABLE entitlement (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  active INTEGER NOT NULL,                  -- 1 once RevenueCat confirms listen
+  checked_at INTEGER NOT NULL,
+  refreshed_at INTEGER                      -- the last purchase that skipped a cached no
+);
+```
+
+- **Claiming a free line.** Inside `transactionSync()`, a line ID already in
+  `free_lines` is a repeat and costs nothing, a new ID below 20 rows is
+  inserted as a free line, and at 20 rows the line needs the entitlement. In
+  the services notes' local test, this counted exactly 20 of 25 simultaneous
+  lines for one device, and ten copies of one line once
+  ([services notes][svc-count]). If Jev fails, the object deletes the row,
+  so only answered lines count (PAY-1).
+- **The entitlement row** caches RevenueCat's answer: a yes for 24 hours,
+  since `listen` is a one-time purchase, and a no for 1 minute.
+- **The name.** The Worker reaches the object with `getByName()` on the
+  SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
+  so a stored record can't be traced back to an ID without the salt.
+- **The Free plan's budget.** Each new free line writes 2 rows, so the Free
+  plan's 100,000 rows a day cover about 2,500 devices spending all 20 lines
+  in one day.
+
+[svc-count]: /docs/research/turn-services.md#counting-free-partner-lines-per-device
+
+### What is never stored
+
+- **Audio** exists only in `turn-listen`'s buffers while they're
+  transcribed (PRIV-1).
+- **Partner lines, candidates, and Jev's answers** live in memory: the
+  caption for at most two minutes (LISTEN-8), the row until it changes, and
+  the relay's copy only for the length of a request (PRIV-2).
+- **The tag map,** which pairs each tag with its name, lives in memory for
+  one request and never leaves the phone.
+
+## Relay API
+
+The relay's base URL comes from the app's configuration, and every request
+carries these headers:
+
+| Header           | Value                                      |
+| ---------------- | ------------------------------------------ |
+| `X-Turn-User`    | the app user ID: a random UUID, version 4  |
+| `X-Turn-Version` | the app's version                          |
+| `X-Turn-Build`   | `device` or `simulator`, set at build time |
+| `Content-Type`   | `application/json`, for `POST`             |
+
+`GET /v1/config` returns what the app caches at launch: whether Jev is on,
+whether the texts name TypeSafe (CONSENT-7), the number of free lines, and
+the current policy.
+
+```ts
+type Config = {
+  jevOn: boolean
+  typesafeNamed: boolean
+  freeLines: number // 20
+  policy: Policy
+}
+```
+
+`POST /v1/lines` asks for one partner line's decisions:
+
+```ts
+type LineRequest = {
+  lineId: string // a random UUID, so a repeated request never counts twice
+  seq: number // increases with every line on this install
+  line: string // at most 300 characters, names as tags (LISTEN-5, LISTEN-6)
+  place: string // at most 40 characters (PLACE-3)
+  categories: string[] // at most 12, each at most 40 characters
+  candidates: { id: string; text: string }[] // at most 40, text at most 200
+  refresh?: boolean // the first line after a purchase (PAY-4)
+}
+
+type LineAnswer = {
+  seq: number
+  kind: Record<'yes_no' | 'either_or' | 'open' | 'not_a_question', number>
+  topic: Record<string, number> // one probability per category name
+  scores: Record<string, number> // candidate id -> Noul, 0 to 1
+  policy: Policy
+  freeLinesLeft: number | null // null once the user is entitled
+  ms: { jev: number; total: number }
+}
+
+type Policy = {
+  floor: number // 0.6
+  bigAbove: number // 0.85
+  margin: number // 0.15
+  yesNoPhrases: boolean // true: phrases may fill slots 4 to 6
+  noBigTopics: string[] // never a big button; starts as ["Body and pain"]
+  fixedOnlyTopics: string[] // only the fixed buttons; starts empty
+}
+```
+
+Errors return `{ "error": "<code>" }`:
+
+| Status | Code              | When                                           | The app                             |
+| ------ | ----------------- | ---------------------------------------------- | ----------------------------------- |
+| 400    | `invalid_request` | a header, field, or length outside the limits  | ranks on the phone; logs the bug    |
+| 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
+| 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
+| 503    | `jev_off`         | the configuration turns Jev off (STATE-3)      | ranks on the phone; degraded notice |
+| 503    | `jev_unavailable` | Jev timed out or failed                        | ranks on the phone (STATE-2)        |
+| 500    | `internal`        | anything else                                  | ranks on the phone                  |
+
+The body may hold at most 16 KB, and a request that breaks any limit above
+gets `400` before any count or call (SEC-2).
 
 ## See also
 
