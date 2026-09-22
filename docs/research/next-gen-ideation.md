@@ -10,8 +10,8 @@ the [technology notes](/docs/research/next-gen-tech.md), the
 [Jev notes](/docs/research/jev.md), and the
 [Jev pattern notes](/docs/research/jev-patterns.md), and narrows thirty
 candidates to one; each round ends with a decision the next one builds on.
-Rounds 8 to 10 record the design as each round decided it; where the idea
-differs, it holds the current version.
+Rounds 8 to 10 record each round's decisions, with the corrections that
+review made to them; where the idea differs, it holds the current version.
 
 Contents:
 
@@ -299,33 +299,34 @@ the rules break ties. The last two columns are each scorer's own total.
 | 22   | 18  | Range        | 3    | 3.5  | 2.5  | 4    | 3.5 | 4    | 3     | 2.5 | 63.5  | 70     | 57    |
 | 23   | 5   | Lull         | 3    | 4.5  | 2.5  | 3    | 3   | 4    | 3     | 2.5 | 63    | 68     | 58    |
 
-Each scorer's own scores, the author's first, in the same order:
+Each scorer's own scores, in the same order; each cell holds the author's score,
+then the blind scorer's:
 
-| #   | Candidate    | Idea | Orig | Work | Demo | RC  | Tech | Craft | Jev |
-| --- | ------------ | ---- | ---- | ---- | ---- | --- | ---- | ----- | --- |
-| 23  | Turn         | 5/5  | 4/5  | 3/4  | 5/5  | 3/3 | 4/4  | 4/4   | 5/5 |
-| 21  | Scenekeeper  | 3/3  | 5/4  | 3/3  | 5/5  | 4/4 | 4/5  | 4/3   | 5/5 |
-| 9   | Bench        | 4/3  | 5/4  | 3/2  | 5/4  | 4/4 | 4/5  | 4/3   | 5/4 |
-| 1   | Chorus       | 5/4  | 4/4  | 2/2  | 5/4  | 3/2 | 5/5  | 3/3   | 5/4 |
-| 3   | Same Boat    | 4/4  | 4/4  | 3/4  | 4/4  | 3/3 | 4/4  | 4/4   | 5/3 |
-| 10  | Backed       | 4/3  | 4/4  | 3/3  | 4/4  | 4/4 | 4/3  | 4/4   | 5/4 |
-| 2   | Qualified    | 4/4  | 4/4  | 3/4  | 4/4  | 4/2 | 3/3  | 4/4   | 5/4 |
-| 25  | Close Enough | 3/3  | 4/3  | 4/4  | 5/4  | 4/4 | 4/3  | 4/4   | 5/3 |
-| 20  | Plainly      | 4/3  | 4/4  | 3/4  | 4/4  | 3/3 | 4/4  | 4/4   | 5/3 |
-| 15  | Cue          | 3/2  | 5/5  | 3/2  | 5/5  | 3/4 | 4/5  | 4/3   | 5/4 |
-| 22  | Crewline     | 4/2  | 5/4  | 2/2  | 4/4  | 3/4 | 5/5  | 3/3   | 5/4 |
-| 29  | Waypoint     | 4/3  | 4/3  | 2/3  | 4/4  | 3/2 | 5/5  | 3/3   | 5/4 |
-| 28  | Orders       | 3/3  | 5/3  | 2/2  | 5/4  | 4/4 | 4/4  | 3/3   | 5/3 |
-| 24  | Gavel        | 3/3  | 5/5  | 3/3  | 4/4  | 3/3 | 4/4  | 4/4   | 4/2 |
-| 19  | Rattle       | 3/2  | 4/3  | 3/3  | 4/4  | 4/4 | 4/4  | 3/3   | 5/3 |
-| 17  | Proof        | 3/3  | 5/3  | 3/2  | 4/4  | 4/4 | 4/4  | 3/3   | 4/2 |
-| 30  | Flowsheet    | 3/2  | 5/4  | 2/2  | 4/3  | 3/3 | 4/5  | 3/3   | 5/4 |
-| G0  | Guessling    | 3/3  | 3/3  | 4/5  | 4/3  | 4/4 | 2/2  | 3/4   | 3/3 |
-| 7   | Fair Game    | 3/3  | 4/4  | 2/3  | 3/4  | 3/3 | 4/4  | 3/3   | 4/3 |
-| 6   | Finders      | 3/3  | 4/4  | 3/3  | 4/4  | 2/2 | 4/4  | 3/3   | 4/3 |
-| 8   | Porchlight   | 4/2  | 3/4  | 4/4  | 3/4  | 2/3 | 3/3  | 3/3   | 4/3 |
-| 18  | Range        | 4/2  | 4/3  | 2/3  | 4/4  | 4/3 | 4/4  | 3/3   | 3/2 |
-| 5   | Lull         | 4/2  | 5/4  | 2/3  | 3/3  | 3/3 | 4/4  | 3/3   | 3/2 |
+| #   | Candidate    | Idea  | Orig  | Work  | Demo  | RC    | Tech  | Craft | Jev   |
+| --- | ------------ | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| 23  | Turn         | 5 · 5 | 4 · 5 | 3 · 4 | 5 · 5 | 3 · 3 | 4 · 4 | 4 · 4 | 5 · 5 |
+| 21  | Scenekeeper  | 3 · 3 | 5 · 4 | 3 · 3 | 5 · 5 | 4 · 4 | 4 · 5 | 4 · 3 | 5 · 5 |
+| 9   | Bench        | 4 · 3 | 5 · 4 | 3 · 2 | 5 · 4 | 4 · 4 | 4 · 5 | 4 · 3 | 5 · 4 |
+| 1   | Chorus       | 5 · 4 | 4 · 4 | 2 · 2 | 5 · 4 | 3 · 2 | 5 · 5 | 3 · 3 | 5 · 4 |
+| 3   | Same Boat    | 4 · 4 | 4 · 4 | 3 · 4 | 4 · 4 | 3 · 3 | 4 · 4 | 4 · 4 | 5 · 3 |
+| 10  | Backed       | 4 · 3 | 4 · 4 | 3 · 3 | 4 · 4 | 4 · 4 | 4 · 3 | 4 · 4 | 5 · 4 |
+| 2   | Qualified    | 4 · 4 | 4 · 4 | 3 · 4 | 4 · 4 | 4 · 2 | 3 · 3 | 4 · 4 | 5 · 4 |
+| 25  | Close Enough | 3 · 3 | 4 · 3 | 4 · 4 | 5 · 4 | 4 · 4 | 4 · 3 | 4 · 4 | 5 · 3 |
+| 20  | Plainly      | 4 · 3 | 4 · 4 | 3 · 4 | 4 · 4 | 3 · 3 | 4 · 4 | 4 · 4 | 5 · 3 |
+| 15  | Cue          | 3 · 2 | 5 · 5 | 3 · 2 | 5 · 5 | 3 · 4 | 4 · 5 | 4 · 3 | 5 · 4 |
+| 22  | Crewline     | 4 · 2 | 5 · 4 | 2 · 2 | 4 · 4 | 3 · 4 | 5 · 5 | 3 · 3 | 5 · 4 |
+| 29  | Waypoint     | 4 · 3 | 4 · 3 | 2 · 3 | 4 · 4 | 3 · 2 | 5 · 5 | 3 · 3 | 5 · 4 |
+| 28  | Orders       | 3 · 3 | 5 · 3 | 2 · 2 | 5 · 4 | 4 · 4 | 4 · 4 | 3 · 3 | 5 · 3 |
+| 24  | Gavel        | 3 · 3 | 5 · 5 | 3 · 3 | 4 · 4 | 3 · 3 | 4 · 4 | 4 · 4 | 4 · 2 |
+| 19  | Rattle       | 3 · 2 | 4 · 3 | 3 · 3 | 4 · 4 | 4 · 4 | 4 · 4 | 3 · 3 | 5 · 3 |
+| 17  | Proof        | 3 · 3 | 5 · 3 | 3 · 2 | 4 · 4 | 4 · 4 | 4 · 4 | 3 · 3 | 4 · 2 |
+| 30  | Flowsheet    | 3 · 2 | 5 · 4 | 2 · 2 | 4 · 3 | 3 · 3 | 4 · 5 | 3 · 3 | 5 · 4 |
+| G0  | Guessling    | 3 · 3 | 3 · 3 | 4 · 5 | 4 · 3 | 4 · 4 | 2 · 2 | 3 · 4 | 3 · 3 |
+| 7   | Fair Game    | 3 · 3 | 4 · 4 | 2 · 3 | 3 · 4 | 3 · 3 | 4 · 4 | 3 · 3 | 4 · 3 |
+| 6   | Finders      | 3 · 3 | 4 · 4 | 3 · 3 | 4 · 4 | 2 · 2 | 4 · 4 | 3 · 3 | 4 · 3 |
+| 8   | Porchlight   | 4 · 2 | 3 · 4 | 4 · 4 | 3 · 4 | 2 · 3 | 3 · 3 | 3 · 3 | 4 · 3 |
+| 18  | Range        | 4 · 2 | 4 · 3 | 2 · 3 | 4 · 4 | 4 · 3 | 4 · 4 | 3 · 3 | 3 · 2 |
+| 5   | Lull         | 4 · 2 | 5 · 4 | 2 · 3 | 3 · 3 | 3 · 3 | 4 · 4 | 3 · 3 | 3 · 2 |
 
 Where the scorers were 2 points apart, each score was settled at the
 average:
@@ -367,25 +368,23 @@ Backed misses the cut by half a point. They go to round 5.
 
 **Question:** does the evidence hold up for the top five?
 
-**Method:** a research subagent checked each finalist against primary
-sources: rival apps, the 2026 gallery, evidence that the problem matters,
-the devices a student team has, Jev's jagged edges, whether plain code,
-embeddings, or Apple's on-device model could do Jev's job, and the harm a
-wrong decision could do. The
+**Method:** a research subagent checked each finalist against primary sources:
+rival apps, the 2026 gallery, evidence that the problem matters, the devices a
+student team has, Jev's jagged edges, whether plain code, embeddings, or Apple's
+on-device model could do Jev's job, and the harm a wrong decision could do. The
 [evidence notes](/docs/research/next-gen-evidence.md) have the sources. A score
 changes only where the evidence changes it.
 
 - **Turn.** For: the best-documented need of the five, with "approximately 5
-  million Americans" who may benefit from AAC by ASHA's figure, and aided
-  speech at "8–10 wpm" against speaking rates of "125 and 185"; the gallery
-  still has no AAC entry. Against: Rejoin Voice, released July 12, 2026,
-  already listens to the partner and offers three tappable replies, with
-  speech free and listening paid, the same split Turn planned. Turn's
-  difference is narrower: every reply is one of the user's own saved
-  phrases, never generated words. That answers AAC users' worry about a
-  system "suggesting the wrong thing" in a tone not their own, though the
-  same study's participants felt even pre-stored phrases made listeners
-  credit the system. A 240-phrase Choice sits at
+  million Americans" who may benefit from AAC by ASHA's figure, and aided speech
+  at "8–10 wpm" against speaking rates of "125 and 185"; the gallery still has
+  no AAC entry. Against: Rejoin Voice, released July 12, 2026, already listens
+  to the partner and offers three tappable replies, with speech free and
+  listening paid, the same split Turn planned. Turn's difference is narrower:
+  every reply is one of the user's own saved phrases, never generated words.
+  That answers AAC users' worry about a system "suggesting the wrong thing" in a
+  tone not their own, though the same study's participants felt even pre-stored
+  phrases made listeners credit the system. A 240-phrase Choice sits at
   TypeSafe's stated limit, and no study compares Jev with embeddings on AAC
   phrases. Originality goes from 4.5 to 3 and Jev centrality from 5 to 4.5.
 - **Scenekeeper.** For: no gallery entry reacts to a live table. Against:
@@ -468,10 +467,9 @@ are the subagent's estimates.
   its setup, and ship debug builds only, since the iOS SDK crashes release
   builds that carry a Test Store key.
 - **The relay (3).** The Jev key must stay confidential while the relay runs
-  until judging ends on October 13; no page read names a free tier, nothing
-  says what the API returns when credits run out, the status page logged an
-  "API issues"
-  incident on September 21, and `jev-latest` can move under tuned
+  until judging ends on October 13; no page read names a free tier, nothing says
+  what the API returns when credits run out, the status page logged an "API
+  issues" incident on September 21, and `jev-latest` can move under tuned
   thresholds. Fix, 3 hours: questions fixed on the server, per-device rate
   limits, a credit alert, `jev-1.13.0` pinned, and a visible degraded mode.
 - **Naming Jev (2).** TypeSafe's agreement bars announcing the relationship
@@ -691,21 +689,19 @@ from the video on September 28.
 
 ### Scope of the first version
 
-- **Must:** the speaking grid with categories, typing, and saved phrases;
-  about 150 editable starter phrases, with every typed reply saved to the
-  bank; speech in the user's Personal Voice once authorized, else a system
-  voice; Listen mode with live transcription on the phone and a field to type
-  the partner's line; the user's own permission, asked the first time Listen
-  mode turns on, before any of their phrases leave the phone; the consent
-  card, the listening light, one-tap pause, and a switch that stops
-  listening when the partner is under 18; names
-  swapped for tags before any request; the shortlist of 40 and Jev's
-  per-phrase decisions; the row of big buttons in steady slots, one big
-  button when a phrase clears the high bar, and fixed Yes, No, and Not sure
-  buttons for yes-or-no questions; the offline fallback, ranked by place and
-  typed letters; the paywall, the Test Store purchase, and Restore Purchases;
-  Settings; the relay; the evaluation; and the README, the license, and a
-  Simulator build.
+- **Must:** the speaking grid with categories, typing, and saved phrases; about
+  150 editable starter phrases, with every typed reply saved to the bank; speech
+  in the user's Personal Voice once authorized, else a system voice; Listen mode
+  with live transcription on the phone and a field to type the partner's line;
+  the user's own permission, asked the first time Listen mode turns on, before
+  any of their phrases leave the phone; the consent card, the listening light,
+  one-tap pause, and a switch that stops listening when the partner is under 18;
+  names swapped for tags before any request; the shortlist of 40 and Jev's
+  per-phrase decisions; the row of big buttons in steady slots, one big button
+  when a phrase clears the high bar, and fixed Yes, No, and Not sure buttons for
+  yes-or-no questions; the offline fallback, ranked by place and typed letters;
+  the paywall, the Test Store purchase, and Restore Purchases; Settings; the
+  relay; the evaluation; and the README, the license, and a Simulator build.
 - **Should:** the replay script of recorded partner lines, the review by a
   campus speech-language pathology clinic, and an alert when Jev's credits
   run low.
@@ -839,12 +835,10 @@ Triggers:
 
 - **No Jev key by noon PT on September 23:** write to `support@typesafe.ai`
   and TypeSafe's Discord, and build on the phone's own ranking meanwhile,
-  since Jev joins at the relay with no app change. No key by September 26 is
-  the no-go point for Jev: the video can't show it, and entering without it
-  breaks this idea's goal. The default is still to enter, with the phone's
-  own ranking and a README that says Jev is missing, since a working app
-  scores on the rules' other criteria; the team can overrule that default
-  on the day.
+  since Jev joins at the relay with no app change. No key by the end of
+  September 24, before the evaluation that needs it, is the no-go: without
+  Jev, Turn breaks N3 and this idea's goal, so Turn as designed stops there,
+  and the team takes the choice back to whoever set the goal.
 - **The evaluation on September 25:** if Jev's top-6 accuracy trails
   embeddings, Jev re-ranks an embedding shortlist instead, built on the phone
   with Apple's sentence embeddings so the bank stays there, and the
@@ -855,8 +849,9 @@ Triggers:
 - **No clinic review by September 27:** the description says no clinician has
   reviewed Turn yet.
 - **No consent from TypeSafe by September 28:** the video, the description,
-  and the README call Jev "a hosted decision model", and the consent card
-  and privacy notice say "a third-party AI service in the United States".
+  and the README call Jev "a hosted decision model", and the user's
+  permission step, the consent card, and the privacy notice say "a
+  third-party AI service in the United States".
 - **No iPhone 15 Pro or later for the video:** a system voice speaks instead
   of a Personal Voice.
 
