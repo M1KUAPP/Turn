@@ -13,6 +13,8 @@ Contents:
 1.  [Overview](#overview)
 1.  [Influences and trends](#influences-and-trends)
 1.  [Colors](#colors)
+1.  [Typography](#typography)
+1.  [Layout](#layout)
 1.  [See also](#see-also)
 
 ## Overview
@@ -92,7 +94,6 @@ being said, and nothing to wait for.
   anything that moves on its own.
 
 [aac-criticize]: /docs/research/aac-design.md#what-users-criticize
-[ft-tokens]: /docs/research/turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
 [aac-stigma]: /docs/research/aac-design.md#social-acceptability-and-stigma
 
 ### Scope
@@ -148,7 +149,6 @@ note that holds its sources.
 [ft-m3e]: /docs/research/turn-frontend-trends.md#material-3-expressive-and-older-users
 [aac-patterns]: /docs/research/aac-design.md#patterns-across-the-apps
 [ft-bans]: /docs/research/turn-frontend-trends.md#bans-that-suit-an-aac-app
-[ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
 [ms-findings]: /docs/research/turn-motionsites.md#findings-for-designmd
 
 ## Colors
@@ -346,6 +346,236 @@ them (A11Y-7).
 
 [aac-polarity]: /docs/research/aac-design.md#dark-mode-contrast-polarity-and-glare
 
+## Typography
+
+Turn uses the iPhone's own face, SF Pro, as `system-ui`, and bundles none. The
+AAC design notes found no evidence that a special face, Atkinson Hyperlegible
+included, reads better, and advise an ordinary iOS app in iOS's own type
+([AAC design notes][aac-type]); the trends notes call the system font the
+accessible choice for Turn ([trends notes][ft-nobans]). Each token takes the
+name of the Apple text style whose Dynamic Type curve it follows, since the
+format's linter rejects a ramp field ([trends notes][ft-tokens]).
+
+```yaml
+typography:
+  largeTitle-emphasized:
+    fontFamily: system-ui
+    fontSize: 34px
+    fontWeight: 700
+    lineHeight: 41px
+  title1-emphasized:
+    fontFamily: system-ui
+    fontSize: 28px
+    fontWeight: 700
+    lineHeight: 34px
+  title2:
+    fontFamily: system-ui
+    fontSize: 22px
+    fontWeight: 400
+    lineHeight: 28px
+  title3:
+    fontFamily: system-ui
+    fontSize: 20px
+    fontWeight: 400
+    lineHeight: 25px
+  title3-emphasized:
+    fontFamily: system-ui
+    fontSize: 20px
+    fontWeight: 600
+    lineHeight: 25px
+  headline:
+    fontFamily: system-ui
+    fontSize: 17px
+    fontWeight: 600
+    lineHeight: 22px
+  body:
+    fontFamily: system-ui
+    fontSize: 17px
+    fontWeight: 400
+    lineHeight: 22px
+  subheadline:
+    fontFamily: system-ui
+    fontSize: 15px
+    fontWeight: 400
+    lineHeight: 20px
+  subheadline-emphasized:
+    fontFamily: system-ui
+    fontSize: 15px
+    fontWeight: 600
+    lineHeight: 20px
+  footnote:
+    fontFamily: system-ui
+    fontSize: 13px
+    fontWeight: 400
+    lineHeight: 18px
+```
+
+Sizes and leading are Apple's defaults at the Large text size, and the weights
+are its regular and emphasized ones ([earlier iOS notes][ios-dt]).
+
+| Token                    | Used for                                                     | `dynamicTypeRamp` | With Bold Text | At AX5 |
+| ------------------------ | ------------------------------------------------------------ | ----------------- | -------------- | ------ |
+| `largeTitle-emphasized`  | The consent card's lead sentence                             | `largeTitle`      | 800            | 60/70  |
+| `title1-emphasized`      | The big button's phrase                                      | `title1`          | 800            | 58/68  |
+| `title2`                 | The consent card's facts, and "Listening" as a session opens | `title2`          | 600            | 56/66  |
+| `title3`                 | The partner's words in the line                              | `title3`          | 600            | 55/65  |
+| `title3-emphasized`      | Phrases in the row and the grid, and Yes, No, and Not sure   | `title3`          | 700            | 55/65  |
+| `headline`               | Buttons, tabs, the Listen control, and a long phrase's step  | `headline`        | 700            | 53/62  |
+| `body`                   | Settings, the permission step, the editor, and the notice    | `body`            | 600            | 53/62  |
+| `subheadline`            | Speaker labels, notes, counts, and placeholders              | `subheadline`     | 600            | 49/58  |
+| `subheadline-emphasized` | The strip's phrases                                          | `subheadline`     | 700            | 49/58  |
+| `footnote`               | Legal lines under the paywall's link and in Settings         | `footnote`        | 600            | 44/52  |
+
+- **Ramps.** Each text style sets its `dynamicTypeRamp`, so it grows the way
+  the system's text does: without one, React Native multiplies every size by
+  one factor, taking a 17-point Body to 60.7 points at AX5, where Apple's is
+  53 ([iOS notes][ios-scale]).
+- **Never shrunk by code.** No text sets `allowFontScaling={false}`,
+  `maxFontSizeMultiplier`, or a fixed height, and only the row's slots set
+  `numberOfLines`; see [the row](#the-row).
+- **Bold Text.** React Native's font code ignores the setting, so one hook
+  swaps each token to its Bold Text weight on `boldTextChanged`, for system
+  text too, since nothing says it thickens by itself ([iOS notes][ios-bold]).
+- **Left, sentence case, upright.** Text is left-aligned, so each line starts
+  where the last one did, which helps readers who lose part of their visual
+  field after a stroke ([AAC design notes][aac-type]); in sentence case, since
+  capitals read slower; never in italics; and never in a weight under Regular
+  ([trends notes][ft-type]).
+- **Floors.** Nothing is under 15 points at the default size except legal
+  lines, at 13; reading slows below about 13 characters a line, so the row
+  and the grid lose columns before a phrase gets narrower
+  ([AAC design notes][aac-type]).
+- **Figures.** The free lines' count uses tabular figures,
+  `fontVariant: ['tabular-nums']`, so it doesn't shift as it falls.
+- **Pitch type.** Apple's license lets SF Pro appear only as the running app
+  draws it, in screenshots and recordings of Turn. The video's titles, the
+  Devpost thumbnail, the gallery's captions, and text in the README's images
+  are set in Atkinson Hyperlegible Next, under the SIL Open Font License
+  ([iOS notes][ios-pitch-fonts]).
+
+[aac-type]: /docs/research/aac-design.md#text-size-line-length-and-fonts
+[ios-dt]: /docs/research/ios-design.md#dynamic-type-sizes
+[ios-scale]: /docs/research/turn-ios-design.md#scaling-text-in-react-native-086
+[ios-bold]: /docs/research/turn-ios-design.md#bold-text-and-custom-fonts
+[ft-type]: /docs/research/turn-frontend-trends.md#bold-large-and-variable-type
+[ios-pitch-fonts]: /docs/research/turn-ios-design.md#fonts-in-the-video-and-gallery-images
+
+## Layout
+
+```yaml
+spacing:
+  xs: 4px
+  sm: 8px
+  md: 12px
+  lg: 16px
+  xl: 24px
+  margin: 16px
+  target: 44px
+  strip-cell: 48px
+  slot: 78px
+  bar: 52px
+```
+
+Sizes are points: the format's `px` means a point on the iPhone. `target` is
+the smallest control, `strip-cell` the strip's shortest phrase button, `slot`
+the row's slot and the grid's shortest phrase button, and `bar` the top bar's
+height.
+
+- **Why 78 points.** Speech buttons should be at least 12 mm on their short
+  side for people with tremor or weakness, and errors kept falling up to 18 mm
+  in one study ([AAC design notes][aac-targets]). Seventy-eight points is 12.2
+  mm on a 326-ppi iPhone and 12.9 mm on a 460-ppi one, above A11Y-1's 64.
+- **Why wide, with gaps.** Keys should be "wider instead of taller" for older
+  hands, and zero spacing was least accurate, so phrase buttons are wider than
+  tall, with 12 points between them ([AAC design notes][aac-targets]).
+
+[aac-targets]: /docs/research/aac-design.md#target-size-and-spacing-for-tremor-and-weakness
+
+### The home screen
+
+The home screen has no navigation bar, and its bands keep the PRD's order,
+top to bottom (SPEAK-1):
+
+```text
+top bar     Settings  ·  place  ·  Listen control
+the line    They said                                        Done or Clear
+            "How was physio?"                                Repeat or Stop
+the strip   Wait, I'm typing  |  Sorry, say that again  |  And you?
+            I use this app to talk. Please give me time.  |  Something's wrong
+the row     slot 1  |  slot 2
+            slot 3  |  slot 4
+            slot 5  |  slot 6
+tabs        Quick  Feelings  Body and pain  …              All  ·  Type
+the grid    phrase  |  phrase                               (scrolls)
+```
+
+| Band      | Height at the default text size                            | What sets it                                            |
+| --------- | ---------------------------------------------------------- | ------------------------------------------------------- |
+| Top bar   | 52 points                                                  | `bar`                                                   |
+| The line  | 92 points                                                  | A label, two lines of `title3`, and two buttons stacked |
+| The strip | 104 points                                                 | Two rows of 48-point cells and an 8-point gap           |
+| The row   | 258 points                                                 | Three rows of 78-point slots and two 12-point gaps      |
+| Tabs      | 44 points                                                  | `target`                                                |
+| The grid  | The rest: about 170 points, two rows, on a 6.1-inch iPhone | It scrolls                                              |
+
+- **Gaps.** 8 points between bands, 12 inside the row and the grid, and 16
+  from the screen's edges; the board's color runs under the status bar and
+  the home indicator, and content stays inside the safe areas.
+- **What doesn't scroll.** The top bar, the line, the strip, the row, and the
+  tabs sit outside the grid's scroll view, so nothing collapses or slides them
+  away ([iOS notes][ios-bars]); only the grid scrolls.
+- **The thumb's band.** The strip and the row fill the middle of the screen,
+  where one thumb reaches best, and the top bar holds only what isn't speech
+  ([AAC design notes][aac-reach]).
+
+[ios-bars]: /docs/research/turn-ios-design.md#bars-that-minimize-and-new-scroll-edges
+[aac-reach]: /docs/research/aac-design.md#one-handed-use-and-where-controls-sit
+
+### Widths
+
+Turn lays out by the width it's given, not by the device, since an app built
+with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
+([iOS notes][ios-resize]). A phrase column needs at least 154 points, about
+13 characters of `title3-emphasized` inside 12-point padding.
+
+| Width available      | The row                    | The strip                           | The grid                  |
+| -------------------- | -------------------------- | ----------------------------------- | ------------------------- |
+| Under 352 points     | One column of six slots    | One column                          | One column                |
+| 352 to 517 points    | Two columns of three slots | Three columns, the fourth spans two | Two columns               |
+| 518 points and wider | Three columns of two slots | Three columns, the fourth spans two | An even number of columns |
+
+- **Slots keep their order.** Slots 1 to 6 read left to right, then down, at
+  every width, so Yes, No, and Not sure are always first.
+- **Checked at** 320, 375, 402, and 440 points wide, and on an iPad in a
+  resized window.
+
+[ios-resize]: /docs/research/turn-ios-design.md#resizable-iphone-apps-and-iphone-duo
+
+### Short screens and large text
+
+- **Short screens.** Where the space between the top bar and the screen's
+  bottom is under 700 points, as on an iPhone SE, the line, the strip, the
+  row, the tabs, and the grid scroll together as one column, and only the top
+  bar stays put.
+- **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip,
+  and the grid take one column each, and everything under the top bar scrolls
+  as one column, as on short screens. Apple advises fewer columns as text
+  grows ([iOS notes][ios-dt-turn]).
+- **Heights follow the text size, never the content.** A slot's height is two
+  lines of `title3-emphasized` at the current size plus its padding, and never
+  less than 78 points; so at AX5 a slot is 154 points tall, and the row holds
+  its height whatever it shows.
+
+[ios-dt-turn]: /docs/research/turn-ios-design.md#dynamic-type-sizes-for-turns-styles
+
+### With the keyboard up
+
+- The composer docks above the keyboard; the tabs and the grid slip under it.
+- The line's words move into the composer's label, "Replying to", so the
+  top bar, the strip, and the row stay in view above the composer.
+- Where they don't fit, as on an iPhone SE, the space above the composer
+  scrolls, the row first.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): who Turn is for, and the principles this
@@ -367,4 +597,6 @@ them (A11Y-7).
 
 [gdm]: https://github.com/google-labs-code/design.md
 [product-principles]: /docs/PRODUCT.md#product-principles
+[ft-tokens]: /docs/research/turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
 [ft-calm]: /docs/research/turn-frontend-trends.md#calm-technology
+[ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
