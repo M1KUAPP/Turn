@@ -421,7 +421,8 @@ https://apps.apple.com/app/id<APP_ID>
   script refuses a puzzle that lacks any of them.
 - **CONTENT-4, Must.** Before a puzzle ships, Jev answers every bank
   question and its negation against the fact card, and a person fixes every
-  answer between 0.3 and 0.7 and every pair whose answers don't differ.
+  answer between 0.3 and 0.7 and every question and negation whose answers
+  contradict each other, both Yes or both No.
   Check: the puzzle's review file has no unresolved line.
 - **CONTENT-5, Must.** The four launch categories are animals, foods,
   everyday objects, and places, each with a bank of about 100 questions,
@@ -464,12 +465,12 @@ https://apps.apple.com/app/id<APP_ID>
 
 ### Availability
 
-- **AVAIL-1, Must.** The server, the archive, Jev's credits, and a new
-  puzzle each day stay up through at least October 22, 2026, the later of
-  the winners dates, and for as long as any Guessling+ subscription runs,
-  since the Paid Apps Agreement requires "the full amount of content" for
-  the whole subscription ([Apple notes][apple-subs]). Check: the daily
-  check passes every day.
+- **AVAIL-1, Must.** The server, the archive, Jev's credits, and a new puzzle
+  each day stay up through at least October 22, 2026, the later of the dates
+  given for the winners, and for as long as any Guessling+ subscription runs,
+  since the Paid Apps Agreement requires "the full amount of content" for the
+  whole subscription ([Apple notes][apple-subs]). Check: the daily check
+  passes every day.
 - **AVAIL-2, Must.** Under load, players get stored answers or the busy
   state, never a broken screen, and the server stays within Jev's limit of
   1,200 requests per minute. Check: a load test on the test server at 30
@@ -654,8 +655,7 @@ Before submitting to App Review on September 24, 2026:
 - **RELEASE-4, Must.** Jev's credits are funded with auto-refill on, the
   In-App Purchase Key is uploaded to RevenueCat, and RevenueCat's sandbox
   access stays open to anybody, because App Review reportedly buys in the
-  sandbox.
-  Check: each setting.
+  sandbox. Check: each setting.
 
 After approval, and before the Devpost deadline on September 30, 2026:
 
@@ -688,11 +688,9 @@ The idea's [assumptions][idea-open] hold, and this document adds one: the
 team can publish a checked puzzle every day for as long as Guessling+ is
 sold (AVAIL-1).
 
-[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
-
 ## Open questions
 
-The idea's [open questions][idea-open-q] still apply. New ones, each with a
+The idea's [open questions][idea-open] still apply. New ones, each with a
 safe default:
 
 - **Age laws in US states.** New Apple Accounts in Texas are subject to its
@@ -718,7 +716,6 @@ safe default:
   new puzzle every day until the last subscription ends. Safe default: keep
   a buffer of at least a week of checked puzzles from October 2026 on.
 
-[idea-open-q]: /docs/IDEA.md#assumptions-and-open-questions
 [apple-age-laws]: /docs/research/apple-requirements.md#age-assurance-laws-in-us-states
 
 ## See also
@@ -732,3 +729,5 @@ safe default:
   [Apple notes](/docs/research/apple-requirements.md), and
   [daily puzzle notes](/docs/research/daily-puzzles.md): the sources behind
   the requirements.
+
+[idea-open]: /docs/IDEA.md#assumptions-and-open-questions

@@ -119,10 +119,11 @@ yes-or-no Noul, with probabilities, and it never writes text
 ([Jev notes][jev-what]). In Guessling it does three jobs, all through the
 team's backend:
 
-1.  **It checks each puzzle before the puzzle ships.** A script asks Jev
-    every question in a bank of common questions, and each one's negation,
-    with the puzzle's fact card as the state. A person fixes every answer
-    between 0.3 and 0.7 and every pair whose answers disagree.
+1.  **It checks each puzzle before the puzzle ships.** A script asks Jev every
+    question in a bank of common questions, and each one's negation, with the
+    puzzle's fact card as the state. A person fixes every answer between 0.3
+    and 0.7 and every question and negation whose answers contradict each
+    other.
 1.  **It matches the player's question to the bank.** A Choice over the
     category's bank questions and their negations, about 200 options plus
     "none", under the 255 a Choice allows, picks the entry that asks the

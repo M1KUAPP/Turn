@@ -182,7 +182,9 @@ priority, one statement, and a check a tester can run.
   with the reason.
 - The TRD cites IDs where it meets them, and its last content section maps
   every ID to the TRD sections that meet it. `check_ids.py` in the
-  [appendix](#appendix-check-scripts) enforces both.
+  [appendix](#appendix-check-scripts) checks that every ID is in that table
+  and that no document cites an undefined ID; whether a section really
+  meets an ID is for review.
 
 ### Sections of the TRD
 

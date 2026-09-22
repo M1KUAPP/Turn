@@ -72,7 +72,7 @@ interviewed yet.
   friends. They want a new puzzle that takes a few minutes, feels fair, and
   gives them something to compare. Guessling gives them a different kind of
   daily puzzle, deduction by question instead of by letters, with a result
-  that fits the same chats. NYT Games alone has 293,384 US ratings.
+  that fits the same chats.
 - **The 20-questions fan** knows the game, or knows Akinator, where the app
   asks the questions. They want to be the one asking, and answers that don't
   contradict each other; reviews of one app that lets players ask punish
@@ -87,7 +87,6 @@ services "is directed to children"
 ([Jev notes on store review][jev-store]), nor for players who want endless
 or competitive play, which version 1.0 leaves out.
 
-[idea-problem]: /docs/IDEA.md#problem-and-audience
 [jev-store]: /docs/research/jev.md#store-review-and-jev
 
 ## Positioning
@@ -97,7 +96,7 @@ of them, Guessling is the daily 20-questions game in which they ask the
 questions, in their own words, and every player gets the same answers.
 
 The alternatives players already have, and how Guessling differs from
-each; the idea's [problem and audience][idea-audience] section and the
+each; the idea's [problem and audience][idea-problem] section and the
 [evidence notes][ev-hunch] have the ratings, prices, and quotes:
 
 - **NYT Games and Apple News+** sell daily puzzles in bundles, archives
@@ -117,7 +116,6 @@ the player's own words, with answers a person has checked in advance.
 Consistent answers are something Guessling must measure and show, not
 something its rivals are known to lack.
 
-[idea-audience]: /docs/IDEA.md#problem-and-audience
 [ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
 
 ## Product principles
@@ -172,7 +170,8 @@ The moments that carry the product:
   ends.
 - **The share**: a result that invites a friend without spoiling anything.
 - **The paywall moment**: "Play yesterday's?", offered when a player wants
-  more, never before today's round.
+  more: after today's round, or on a locked archive puzzle. Today's round
+  never waits behind it.
 
 [prd-functional]: /docs/PRD.md#functional-requirements
 
@@ -347,3 +346,5 @@ is named; the rest are watched and reported as rates, as the idea's
   games handle the day, sharing, streaks, and archives.
 - [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
   and terms.
+
+[idea-problem]: /docs/IDEA.md#problem-and-audience
