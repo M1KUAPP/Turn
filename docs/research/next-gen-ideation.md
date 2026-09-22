@@ -20,6 +20,7 @@ Contents:
 1.  [Round 6: red team](#round-6-red-team)
 1.  [Round 7: the choice](#round-7-the-choice)
 1.  [Round 8: monetization](#round-8-monetization)
+1.  [Round 9: scope, stack, and schedule](#round-9-scope-stack-and-schedule)
 
 ## Round 1: constraints and rubric
 
@@ -619,5 +620,116 @@ on AAC pricing, and Next Gen's purchase rules to Turn.
 **Decision:** one entitlement, `listen`, sold once for $24.99 through a
 RevenueCat Paywall after 20 free partner lines, and checked by the relay;
 speaking is never sold.
+
+## Round 9: scope, stack, and schedule
+
+**Question:** what ships by September 28, on what stack, and how do judges
+run it?
+
+**Method:** cut Turn to one core loop, from the partner's line to a spoken
+reply; take the fixes from rounds 6 and 7; and schedule the work backward
+from the video on September 28.
+
+### Scope of the first version
+
+- **Must:** the speaking grid with categories, typing, and saved phrases;
+  about 150 editable starter phrases, with every typed reply saved to the
+  bank; speech in the user's Personal Voice once authorized, else a system
+  voice; Listen mode with live transcription on the phone and a field to type
+  the partner's line; the consent card, the listening light, one-tap pause,
+  and a switch that stops listening when the partner is under 18; names
+  swapped for tags before any request; the shortlist of 40 and Jev's
+  per-phrase decisions; the row of big buttons in steady slots, one big
+  button when a phrase clears the high bar, and fixed Yes, No, and Not sure
+  buttons for yes-or-no questions; the offline fallback, ranked by place and
+  typed letters; the paywall, the Test Store purchase, and Restore Purchases;
+  Settings; the relay; the evaluation; and the README, the license, and a
+  Simulator build.
+- **Should:** the replay script of recorded partner lines, the review by a
+  campus speech-language pathology clinic, and an alert when Jev's credits
+  run low.
+- **Won't:** a partner joining from their own phone, Android, an iPad
+  layout, accounts, phrase banks synced to a server, languages other than
+  English, and custom switch or eye-gaze access beyond what iOS provides.
+
+### Stack and data flow
+
+- **App:** Expo SDK 57, at 57.0.23 or later with `ios.enableSceneSupport`
+  turned on for iOS 27, in TypeScript, with `react-native-purchases` and its
+  Paywalls UI, built locally with Xcode 27 under a free Apple account, as
+  debug builds only. Two small Swift modules, written with the Expo Modules
+  API, run live transcription through `SpeechTranscriber` and ask for
+  Personal Voice authorization; `expo-speech` then speaks with the authorized
+  voice, and `expo-speech-recognition` is the fallback for transcription.
+  ([Turn on students' devices][ev-turn-devices])
+- **Shortlist on the phone:** keyword ranking over the partner's line, the
+  place, and recent use picks 40 phrases in TypeScript, so the bank stays on
+  the phone and only those 40 leave it, per request.
+- **One request per partner line:** the state holds the partner's line, with
+  names as tags, the place, and the 40 candidates; the questions are a Choice
+  for the kind of question (yes-or-no, a choice between options, open, or not
+  a question), a Choice for the topic among the bank's categories, and one
+  Noul per candidate, "this phrase answers what the partner just said". All
+  42 run in parallel in one call.
+- **The row, in code:** candidates rank by their Noul. One big button needs
+  more than 0.85, the bar TypeSafe's routing example sets for acting without
+  asking; six buttons need at least 0.6, its floor; below that the row holds.
+  A new phrase takes a slot only when it beats the phrase there by a clear
+  margin, and a yes-or-no question puts Yes, No, and Not sure first.
+  ([confidence routing][jp-routing])
+- **Relay:** one Cloudflare Worker holds the Jev key and a RevenueCat secret
+  key. It builds the fixed questions, calls Jev through TypeSafe's JavaScript
+  SDK or its HTTP API with the model pinned to `jev-1.13.0`, counts free
+  lines, checks the entitlement, limits requests per device, and drops any
+  answer older than the latest line by sequence number. It shows a degraded
+  state when Jev is busy or down, and the phone falls back to its own
+  ranking. ([Workers secrets][cf-secrets])
+- **Evaluation:** `eval/` holds 80 partner lines, each with its best replies
+  from the starter bank, and a script that scores top-1 and top-6 accuracy,
+  "none" handling, and latency for four rankers: the fallback, keyword
+  ranking on the partner's line, embeddings from Workers AI, and Jev. The
+  README carries the table.
+- **Repository:** `app/`, `modules/`, `worker/`, and `eval/`, an MIT
+  `LICENSE` at the root, and a README with setup, the Test Store path, the
+  Simulator path through a typed partner line, and the evaluation. The app's
+  config points at the team's relay, which runs until judging ends on
+  October 13. The Test Store public SDK key is committed for debug builds, a
+  choice no RevenueCat page settles; no secret key is.
+
+[ev-turn-devices]: next-gen-evidence.md#turn-on-students-devices
+[jp-routing]: jev-patterns.md#confidence-gated-routing-pattern
+[cf-secrets]: cloudflare-workers.md#secrets-configuration-and-wrangler
+
+### Schedule to September 30
+
+- **Tuesday, September 22:** request the Jev key and TypeSafe's consent to
+  name Jev; create the RevenueCat project, the Test Store product, the
+  entitlement, and the offering; start the Expo app with scene support;
+  write the starter phrases and the 80 evaluation lines; stand up the relay.
+- **Wednesday, September 23:** the grid, typing, the phrase bank, and
+  speech with Personal Voice; the relay's Jev request with its fixed
+  questions and pinned model; the shortlist on the phone.
+- **Thursday, September 24:** Listen mode, with the transcription module and
+  the typed-line field; the consent card, the listening light, pause, and the
+  under-18 switch; steady slots and the Yes, No, and Not sure buttons; ask the
+  campus clinic for a review.
+- **Friday, September 25:** run the evaluation and set the thresholds; the
+  paywall, the Test Store purchase, Restore, and the relay's free-line count
+  and entitlement check; Settings.
+- **Saturday, September 26:** the clinic's review, if booked, and its fixes;
+  the README, the license, the Simulator build in the repository's
+  releases, and the replay script.
+- **Sunday, September 27:** polish; the 1024 × 1024 icon and the 1179 × 2556
+  screenshot; rehearse the video with a partner who has agreed to it.
+- **Monday, September 28:** record the video on an iPhone 15 Pro or later,
+  and upload it.
+- **Tuesday, September 29:** write the Devpost description and answers, and
+  collect a guardian's consent for any minor on the team.
+- **Wednesday, September 30:** submit before 11:45 PM PT. Keep the relay
+  running and Jev's credits funded through judging, which ends on October 13,
+  and until the winners are announced on October 21 or 22.
+
+**Decision:** one core loop, from the partner's line to a spoken reply, on
+the stack and schedule above.
 
 [ng-purchase]: next-gen.md#the-purchase-requirement-for-next-gen
