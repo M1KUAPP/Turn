@@ -73,7 +73,7 @@ An idea that breaks one is out.
   Jev. Users give permission before their personal data goes to TypeSafe,
   as Apple's guideline 5.1.2(i) asks of third-party AI: Next Gen skips App
   Review, but judges hold the app to a released app's bar. ([ages and
-  accounts][ng-minors])
+  accounts][ng-minors]; [guideline 5.1.2(i)][jev-store])
 - **N6. More than one interaction around one call.** The feedback judged
   Guessling too simple: one daily screen where each typed question gets one
   answer. The core loop must need parts that work together, such as live
@@ -92,6 +92,7 @@ An idea that breaks one is out.
 [ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
 [ng-minors]: next-gen.md#minors-ages-and-accounts
 [jev-data]: jev.md#offline-behavior-and-data-handling
+[jev-store]: jev.md#store-review-and-jev
 
 ### Assumptions
 
@@ -192,7 +193,7 @@ assumption, and how to cut it.
 | 29  | Waypoint     | C    | A sign reader for blind travelers that voices only the signs that serve their goal                      |
 | 30  | Flowsheet    | C    | A live debate flow that links rebuttals to arguments and flags the dropped ones                         |
 
-Seven ideas repeat another's core and are merged into the first:
+Seven ideas repeat another's core and are merged into one of them:
 
 - **1, 12, and 26:** live captions that tell a hard-of-hearing user when a
   line needs them. Kept as 1, Chorus, for meetings and meals alike.
@@ -303,16 +304,17 @@ average:
   blind scorer marked down ideas where a wrong call could hurt someone (two
   "collapse" reports merged, a missed self-harm signal, a missed "sharp"),
   and Lull's need for phones left in every room.
-- **RevenueCat fit, once:** Qualified, since charging students to see the
-  scholarships they qualify for resembles the "pay to find scholarships"
-  warnings students get.
+- **RevenueCat fit, once:** Qualified, since the blind scorer judged that
+  charging students to see the scholarships they qualify for looks like the
+  paid scholarship searches students are warned against.
 - **Originality, twice:** Orders and Proof, whose formats exist beyond the
   gallery.
 
 What the scores show:
 
-- Both scorers put Turn first. It ranks only the user's own saved phrases,
-  so Jev's inability to write text becomes a safety feature.
+- The blind scorer put Turn first, and the author put it second, a point
+  behind Bench; averaged, Turn leads by 5.5. It ranks only the user's own
+  saved phrases, so Jev's inability to write text becomes a safety feature.
 - Guessling, the control, ties for 18th of 23 at 65.5. Every top-five
   candidate beats it by at least 10 points and at least doubles its
   technical ambition score of 2.
@@ -343,8 +345,10 @@ sources. A score changes only where the evidence changes it.
   already listens to the partner and offers three tappable replies, with
   speech free and listening paid, the same split Turn planned. Turn's
   difference is narrower: every reply is one of the user's own saved
-  phrases, never generated words, which answers the worry AAC users voiced
-  about systems "suggesting the wrong thing". A 240-phrase Choice sits at
+  phrases, never generated words. That answers AAC users' worry about a
+  system "suggesting the wrong thing" in a tone not their own, though the
+  same study's participants felt even pre-stored phrases made listeners
+  credit the system. A 240-phrase Choice sits at
   TypeSafe's stated limit, and no study compares Jev with embeddings on AAC
   phrases. Originality goes from 4.5 to 3 and Jev centrality from 5 to 4.5.
 - **Scenekeeper.** For: no gallery entry reacts to a live table. Against:
@@ -427,8 +431,9 @@ are the subagent's estimates.
   its setup, and ship debug builds only, since the iOS SDK crashes release
   builds that carry a Test Store key.
 - **The relay (3).** The Jev key must stay confidential while the relay runs
-  until judging ends on October 13; there's no free tier, nothing says what
-  happens when credits run out, the status page logged an "API issues"
+  until judging ends on October 13; no page read names a free tier, nothing
+  says what the API returns when credits run out, the status page logged an
+  "API issues"
   incident on September 21, and `jev-latest` can move under tuned
   thresholds. Fix, 3 hours: questions fixed on the server, per-device rate
   limits, a credit alert, `jev-1.13.0` pinned, and a visible degraded mode.
@@ -450,10 +455,10 @@ are the subagent's estimates.
 | Engineer | The partner never agreed to TypeSafe, which keeps telemetry rights "in perpetuity", and partners may be under 18          | 3        | A consent card the user shows, a listening light with one-tap pause, no listening for partners marked under 18, and names swapped for tags                        | 3     |
 
 Verdict: build it, with about 27 hours of fixes, all design and evaluation.
-A Noul's probability had a standard deviation of about 0.01 over TypeSafe's
-repeats, so the row can hold steady, and if Jev doesn't beat embeddings on
-the evaluation, it
-re-ranks an embedding shortlist instead, TypeSafe's own pattern, and still
+Nouls had a mean per-question standard deviation of about 0.01 over
+TypeSafe's repeats, though one question crossed 0.5, so steady slots with a
+margin can hold the row. If Jev doesn't beat embeddings on the evaluation,
+it re-ranks an embedding shortlist instead, TypeSafe's own pattern, and still
 decides the row.
 
 ### Same Boat under attack
@@ -595,9 +600,9 @@ on AAC pricing, and Next Gen's purchase rules to Turn.
   caregiver can buy from there.
 - **The relay checks.** Past the free lines, the relay checks the `listen`
   entitlement through RevenueCat's REST API before calling Jev, with a short
-  cache, so Jev's key serves only paid users. Test Store purchases grant
-  entitlements while Sandbox Testing Access stays at its default, "Anybody".
-  ([server checks][expo-server])
+  cache, so past the free lines Jev's key serves only paid users. Test Store
+  purchases grant entitlements while Sandbox Testing Access stays at its
+  default, "Anybody". ([server checks][expo-server])
 - **For Next Gen.** The purchase runs through RevenueCat's Test Store, which
   the organizers accept. The video shows the Test Store sheet, a simulated
   successful purchase, and Listen mode unlocking, and judges can repeat it in
@@ -663,9 +668,11 @@ from the video on September 28.
   Personal Voice authorization; `expo-speech` then speaks with the authorized
   voice, and `expo-speech-recognition` is the fallback for transcription.
   ([Turn on students' devices][ev-turn-devices])
-- **Shortlist on the phone:** keyword ranking over the partner's line, the
-  place, and recent use picks 40 phrases in TypeScript, so the bank stays on
-  the phone and only those 40 leave it, per request.
+- **Shortlist on the phone:** keyword ranking over the partner's line, plus
+  the user's most-used replies and the place's phrases, picks 40 phrases in
+  TypeScript, so a reply that shares no content word with the question, such
+  as "It was hard", still reaches Jev. The bank stays on the phone, and only
+  those 40 leave it, per request.
 - **One request per partner line:** the state holds the partner's line, with
   names as tags, the place, and the 40 candidates; the questions are a Choice
   for the kind of question (yes-or-no, a choice between options, open, or not
@@ -693,8 +700,8 @@ from the video on September 28.
 - **Repository:** `app/`, `modules/`, `worker/`, and `eval/`, an MIT
   `LICENSE` at the root, and a README with setup, the Test Store path, the
   Simulator path through a typed partner line, and the evaluation. The app's
-  config points at the team's relay, which runs until judging ends on
-  October 13. The Test Store public SDK key is committed for debug builds, a
+  config points at the team's relay, which runs until the winners are
+  announced. The Test Store public SDK key is committed for debug builds, a
   choice no RevenueCat page settles; no secret key is.
 
 [ev-turn-devices]: next-gen-evidence.md#turn-on-students-devices
@@ -735,7 +742,7 @@ the stack and schedule above.
 
 ## Round 10: pitch test
 
-**Question:** does the pitch hold up in two minutes and one paragraph?
+**Question:** does the pitch hold up in under two minutes and one paragraph?
 
 **Method:** write the logline in the brief's form, the video's beats, and
 the description's outline; re-score Turn and the Guessling control; and set
@@ -746,11 +753,12 @@ conversation by listening to what the other person says and offering replies
 in their own saved words, so they can take their turn before the conversation
 moves on."
 
-The video, two minutes on an iPhone:
+The video, under two minutes on an iPhone:
 
 1.  **0:00–0:15:** a partner asks "How was physio?"; the row offers "It was
-    hard", sharing no word with the question; a tap speaks it. On screen:
-    "Turn: your own words, in time for your turn", and the Next Gen Award.
+    hard", sharing no content word with the question; a tap speaks it. On
+    screen: "Turn: your own words, in time for your turn", the Next Gen
+    Award, and one line of the problem, so it's named within 15 seconds.
 1.  **0:15–0:35:** the problem: aided speech at 8 to 10 words a minute
     against 125 to 185 spoken, and a reply typed too late.
 1.  **0:35–1:05:** how it works: the consent card and the listening light, a
@@ -760,7 +768,7 @@ The video, two minutes on an iPhone:
     words: every phrase is the user's own."
 1.  **1:25–1:45:** the purchase: the free lines run out, the paywall opens,
     a Test Store purchase unlocks Listen mode, and speaking stays free.
-1.  **1:45–2:00:** the repository, its license, the Simulator path, and the
+1.  **1:45–1:55:** the repository, its license, the Simulator path, and the
     student team.
 
 The description, in order: what the team built, what it does, and why it
@@ -780,9 +788,10 @@ Triggers:
   means the video can't show Jev, and the team decides whether to enter
   without it, which breaks this idea's goal.
 - **The evaluation on September 25:** if Jev's top-6 accuracy trails
-  embeddings, Jev re-ranks an embedding shortlist instead, and the evaluation
-  runs again. If Jev still trails, the README says so, and the pitch rests on
-  "none" and steady rows rather than accuracy.
+  embeddings, Jev re-ranks an embedding shortlist instead, built on the phone
+  with Apple's sentence embeddings so the bank stays there, and the
+  evaluation runs again. If Jev still trails, the README says so, and the pitch
+  rests on "none" and steady rows rather than accuracy.
 - **No live transcription on a device by the end of September 24:** switch to
   `expo-speech-recognition` and its older recognizer.
 - **No clinic review by September 27:** the description says no clinician has
