@@ -1,15 +1,14 @@
 # Shipaton 2026 idea
 
-Turn is the app this student team will build for RevenueCat Shipaton 2026's
-Next Gen Award: an augmentative and alternative communication (AAC) app for
-adults who can't rely on speech that listens to
-what a partner says and offers replies in the user's own saved words, with Jev
-deciding which of them answer. It replaces Guessling, the team's first idea,
-which the team judged too simple; the [Guessling idea][guessling] is archived.
-Ten rounds of ideation chose Turn, and the [Next Gen ideation log][log]
-records each one. The [brief](/docs/BRIEF.md) and the
-[context](/docs/CONTEXT.md) hold the contest's rules and background, so this
-document links to them, with facts as of September 22, 2026.
+Turn is the app this student team will build for RevenueCat Shipaton 2026's Next
+Gen Award: an augmentative and alternative communication (AAC) app for adults
+who can't rely on speech. It listens to what a partner says and offers replies
+in the user's own saved words, with Jev deciding which of them answer. It
+replaces Guessling, the team's first idea, which the team judged too simple; the
+[Guessling idea][guessling] is archived. Ten rounds of ideation chose Turn, and
+the [Next Gen ideation log][log] records each one. The [brief](/docs/BRIEF.md)
+and the [context](/docs/CONTEXT.md) hold the contest's rules and background, so
+this document links to them, with facts as of September 22, 2026.
 
 Contents:
 
@@ -100,10 +99,12 @@ The [evidence notes][ev-turn] have the sources, and the
     phrases in categories.
 1.  **Listen, with consent.** The first time the user turns on Listen mode,
     Turn asks their own permission to send their phrases and the partner's
-    words to TypeSafe. Then the user shows the partner a consent card; a
-    light shows while the phone listens, one tap pauses it, and a switch
-    stops listening when the partner is under 18. These are Turn's consent
-    controls. The phone transcribes the partner on the device.
+    words to TypeSafe, or to "a third-party AI service in the United States"
+    until TypeSafe agrees to be named. Then the user shows the partner a
+    consent card; a light shows while the phone listens, one tap pauses it,
+    and a switch stops listening when the partner is under 18. With the
+    user's permission, these are Turn's consent controls. The phone
+    transcribes the partner on the device.
 1.  **Answer.** When the partner finishes, a row of big buttons above the
     grid offers the user's own phrases that answer what was said: one big
     button when Turn is confident, up to six otherwise, and no change when
@@ -115,9 +116,13 @@ The [evidence notes][ev-turn] have the sources, and the
 1.  **Keep listening.** Listen mode is free for the first 20 partner lines;
     after that, a paywall offers a one-time unlock, and speaking stays free.
 
-- **Screens:** the speaking grid with the reply row, the phrase bank editor,
-  the consent card, the paywall, and Settings, with voices, Listen mode, the
-  under-18 switch, Restore Purchases, and the privacy notice.
+- **The place:** one tap on the grid picks where the user is, such as home,
+  the clinic, or a shop, from a list they can edit. Turn never reads the
+  location, so it needs no location permission, and only the place's name
+  leaves the phone.
+- **Screens:** the speaking grid with the reply row and the place picker, the
+  phrase bank editor, the consent card, the paywall, and Settings, with voices,
+  Listen mode, the under-18 switch, Restore Purchases, and the privacy notice.
 - **The "aha":** a partner asks "How was physio?", and "It was hard" is
   waiting before the user reaches for the keyboard, though the two share no
   content word.
@@ -188,12 +193,11 @@ against the same state in one go", so 42 questions cost one round trip
 
 Why Jev decides this way:
 
-- **Nouls, not one big Choice.** A Choice over the whole bank would soon
-  reach the "roughly 240" options TypeSafe calls reliable, since the bank
-  grows with every typed reply, and a Choice's
-  probabilities "always add up to 1, so a line ranks first even when none
-  answer the query". Per-phrase Nouls can all come back low, which tells
-  Turn to change nothing ([Choice size][jp-choice]).
+- **Nouls, not one big Choice.** A Choice over the whole bank would soon reach
+  the "roughly 240" options TypeSafe calls reliable, since the bank grows with
+  every typed reply, and a Choice's probabilities "always add up to 1, so a line
+  ranks first even when none answer the query". Per-phrase Nouls can all come
+  back low, which tells Turn to change nothing ([Choice size][jp-choice]).
 - **A steady row.** Over TypeSafe's repeat tests, Nouls had a mean
   per-question standard deviation of about 0.01, though one question crossed
   0.5, while a Choice's top answer flipped on 2 of 8 questions
@@ -245,11 +249,11 @@ How it's wired:
 
 Data, consent, and terms:
 
-- **What leaves the phone:** per request, the partner's line with names
-  swapped for tags, the place, and 40 of the user's phrases. TypeSafe hosts
-  Jev in the United States, and "Jev is not trained on customer requests or
-  responses", but it keeps rights "in perpetuity" to use the data for
-  telemetry and abuse monitoring ([data handling][jev-data]).
+- **What leaves the phone:** per request, the partner's line with names swapped
+  for tags, the place's name, and 40 of the user's phrases. TypeSafe hosts Jev
+  in the United States, and "Jev is not trained on customer requests or
+  responses", but it keeps rights "in perpetuity" to use the data for telemetry
+  and abuse monitoring ([data handling][jev-data]).
 - **The user's consent.** None of the user's phrases leave the phone until
   the user agrees, the first time they turn on Listen mode.
 - **The partner's consent.** TypeSafe's agreement makes the team give the
@@ -324,6 +328,7 @@ the [reasoning][r8]; this is how Turn applies them.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
 [expo-server]: /docs/research/revenuecat-expo.md#checking-entitlements-from-a-server
+[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
 
 ## Categories to enter
 
@@ -377,12 +382,11 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
 
 ### Scope of the first version
 
-- **Must:** the grid, typing, and saved phrases, with about 150 editable
-  starter phrases and every typed reply saved; Personal Voice, else a system
-  voice; Listen mode with live transcription and a typed-line field; the
-  consent controls; names
-  swapped for tags; the shortlist and Jev's decisions; steady slots, the
-  confidence bars, and the Yes, No, and Not sure buttons; the offline
+- **Must:** the grid, typing, and saved phrases, with about 150 editable starter
+  phrases and every typed reply saved; Personal Voice, else a system voice;
+  Listen mode with live transcription and a typed-line field; the consent
+  controls; names swapped for tags; the shortlist and Jev's decisions; steady
+  slots, the confidence bars, and the Yes, No, and Not sure buttons; the offline
   fallback; the paywall, the Test Store purchase, and Restore Purchases;
   Settings; the relay; the evaluation; and the README, the license, and a
   Simulator build.
@@ -466,7 +470,8 @@ The video, under two minutes on an iPhone:
 
 The description, in order: what the team built, what it does, and why it
 matters, in the [category page's][ng-submit] words; the evaluation; the
-purchase and why speech is free; the technical choices; privacy and consent;
+purchase, why speech is free, and why a Test Store purchase counts for Next
+Gen, citing the organizers' answers; the technical choices; privacy and consent;
 the AI tools used, credited openly; and the award named, as RevenueCat's
 September 18 update asks: "Name the awards you're going for".
 
@@ -486,20 +491,19 @@ description alone and read the code to check them.
 - **No Jev key in time.** Request it on September 22. Trigger: no key by noon
   PT on September 23; then write to `support@typesafe.ai` and TypeSafe's
   Discord, and build on the phone's own ranking meanwhile, since Jev joins
-  at the relay with no app change. No key by September 26 is the no-go
-  point for Jev: the video can't show it, and entering without it breaks
-  this idea's goal. The default is still to enter, with the phone's own
-  ranking and a README that says Jev is missing, since a working app scores
-  on the rules' other criteria; the team can overrule that on the day.
+  at the relay with no app change. No key by the end of September 24, before
+  the evaluation that needs it, is the no-go: without Jev, Turn breaks the
+  goal it was chosen for, so Turn as designed stops there, and the team takes
+  the choice back to whoever set the goal: enter without Jev, saying so, or
+  enter something else.
 - **Live transcription fails on the device.** Trigger: not working by the end
   of September 24; then switch to `expo-speech-recognition` and its older
   recognizer.
-- **Test Store can't sell a one-time product.** RevenueCat's Test Store
-  pages don't say whether a one-time product can be made there
-  ([gaps][ng-gaps]). Trigger: the dashboard offers none
-  on September 22; then the demo sells Listen as a yearly Test Store product,
-  which renews at most five times before it ends, and the one-time design
-  stays for a store release ([round 8][r8]).
+- **Test Store can't sell a one-time product.** RevenueCat's Test Store pages
+  don't say whether a one-time product can be made there ([gaps][ng-gaps]).
+  Trigger: the dashboard offers none on September 22; then the demo sells Listen
+  as a yearly Test Store product, which renews at most five times before it
+  ends, and the one-time design stays for a store release ([round 8][r8]).
 - **A wrong reply.** A mis-ranked row costs time more than words, since
   nothing speaks until the user taps, but a wrong tap on a question about
   pain or consent matters. Yes-or-no questions get the fixed Yes, No, and
@@ -518,9 +522,10 @@ description alone and read the code to check them.
   description says no clinician has reviewed Turn yet.
 - **TypeSafe doesn't consent to being named.** Trigger: no answer by
   September 28, when the video is recorded; then the video, the
-  description, and the README call Jev "a hosted decision model", the consent
-  card and privacy notice say "a third-party AI service in the United
-  States", and the names go in only if consent arrives before the deadline.
+  description, and the README call Jev "a hosted decision model", the user's
+  permission step, the consent card, and the privacy notice say "a
+  third-party AI service in the United States", and the names go in only if
+  consent arrives before the deadline.
 - **The wrong phone.** Personal Voice needs an iPhone 15 Pro or later by one
   Apple page. Trigger: no such phone for the video; then a system voice
   speaks.
@@ -586,22 +591,21 @@ Nobody could be asked while this was written, so the plan assumes:
 
 Still open, each with a safe default:
 
-- **Test Store as the purchase.** Only a manager's forum answer, not the
-  rules, says "Test Store is enough for the Next Gen category", while the
-  brief's safe default for the purchase rule is "at least one real purchase
-  or ad". Safe default: cite the forum answer in the description, and if an
-  adult teammate's Stripe account clears verification in time, also sell
-  Turn Listen through a RevenueCat Web Purchase Link and make one real
-  purchase ([purchase paths][ng-purchase]).
+- **Test Store as the purchase.** Two managers' forum answers accept Test
+  Store for Next Gen, one saying "Test Store is enough for the Next Gen
+  category", and the category video asks for monetization "even though it'll
+  be sandboxed"; but the rules never name Test Store, and the brief's safe
+  default for the purchase rule is "at least one real purchase or ad". Safe
+  default: cite those answers in the description ([purchase rule][ng-rule]).
 - **Test Store and one-time products.** Safe default: the yearly fallback
   under [Risks](#risks).
 - **Test Store in the Simulator.** RevenueCat never says outright that Test
   Store runs on the iOS Simulator ([gaps][ng-gaps]). Safe default: try it
   there on September 25; if it fails, the README's Simulator path skips the
   purchase, and the video shows it on a device.
-- **The Test Store key in a public repository.** No RevenueCat page says
-  whether it may be committed. Safe default: commit only the public Test
-  Store key, and rotate it if RevenueCat objects.
+- **The Test Store key in a public repository.** No RevenueCat page says whether
+  it may be committed. Safe default: commit only the public Test Store key, and
+  rotate it if RevenueCat objects.
 - **Jev credits.** No page read names a free tier or student program, and
   no page says
   what the API returns when credits run out. Safe default: buy credits on
@@ -622,6 +626,7 @@ Still open, each with a safe default:
   expect at most one.
 
 [jp-programs]: /docs/research/jev-patterns.md#programs-and-credits
+[ng-rule]: /docs/research/next-gen.md#whether-the-revenuecat-rule-applies
 
 ## See also
 
@@ -654,4 +659,3 @@ Still open, each with a safe default:
 [r8]: /docs/research/next-gen-ideation.md#round-8-monetization
 [r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
 [r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
-[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
