@@ -561,15 +561,15 @@ Sizes are points: the format's `px` means a point on the iPhone.
   `0 8 24` at 25%, and the composer's fallback, `0 2 8` at 12%.
 - **Liquid Glass from the system.** "Standard components like bars, sheets,
   popovers, and controls" take it on iOS 26 and 27 by themselves. The app
-  sets no
-  opt-out, since Apple ignores `UIDesignRequiresCompatibility` once an app
-  builds for iOS 27 ([iOS notes on the key][ios-key]).
+  sets no opt-out: Apple calls `UIDesignRequiresCompatibility` a key to
+  "Temporarily use", and ignores it once an app builds with the iOS 27 SDK,
+  which uploads need from April 2027 ([iOS notes on the key][ios-key]).
 - **Liquid Glass in Guessling's views.** Only the composer, a capsule of
   regular `GlassView` from `expo-glass-effect` on iOS 26 and later, which
   floats over the notepad. Its send button is the one colored thing on it,
   in Marigold, since Apple says "To emphasize primary actions, apply color
-  to the background rather than to symbols or text."
-  ([iOS notes on color on glass][ios-glass-color])
+  to the background rather than to symbols or text"
+  ([iOS notes on color on glass][ios-glass-color]).
 - **The fallback.** On iOS 16.4 to 18, where `GlassView` draws nothing, and
   whenever `AccessibilityInfo.isReduceTransparencyEnabled()` is true, the
   composer is an Index white capsule with a 1-point Pencil border and its
@@ -818,8 +818,8 @@ property for.
 - **Guessing.** Guess turns the field into "Name the thing", with a
   "Guess" label inside it in the `chip-right` style, a 60-character limit,
   and the line "A guess uses a turn." above the composer; the send button
-  shows a `target`.
-  An `xmark.circle.fill` button returns to asking (GUESS-1, GUESS-3).
+  shows a `target`. An `xmark.circle.fill` button returns to asking
+  (GUESS-1, GUESS-3).
 - **Counts.** Characters left show in `meta` from 120 of 140 for a question
   and from 50 of 60 for a guess.
 - **Pending.** While an answer is pending, the field, Guess, and the
@@ -983,8 +983,12 @@ sound starts; and VoiceOver announces the words. Then the body moves:
   seconds; the composer moves down off the screen with `settle`; the answer
   card turns over, a 180° turn about its vertical axis in 500 ms with
   `settle`, its face showing from 90°; and the result, the share row, and
-  the buttons rise in 60 ms apart. Under Reduce Motion, the card fades from
-  back to face, and the rest fades in together.
+  the buttons rise into place, 60 ms apart.
+- **The end of a round under Reduce Motion.** The card fades from back to
+  face, and the rest fades in together. The composer can neither move nor
+  fade, so its glass turns off through `glassEffectStyle`'s own animation,
+  set to `none`, and then the composer is removed; without glass, it's
+  removed at once.
 - **Presses** use `snap`.
 
 ## Sound and haptics
@@ -1318,8 +1322,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 - **Variants.** Dark puts the same shapes on the dark table color; mono
   makes the Guessling white.
 - **Checks.** Legible at the smallest icon sizes, in the dark, clear, and
-  tinted looks,
-  and on an iOS 18 simulator.
+  tinted looks, and on an iOS 18 simulator.
 - **For Devpost.** A 1024 × 1024 PNG of the default look, which Shipaton's
   rules ask for.
 
