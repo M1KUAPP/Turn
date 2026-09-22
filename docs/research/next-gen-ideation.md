@@ -19,6 +19,7 @@ Contents:
 1.  [Round 5: evidence](#round-5-evidence)
 1.  [Round 6: red team](#round-6-red-team)
 1.  [Round 7: the choice](#round-7-the-choice)
+1.  [Round 8: monetization](#round-8-monetization)
 
 ## Round 1: constraints and rubric
 
@@ -83,7 +84,6 @@ An idea that breaks one is out.
   conversations. ([data handling][jev-data])
 
 [ng-submit]: next-gen.md#what-a-next-gen-entry-must-submit
-[ng-purchase]: next-gen.md#the-purchase-requirement-for-next-gen
 [jev-what]: jev.md#what-jev-is
 [ng-judge]: next-gen.md#what-a-judge-needs-to-run-the-app
 [ng-free]: next-gen.md#building-without-a-paid-developer-account
@@ -553,3 +553,71 @@ repository's evaluation compares Jev with keyword ranking and embeddings on
 
 **Decision:** Turn is the idea. Rounds 8 to 10 design its purchase, its
 scope and schedule, and its pitch.
+
+## Round 8: monetization
+
+**Question:** how does Turn use RevenueCat so the purchase belongs in the
+product, when AAC users resent paying to speak?
+
+**Method:** apply the context's [monetization rules][ctx-money], the evidence
+on AAC pricing, and Next Gen's purchase rules to Turn.
+
+- **Speech is never sold.** The grid, saved phrases, typing, and Personal
+  Voice stay free. One AAC app's reviewer calls "paying an ongoing
+  subscription fee in order to access basic communication" repugnant, fearing
+  "that one can have their voice taken away at any time if they can no longer
+  afford it", and Rejoin Voice promises "Everything you need to speak is
+  free, forever". ([AAC reviews][ev-sayso]; [Turn's rivals][ev-turn-rivals])
+- **Listen mode is what's sold.** It is the part that costs the team money
+  on every partner line, through Jev and the relay, and the part rivals
+  charge for: Rejoin+ costs $12.99 a month or $99.99.
+- **One price, paid once.** Turn Listen is a one-time purchase of $24.99 that
+  grants the entitlement `listen`. The established text AAC apps also sell
+  once, from Speech Assistant AAC's $24.99 to Predictable's $159.99, and a
+  one-time price answers the fear of losing one's voice when a payment
+  lapses. It matches the lowest of them and costs less than two months of
+  Rejoin+. ([SaySo's rivals][ev-sayso])
+- **What a user costs.** A Listen request carries the partner's line and 40
+  candidate phrases, an estimated 1,500 input tokens, so at Jev's $0.042 per
+  million it costs about $0.00006, and 200 partner lines a day for a year
+  cost about $4.60. One payment covers about five years of Jev at that pace;
+  the relay's hosting comes on top. ([Jev prices][jev-prices])
+- **Trying before paying.** Listen mode is free for the first 20 partner
+  lines, counted by the relay against the RevenueCat app user ID, so the user
+  sees it work first; the context advises giving users "sufficient context
+  about what your app offers" before a hard paywall.
+- **The paywall.** A RevenueCat Paywall, configured remotely, opens when the
+  free lines run out or when the user turns Listen mode on after that. It
+  shows the one-time price, says speaking stays free, and closes with one
+  tap; speech never waits behind it. Settings holds Restore Purchases, and a
+  caregiver can buy from there.
+- **The relay checks.** Past the free lines, the relay checks the `listen`
+  entitlement through RevenueCat's REST API before calling Jev, with a short
+  cache, so Jev's key serves only paid users. Test Store purchases grant
+  entitlements while Sandbox Testing Access stays at its default, "Anybody".
+  ([server checks][expo-server])
+- **For Next Gen.** The purchase runs through RevenueCat's Test Store, which
+  the organizers accept. The video shows the Test Store sheet, a simulated
+  successful purchase, and Listen mode unlocking, and judges can repeat it in
+  a debug build. Test Store purchases count as sandbox data, so the entry
+  reports no revenue. RevenueCat's [Test Store page][rc-test-store] describes
+  products by identifier, price, and duration without saying whether a
+  one-time product can be made there. If it can't, the demo sells Listen as a
+  yearly Test Store product, which renews at most five times before it ends,
+  and the one-time design stays for a store release. ([purchase
+  paths][ng-purchase])
+- **Left out:** subscriptions, which AAC users resent; web purchases, which
+  need a Stripe account; and ads, which have no place in someone's voice.
+
+[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[ev-sayso]: idea-evidence.md#sayso-an-aac-phrase-finder
+[ev-turn-rivals]: next-gen-evidence.md#turn-rival-apps
+[jev-prices]: jev.md#jev-prices
+[expo-server]: revenuecat-expo.md#checking-entitlements-from-a-server
+[rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
+
+**Decision:** one entitlement, `listen`, sold once for $24.99 through a
+RevenueCat Paywall after 20 free partner lines, and checked by the relay;
+speaking is never sold.
+
+[ng-purchase]: next-gen.md#the-purchase-requirement-for-next-gen
