@@ -28,6 +28,8 @@ Contents:
 1.  [Accessibility](#accessibility)
 1.  [Web pages](#web-pages)
 1.  [App icon and store assets](#app-icon-and-store-assets)
+1.  [Do's and don'ts](#dos-and-donts)
+1.  [Guidance for coding agents](#guidance-for-coding-agents)
 1.  [See also](#see-also)
 
 ## Overview
@@ -1310,6 +1312,61 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 
 [idea-video]: /docs/IDEA.md#launch-and-pitch
 [ios-store]: /docs/research/ios-design.md#store-and-pitch-assets
+
+## Do's and don'ts
+
+- Do show the words and the glyph with every answer, within 100 ms.
+- Do keep Marigold for the Guessling and the primary action, and green and
+  red for answers.
+- Do take every color, size, and timing from a token.
+- Don't mock a miss: no red flash, no buzzer, no "Wrong".
+- Don't make the player wait for an animation.
+- Don't put glass on content, and don't fade glass.
+- Don't use emoji anywhere but the share text.
+- Don't loop anything while the Guessling waits.
+- Don't load anything from a third party on the web pages.
+- Don't put an SF Symbol in the icon, a logo, or the Guessling.
+
+## Guidance for coding agents
+
+### Using this file
+
+- **Read it first.** Read this file before building or changing a screen.
+  The tokens are the values to use; the prose says how to apply them.
+- **Where values live.** The yaml blocks hold the light values, the
+  [Colors table](#colors-in-every-appearance) holds all four appearances,
+  and the motion block holds the springs.
+- **Tools.** `bunx @google/design.md@0.4.0 lint docs/DESIGN.md` checks the
+  tokens, and `bunx @google/design.md@0.4.0 spec` prints the format. Pin the
+  version: the format is still alpha.
+- **Other tools.** Hand this file to RevenueCat's Paywall AI Editor, and to
+  Google Stitch if the team sketches screens there.
+
+### Keeping code in step
+
+- `app/src/constants/theme.ts`, where Expo's default template keeps its
+  theme, exports the tokens: each color as a `DynamicColorIOS` value from
+  the Colors table; each text style with its family, size, line height,
+  weight, and `dynamicTypeRamp`; the spacing, the corners, and the motion
+  configs.
+- A unit test reads this file's yaml blocks and Colors table and fails when
+  `theme.ts` differs, since a prose-only design file led different models to
+  build different pages in Vercel's test ([trends notes][ft-agents]).
+- A change starts here, then reaches `theme.ts`, never the other way.
+
+[ft-agents]: /docs/research/frontend-trends.md#how-agents-are-meant-to-use-designmd
+
+### Checks before a screen ships
+
+- **Systems.** iOS 16.4, 18, and 26 or 27 simulators, and a release build,
+  since some faults show only there.
+- **Settings.** Light and dark; Increase Contrast; Reduce Transparency;
+  Reduce Motion; Bold Text; the largest accessibility size, AX5; VoiceOver;
+  and grayscale, through Color Filters.
+- **Screens.** 375 × 667 and 440 × 956 points, and an iPad at phone size
+  (COMPAT-3).
+- **Colors.** After any color change, the contrast table is recomputed and
+  still passes.
 
 ## See also
 
