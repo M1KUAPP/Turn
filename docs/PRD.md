@@ -12,6 +12,8 @@ Contents:
 1.  [Goals and non-goals](#goals-and-non-goals)
 1.  [User scenarios](#user-scenarios)
 1.  [Functional requirements](#functional-requirements)
+1.  [Content requirements](#content-requirements)
+1.  [Evaluation requirements](#evaluation-requirements)
 1.  [See also](#see-also)
 
 ## Overview
@@ -354,6 +356,170 @@ says how each is built.
 - **ROW-10, Must.** A Clear button empties the row, and stopping Listen mode
   clears it too. Check: tap Clear.
 
+### Offline and degraded states
+
+- **STATE-1, Must.** With no network, Listen mode still transcribes, and the
+  phone ranks each line itself: up to six phrases sharing a word with the
+  line other than common words, the place's phrases first among ties, or no
+  change when none does, under a note that the phone ranked them. This
+  refines the idea's fallback by place and typed letters, which SPEAK-4 keeps
+  for typing. Check: scenario 6.
+- **STATE-2, Must.** When the relay or Jev fails, or no answer arrives within
+  3 seconds, the phone ranks that line itself. After two failures in the
+  last three lines, the app says Listen mode is degraded until a line
+  succeeds. Check: scenario 7, with the relay's address blocked.
+- **STATE-3, Must.** When the relay's configuration turns Jev off, every line
+  is ranked on the phone, and the app says Listen mode is degraded. Check:
+  turn Jev off in the relay and send a line.
+- **STATE-4, Must.** Once the free lines are used up without the
+  entitlement, the relay answers no line, and the app opens the paywall
+  (PAY-2) instead of ranking. Check: scenario 8.
+
+### The paywall and purchases
+
+- **PAY-1, Must.** The relay counts 20 free partner lines per app user ID,
+  counting only lines Jev answered, and the Listen button shows how many
+  remain. Check: after 20 answered lines, the 21st opens the paywall.
+- **PAY-2, Must.** When the free lines run out, or when the user turns Listen
+  mode on after that without the entitlement, a RevenueCat Paywall opens. It
+  shows the one-time price, says speaking stays free, and closes with one
+  tap; closing it turns Listen mode off and leaves everything else as it
+  was. Check: close the paywall, then speak a phrase.
+- **PAY-3, Must.** The paywall sells Turn Listen, a one-time Test Store
+  product at $24.99 that grants the entitlement `listen`, in the offering
+  `default`, configured in RevenueCat's dashboard. Check: the dashboard, and
+  the paywall's price.
+- **PAY-4, Must.** A successful Test Store purchase unlocks Listen mode at
+  once, without a restart, and the next partner line reaches Jev. Check:
+  scenario 8.
+- **PAY-5, Must.** A cancelled or failed Test Store purchase leaves Listen
+  mode locked and says so; nothing else changes. Check: choose each failure
+  outcome Test Store offers.
+- **PAY-6, Must.** Settings holds Restore Purchases. Under Test Store,
+  RevenueCat can't restore a purchase and only refreshes the current user's,
+  so the button refreshes and says whether Listen mode is unlocked. Check:
+  scenario 9.
+- **PAY-7, Must.** Past the free lines, the relay answers only for an app
+  user ID with an active `listen` entitlement, checked with RevenueCat.
+  Check: a request with a fresh ID's 21st line and no purchase gets the
+  paywall response.
+- **PAY-8, Must.** If the dashboard's form can't make a one-time Test Store
+  product, the team makes it through RevenueCat's API, which supports one.
+  The idea's yearly fallback, in its [risks][idea-risks], isn't used: a
+  yearly Test Store product ends after five hours, mid-judging. Check: the
+  product's type in the dashboard on September 22.
+- **PAY-9, Must.** Judges can use Listen mode, free of charge and without
+  restriction, until judging ends on October 13, 2026, as the
+  [official rules][ctx-rules] require: the Test Store purchase works in the
+  builds they run, or the build that can't buy isn't held to the free lines.
+  Check: on September 25, buy in the Simulator build, or run 25 lines in it.
+- **PAY-10, Should.** The user's ID survives a reinstall where iOS keeps it,
+  so the purchase and the count of free lines do too. Check: buy, delete
+  and reinstall Turn on the same iPhone, and see Listen mode still unlocked.
+
+[ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
+
+### Settings
+
+- **SET-1, Must.** Settings holds the voice and its rate, Personal Voice,
+  Listen mode's permission and its withdrawal, the under-18 switch, the
+  places, the phrase bank editor, Restore Purchases, the privacy notice, the
+  open-source licenses, and the app's version and the relay's status.
+  Check: each entry opens.
+- **SET-2, Must.** The privacy notice reads in the app with no network.
+  Check: open it in Airplane Mode.
+- **SET-3, Should.** "Erase all data" deletes the bank, the places, the tap
+  counts, and the settings after a confirmation, and restores the starter
+  bank. Check: erase, and the starter bank returns.
+- **SET-4, Should.** "Stats on this phone" shows the measurements METRIC-3
+  names, and a button resets them. Check: after five lines, the counts
+  match.
+
+## Content requirements
+
+- **CONTENT-1, Must.** The starter bank holds 140 to 160 phrases in about
+  ten categories, written by the team in plain US English, each of at most
+  120 characters and naming no real person. It includes the Quick category
+  (the fixed buttons, "I don't know", and "I have something to say"), the
+  conversation strip's five phrases (SPEAK-7), and phrases for pain, where
+  it hurts, and refusing or agreeing to care. Check: a script counts phrases
+  and lengths, and a teammate reads every phrase.
+- **CONTENT-2, Must.** The starter places are Home, Clinic, Shop, and Out,
+  and starter phrases are tied to them. Check: each place has at least ten
+  phrases.
+- **CONTENT-3, Must.** The permission step and the consent card have two
+  versions each, naming TypeSafe and not naming it, and say what CONSENT-1
+  and CONSENT-4 require in plain words. Check: a teammate compares each
+  version with the requirements.
+- **CONTENT-4, Must.** The privacy notice says what stays on the phone, what
+  leaves with each partner line and to whom (the relay on Cloudflare, then
+  TypeSafe, in the United States), that lines and phrases can reveal
+  health, such as a clinic visit or pain, what RevenueCat receives for
+  purchases, as its terms require,
+  what is never kept (audio and transcripts), what TypeSafe may keep and
+  why, that Turn isn't for children and doesn't listen to partners under 18,
+  and how to reach the team. Check: a teammate compares it with the TRD's
+  data inventory.
+- **CONTENT-5, Should.** A campus speech-language pathology clinic reviews
+  Turn with a one-page feature chart in ASHA's terms and five questions:
+  whether the starter phrases suit adults with ALS, stroke, or
+  laryngectomy; whether the fixed buttons and the strip cover
+  safety-critical answers; whether the row changes predictably enough;
+  whether the consent card is fair to partners; and who shouldn't be offered
+  Turn ([AAC notes][aac-clinic]). The team records what it changed. Check:
+  the review notes in the repository.
+
+[aac-clinic]: /docs/research/aac-practice.md#what-a-clinic-review-can-check
+
+## Evaluation requirements
+
+- **EVAL-1, Must.** `eval/` holds 80 partner lines, written by the team by
+  hand before looking at the starter bank, each with its kind (yes-or-no,
+  either-or, open, or not a question), a place, and every acceptable reply
+  in the starter bank, or none, labeled by a teammate other than its writer.
+  At least 16 lines have no acceptable reply, at least 24 are yes-or-no
+  questions, at least 8 are about pain or health, at least 4 ask for
+  consent, and at least 10 share no content word with any acceptable reply.
+  Check: a script counts them and prints the labelers' agreement.
+- **EVAL-2, Must.** Jev's floor, big-button bar, margin, and question
+  wording are committed before the first run, and Jev is reported on all 80
+  lines. The keyword and embedding rankers' cut-offs for holding are set by
+  five-fold cross-validation and reported out of fold. If anything of Jev's
+  changes after the team sees results, the README reports Jev only on at
+  least 20 new lines, written and labeled by a teammate who hasn't seen
+  them. Check: the history shows the settings committed before the results.
+- **EVAL-3, Must.** One command scores four rankers on the same lines: the
+  phone's fallback by place and taps, keyword ranking on the line, Workers AI
+  embeddings, and Jev. On lines with an acceptable reply, it reports top-1
+  and top-6 accuracy and mean reciprocal rank, beside the rates chance
+  would give; on every line, what the user would see (a right or wrong big
+  button, a right or wrong row, a missed reply, or a right hold), with
+  coverage, risk, and an always-hold baseline; and the shortlist's recall
+  at 40, the question-kind accuracy, and the latency at the median and the
+  95th percentile. Rates carry 95% intervals, and yes-or-no, pain and
+  consent, and no-shared-word lines are also reported apart. Check: run it
+  and read the table.
+- **EVAL-4, Must.** Jev "trails" embeddings only when a paired bootstrap
+  interval for the difference in top-6 accuracy lies wholly below zero;
+  otherwise the README says there's no clear difference. When Jev trails,
+  the script also scores Jev re-ranking an embedding shortlist, the relay
+  uses the better of the two, and the README reports both, as the idea's
+  [risks][idea-risks] say. Check: the table shows the interval.
+- **EVAL-5, Must.** No big button is wrong on a yes-or-no, pain, or consent
+  line. If one is, the relay's configuration gives those lines only the
+  fixed buttons and the grid. Check: the script lists every big button on
+  those lines.
+- **EVAL-6, Must.** The README's table names the date, the model pin, and
+  the commit it ran on. Check: read the README.
+- **EVAL-7, Should.** A replay script sends recorded partner lines through
+  the relay and the row's rules, for rehearsals and for checks of ROW-5.
+  Check: replay a conversation and count slot changes.
+- **EVAL-8, Should.** The table adds a reliability diagram and Brier score
+  for Jev's top phrase, and extra rankers: an off-the-shelf reranker over the
+  keyword shortlist, an instruction-tuned embedding, and Apple's sentence
+  embeddings, the phone-side path the idea keeps if Jev trails. Check: read
+  the table.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why.
@@ -367,3 +533,5 @@ says how each is built.
   the requirements.
 - [Guessling product requirements](/docs/archive/guessling-prd.md): the
   requirements for the team's first idea, archived.
+
+[idea-risks]: /docs/IDEA.md#risks
