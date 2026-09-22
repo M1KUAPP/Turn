@@ -104,8 +104,8 @@ the sources.
 - **Screens:** today's puzzle, the result and share card, the archive, the
   paywall, and settings with Restore Purchases, the privacy policy, and the
   terms. Every answer has "Report this answer", which sends it to the team,
-  who fix the puzzle once the day ends, so everyone gets the same answers
-  that day.
+  who fix the puzzle once every round of that day has closed, so everyone gets
+  the same answers that day.
 - **The "aha":** the first question typed in the player's own words,
   answered at once.
 - **Left out of the first version:** accounts, leaderboards, friends, packs,
@@ -128,13 +128,13 @@ team's backend:
     category's bank questions and their negations, about 200 options plus
     "none", under the 255 a Choice allows, picks the entry that asks the
     same thing, so a negated question gets the negated entry's answer. A
-    confident match returns the checked answer, and the match is cached for
-    the day by wording, so two wordings get one answer.
+    confident match returns the checked answer, and the match is stored by
+    wording, so two wordings get one answer.
 1.  **It answers what the bank doesn't cover.** A live Noul against the fact
     card gives Yes above 0.7, No below 0.3, and "Ask another way" in between.
     In the same request as the match, a Noul turns away anything that isn't
-    a yes-or-no question about the hidden thing. A live answer is cached for
-    the day, so every player gets the same one.
+    a yes-or-no question about the hidden thing. A live answer is stored
+    too, so every player gets the same one.
 
 Questions about letters or spelling are answered in code from the card,
 because Jev "does not count reliably". Jev also reads wording literally, and
