@@ -218,7 +218,7 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
 | Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°                                                                    | Shoulders   |
 | Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open                                                                | Up          |
 | Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                                                                                | Down        |
-| Presenting  | The reveal of a round not solved                       | Holding the answer card out, in a small bow                                                                            | Forward     |
+| Presenting  | The reveal of a round not solved                       | Arms out toward the answer card beside it, in a small bow                                                              | Forward     |
 
 - **The signature.** The tuft turns from "?" to "!" on a solve and stays
   "!" on the end screen.
@@ -235,13 +235,18 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
 
 - **Shape.** A playing card, 5 to 7, in Index white (`card`) with a
   Ballpoint (`ink`) outline and 12-point corners (`md`).
-- **Back.** Table blue (`desk`) with a Marigold (`primary`) "?" in the
-  middle.
+- **Back.** Table blue (`desk`) with a 2-point Chalk (`on-desk`) border, so
+  it stands out on the table in both appearances, and a Marigold
+  (`primary`) "?" in the middle.
 - **Face.** The answer's name in `reveal` and the hint under it in `meta`,
   both in Ballpoint (`ink`).
-- **Size.** As wide as the stage less 48 points, up to 280, and at least
-  5 to 7 in shape. At large text it grows taller, and the name wraps
-  between words rather than shrinking.
+- **Size.** 5 to 7, 160 points wide on screens under 700 points tall and
+  200 on taller ones. At large text it grows, up to the stage's width, and
+  the name wraps between words, or inside a word still too wide, rather
+  than shrinking.
+- **Place.** It stands on the trailing side of the stage, with the
+  Guessling beside it at 96 points, or 120 on screens 700 points or taller,
+  so both fit on a 375-point-wide screen.
 - **When.** Only at the end of a round, when the Guessling turns it over,
   as the end of a round under Screens describes.
 
@@ -351,22 +356,22 @@ pass. Text needs 4.5 to 1 in every appearance, and 7 to 1 for questions and
 body text, as Apple asks for small text; glyphs, pips, and the Guessling
 need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
 
-| Text or mark | On            | Used for                                                               | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| ------------ | ------------- | ---------------------------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`        | `card`        | Questions, body text, and the right-guess pip's ring                   | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
-| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips                          | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
-| `link`       | `card`        | Links, and the switches' "on" track                                    | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
-| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table                          | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
-| `on-primary` | `primary`     | Primary buttons; the right-guess chip, badge, and pip; the Guess label | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
-| `yes-ink`    | `yes-tint`    | Yes chips                                                              | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
-| `no-ink`     | `no-tint`     | No and wrong-guess chips                                               | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
-| `unsure-ink` | `unsure-tint` | Free-reply chips and banners                                           | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
-| `yes-ink`    | `card`        | "Yes" in the speech bubble                                             | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
-| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble                                 | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
-| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges                           | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
-| `card`       | `yes`         | A Yes pip's or badge's glyph, and the pip against the notepad          | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
-| `card`       | `no`          | A No pip's or badge's glyph and edge, and a wrong-guess ring           | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
-| `primary`    | `desk`        | The Guessling against the table                                        | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
+| Text or mark | On            | Used for                                                                  | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| ------------ | ------------- | ------------------------------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`        | `card`        | Questions, body text, and the right-guess pip's ring                      | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
+| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips                             | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
+| `link`       | `card`        | Links, and the switches' "on" track                                       | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
+| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table, and the card back's border | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
+| `on-primary` | `primary`     | Primary buttons; the right-guess chip, badge, and pip; the Guess label    | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
+| `yes-ink`    | `yes-tint`    | Yes chips                                                                 | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
+| `no-ink`     | `no-tint`     | No and wrong-guess chips                                                  | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
+| `unsure-ink` | `unsure-tint` | Free-reply chips and banners                                              | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
+| `yes-ink`    | `card`        | "Yes" in the speech bubble                                                | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
+| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble                                    | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
+| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges                              | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
+| `card`       | `yes`         | A Yes pip's or badge's glyph, and the pip against the notepad             | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
+| `card`       | `no`          | A No pip's or badge's glyph and edge, and a wrong-guess ring              | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
+| `primary`    | `desk`        | The Guessling against the table                                           | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
 
 [ios-wcag]: /docs/research/ios-design.md#wcag-22-contrast-minimums
 
@@ -559,8 +564,9 @@ Sizes are points: the format's `px` means a point on the iPhone.
 - **Depth by color.** The table is the floor; the notepad and the speech
   bubble are Index white on it; the answer card sits highest, with the only
   large shadow.
-- **Shadows.** Two, tinted with Ballpoint, never gray: the answer card's,
-  `0 8 24` at 25%, and the composer's fallback, `0 2 8` at 12%.
+- **Shadows.** Two, tinted with the `on-primary` Ballpoint, which stays the
+  same in Dark Mode, never gray: the answer card's, `0 8 24` at 25%, and the
+  composer's fallback, `0 2 8` at 12%.
 - **Liquid Glass from the system.** "Standard components like bars, sheets,
   popovers, and controls" take it on iOS 26 and 27 by themselves. The app
   sets no opt-out: Apple calls `UIDesignRequiresCompatibility` a key to
@@ -728,9 +734,9 @@ property for.
 ### Buttons
 
 - **Primary.** A Marigold capsule, 50 points tall, with its label in
-  `button`, Ballpoint; full width in sheets and on the end screen. At most
-  one per screen, within Apple's "Keep the number of prominent buttons to
-  one or two per view."
+  `button`, in `on-primary`; full width in sheets and on the end screen. At
+  most one per screen, within Apple's "Keep the number of prominent buttons
+  to one or two per view."
 - **Secondary.** An Index white capsule with a 1-point Pencil border on
   cards; on the table it needs no border.
 - **Symbol buttons.** A symbol in Chalk on the table, or Ballpoint on a
@@ -991,10 +997,11 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 - **A new history row** fades in rising 8 points with `settle`; only the
   fade under Reduce Motion.
 - **The end of a round.** The last reaction plays in full and holds for 1.5
-  seconds; the composer moves down off the screen with `settle`; the answer
-  card turns over, a 180° turn about its vertical axis in 500 ms with
-  `settle`, its face showing from 90°; and the result, the share row, and
-  the buttons rise into place, 60 ms apart.
+  seconds; the composer moves down off the screen and the Guessling scales
+  to its end size, both with `settle`; the answer card turns over beside
+  it, a 180° turn about its vertical axis in 500 ms with `settle`, its face
+  showing from 90°; and the result, the share row, and the buttons rise
+  into place, 60 ms apart.
 - **The end of a round under Reduce Motion.** The card fades from back to
   face, and the rest fades in together. The composer can neither move nor
   fade, so its glass turns off through `glassEffectStyle`'s own animation,
@@ -1094,10 +1101,12 @@ added only when a turn is used.
 
 (END-1 to END-5, SHARE-1 to SHARE-3)
 
-- **The stage.** After the hold and the card's turn, the Guessling stands
-  in its celebration, with the tuft as "!", or presents the card in its
-  bow, and the answer card shows its face: the answer's name in `reveal`
-  and the hint under it (END-2).
+- **The stage.** After the hold and the card's turn, the answer card shows
+  its face, the answer's name in `reveal` and the hint under it (END-2),
+  and the Guessling beside it keeps its celebration, with the tuft as "!",
+  or presents the card in its bow.
+- **Above the fold.** At 375 × 667 and the default text size, the result,
+  the share row, and Share show without scrolling.
 - **The result**, at the top of the notepad: "Solved in 9 of 20" or "Out of
   turns"; the turn meter without its empty rings, so it shows the share's
   symbols one for one; and "Next Guessling
@@ -1171,8 +1180,8 @@ RevenueCat's paywall, configured in its editor, which the SDK in version
 1.  **The two plans** as Index white cards, the yearly preselected with a
     Marigold border and a "3 days free" badge, each with its billed amount as
     the largest price, the trial, and the renewal (PAY-1, PAY-2).
-1.  **The purchase button**, Marigold with a Ballpoint label, then "Cancel
-    anytime in Settings".
+1.  **The purchase button**, Marigold with its label in `on-primary`, then
+    "Cancel anytime in Settings".
 1.  **Restore Purchases, Terms of Use, Privacy Policy, and Close** (PAY-3).
 
 - **Colors** come from the tokens, Table blue behind white cards, and every
