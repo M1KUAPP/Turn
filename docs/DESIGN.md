@@ -119,8 +119,9 @@ applies:
   interface generators, only Bolt.new emits an Expo app. Anthropic's design
   skill lists five looks that generated design "clusters around", the first
   a warm cream background with a serif display and a terracotta accent.
-  Apple's Liquid Glass and Google's Material 3 Expressive both moved motion
-  to springs ([trends notes][ft-findings]).
+  Springs are the one motion trend Apple and Google share: SwiftUI animates
+  with them by default, and Material 3 Expressive replaced its easing
+  curves with them ([trends notes][ft-findings]).
 - **iOS 26 and Expo SDK 57.** Liquid Glass belongs to controls; SDK 57
   pins Reanimated 4.5.1, `expo-glass-effect`, and `expo-symbols`; and four
   parts of the TRD's first plan, Dark Mode, the Reduce Motion fade, the
@@ -250,8 +251,9 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
   idea's trigger ([idea risks][idea-risks]), the app ships the eight key
   poses as stills with the 200 ms fade between them, and the rig follows in
   an update.
-- **Not Rive or Lottie in version 1.0.** Both need a new tool, Rive's
-  exports need a paid plan, and neither applies Reduce Motion for the app.
+- **Not Rive or Lottie in version 1.0.** Both need a new tool. Rive's
+  exports need a paid plan, and Rive doesn't apply Reduce Motion by itself;
+  a Lottie file honors it only through a reduced-motion marker of its own.
   Rive is the upgrade path if the poses ever need a state machine
   ([iOS notes on drawing the character][ios-character]).
 
@@ -392,10 +394,11 @@ Guessling uses the iPhone's own faces and bundles none:
   provide an alternative typographic voice", which suits a soft character.
 - **SF Pro**, as `system-ui`: questions, the notice, lists, and everything
   read at length.
-- **Why system faces.** They come with the device, follow Dynamic Type and
-  Bold Text, and need no download. A bundled face would need its license
-  text in the app, an upload to RevenueCat for the paywall, and its own Bold
-  Text handling ([iOS notes on fonts][ios-fonts]).
+- **Why system faces.** They come with the device and need no download,
+  and they're the faces Apple tunes Dynamic Type and Bold Text for. A
+  bundled face would need its license text in the app, an upload to
+  RevenueCat for the paywall, and its own Bold Text handling
+  ([iOS notes on fonts][ios-fonts]).
 
 ```yaml
 typography:
@@ -533,9 +536,9 @@ Sizes are points: the format's `px` means a point on the iPhone.
 - **Large text.** From AX1, the stage stays compact, history rows put the
   chip under the question, and the whole screen scrolls; nothing truncates
   (A11Y-2).
-- **Screens.** Laid out for 390 × 844 points and checked at 375 × 667, the
-  smallest iPhone that runs iOS 16.4, and at 440 × 956, the 6.9-inch
-  iPhone, and on an iPad at phone size (COMPAT-3).
+- **Screens.** Laid out for 390 × 844 points, and checked at 375 × 667 and
+  at 440 × 956, the 6.9-inch size, and on an iPad at phone size
+  (COMPAT-3).
 - **Safe areas.** Content stays inside them, and the table's color runs
   under the status bar and the home indicator.
 
@@ -546,8 +549,9 @@ Sizes are points: the format's `px` means a point on the iPhone.
   large shadow.
 - **Shadows.** Two, tinted with Ballpoint, never gray: the answer card's,
   `0 8 24` at 25%, and the composer's fallback, `0 2 8` at 12%.
-- **Liquid Glass from the system.** Navigation bars, sheets, alerts, menus,
-  and the keyboard take it on iOS 26 and 27 by themselves. The app sets no
+- **Liquid Glass from the system.** "Standard components like bars, sheets,
+  popovers, and controls" take it on iOS 26 and 27 by themselves. The app
+  sets no
   opt-out, since Apple ignores `UIDesignRequiresCompatibility` once an app
   builds for iOS 27 ([iOS notes on the key][ios-key]).
 - **Liquid Glass in Guessling's views.** Only the composer, a capsule of
@@ -559,9 +563,9 @@ Sizes are points: the format's `px` means a point on the iPhone.
   whenever `AccessibilityInfo.isReduceTransparencyEnabled()` is true, the
   composer is an Index white capsule with a 1-point Pencil border and its
   shadow; the app follows `reduceTransparencyChanged`.
-- **Never fade glass.** Opacity under 1 on a `GlassView` or any parent stops
-  the glass from drawing, so the composer leaves by moving, never by fading
-  ([iOS notes on glass views][ios-glass-views]).
+- **Never fade glass.** Opacity under 1 on a `GlassView` or any parent can
+  make the glass look wrong or vanish, so the composer leaves by moving,
+  never by fading ([iOS notes on glass views][ios-glass-views]).
 - **Never glass on content.** Not on the Guessling, the hint, the notepad,
   the chips, or the answer card: "Don't use Liquid Glass in the content
   layer."
@@ -706,7 +710,7 @@ property for.
 
 - **Primary.** A Marigold capsule, 50 points tall, with its label in
   `button`, Ballpoint; full width in sheets and on the end screen. At most
-  one per screen, as Apple asks: "Keep the number of prominent buttons to
+  one per screen, within Apple's "Keep the number of prominent buttons to
   one or two per view."
 - **Secondary.** An Index white capsule with a 1-point Pencil border on
   cards; on the table it needs no border.
