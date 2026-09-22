@@ -909,8 +909,12 @@ Expo Router, with one stack:
 - Every answer shows its word, and the Guessling's image carries the answer
   as its accessibility label; `AccessibilityInfo.announceForAccessibility`
   reads each new answer (A11Y-1, A11Y-4).
-- Text uses the system's Dynamic Type sizes, and screens scroll rather than
-  truncate at the largest sizes (A11Y-2).
+- Each text style sets `dynamicTypeRamp` to the Apple text style whose
+  curve it follows, so text grows as the system's does. Without a ramp,
+  React Native scales every size by one multiplier, which puts a 34-point
+  title at about 121 points at the largest accessibility size, where
+  Apple's is 60. Screens scroll rather than truncate at the largest sizes
+  (A11Y-2) ([iOS notes on text scaling][ios-scaling]).
 - Colors come from one theme with light, dark, and Increase Contrast
   values, each a `DynamicColorIOS`, and text keeps a contrast of at least
   4.5 to 1 in all four (A11Y-5). The app follows the system's appearance
@@ -922,6 +926,7 @@ Expo Router, with one stack:
   works with that feature (A11Y-6).
 
 [ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
+[ios-scaling]: /docs/research/ios-design.md#how-react-native-scales-text
 
 ### Build configuration
 
