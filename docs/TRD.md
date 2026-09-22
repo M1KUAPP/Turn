@@ -296,16 +296,15 @@ carries these headers:
 
 `GET /v1/config` returns what the app caches at launch and when Listen mode
 starts: whether Jev is on, whether the texts name TypeSafe (CONSENT-7), the
-free lines this user has left, whether the relay has confirmed `listen`, and
-the current policy. The Worker asks the user's Durable Object for the two
-per-user values, so they survive a relaunch (PAY-1, PAY-2).
+free lines this user has left, and the current policy. The Worker asks the
+user's Durable Object for the free lines left, so they survive a relaunch
+(PAY-1, PAY-2).
 
 ```ts
 type Config = {
   jevOn: boolean
   typesafeNamed: boolean
   freeLinesLeft: number // 20 for a new user
-  entitled: boolean // the object's cached yes
   policy: Policy
 }
 ```
@@ -762,8 +761,9 @@ Listen mode says so and offers the typed-line field.
   usually survives a reinstall with the same bundle ID but that "you should
   never rely on this implementation detail"; when it survives, the free
   lines and the purchase do too (PAY-10) ([services notes][svc-ids]).
-- **The paywall.** On a `402`, or when Listen mode is turned on with no
-  free lines left, the app presents RevenueCat's paywall for `listen`
+- **The paywall.** On a `402`, or when Listen mode is turned on while the
+  configuration shows no free lines left and RevenueCat's customer info has
+  no active `listen`, the app presents RevenueCat's paywall for `listen`
   (PAY-2); setup and the paywall never block the grid (SPEAK-5):
 
   ```ts
@@ -871,9 +871,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   3-second abort, and no retry (STATE-2).
 - **The configuration** is fetched at launch and when Listen mode starts,
   and the last copy is kept; without one, the texts don't name TypeSafe
-  (CONSENT-7). Turning Listen mode on opens the paywall at once when the
-  configuration shows no free lines left and RevenueCat's customer info has
-  no active `listen` (PAY-2).
+  (CONSENT-7), and the paywall's check when Listen mode starts reads it
+  (PAY-2).
 
 ### Flows on the phone
 
