@@ -18,6 +18,7 @@ Contents:
 1.  [Round 4: scoring](#round-4-scoring)
 1.  [Round 5: evidence](#round-5-evidence)
 1.  [Round 6: red team](#round-6-red-team)
+1.  [Round 7: the choice](#round-7-the-choice)
 
 ## Round 1: constraints and rubric
 
@@ -501,3 +502,54 @@ on the heaviest base build, and Jev's share still unmeasured.
 
 **Decision:** the red team ranks Turn first, Same Boat second, and
 Scenekeeper third. All three go to round 7 with their fixes.
+
+## Round 7: the choice
+
+**Question:** with the fixes in, which idea wins, and how can it be sharper?
+
+**Method:** re-score the three finalists with round 6's fixes, check the
+winner against the Guessling control, and fold in the best parts of the
+runners-up.
+
+| Candidate   | Round 5 total | Round 7 total | What the fixes changed                                                                                                                |
+| ----------- | ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Turn        | 80            | 82            | Technical ambition 4 to 4.5 and craft 4 to 4.5: a shortlist, per-phrase Nouls, steady slots, a published evaluation, a Simulator path |
+| Same Boat   | 72.5          | 73.5          | RevenueCat fit 2.5 to 3.5 and craft 4 to 4.5; working app 4 to 3.5 and originality 4 to 3.5, since Hivenotes builds class FAQs        |
+| Scenekeeper | 72            | 67.5          | Jev centrality 4 to 3.5, working app 3 to 2.5, technical ambition 4.5 to 4, and demo 5 to 4.5; craft 3.5 to 4                         |
+
+**The control.** Turn's 82 beats Guessling's 65.5 by 16.5 points, and its
+technical ambition, 4.5, beats Guessling's 2 by 2.5, so it meets round 1's
+rule.
+
+**Why Turn.** It has the best-documented need of the five finalists checked,
+on the criterion that breaks ties. It puts Jev where its limits help: Jev can't
+write, so every word spoken is one the user saved. It runs on one phone, its
+"aha" lands in seconds, and its repository can show judges a working loop in
+the Simulator and an evaluation against simpler methods.
+
+**Folded in from the runners-up:**
+
+- From Same Boat, a band that asks instead of acting: one big button only
+  when a phrase clears a high bar, and otherwise the row holds; and a replay
+  script of recorded partner lines, so judges see the loop without a partner.
+- From Scenekeeper, one request per finished utterance with a sequence
+  number, with stale answers dropped rather than retried, and steady over
+  jumpy.
+
+**The name.** Turn keeps its name. A 1988 study found that "Augmented
+communicators were frequently unsuccessful in their attempts to secure
+speaking turns"; the app exists to win those turns back. Its line: "Your own
+words, in time for your turn."
+
+**The idea.** Turn is an iPhone app for adults who can't rely on speech. The
+user speaks by tapping saved phrases or typing, in their Personal Voice if
+they have one. In Listen mode, once the partner agrees, the phone transcribes
+the partner on the device; code shortlists 40 of the user's own phrases; and
+Jev decides, for each one, whether it answers what the partner just said.
+The best fill a row of big buttons above the grid, in steady slots, and a tap
+speaks. Jev never writes words, so everything spoken is the user's own. The
+repository's evaluation compares Jev with keyword ranking and embeddings on
+80 partner lines.
+
+**Decision:** Turn is the idea. Rounds 8 to 10 design its purchase, its
+scope and schedule, and its pitch.
