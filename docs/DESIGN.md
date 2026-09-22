@@ -141,18 +141,18 @@ being said, and nothing to wait for.
 What the four notes found, and what Turn takes from each. Every row cites the
 note that holds its sources.
 
-| Source                          | What it offers                                 | What Turn does                                                                                    |
-| ------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| motionsites.ai's newest prompts | Exact copy, a motion inventory, and checks     | Adopts the shape: this file lists every animation and ends with checks ([notes][ms-spec])         |
-| motionsites.ai's house look     | Near-black pages, video, glass, and faint text | Rejects it: faint text and glass edges fail contrast, and loops can't pause ([notes][ms-a11y])    |
-| Calm wellness prompts           | Warm light fields and one accent               | Adopts a light field and one accent, not their loops ([notes][ms-color])                          |
-| Google's DESIGN.md format       | Tokens and prose that a linter checks          | Adopts it, with four appearances per color ([notes][ft-sample])                                   |
-| AI generators of native apps    | Fast first screens                             | Sketches only: generated screens fail on contrast and labels first ([notes][ft-studies])          |
-| React Native component kits     | Ready-made controls                            | Rejects them: none handles Increase Contrast ([notes][ft-kits])                                   |
-| Apple's Liquid Glass            | Glass controls that float over content         | Adapts it: glass stays in the system's chrome ([notes][ios-glass-content])                        |
-| Google's Material 3 Expressive  | Large, contained buttons with labels           | Adopts the buttons and labels, not the springy motion ([notes][ft-m3e])                           |
-| Calm technology                 | Attention only when something matters          | Adopts it for the light and the row ([notes][ft-calm])                                            |
-| Text AAC apps                   | Message windows, phrases, and show views       | Adopts fixed places and plain text, and keeps more in view than any rival ([notes][aac-patterns]) |
+| Source                          | What it offers                                 | What Turn does                                                                                               |
+| ------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| motionsites.ai's newest prompts | Exact copy, a motion inventory, and checks     | Adopts the shape: this file lists every animation and ends with checks ([motionsites notes][ms-spec])        |
+| motionsites.ai's house look     | Near-black pages, video, glass, and faint text | Rejects it: faint text and glass edges fail contrast, and loops can't pause ([motionsites notes][ms-a11y])   |
+| Calm wellness prompts           | Warm light fields and one accent               | Adopts a light field and one accent, not their loops ([motionsites notes][ms-color])                         |
+| Google's DESIGN.md format       | Tokens and prose that a linter checks          | Adopts it, with four appearances per color ([trends notes][ft-sample])                                       |
+| AI generators of native apps    | Fast first screens                             | Sketches only: generated screens fail on contrast and labels first ([trends notes][ft-studies])              |
+| React Native component kits     | Ready-made controls                            | Rejects them: none handles Increase Contrast ([trends notes][ft-kits])                                       |
+| Apple's Liquid Glass            | Glass controls that float over content         | Adapts it: glass stays in the system's chrome ([iOS notes][ios-glass-content])                               |
+| Google's Material 3 Expressive  | Large, contained buttons with labels           | Adopts the buttons and labels, not the springy motion ([trends notes][ft-m3e])                               |
+| Calm technology                 | Attention only when something matters          | Adopts it for the light and the row ([trends notes][ft-calm])                                                |
+| Text AAC apps                   | Message windows, phrases, and show views       | Adopts fixed places and plain text, and keeps more in view than any rival ([AAC design notes][aac-patterns]) |
 
 - **Bans Turn keeps.** "Default to stillness", no staggered entrances, no
   squish on press, no hardcoded colors, no labels in capitals, no glass on
@@ -1546,7 +1546,8 @@ listing, since each label has published criteria
   ([motionsites notes][ms-readme]).
 - **The "aha".** A short GIF of the scenario the idea's
   [pitch](/docs/IDEA.md#pitch) opens with, whose first frame tells the story,
-  since GitHub pauses GIFs for people who reduce motion.
+  since GitHub pauses GIFs for people who reduce motion
+  ([motionsites notes][ms-readme]).
 - **Social preview.** 1280 by 640 pixels, the thumbnail's type on the board's
   color.
 
