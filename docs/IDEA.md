@@ -58,9 +58,9 @@ Contents:
 - **Who:** adults who can't rely on speech, after ALS, a stroke, or other
   causes, and the people they talk with. ASHA cites an estimate that
   "approximately 5 million Americans and 97 million people in the world may
-  benefit from AAC". CDC projects 34,720 US adults with ALS in 2026, and "At
-  some point, 80 to 95% of people with ALS are unable to meet their daily
-  communication needs using natural speech."
+  benefit from AAC". CDC projects 34,720 US adults with ALS in 2026, and a
+  2011 review says: "At some point, 80 to 95% of people with ALS are unable
+  to meet their daily communication needs using natural speech."
 - **The gap:** aided communication runs at "8–10 wpm without acceleration
   methods", against "speaking rates of between 125 and 185 words per minute",
   and a 1988 study found that "Augmented communicators were frequently
@@ -68,8 +68,8 @@ Contents:
   reply is typed, the conversation has moved on.
 - **Why it matters:** in a Quebec review of 2,355 hospital charts, patients
   with preventable adverse events were more likely to have a communication
-  problem, with an odds ratio of 3.00. A reply that arrives in time is care,
-  not only courtesy.
+  problem, with an odds ratio of 3.00. The study covers communication
+  problems in general, not AAC.
 - **What already exists:** the incumbents sell symbol grids or typing with
   saved phrases, such as Proloquo2Go at $249.99 and Proloquo4Text at
   $119.99, and Apple's Live Speech speaks typed text and saved phrases for
@@ -79,9 +79,10 @@ Contents:
 - **Turn's difference:** every reply is one of the user's own saved phrases,
   never generated words. AAC users testing AI suggestions "had concerns about
   the system suggesting the wrong thing and making the participants look
-  bad".
+  bad", though the same study found that even a pre-stored phrase "made
+  others believe the system did all the work for them".
 - **The field:** on September 22, the 2026 gallery had no AAC entry and no
-  entry naming Jev. Of the 13 entries that name Next Gen, study help is the
+  entry naming Jev. Among the entries tied to Next Gen, study help is the
   crowded theme.
 
 The [evidence notes][ev-turn] have the sources, and the
@@ -116,7 +117,7 @@ The [evidence notes][ev-turn] have the sources, and the
   under-18 switch, Restore Purchases, and the privacy notice.
 - **The "aha":** a partner asks "How was physio?", and "It was hard" is
   waiting before the user reaches for the keyboard, though the two share no
-  word.
+  content word.
 - **Left out of the first version:** a partner joining from their own phone,
   Android, iPad layouts, accounts, phrase banks on a server, languages other
   than English, and switch or eye-gaze access beyond what iOS provides.
@@ -141,9 +142,11 @@ What makes it more than one screen around one model call:
   and its modules "don't send audio data of the user's voice to Apple's
   servers" ([speech notes][tech-speech]).
 - **Retrieval before judgment.** Keyword ranking over the partner's line,
-  the place, and recent use picks 40 candidates on the phone, so the phrase
-  bank stays there. It is the order TypeSafe's own re-ranking cookbook uses:
-  keyword search first, then Jev ([simpler methods][ev-simpler]).
+  plus the user's most-used replies and the place's phrases, picks 40
+  candidates on the phone, so a reply that shares no content word with the
+  question still reaches Jev, and the phrase bank stays on the phone. It is the
+  order TypeSafe's own re-ranking cookbook uses: keyword search first, then Jev
+  ([simpler methods][ev-simpler]).
 - **Decisions in parallel.** Forty-two questions go to Jev in one request and
   come back together.
 - **Code that keeps the row steady.** Confidence bars, slots that change only
@@ -182,15 +185,17 @@ against the same state in one go", so 42 questions cost one round trip
 
 Why Jev decides this way:
 
-- **Nouls, not one big Choice.** A Choice over the whole bank would sit at
-  the "roughly 240" options TypeSafe calls reliable, and a Choice's
+- **Nouls, not one big Choice.** A Choice over the whole bank would soon
+  reach the "roughly 240" options TypeSafe calls reliable, since the bank
+  grows with every typed reply, and a Choice's
   probabilities "always add up to 1, so a line ranks first even when none
   answer the query". Per-phrase Nouls can all come back low, which tells
   Turn to change nothing ([Choice size][jp-choice]).
-- **A steady row.** Over TypeSafe's repeat tests, a Noul's probability had a
-  standard deviation of about 0.01, while a Choice's top answer flipped on 2
-  of 8 questions ([consistency][jp-consistency]). Buttons users learn by
-  position shouldn't move for noise.
+- **A steady row.** Over TypeSafe's repeat tests, Nouls had a mean
+  per-question standard deviation of about 0.01, though one question crossed
+  0.5, while a Choice's top answer flipped on 2 of 8 questions
+  ([consistency][jp-consistency]). Buttons users learn by position shouldn't
+  move for noise, so a slot changes only by a clear margin.
 - **Confidence bars.** One big button needs more than 0.85, the bar
   TypeSafe's routing example sets for acting without asking; six buttons
   need at least 0.6, its floor; below that the row holds
@@ -202,11 +207,13 @@ Why Jev decides this way:
 - **Not the on-device model.** Apple's Foundation Models can be made to pick
   from a list, but it returns no probabilities and "may take a few
   seconds", on iPhone 15 Pro and later only ([simpler methods][ev-simpler]).
-- **Not only embeddings.** Embeddings measure how alike two strings are, not
-  whether one answers the other, and "How was physio?" shares no word with
-  "It was hard". The evaluation tests this, and if Jev trails embeddings,
-  it re-ranks an embedding shortlist instead, as TypeSafe's own cookbooks do
-  ([Turn without Jev][ev-without]).
+- **Not only embeddings.** General-purpose embeddings, like Apple's and
+  Workers AI's, measure how alike two strings are, not whether one answers
+  the other, though embeddings trained on reply pairs do better
+  ([Turn without Jev][ev-without]). The evaluation tests this. If Jev trails
+  embeddings, it re-ranks an embedding shortlist instead, built on the phone
+  with Apple's sentence embeddings, the order TypeSafe's RAG cookbook uses
+  ([simpler methods][ev-simpler]).
 - **Fast enough for a conversation.** TypeSafe says "Most queries complete
   in about 100 ms", and its cookbooks measured mean round trips of 111 and
   114 ms. The phone's trip to the relay, and the relay's to TypeSafe on the
@@ -319,12 +326,13 @@ the [reasoning][log-r8]; this is how Turn applies them.
   purchase that never touches speech, and an evaluation in the repository.
   The category video asks for "a fully realized app", with "a settings page"
   and "a paywall", and the first version has both ([criteria][ng-criteria]).
-- **The Grand Prize, by the rules only.** Every eligible entry is
-  considered, but its shortlist counts revenue "as reported in RevenueCat",
-  and a Test Store purchase moves no money ([other prizes][ng-prizes]).
-- **Every other category is left out.** Each needs a store release, which a
-  team without a paid developer account can't make, and a team with a minor
-  may enter only Next Gen.
+- **The Grand Prize is out of reach.** A manager says it needs a store
+  release, a team with a minor can't enter it, and its shortlist counts
+  revenue "as reported in RevenueCat", which a Test Store purchase doesn't
+  produce ([other prizes][ng-prizes]).
+- **Every other category is left out.** Each needs a store release, an
+  iPhone-only app needs the paid Apple Developer Program to reach a store,
+  and a team with a minor may enter only Next Gen.
 
 [ng-prizes]: /docs/research/next-gen.md#next-gen-and-the-other-prizes
 
@@ -346,8 +354,9 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
   transcription through `SpeechTranscriber`, and Personal Voice
   authorization. `expo-speech` then speaks with the authorized voice, and
   `expo-speech-recognition` is the fallback for transcription.
-- **Shortlist on the phone:** keyword ranking picks 40 phrases in
-  TypeScript, so only those 40 leave the phone, per request.
+- **Shortlist on the phone:** keyword ranking, the user's most-used replies,
+  and the place's phrases pick 40 phrases in TypeScript, so only those 40
+  leave the phone, per request.
 - **Relay:** one Cloudflare Worker holds the Jev key and a RevenueCat secret
   key. It builds the fixed questions, calls Jev through TypeSafe's
   JavaScript SDK or its HTTP API, counts free lines, checks the entitlement,
@@ -386,7 +395,7 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
   feature in the Simulator, by typing the partner's line, since live
   transcription needs a physical iPhone; and the evaluation's table.
 - **Running it without the team's keys:** the app's config points at the
-  team's relay, which runs until judging ends on October 13. The Test Store
+  team's relay, which runs until the winners are announced. The Test Store
   public SDK key is committed for debug builds; no secret key is. A
   Simulator build goes in the repository's releases, since building for iOS
   needs a Mac with Xcode 27 on macOS Tahoe 26.6 or later
@@ -432,11 +441,12 @@ The brief's [pitch advice][brief-pitch] and the context's
 [video guidance][ctx-video] apply; round 10 of the log
 [tests this pitch][log-r10].
 
-The video, two minutes on an iPhone:
+The video, under two minutes on an iPhone:
 
 1.  **0:00–0:15:** a partner asks "How was physio?"; the row offers "It was
     hard"; a tap speaks it. On screen: "Turn: your own words, in time for
-    your turn", and the Next Gen Award.
+    your turn", the Next Gen Award, and one line of the problem, so it's
+    named within 15 seconds.
 1.  **0:15–0:35:** the problem: aided speech at 8 to 10 words a minute
     against 125 to 185 spoken, and a reply typed too late.
 1.  **0:35–1:05:** how it works: the consent card and the listening light, a
@@ -446,7 +456,7 @@ The video, two minutes on an iPhone:
     words: every phrase is the user's own."
 1.  **1:25–1:45:** the purchase: the free lines run out, the paywall opens,
     a Test Store purchase unlocks Listen mode, and speaking stays free.
-1.  **1:45–2:00:** the repository, its license, the Simulator path, and the
+1.  **1:45–1:55:** the repository, its license, the Simulator path, and the
     student team.
 
 The description, in order: what the team built, what it does, and why it
@@ -604,9 +614,10 @@ Still open, each with a safe default:
   costs, and how to use it well.
 - [Evidence notes](/docs/research/next-gen-evidence.md): rivals, need, and
   risks for the five finalists.
-- [Guessling idea][guessling]: the first idea, archived with the
+- [Guessling idea][guessling]: the first idea, archived; the
   [product](/docs/PRODUCT.md), [PRD](/docs/PRD.md), [TRD](/docs/TRD.md), and
-  [design](/docs/DESIGN.md) documents built on it.
+  [design](/docs/DESIGN.md) documents built on it stay in `docs/`, marked
+  superseded.
 
 [guessling]: /docs/archive/guessling-idea.md
 [log]: /docs/research/next-gen-ideation.md
