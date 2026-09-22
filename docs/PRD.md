@@ -11,6 +11,7 @@ Contents:
 1.  [Overview](#overview)
 1.  [Goals and non-goals](#goals-and-non-goals)
 1.  [User scenarios](#user-scenarios)
+1.  [Functional requirements](#functional-requirements)
 1.  [See also](#see-also)
 
 ## Overview
@@ -127,6 +128,109 @@ judge's, which uses the Simulator build.
     partner's.
 13. **A repair.** The partner says something the user didn't catch. With
     one tap on the strip, Turn says "Sorry, say that again".
+
+## Functional requirements
+
+The flows follow the product's [principles][product-principles]; the TRD
+says how each is built.
+
+[product-principles]: /docs/PRODUCT.md#product-principles
+
+### The speaking grid
+
+- **SPEAK-1, Must.** The home screen shows the grid of saved phrases by
+  category, the row above it, the conversation strip above the row, the
+  place picker, the keyboard button, and the Listen button. Check: on first
+  launch, all six are on screen.
+- **SPEAK-2, Must.** A tap on a phrase speaks it at once in the chosen voice.
+  A tap on another phrase during speech stops the first and speaks the
+  second, and a Stop button ends speech. Check: tap two phrases in quick
+  succession; only the second finishes.
+- **SPEAK-3, Must.** The keyboard takes up to 500 characters and speaks them
+  on one tap of Speak. Typed text of up to 200 characters joins the bank in
+  the category Typed, unless the bank already holds the same text. Check:
+  speak a new sentence, then find it under Typed; speak it again, and it
+  isn't added twice.
+- **SPEAK-4, Must.** As the user types, the row offers up to six saved
+  phrases containing a word that starts with the letters typed, the place's
+  phrases first. Check: at Home, type "wa"; "Wait, I'm typing" and "Water,
+  please" appear.
+- **SPEAK-5, Must.** Speaking never waits on the network, the relay,
+  RevenueCat, the paywall, or the consent flow. Check: in Airplane Mode, and
+  with the relay's address blocked, every phrase and typed sentence speaks.
+- **SPEAK-6, Should.** A Repeat button speaks the last spoken text again.
+  Check: speak a phrase, then tap Repeat.
+- **SPEAK-7, Must.** The conversation strip holds five phrases that manage
+  the conversation, always in the same place and never ranked: "Wait, I'm
+  typing", "Sorry, say that again", "And you?", "I use this app to talk.
+  Please give me time.", and "Something's wrong". Each speaks with one tap,
+  and the user can reword them but not move or remove them. Check: with the
+  grid on any category, each strip phrase speaks with one tap.
+
+### The phrase bank
+
+- **BANK-1, Must.** On first launch, the bank holds the starter bank
+  (CONTENT-1), and every starter phrase and category can be edited. Check:
+  edit a starter phrase and relaunch; the edit stays.
+- **BANK-2, Must.** The user can add, edit, delete, and move phrases between
+  categories, and add, rename, reorder, and delete categories; deleting a
+  category that holds phrases asks where they go. Check: each action in the
+  editor.
+- **BANK-3, Must.** A phrase holds 1 to 200 characters, and each can be tied
+  to any of the user's places. Check: a 201st character can't be typed in
+  the editor.
+- **BANK-4, Must.** The grid's order changes only when the user changes it.
+  The place, taps, and the row never reorder the grid. Check: change the
+  place and speak ten phrases; the grid is unchanged.
+- **BANK-5, Must.** The fixed buttons can't be deleted or renamed, and the
+  Quick category, which holds them, comes first in the grid. Check: the
+  editor offers no delete for Yes, No, or Not sure.
+- **BANK-6, Must.** Every spoken phrase adds one to its tap count, which the
+  shortlist uses. Check: speak a phrase that no line has suggested three
+  times; with no other signal, it enters the next shortlist among the
+  most-tapped.
+- **BANK-7, Must.** The bank works at 2,000 phrases within PERF-3 and PERF-4.
+  Check: seed 2,000 phrases and run both checks.
+- **BANK-8, Must.** The bank, the places, and the tap counts stay on the
+  phone: nothing syncs, and only the shortlist leaves it, per partner line.
+  Check: a capture of the app's traffic shows no other phrase text.
+- **BANK-9, Should.** Deleting a phrase can be undone for five seconds. Check:
+  delete a phrase and tap Undo.
+- **BANK-10, Should.** Starter phrases are the team's words until the user
+  keeps them, so the first launch invites the user, or whoever helps them,
+  to review the starter bank category by category, and the editor marks
+  starter phrases nobody has reviewed. Check: on a fresh install, review one
+  category, and its marks go.
+
+### Places
+
+- **PLACE-1, Must.** The place picker shows the current place and changes it
+  with one tap from the user's list, which starts with Home, Clinic, Shop,
+  and Out, and holds up to 12 places of up to 40 characters. Check: pick
+  Clinic, relaunch, and Clinic is still chosen.
+- **PLACE-2, Must.** Turn never asks for or reads the location. Check: the
+  app's Info.plist has no location usage key, and iOS Settings shows no
+  Location entry for Turn.
+- **PLACE-3, Must.** Only the current place's name leaves the phone, with
+  each partner line. Check: a captured request holds the name and nothing
+  else about places.
+
+### Voices
+
+- **VOICE-1, Must.** Settings lists the installed English system voices and,
+  when authorized, the user's Personal Voice, each with a preview. Check:
+  preview two voices.
+- **VOICE-2, Must.** Choosing Personal Voice asks iOS for permission. If
+  granted, Turn speaks with it; if denied or unavailable, Turn says which,
+  explains that iOS Settings must allow apps to ask, and keeps the system
+  voice. Check: on an iPhone with a Personal Voice, allow and deny; on the
+  Simulator, see the explanation.
+- **VOICE-3, Must.** The user can set the speech rate in five steps. Check:
+  the slowest and fastest steps are audibly different.
+- **VOICE-4, Must.** Turn speaks from the loudspeaker, or from connected
+  headphones or a speaker, at the phone's volume, in Listen mode as well,
+  and with the Ring/Silent switch set to silent. Check: in Listen mode with
+  the switch on silent, a phrase is heard from the bottom speaker.
 
 ## See also
 
