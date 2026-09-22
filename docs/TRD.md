@@ -232,8 +232,9 @@ CREATE TABLE setting (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 - **Settings** hold the voice and its rate, the place, the user's permission
   and its date, the under-18 switch, the cached configuration, and the stats
   of METRIC-3.
-- **Limits** match the PRD: phrases of 200 characters (BANK-3), and places
-  of 40, at most 12 (PLACE-1); the app enforces the counts.
+- **Limits** match the PRD: phrases of 200 characters (BANK-3), at most 12
+  categories of 40 (BANK-2), and at most 12 places of 40 (PLACE-1); the app
+  enforces the counts, so a request never breaks the relay's limits.
 
 ### The relay's storage
 
@@ -378,8 +379,8 @@ reports only errors, so Turn sets its own rule
 
 ### Names as tags
 
-Before a request, `turn-listen` tags the line and the 40 candidates together
-(LISTEN-5):
+Before a request, `turn-listen` tags the line, the 40 candidates, and the
+category names together (LISTEN-5):
 
 - **The tagger.** `NLTagger` with the `nameType` scheme and the options
   `joinNames`, `omitPunctuation`, and `omitWhitespace`, as in Apple's recipe
@@ -986,15 +987,15 @@ ran under Wrangler 4.136.2:
 
 ### Data inventory
 
-| Data                                    | Where                     | Kept                             | Leaves to                                                |
-| --------------------------------------- | ------------------------- | -------------------------------- | -------------------------------------------------------- |
-| The phrase bank, places, taps, settings | the phone's SQLite        | until the user erases them       | 40 tagged candidates per line, to the relay and TypeSafe |
-| Audio                                   | `turn-listen`'s buffers   | never stored                     | nowhere                                                  |
-| A partner line                          | the phone's memory        | the caption, at most two minutes | the relay and TypeSafe, tagged, with the place's name    |
-| The app user ID                         | RevenueCat's SDK          | the SDK's own storage            | RevenueCat, and the relay, which stores its hash         |
-| Free lines used, the cached entitlement | the user's Durable Object | until the relay is deleted       | nowhere                                                  |
-| Request logs                            | Workers Logs              | 3 days on the Free plan          | Cloudflare                                               |
-| Purchases                               | RevenueCat                | RevenueCat's retention           | RevenueCat                                               |
+| Data                                    | Where                     | Kept                             | Leaves to                                                                        |
+| --------------------------------------- | ------------------------- | -------------------------------- | -------------------------------------------------------------------------------- |
+| The phrase bank, places, taps, settings | the phone's SQLite        | until the user erases them       | 40 candidates and the category names per line, tagged, to the relay and TypeSafe |
+| Audio                                   | `turn-listen`'s buffers   | never stored                     | nowhere                                                                          |
+| A partner line                          | the phone's memory        | the caption, at most two minutes | the relay and TypeSafe, tagged, with the place's name                            |
+| The app user ID                         | RevenueCat's SDK          | the SDK's own storage            | RevenueCat, and the relay, which stores its hash                                 |
+| Free lines used, the cached entitlement | the user's Durable Object | until the relay is deleted       | nowhere                                                                          |
+| Request logs                            | Workers Logs              | 3 days on the Free plan          | Cloudflare                                                                       |
+| Purchases                               | RevenueCat                | RevenueCat's retention           | RevenueCat                                                                       |
 
 TypeSafe keeps rights "in perpetuity" to use requests for telemetry and abuse
 monitoring, and "Jev is not trained on customer requests or responses"
