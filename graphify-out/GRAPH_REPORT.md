@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 111 files · ~411,500 words
+- 119 files · ~481,605 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 2091 nodes · 1984 edges · 154 communities (147 shown, 4 thin omitted)
+- 2391 nodes · 2276 edges · 171 communities (164 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `485b2254`
+- Built from commit: `8fe4673e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -123,14 +123,14 @@
 - Tasks
 - Jev research notes
 - Shipaton 2026 idea
-- Guessling technical requirements
+- Turn technical requirements
 - Cloudflare Workers research notes
 - RevenueCat and Expo research notes
 - Apple requirements for Guessling
 - Tasks
-- Functional requirements
+- Turn product requirements
 - Daily puzzles research notes
-- Guessling product
+- Turn product
 - AI UI generators in September 2026
 - motionsites.ai research notes
 - Game and character design research notes
@@ -171,6 +171,23 @@
 - What teams can build with Jev
 - Integration effort and limitations
 - Round 1: constraints and rubric
+- Reply-ranking evaluation research notes
+- Guessling technical requirements
+- AAC practice research notes
+- Turn's relay and services research notes
+- Turn's iPhone build research notes
+- Functional requirements
+- Design
+- Guessling product
+- Decision pipeline
+- The iPhone app
+- Evaluation
+- Listening and speaking on the phone
+- Security and privacy
+- Data model
+- Reliability and observability
+- Purchases and entitlements
+- Stack and repository
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -181,9 +198,9 @@
 5. `Tasks` - 22 edges
 6. `Guessling design` - 21 edges
 7. `Tasks` - 21 edges
-8. `Guessling technical requirements` - 17 edges
-9. `Cloudflare Workers research notes` - 17 edges
-10. `Shipaton 2025 recordings` - 17 edges
+8. `Turn technical requirements` - 18 edges
+9. `Guessling technical requirements` - 17 edges
+10. `Cloudflare Workers research notes` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -193,7 +210,7 @@
 
 - None detected.
 
-## Communities (154 total, 4 thin omitted)
+## Communities (171 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -695,10 +712,10 @@ Nodes (6): Conflicts between sources, Gaps, Jev research notes, Latest versions 
 Cohesion: 0.11
 Nodes (18): Assumptions and open questions, At a glance, Build plan, Categories to enter, How it works, How Jev fits, How the idea was chosen, Monetization (+10 more)
 
-### Community 106 - "Guessling technical requirements"
+### Community 106 - "Turn technical requirements"
 
-Cohesion: 0.04
-Nodes (47): Accessibility, Answer pipeline, Build configuration, Data inventory, Data model, Dates and numbers, Environments and release, Failure modes (+39 more)
+Cohesion: 0.20
+Nodes (9): Environments and release, Open technical questions, Overview, Relay API, Requirements traceability, See also, System architecture, Testing (+1 more)
 
 ### Community 107 - "Cloudflare Workers research notes"
 
@@ -720,20 +737,20 @@ Nodes (40): Accessibility Nutrition Labels, Age assurance laws in US states, Age
 Cohesion: 0.05
 Nodes (36): Appendix: check scripts, Assumptions, Decisions the documents record, Design, Global constraints, Guessling product, PRD, and TRD implementation plan, Rejected alternatives, Requirement format and IDs (+28 more)
 
-### Community 111 - "Functional requirements"
+### Community 111 - "Turn product requirements"
 
 Cohesion: 0.06
-Nodes (31): Accessibility, Analytics requirements, App Store listing and review, Asking a question, Availability, Compatibility, Dependencies and assumptions, Functional requirements (+23 more)
+Nodes (30): Accessibility, Availability, Compatibility, Content requirements, Dependencies and assumptions, Evaluation requirements, Functional requirements, Goals and non-goals (+22 more)
 
 ### Community 112 - "Daily puzzles research notes"
 
 Cohesion: 0.07
 Nodes (29): A round in progress at midnight, Apple News+ release time, Apple News+ streak window, Conflicts between sources, Countdowns and reminders, Daily puzzles research notes, End-of-round screens, Fairness and corrections (+21 more)
 
-### Community 113 - "Guessling product"
+### Community 113 - "Turn product"
 
-Cohesion: 0.13
-Nodes (14): Business model, Guessling in brief, Guessling product, Players, Positioning, Product principles, Puzzles, Roadmap (+6 more)
+Cohesion: 0.14
+Nodes (13): Business model, Positioning, Product principles, Roadmap, See also, Success metrics, The experience, The phrase bank (+5 more)
 
 ### Community 114 - "AI UI generators in September 2026"
 
@@ -930,27 +947,112 @@ Nodes (5): Gotchas in the API and SDKs, Integration effort and limitations, Know
 Cohesion: 0.50
 Nodes (4): Assumptions, Hard constraints, Round 1: constraints and rubric, Rubric
 
+### Community 154 - "Reply-ranking evaluation research notes"
+
+Cohesion: 0.04
+Nodes (48): A latency target for Turn, A scoring scheme for Turn's 80 lines, Abstention and selective prediction, Apple's NLEmbedding, Baselines: BM25 and embeddings, Bins and small samples, BM25 settings, Calibration and the two confidence bars (+40 more)
+
+### Community 155 - "Guessling technical requirements"
+
+Cohesion: 0.04
+Nodes (47): Accessibility, Answer pipeline, Build configuration, Data inventory, Data model, Dates and numbers, Environments and release, Failure modes (+39 more)
+
+### Community 156 - "AAC practice research notes"
+
+Cohesion: 0.04
+Nodes (46): AAC design conventions for Turn, AAC practice research notes, Abandonment rates and reasons, Adults with motor speech impairments, AI and context-aware suggestions in AAC research, Aphasia and why text phrases may not suit, Authorship and how partners see suggestions, Conflicts between sources (+38 more)
+
+### Community 157 - "Turn's relay and services research notes"
+
+Cohesion: 0.05
+Nodes (40): App Attest and DeviceCheck on a free account, Charts and dashboards with Test Store data, Conflicts between sources, Counting free partner lines per device, Errors, retries, and timeouts, Findings for the product, PRD, and TRD, Free and Paid limits for the relay, Gaps (+32 more)
+
+### Community 158 - "Turn's iPhone build research notes"
+
+Cohesion: 0.05
+Nodes (38): A phrase ranker in TypeScript, A steady row in React Native, Asking for Personal Voice and finding it, Audio session category, mode, and options, Building to an iPhone with a free account, Conflicts between sources, Echo cancellation with voice processing, Ending the partner's line (+30 more)
+
+### Community 159 - "Functional requirements"
+
+Cohesion: 0.06
+Nodes (31): Accessibility, Analytics requirements, App Store listing and review, Asking a question, Availability, Compatibility, Dependencies and assumptions, Functional requirements (+23 more)
+
+### Community 160 - "Design"
+
+Cohesion: 0.08
+Nodes (24): Assumptions, Decisions the documents record, Design, Global constraints, Rejected alternatives, Requirement format and IDs, Sections of the PRD, Sections of the product document (+16 more)
+
+### Community 161 - "Guessling product"
+
+Cohesion: 0.13
+Nodes (14): Business model, Guessling in brief, Guessling product, Players, Positioning, Product principles, Puzzles, Roadmap (+6 more)
+
+### Community 162 - "Decision pipeline"
+
+Cohesion: 0.25
+Nodes (8): Decision pipeline, From probabilities to the row, Names as tags, The end of a line, The Jev request, The phone's own ranking, The shortlist, Timeouts, sequence numbers, and fallbacks
+
+### Community 163 - "The iPhone app"
+
+Cohesion: 0.29
+Nodes (7): Accessibility in the app, Build configuration, Flows on the phone, Networking, Screens and navigation, State and storage, The iPhone app
+
+### Community 164 - "Evaluation"
+
+Cohesion: 0.40
+Nodes (5): Evaluation, Metrics, intervals, and thresholds, The evaluation data, The rankers, The report
+
+### Community 165 - "Listening and speaking on the phone"
+
+Cohesion: 0.40
+Nodes (5): Listening and speaking on the phone, The audio session, The turn-listen module, The turn-voice module, When transcription isn't available
+
+### Community 166 - "Security and privacy"
+
+Cohesion: 0.50
+Nodes (4): Data inventory, Secrets and configuration, Security and privacy, Validation and abuse limits
+
+### Community 167 - "Data model"
+
+Cohesion: 0.50
+Nodes (4): Data model, The phone's database, The relay's storage, What is never stored
+
+### Community 168 - "Reliability and observability"
+
+Cohesion: 0.50
+Nodes (4): Failure modes, Logs and counts, Reliability and observability, Service life
+
+### Community 169 - "Purchases and entitlements"
+
+Cohesion: 0.50
+Nodes (4): Purchases and entitlements, Purchases in the app, RevenueCat setup, The relay's entitlement check
+
+### Community 170 - "Stack and repository"
+
+Cohesion: 0.67
+Nodes (3): Repository layout, Stack and repository, Versions on September 22, 2026
+
 ## Knowledge Gaps
 
-- **1649 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1644 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1753 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1892 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1887 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2004 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `iOS design research notes` connect `iOS design research notes` to `RevenueCat Paywalls styling`, `App icon and launch screen`, `SF Symbols`, `Motion and haptics`, `Liquid Glass`, `Typography`, `Color`, `Store and pitch assets`?**
+- **Why does `Guessling design` connect `Guessling design` to `Colors`, `App icon and store assets`, `Guidance for coding agents`, `Motion`, `Overview`, `Components`, `Screens`, `The Guessling`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Demo video and write-up`, `Samsung Galaxy Store review`, `Apple App Store review`, `Monetization and paywall benchmarks`, `Google Play review`, `Store listing and discoverability`, `Retention and push notifications`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Eligibility rules`, `Resources, perks, and programs`, `Winning playbook`, `Prize categories and prize structure`?**
+- **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _1649 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1892 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
+- **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
+  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
