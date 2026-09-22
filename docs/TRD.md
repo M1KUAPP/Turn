@@ -864,7 +864,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **The permission step** is a `formSheet` that sets
   `headerTransparent: false` and a solid background, since Expo Router makes
   form sheets transparent where Liquid Glass is available
-  ([iOS design notes][ios-glass-expo]).
+  ([Turn's iOS design notes][ios-glass-expo]).
 
 [design-home]: /docs/DESIGN.md#the-home-screen
 [ios-glass-expo]: /docs/research/turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
@@ -946,13 +946,15 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **Text.** Every text style comes from the theme with its
   `dynamicTypeRamp`, font scaling stays on, and phrase text wraps everywhere
   but the row's slots; from AX1, when `PixelRatio.getFontScale()` reaches
-  1.786, the row, the strip, and the grid take one column each (A11Y-4).
+  1.786, the row, the strip, and the grid take one column each (A11Y-4)
+  ([Turn's iOS design notes][ios-scale-turn]).
 - **Accessibility settings.** A store reads Reduce Motion, Bold Text, Reduce
   Transparency, Increase Contrast, and the text size at launch and follows
   each change event, since Reanimated reads Reduce Motion only at launch.
   Reduce Motion stills the light's pulse and the row's fades, which run with
   `ReduceMotion.Never` so the store decides, and Bold Text moves each text
-  style to its heavier weight (A11Y-6) ([iOS design notes][ios-rn-settings]).
+  style to its heavier weight (A11Y-6)
+  ([Turn's iOS design notes][ios-rn-settings]).
 - **The theme.** `app/src/constants/theme.ts` holds the design's tokens:
   each color as a `DynamicColorIOS` with its four values, and each text style
   with its size, leading, weights, and ramp. A unit test compares it with the
@@ -968,6 +970,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 [design-row]: /docs/DESIGN.md#the-row
 [aac-rn]: /docs/research/aac-practice.md#react-natives-accessibility-api
 [ios-rn-settings]: /docs/research/turn-ios-design.md#colors-and-settings-in-react-native-086
+[ios-scale-turn]: /docs/research/turn-ios-design.md#scaling-text-in-react-native-086
 [design-code]: /docs/DESIGN.md#keeping-code-in-step
 [design-sound]: /docs/DESIGN.md#sound-and-haptics
 
@@ -986,11 +989,11 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **`ios.supportsTablet`:** `false`, and `orientation` `portrait`.
 - **`userInterfaceStyle`:** `'automatic'`, so the app follows the system's
   appearance; without it, Expo writes the light style into Info.plist
-  ([iOS design notes][ios-launch]).
+  ([Turn's iOS design notes][ios-launch]).
 - **`ios.icon`:** `./assets/turn.icon`, the design's Icon Composer file
   ([design][design-icon]).
-- **`expo-splash-screen`:** the board's color, `#F2F2F7`, and `#000000` in
-  dark, with no image ([design][design-launch]).
+- **`expo-splash-screen`:** the design's `board` color in light and dark,
+  with no image ([design][design-launch]).
 - **`ios.infoPlist`:** `NSMicrophoneUsageDescription`, worded for the user
   and the partner, and `NSSpeechRecognitionUsageDescription` for the last
   fallback; no location key (PLACE-2).
