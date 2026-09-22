@@ -24,6 +24,7 @@ Contents:
 1.  [Motion](#motion)
 1.  [Sound and haptics](#sound-and-haptics)
 1.  [Screens](#screens)
+1.  [Words on screen](#words-on-screen)
 1.  [See also](#see-also)
 
 ## Overview
@@ -1136,6 +1137,50 @@ RevenueCat's paywall, configured in its editor, which the SDK in version
   `dark` value.
 
 [ios-launch]: /docs/research/ios-design.md#launch-screens
+
+## Words on screen
+
+The [product][product-character] sets the voice: fixed, short, plain
+phrases. The PRD quotes some strings; this section fixes the rest.
+
+- **Sentence case** for everything the team writes, buttons included: "Send
+  again". Apple's names keep Apple's case: Restore Purchases, Redeem Code,
+  Manage Subscription, Terms of Use, and Privacy Policy.
+- **Plain and short.** One exclamation mark in the whole app, in "You got
+  it!".
+- **Never blame.** No "Wrong", "Nope", "Oops", or "Fail"; a wrong guess gets
+  "Not it".
+- **Numerals** for numbers: "14 turns left", "1 turn left", "Solved in 9 of
+  20".
+- **Curly quotes and apostrophes** in the app, the PRD's strings included:
+  “An animal”, “You’re offline”, “Play yesterday’s?”.
+- **No emoji** anywhere but the share text, which SHARE-1 fixes.
+
+| Where                         | Words                                     | Fixed by      |
+| ----------------------------- | ----------------------------------------- | ------------- |
+| The bubble before a question  | I’m thinking of something.                | This document |
+| The bubble while loading      | Getting today’s puzzle                    | This document |
+| The question field            | Ask a yes-or-no question                  | This document |
+| The guess field               | Name the thing                            | This document |
+| Above the guess field         | A guess uses a turn.                      | This document |
+| The turn meter                | 14 turns left · 1 turn left               | This document |
+| The three answers             | Yes · No · Ask another way                | ASK-2         |
+| Not a question                | Ask a yes-or-no question                  | ASK-4         |
+| The guesses                   | You got it! · Not it                      | This document |
+| The notice's buttons          | Allow AI answers · Not now                | NOTICE-1      |
+| The notice's title            | Before you ask                            | This document |
+| A row's action                | Report this answer · Wrong · Unclear      | REPORT-1      |
+| After a report                | Reported                                  | REPORT-3      |
+| After a timeout               | Send again                                | ASK-8         |
+| A round solved                | Solved in 9 of 20                         | This document |
+| A round not solved            | Out of turns                              | This document |
+| The end screen                | Share · Play yesterday’s? · Play another? | END-3         |
+| The countdown                 | Next Guessling in 5:42:10                 | This document |
+| The statistics                | Played · Solved · Streak · Longest        | This document |
+| The archive, for free players | Past puzzles open with Guessling+.        | This document |
+| The paywall's title           | Every past puzzle, any day                | This document |
+
+[product-character]: /docs/PRODUCT.md#the-guessling-character
 
 ## See also
 
