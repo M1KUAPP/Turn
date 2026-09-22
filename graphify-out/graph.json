@@ -802,6 +802,18 @@
       "source_location": "L148"
     },
     {
+      "id": "docs_research_gallery_2026",
+      "label": "gallery-2026.md",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Shipaton 2026 gallery landscape",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "gallery-2026.md",
+      "source_file": "docs/research/gallery-2026.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_research_gallery_2026_career_coaching_brief_leadership_heather",
       "label": "Career Coaching brief (Leadership Heather)",
       "_origin": "ast",
@@ -1366,6 +1378,42 @@
       "source_location": "L169"
     },
     {
+      "id": "docs_research_idea_evidence",
+      "label": "idea-evidence.md",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Jev research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "idea-evidence.md",
+      "source_file": "docs/research/idea-evidence.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_ideation",
+      "label": "ideation.md",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Jev research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "ideation.md",
+      "source_file": "docs/research/ideation.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_jev",
+      "label": "jev.md",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Jev research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "jev.md",
+      "source_file": "docs/research/jev.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_research_jev_conflicts_between_sources",
       "label": "Conflicts between sources",
       "_origin": "ast",
@@ -1378,18 +1426,6 @@
       "source_location": "L945"
     },
     {
-      "id": "docs_research_jev_free_tier_credits_and_programs",
-      "label": "Free tier, credits, and programs",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "Jev research notes",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "free tier, credits, and programs",
-      "source_file": "docs/research/jev.md",
-      "source_location": "L561"
-    },
-    {
       "id": "docs_research_jev_gaps",
       "label": "Gaps",
       "_origin": "ast",
@@ -1400,18 +1436,6 @@
       "norm_label": "gaps",
       "source_file": "docs/research/jev.md",
       "source_location": "L983"
-    },
-    {
-      "id": "docs_research_jev_jev_prices",
-      "label": "Jev prices",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "Jev research notes",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "jev prices",
-      "source_file": "docs/research/jev.md",
-      "source_location": "L541"
     },
     {
       "id": "docs_research_jev_jev_research_notes",
@@ -1436,30 +1460,6 @@
       "norm_label": "latest versions as of september 22, 2026",
       "source_file": "docs/research/jev.md",
       "source_location": "L922"
-    },
-    {
-      "id": "docs_research_jev_master_customer_agreement_terms_for_apps",
-      "label": "Master Customer Agreement terms for apps",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "Jev research notes",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "master customer agreement terms for apps",
-      "source_file": "docs/research/jev.md",
-      "source_location": "L581"
-    },
-    {
-      "id": "docs_research_jev_pricing_limits_and_terms",
-      "label": "Pricing, limits, and terms",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "Jev research notes",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "pricing, limits, and terms",
-      "source_file": "docs/research/jev.md",
-      "source_location": "L539"
     },
     {
       "id": "docs_research_jev_store_review_and_jev",
@@ -1507,7 +1507,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions and open questions",
       "source_file": "docs/IDEA.md",
-      "source_location": "L547"
+      "source_location": "L571"
     },
     {
       "id": "docs_idea_at_a_glance",
@@ -1531,7 +1531,7 @@
       "node_kind": "heading",
       "norm_label": "build plan",
       "source_file": "docs/IDEA.md",
-      "source_location": "L331"
+      "source_location": "L352"
     },
     {
       "id": "docs_idea_categories_to_enter",
@@ -1543,7 +1543,7 @@
       "node_kind": "heading",
       "norm_label": "categories to enter",
       "source_file": "docs/IDEA.md",
-      "source_location": "L313"
+      "source_location": "L333"
     },
     {
       "id": "docs_idea_how_it_works",
@@ -1555,7 +1555,7 @@
       "node_kind": "heading",
       "norm_label": "how it works",
       "source_file": "docs/IDEA.md",
-      "source_location": "L124"
+      "source_location": "L133"
     },
     {
       "id": "docs_idea_how_jev_fits",
@@ -1567,7 +1567,7 @@
       "node_kind": "heading",
       "norm_label": "how jev fits",
       "source_file": "docs/IDEA.md",
-      "source_location": "L162"
+      "source_location": "L173"
     },
     {
       "id": "docs_idea_how_the_idea_was_chosen",
@@ -1579,7 +1579,7 @@
       "node_kind": "heading",
       "norm_label": "how the idea was chosen",
       "source_file": "docs/IDEA.md",
-      "source_location": "L511"
+      "source_location": "L538"
     },
     {
       "id": "docs_idea_monetization",
@@ -1591,7 +1591,7 @@
       "node_kind": "heading",
       "norm_label": "monetization",
       "source_file": "docs/IDEA.md",
-      "source_location": "L273"
+      "source_location": "L293"
     },
     {
       "id": "docs_idea_pitch",
@@ -1603,7 +1603,7 @@
       "node_kind": "heading",
       "norm_label": "pitch",
       "source_file": "docs/IDEA.md",
-      "source_location": "L429"
+      "source_location": "L447"
     },
     {
       "id": "docs_idea_problem_and_audience",
@@ -1627,7 +1627,7 @@
       "node_kind": "heading",
       "norm_label": "risks",
       "source_file": "docs/IDEA.md",
-      "source_location": "L466"
+      "source_location": "L485"
     },
     {
       "id": "docs_idea_schedule_to_september_30",
@@ -1639,7 +1639,7 @@
       "node_kind": "heading",
       "norm_label": "schedule to september 30",
       "source_file": "docs/IDEA.md",
-      "source_location": "L398"
+      "source_location": "L417"
     },
     {
       "id": "docs_idea_scope_of_the_first_version",
@@ -1651,7 +1651,7 @@
       "node_kind": "heading",
       "norm_label": "scope of the first version",
       "source_file": "docs/IDEA.md",
-      "source_location": "L363"
+      "source_location": "L383"
     },
     {
       "id": "docs_idea_see_also",
@@ -1663,7 +1663,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/IDEA.md",
-      "source_location": "L590"
+      "source_location": "L631"
     },
     {
       "id": "docs_idea_shipaton_2026_idea",
@@ -1687,7 +1687,7 @@
       "node_kind": "heading",
       "norm_label": "stack and data flow",
       "source_file": "docs/IDEA.md",
-      "source_location": "L337"
+      "source_location": "L356"
     },
     {
       "id": "docs_idea_the_repository",
@@ -1699,7 +1699,7 @@
       "node_kind": "heading",
       "norm_label": "the repository",
       "source_file": "docs/IDEA.md",
-      "source_location": "L380"
+      "source_location": "L399"
     },
     {
       "id": "docs_idea_what_the_app_does",
@@ -1711,7 +1711,7 @@
       "node_kind": "heading",
       "norm_label": "what the app does",
       "source_file": "docs/IDEA.md",
-      "source_location": "L93"
+      "source_location": "L94"
     },
     {
       "id": "docs_trd",
@@ -2288,6 +2288,18 @@
       "norm_label": "worker api",
       "source_file": "docs/TRD.md",
       "source_location": "L291"
+    },
+    {
+      "id": "docs_research_cloudflare_workers",
+      "label": "cloudflare-workers.md",
+      "_origin": "ast",
+      "community": 107,
+      "community_name": "Cloudflare Workers research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "cloudflare-workers.md",
+      "source_file": "docs/research/cloudflare-workers.md",
+      "source_location": "L1"
     },
     {
       "id": "docs_research_cloudflare_workers_alarms_lifecycle_and_durable_object_limits",
@@ -8373,6 +8385,18 @@
       "source_location": "L1481"
     },
     {
+      "id": "docs_research_next_gen_evidence",
+      "label": "next-gen-evidence.md",
+      "_origin": "ast",
+      "community": 136,
+      "community_name": "Next Gen idea evidence notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "next-gen-evidence.md",
+      "source_file": "docs/research/next-gen-evidence.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_research_next_gen_evidence_bench_a_hands_free_lab_notebook",
       "label": "Bench, a hands-free lab notebook",
       "_origin": "ast",
@@ -8382,7 +8406,7 @@
       "node_kind": "heading",
       "norm_label": "bench, a hands-free lab notebook",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L808"
+      "source_location": "L809"
     },
     {
       "id": "docs_research_next_gen_evidence_bench_in_the_2026_gallery",
@@ -8394,7 +8418,7 @@
       "node_kind": "heading",
       "norm_label": "bench in the 2026 gallery",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L902"
+      "source_location": "L903"
     },
     {
       "id": "docs_research_next_gen_evidence_bench_on_students_devices",
@@ -8406,7 +8430,7 @@
       "node_kind": "heading",
       "norm_label": "bench on students' devices",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L987"
+      "source_location": "L988"
     },
     {
       "id": "docs_research_next_gen_evidence_bench_rival_apps",
@@ -8418,7 +8442,7 @@
       "node_kind": "heading",
       "norm_label": "bench rival apps",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L819"
+      "source_location": "L820"
     },
     {
       "id": "docs_research_next_gen_evidence_bench_without_jev",
@@ -8430,7 +8454,7 @@
       "node_kind": "heading",
       "norm_label": "bench without jev",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1045"
+      "source_location": "L1046"
     },
     {
       "id": "docs_research_next_gen_evidence_chorus_group_captions_for_deaf_and_hard_of_hearing_adults",
@@ -8442,7 +8466,7 @@
       "node_kind": "heading",
       "norm_label": "chorus, group captions for deaf and hard-of-hearing adults",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1133"
+      "source_location": "L1134"
     },
     {
       "id": "docs_research_next_gen_evidence_chorus_in_the_2026_gallery",
@@ -8454,7 +8478,7 @@
       "node_kind": "heading",
       "norm_label": "chorus in the 2026 gallery",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1206"
+      "source_location": "L1207"
     },
     {
       "id": "docs_research_next_gen_evidence_chorus_on_students_devices",
@@ -8466,7 +8490,7 @@
       "node_kind": "heading",
       "norm_label": "chorus on students' devices",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1289"
+      "source_location": "L1290"
     },
     {
       "id": "docs_research_next_gen_evidence_chorus_rival_apps",
@@ -8478,7 +8502,7 @@
       "node_kind": "heading",
       "norm_label": "chorus rival apps",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1143"
+      "source_location": "L1144"
     },
     {
       "id": "docs_research_next_gen_evidence_chorus_without_jev",
@@ -8490,7 +8514,7 @@
       "node_kind": "heading",
       "norm_label": "chorus without jev",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1341"
+      "source_location": "L1342"
     },
     {
       "id": "docs_research_next_gen_evidence_conflicts_between_sources",
@@ -8502,7 +8526,7 @@
       "node_kind": "heading",
       "norm_label": "conflicts between sources",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1712"
+      "source_location": "L1713"
     },
     {
       "id": "docs_research_next_gen_evidence_evidence_that_bench_s_problem_matters",
@@ -8514,7 +8538,7 @@
       "node_kind": "heading",
       "norm_label": "evidence that bench's problem matters",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L939"
+      "source_location": "L940"
     },
     {
       "id": "docs_research_next_gen_evidence_evidence_that_chorus_s_problem_matters",
@@ -8526,7 +8550,7 @@
       "node_kind": "heading",
       "norm_label": "evidence that chorus's problem matters",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1247"
+      "source_location": "L1248"
     },
     {
       "id": "docs_research_next_gen_evidence_evidence_that_same_boat_s_problem_matters",
@@ -8538,7 +8562,7 @@
       "node_kind": "heading",
       "norm_label": "evidence that same boat's problem matters",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1515"
+      "source_location": "L1516"
     },
     {
       "id": "docs_research_next_gen_evidence_evidence_that_scenekeeper_s_problem_matters",
@@ -8550,7 +8574,7 @@
       "node_kind": "heading",
       "norm_label": "evidence that scenekeeper's problem matters",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L647"
+      "source_location": "L648"
     },
     {
       "id": "docs_research_next_gen_evidence_evidence_that_turn_s_problem_matters",
@@ -8562,7 +8586,7 @@
       "node_kind": "heading",
       "norm_label": "evidence that turn's problem matters",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L328"
+      "source_location": "L329"
     },
     {
       "id": "docs_research_next_gen_evidence_gaps",
@@ -8574,7 +8598,7 @@
       "node_kind": "heading",
       "norm_label": "gaps",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1760"
+      "source_location": "L1761"
     },
     {
       "id": "docs_research_next_gen_evidence_harm_from_a_wrong_bench_decision",
@@ -8586,7 +8610,7 @@
       "node_kind": "heading",
       "norm_label": "harm from a wrong bench decision",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1097"
+      "source_location": "L1098"
     },
     {
       "id": "docs_research_next_gen_evidence_harm_from_a_wrong_chorus_decision",
@@ -8598,7 +8622,7 @@
       "node_kind": "heading",
       "norm_label": "harm from a wrong chorus decision",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1381"
+      "source_location": "L1382"
     },
     {
       "id": "docs_research_next_gen_evidence_harm_from_a_wrong_same_boat_decision",
@@ -8610,7 +8634,7 @@
       "node_kind": "heading",
       "norm_label": "harm from a wrong same boat decision",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1638"
+      "source_location": "L1639"
     },
     {
       "id": "docs_research_next_gen_evidence_harm_from_a_wrong_scenekeeper_decision",
@@ -8622,7 +8646,7 @@
       "node_kind": "heading",
       "norm_label": "harm from a wrong scenekeeper decision",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L774"
+      "source_location": "L775"
     },
     {
       "id": "docs_research_next_gen_evidence_harm_from_a_wrong_turn_decision",
@@ -8634,7 +8658,7 @@
       "node_kind": "heading",
       "norm_label": "harm from a wrong turn decision",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L498"
+      "source_location": "L499"
     },
     {
       "id": "docs_research_next_gen_evidence_jagged_edges_compared",
@@ -8646,7 +8670,7 @@
       "node_kind": "heading",
       "norm_label": "jagged edges compared",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1679"
+      "source_location": "L1680"
     },
     {
       "id": "docs_research_next_gen_evidence_jev_s_jagged_edges_for_bench",
@@ -8658,7 +8682,7 @@
       "node_kind": "heading",
       "norm_label": "jev's jagged edges for bench",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1023"
+      "source_location": "L1024"
     },
     {
       "id": "docs_research_next_gen_evidence_jev_s_jagged_edges_for_chorus",
@@ -8670,7 +8694,7 @@
       "node_kind": "heading",
       "norm_label": "jev's jagged edges for chorus",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1321"
+      "source_location": "L1322"
     },
     {
       "id": "docs_research_next_gen_evidence_jev_s_jagged_edges_for_same_boat",
@@ -8682,7 +8706,7 @@
       "node_kind": "heading",
       "norm_label": "jev's jagged edges for same boat",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1565"
+      "source_location": "L1566"
     },
     {
       "id": "docs_research_next_gen_evidence_jev_s_jagged_edges_for_scenekeeper",
@@ -8694,7 +8718,7 @@
       "node_kind": "heading",
       "norm_label": "jev's jagged edges for scenekeeper",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L713"
+      "source_location": "L714"
     },
     {
       "id": "docs_research_next_gen_evidence_jev_s_jagged_edges_for_turn",
@@ -8706,7 +8730,7 @@
       "node_kind": "heading",
       "norm_label": "jev's jagged edges for turn",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L420"
+      "source_location": "L421"
     },
     {
       "id": "docs_research_next_gen_evidence_key_findings",
@@ -8754,7 +8778,7 @@
       "node_kind": "heading",
       "norm_label": "same boat in the 2026 gallery",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1484"
+      "source_location": "L1485"
     },
     {
       "id": "docs_research_next_gen_evidence_same_boat_office_hours_grouped_by_problem",
@@ -8766,7 +8790,7 @@
       "node_kind": "heading",
       "norm_label": "same boat, office hours grouped by problem",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1411"
+      "source_location": "L1412"
     },
     {
       "id": "docs_research_next_gen_evidence_same_boat_on_students_devices",
@@ -8778,7 +8802,7 @@
       "node_kind": "heading",
       "norm_label": "same boat on students' devices",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1547"
+      "source_location": "L1548"
     },
     {
       "id": "docs_research_next_gen_evidence_same_boat_rival_apps",
@@ -8790,7 +8814,7 @@
       "node_kind": "heading",
       "norm_label": "same boat rival apps",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1420"
+      "source_location": "L1421"
     },
     {
       "id": "docs_research_next_gen_evidence_same_boat_without_jev",
@@ -8802,7 +8826,7 @@
       "node_kind": "heading",
       "norm_label": "same boat without jev",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1586"
+      "source_location": "L1587"
     },
     {
       "id": "docs_research_next_gen_evidence_scenekeeper_in_the_2026_gallery",
@@ -8814,7 +8838,7 @@
       "node_kind": "heading",
       "norm_label": "scenekeeper in the 2026 gallery",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L611"
+      "source_location": "L612"
     },
     {
       "id": "docs_research_next_gen_evidence_scenekeeper_live_sound_and_light_for_a_game_master",
@@ -8826,7 +8850,7 @@
       "node_kind": "heading",
       "norm_label": "scenekeeper, live sound and light for a game master",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L532"
+      "source_location": "L533"
     },
     {
       "id": "docs_research_next_gen_evidence_scenekeeper_on_students_devices",
@@ -8838,7 +8862,7 @@
       "node_kind": "heading",
       "norm_label": "scenekeeper on students' devices",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L677"
+      "source_location": "L678"
     },
     {
       "id": "docs_research_next_gen_evidence_scenekeeper_rival_apps",
@@ -8850,7 +8874,7 @@
       "node_kind": "heading",
       "norm_label": "scenekeeper rival apps",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L542"
+      "source_location": "L543"
     },
     {
       "id": "docs_research_next_gen_evidence_scenekeeper_without_jev",
@@ -8862,7 +8886,7 @@
       "node_kind": "heading",
       "norm_label": "scenekeeper without jev",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L736"
+      "source_location": "L737"
     },
     {
       "id": "docs_research_next_gen_evidence_turn_aac_that_ranks_the_user_s_own_phrases",
@@ -8886,7 +8910,7 @@
       "node_kind": "heading",
       "norm_label": "turn in the 2026 gallery",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L288"
+      "source_location": "L289"
     },
     {
       "id": "docs_research_next_gen_evidence_turn_on_students_devices",
@@ -8898,7 +8922,7 @@
       "node_kind": "heading",
       "norm_label": "turn on students' devices",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L370"
+      "source_location": "L371"
     },
     {
       "id": "docs_research_next_gen_evidence_turn_rival_apps",
@@ -8910,7 +8934,7 @@
       "node_kind": "heading",
       "norm_label": "turn rival apps",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L200"
+      "source_location": "L201"
     },
     {
       "id": "docs_research_next_gen_evidence_turn_without_jev",
@@ -8922,7 +8946,7 @@
       "node_kind": "heading",
       "norm_label": "turn without jev",
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L444"
+      "source_location": "L445"
     },
     {
       "id": "docs_research_next_gen_evidence_what_simpler_methods_offer",
@@ -8937,6 +8961,18 @@
       "source_location": "L125"
     },
     {
+      "id": "docs_research_next_gen_tech",
+      "label": "next-gen-tech.md",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Next Gen technology research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "next-gen-tech.md",
+      "source_file": "docs/research/next-gen-tech.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_research_next_gen_tech_accounts_entitlements_and_devices_for_an_eight_day_build",
       "label": "Accounts, entitlements, and devices for an eight-day build",
       "_origin": "ast",
@@ -8946,7 +8982,7 @@
       "node_kind": "heading",
       "norm_label": "accounts, entitlements, and devices for an eight-day build",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L997"
+      "source_location": "L998"
     },
     {
       "id": "docs_research_next_gen_tech_agents_sdk_voice_and_realtime",
@@ -8958,7 +8994,7 @@
       "node_kind": "heading",
       "norm_label": "agents sdk, voice, and realtime",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L810"
+      "source_location": "L811"
     },
     {
       "id": "docs_research_next_gen_tech_android_equivalents",
@@ -8970,7 +9006,7 @@
       "node_kind": "heading",
       "norm_label": "android equivalents",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L520"
+      "source_location": "L521"
     },
     {
       "id": "docs_research_next_gen_tech_app_intents_siri_and_visual_intelligence",
@@ -8982,7 +9018,7 @@
       "node_kind": "heading",
       "norm_label": "app intents, siri, and visual intelligence",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L458"
+      "source_location": "L459"
     },
     {
       "id": "docs_research_next_gen_tech_apple_accounts_for_a_student_team",
@@ -8994,7 +9030,7 @@
       "node_kind": "heading",
       "norm_label": "apple accounts for a student team",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1001"
+      "source_location": "L1002"
     },
     {
       "id": "docs_research_next_gen_tech_apple_intelligence_devices",
@@ -9006,7 +9042,7 @@
       "node_kind": "heading",
       "norm_label": "apple intelligence devices",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L252"
+      "source_location": "L253"
     },
     {
       "id": "docs_research_next_gen_tech_conflicts_between_sources",
@@ -9018,7 +9054,7 @@
       "node_kind": "heading",
       "norm_label": "conflicts between sources",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1064"
+      "source_location": "L1065"
     },
     {
       "id": "docs_research_next_gen_tech_core_motion_and_healthkit",
@@ -9030,7 +9066,7 @@
       "node_kind": "heading",
       "norm_label": "core motion and healthkit",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L428"
+      "source_location": "L429"
     },
     {
       "id": "docs_research_next_gen_tech_expo_and_react_native_access",
@@ -9042,7 +9078,7 @@
       "node_kind": "heading",
       "norm_label": "expo and react native access",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L592"
+      "source_location": "L593"
     },
     {
       "id": "docs_research_next_gen_tech_expo_go_and_development_builds",
@@ -9054,7 +9090,7 @@
       "node_kind": "heading",
       "norm_label": "expo go and development builds",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L742"
+      "source_location": "L743"
     },
     {
       "id": "docs_research_next_gen_tech_expo_sdk_57_sdk_58_and_xcode_27",
@@ -9066,7 +9102,7 @@
       "node_kind": "heading",
       "norm_label": "expo sdk 57, sdk 58, and xcode 27",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L597"
+      "source_location": "L598"
     },
     {
       "id": "docs_research_next_gen_tech_fan_out_confidence_gates_and_intent_routing",
@@ -9078,7 +9114,7 @@
       "node_kind": "heading",
       "norm_label": "fan-out, confidence gates, and intent routing",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L913"
+      "source_location": "L914"
     },
     {
       "id": "docs_research_next_gen_tech_findings_for_the_ideation",
@@ -9102,7 +9138,7 @@
       "node_kind": "heading",
       "norm_label": "foundation models in ios 27",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L149"
+      "source_location": "L150"
     },
     {
       "id": "docs_research_next_gen_tech_gaps",
@@ -9114,7 +9150,7 @@
       "node_kind": "heading",
       "norm_label": "gaps",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1101"
+      "source_location": "L1102"
     },
     {
       "id": "docs_research_next_gen_tech_gemini_nano_through_the_ml_kit_genai_apis",
@@ -9126,7 +9162,7 @@
       "node_kind": "heading",
       "norm_label": "gemini nano through the ml kit genai apis",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L525"
+      "source_location": "L526"
     },
     {
       "id": "docs_research_next_gen_tech_how_jev_pairs_with_phone_perception",
@@ -9138,7 +9174,7 @@
       "node_kind": "heading",
       "norm_label": "how jev pairs with phone perception",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L885"
+      "source_location": "L886"
     },
     {
       "id": "docs_research_next_gen_tech_jev_reads_text_so_perception_must_become_text_first",
@@ -9150,7 +9186,7 @@
       "node_kind": "heading",
       "norm_label": "jev reads text, so perception must become text first",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L891"
+      "source_location": "L892"
     },
     {
       "id": "docs_research_next_gen_tech_jev_s_real_time_claims_and_limits",
@@ -9162,7 +9198,7 @@
       "node_kind": "heading",
       "norm_label": "jev's real-time claims and limits",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L941"
+      "source_location": "L942"
     },
     {
       "id": "docs_research_next_gen_tech_live_activities",
@@ -9174,7 +9210,7 @@
       "node_kind": "heading",
       "norm_label": "live activities",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L493"
+      "source_location": "L494"
     },
     {
       "id": "docs_research_next_gen_tech_next_gen_technology_research_notes",
@@ -9198,7 +9234,7 @@
       "node_kind": "heading",
       "norm_label": "on-device language models on iphone",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L143"
+      "source_location": "L144"
     },
     {
       "id": "docs_research_next_gen_tech_pairings_the_sources_suggest",
@@ -9210,7 +9246,7 @@
       "node_kind": "heading",
       "norm_label": "pairings the sources suggest",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L970"
+      "source_location": "L971"
     },
     {
       "id": "docs_research_next_gen_tech_platform_versions_on_september_22_2026",
@@ -9222,7 +9258,7 @@
       "node_kind": "heading",
       "norm_label": "platform versions on september 22, 2026",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L102"
+      "source_location": "L103"
     },
     {
       "id": "docs_research_next_gen_tech_private_cloud_compute",
@@ -9234,7 +9270,7 @@
       "node_kind": "heading",
       "norm_label": "private cloud compute",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L229"
+      "source_location": "L230"
     },
     {
       "id": "docs_research_next_gen_tech_real_time_backends_on_cloudflare",
@@ -9246,7 +9282,7 @@
       "node_kind": "heading",
       "norm_label": "real-time backends on cloudflare",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L762"
+      "source_location": "L763"
     },
     {
       "id": "docs_research_next_gen_tech_simulator_and_hardware_limits",
@@ -9258,7 +9294,7 @@
       "node_kind": "heading",
       "norm_label": "simulator and hardware limits",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1027"
+      "source_location": "L1028"
     },
     {
       "id": "docs_research_next_gen_tech_sound_analysis",
@@ -9270,7 +9306,7 @@
       "node_kind": "heading",
       "norm_label": "sound analysis",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L405"
+      "source_location": "L406"
     },
     {
       "id": "docs_research_next_gen_tech_speech_and_translation_on_iphone",
@@ -9282,7 +9318,7 @@
       "node_kind": "heading",
       "norm_label": "speech and translation on iphone",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L275"
+      "source_location": "L276"
     },
     {
       "id": "docs_research_next_gen_tech_speech_and_vision_on_android",
@@ -9294,7 +9330,7 @@
       "node_kind": "heading",
       "norm_label": "speech and vision on android",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L561"
+      "source_location": "L562"
     },
     {
       "id": "docs_research_next_gen_tech_speech_camera_and_model_modules",
@@ -9306,7 +9342,7 @@
       "node_kind": "heading",
       "norm_label": "speech, camera, and model modules",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L624"
+      "source_location": "L625"
     },
     {
       "id": "docs_research_next_gen_tech_speechanalyzer_and_speechtranscriber",
@@ -9318,7 +9354,7 @@
       "node_kind": "heading",
       "norm_label": "speechanalyzer and speechtranscriber",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L280"
+      "source_location": "L281"
     },
     {
       "id": "docs_research_next_gen_tech_system_surfaces_on_iphone",
@@ -9330,7 +9366,7 @@
       "node_kind": "heading",
       "norm_label": "system surfaces on iphone",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L454"
+      "source_location": "L455"
     },
     {
       "id": "docs_research_next_gen_tech_translation",
@@ -9342,7 +9378,7 @@
       "node_kind": "heading",
       "norm_label": "translation",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L326"
+      "source_location": "L327"
     },
     {
       "id": "docs_research_next_gen_tech_vision_requests",
@@ -9354,7 +9390,7 @@
       "node_kind": "heading",
       "norm_label": "vision requests",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L355"
+      "source_location": "L356"
     },
     {
       "id": "docs_research_next_gen_tech_vision_sound_and_motion_on_iphone",
@@ -9366,7 +9402,7 @@
       "node_kind": "heading",
       "norm_label": "vision, sound, and motion on iphone",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L350"
+      "source_location": "L351"
     },
     {
       "id": "docs_research_next_gen_tech_websockets_on_a_hibernating_durable_object",
@@ -9378,7 +9414,7 @@
       "node_kind": "heading",
       "norm_label": "websockets on a hibernating durable object",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L769"
+      "source_location": "L770"
     },
     {
       "id": "docs_research_next_gen_tech_workers_ai_embeddings_and_vectorize",
@@ -9390,7 +9426,7 @@
       "node_kind": "heading",
       "norm_label": "workers ai embeddings and vectorize",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L853"
+      "source_location": "L854"
     },
     {
       "id": "docs_research_next_gen_tech_workers_ai_prices_and_limits",
@@ -9402,7 +9438,7 @@
       "node_kind": "heading",
       "norm_label": "workers ai prices and limits",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L873"
+      "source_location": "L874"
     },
     {
       "id": "docs_research_next_gen_tech_workers_ai_speech_to_text",
@@ -9414,7 +9450,7 @@
       "node_kind": "heading",
       "norm_label": "workers ai speech-to-text",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L834"
+      "source_location": "L835"
     },
     {
       "id": "docs_research_next_gen_tech_writing_a_swift_bridge_with_expo_modules",
@@ -9426,7 +9462,7 @@
       "node_kind": "heading",
       "norm_label": "writing a swift bridge with expo modules",
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L721"
+      "source_location": "L722"
     },
     {
       "id": "docs_research_jev_patterns",
@@ -9849,14 +9885,14 @@
       "source_location": "L96"
     },
     {
-      "id": "docs_research_jev_patterns_what_changed_since_this_morning",
-      "label": "What changed since this morning",
+      "id": "docs_research_jev_patterns_what_changed_since_the_jev_notes",
+      "label": "What changed since the Jev notes",
       "_origin": "ast",
       "community": 138,
       "community_name": "Jev patterns research notes",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "what changed since this morning",
+      "norm_label": "what changed since the jev notes",
       "source_file": "docs/research/jev-patterns.md",
       "source_location": "L729"
     },
@@ -10051,6 +10087,18 @@
       "norm_label": "use the glossary's vocabulary",
       "source_file": "docs/agents/domain.md",
       "source_location": "L58"
+    },
+    {
+      "id": "docs_research_next_gen",
+      "label": "next-gen.md",
+      "_origin": "ast",
+      "community": 141,
+      "community_name": "Next Gen Award research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "next-gen.md",
+      "source_file": "docs/research/next-gen.md",
+      "source_location": "L1"
     },
     {
       "id": "docs_research_next_gen_android_sideloading_and_developer_verification",
@@ -10833,6 +10881,18 @@
       "source_location": "L89"
     },
     {
+      "id": "docs_research_next_gen_ideation",
+      "label": "next-gen-ideation.md",
+      "_origin": "ast",
+      "community": 143,
+      "community_name": "Next Gen ideation log",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "next-gen-ideation.md",
+      "source_file": "docs/research/next-gen-ideation.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_research_next_gen_ideation_assumptions",
       "label": "Assumptions",
       "_origin": "ast",
@@ -10842,7 +10902,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L96"
+      "source_location": "L100"
     },
     {
       "id": "docs_research_next_gen_ideation_failures_every_finalist_shares",
@@ -10854,7 +10914,7 @@
       "node_kind": "heading",
       "norm_label": "failures every finalist shares",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L420"
+      "source_location": "L460"
     },
     {
       "id": "docs_research_next_gen_ideation_hard_constraints",
@@ -10866,7 +10926,7 @@
       "node_kind": "heading",
       "norm_label": "hard constraints",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L35"
+      "source_location": "L38"
     },
     {
       "id": "docs_research_next_gen_ideation_next_gen_ideation_log",
@@ -10890,7 +10950,7 @@
       "node_kind": "heading",
       "norm_label": "round 10: pitch test",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L736"
+      "source_location": "L794"
     },
     {
       "id": "docs_research_next_gen_ideation_round_1_constraints_and_rubric",
@@ -10902,7 +10962,7 @@
       "node_kind": "heading",
       "norm_label": "round 1: constraints and rubric",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L26"
+      "source_location": "L29"
     },
     {
       "id": "docs_research_next_gen_ideation_round_2_thirty_candidates",
@@ -10914,7 +10974,7 @@
       "node_kind": "heading",
       "norm_label": "round 2: thirty candidates",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L149"
+      "source_location": "L153"
     },
     {
       "id": "docs_research_next_gen_ideation_round_3_screening",
@@ -10926,7 +10986,7 @@
       "node_kind": "heading",
       "norm_label": "round 3: screening",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L214"
+      "source_location": "L218"
     },
     {
       "id": "docs_research_next_gen_ideation_round_4_scoring",
@@ -10938,7 +10998,7 @@
       "node_kind": "heading",
       "norm_label": "round 4: scoring",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L252"
+      "source_location": "L260"
     },
     {
       "id": "docs_research_next_gen_ideation_round_5_evidence",
@@ -10950,7 +11010,7 @@
       "node_kind": "heading",
       "norm_label": "round 5: evidence",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L328"
+      "source_location": "L367"
     },
     {
       "id": "docs_research_next_gen_ideation_round_6_red_team",
@@ -10962,7 +11022,7 @@
       "node_kind": "heading",
       "norm_label": "round 6: red team",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L407"
+      "source_location": "L447"
     },
     {
       "id": "docs_research_next_gen_ideation_round_7_the_choice",
@@ -10974,7 +11034,7 @@
       "node_kind": "heading",
       "norm_label": "round 7: the choice",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L508"
+      "source_location": "L564"
     },
     {
       "id": "docs_research_next_gen_ideation_round_8_monetization",
@@ -10986,7 +11046,7 @@
       "node_kind": "heading",
       "norm_label": "round 8: monetization",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L559"
+      "source_location": "L615"
     },
     {
       "id": "docs_research_next_gen_ideation_round_9_scope_stack_and_schedule",
@@ -10998,7 +11058,7 @@
       "node_kind": "heading",
       "norm_label": "round 9: scope, stack, and schedule",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L625"
+      "source_location": "L681"
     },
     {
       "id": "docs_research_next_gen_ideation_rubric",
@@ -11010,7 +11070,7 @@
       "node_kind": "heading",
       "norm_label": "rubric",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L120"
+      "source_location": "L124"
     },
     {
       "id": "docs_research_next_gen_ideation_same_boat_under_attack",
@@ -11022,7 +11082,7 @@
       "node_kind": "heading",
       "norm_label": "same boat under attack",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L459"
+      "source_location": "L515"
     },
     {
       "id": "docs_research_next_gen_ideation_scenekeeper_under_attack",
@@ -11034,7 +11094,7 @@
       "node_kind": "heading",
       "norm_label": "scenekeeper under attack",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L481"
+      "source_location": "L537"
     },
     {
       "id": "docs_research_next_gen_ideation_schedule_to_september_30",
@@ -11046,7 +11106,7 @@
       "node_kind": "heading",
       "norm_label": "schedule to september 30",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L704"
+      "source_location": "L762"
     },
     {
       "id": "docs_research_next_gen_ideation_scope_of_the_first_version",
@@ -11058,7 +11118,7 @@
       "node_kind": "heading",
       "norm_label": "scope of the first version",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L634"
+      "source_location": "L690"
     },
     {
       "id": "docs_research_next_gen_ideation_stack_and_data_flow",
@@ -11070,7 +11130,7 @@
       "node_kind": "heading",
       "norm_label": "stack and data flow",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L656"
+      "source_location": "L712"
     },
     {
       "id": "docs_research_next_gen_ideation_turn_under_attack",
@@ -11082,7 +11142,7 @@
       "node_kind": "heading",
       "norm_label": "turn under attack",
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L442"
+      "source_location": "L482"
     },
     {
       "id": "docs_archive_guessling_idea",
@@ -11445,112 +11505,52 @@
       "source_location": "L1"
     },
     {
-      "id": "docs_research_cloudflare_workers",
-      "label": "cloudflare-workers.md",
+      "id": "docs_research_jev_free_tier_credits_and_programs",
+      "label": "Free tier, credits, and programs",
       "_origin": "ast",
       "community": 147,
-      "community_name": "next-gen-ideation.md",
+      "community_name": "Pricing, limits, and terms",
       "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "cloudflare-workers.md",
-      "source_file": "docs/research/cloudflare-workers.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_research_gallery_2026",
-      "label": "gallery-2026.md",
-      "_origin": "ast",
-      "community": 147,
-      "community_name": "next-gen-ideation.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "gallery-2026.md",
-      "source_file": "docs/research/gallery-2026.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_research_idea_evidence",
-      "label": "idea-evidence.md",
-      "_origin": "ast",
-      "community": 147,
-      "community_name": "next-gen-ideation.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "idea-evidence.md",
-      "source_file": "docs/research/idea-evidence.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_research_ideation",
-      "label": "ideation.md",
-      "_origin": "ast",
-      "community": 147,
-      "community_name": "next-gen-ideation.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "ideation.md",
-      "source_file": "docs/research/ideation.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_research_jev",
-      "label": "jev.md",
-      "_origin": "ast",
-      "community": 147,
-      "community_name": "next-gen-ideation.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "jev.md",
+      "node_kind": "heading",
+      "norm_label": "free tier, credits, and programs",
       "source_file": "docs/research/jev.md",
-      "source_location": "L1"
+      "source_location": "L561"
     },
     {
-      "id": "docs_research_next_gen",
-      "label": "next-gen.md",
+      "id": "docs_research_jev_jev_prices",
+      "label": "Jev prices",
       "_origin": "ast",
       "community": 147,
-      "community_name": "next-gen-ideation.md",
+      "community_name": "Pricing, limits, and terms",
       "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "next-gen.md",
-      "source_file": "docs/research/next-gen.md",
-      "source_location": "L1"
+      "node_kind": "heading",
+      "norm_label": "jev prices",
+      "source_file": "docs/research/jev.md",
+      "source_location": "L541"
     },
     {
-      "id": "docs_research_next_gen_evidence",
-      "label": "next-gen-evidence.md",
+      "id": "docs_research_jev_master_customer_agreement_terms_for_apps",
+      "label": "Master Customer Agreement terms for apps",
       "_origin": "ast",
       "community": 147,
-      "community_name": "next-gen-ideation.md",
+      "community_name": "Pricing, limits, and terms",
       "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "next-gen-evidence.md",
-      "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1"
+      "node_kind": "heading",
+      "norm_label": "master customer agreement terms for apps",
+      "source_file": "docs/research/jev.md",
+      "source_location": "L581"
     },
     {
-      "id": "docs_research_next_gen_ideation",
-      "label": "next-gen-ideation.md",
+      "id": "docs_research_jev_pricing_limits_and_terms",
+      "label": "Pricing, limits, and terms",
       "_origin": "ast",
       "community": 147,
-      "community_name": "next-gen-ideation.md",
+      "community_name": "Pricing, limits, and terms",
       "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "next-gen-ideation.md",
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_research_next_gen_tech",
-      "label": "next-gen-tech.md",
-      "_origin": "ast",
-      "community": 147,
-      "community_name": "next-gen-ideation.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "next-gen-tech.md",
-      "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1"
+      "node_kind": "heading",
+      "norm_label": "pricing, limits, and terms",
+      "source_file": "docs/research/jev.md",
+      "source_location": "L539"
     },
     {
       "id": "docs_research_ideation_round_10_pitch_test",
@@ -11562,7 +11562,7 @@
       "node_kind": "heading",
       "norm_label": "round 10: pitch test",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L712"
+      "source_location": "L713"
     },
     {
       "id": "docs_research_ideation_round_2_thirty_candidates",
@@ -11574,7 +11574,7 @@
       "node_kind": "heading",
       "norm_label": "round 2: thirty candidates",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L118"
+      "source_location": "L119"
     },
     {
       "id": "docs_research_ideation_round_3_screening",
@@ -11586,7 +11586,7 @@
       "node_kind": "heading",
       "norm_label": "round 3: screening",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L198"
+      "source_location": "L199"
     },
     {
       "id": "docs_research_ideation_round_4_scoring",
@@ -11598,7 +11598,7 @@
       "node_kind": "heading",
       "norm_label": "round 4: scoring",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L253"
+      "source_location": "L254"
     },
     {
       "id": "docs_research_ideation_round_5_evidence",
@@ -11610,7 +11610,7 @@
       "node_kind": "heading",
       "norm_label": "round 5: evidence",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L313"
+      "source_location": "L314"
     },
     {
       "id": "docs_research_ideation_round_6_red_team",
@@ -11622,7 +11622,7 @@
       "node_kind": "heading",
       "norm_label": "round 6: red team",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L383"
+      "source_location": "L384"
     },
     {
       "id": "docs_research_ideation_round_7_the_choice",
@@ -11634,7 +11634,7 @@
       "node_kind": "heading",
       "norm_label": "round 7: the choice",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L459"
+      "source_location": "L460"
     },
     {
       "id": "docs_research_ideation_round_8_monetization",
@@ -11646,7 +11646,7 @@
       "node_kind": "heading",
       "norm_label": "round 8: monetization",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L525"
+      "source_location": "L526"
     },
     {
       "id": "docs_research_ideation_shipaton_2026_ideation_log",
@@ -12070,7 +12070,7 @@
       "node_kind": "heading",
       "norm_label": "review-safety checklist",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L690"
+      "source_location": "L691"
     },
     {
       "id": "docs_research_ideation_round_9_scope_stack_and_schedule",
@@ -12082,7 +12082,7 @@
       "node_kind": "heading",
       "norm_label": "round 9: scope, stack, and schedule",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L577"
+      "source_location": "L578"
     },
     {
       "id": "docs_research_ideation_schedule",
@@ -12094,7 +12094,7 @@
       "node_kind": "heading",
       "norm_label": "schedule",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L661"
+      "source_location": "L662"
     },
     {
       "id": "docs_research_ideation_scope_of_the_first_version",
@@ -12106,7 +12106,7 @@
       "node_kind": "heading",
       "norm_label": "scope of the first version",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L586"
+      "source_location": "L587"
     },
     {
       "id": "docs_research_ideation_stack_and_data_flow",
@@ -12118,7 +12118,7 @@
       "node_kind": "heading",
       "norm_label": "stack and data flow",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L605"
+      "source_location": "L606"
     },
     {
       "id": "docs_research_jev_cookbooks_and_demos",
@@ -12250,7 +12250,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L78"
+      "source_location": "L79"
     },
     {
       "id": "docs_research_ideation_hard_constraints",
@@ -12262,7 +12262,7 @@
       "node_kind": "heading",
       "norm_label": "hard constraints",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L31"
+      "source_location": "L32"
     },
     {
       "id": "docs_research_ideation_round_1_constraints_and_rubric",
@@ -12274,7 +12274,7 @@
       "node_kind": "heading",
       "norm_label": "round 1: constraints and rubric",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L22"
+      "source_location": "L23"
     },
     {
       "id": "docs_research_ideation_rubric",
@@ -12286,7 +12286,7 @@
       "node_kind": "heading",
       "norm_label": "rubric",
       "source_file": "docs/research/ideation.md",
-      "source_location": "L98"
+      "source_location": "L99"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_announcing_shipaton_2026",
@@ -26927,7 +26927,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L337",
+      "source_location": "L356",
       "weight": 1.0
     },
     {
@@ -26938,7 +26938,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L363",
+      "source_location": "L383",
       "weight": 1.0
     },
     {
@@ -26949,7 +26949,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L380",
+      "source_location": "L399",
       "weight": 1.0
     },
     {
@@ -26960,7 +26960,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L398",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -26971,7 +26971,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L124",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -26982,18 +26982,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L162",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_idea_shipaton_2026_idea",
-      "target": "docs_idea_monetization",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/IDEA.md",
-      "source_location": "L273",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -27009,13 +26998,24 @@
     },
     {
       "source": "docs_idea_shipaton_2026_idea",
+      "target": "docs_idea_monetization",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IDEA.md",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_idea_shipaton_2026_idea",
       "target": "docs_idea_categories_to_enter",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L313",
+      "source_location": "L333",
       "weight": 1.0
     },
     {
@@ -27026,7 +27026,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L331",
+      "source_location": "L352",
       "weight": 1.0
     },
     {
@@ -27037,7 +27037,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L429",
+      "source_location": "L447",
       "weight": 1.0
     },
     {
@@ -27048,7 +27048,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L466",
+      "source_location": "L485",
       "weight": 1.0
     },
     {
@@ -27059,18 +27059,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L511",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_idea_shipaton_2026_idea",
-      "target": "docs_idea_assumptions_and_open_questions",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/IDEA.md",
-      "source_location": "L547",
+      "source_location": "L538",
       "weight": 1.0
     },
     {
@@ -27086,13 +27075,24 @@
     },
     {
       "source": "docs_idea_shipaton_2026_idea",
+      "target": "docs_idea_assumptions_and_open_questions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IDEA.md",
+      "source_location": "L571",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_idea_shipaton_2026_idea",
       "target": "docs_idea_see_also",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L590",
+      "source_location": "L631",
       "weight": 1.0
     },
     {
@@ -27103,7 +27103,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/IDEA.md",
-      "source_location": "L93",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -30964,7 +30964,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -30975,7 +30975,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L78",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -30986,7 +30986,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L98",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -30997,7 +30997,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L586",
+      "source_location": "L587",
       "weight": 1.0
     },
     {
@@ -31008,7 +31008,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L605",
+      "source_location": "L606",
       "weight": 1.0
     },
     {
@@ -31019,7 +31019,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L661",
+      "source_location": "L662",
       "weight": 1.0
     },
     {
@@ -31030,7 +31030,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L690",
+      "source_location": "L691",
       "weight": 1.0
     },
     {
@@ -31041,7 +31041,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -31052,7 +31052,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L198",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -31063,7 +31063,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -31074,7 +31074,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L253",
+      "source_location": "L254",
       "weight": 1.0
     },
     {
@@ -31085,7 +31085,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L313",
+      "source_location": "L314",
       "weight": 1.0
     },
     {
@@ -31096,7 +31096,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L383",
+      "source_location": "L384",
       "weight": 1.0
     },
     {
@@ -31107,7 +31107,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L459",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -31118,7 +31118,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L525",
+      "source_location": "L526",
       "weight": 1.0
     },
     {
@@ -31129,7 +31129,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L577",
+      "source_location": "L578",
       "weight": 1.0
     },
     {
@@ -31140,7 +31140,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L712",
+      "source_location": "L713",
       "weight": 1.0
     },
     {
@@ -32212,7 +32212,7 @@
     },
     {
       "source": "docs_research_jev_patterns_jev_patterns_research_notes",
-      "target": "docs_research_jev_patterns_what_changed_since_this_morning",
+      "target": "docs_research_jev_patterns_what_changed_since_the_jev_notes",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -33010,7 +33010,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1023",
+      "source_location": "L1024",
       "weight": 1.0
     },
     {
@@ -33021,7 +33021,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1045",
+      "source_location": "L1046",
       "weight": 1.0
     },
     {
@@ -33032,7 +33032,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1097",
+      "source_location": "L1098",
       "weight": 1.0
     },
     {
@@ -33043,7 +33043,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L819",
+      "source_location": "L820",
       "weight": 1.0
     },
     {
@@ -33054,7 +33054,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L902",
+      "source_location": "L903",
       "weight": 1.0
     },
     {
@@ -33065,7 +33065,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L939",
+      "source_location": "L940",
       "weight": 1.0
     },
     {
@@ -33076,7 +33076,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L987",
+      "source_location": "L988",
       "weight": 1.0
     },
     {
@@ -33087,7 +33087,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1143",
+      "source_location": "L1144",
       "weight": 1.0
     },
     {
@@ -33098,7 +33098,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1206",
+      "source_location": "L1207",
       "weight": 1.0
     },
     {
@@ -33109,7 +33109,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1247",
+      "source_location": "L1248",
       "weight": 1.0
     },
     {
@@ -33120,7 +33120,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1289",
+      "source_location": "L1290",
       "weight": 1.0
     },
     {
@@ -33131,7 +33131,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1321",
+      "source_location": "L1322",
       "weight": 1.0
     },
     {
@@ -33142,7 +33142,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1341",
+      "source_location": "L1342",
       "weight": 1.0
     },
     {
@@ -33153,7 +33153,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1381",
+      "source_location": "L1382",
       "weight": 1.0
     },
     {
@@ -33164,7 +33164,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1133",
+      "source_location": "L1134",
       "weight": 1.0
     },
     {
@@ -33186,7 +33186,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1411",
+      "source_location": "L1412",
       "weight": 1.0
     },
     {
@@ -33197,7 +33197,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1679",
+      "source_location": "L1680",
       "weight": 1.0
     },
     {
@@ -33208,7 +33208,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1712",
+      "source_location": "L1713",
       "weight": 1.0
     },
     {
@@ -33219,7 +33219,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1760",
+      "source_location": "L1761",
       "weight": 1.0
     },
     {
@@ -33252,7 +33252,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L532",
+      "source_location": "L533",
       "weight": 1.0
     },
     {
@@ -33274,7 +33274,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L808",
+      "source_location": "L809",
       "weight": 1.0
     },
     {
@@ -33285,7 +33285,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1420",
+      "source_location": "L1421",
       "weight": 1.0
     },
     {
@@ -33296,7 +33296,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1484",
+      "source_location": "L1485",
       "weight": 1.0
     },
     {
@@ -33307,7 +33307,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1515",
+      "source_location": "L1516",
       "weight": 1.0
     },
     {
@@ -33318,7 +33318,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1547",
+      "source_location": "L1548",
       "weight": 1.0
     },
     {
@@ -33329,7 +33329,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1565",
+      "source_location": "L1566",
       "weight": 1.0
     },
     {
@@ -33340,7 +33340,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1586",
+      "source_location": "L1587",
       "weight": 1.0
     },
     {
@@ -33351,7 +33351,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L1638",
+      "source_location": "L1639",
       "weight": 1.0
     },
     {
@@ -33362,7 +33362,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L542",
+      "source_location": "L543",
       "weight": 1.0
     },
     {
@@ -33373,7 +33373,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L611",
+      "source_location": "L612",
       "weight": 1.0
     },
     {
@@ -33384,7 +33384,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L647",
+      "source_location": "L648",
       "weight": 1.0
     },
     {
@@ -33395,7 +33395,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L677",
+      "source_location": "L678",
       "weight": 1.0
     },
     {
@@ -33406,7 +33406,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L713",
+      "source_location": "L714",
       "weight": 1.0
     },
     {
@@ -33417,7 +33417,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L736",
+      "source_location": "L737",
       "weight": 1.0
     },
     {
@@ -33428,7 +33428,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L774",
+      "source_location": "L775",
       "weight": 1.0
     },
     {
@@ -33439,7 +33439,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L200",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -33450,7 +33450,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L288",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -33461,7 +33461,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L328",
+      "source_location": "L329",
       "weight": 1.0
     },
     {
@@ -33472,7 +33472,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L370",
+      "source_location": "L371",
       "weight": 1.0
     },
     {
@@ -33483,7 +33483,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L420",
+      "source_location": "L421",
       "weight": 1.0
     },
     {
@@ -33494,7 +33494,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L444",
+      "source_location": "L445",
       "weight": 1.0
     },
     {
@@ -33505,7 +33505,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-evidence.md",
-      "source_location": "L498",
+      "source_location": "L499",
       "weight": 1.0
     },
     {
@@ -33527,7 +33527,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L149",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -33538,7 +33538,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L214",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -33549,7 +33549,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L252",
+      "source_location": "L260",
       "weight": 1.0
     },
     {
@@ -33560,7 +33560,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L26",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -33571,7 +33571,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L328",
+      "source_location": "L367",
       "weight": 1.0
     },
     {
@@ -33582,7 +33582,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L407",
+      "source_location": "L447",
       "weight": 1.0
     },
     {
@@ -33593,7 +33593,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L508",
+      "source_location": "L564",
       "weight": 1.0
     },
     {
@@ -33604,7 +33604,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L559",
+      "source_location": "L615",
       "weight": 1.0
     },
     {
@@ -33615,7 +33615,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L625",
+      "source_location": "L681",
       "weight": 1.0
     },
     {
@@ -33626,29 +33626,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L736",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation_round_1_constraints_and_rubric",
-      "target": "docs_research_next_gen_ideation_rubric",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L120",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation_round_1_constraints_and_rubric",
-      "target": "docs_research_next_gen_ideation_hard_constraints",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L35",
+      "source_location": "L794",
       "weight": 1.0
     },
     {
@@ -33659,7 +33637,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L96",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_next_gen_ideation_round_1_constraints_and_rubric",
+      "target": "docs_research_next_gen_ideation_rubric",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/next-gen-ideation.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_next_gen_ideation_round_1_constraints_and_rubric",
+      "target": "docs_research_next_gen_ideation_hard_constraints",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/next-gen-ideation.md",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -33670,7 +33670,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L420",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -33681,7 +33681,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L442",
+      "source_location": "L482",
       "weight": 1.0
     },
     {
@@ -33692,7 +33692,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L459",
+      "source_location": "L515",
       "weight": 1.0
     },
     {
@@ -33703,7 +33703,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L481",
+      "source_location": "L537",
       "weight": 1.0
     },
     {
@@ -33714,7 +33714,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L634",
+      "source_location": "L690",
       "weight": 1.0
     },
     {
@@ -33725,7 +33725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L656",
+      "source_location": "L712",
       "weight": 1.0
     },
     {
@@ -33736,7 +33736,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L704",
+      "source_location": "L762",
       "weight": 1.0
     },
     {
@@ -33967,7 +33967,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1001",
+      "source_location": "L1002",
       "weight": 1.0
     },
     {
@@ -33978,7 +33978,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1027",
+      "source_location": "L1028",
       "weight": 1.0
     },
     {
@@ -33989,7 +33989,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L525",
+      "source_location": "L526",
       "weight": 1.0
     },
     {
@@ -34000,7 +34000,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L561",
+      "source_location": "L562",
       "weight": 1.0
     },
     {
@@ -34011,7 +34011,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L597",
+      "source_location": "L598",
       "weight": 1.0
     },
     {
@@ -34022,7 +34022,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L624",
+      "source_location": "L625",
       "weight": 1.0
     },
     {
@@ -34033,7 +34033,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L721",
+      "source_location": "L722",
       "weight": 1.0
     },
     {
@@ -34044,7 +34044,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L742",
+      "source_location": "L743",
       "weight": 1.0
     },
     {
@@ -34055,7 +34055,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L891",
+      "source_location": "L892",
       "weight": 1.0
     },
     {
@@ -34066,7 +34066,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L913",
+      "source_location": "L914",
       "weight": 1.0
     },
     {
@@ -34077,7 +34077,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L941",
+      "source_location": "L942",
       "weight": 1.0
     },
     {
@@ -34088,7 +34088,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L970",
+      "source_location": "L971",
       "weight": 1.0
     },
     {
@@ -34099,7 +34099,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L102",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -34110,7 +34110,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1064",
+      "source_location": "L1065",
       "weight": 1.0
     },
     {
@@ -34121,7 +34121,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L1101",
+      "source_location": "L1102",
       "weight": 1.0
     },
     {
@@ -34132,7 +34132,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L143",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -34143,7 +34143,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L275",
+      "source_location": "L276",
       "weight": 1.0
     },
     {
@@ -34165,7 +34165,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L350",
+      "source_location": "L351",
       "weight": 1.0
     },
     {
@@ -34176,7 +34176,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L454",
+      "source_location": "L455",
       "weight": 1.0
     },
     {
@@ -34187,7 +34187,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L520",
+      "source_location": "L521",
       "weight": 1.0
     },
     {
@@ -34198,7 +34198,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L592",
+      "source_location": "L593",
       "weight": 1.0
     },
     {
@@ -34209,7 +34209,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L762",
+      "source_location": "L763",
       "weight": 1.0
     },
     {
@@ -34220,7 +34220,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L885",
+      "source_location": "L886",
       "weight": 1.0
     },
     {
@@ -34231,7 +34231,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L997",
+      "source_location": "L998",
       "weight": 1.0
     },
     {
@@ -34242,7 +34242,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L149",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -34253,7 +34253,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L229",
+      "source_location": "L230",
       "weight": 1.0
     },
     {
@@ -34264,7 +34264,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L252",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -34275,7 +34275,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L769",
+      "source_location": "L770",
       "weight": 1.0
     },
     {
@@ -34286,7 +34286,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L810",
+      "source_location": "L811",
       "weight": 1.0
     },
     {
@@ -34297,7 +34297,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L834",
+      "source_location": "L835",
       "weight": 1.0
     },
     {
@@ -34308,7 +34308,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L853",
+      "source_location": "L854",
       "weight": 1.0
     },
     {
@@ -34319,7 +34319,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L873",
+      "source_location": "L874",
       "weight": 1.0
     },
     {
@@ -34330,7 +34330,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L280",
+      "source_location": "L281",
       "weight": 1.0
     },
     {
@@ -34341,7 +34341,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L326",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -34352,7 +34352,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L458",
+      "source_location": "L459",
       "weight": 1.0
     },
     {
@@ -34363,7 +34363,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L493",
+      "source_location": "L494",
       "weight": 1.0
     },
     {
@@ -34374,7 +34374,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L355",
+      "source_location": "L356",
       "weight": 1.0
     },
     {
@@ -34385,7 +34385,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L405",
+      "source_location": "L406",
       "weight": 1.0
     },
     {
@@ -34396,7 +34396,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/next-gen-tech.md",
-      "source_location": "L428",
+      "source_location": "L429",
       "weight": 1.0
     },
     {
@@ -47123,18 +47123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L320",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_ideation",
-      "target": "docs_research_gallery_2026",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/ideation.md",
-      "source_location": "L6",
+      "source_location": "L321",
       "weight": 1.0
     },
     {
@@ -47145,109 +47134,10 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/ideation.md",
-      "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_next_gen_evidence",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L336",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_ideation",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_idea_evidence",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L615",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_revenuecat_expo",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L618",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_cloudflare_workers",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L702",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_next_gen",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_next_gen_tech",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_jev",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L9",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_next_gen_ideation",
-      "target": "docs_research_jev_patterns",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/next-gen-ideation.md",
-      "source_location": "L9",
+      "source_location": "L73",
       "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ca944ed4c2d466981e4a4d78413961625b4b4995"
+  "built_at_commit": "485b22546a9ac4b503908f6dc900e349e1646c5b"
 }
