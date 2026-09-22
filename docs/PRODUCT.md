@@ -16,6 +16,10 @@ Contents:
 1.  [Turn in brief](#turn-in-brief)
 1.  [Vision](#vision)
 1.  [Users and partners](#users-and-partners)
+1.  [Positioning](#positioning)
+1.  [Product principles](#product-principles)
+1.  [The experience](#the-experience)
+1.  [The phrase bank](#the-phrase-bank)
 1.  [See also](#see-also)
 
 ## Turn in brief
@@ -104,6 +108,144 @@ Turn isn't built, in its first version, for:
 - **Emergencies.** Turn is not an emergency service.
 
 [ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
+
+## Positioning
+
+For adults who can't rely on speech, and the people they talk with, Turn is
+the AAC app that listens to the partner and offers replies from the user's
+own saved phrases, so they can answer in time, in their own words, and never
+pay to speak.
+
+The alternatives, and how Turn differs from each; the
+[evidence notes][ev-rivals] have the prices, ratings, and quotes:
+
+- **Text AAC apps with saved phrases,** such as Proloquo4Text at $119.99 and
+  Predictable at $159.99, speak typed text and saved phrases with
+  prediction from the user's typing. None ranks phrases by what the partner
+  just said; Turn adds the partner's line as context.
+- **Apple's Live Speech** is free and built in: it speaks typed text and
+  saved phrases, in Personal Voice too. Turn is for the moments when typing
+  or scrolling is too slow for the conversation.
+- **Rejoin Voice,** the closest rival, released July 12, 2026, listens and
+  offers three generated replies, "written in your style"; speech is free,
+  and listening costs $12.99 a month or $99.99. Turn offers only phrases the
+  user saved, and sells listening once.
+- **Vocable AAC** listens to caregivers and offers generated responses, for
+  free. **Spoken** tailors AI word prediction to the people and places a user
+  names. Both write words the user didn't save.
+- **Transcription apps,** such as Live Transcribe, show the partner's words,
+  and the user still types a reply.
+
+The difference is narrow: replies from the user's own words, never
+generated, chosen by a model that can say none fits. Turn doesn't claim to
+be the first AAC app that listens; it has to show, in its evaluation, that
+its ranking beats simpler methods.
+
+[ev-rivals]: /docs/research/next-gen-evidence.md#turn-rival-apps
+
+## Product principles
+
+Each principle settles trade-offs, and the PRD turns its consequence into
+requirements.
+
+- **Only their words.** Every reply Turn offers is a phrase the user saved or
+  typed. So Jev chooses and never writes, nothing generates a reply when
+  none fits, the starter phrases can all be edited, and every typed reply
+  joins the bank.
+- **Nothing speaks without a tap.** A suggestion is never an action. So
+  even the big button waits for a tap, and the grid and keyboard are always
+  one tap away.
+- **Steady beats clever.** A button the user has learned by position
+  shouldn't move for noise. So the grid never reorders itself and only the
+  row adapts, a phrase keeps its slot until a new one wins by a clear
+  margin, Yes, No, and Not sure have fixed places, and when nothing fits,
+  the row holds: listeners rate a phrase that almost fits below a reply that
+  comes late ([AAC notes][aac-fail]).
+- **Honest about doubt.** When no phrase clears the bar, Turn changes
+  nothing, and when Jev is slow or down, Turn says Listen mode is degraded
+  and ranks phrases on the phone.
+- **Listening is visible and agreed.** The user's permission comes before any
+  of their phrases leave the phone, the partner's consent before each
+  listening session, a light shows while the phone listens, one tap pauses
+  it, a partner under 18 is never heard, and no audio is kept.
+- **Speech is never sold.** The grid, typing, saved phrases, and Personal
+  Voice are free, and the paywall never stands between the user and speech.
+- **Private by default.** No accounts, and the phrase bank stays on the
+  phone. For each partner line, only the line and the phrases sent with it,
+  names swapped for tags, and the place's name leave it.
+- **Useful offline.** Speaking needs no network, and without one, Listen mode
+  ranks phrases by the place and the letters typed.
+
+[aac-fail]: /docs/research/aac-practice.md#why-prestored-phrase-systems-work-or-fail
+
+## The experience
+
+As the user lives it; the PRD's [functional requirements][prd-functional]
+set every step's rules:
+
+1.  **Set up.** The first launch opens the speaking grid with about 150
+    starter phrases in categories, ready to speak. The user, or whoever
+    helps them, picks a voice, authorizes their Personal Voice if they made
+    one in iOS, adds names and places, and edits phrases.
+1.  **Speak.** A tap on a phrase speaks it. Typed text speaks with one more
+    tap and joins the bank.
+1.  **Listen, with consent.** The first time the user turns on Listen mode,
+    Turn asks their permission to send their phrases and the partner's words
+    to TypeSafe, or to "a third-party AI service in the United States" until
+    TypeSafe agrees to be named. Each time Listen mode starts, the user shows
+    the partner a consent card; once the partner agrees, a light shows while
+    the phone listens.
+1.  **Answer.** When the partner finishes, the row above the grid offers the
+    user's phrases that answer: one big button when Turn is confident, up to
+    six otherwise, and no change when none fits. A yes-or-no question puts
+    Yes, No, and Not sure first. The user taps, and Turn speaks.
+1.  **When it goes wrong.** A caption shows the line Turn heard, so a
+    mishearing is plain; the strip asks the partner to say it again with
+    one tap; the partner's line can be typed instead; and without a network,
+    or when Jev is busy, the phone ranks phrases itself and says so.
+1.  **Keep listening.** After 20 partner lines, a paywall offers Turn Listen
+    once; closing it leaves everything else as it was.
+
+The moments that carry the product:
+
+- **The "aha":** a partner asks "How was physio?", and "It was hard" is
+  waiting before the user reaches for the keyboard, though the two share no
+  content word.
+- **The steady row:** a second question doesn't reshuffle the buttons the
+  user was reaching for.
+- **The row that holds:** small talk that needs no reply changes nothing.
+
+[prd-functional]: /docs/PRD.md#functional-requirements
+
+## The phrase bank
+
+The phrase bank is the user's voice, so it's theirs to shape, and it never
+leaves the phone whole.
+
+- **A phrase** is text the user can say, in one category, optionally tied to
+  places, with a count of how often the user taps it.
+- **Categories** group phrases on the grid, such as feelings, body and pain,
+  needs, people, plans, food and drink, opinions, social talk, and the
+  clinic. The user can rename, add, and reorder them.
+- **Places** say where the user is, such as home, the clinic, or a shop,
+  picked with one tap on the grid from a list the user edits. Turn never
+  reads the location, so it needs no location permission.
+- **The fixed buttons,** Yes, No, and Not sure, are always there, and take the
+  first slots of the row for a yes-or-no question.
+- **The conversation strip** holds five phrases that manage the
+  conversation, always in the same place and never ranked: a floorholder,
+  "Wait, I'm typing"; a repair, "Sorry, say that again"; a question back,
+  "And you?"; an introduction to the app; and "Something's wrong". AAC
+  research supports each, and repair has to take one tap
+  ([AAC notes][aac-strip]).
+- **The starter bank** holds about 150 editable phrases, written by the team
+  and reviewed by a campus speech-language pathology clinic if a review can
+  be booked. They stay the team's words until the user keeps them, so setup
+  invites the user to make them their own.
+- **It grows with use.** Every typed reply joins the bank, and the phrases the
+  user taps most rise in the shortlist.
+
+[aac-strip]: /docs/research/aac-practice.md#quick-fire-turn-holding-and-repair-messages
 
 ## See also
 
