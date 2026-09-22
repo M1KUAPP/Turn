@@ -883,8 +883,9 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   Typed category, which the app creates on first use and counts among the 12.
 - **Repeat (SPEAK-6).** The last spoken text stays in memory, and Repeat
   speaks it again.
-- **Undo (BANK-9).** A deleted phrase is hidden for five seconds behind an
-  Undo toast, and only then deleted from SQLite.
+- **Undo (BANK-9).** A deleted phrase stays hidden, with an Undo button,
+  until the user leaves the editor, and only then is deleted from SQLite; no
+  timer runs (A11Y-5).
 - **Permission (CONSENT-1 to CONSENT-3).** Allow writes the permission and
   its date to `setting`; Not now writes nothing, so the step returns.
   Withdrawing in Settings deletes it, stops `turn-listen`, aborts any
