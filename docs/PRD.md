@@ -506,7 +506,7 @@ says how each is built.
   least 20 new lines, written and labeled by a teammate who hasn't seen
   them. Check: the history shows the settings committed before the results.
 - **EVAL-3, Must.** One command scores four rankers on the same lines: the
-  place's phrases alone, as the phone shows them before any line, keyword
+  place's phrases alone, keyword
   ranking on the line, Workers AI embeddings, and Jev. On lines with an
   acceptable reply, it reports top-1 and top-6 accuracy and mean reciprocal
   rank, beside the rates chance would give; on every line, what the user would
