@@ -16,6 +16,7 @@ Contents:
 1.  [Influences and trends](#influences-and-trends)
 1.  [The Guessling](#the-guessling)
 1.  [Colors](#colors)
+1.  [Typography](#typography)
 1.  [See also](#see-also)
 
 ## Overview
@@ -368,6 +369,124 @@ need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
   for the replies that use no turn, is plainly neither.
 
 [game-squares]: /docs/research/game-design.md#the-share-squares-measured
+
+## Typography
+
+Guessling uses the iPhone's own faces and bundles none:
+
+- **SF Pro Rounded**, as `ui-rounded`: the Guessling's words, the hint,
+  titles, buttons, chips, and counts. Apple made the rounded faces "to
+  coordinate text with the appearance of soft or rounded UI elements, or to
+  provide an alternative typographic voice", which suits a soft character.
+- **SF Pro**, as `system-ui`: questions, the notice, lists, and everything
+  read at length.
+- **Why system faces.** They come with the device, follow Dynamic Type and
+  Bold Text, and need no download. A bundled face would need its license
+  text in the app, an upload to RevenueCat for the paywall, and its own Bold
+  Text handling ([iOS notes on fonts][ios-fonts]).
+
+```yaml
+typography:
+  reply:
+    fontFamily: ui-rounded
+    fontSize: 28px
+    fontWeight: 800
+    lineHeight: 34px
+  reveal:
+    fontFamily: ui-rounded
+    fontSize: 34px
+    fontWeight: 800
+    lineHeight: 41px
+  hint:
+    fontFamily: ui-rounded
+    fontSize: 22px
+    fontWeight: 700
+    lineHeight: 28px
+  title:
+    fontFamily: ui-rounded
+    fontSize: 28px
+    fontWeight: 700
+    lineHeight: 34px
+  body:
+    fontFamily: system-ui
+    fontSize: 17px
+    fontWeight: 400
+    lineHeight: 22px
+  body-strong:
+    fontFamily: system-ui
+    fontSize: 17px
+    fontWeight: 600
+    lineHeight: 22px
+  button:
+    fontFamily: ui-rounded
+    fontSize: 17px
+    fontWeight: 700
+    lineHeight: 22px
+  chip:
+    fontFamily: ui-rounded
+    fontSize: 15px
+    fontWeight: 700
+    lineHeight: 20px
+  meta:
+    fontFamily: system-ui
+    fontSize: 13px
+    fontWeight: 400
+    lineHeight: 18px
+  count:
+    fontFamily: ui-rounded
+    fontSize: 22px
+    fontWeight: 700
+    lineHeight: 28px
+    fontFeature: '"tnum"'
+  caption:
+    fontFamily: system-ui
+    fontSize: 12px
+    fontWeight: 400
+    lineHeight: 16px
+```
+
+Each token follows the Dynamic Type curve of one of Apple's text styles,
+through React Native's `dynamicTypeRamp`, so it grows the way the system's
+text does. Without a ramp, React Native multiplies every size by one factor,
+which would take a 34-point title to about 121 points at the largest
+accessibility size, where Apple's Large Title is 60 ([iOS notes on text
+scaling][ios-scaling]).
+
+| Token         | Used for                                   | `dynamicTypeRamp` | At AX5 |
+| ------------- | ------------------------------------------ | ----------------- | ------ |
+| `reply`       | The Guessling's words in the speech bubble | `title1`          | 58/68  |
+| `reveal`      | The answer's name on the card              | `largeTitle`      | 60/70  |
+| `hint`        | The hint on the notepad                    | `title2`          | 56/66  |
+| `title`       | Titles in the app's own views              | `title1`          | 58/68  |
+| `body`        | Questions, the notice, and list rows       | `body`            | 53/62  |
+| `body-strong` | Row titles and emphasis                    | `headline`        | 53/62  |
+| `button`      | Button labels                              | `headline`        | 53/62  |
+| `chip`        | Answer chips                               | `subheadline`     | 49/58  |
+| `meta`        | The date, turns left, labels, and footers  | `footnote`        | 44/52  |
+| `count`       | The countdown and the statistics           | `title2`          | 56/66  |
+| `caption`     | Legal lines                                | `caption1`        | 43/51  |
+
+- **Never cut off.** No text sets `allowFontScaling={false}`,
+  `numberOfLines`, or a fixed height, and from AX1, when the font scale
+  reaches 1.786, rows stack their parts (A11Y-2).
+- **Weights.** Regular, Semibold, Bold, and Heavy only; no Thin or Light.
+  React Native 0.86 doesn't read Bold Text, so the app follows
+  `AccessibilityInfo`'s `boldTextChanged` and steps every weight up one
+  level while it's on.
+- **Figures.** Counts use tabular figures, `fontVariant: ['tabular-nums']`,
+  so the countdown doesn't jitter.
+- **Sizes.** Body text is 17 points, and nothing is under 11 at the default
+  size, Apple's floor.
+- **Case.** Sentence case everywhere, no all-caps labels, and no italics.
+- **Marketing art.** Screenshot captions, the Devpost thumbnail, and the
+  video's title cards are set in [Nunito][nunito], a rounded face under the
+  SIL Open Font License, since Apple licenses its fonts only for "creating
+  mock-ups of user interfaces". Nunito never ships in the app or loads on
+  the web pages.
+
+[ios-fonts]: /docs/research/ios-design.md#system-fonts-and-their-licenses
+[ios-scaling]: /docs/research/ios-design.md#how-react-native-scales-text
+[nunito]: https://github.com/google/fonts/tree/main/ofl/nunito
 
 ## See also
 
