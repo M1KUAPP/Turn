@@ -382,8 +382,10 @@ Admin routes, for the team's scripts only, need `Authorization: Bearer`
 with the `ADMIN_TOKEN` secret:
 
 - `GET /v1/admin/reports?number=<n>` lists a puzzle's reports (REPORT-2).
-- `POST /v1/admin/puzzles/<n>/forget` deletes stored answers for given
-  wordings after a fix, and refuses until the puzzle closes (CONTENT-8).
+- `POST /v1/admin/puzzles/<n>/forget` deletes stored answers after a fix,
+  by wording or by `bank_id`, which removes every paraphrase matched to
+  that entry and its negation, and refuses until the puzzle closes
+  (CONTENT-8).
 
 ## Answer pipeline
 
@@ -640,13 +642,15 @@ take a puzzle from draft to published:
     both No (CONTENT-4).
 2.  **A person** fills in `checked` for every flagged entry and copies the
     clear answers as they stand.
-3.  **`publish.ts <n>`** refuses a puzzle unless every bank id and negation
-    is checked, the names are normalized, the date matches the number, the
-    card has at most 40 facts, and the bank at most 127 questions
-    (CONTENT-3, CONTENT-5). It then writes `puzzle:<n>:<rev>` and points
-    `live:<n>` at it, with `wrangler kv key put --remote`, since Wrangler 4
-    writes to local storage without that flag. A daily puzzle goes up at
-    least two days before its date (CONTENT-2).
+3.  **`publish.ts <n>`** refuses a puzzle unless every bank id and negation is
+    checked, the names are normalized, the date matches the number, the card
+    has at most 40 facts, and the bank at most 127 questions (CONTENT-3,
+    CONTENT-5). It then writes `puzzle:<n>:<rev>` and points `live:<n>` at it,
+    with `wrangler kv key put --remote`, since Wrangler 4 writes to local
+    storage without that flag. A daily puzzle goes up at least two days before
+    its date (CONTENT-2), and from the moment its date is today anywhere,
+    `publish.ts` refuses to move `live:<n>` again until the puzzle closes
+    (CONTENT-8).
 4.  **`consistency.ts <category>`** sends the category's paraphrase set
     through the match request and reports the share that reach the right
     entry and the share of questions outside the bank that match anything,
@@ -668,10 +672,12 @@ puzzle is published (CONTENT-7, CONTENT-9).
 2.  A person corrects `checked` or the card, reruns `check.ts`, and
     publishes a new revision; `live:<n>` moves only once the puzzle
     closes.
-3.  `forget.ts <n> <wording>...` deletes the corrected wordings' stored
-    answers, which the Worker allows only once the puzzle closes. Archive
-    players then get the fixed answer (ARCHIVE-3). A starter has no date,
-    so it has no day to wait for, and a fix to it applies at once.
+3.  `forget.ts <n> --bank <id>` deletes every stored answer matched to the
+    corrected bank entry or its negation, and `forget.ts <n> <wording>...`
+    deletes live answers by wording; the Worker allows both only once the
+    puzzle closes. Archive players then get the fixed answer, whatever
+    words they use (ARCHIVE-3). A starter has no date, so it has no day to
+    wait for, and a fix to it applies at once.
 
 ## Purchases and entitlements
 
