@@ -47,8 +47,8 @@ Contents:
   - _Listen mode_ is the state in which Turn hears the partner, or takes
     typed partner lines, and suggests replies.
   - The _row_ is the reply area above the grid: six _slots_ in fixed places,
-    two across on a phone, as the [design](/docs/DESIGN.md#the-row) lays them
-    out, or one _big button_ across all of them.
+    which the [design](/docs/DESIGN.md#the-row) lays out, or one _big button_
+    across all of them.
   - The _fixed buttons_ are Yes, No, and Not sure.
   - A _candidate_ is one of the 40 phrases the phone sends with a partner
     line; the _shortlist_ is those 40.
