@@ -2,8 +2,8 @@
 
 How text AAC apps for literate adults look and behave, and what research says
 about the visual and interaction design of augmentative and alternative
-communication (AAC) and other assistive interfaces. The note feeds the rewrite
-of [DESIGN.md](/docs/DESIGN.md) as Turn's design system and art direction, with
+communication (AAC) and other assistive interfaces, for the rewrite of
+[DESIGN.md](/docs/DESIGN.md) as Turn's design system and art direction, beside
 the three sibling notes under [See also](#see-also). Every source below was read
 on September 23, 2026, so versions and page contents are as of that date, and
 judgment starts with "Synthesis:". The [AAC practice notes][aac-notes] already
@@ -809,8 +809,8 @@ research, and consent notices.
   et al., 2019][utz-2019]).
 - **Key information first.** US research consent "must begin with a concise and
   focused presentation of the key information" ([45 CFR 46.116][cfr-46-116]),
-  which fits Turn's card by analogy, and CDC's index asks "Is the main message
-  at the top, beginning, or front of the material?" ([CDC][cdc-cci]).
+  and CDC's index asks "Is the main message at the top, beginning, or front of
+  the material?" ([CDC][cdc-cci]).
 - **Talk, and type size.** Talking one-on-one "appears to be the most effective
   available way of improving research participants' understanding" ([Flory and
   Emanuel, 2004][flory-2004]); UK guidance defines large print as "a point size
