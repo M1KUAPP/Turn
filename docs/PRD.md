@@ -501,15 +501,15 @@ says how each is built.
   least 20 new lines, written and labeled by a teammate who hasn't seen
   them. Check: the history shows the settings committed before the results.
 - **EVAL-3, Must.** One command scores four rankers on the same lines: the
-  phone's fallback by place and taps, keyword ranking on the line, Workers AI
-  embeddings, and Jev. On lines with an acceptable reply, it reports top-1
-  and top-6 accuracy and mean reciprocal rank, beside the rates chance
-  would give; on every line, what the user would see (a right or wrong big
-  button, a right or wrong row, a missed reply, or a right hold), with
-  coverage, risk, and an always-hold baseline; and the shortlist's recall
-  at 40, the question-kind accuracy, and the latency at the median and the
-  95th percentile. Rates carry 95% intervals, and yes-or-no, pain and
-  consent, and no-shared-word lines are also reported apart. Check: run it
+  place's phrases alone, as the phone shows them before any line, keyword
+  ranking on the line, Workers AI embeddings, and Jev. On lines with an
+  acceptable reply, it reports top-1 and top-6 accuracy and mean reciprocal
+  rank, beside the rates chance would give; on every line, what the user would
+  see (a right or wrong big button, a right or wrong row, a missed reply, or a
+  right hold), with coverage, risk, and an always-hold baseline; and the
+  shortlist's recall at 40, the question-kind accuracy, and the latency at the
+  median and the 95th percentile. Rates carry 95% intervals, and yes-or-no, pain
+  and consent, and no-shared-word lines are also reported apart. Check: run it
   and read the table.
 - **EVAL-4, Must.** Jev "trails" embeddings only when a paired bootstrap
   interval for the difference in top-6 accuracy lies wholly below zero;
