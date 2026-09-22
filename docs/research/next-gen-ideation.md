@@ -16,6 +16,7 @@ Contents:
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 1.  [Round 3: screening](#round-3-screening)
 1.  [Round 4: scoring](#round-4-scoring)
+1.  [Round 5: evidence](#round-5-evidence)
 
 ## Round 1: constraints and rubric
 
@@ -319,3 +320,82 @@ What the scores show:
 **Decision:** top five, in order: Turn, Scenekeeper, Bench, Chorus, and Same
 Boat. Chorus and Same Boat tie at 75.5, and the idea score puts Chorus ahead;
 Backed misses the cut by half a point. They go to round 5.
+
+## Round 5: evidence
+
+**Question:** does the evidence hold up for the top five?
+
+**Method:** a research subagent checked each finalist against primary
+sources: rival apps, the 2026 gallery, evidence that the problem matters,
+the devices a student team has, Jev's jagged edges, whether plain code,
+embeddings, or Apple's on-device model could do Jev's job, and the harm a
+wrong decision could do. The [evidence notes](next-gen-evidence.md) have the
+sources. A score changes only where the evidence changes it.
+
+- **Turn.** For: the best-documented need of the five, with "approximately 5
+  million Americans" who may benefit from AAC by ASHA's figure, and aided
+  speech at "8–10 wpm" against speaking rates of "125 and 185"; the gallery
+  still has no AAC entry. Against: Rejoin Voice, released July 12, 2026,
+  already listens to the partner and offers three tappable replies, with
+  speech free and listening paid, the same split Turn planned. Turn's
+  difference is narrower: every reply is one of the user's own saved
+  phrases, never generated words, which answers the worry AAC users voiced
+  about systems "suggesting the wrong thing". A 240-phrase Choice sits at
+  TypeSafe's stated limit, and no study compares Jev with embeddings on AAC
+  phrases. Originality goes from 4.5 to 3 and Jev centrality from 5 to 4.5.
+- **Scenekeeper.** For: no gallery entry reacts to a live table. Against:
+  Bardy already "listens to your party's conversation and automatically
+  adjusts the music and ambiance", by keywords, and the evidence of need is
+  marketing counts and a 17-person survey. Research on the same task found
+  keyword rules and Naive Bayes usable for mood, so Jev's added value is the
+  effects, intensity, and check calls. Originality goes from 4.5 to 3.5, the
+  idea from 3 to 2.5, and Jev centrality from 5 to 4.
+- **Bench.** For: no app checks a spoken value against the protocol's
+  tolerance. Against: every other part ships somewhere; the value check lands
+  on numbers, Jev's best-documented weakness, where a published parser beat a
+  language model; and Boston University's lab policy bars phones and earbuds
+  while wearing gloves or using chemicals, the demo's setting. The idea goes
+  from 3.5 to 3, Jev centrality from 4.5 to 3.5, the working app from 2.5 to
+  2, and demo-ability from 4.5 to 4.
+- **Chorus.** For: NIDCD and CDC count the population, and no gallery entry
+  serves Deaf users. Against: Hearing Buddy, a 2026 Apple Design Award
+  finalist, already merges several phones into one transcript and taps the
+  user when their name is said or a question is asked; Apple's Speech
+  framework can't tell speakers apart; and every published method is weak at
+  finding whom a line addresses. Originality goes from 4 to 2.5 and Jev
+  centrality from 4.5 to 3.5.
+- **Same Boat.** For: no store app groups office-hours questions live, and
+  deadline waits of 39 to 58 minutes are measured. Against: embeddings are
+  the textbook method for duplicate questions, and plain cosine similarity
+  cut simulated waits by 11%, so Jev's case rests on its probabilities; a TA
+  buying a Course Pass alone sits awkwardly with FERPA guidance; and
+  students write the text Jev reads. It is the easiest of the five to build.
+  Jev centrality goes from 4 to 3, RevenueCat fit from 3 to 2.5, and the
+  working app from 3.5 to 4.
+
+| Candidate   | Round 4 total | Round 5 total |
+| ----------- | ------------- | ------------- |
+| Turn        | 84.5          | 80            |
+| Same Boat   | 75.5          | 72.5          |
+| Scenekeeper | 79            | 72            |
+| Bench       | 77.5          | 70.5          |
+| Chorus      | 75.5          | 69.5          |
+
+Backed, sixth in round 4 at 75, wasn't checked, so its score isn't
+comparable: every checked finalist lost 3 to 7 points to the evidence, and
+Backed would pass Scenekeeper only if it lost less than 3 of its own.
+
+What the finalists carry forward:
+
+- **Turn** must beat its own offline fallback, the place and typed letters
+  ranked in code, on the same partner lines, and show it; keep each Choice
+  well under 240 phrases with a first-stage filter and a "none of these"
+  option; hold the row steady; and let the user pause listening at any time.
+- **Same Boat** must show Jev beating embeddings on real duplicate questions,
+  or lose its reason to use Jev, and must be bought by a course, not a TA
+  alone.
+- **Scenekeeper** needs stable cues over accurate but jumpy ones, a rate cap
+  in code on any light, and Jev's value in effects and check calls, beyond
+  what keywords catch.
+
+**Decision:** top three: Turn, Same Boat, and Scenekeeper go to round 6.
