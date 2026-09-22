@@ -51,10 +51,11 @@ goes down on an index card beside it, one line each, with the Guessling's
 answer at the end. When the round ends, the Guessling turns the card over.
 
 - **Why a reference.** Google's format says "Adjectives describe a region. A
-  specific reference describes a point.", and Anthropic's design skill finds
-  distinctive choices in "The subject's industry, subject matter, materials,
-  and vernacular" ([trends notes][ft-gdm]). Twenty Questions is a parlor
-  game with one secret; the card makes the secret something you can see.
+  specific reference describes a point." ([trends notes][ft-gdm]), and
+  Anthropic's design skill finds distinctive choices in "The subject's
+  industry, subject matter, materials, and vernacular"
+  ([trends notes][ft-anthropic]). Twenty Questions is a parlor game with one
+  secret; the card makes the secret something you can see.
 - **Why this one.** A written-down answer is the product's promise: it was
   settled before anyone asked, and it's the same for everyone
   ([product principles][product-principles]).
@@ -66,6 +67,7 @@ answer at the end. When the round ends, the Guessling turns the card over.
   Anthropic's skill puts it, "Spend your boldness in one place".
 
 [ft-gdm]: /docs/research/frontend-trends.md#sections-and-tokens-in-the-specification
+[ft-anthropic]: /docs/research/frontend-trends.md#anthropics-frontend-design-skill
 [product-principles]: /docs/PRODUCT.md#product-principles
 
 ### Principles
@@ -110,8 +112,8 @@ applies:
 - **motionsites.ai** sells prompts for motion-heavy landing pages. Of the
   483 of its prompts in the team's corpus, 52.0% build dark pages and 18.0%
   light ones, 70.6% use a video, and 35.6% use liquid glass or
-  glassmorphism; its house pairing is Inter with Instrument Serif; and its
-  newest prompts, from August 2026, are its longest, with exact tokens, "do
+  glassmorphism; its house pairing is Inter with Instrument Serif; and the
+  corpus's newest, from August 2026, are its longest, with exact tokens, "do
   not" lists, reduced motion, and acceptance checks
   ([motionsites.ai notes][ms-findings]).
 - **The wider landscape.** Google introduced DESIGN.md with Stitch on March
@@ -123,10 +125,10 @@ applies:
   with them by default, and Material 3 Expressive replaced its easing
   curves with them ([trends notes][ft-findings]).
 - **iOS 26 and Expo SDK 57.** Liquid Glass belongs to controls; SDK 57
-  pins Reanimated 4.5.1, `expo-glass-effect`, and `expo-symbols`; and four
+  pins Reanimated 4.5.1, `expo-glass-effect`, and `expo-symbols`; and five
   parts of the TRD's first plan, Dark Mode, the Reduce Motion fade, the
-  audio mode, and text scaling, didn't work as written and are now fixed in
-  the [TRD's iPhone app section][trd-app] ([iOS notes][ios-findings]).
+  audio mode, text scaling, and the paywall's images, needed fixes, which
+  the [TRD's iPhone app section][trd-app] now has ([iOS notes][ios-findings]).
 - **Puzzle games and characters.** The daily games players know are silent
   and recognized by their colors; character apps nod on one axis and shake
   on another; and 🟩 and 🟥 nearly merge for deuteranopes
@@ -138,8 +140,8 @@ What Guessling does with them:
   - A DESIGN.md with exact tokens, a short list of don'ts, and checks, as
     Google's format and the newest motionsites.ai prompts have.
   - Springs for every move, kept short, as Apple and Google now use.
-  - One signature accent with one job: Marigold, for the Guessling and the
-    primary action.
+  - One signature accent with one meaning: Marigold is the Guessling, on
+    its body, on the primary action, and on the right guess.
   - A named motion for each reaction.
   - A celebration recipe, a squash, a jump, and confetti, played once, on
     the solve.
@@ -158,7 +160,8 @@ What Guessling does with them:
   - Background video, parallax, scroll-driven reveals, custom cursors, and
     blur-in text: web habits, and a round is one screen.
   - Glass on every card, near-black pages, and purple or neon gradients:
-    the sameness Anthropic, Google, and Webflow each warn about.
+    defaults that Taste Skill and Anthropic's skill flag, part of the
+    sameness Google and Webflow also warn about.
   - Inter with an italic serif display: the corpus's house pairing, and
     close to Anthropic's first generated look.
   - Idle loops: Apple asks for motion with a purpose, and WCAG 2.2.2 for a
@@ -183,8 +186,8 @@ Guessling's role, personality, and voice; this section draws it.
 
 - **Silhouette.** A soft gumdrop a little taller than wide, 1 to 1.15, head
   and body in one, with a tuft on top curled into a "?". Filled solid, it
-  must still read at 29 points, the icon's smallest size, because a
-  character is recognized by its silhouette before its details
+  must still read at the app icon's smallest sizes, because a character is
+  recognized by its silhouette before its details
   ([game notes][game-silhouette]).
 - **Color.** The body is Marigold (`primary`), with a Ballpoint outline a
   40th of its height, 4 points at the default 160; the eyes are white with
@@ -204,16 +207,16 @@ Guessling's role, personality, and voice; this section draws it.
 Each pose is a set of part states, and each key pose reads as a still, so
 it doubles as the Reduce Motion frame. Every pose appears with its words.
 
-| Pose        | When                                                   | Key shape                                               | Moves along |
-| ----------- | ------------------------------------------------------ | ------------------------------------------------------- | ----------- |
-| Idle        | Between answers                                        | Upright, eyes forward, a small smile                    | Nothing     |
-| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°           | A tilt      |
-| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs              | Vertical    |
-| Head shake  | No, and a wrong guess                                  | Turned 10°, eyes open, a small kind smile               | Horizontal  |
-| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°     | Shoulders   |
-| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open | Up          |
-| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                 | Down        |
-| Presenting  | The reveal of a round not solved                       | Holding the answer card out, in a small bow             | Forward     |
+| Pose        | When                                                   | Key shape                                                          | Moves along |
+| ----------- | ------------------------------------------------------ | ------------------------------------------------------------------ | ----------- |
+| Idle        | Between answers                                        | Upright, eyes forward, a small smile                               | Nothing     |
+| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°                      | A tilt      |
+| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs                         | Vertical    |
+| Head shake  | No, and a wrong guess                                  | Turned 10°, or 8° for a wrong guess, eyes open, a small kind smile | Horizontal  |
+| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°                | Shoulders   |
+| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open            | Up          |
+| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                            | Down        |
+| Presenting  | The reveal of a round not solved                       | Holding the answer card out, in a small bow                        | Forward     |
 
 - **The signature.** The tuft turns from "?" to "!" on a solve and stays
   "!" on the end screen.
@@ -341,22 +344,22 @@ pass. Text needs 4.5 to 1 in every appearance, and 7 to 1 for questions and
 body text, as Apple asks for small text; glyphs, pips, and the Guessling
 need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
 
-| Text or mark | On            | Used for                                           | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| ------------ | ------------- | -------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`        | `card`        | Questions and body text                            | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
-| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips      | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
-| `link`       | `card`        | Links                                              | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
-| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table      | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
-| `on-primary` | `primary`     | Primary buttons and the right-guess chip           | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
-| `yes-ink`    | `yes-tint`    | Yes chips                                          | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
-| `no-ink`     | `no-tint`     | No and wrong-guess chips                           | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
-| `unsure-ink` | `unsure-tint` | Free-reply chips                                   | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
-| `yes-ink`    | `card`        | "Yes" in the speech bubble                         | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
-| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble             | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
-| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges       | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
-| `card`       | `yes`         | A Yes pip's glyph, and the pip against the notepad | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
-| `card`       | `no`          | A No pip's glyph and edge, and a wrong-guess ring  | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
-| `primary`    | `desk`        | The Guessling against the table                    | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
+| Text or mark | On            | Used for                                             | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| ------------ | ------------- | ---------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`        | `card`        | Questions, body text, and the right-guess pip's ring | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
+| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips        | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
+| `link`       | `card`        | Links, and the switches' "on" track                  | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
+| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table        | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
+| `on-primary` | `primary`     | Primary buttons and the right-guess chip             | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
+| `yes-ink`    | `yes-tint`    | Yes chips                                            | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
+| `no-ink`     | `no-tint`     | No and wrong-guess chips                             | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
+| `unsure-ink` | `unsure-tint` | Free-reply chips                                     | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
+| `yes-ink`    | `card`        | "Yes" in the speech bubble                           | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
+| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble               | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
+| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges         | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
+| `card`       | `yes`         | A Yes pip's glyph, and the pip against the notepad   | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
+| `card`       | `no`          | A No pip's glyph and edge, and a wrong-guess ring    | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
+| `primary`    | `desk`        | The Guessling against the table                      | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
 
 [ios-wcag]: /docs/research/ios-design.md#wcag-22-contrast-minimums
 
@@ -379,8 +382,9 @@ need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
 | A right guess                                 | `target`          | `primary`, `on-primary`              |
 | Ask another way, and Ask a yes-or-no question | `questionmark`    | `unsure-ink`, `unsure-tint`          |
 
-- **Neither green nor red.** Marigold is never an answer color, and Stone,
-  for the replies that use no turn, is plainly neither.
+- **Neither green nor red.** Marigold marks only the right guess, the
+  Guessling's own moment, and never a Yes or a No; Stone, for the replies
+  that use no turn, is plainly neither.
 
 [game-squares]: /docs/research/game-design.md#the-share-squares-measured
 
@@ -394,11 +398,9 @@ Guessling uses the iPhone's own faces and bundles none:
   provide an alternative typographic voice", which suits a soft character.
 - **SF Pro**, as `system-ui`: questions, the notice, lists, and everything
   read at length.
-- **Why system faces.** They come with the device and need no download,
-  and they're the faces Apple tunes Dynamic Type and Bold Text for. A
-  bundled face would need its license text in the app, an upload to
-  RevenueCat for the paywall, and its own Bold Text handling
-  ([iOS notes on fonts][ios-fonts]).
+- **Why system faces.** They come with the device and need no download. A
+  bundled face would add its license text to the app and an upload to
+  RevenueCat for the paywall ([iOS notes on fonts][ios-fonts]).
 
 ```yaml
 typography:
@@ -559,6 +561,7 @@ Sizes are points: the format's `px` means a point on the iPhone.
   floats over the notepad. Its send button is the one colored thing on it,
   in Marigold, since Apple says "To emphasize primary actions, apply color
   to the background rather than to symbols or text."
+  ([iOS notes on color on glass][ios-glass-color])
 - **The fallback.** On iOS 16.4 to 18, where `GlassView` draws nothing, and
   whenever `AccessibilityInfo.isReduceTransparencyEnabled()` is true, the
   composer is an Index white capsule with a 1-point Pencil border and its
@@ -578,6 +581,7 @@ Sizes are points: the format's `px` means a point on the iPhone.
 [ios-key]: /docs/research/ios-design.md#the-compatibility-key
 [ios-glass-views]: /docs/research/ios-design.md#glass-views-in-expo
 [ios-headers]: /docs/research/ios-design.md#headers-sheets-and-tabs-in-expo-router
+[ios-glass-color]: /docs/research/ios-design.md#color-and-controls-on-glass
 
 ## Shapes
 
@@ -591,7 +595,8 @@ rounded:
 ```
 
 - **Capsules** for buttons, chips, the composer, and the speech bubble,
-  with "a radius that's half the height".
+  with "a radius that's half the height"
+  ([iOS notes on glass in controls][ios-glass-controls]).
 - **Cards.** The notepad has `lg` corners at the top and runs off the
   bottom of the screen; list groups are `lg`; the answer card is `md`.
 - **Pips** are `pip`.
@@ -599,6 +604,8 @@ rounded:
   padding between them, as Apple's layouts do.
 - **Soft everywhere.** No sharp corners, and no square and round corners
   in the same view.
+
+[ios-glass-controls]: /docs/research/ios-design.md#glass-in-custom-controls
 
 ## Components
 
@@ -750,15 +757,16 @@ property for.
 
 - **What.** Twenty pips in two rows of ten, like the share, on the notepad
   under the hint, with "14 turns left" beside them in `meta` (TODAY-1). A
-  pip appears only for a turn used, so free replies add none (ASK-3).
+  pip fills only when a turn is used, so free replies fill none (ASK-3).
 - **Pips.** 14 points at the default size, 4 apart, with `pip` corners:
-  - Empty: a 1.5-point Pencil ring.
+  - Empty: a 1.5-point Pencil ring, for a turn not yet used.
   - Yes: `yes`, with an Index white `checkmark`.
   - No: `no`, with an Index white `xmark`.
   - A wrong guess: Index white with a 2-point `no` ring and a `no`
     `xmark`, like the share's ❌.
   - The right guess: Marigold with a Ballpoint `target`, like the share's
-    🎯.
+    🎯, and a 1.5-point `ink` ring, since Marigold on Index white is only
+    1.5 to 1.
 - **Large text.** Pips grow with the text up to 1.6 times, and from AX1
   the meter wraps into four rows of five.
 - **For VoiceOver.** One element: "6 of 20 turns used: 4 Yes, 1 No, 1 wrong
@@ -837,7 +845,7 @@ Type:
 ### Banners
 
 - **What.** One line above the composer for a state that isn't an answer:
-  offline, busy, resting, no answer yet, or an error. It's a Stone capsule
+  offline, busy, resting, or an error. It's a Stone capsule
   with its symbol, its words from Words on screen, and
   its action, such as "Send again".
 - **Rules.** One banner at a time; it stays until its state ends, with no
@@ -871,7 +879,6 @@ motion:
   fade:
     duration: 200
     easing: inOutQuad
-    reduceMotion: never
 ```
 
 - **Springs.** Each spring token is a duration-based `withSpring` in
@@ -880,16 +887,16 @@ motion:
   bounce; lower ones do, and only the character's moves go below 0.8
   ([iOS notes on springs][ios-springs]).
 - **Timings.** `lead` and `fade` are `withTiming`; the fade is for opacity
-  and color only, and it keeps running under Reduce Motion:
+  and color only, and it's the motion the app plays under Reduce Motion.
+- **The app decides.** Every animation sets `reduceMotion` to
+  `ReduceMotion.Never`, because the app itself picks the full or the
+  reduced version from the live setting; see
+  [Reduce Motion](#reduce-motion):
 
   ```ts
-  withSpring(value, { duration: 350, dampingRatio: 1 }) // settle
-  withTiming(value, { duration: 120, easing: Easing.out(Easing.cubic) }) // lead
-  withTiming(value, {
-    duration: 200,
-    easing: Easing.inOut(Easing.quad),
-    reduceMotion: ReduceMotion.Never
-  }) // fade
+  withSpring(value, { duration: 350, dampingRatio: 1, reduceMotion: ReduceMotion.Never }) // settle
+  withTiming(value, { duration: 120, easing: Easing.out(Easing.cubic), reduceMotion: ReduceMotion.Never }) // lead
+  withTiming(value, { duration: 200, easing: Easing.inOut(Easing.quad), reduceMotion: ReduceMotion.Never }) // fade
   ```
 
 - **Only transform and opacity** animate, never layout; and no Reanimated
@@ -928,14 +935,16 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 - **What changes.** Each reaction becomes a 200 ms `fade` from the current
   pose to the reaction's key pose, drawn as two stacked copies of the rig;
   there's no hop and no confetti; pips and the bubble's words fade in
-  instead of popping (A11Y-3).
+  instead of popping; and the stage, the rows, and the answer card change
+  by fading, never by moving (A11Y-3).
 - **Reading the setting.** The app reads `AccessibilityInfo`'s
   `isReduceMotionEnabled()` and follows `reduceMotionChanged`, because
   `useReducedMotion()` keeps the value it had at launch.
-- **Keeping the fade.** Every fade sets `reduceMotion: ReduceMotion.Never`;
-  otherwise Reanimated's default makes it jump to its end, and a nod built
-  from a sequence shows nothing at all ([iOS notes on Reduce
-  Motion][ios-reduce-motion]).
+- **Opting out of Reanimated's switch.** Every animation, full or reduced,
+  sets `ReduceMotion.Never`. Reanimated's default, `ReduceMotion.System`,
+  keeps the setting from launch, makes a fade jump to its end, and shows
+  nothing of a nod built from a sequence
+  ([iOS notes on Reduce Motion][ios-reduce-motion]).
 - **Screens.** Native transitions cross-fade under Reduce Motion by
   themselves.
 
@@ -1034,7 +1043,7 @@ added only when a turn is used.
 | State                     | Banner                                               | The Guessling | Offers                         |
 | ------------------------- | ---------------------------------------------------- | ------------- | ------------------------------ |
 | No answer after 300 ms    | None; the bubble's dots pulse                        | Thinking      | Nothing; the composer waits    |
-| No answer after 5 seconds | No answer yet.                                       | Idle          | Send again (ASK-8)             |
+| No answer after 5 seconds | The busy banner, or the offline one with no network  | Idle          | Send again (ASK-8, PERF-2)     |
 | Offline                   | You’re offline. Your question is saved.              | Idle          | Send again (STATE-1)           |
 | `busy`                    | The Guessling is busy. Pick a question or try again. | Thinking      | The list, Send again (STATE-3) |
 | `slow_down`               | One moment, then try again.                          | Idle          | Send again                     |
@@ -1052,7 +1061,8 @@ added only when a turn is used.
   bow, and the answer card shows its face: the answer's name in `reveal`
   and the hint under it (END-2).
 - **The result**, at the top of the notepad: "Solved in 9 of 20" or "Out of
-  turns"; the turn meter exactly as it will be shared; and "Next Guessling
+  turns"; the turn meter without its empty rings, so it shows the share's
+  symbols one for one; and "Next Guessling
   in 5:42:10" in `count`, counting down.
 - **The buttons.** Share, primary, and "Play yesterday’s?", secondary,
   which reads "Play another?" when no daily puzzle is dated before today
@@ -1102,8 +1112,9 @@ added only when a turn is used.
   - **Guessling+:** Restore Purchases, Redeem Code, and Manage Subscription.
   - **About:** Privacy Policy, Terms of Use, Support, Your ID, which copies
     the player's RevenueCat ID, and Version.
-- **Switches** are the system's, with their "on" track in Table blue, since
-  green belongs to answers.
+- **Switches** are the system's, with their "on" track in Link blue, since
+  green belongs to answers and Link blue clears 3 to 1 on cards in both
+  appearances.
 
 ### The paywall
 
@@ -1157,12 +1168,13 @@ phrases. The PRD quotes some strings; this section fixes the rest.
   Manage Subscription, Terms of Use, and Privacy Policy.
 - **Plain and short.** One exclamation mark in the whole app, in "You got
   it!".
-- **Never blame.** No "Wrong", "Nope", "Oops", or "Fail"; a wrong guess gets
-  "Not it".
+- **Never blame.** The Guessling never says "Wrong", "Nope", "Oops", or
+  "Fail"; a wrong guess gets "Not it". The report reason "Wrong" (REPORT-1)
+  is about an answer, not the player.
 - **Numerals** for numbers: "14 turns left", "1 turn left", "Solved in 9 of
   20".
-- **Curly quotes and apostrophes** in the app, the PRD's strings included:
-  “An animal”, “You’re offline”, “Play yesterday’s?”.
+- **Curly quotes and apostrophes** in the app: “An animal” and “You’re
+  offline”, and in the PRD's strings too, such as “Play yesterday’s?”.
 - **No emoji** anywhere but the share text, which SHARE-1 fixes.
 
 | Where                         | Words                                     | Fixed by      |
@@ -1275,7 +1287,8 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   the system adds.
 - **Variants.** Dark puts the same shapes on the dark table color; mono
   makes the Guessling white.
-- **Checks.** Legible at 29 points, in the dark, clear, and tinted looks,
+- **Checks.** Legible at the smallest icon sizes, in the dark, clear, and
+  tinted looks,
   and on an iOS 18 simulator.
 - **For Devpost.** A 1024 × 1024 PNG of the default look, which Shipaton's
   rules ask for.
@@ -1320,10 +1333,11 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 ## Do's and don'ts
 
 - Do show the words and the glyph with every answer, within 100 ms.
-- Do keep Marigold for the Guessling and the primary action, and green and
-  red for answers.
+- Do keep Marigold for the Guessling, the primary action, and the right
+  guess, and green and red for Yes and No.
 - Do take every color, size, and timing from a token.
-- Don't mock a miss: no red flash, no buzzer, no "Wrong".
+- Don't mock a miss: no red flash, no buzzer, and no "Wrong" from the
+  Guessling.
 - Don't make the player wait for an animation.
 - Don't put glass on content, and don't fade glass.
 - Don't use emoji anywhere but the share text.
