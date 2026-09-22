@@ -483,13 +483,29 @@ are the subagent's estimates.
 
 ### Turn under attack
 
-| Role     | Failure mode                                                                                                              | Severity | Fix                                                                                                                                                               | Hours |
-| -------- | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| Judge    | "What's new, and why Jev?" Rejoin Voice already listens, "Tea or coffee?" is a word match, and the fallback is a strawman | 4        | Score 80 partner lines against gold replies for the fallback, keyword ranking on the partner's line, embeddings, and Jev; publish it; claim "only your own words" | 8     |
-| Judge    | "Who types the phrases, and has an AAC user seen this?" A 240-phrase bank takes hours at "8–10 wpm"                       | 3        | About 150 editable starter phrases, every typed reply saved to the bank, and a 30-minute review by a campus speech-language pathology clinic                      | 6     |
-| Advocate | Listen mode needs a phone: live transcription doesn't run in the Simulator, and Personal Voice needs an iPhone 15 Pro     | 4        | A field to type the partner's line, a Simulator build in the repository's releases, and a README path through the paid feature                                    | 4     |
-| Engineer | One 240-option Choice sits at the reliability limit, always picks something, and flipped on 2 of 8 questions in repeats   | 4        | Code shortlists 40 phrases; Jev asks one Noul per candidate, which can all come back low; buttons keep their slots; yes-or-no questions get fixed buttons         | 6     |
-| Engineer | The partner never agreed to TypeSafe, which keeps telemetry rights "in perpetuity", and partners may be under 18          | 3        | A consent card the user shows, a listening light with one-tap pause, no listening for partners marked under 18, and names swapped for tags                        | 3     |
+- **"What's new, and why Jev?" (judge, 4).** Rejoin Voice already listens,
+  "Tea or coffee?" is a word match, and comparing Jev with the
+  place-and-letters fallback is a strawman. Fix, 8 hours: score 80 partner
+  lines against gold replies for the fallback, keyword ranking on the
+  partner's line, embeddings, and Jev; publish the result; and claim "only
+  your own words", not "first".
+- **"Who types the phrases, and has an AAC user seen this?" (judge, 3).** A
+  240-phrase bank takes hours at "8–10 wpm". Fix, 6 hours: about 150
+  editable starter phrases, every typed reply saved to the bank, and a
+  30-minute review by a campus speech-language pathology clinic.
+- **Listen mode needs a phone (advocate, 4).** Live transcription doesn't run
+  in the Simulator, and Personal Voice needs an iPhone 15 Pro. Fix, 4 hours:
+  a field to type the partner's line, a Simulator build in the repository's
+  releases, and a README path through the paid feature.
+- **One 240-option Choice (engineer, 4)** sits at the reliability limit,
+  always picks something, and flipped on 2 of 8 questions in repeats. Fix, 6
+  hours: code shortlists 40 phrases; Jev asks one Noul per candidate, which
+  can all come back low; buttons keep their slots; and yes-or-no questions
+  get fixed buttons.
+- **The partner never agreed to TypeSafe (engineer, 3),** which keeps
+  telemetry rights "in perpetuity", and partners may be under 18. Fix, 3
+  hours: a consent card the user shows, a listening light with one-tap pause,
+  no listening for partners marked under 18, and names swapped for tags.
 
 Verdict: build it, with about 27 hours of fixes, all design and evaluation.
 Nouls had a mean per-question standard deviation of about 0.01 over
@@ -679,8 +695,10 @@ from the video on September 28.
   about 150 editable starter phrases, with every typed reply saved to the
   bank; speech in the user's Personal Voice once authorized, else a system
   voice; Listen mode with live transcription on the phone and a field to type
-  the partner's line; the consent card, the listening light, one-tap pause,
-  and a switch that stops listening when the partner is under 18; names
+  the partner's line; the user's own permission, asked the first time Listen
+  mode turns on, before any of their phrases leave the phone; the consent
+  card, the listening light, one-tap pause, and a switch that stops
+  listening when the partner is under 18; names
   swapped for tags before any request; the shortlist of 40 and Jev's
   per-phrase decisions; the row of big buttons in steady slots, one big
   button when a phrase clears the high bar, and fixed Yes, No, and Not sure
@@ -821,9 +839,12 @@ Triggers:
 
 - **No Jev key by noon PT on September 23:** write to `support@typesafe.ai`
   and TypeSafe's Discord, and build on the phone's own ranking meanwhile,
-  since Jev joins at the relay with no app change. No key by September 26
-  means the video can't show Jev, and the team decides whether to enter
-  without it, which breaks this idea's goal.
+  since Jev joins at the relay with no app change. No key by September 26 is
+  the no-go point for Jev: the video can't show it, and entering without it
+  breaks this idea's goal. The default is still to enter, with the phone's
+  own ranking and a README that says Jev is missing, since a working app
+  scores on the rules' other criteria; the team can overrule that default
+  on the day.
 - **The evaluation on September 25:** if Jev's top-6 accuracy trails
   embeddings, Jev re-ranks an embedding shortlist instead, built on the phone
   with Apple's sentence embeddings so the bank stays there, and the
@@ -835,7 +856,7 @@ Triggers:
   reviewed Turn yet.
 - **No consent from TypeSafe by September 28:** the video, the description,
   and the README call Jev "a hosted decision model", and the consent card
-  says "a third-party AI service in the United States".
+  and privacy notice say "a third-party AI service in the United States".
 - **No iPhone 15 Pro or later for the video:** a system voice speaks instead
   of a Personal Voice.
 
