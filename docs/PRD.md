@@ -14,6 +14,12 @@ Contents:
 1.  [Functional requirements](#functional-requirements)
 1.  [Content requirements](#content-requirements)
 1.  [Evaluation requirements](#evaluation-requirements)
+1.  [Non-functional requirements](#non-functional-requirements)
+1.  [Measurement requirements](#measurement-requirements)
+1.  [Submission requirements](#submission-requirements)
+1.  [Release criteria](#release-criteria)
+1.  [Dependencies and assumptions](#dependencies-and-assumptions)
+1.  [Open questions](#open-questions)
 1.  [See also](#see-also)
 
 ## Overview
@@ -87,8 +93,6 @@ document adds:
 - Switch or eye-gaze access beyond what iOS provides.
 - A store release, TestFlight, and real payments (added).
 - Usage analytics (added).
-
-[brief-checklist]: /docs/BRIEF.md#submission-checklist
 
 ## User scenarios
 
@@ -520,6 +524,246 @@ says how each is built.
   embeddings, the phone-side path the idea keeps if Jev trails. Check: read
   the table.
 
+## Non-functional requirements
+
+### Performance
+
+- **PERF-1, Must.** The row is drawn within 1.0 second of the end of the
+  partner's speech at the median, and within 2.0 seconds at the 95th
+  percentile, on Wi-Fi in the United States. The user's own time to choose
+  is measured apart. Check: timings from at least 50 replayed lines.
+- **PERF-2, Must.** Speech starts within 300 milliseconds of a tap for 95%
+  of taps. Check: timings from 50 taps.
+- **PERF-3, Must.** The grid is ready to speak within 2 seconds of launch.
+  Check: timings from ten cold launches on the video's iPhone.
+- **PERF-4, Must.** The phone picks the shortlist within 50 milliseconds
+  from a bank of 2,000 phrases. Check: timings from 50 lines.
+- **PERF-5, Must.** At most one partner line in ten ends before the partner
+  has finished speaking. Check: count cut-off lines among at least 50
+  replayed lines.
+
+### Availability
+
+- **AVAIL-1, Must.** The relay runs with Jev's credits funded and auto-refill
+  on from submission until the winners are announced on October 21 or 22,
+  2026, and a check on each day of judging, October 1 to 13, finds it
+  answering. Check: the daily log of checks.
+- **AVAIL-2, Should.** The team gets an alert when Jev's credits run low.
+  Check: lower the alert's level and see it fire.
+
+### Privacy
+
+- **PRIV-1, Must.** Audio never leaves the phone and is never written to
+  storage. Check: a capture of the app's traffic, and the app's container,
+  after a session.
+- **PRIV-2, Must.** No transcript, phrase, place, or category name is
+  written to storage in the relay or to its logs. Check: the relay's storage
+  and logs after a session.
+- **PRIV-3, Must.** Nothing reaches TypeSafe before the user's permission,
+  after its withdrawal, or while the under-18 switch is on, and each request
+  carries only what CONSENT-1 names. Check: the relay's logs and a capture.
+- **PRIV-4, Must.** RevenueCat receives only what its SDK sends for
+  purchases, under a random app user ID that names no one, and Turn sets no
+  attributes.
+  Check: the code sets none.
+- **PRIV-5, Must.** The app has no analytics or advertising SDK and doesn't
+  track. Check: the dependency list.
+
+### Security
+
+- **SEC-1, Must.** The Jev key and RevenueCat's secret key exist only as the
+  relay's secrets; no secret key is in the app, the repository, or its
+  history. The Test Store key, the only RevenueCat key the app carries, is
+  committed for judging and rotated after the winners are announced. Check:
+  a secret scan of the full history before it goes public.
+- **SEC-2, Must.** The relay builds Jev's questions and names the model
+  itself, and rejects any request over its limits: a line of 300
+  characters, 40 candidates of 200 characters each, 12 category names and a
+  place name of 40 characters each, and 16 KB in all. Check: an oversized
+  field gets a 400.
+- **SEC-3, Must.** The relay accepts at most 30 requests a minute from one
+  app user ID. Check: the 31st in a minute gets a 429.
+- **SEC-4, Must.** The relay's responses and errors never carry keys,
+  internal errors, or another user's data. Check: force each error and read
+  the response.
+- **SEC-5, Must.** The relay stops calling Jev after 10,000 lines in a UTC
+  day and answers as it does when Jev is busy until midnight UTC, so minted
+  IDs can't drain Jev's credits. Check: lower the budget to 3 in a test and
+  send 4 lines.
+
+### Accessibility
+
+- **A11Y-1, Must.** Every control is at least 44 by 44 points, phrase buttons
+  in the row at least 64 points tall, and the big button fills the row.
+  Check: measure in the Accessibility Inspector.
+- **A11Y-2, Must.** VoiceOver reads each phrase button as its text with the
+  button trait, the light as "Listening" with a hint to pause, and a changed
+  row once, as the number of replies. Check: with VoiceOver on.
+- **A11Y-3, Must.** Switch Control and Voice Control reach and activate every
+  control, and Switch Control scans the row before the grid. Check: with
+  each.
+- **A11Y-4, Must.** At every Dynamic Type size, up to the largest
+  accessibility size, phrase text wraps instead of being cut off, and the
+  grid scrolls. Check: at the largest size.
+- **A11Y-5, Must.** No action has a time limit, and everything works with
+  single taps. Check: walk every scenario with taps only.
+- **A11Y-6, Must.** Reduce Motion stops the light's pulse and the row's
+  animations, and no state is shown by color alone. Check: with Reduce
+  Motion on.
+- **A11Y-7, Must.** Text contrasts with its background at 4.5:1 or more, and
+  button edges at 3:1, the WCAG 2.2 AA levels. Check: measure every color
+  pair.
+- **A11Y-8, Must.** Every phrase button's accessibility name is its visible
+  text, so a Voice Control user can say "Tap" and the phrase; a phrase's
+  other actions, such as Edit, are named accessibility actions, not long
+  presses; nothing acts on touch-down; and reordering never needs dragging.
+  React Native can't tell when Switch Control or Voice Control is on, so the
+  app works for them without detecting them. Check: on an iPhone, say "Tap
+  It was hard", and reorder a phrase with Switch Control.
+
+### Compatibility
+
+- **COMPAT-1, Must.** Turn runs on iPhones with iOS 26 or later, in portrait
+  and US English, built with Xcode 27 and Expo SDK 57.0.23 or later with
+  `ios.enableSceneSupport`. Check: build and run on iOS 26 and iOS 27.
+- **COMPAT-2, Must.** The Simulator build runs on Xcode 27's iOS 27
+  Simulator, where the typed-line field, the row, speech in a system voice,
+  and the paywall work. Check: scenario 10.
+- **COMPAT-3, Must.** Personal Voice works on iPhones that support it, and
+  other iPhones speak in a system voice. Check: VOICE-2 on both kinds.
+- **COMPAT-4, Must.** Debug builds install on the team's iPhones under a free
+  Apple account, and the build for the video is installed after September
+  21, so its seven-day profile lasts through September 28. Check: the
+  build's install date.
+
+## Measurement requirements
+
+- **METRIC-1, Must.** The relay logs one line per request: the time, a short
+  prefix of the ID's hash, the sequence number, the outcome (answered,
+  paywall, limited, failed, or off), the time spent in Jev and in all, and
+  the model and input tokens Jev reports, with no text. Check: read the logs
+  after a session.
+- **METRIC-2, Must.** A script turns those logs into daily counts of lines
+  answered, paywall responses, failures, and latency at the median and the
+  95th percentile. Check: run it on a day's logs.
+- **METRIC-3, Should.** The phone counts, for "Stats on this phone", partner
+  lines, replies from the row, replies from the grid or keyboard, and the
+  median times from a line's end to the row and to speech; the counts never
+  leave the phone. Check: SET-4.
+- **METRIC-4, Must.** RevenueCat's dashboard, with sandbox data shown, has
+  the Test Store purchases. Check: after a purchase.
+
+## Submission requirements
+
+The brief's [submission checklist][brief-checklist] owns the full list;
+these are what it means for Turn.
+
+- **SUBMIT-1, Must.** The repository is public by September 29, 2026, with an
+  MIT `LICENSE` at its root that GitHub detects, after the secret scan in
+  SEC-1. Check: GitHub shows the repository as public with the MIT license.
+- **SUBMIT-2, Must.** The README opens with the logline and the evaluation's
+  table, then gives setup from a Mac with Xcode 27, the Simulator path by
+  typing a partner line, the Test Store purchase, the privacy notice, and
+  how to run the relay and the evaluation with one's own keys. Check:
+  someone outside the team follows it to a spoken reply.
+- **SUBMIT-3, Must.** The repository's releases hold a Simulator build that
+  points at the team's relay. Check: install it on a clean Simulator.
+- **SUBMIT-4, Must.** The video runs under two minutes on YouTube, public or
+  unlisted, follows the idea's [pitch][idea-pitch], shows the Test Store
+  purchase, uses no copyrighted music, and shows only partners who agreed to
+  be filmed. Check: watch it logged out.
+- **SUBMIT-5, Must.** The Devpost entry has the name and tagline, the
+  description in the idea's order, the repository's URL, the video, the
+  1024 × 1024 icon, a 1179 × 2556 screenshot without a device frame, the
+  RevenueCat project ID, the bundle ID, how judges reach Listen mode's paid
+  part, and the Next Gen Award named with the reason. Check: Devpost shows
+  the entry as submitted.
+- **SUBMIT-6, Must.** Jev and TypeSafe are named in the app, the video, the
+  description, and the README only once TypeSafe has agreed; until then,
+  "a hosted decision model", as the idea's [risks][idea-risks] say. Check:
+  search each for the names.
+
+[idea-pitch]: /docs/IDEA.md#pitch
+
+## Release criteria
+
+Before recording the video on September 28, 2026:
+
+- **RELEASE-1, Must.** Every other Must requirement's check passes on the
+  build the video uses, except those that need the public repository,
+  Devpost, or judging (SUBMIT-1 to SUBMIT-6, AVAIL-1, and PAY-9's
+  Simulator check), which run under RELEASE-4 and RELEASE-5. Check: the
+  checklist, signed off.
+- **RELEASE-2, Must.** The evaluation has run with the final thresholds and
+  model pin, and the relay's configuration matches its result. Check: the
+  README's table and the relay's values.
+- **RELEASE-3, Must.** After a 10-minute Listen session, the privacy checks
+  PRIV-1 to PRIV-3 pass on the phone and in the relay. Check: the saved
+  results.
+
+Before the Devpost deadline on September 30, 2026:
+
+- **RELEASE-4, Must.** SUBMIT-1 to SUBMIT-6 pass, and Devpost shows the entry
+  as submitted before 11:45 PM PT. Check: Devpost, logged in.
+
+Through judging:
+
+- **RELEASE-5, Must.** The builds judges run work as the video shows, and
+  AVAIL-1 and PAY-9 hold until judging ends on October 13, 2026. Check: the
+  daily log of checks.
+
+## Dependencies and assumptions
+
+What the first version depends on, each owned by the team:
+
+- **TypeSafe:** a Jev API key and funded credits with auto-refill, and
+  answers on naming TypeSafe and on its SDK in a public repository, as the
+  idea's [open questions][idea-open] say.
+- **RevenueCat:** a project with the Test Store product, the entitlement,
+  the offering, a Paywall, and a secret key for the relay.
+- **Cloudflare:** an account for the relay, with Durable Objects.
+- **Apple:** a free Apple Account, an iPhone 15 Pro or later for the video,
+  and a Mac with Xcode 27.
+- **A campus speech-language pathology clinic,** for the Should review.
+
+The idea's [assumptions][idea-open] hold, and this document adds one: the
+code lives in this repository, which goes public before submission
+(SUBMIT-1).
+
+## Open questions
+
+The idea's [open questions][idea-open] still apply. New ones, each with a
+safe default:
+
+- **Publishing this repository.** It is private on September 22, 2026, and
+  `docs/sources/` holds full captures of the contest's web pages. Safe
+  default: run the secret scan, and ask the organizers on Discord whether
+  the captures may stay before making it public.
+- **Voices nearby.** The consent card covers the partner, but the microphone
+  also hears anyone talking nearby. Safe default: the card and the privacy
+  notice ask the user to pause listening when others are talking close by.
+- **Intake without a store listing.** The checklist's bundle ID lets intake
+  confirm the RevenueCat SDK, and no source says how intake checks a Test
+  Store app. Safe default: give the bundle ID and the project ID, and say
+  in the description that the purchase runs through Test Store, citing the
+  organizers' answers.
+- **A one-time purchase's promise.** A store release would sell Listen mode
+  once while the relay and Jev cost money per line. Safe default: before any
+  store release, decide and publish how long Turn Listen keeps working.
+- **The partner under the providers' terms.** TypeSafe's agreement makes the
+  team give every notice its use of input needs, but no source says whether
+  a partner, who is neither the customer nor the app's user, counts, or
+  whether phrases that reveal health are sensitive data under the laws that
+  apply ([services notes][svc-notices]). Safe default: the consent card and
+  the privacy notice name the flow plainly, and nothing reaches TypeSafe
+  without the partner's agreement; ask counsel before any store release.
+- **How partners feel about being transcribed.** No study asks the partners
+  of AAC users ([AAC notes][aac-partners]). Safe default: keep the card
+  short, and ask the clinic's review whether it is fair to partners.
+
+[svc-notices]: /docs/research/turn-services.md#notices-consent-and-sensitive-data
+[aac-partners]: /docs/research/aac-practice.md#partners-and-devices-that-listen
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why.
@@ -534,4 +778,6 @@ says how each is built.
 - [Guessling product requirements](/docs/archive/guessling-prd.md): the
   requirements for the team's first idea, archived.
 
+[brief-checklist]: /docs/BRIEF.md#submission-checklist
 [idea-risks]: /docs/IDEA.md#risks
+[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
