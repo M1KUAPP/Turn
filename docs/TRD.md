@@ -615,7 +615,8 @@ and the default category is silenced by the Silent switch
 ([iPhone build notes][ios-session]):
 
 - **At launch:** `.playback`, so speech plays with the Silent switch set to
-  silent and with the screen locked (VOICE-4).
+  silent and with the screen locked, and follows the current route, such as
+  connected headphones (VOICE-4).
 - **In Listen mode:** `.playAndRecord` with the `.default` mode and
   `.defaultToSpeaker`, so the partner hears Turn through the loudspeaker;
   no Bluetooth input option, so the built-in microphone stays in use.
