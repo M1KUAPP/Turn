@@ -320,8 +320,8 @@ the [reasoning][r8]; this is how Turn applies them.
   shows the one-time price, says speaking stays free, and closes with one
   tap. Settings holds Restore Purchases, and a caregiver can buy from there.
 - **The relay checks.** Past the free lines, the relay checks the `listen`
-  entitlement through RevenueCat's REST API before it calls Jev, with a short
-  cache ([server checks][expo-server]).
+  entitlement through RevenueCat's REST API before it calls Jev, caching a
+  yes for a day and a no for a minute ([server checks][expo-server]).
 - **For Next Gen.** The purchase runs through RevenueCat's Test Store, which
   the organizers accept for Next Gen. The video shows the Test Store sheet, a
   simulated successful purchase, and Listen mode unlocking, and judges can
