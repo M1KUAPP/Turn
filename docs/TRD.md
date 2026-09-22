@@ -71,7 +71,7 @@ Contents:
                                  +--------------+---------------+   |   +--------------+
                                                 |                   |
                                  +--------------v---------------+   |   +--------------+
-                                 | Workers KV                   |   +---| jev-budget   |
+                                 | Workers KV                   |   +---| budget       |
                                  | puzzles, banks, config       |       | tokens/min   |
                                  +------------------------------+       +--------------+
 ```
@@ -91,8 +91,8 @@ What each part owns:
   of Jev in play. It's created with `locationHint: "wnam"`, near where
   `api.typesafe.ai` resolved on September 22, 2026, AWS us-west-2 by DNS
   alone ([Cloudflare notes][cf-latency]).
-- **The Jev budget**, one more Durable Object, also created in `wnam`,
-  hands out tokens for Jev requests in play.
+- **The budget**, one more Durable Object, also created in `wnam`, hands
+  out tokens for Jev requests in play and for RevenueCat lookups.
 - **Workers KV** holds the published puzzles, the banks, and the config.
 - **Jev** matches questions to the bank and answers the rest.
 - **RevenueCat** runs purchases, the paywall, entitlements, and the charts.
@@ -226,14 +226,14 @@ answers, players' progress, and reports in its SQLite storage, which new
 namespaces must use:
 
 ```sql
-CREATE TABLE answers (
+CREATE TABLE answers (          -- WITHOUT ROWID, so rows keep no insertion order
   wording    TEXT PRIMARY KEY, -- the normalized question, with no player ID
   answer     TEXT NOT NULL,    -- 'yes' | 'no' | 'rephrase' | 'not_question'
   source     TEXT NOT NULL,    -- 'bank' | 'live'
   bank_id    TEXT,             -- the matched entry, such as 'q017' or 'q017_not'
   p          REAL,             -- the probability that decided it
   model      TEXT NOT NULL     -- 'jev-1.13.0'
-);
+) WITHOUT ROWID;
 
 CREATE TABLE players (
   player        TEXT PRIMARY KEY, -- SHA-256 of PLAYER_SALT and the app user ID
@@ -247,7 +247,7 @@ CREATE TABLE players (
 );
 
 CREATE TABLE reports (
-  id         INTEGER PRIMARY KEY,
+  id         TEXT PRIMARY KEY, -- a random UUID, so IDs keep no order
   wording    TEXT NOT NULL,
   answer     TEXT NOT NULL,
   reason     TEXT,             -- 'wrong' | 'unclear' | NULL
@@ -259,9 +259,10 @@ CREATE TABLE reports (
   (NOTICE-3). Code-rule answers, such as letter questions, aren't stored,
   since code gives the same answer every time.
 - No table holds question text next to a player: `players` has counts, and
-  `answers` and `reports` have wordings without IDs (PRIV-3). Neither keeps
-  a time finer than a day, so a wording can't be matched to a player's turn
-  or count by when it arrived.
+  `answers` and `reports` have wordings without IDs (PRIV-3). Neither keeps a
+  time finer than a day or an insertion order, and the question and report
+  events in Analytics Engine carry no player ID, so a wording can't be matched
+  to a player's turn or count by when it arrived.
 
 ### What the device keeps
 
@@ -565,7 +566,7 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 - Past the budget, the Worker answers `busy` and stores nothing, so the
   next attempt can still reach Jev (STATE-3, PERF-2).
 - Every Jev request in play first takes a token from one Durable Object,
-  `jev-budget`, which hands out at most `JEV_BUDGET` a minute across all
+  `budget`, which hands out at most `JEV_BUDGET` a minute across all
   puzzles: 1,000 in production and 50 in the test environment. The SDK's
   injected `fetch` asks for a token before each attempt, so a retry counts
   too. Without a token, it returns a made-up `409`, a status the SDK
@@ -764,9 +765,11 @@ export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boo
   yes until the entitlement expires or for 15 minutes, whichever comes
   first, and a no for 1 minute. The cache is per Cloudflare data center, so
   a player whose requests move to another one is simply checked again.
-- The refresh header skips only a cached no, at most once a minute per
-  player, so no client can spend RevenueCat's limit of 480 requests a
-  minute for everyone.
+- The refresh header skips only a cached no, at most once a minute per player,
+  so no single player can spend RevenueCat's limit of 480 requests a minute.
+  The budget object also caps all lookups at 400 a minute, so invented IDs,
+  which always miss the cache, can't spend it either; past the cap, a lookup
+  is answered `unconfirmed`.
 - A timeout, a `429`, or any other failure is answered `unconfirmed`, and
   the app offers a retry (STATE-5).
 - An app user ID works like a bearer value: nothing ties it to a device.
@@ -946,7 +949,7 @@ export default {
   ([Cloudflare notes][cf-ratelimit]).
 - Exact caps live in Durable Objects: 20 turns and 40 free answers per
   player in the puzzle's object (ASK-10), and 1,000 Jev requests a minute
-  in `jev-budget` (AVAIL-2).
+  in `budget` (AVAIL-2).
 - A client that makes up new IDs escapes the per-player limits; the shared
   Jev budget is the backstop.
 
@@ -954,16 +957,16 @@ export default {
 
 ### Data inventory
 
-| Data                                   | Where it's kept                            | Linked to a player | Kept for                        | App Privacy type                     |
-| -------------------------------------- | ------------------------------------------ | ------------------ | ------------------------------- | ------------------------------------ |
-| Typed questions, with AI answers on    | `answers` in the puzzle's object; TypeSafe | No                 | As long as the puzzle is served | Other User Content, Gameplay Content |
-| Round progress: turns and status       | `players`, under a salted hash of the ID   | Yes                | As long as the puzzle is served | Gameplay Content                     |
-| RevenueCat app user ID                 | RevenueCat; hashed on the server           | Yes                | RevenueCat's retention          | User ID                              |
-| Purchases                              | RevenueCat and Apple                       | Yes                | RevenueCat's retention          | Purchase History                     |
-| Paywall views                          | RevenueCat, recorded by its Paywalls       | Yes                | RevenueCat's retention          | Product Interaction                  |
-| Counts of plays, questions, and solves | Analytics Engine, indexed by the hash      | Yes                | Three months                    | Product Interaction                  |
-| Reports                                | `reports` in the puzzle's object           | No                 | Until triaged, then 30 days     | Customer Support                     |
-| Logs                                   | Workers Logs, with no text and no IDs      | No                 | Seven days on Workers Paid      | Not collected                        |
+| Data                                   | Where it's kept                                | Linked to a player | Kept for                        | App Privacy type                     |
+| -------------------------------------- | ---------------------------------------------- | ------------------ | ------------------------------- | ------------------------------------ |
+| Typed questions, with AI answers on    | `answers` in the puzzle's object; TypeSafe     | No                 | As long as the puzzle is served | Other User Content, Gameplay Content |
+| Round progress: turns and status       | `players`, under a salted hash of the ID       | Yes                | As long as the puzzle is served | Gameplay Content                     |
+| RevenueCat app user ID                 | RevenueCat; hashed on the server               | Yes                | RevenueCat's retention          | User ID                              |
+| Purchases                              | RevenueCat and Apple                           | Yes                | RevenueCat's retention          | Purchase History                     |
+| Paywall views                          | RevenueCat, recorded by its Paywalls           | Yes                | RevenueCat's retention          | Product Interaction                  |
+| Counts of plays, questions, and solves | Analytics Engine; only openings carry the hash | Yes                | Three months                    | Product Interaction                  |
+| Reports                                | `reports` in the puzzle's object               | No                 | 30 days from arrival            | Customer Support                     |
+| Logs                                   | Workers Logs, with no text and no IDs          | No                 | Seven days on Workers Paid      | Not collected                        |
 
 - None of it is used for tracking, so there's no tracking prompt (PRIV-1),
   and the App Privacy answers follow the last column (STORE-5, PRIV-5).
@@ -1006,10 +1009,12 @@ again.
 - **Counts.** Workers Analytics Engine, one data point per event, for players
   who allowed AI answers: puzzle opened, question answered, with its answer
   and source, guess, round solved or lost, report, and busy, each with the
-  puzzle and the player's date, so a finish on its date is countable. The
-  index is the hashed player ID, so distinct players and the return rate are
-  `count(DISTINCT index1)` queries; at high volume the data is sampled, so
-  totals use `SUM(_sample_interval)` (METRIC-1, METRIC-2)
+  puzzle and the player's date, so a finish on its date is countable. Only the
+  "puzzle opened" event carries the hashed player ID as its index, so distinct
+  players and the return rate are `count(DISTINCT index1)` queries on
+  openings, and the question and report events carry no ID that could line
+  them up with a stored wording; at high volume the data is sampled, so totals
+  use `SUM(_sample_interval)` (METRIC-1, METRIC-2)
   ([Cloudflare notes][cf-ae]).
 - **Numbers for the write-up.** `stats.ts` queries the SQL API, with a token
   kept on the team's machines, not in the Worker, and prints the idea's
