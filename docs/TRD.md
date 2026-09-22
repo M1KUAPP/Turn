@@ -888,9 +888,21 @@ Expo Router, with one stack:
   them and the player's music keeps playing; a light haptic marks each
   answer and a success haptic the solve. Both follow Settings' switches
   (SET-2) ([Apple notes on sound][apple-sound]).
+- The ambient category needs an explicit call before the first sound,
+  since without it the first sound stops the player's music:
+
+  ```ts
+  await setAudioModeAsync({ playsInSilentMode: false, interruptionMode: 'mixWithOthers' })
+  ```
+
+  The expo-audio plugin sets `enableBackgroundPlayback` and
+  `microphonePermission` to false, since its defaults add a background
+  audio mode and a microphone usage string
+  ([iOS notes on sounds][ios-sounds]).
 
 [apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
 [ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
+[ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
 
 ### Accessibility
 
@@ -926,7 +938,7 @@ export default {
     supportsTablet: false, // iPhone only, the default (COMPAT-1)
     config: { usesNonExemptEncryption: false } // HTTPS through the system only
   },
-  plugins: ['expo-router']
+  plugins: ['expo-router', ['expo-audio', { enableBackgroundPlayback: false, microphonePermission: false }]]
 }
 ```
 
