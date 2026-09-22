@@ -279,9 +279,12 @@ The research notes supply the facts behind them.
     most one line in ten cut off before the partner finishes.
 1.  **The shortlist.** Forty candidates, chosen on the phone: the phrases
     already in the row, so each gets a new score, then up to 24 by BM25 over
-    the tagged line, up to 8 of the user's most-tapped replies of the last 30
-    days, and up to 8 of the place's phrases, without duplicates, filled by
-    overall taps. The fixed buttons never enter it.
+    the line as heard, before tagging, up to 8 of the user's most-tapped replies
+    of the last 30 days, and up to 8 of the place's phrases, without duplicates,
+    filled by taps over the last 30 days. The fixed buttons and the strip never
+    enter it. The category names travel with the shortlist, as the topic's
+    options, so the permission step and the privacy notice name them too, and
+    the app caps categories at the relay's 12.
 1.  **Names as tags.** Each distinct name the phone's tagger finds in the
     line or the candidates becomes the same tag everywhere in the request,
     so matching still works and no name the tagger finds leaves the phone. A
@@ -299,10 +302,11 @@ The research notes supply the facts behind them.
     with each answer, with whether yes-or-no questions also get phrases and
     which topics get only the fixed buttons, so the evaluation can change
     them without an app build, as the idea's risk triggers need.
-1.  **Pain never gets a big button.** The topic body and pain starts in the
-    list of topics that never get one, since a wrong tap on a pain or
-    consent question matters most; consent questions are yes-or-no, which
-    never get one either.
+1.  **Pain and consent never get a big button.** The topic Choice keys its
+    options by category id, plus a fixed `consent` option, and the list of
+    topics that never get a big button starts as `body-pain` and `consent`,
+    ids a rename can't change, since a wrong tap on a pain or consent
+    question matters most; the body and pain category can't be deleted.
 1.  **The conversation strip.** Five fixed phrases above the row, never
     ranked: a floorholder, a repair, a question back, an introduction to the
     app, and "Something's wrong", as the AAC notes recommend; repair takes
@@ -403,11 +407,14 @@ The research notes supply the facts behind them.
 1.  **Evaluation.** `eval/` holds 80 lines written by hand, since the public
     sets' licenses don't allow copying, each with every acceptable reply or
     none, labeled by a second teammate. Jev's bars, margin, and question
-    wording are frozen before the run, and the other rankers' cut-offs come
-    from cross-validation. Ranking is scored only on lines with a reply, and
-    "none" as its own decision, with coverage, risk, and 95% intervals; Jev
-    "trails" embeddings only when a paired interval lies below zero, which
-    refines the idea's trigger. The table goes in the README.
+    wording are frozen before the run, the embedding ranker's cut-off comes
+    from cross-validation, and the keyword ranker holds when no word is
+    shared, as the phone does. Ranking is scored only on lines with a reply,
+    and "none" as its own decision, with coverage, risk, and 95% intervals;
+    Jev "trails" embeddings only when a paired interval lies below zero,
+    which refines the idea's trigger, and then Jev re-ranks the phrases
+    nearest by Apple's sentence embeddings, which the phone would compute.
+    The table goes in the README.
 1.  **Accessibility.** Every control at least 44 by 44 points, reply slots
     taller, the reply area's height fixed so nothing shifts, Dynamic Type
     through the largest sizes by wrapping, phrase text as the accessibility
