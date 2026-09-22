@@ -14,6 +14,7 @@ Contents:
 
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
+1.  [Round 3: screening](#round-3-screening)
 
 ## Round 1: constraints and rubric
 
@@ -203,3 +204,41 @@ read the camera or typed text; the three lenses converged on perception on
 the phone, Jev deciding per event, and state shared between phones.
 
 **Decision:** 23 distinct candidates go to screening.
+
+## Round 3: screening
+
+**Question:** which of the 23 distinct candidates meet N1 to N7?
+
+**Method:** each candidate was checked against every hard constraint, pass
+or fail. A fail names the constraint it breaks; a pass that depends on a cut
+its generator proposed names the cut, which later rounds carry forward.
+
+| #   | Candidate    | Result | Reason                                                                                                          |
+| --- | ------------ | ------ | --------------------------------------------------------------------------------------------------------------- |
+| 1   | Chorus       | Pass   | Each phone transcribes only its owner, and every speaker joins, so N7 holds                                     |
+| 2   | Qualified    | Pass   | The student's own paragraph and answers, after a consent notice                                                 |
+| 3   | Same Boat    | Pass   | Typed questions from students who join the session                                                              |
+| 4   | Headcount    | Fail   | N4: alerting a friend whose phone is in a pocket needs push notifications, which a free Apple account can't use |
+| 5   | Lull         | Pass   | Only sound labels and levels leave the phones, never audio or words                                             |
+| 6   | Finders      | Pass   | Image input needs Xcode 27 and an iPhone 15 Pro or newer; the generator's cut, typed descriptions, remains      |
+| 7   | Fair Game    | Pass   | The student's own résumé text, notes, and banner text                                                           |
+| 8   | Porchlight   | Pass   | Adults only, and crisis language goes to resources for the writer, never to friends                             |
+| 9   | Bench        | Pass   | The student's own voice, on a single phone                                                                      |
+| 10  | Backed       | Pass   | The student's own essay and sources                                                                             |
+| 15  | Cue          | Pass   | The cast consents before rehearsal                                                                              |
+| 17  | Proof        | Pass   | Descriptions name objects, never people; image input as for 6                                                   |
+| 18  | Range        | Pass   | The patient's own remarks, with consent                                                                         |
+| 19  | Rattle       | Pass   | A car's sounds and the driver's own answers                                                                     |
+| 20  | Plainly      | Pass   | The user's own notices, after a consent notice                                                                  |
+| 21  | Scenekeeper  | Pass   | Players consent when they join                                                                                  |
+| 22  | Crewline     | Pass   | Volunteers keep the app open, since a free account can't push                                                   |
+| 23  | Turn         | Pass   | Only a consenting partner's speech is transcribed; otherwise the place and typed letters rank the phrases       |
+| 24  | Gavel        | Pass   | The meeting starts once every member present has joined                                                         |
+| 25  | Close Enough | Pass   | Players may be 13, but only anonymous trivia answers reach Jev, per N5                                          |
+| 28  | Orders       | Pass   | Players may be 13, but only orders and game state reach Jev, per N5                                             |
+| 29  | Waypoint     | Pass   | Only the text of signs reaches Jev                                                                              |
+| 30  | Flowsheet    | Pass   | Speakers consent before each round                                                                              |
+
+**Decision:** 22 candidates go to scoring, with Guessling as the control.
+Headcount is out: without push, its core loop, a friend's phone buzzing in a
+pocket, can't work.
