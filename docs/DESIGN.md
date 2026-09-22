@@ -14,6 +14,7 @@ Contents:
 
 1.  [Overview](#overview)
 1.  [Influences and trends](#influences-and-trends)
+1.  [The Guessling](#the-guessling)
 1.  [See also](#see-also)
 
 ## Overview
@@ -73,8 +74,6 @@ Each principle settles a trade-off.
   risk plans ([idea risks][idea-risks]).
 - **Private by construction.** Nothing in the app or on the web pages loads
   a font, a script, or an image from a third party.
-
-[idea-risks]: /docs/IDEA.md#risks
 
 ### Scope
 
@@ -159,6 +158,92 @@ What Guessling does with them:
 [ms-license]: /docs/research/motionsites.md#license-and-terms
 [game-findings]: /docs/research/game-design.md#findings-for-designmd
 
+## The Guessling
+
+The [product](/docs/PRODUCT.md#the-guessling-character) sets the
+Guessling's role, personality, and voice; this section draws it.
+
+### Parts of the Guessling
+
+- **Silhouette.** A soft gumdrop a little taller than wide, 1 to 1.15, head
+  and body in one, with a tuft on top curled into a "?". Filled solid, it
+  must still read at 29 points, the icon's smallest size, because a
+  character is recognized by its silhouette before its details
+  ([game notes][game-silhouette]).
+- **Color.** The body is Marigold (`primary`), with a Ballpoint outline a
+  40th of its height, 4 points at the default 160; the eyes are white with
+  Ballpoint pupils. No gradients or textures.
+- **Parts, back to front.** Feet, body, arms (short nubs ending in round
+  hands), mouth, eyes with lids, brows, and the tuft. Each part is its own
+  layer, moved only by transforms and opacity, as the TRD animates it with
+  Reanimated.
+- **Face.** Large and simple, since the face does most of the work: two
+  tall oval eyes set high, short rounded brows, and a small mouth. No line
+  is thinner than 2 points at the default size.
+
+[game-silhouette]: /docs/research/game-design.md#silhouette-and-staging
+
+### Poses
+
+Each pose is a set of part states, and each key pose reads as a still, so
+it doubles as the Reduce Motion frame. Every pose appears with its words.
+
+| Pose        | When                                                   | Key shape                                               | Moves along |
+| ----------- | ------------------------------------------------------ | ------------------------------------------------------- | ----------- |
+| Idle        | Between answers                                        | Upright, eyes forward, a small smile                    | Nothing     |
+| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°           | A tilt      |
+| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs              | Vertical    |
+| Head shake  | No, and a wrong guess                                  | Turned 10°, eyes open, a small kind smile               | Horizontal  |
+| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°     | Shoulders   |
+| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open | Up          |
+| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                 | Down        |
+| Presenting  | The reveal of a round not solved                       | Holding the answer card out, in a small bow             | Forward     |
+
+- **The signature.** The tuft turns from "?" to "!" on a solve and stays
+  "!" on the end screen.
+- **No loops.** After each reaction, the Guessling blinks once and returns
+  to idle; nothing moves while it waits for the next question.
+- **Kind poses.** The head shake is a friendly "no", like Duolingo's and
+  Brilliant's characters, and a round not solved ends in the presenting
+  bow, like Akinator's genie, never in a defeated pose
+  ([game notes][game-signals]).
+
+[game-signals]: /docs/research/game-design.md#how-characters-show-yes-no-unsure-and-delight
+
+### The answer card
+
+- **Shape.** A playing card, 5 to 7, in Index white with a Ballpoint
+  outline and 12-point corners (`md`).
+- **Back.** Table blue with a Marigold "?" in the middle.
+- **Face.** The answer's name in `reveal` and the hint under it in `meta`,
+  both in Ballpoint.
+- **When.** Only at the end of a round, when the Guessling turns it over,
+  as the end of a round under Screens describes.
+
+### Making the art
+
+- **Tool.** Any vector editor. Each part is exported as its own SVG, all
+  drawn in one 200 × 230 view box so the parts line up, then drawn with
+  `react-native-svg`, which SDK 57 bundles.
+- **Who.** A teammate draws and poses the final parts. AI tools may explore
+  the look first, and the write-up credits them, as the idea's safe default
+  says ([idea open questions][idea-open]). The Shipaton rules ask for
+  "original work product" that is "solely owned", and the US Copyright
+  Office protects AI output only where a person set "sufficient expressive
+  elements" ([game notes on AI art][game-ai]).
+- **If the rig is late.** If it isn't ready by the end of September 23, the
+  idea's trigger ([idea risks][idea-risks]), the app ships the eight key
+  poses as stills with the 200 ms fade between them, and the rig follows in
+  an update.
+- **Not Rive or Lottie in version 1.0.** Both need a new tool, Rive's
+  exports need a paid plan, and neither applies Reduce Motion for the app.
+  Rive is the upgrade path if the poses ever need a state machine
+  ([iOS notes on drawing the character][ios-character]).
+
+[ios-character]: /docs/research/ios-design.md#drawing-and-animating-the-character
+[game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
+[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
@@ -173,3 +258,4 @@ What Guessling does with them:
 - [Google's DESIGN.md format][gdm]: the specification and the linter.
 
 [gdm]: https://github.com/google-labs-code/design.md
+[idea-risks]: /docs/IDEA.md#risks
