@@ -413,7 +413,7 @@ evaluation metrics.
   suggest humorous remarks, after interviews with seven ([Weinberg et al.,
   2025][weinberg-2025]).
 - **I, Robot?, CHI 2026.** An AAC user who is the lead author lived with a cloud
-  model tuned on months of his own logged speech ([Weinberg et al.,
+  model tuned on months of their own logged speech ([Weinberg et al.,
   2026][weinberg-2026]).
 - **People with neurodegenerative disease.** Fifteen interviews and 51 surveys
   on personalized language models, with the caveat "No participant needed this
@@ -447,7 +447,7 @@ evaluation metrics.
   ([Valencia et al., 2024][compa-2024])
 - **Suggestions steer.** A participant said a suggestion "matched my intentions
   and also influenced it" ([Weinberg et al., 2025][weinberg-2025]), and the user
-  who lived with a model trained on his own speech noticed it "was subtly
+  who lived with a model trained on their own speech noticed it "was subtly
   steering dialogue in specific directions; pulling toward familiar patterns or
   vocabulary, narrowing my expression rather than expanding it" ([Weinberg et
   al., 2026][weinberg-2026]).
@@ -1370,8 +1370,8 @@ apps may do, as of September 22, 2026.
   confidential communication without every party's consent; the [evidence
   notes][ev-harm] quote both.
 - **The one AAC study that recorded partners.** SpeakFaster Observer's user with
-  ALS, his spouse, and four caregivers gave written consent; a user-provided LED
-  ensured "a salient signal is visible to conversation participants during
+  ALS, their spouse, and four caregivers gave written consent; a user-provided
+  LED ensured "a salient signal is visible to conversation participants during
   active data collection"; transcripts from "non-participating individuals are
   redacted"; the user could "delete logged sessions"; and recording paused
   around the holidays because of "the presence of many non-participating
