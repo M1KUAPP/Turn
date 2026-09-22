@@ -15,6 +15,7 @@ Contents:
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 1.  [Round 3: screening](#round-3-screening)
+1.  [Round 4: scoring](#round-4-scoring)
 
 ## Round 1: constraints and rubric
 
@@ -242,3 +243,79 @@ its generator proposed names the cut, which later rounds carry forward.
 **Decision:** 22 candidates go to scoring, with Guessling as the control.
 Headcount is out: without push, its core loop, a friend's phone buzzing in a
 pocket, can't work.
+
+## Round 4: scoring
+
+**Question:** which survivors are strongest, and how far do they clear
+Guessling?
+
+**Method:** two scorers rated the 22 survivors and Guessling on the rubric.
+The log's author scored first; a subagent then scored blind, from the same
+write-ups, round 1, and the four notes, without seeing the first scores. It
+was told to be harsh on six days of student work with a free Apple account,
+on jobs that plain code or Apple's on-device model could do in Jev's place,
+on paywalls that feel wrong for their audience, and on ideas where a wrong
+decision could hurt someone. Each criterion's score is the average of the
+two, and ties go to the idea score, as the rules break ties. The last two
+columns are each scorer's own total.
+
+| Rank | #   | Candidate    | Idea | Orig | Work | Demo | RC  | Tech | Craft | Jev | Total | Author | Blind |
+| ---- | --- | ------------ | ---- | ---- | ---- | ---- | --- | ---- | ----- | --- | ----- | ------ | ----- |
+| 1    | 23  | Turn         | 5    | 4.5  | 3.5  | 5    | 3   | 4    | 4     | 5   | 84.5  | 82     | 87    |
+| 2    | 21  | Scenekeeper  | 3    | 4.5  | 3    | 5    | 4   | 4.5  | 3.5   | 5   | 79    | 79     | 79    |
+| 3    | 9   | Bench        | 3.5  | 4.5  | 2.5  | 4.5  | 4   | 4.5  | 3.5   | 4.5 | 77.5  | 83     | 72    |
+| 4    | 1   | Chorus       | 4.5  | 4    | 2    | 4.5  | 2.5 | 5    | 3     | 4.5 | 75.5  | 81     | 70    |
+| 5    | 3   | Same Boat    | 4    | 4    | 3.5  | 4    | 3   | 4    | 4     | 4   | 75.5  | 77     | 74    |
+| 6    | 10  | Backed       | 3.5  | 4    | 3    | 4    | 4   | 3.5  | 4     | 4.5 | 75    | 80     | 70    |
+| 7    | 2   | Qualified    | 4    | 4    | 3.5  | 4    | 3   | 3    | 4     | 4.5 | 74    | 77     | 71    |
+| 8    | 25  | Close Enough | 3    | 3.5  | 4    | 4.5  | 4   | 3.5  | 4     | 4   | 74    | 80     | 68    |
+| 9    | 20  | Plainly      | 3.5  | 4    | 3.5  | 4    | 3   | 4    | 4     | 4   | 73.5  | 77     | 70    |
+| 10   | 15  | Cue          | 2.5  | 5    | 2.5  | 5    | 3.5 | 4.5  | 3.5   | 4.5 | 73.5  | 76     | 71    |
+| 11   | 22  | Crewline     | 3    | 4.5  | 2    | 4    | 3.5 | 5    | 3     | 4.5 | 73    | 78     | 68    |
+| 12   | 29  | Waypoint     | 3.5  | 3.5  | 2.5  | 4    | 2.5 | 5    | 3     | 4.5 | 71.5  | 76     | 67    |
+| 13   | 28  | Orders       | 3    | 4    | 2    | 4.5  | 4   | 4    | 3     | 4   | 69.5  | 75     | 64    |
+| 14   | 24  | Gavel        | 3    | 5    | 3    | 4    | 3   | 4    | 4     | 3   | 69    | 72     | 66    |
+| 15   | 19  | Rattle       | 2.5  | 3.5  | 3    | 4    | 4   | 4    | 3     | 4   | 69    | 75     | 63    |
+| 16   | 17  | Proof        | 3    | 4    | 2.5  | 4    | 4   | 4    | 3     | 3   | 67.5  | 74     | 61    |
+| 17   | 30  | Flowsheet    | 2.5  | 4.5  | 2    | 3.5  | 3   | 4.5  | 3     | 4.5 | 67.5  | 71     | 64    |
+| 18   | G0  | Guessling    | 3    | 3    | 4.5  | 3.5  | 4   | 2    | 3.5   | 3   | 65.5  | 64     | 67    |
+| 19   | 7   | Fair Game    | 3    | 4    | 2.5  | 3.5  | 3   | 4    | 3     | 3.5 | 65.5  | 65     | 66    |
+| 20   | 6   | Finders      | 3    | 4    | 3    | 4    | 2   | 4    | 3     | 3.5 | 64.5  | 66     | 63    |
+| 21   | 8   | Porchlight   | 3    | 3.5  | 4    | 3.5  | 2.5 | 3    | 3     | 3.5 | 64.5  | 67     | 62    |
+| 22   | 18  | Range        | 3    | 3.5  | 2.5  | 4    | 3.5 | 4    | 3     | 2.5 | 63.5  | 70     | 57    |
+| 23   | 5   | Lull         | 3    | 4.5  | 2.5  | 3    | 3   | 4    | 3     | 2.5 | 63    | 68     | 58    |
+
+Where the scorers were 2 points apart, each score was settled at the
+average:
+
+- **Jev centrality, seven times:** Same Boat, Close Enough, Plainly, Orders,
+  Rattle, Gavel, and Proof. The blind scorer found a stand-in each time:
+  embeddings to group questions, fuzzy matching against accepted spellings,
+  the code's own date check, keyword rules for meeting procedure, or the
+  on-device model that already saw the photo. Round 6 asks the same of every
+  finalist.
+- **Idea and need, four times:** Crewline, Porchlight, Range, and Lull. The
+  blind scorer marked down ideas where a wrong call could hurt someone (two
+  "collapse" reports merged, a missed self-harm signal, a missed "sharp"),
+  and Lull's need for phones left in every room.
+- **RevenueCat fit, once:** Qualified, since charging students to see the
+  scholarships they qualify for resembles the "pay to find scholarships"
+  warnings students get.
+- **Originality, twice:** Orders and Proof, whose formats exist beyond the
+  gallery.
+
+What the scores show:
+
+- Both scorers put Turn first. It ranks only the user's own saved phrases,
+  so Jev's inability to write text becomes a safety feature.
+- Guessling, the control, ties for 18th of 23 at 65.5. Every top-five
+  candidate beats it by at least 10 points and at least doubles its
+  technical ambition score of 2.
+- The ideas that need live speech across several phones, Chorus, Crewline,
+  and Flowsheet, got a 2 for a working app from both scorers.
+- The scorers' own top fives share only Turn and Bench, so the averaging
+  decides the rest.
+
+**Decision:** top five, in order: Turn, Scenekeeper, Bench, Chorus, and Same
+Boat. Chorus and Same Boat tie at 75.5, and the idea score puts Chorus ahead;
+Backed misses the cut by half a point. They go to round 5.
