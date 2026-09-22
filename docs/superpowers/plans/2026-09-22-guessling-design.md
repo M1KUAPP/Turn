@@ -18,7 +18,7 @@ daily puzzle games and character-led apps. `docs/DESIGN.md` follows Google's
 DESIGN.md format in the form the repo's style guide asks for, and each task
 adds whole H2 sections with their `Contents:` entries, so every commit
 leaves a consistent document. Google's linter and a new contrast script
-check it, and small TRD edits fix the four problems the research found in
+check it, and small TRD edits fix the five problems the research found in
 the TRD's plan.
 
 **Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged,
@@ -66,9 +66,11 @@ Contents:
   native paywall, and an iPhone-only portrait app on iOS 16.4 or later. Where
   the research shows the TRD's plan fails, the TRD is fixed in this branch,
   in its own commit, and both documents say the same thing.
-- Every color pair the document states passes `check_contrast.py`: text at
-  4.5 to 1 or more in all four appearances (A11Y-5), and marks and
-  boundaries at 3 to 1.
+- Every pair in the Colors section's contrast table passes
+  `check_contrast.py`: text at 4.5 to 1 or more in all four appearances
+  (A11Y-5), and marks and boundaries at 3 to 1. Every other pair the
+  document names reuses one of those pairs, which review checks, and the
+  app's theme test computes them all.
 - Trend claims cite the research notes, and a trend the design rejects says
   why.
 - Design values the document sets, such as colors, sizes, and durations, are
@@ -285,7 +287,7 @@ On `docs/DESIGN.md`, from the task that adds Colors on, it also runs:
 
 ```shell
 bunx @google/design.md@0.4.0 lint docs/DESIGN.md > "$CHECKS/lint.json"
-python3 "$CHECKS/lint_summary.py" "$CHECKS/lint.json" missing-typography
+python3 "$CHECKS/lint_summary.py" "$CHECKS/lint.json" missing-typography  # none allowed from Typography on
 python3 "$CHECKS/check_contrast.py" docs/DESIGN.md
 ```
 
