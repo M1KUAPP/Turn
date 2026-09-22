@@ -3,10 +3,11 @@
 Where the DESIGN.md convention comes from and how agents use it, what AI UI
 generators and component and motion libraries offer in September 2026, and which
 visual trends Apple, Google, Figma, Framer, and Webflow name for 2025 and 2026.
-These notes feed `docs/DESIGN.md`, Guessling's design system and art direction;
-every source was read on September 22, 2026, so versions, prices, and features
-are as of that date, and judgment starts with "Synthesis:". motionsites.ai
-itself has its own [research notes](/docs/research/motionsites.md).
+These notes fed Guessling's design system and art direction, now the
+[archived Guessling design](/docs/archive/guessling-design.md); every source was
+read on September 22, 2026, so versions, prices, and features are as of that
+date, and judgment starts with "Synthesis:". motionsites.ai itself has its own
+[research notes](/docs/research/motionsites.md).
 
 Contents:
 

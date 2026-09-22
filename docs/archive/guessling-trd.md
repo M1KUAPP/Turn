@@ -919,9 +919,9 @@ composer's glass comes from `expo-glass-effect`, and symbols from
   ([iOS notes on sounds][ios-sounds]).
 
 [apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
-[design-guessling]: /docs/DESIGN.md#the-guessling
-[design-motion]: /docs/DESIGN.md#motion
-[design-sound]: /docs/DESIGN.md#sound-and-haptics
+[design-guessling]: /docs/archive/guessling-design.md#the-guessling
+[design-motion]: /docs/archive/guessling-design.md#motion
+[design-sound]: /docs/archive/guessling-design.md#sound-and-haptics
 [ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
 [ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
 
@@ -989,8 +989,8 @@ export default {
   (COMPAT-3).
 
 [rc-pm]: /docs/research/revenuecat-expo.md#privacy-manifests-in-expo
-[design-icon]: /docs/DESIGN.md#the-app-icon
-[design-launch]: /docs/DESIGN.md#launch
+[design-icon]: /docs/archive/guessling-design.md#the-app-icon
+[design-launch]: /docs/archive/guessling-design.md#launch
 
 ## Security and privacy
 
@@ -1278,8 +1278,8 @@ product and legal ones.
 - [Product requirements](/docs/archive/guessling-prd.md): every requirement this
   document traces.
 - [Product](/docs/archive/guessling-product.md): what Guessling is and why.
-- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
-  tokens and rules a coding agent can follow.
+- [Design](/docs/archive/guessling-design.md): how Guessling looks, moves,
+  and sounds, as tokens and rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,
   and the pitch.
 - [RevenueCat notes][rc-notes], [Cloudflare notes][cf-notes],

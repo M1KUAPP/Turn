@@ -2,9 +2,9 @@
 
 How daily puzzle games look and move, how character-led apps make a mascot
 readable, how reactions are timed and built, and how to show an answer
-without relying on color. These notes feed `docs/DESIGN.md`, Guessling's
-design system and art direction, and build on the
-[daily puzzle notes][daily], which cover release times, share formats,
+without relying on color. These notes fed the
+[Guessling design](/docs/archive/guessling-design.md), now archived, and build
+on the [daily puzzle notes][daily], which cover release times, share formats,
 streaks, archives, and end-of-round screens. Every source was read on
 September 22, 2026, and judgment starts with "Synthesis:".
 

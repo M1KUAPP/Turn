@@ -3,14 +3,15 @@
 What iOS 26 and Guessling's stack, Expo SDK 57 on iOS 16.4 and later, make
 possible and require for the app's look: Liquid Glass, type, color, motion and
 haptics, the icon and launch screen, SF Symbols, the RevenueCat paywall, and the
-art for the App Store and Devpost. These notes feed `docs/DESIGN.md`, the design
-system and art direction, and check the plan in the
-[TRD's iPhone app section][trd-app] against the sources. Every source was read
-on September 22, 2026, so versions are as of that date, and judgment starts with
-"Synthesis:". What the [Apple notes][apple-notes] already hold on haptics,
-sound, sharing, and Accessibility Nutrition Labels, and what the
-[RevenueCat notes][rc-notes] hold on presenting a paywall and its buttons, is
-linked, not repeated.
+art for the App Store and Devpost. These notes fed Guessling's design system and
+art direction, now the
+[archived Guessling design](/docs/archive/guessling-design.md), and check the
+plan in the [TRD's iPhone app section][trd-app] against the sources. Every
+source was read on September 22, 2026, so versions are as of that date, and
+judgment starts with "Synthesis:". What the [Apple notes][apple-notes] already
+hold on haptics, sound, sharing, and Accessibility Nutrition Labels, and what
+the [RevenueCat notes][rc-notes] hold on presenting a paywall and its buttons,
+is linked, not repeated.
 
 Contents:
 

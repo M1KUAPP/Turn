@@ -3,10 +3,11 @@
 What motionsites.ai sells and on what terms, what a local corpus of 813
 prompts holds (483 of them from motionsites.ai), which design patterns recur
 across them, and which of those patterns suit a native iPhone game. These
-notes are the motionsites.ai part of the research behind `docs/DESIGN.md`,
-Guessling's design system and art direction for Shipaton's Best Game
-category. Every source was read on September 22, 2026, so prices, counts,
-and page text are as of that date, and judgment starts with "Synthesis:".
+notes are the motionsites.ai part of the research behind the
+[Guessling design](/docs/archive/guessling-design.md), now archived, made for
+Shipaton's Best Game category. Every source was read on September 22, 2026,
+so prices, counts, and page text are as of that date, and judgment starts
+with "Synthesis:".
 
 Contents:
 

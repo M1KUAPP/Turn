@@ -4,7 +4,7 @@
 > and [Turn](/docs/IDEA.md) replaced this idea. It's kept because the
 > [product](/docs/archive/guessling-product.md),
 > [PRD](/docs/archive/guessling-prd.md), [TRD](/docs/archive/guessling-trd.md),
-> and [design](/docs/DESIGN.md) documents were built on it.
+> and [design](/docs/archive/guessling-design.md) documents were built on it.
 
 Guessling is the app this team will ship for RevenueCat Shipaton 2026: a
 daily 20-questions game in which Jev answers any yes-or-no question a player
@@ -577,8 +577,8 @@ Still open, each with a safe default:
   do, as numbered requirements with checks.
 - [Technical requirements](/docs/archive/guessling-trd.md): how version 1.0 is
   built, traced to the product requirements.
-- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
-  tokens and rules a coding agent can follow.
+- [Design](/docs/archive/guessling-design.md): how Guessling looks, moves,
+  and sounds, as tokens and rules a coding agent can follow.
 - [Ideation log](/docs/research/ideation.md): the ten rounds that chose
   Guessling, with their scores.
 - [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
