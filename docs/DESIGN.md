@@ -21,6 +21,7 @@ Contents:
 1.  [Elevation](#elevation)
 1.  [Shapes](#shapes)
 1.  [Components](#components)
+1.  [Motion](#motion)
 1.  [See also](#see-also)
 
 ## Overview
@@ -830,6 +831,118 @@ Type:
   its action, such as "Send again".
 - **Rules.** One banner at a time; it stays until its state ends, with no
   timer; VoiceOver announces it when it appears.
+
+## Motion
+
+```yaml
+motion:
+  lead:
+    duration: 120
+    easing: outCubic
+  snap:
+    duration: 200
+    dampingRatio: 0.8
+  settle:
+    duration: 350
+    dampingRatio: 1
+  nod:
+    duration: 250
+    dampingRatio: 0.35
+  shake:
+    duration: 300
+    dampingRatio: 0.3
+  shrug:
+    duration: 160
+    dampingRatio: 1
+  hop:
+    duration: 320
+    dampingRatio: 0.45
+  fade:
+    duration: 200
+    easing: inOutQuad
+    reduceMotion: never
+```
+
+- **Springs.** Each spring token is a duration-based `withSpring` in
+  Reanimated 4.5.1, whose duration is perceptual: "Actual duration is 1.5
+  times the value of perceptual duration." A damping ratio of 1 doesn't
+  bounce; lower ones do, and only the character's moves go below 0.8
+  ([iOS notes on springs][ios-springs]).
+- **Timings.** `lead` and `fade` are `withTiming`; the fade is for opacity
+  and color only, and it keeps running under Reduce Motion:
+
+  ```ts
+  withSpring(value, { duration: 350, dampingRatio: 1 }) // settle
+  withTiming(value, { duration: 120, easing: Easing.out(Easing.cubic) }) // lead
+  withTiming(value, {
+    duration: 200,
+    easing: Easing.inOut(Easing.quad),
+    reduceMotion: ReduceMotion.Never
+  }) // fade
+  ```
+
+- **Only transform and opacity** animate, never layout; and no Reanimated
+  CSS animations or transitions, which ignore Reduce Motion.
+
+[ios-springs]: /docs/research/ios-design.md#springs-and-layout-animations
+
+### Reactions
+
+At 0 ms, when the answer arrives, everything that carries meaning lands at
+once: the bubble's badge and words swap in with `snap`, from 92% to full
+size; the chip fills in; the pip pops in with `snap`; the haptic fires; the
+sound starts; and VoiceOver announces the words. Then the body moves:
+
+| Reaction    | The moves                                                                                                                                                                                                                        | About  |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Nod         | Dips 8 points with `lead`, then springs back with `nod`, whose overshoot makes a second, smaller nod; eyes close to arcs                                                                                                         | 500 ms |
+| Head shake  | Turns 10° with `lead`, then springs back with `shake`, swinging past center and back; 8° at most for a wrong guess                                                                                                               | 550 ms |
+| Shrug       | Arms and brows up with `shrug`, a head tilt of 8°, a 200 ms hold, then down with `snap`                                                                                                                                          | 750 ms |
+| Celebration | Squashes to 92% with `lead`, hops 40 points with `hop`, the tuft fades from "?" to "!" at the top, and lands in a squash to 95%; 24 pieces of confetti in Marigold, Yes green, Table blue, and Index white fall for 900 ms, once | 1.2 s  |
+| Thinking    | After 300 ms without an answer, eyes and brows move with `settle`                                                                                                                                                                | 500 ms |
+| Resting     | Lids and body settle with `settle`                                                                                                                                                                                               | 500 ms |
+
+- **Anchored, not measured.** No maker states how long a nod or a shrug
+  should take, so these follow the notes' starting values: Wordle's shake
+  is 600 ms and its win bounce 1,000 ([game notes on timing][game-timing]).
+- **Never in the way.** The field is usable the moment an answer arrives;
+  a new answer cuts the running reaction short and starts its own from the
+  current pose.
+- **One blink** ends each reaction, then idle.
+
+[game-timing]: /docs/research/game-design.md#reaction-durations
+
+### Reduce Motion
+
+- **What changes.** Each reaction becomes a 200 ms `fade` from the current
+  pose to the reaction's key pose, drawn as two stacked copies of the rig;
+  there's no hop and no confetti; pips and the bubble's words fade in
+  instead of popping (A11Y-3).
+- **Reading the setting.** The app reads `AccessibilityInfo`'s
+  `isReduceMotionEnabled()` and follows `reduceMotionChanged`, because
+  `useReducedMotion()` keeps the value it had at launch.
+- **Keeping the fade.** Every fade sets `reduceMotion: ReduceMotion.Never`;
+  otherwise Reanimated's default makes it jump to its end, and a nod built
+  from a sequence shows nothing at all ([iOS notes on Reduce
+  Motion][ios-reduce-motion]).
+- **Screens.** Native transitions cross-fade under Reduce Motion by
+  themselves.
+
+[ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
+
+### Screen motion
+
+- **The stage** turns compact and back with `settle`, by scale and
+  translation.
+- **A new history row** fades in rising 8 points with `settle`; only the
+  fade under Reduce Motion.
+- **The end of a round.** The last reaction plays in full and holds for 1.5
+  seconds; the composer moves down off the screen with `settle`; the answer
+  card turns over, a 180° turn about its vertical axis in 500 ms with
+  `settle`, its face showing from 90°; and the result, the share row, and
+  the buttons rise in 60 ms apart. Under Reduce Motion, the card fades from
+  back to face, and the rest fades in together.
+- **Presses** use `snap`.
 
 ## See also
 
