@@ -30,7 +30,7 @@ are.
 - **Give each phrase its own Noul, and keep the state small.** TypeSafe's
   Noul page puts each candidate inside its own question's `instructions`,
   and its jaggedness page says unrelated state "costs you accuracy"; the
-  idea puts all 40 phrases in the state. See
+  idea first put all 40 phrases in the state. See
   [The request body for one partner line](#the-request-body-for-one-partner-line).
 - **Nothing caps 42 questions.** No page or schema limits the questions in a
   request; the budgets are 64k tokens per request and 32k for the state plus
@@ -45,9 +45,9 @@ are.
   and running out of credits has no documented status; the relay sets a short
   timeout, at most one retry, and a `signal`, and handles a 402 itself. See
   [Errors, retries, and timeouts](#errors-retries-and-timeouts).
-- **A line costs about 1,700 to 1,900 input tokens,** not the idea's 1,500:
-  up to about $0.00008, or $5.20 to $5.80 a year at 200 lines a day. See
-  [How a Jev request is billed](#how-a-jev-request-is-billed).
+- **A line costs about 1,700 to 1,900 input tokens,** not the 1,500 the idea
+  first estimated: up to about $0.00008, or $5.20 to $5.80 a year at 200 lines a
+  day. See [How a Jev request is billed](#how-a-jev-request-is-billed).
 - **Count free lines in one Durable Object per device.** KV can't count
   concurrent lines, D1 now fails hard past its Free limits, and a SQLite
   object per device counted exactly 20 of 25 simultaneous lines, and a
@@ -63,8 +63,8 @@ are.
   [Workers Logs and traces for the relay](#workers-logs-and-traces-for-the-relay).
 - **Test Store can sell a one-time product.** REST API v2 and the iOS SDK
   both handle non-consumable Test Store products; only the dashboard's form
-  is undocumented, and the idea's yearly fallback would lock Listen mode
-  after five hours. See
+  is undocumented, and the yearly fallback the idea first planned would lock
+  Listen mode after five hours. See
   [One-time products in Test Store](#one-time-products-in-test-store).
 - **Restore does nothing under Test Store.** The SDK only refetches the
   current customer, and the anonymous ID lives in UserDefaults, so a
@@ -135,7 +135,7 @@ makes per partner line, with 2 Choices and 40 Nouls, as the
 
 Synthesis: the body below keeps the state to the partner's line and the
 place and gives each phrase its own Noul, as the Noul page does. The idea's
-layout, with the 40 phrases in the state and `` `candidates[3]` `` in each
+first layout, with the 40 phrases in the state and `` `candidates[3]` `` in each
 Noul, is valid too, but then each Noul reads 39 phrases it isn't about; the
 evaluation can try both. Keys stay in code: "The key is not sent to the
 underlying model and is not used in inference." ([ts-api]) The relay sends
@@ -386,10 +386,10 @@ a missing key are in the [Jev notes][jev-api]. New, or specific to Turn:
   296-token example puts a request's fixed overhead near 280 tokens. A Turn
   request with 40 phrases of about 14 characters then comes to roughly 1,700
   to 1,900 input tokens, depending on the layout: about $0.00007 to $0.00008
-  a line, or $5.20 to $5.80 a year at 200 lines a day, against the idea's
-  "about 1,500" tokens and $4.60 ([idea-money]). TypeSafe's tokenizer isn't
-  published, so the relay should log `usage.input_tokens` from its first
-  real call.
+  a line, or $5.20 to $5.80 a year at 200 lines a day, against the
+  "about 1,500" tokens and $4.60 the idea first estimated ([idea-money]).
+  TypeSafe's tokenizer isn't published, so the relay should log
+  `usage.input_tokens` from its first real call.
 
 ## The relay on Cloudflare Workers
 
@@ -776,8 +776,8 @@ one-time `listen` purchase, sold in debug builds through Test Store only
   doesn't, `POST /v2/projects/{project_id}/products` with
   `"type": "non_consumable"`, which needs a secret key with
   `project_configuration:products:read_write` ([rc-api-v2-product]), is a
-  documented route. The idea's yearly fallback would lock Listen mode five
-  hours after a purchase, mid-judging, so it is no fallback.
+  documented route. The yearly fallback the idea first planned would lock Listen
+  mode five hours after a purchase, mid-judging, so it is no fallback.
 
 [rc-changelog]: https://www.revenuecat.com/changelog
 [rc-api-v2-product]: https://www.revenuecat.com/docs/api-v2/product
@@ -1207,18 +1207,21 @@ headed "Customer Obligations" and reads in full ([ts-mca]):
 
 ## Conflicts between sources
 
-- **The yearly fallback.** The idea says a yearly Test Store product "renews
+The idea was revised in the same pull request to follow this note, so the
+conflicts with it below describe the idea as first written.
+
+- **The yearly fallback.** The idea said a yearly Test Store product "renews
   at most five times before it ends" ([idea-risks]); Test Store's table ends
   a 1-year product after "5 hours" ([rc-test-store]).
-- **Committing the Test Store key.** The idea commits it for debug builds
+- **Committing the Test Store key.** The idea committed it for debug builds
   ([idea-repo]); RevenueCat's blogs keep it "out of version control" and
   suggest rotating it, while its docs are silent ([rc-blog-tests];
   [rc-blog-test-store]).
-- **Where the phrases go.** The idea puts the 40 candidates in the state
+- **Where the phrases go.** The idea put the 40 candidates in the state
   ([idea-jev]); TypeSafe's Noul page puts each candidate in its own question
   and its jaggedness page warns about unrelated state ([ts-noul];
   [ts-jagged]).
-- **Tokens per line.** The idea estimates "about 1,500" input tokens a line
+- **Tokens per line.** The idea estimated "about 1,500" input tokens a line
   ([idea-money]); TypeSafe's published usage implies about 1,700 to 1,900
   (see [How a Jev request is billed](#how-a-jev-request-is-billed)).
 - **Restore Purchases.** The idea puts Restore Purchases in Settings
