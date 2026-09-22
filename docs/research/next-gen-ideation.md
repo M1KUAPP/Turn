@@ -13,6 +13,7 @@ builds on.
 Contents:
 
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
+1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 
 ## Round 1: constraints and rubric
 
@@ -137,3 +138,68 @@ higher on technical ambition, or round 7 must say why not.
 
 **Decision:** round 3 screens with N1 to N7, and rounds 4, 7, and 10 score
 with this rubric.
+
+## Round 2: thirty candidates
+
+**Question:** what could a student team build that is more ambitious than
+Guessling and depends on Jev?
+
+**Method:** three subagents, each given round 1 and the four notes, wrote ten
+ideas apiece through one lens without seeing the others' work: A, students'
+own problems; B, capabilities new on the phone in 2026; and C, systems that
+need many fast, calibrated decisions a minute. Each idea named its user, why
+it matters, the system from input to Jev's decisions to action, Jev's
+questions, the purchase, the video's first 15 seconds, the riskiest
+assumption, and how to cut it.
+
+| #   | Candidate    | Lens | Pitch                                                                                                   |
+| --- | ------------ | ---- | ------------------------------------------------------------------------------------------------------- |
+| 1   | Chorus       | A    | Group meetings a Deaf student can follow: every phone captions its owner, and Jev flags what's for them |
+| 2   | Qualified    | A    | Twenty questions that find the scholarships a student qualifies for, re-screened after every answer     |
+| 3   | Same Boat    | A    | Office hours that group students stuck on the same bug, merged live on the TA's iPad                    |
+| 4   | Headcount    | A    | Friends on a night out, where Jev reads motion, battery, and check-ins and nudges the nearest friend    |
+| 5   | Lull         | A    | Study spots ranked for each student's senses from on-device sound labels, never audio                   |
+| 6   | Finders      | A    | Campus lost and found that matches a photo to a report and checks the owner's hidden detail             |
+| 7   | Fair Game    | A    | A career-fair plan that re-ranks booths as the student scans banners and records notes                  |
+| 8   | Porchlight   | A    | Friends get a vetted nudge when someone's daily check-ins go quiet; the words stay private              |
+| 9   | Bench        | A    | A hands-free lab notebook: spoken notes tick protocol steps and flag deviations                         |
+| 10  | Backed       | A    | Every citation in an essay checked against its source while the student writes                          |
+| 11  | Bench        | B    | Talk through a lab protocol hands-free: steps tick, values log, timers start, and slips get caught      |
+| 12  | Crosstalk    | B    | Friends' phones caption their owners, and Jev taps a hard-of-hearing user when a line needs them        |
+| 13  | Tableside    | B    | Players say what they do, and the game master's phone calls the check and its difficulty                |
+| 14  | Pointer      | B    | AAC that reads the place and a partner's question and puts the user's own phrase first                  |
+| 15  | Cue          | B    | The stage manager's script follows the actors and stands by each cue a line early                       |
+| 16  | Muster       | B    | Volunteers speak reports, and Jev triages and routes them to the nearest free volunteer                 |
+| 17  | Proof        | B    | A photo-riddle hunt where Jev rules on every photo and rival teams vote on close calls                  |
+| 18  | Range        | B    | A strapped-on phone counts rehab reps, and "that's sharp" stops the set by the physio's rules           |
+| 19  | Rattle       | B    | A car noise, then Jev narrows 30 faults by choosing each next question and rates the urgency            |
+| 20  | Plainly      | B    | The on-device model rewrites a notice in Easy Read, and Jev checks each sentence against the source     |
+| 21  | Scenekeeper  | C    | Music and lights that follow the game master's story as it turns                                        |
+| 22  | Crewline     | C    | Event radio calls become merged, ranked, and routed tickets within a second                             |
+| 23  | Turn         | C    | AAC that ranks the user's own phrases by what a partner just said                                       |
+| 24  | Gavel        | C    | Spoken Robert's Rules, tracked live on every member's phone                                             |
+| 25  | Close Enough | C    | A live quiz that grades a room's free-text answers within a second                                      |
+| 26  | Tableside    | C    | Threaded group captions for hard-of-hearing adults that buzz when they're asked something               |
+| 27  | Standby      | C    | Sound cues that fire on the line, even when the actor paraphrases                                       |
+| 28  | Orders       | C    | A real-time tactics game where the player commands a squad in plain English                             |
+| 29  | Waypoint     | C    | A sign reader for blind travelers that voices only the signs that serve their goal                      |
+| 30  | Flowsheet    | C    | A live debate flow that links rebuttals to arguments and flags the dropped ones                         |
+
+Seven ideas repeat another's core and are merged into the first:
+
+- **1, 12, and 26:** live captions that tell a hard-of-hearing user when a
+  line needs them. Kept as 1, Chorus, for meetings and meals alike.
+- **9 and 11:** a hands-free lab notebook, kept as 9, Bench.
+- **13 and 21:** a companion for a tabletop game master, kept as 21,
+  Scenekeeper, with 13's check calls folded in.
+- **14 and 23:** ranking an AAC user's own phrases, kept as 23, Turn, with
+  14's place and typing context folded in.
+- **15 and 27:** a script that follows the actors, kept as 15, Cue.
+- **16 and 22:** triage for event volunteers' spoken reports, kept as 22,
+  Crewline.
+
+Nineteen of the 30 turn live speech into text for Jev, and most of the rest
+read the camera or typed text; the three lenses converged on perception on
+the phone, Jev deciding per event, and state shared between phones.
+
+**Decision:** 23 distinct candidates go to screening.
