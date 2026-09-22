@@ -1124,7 +1124,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
 
 | Ranker       | What it does                                                                                                                                        |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fallback`   | the place's phrases in the bank's order, the phone's offline view before any line                                                                   |
+| `place`      | the place's phrases in the bank's order, what the phone shows before any line; the phone's own ranking of a line is `keyword`                       |
 | `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                           |
 | `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off                  |
 | `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                                               |
