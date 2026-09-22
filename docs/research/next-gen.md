@@ -954,8 +954,8 @@ and [RepoLens][p-repolens], a macOS workspace for research code.
   official document" through a manual form instead ([f-alt-verify]).
 - **Minors in other categories.** Before August 31, managers told a
   14-year-old that joining "as part of a team, as long as at least one team
-  member is 18 or older" would work, and told a 12-year-old using his
-  father's account that "your project is eligible for all categories". Later
+  member is 18 or older" would work, and told a 12-year-old using their
+  dad's account that "your project is eligible for all categories". Later
   manager replies apply the updated rules: minors and teams with minors enter
   Next Gen only ([f-under-18]; [f-checks]; [f-age-12]).
 - **Guardian consent timing.** The rules want the consent form "completed

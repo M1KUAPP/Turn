@@ -311,7 +311,7 @@ ratings on the listing.
 - Synthesis: Turn would still be the gallery's only AAC entry, as the earlier
   [SaySo check][prior-sayso] found. SideBell shares Turn's users but not its
   job, and shows that at least one builder has already pitched stroke and ALS to
-  this year's judges.
+  the 2026 judges.
 
 [s-augmentative]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=augmentative
 [s-nonverbal]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=nonverbal
@@ -762,7 +762,7 @@ listens to the table. Counts are US ratings on the listing.
   materials" ([Apple][s-fm-safety]), which combat narration may trip, and it
   returns no probabilities ([simpler methods](#what-simpler-methods-offer)).
 - Synthesis: for mood, a trained classifier or keyword rules reach usable
-  accuracy, and Bardy ships keywords today; the published lesson is that
+  accuracy, and Bardy already ships keywords; the published lesson is that
   stability matters more than accuracy. Jev's added value would be the effects,
   intensity, and check calls, for which no measurement turned up.
 
@@ -1779,7 +1779,7 @@ What no source settled on September 22, 2026:
   Recognition ([technology notes][tech-speech]). Whether a phone near its owner
   also transcribes other nearby speakers isn't documented.
 - **Turn.** No study measures the harm of a mis-ranked or mis-tapped AAC phrase,
-  or how long partners wait today; Rejoin Voice and MaTalk AI have 1 and 7
+  or how long partners wait; Rejoin Voice and MaTalk AI have 1 and 7
   ratings, so there is no usage evidence for listening AAC yet. No Android page
   read offers third-party apps a voice cloned from the user, like Personal
   Voice.
