@@ -13,6 +13,7 @@ decision.
 Contents:
 
 1.  [Overview](#overview)
+1.  [Influences and trends](#influences-and-trends)
 1.  [See also](#see-also)
 
 ## Overview
@@ -85,6 +86,78 @@ Each principle settles a trade-off.
   since the app runs at phone size there (COMPAT-3); an image share card,
   since results share as text (SHARE-1); and any appearance setting inside
   the app.
+
+## Influences and trends
+
+Four notes, read on September 22, 2026, surveyed what's trending and what
+applies:
+
+- **motionsites.ai** sells prompts for motion-heavy landing pages. Of the
+  483 of its prompts in the team's corpus, 52.0% build dark pages and 18.0%
+  light ones, 70.6% use a video, and 35.6% use liquid glass or
+  glassmorphism; its house pairing is Inter with Instrument Serif; and its
+  newest prompts, from August 2026, are its longest, with exact tokens, "do
+  not" lists, reduced motion, and acceptance checks
+  ([motionsites.ai notes][ms-findings]).
+- **The wider landscape.** Google introduced DESIGN.md with Stitch on March
+  18, 2026, and opened its draft specification on April 21. Of the AI
+  interface generators, only Bolt.new emits an Expo app. Anthropic's design
+  skill lists five looks that generated design "clusters around", the first
+  a warm cream background with a serif display and a terracotta accent.
+  Apple's Liquid Glass and Google's Material 3 Expressive both moved motion
+  to springs ([trends notes][ft-findings]).
+- **iOS 26 and Expo SDK 57.** Liquid Glass belongs to controls; SDK 57
+  pins Reanimated 4.5.1, `expo-glass-effect`, and `expo-symbols`; and four
+  parts of the TRD's first plan, Dark Mode, the Reduce Motion fade, the
+  audio mode, and text scaling, didn't work as written and are now fixed in
+  the [TRD's iPhone app section][trd-app] ([iOS notes][ios-findings]).
+- **Puzzle games and characters.** The daily games players know are silent
+  and recognized by their colors; character apps nod on one axis and shake
+  on another; and 🟩 and 🟥 nearly merge for deuteranopes
+  ([game and character notes][game-findings]).
+
+What Guessling does with them:
+
+- **Adopted.**
+  - A DESIGN.md with exact tokens, a short list of don'ts, and checks, as
+    Google's format and the newest motionsites.ai prompts have.
+  - Springs for every move, kept short, as Apple and Google now use.
+  - One signature accent with one job: Marigold, for the Guessling and the
+    primary action.
+  - A named motion for each reaction.
+  - A celebration recipe, a squash, a jump, and confetti, played once, on
+    the solve.
+  - The resting state as the final state, so no reaction disappears under
+    Reduce Motion.
+- **Adapted.**
+  - Liquid Glass comes from the system; in Guessling's own views it's
+    only on the composer, never on the character, the hint, or the
+    answers.
+  - Expressive type becomes heavy SF Pro Rounded for the Guessling's
+    words: character without a bundled font.
+  - Cinematic video becomes the demo video and the screenshots, never a
+    background.
+  - Dark-first becomes both appearances, following the system.
+- **Rejected.**
+  - Background video, parallax, scroll-driven reveals, custom cursors, and
+    blur-in text: web habits, and a round is one screen.
+  - Glass on every card, near-black pages, and purple or neon gradients:
+    the sameness Anthropic, Google, and Webflow each warn about.
+  - Inter with an italic serif display: the corpus's house pairing, and
+    close to Anthropic's first generated look.
+  - Idle loops: Apple asks for motion with a purpose, and WCAG 2.2.2 for a
+    way to stop motion that runs past five seconds.
+  - Copying prompts: motionsites.ai grants only "For personal & client
+    work", so this document takes patterns from the notes, and the app
+    ships no media or font that a prompt points to
+    ([motionsites.ai license][ms-license]).
+
+[ms-findings]: /docs/research/motionsites.md#findings-for-designmd
+[ft-findings]: /docs/research/frontend-trends.md#findings-for-designmd
+[trd-app]: /docs/TRD.md#the-iphone-app
+[ios-findings]: /docs/research/ios-design.md#findings-for-designmd
+[ms-license]: /docs/research/motionsites.md#license-and-terms
+[game-findings]: /docs/research/game-design.md#findings-for-designmd
 
 ## See also
 
