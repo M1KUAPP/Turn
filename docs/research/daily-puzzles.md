@@ -720,9 +720,9 @@ What the sources don't say that the PRD needs, as of September 22, 2026:
 
 ## See also
 
-- [Shipaton 2026 idea](/docs/IDEA.md), especially
-  [What the app does](/docs/IDEA.md#what-the-app-does) and
-  [Monetization](/docs/IDEA.md#monetization).
+- [Shipaton 2026 idea](/docs/archive/guessling-idea.md), especially
+  [What the app does](/docs/archive/guessling-idea.md#what-the-app-does) and
+  [Monetization](/docs/archive/guessling-idea.md#monetization).
 - [Evidence for the top five ideas](/docs/research/idea-evidence.md#hunch-a-daily-20-questions-game),
   which covers the rival apps and Apple News+'s share summary.
 - [Jev research notes](/docs/research/jev.md), on the model that answers
@@ -758,5 +758,5 @@ What the sources don't say that the PRD needs, as of September 22, 2026:
 [apple-nr-quartiles]: https://www.apple.com/newsroom/2024/05/apple-news-plus-introduces-quartiles-a-new-game-and-offline-mode-for-subscribers/
 [apple-nr-emoji]: https://www.apple.com/newsroom/2025/07/apple-news-plus-introduces-emoji-game/
 [wp-20q]: https://en.wikipedia.org/w/index.php?title=Twenty_questions&oldid=1373060994
-[idea-what]: /docs/IDEA.md#what-the-app-does
-[idea-money]: /docs/IDEA.md#monetization
+[idea-what]: /docs/archive/guessling-idea.md#what-the-app-does
+[idea-money]: /docs/archive/guessling-idea.md#monetization

@@ -1,13 +1,18 @@
 # Guessling product
 
+> **Superseded on September 22, 2026.** This document describes Guessling,
+> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
+> Award, replaced it, and this document's links to the idea point at the
+> [archived Guessling idea](/docs/archive/guessling-idea.md).
+
 Guessling is a daily 20-questions game for iPhone: everyone gets the same
 hidden thing each day and finds it by typing yes-or-no questions in their
 own words. This document says what the product is, who it's for, the
 principles behind its decisions, and where it goes after version 1.0. The
-[idea](/docs/IDEA.md) records why the team chose it for Shipaton 2026, the
-[product requirements](/docs/PRD.md) say what version 1.0 must do, and the
-[technical requirements](/docs/TRD.md) say how it's built. Facts are as of
-September 22, 2026.
+[idea](/docs/archive/guessling-idea.md) records why the team chose it for
+Shipaton 2026, the [product requirements](/docs/PRD.md) say what version 1.0
+must do, and the [technical requirements](/docs/TRD.md) say how it's built.
+Facts are as of September 22, 2026.
 
 Contents:
 
@@ -43,8 +48,8 @@ Contents:
 - **Status:** version 1.0 goes to App Review on Thursday, September 24,
   2026, on the [idea's schedule][idea-schedule].
 
-[idea-jev]: /docs/IDEA.md#how-jev-fits
-[idea-schedule]: /docs/IDEA.md#schedule-to-september-30
+[idea-jev]: /docs/archive/guessling-idea.md#how-jev-fits
+[idea-schedule]: /docs/archive/guessling-idea.md#schedule-to-september-30
 
 ## Vision
 
@@ -197,7 +202,7 @@ The moments that carry the product:
 - **Sound and haptics:** a short, distinct cue for each answer, which the
   player can turn off; they're a Should for version 1.0.
 
-[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
+[idea-open]: /docs/archive/guessling-idea.md#assumptions-and-open-questions
 
 ## Puzzles
 
@@ -254,7 +259,7 @@ The moments that carry the product:
   sale at least 31 days ahead and keeping the archive open until the last
   subscription ends ([Apple notes on subscriptions][apple-subs]).
 
-[idea-money]: /docs/IDEA.md#monetization
+[idea-money]: /docs/archive/guessling-idea.md#monetization
 [prd-pay]: /docs/PRD.md#the-paywall-and-purchases
 [apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
 
@@ -291,8 +296,8 @@ is named; the rest are watched and reported as rates, as the idea's
   Conversion chart, and revenue. The context's [benchmarks][ctx-money] give
   a reference: a median 25.5% of trials of 4 days or less become paid.
 
-[idea-launch]: /docs/IDEA.md#launch-and-pitch
-[idea-risks]: /docs/IDEA.md#risks
+[idea-launch]: /docs/archive/guessling-idea.md#launch-and-pitch
+[idea-risks]: /docs/archive/guessling-idea.md#risks
 [prd-perf]: /docs/PRD.md#performance
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
 
@@ -335,8 +340,8 @@ is named; the rest are watched and reported as rates, as the idea's
 
 ## See also
 
-- [Idea](/docs/IDEA.md): why Guessling was chosen for Shipaton 2026, its
-  categories, schedule, risks, and pitch.
+- [Idea](/docs/archive/guessling-idea.md): why Guessling was chosen for Shipaton
+  2026, its categories, schedule, risks, and pitch.
 - [Product requirements](/docs/PRD.md): what version 1.0 must do, as
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built.
@@ -349,4 +354,4 @@ is named; the rest are watched and reported as rates, as the idea's
 - [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
   and terms.
 
-[idea-problem]: /docs/IDEA.md#problem-and-audience
+[idea-problem]: /docs/archive/guessling-idea.md#problem-and-audience
