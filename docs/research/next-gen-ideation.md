@@ -3,12 +3,15 @@
 The ten rounds of ideation behind [the idea](/docs/IDEA.md), run on September
 22, 2026, after the team gave this feedback on its first idea, Guessling:
 "The idea is too simple and our team is aiming for Next Gen category." The
-[first log](ideation.md) records why Guessling was chosen for Best Game. This
-one starts from the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md),
-the [Next Gen notes](next-gen.md), the [technology notes](next-gen-tech.md),
-the [Jev notes](jev.md), and the [Jev pattern notes](jev-patterns.md), and
-narrows thirty candidates to one; each round ends with a decision the next one
-builds on.
+[first log](/docs/research/ideation.md) records why Guessling was chosen for
+Best Game. This one starts from the [brief](/docs/BRIEF.md), the
+[context](/docs/CONTEXT.md), the [Next Gen notes](/docs/research/next-gen.md),
+the [technology notes](/docs/research/next-gen-tech.md), the
+[Jev notes](/docs/research/jev.md), and the
+[Jev pattern notes](/docs/research/jev-patterns.md), and narrows thirty
+candidates to one; each round ends with a decision the next one builds on.
+Rounds 8 to 10 record the design as each round decided it; where the idea
+differs, it holds the current version.
 
 Contents:
 
@@ -85,14 +88,14 @@ An idea that breaks one is out.
   data it receives. That rules out covertly transcribing lectures or
   conversations. ([data handling][jev-data])
 
-[ng-submit]: next-gen.md#what-a-next-gen-entry-must-submit
-[jev-what]: jev.md#what-jev-is
-[ng-judge]: next-gen.md#what-a-judge-needs-to-run-the-app
-[ng-free]: next-gen.md#building-without-a-paid-developer-account
+[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
+[jev-what]: /docs/research/jev.md#what-jev-is
+[ng-judge]: /docs/research/next-gen.md#what-a-judge-needs-to-run-the-app
+[ng-free]: /docs/research/next-gen.md#building-without-a-paid-developer-account
 [ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
-[ng-minors]: next-gen.md#minors-ages-and-accounts
-[jev-data]: jev.md#offline-behavior-and-data-handling
-[jev-store]: jev.md#store-review-and-jev
+[ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
+[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
+[jev-store]: /docs/research/jev.md#store-review-and-jev
 
 ### Assumptions
 
@@ -142,7 +145,7 @@ Guessling is scored in round 4 as a control, with the same rubric. The idea
 chosen in round 7 must beat Guessling's total and score at least 2 points
 higher on technical ambition, or round 7 must say why not.
 
-[ng-criteria]: next-gen.md#next-gen-criteria-and-scoring
+[ng-criteria]: /docs/research/next-gen.md#next-gen-criteria-and-scoring
 
 **Decision:** round 3 screens with N1 to N7, and rounds 4, 7, and 10 score
 with this rubric.
@@ -160,38 +163,38 @@ it matters, the system from input to Jev's decisions to action, Jev's
 questions, the purchase, the video's first 15 seconds, the riskiest
 assumption, and how to cut it.
 
-| #   | Candidate    | Lens | Pitch                                                                                                   |
-| --- | ------------ | ---- | ------------------------------------------------------------------------------------------------------- |
-| 1   | Chorus       | A    | Group meetings a Deaf student can follow: every phone captions its owner, and Jev flags what's for them |
-| 2   | Qualified    | A    | Twenty questions that find the scholarships a student qualifies for, re-screened after every answer     |
-| 3   | Same Boat    | A    | Office hours that group students stuck on the same bug, merged live on the TA's iPad                    |
-| 4   | Headcount    | A    | Friends on a night out, where Jev reads motion, battery, and check-ins and nudges the nearest friend    |
-| 5   | Lull         | A    | Study spots ranked for each student's senses from on-device sound labels, never audio                   |
-| 6   | Finders      | A    | Campus lost and found that matches a photo to a report and checks the owner's hidden detail             |
-| 7   | Fair Game    | A    | A career-fair plan that re-ranks booths as the student scans banners and records notes                  |
-| 8   | Porchlight   | A    | Friends get a vetted nudge when someone's daily check-ins go quiet; the words stay private              |
-| 9   | Bench        | A    | A hands-free lab notebook: spoken notes tick protocol steps and flag deviations                         |
-| 10  | Backed       | A    | Every citation in an essay checked against its source while the student writes                          |
-| 11  | Bench        | B    | Talk through a lab protocol hands-free: steps tick, values log, timers start, and slips get caught      |
-| 12  | Crosstalk    | B    | Friends' phones caption their owners, and Jev taps a hard-of-hearing user when a line needs them        |
-| 13  | Tableside    | B    | Players say what they do, and the game master's phone calls the check and its difficulty                |
-| 14  | Pointer      | B    | AAC that reads the place and a partner's question and puts the user's own phrase first                  |
-| 15  | Cue          | B    | The stage manager's script follows the actors and stands by each cue a line early                       |
-| 16  | Muster       | B    | Volunteers speak reports, and Jev triages and routes them to the nearest free volunteer                 |
-| 17  | Proof        | B    | A photo-riddle hunt where Jev rules on every photo and rival teams vote on close calls                  |
-| 18  | Range        | B    | A strapped-on phone counts rehab reps, and "that's sharp" stops the set by the physio's rules           |
-| 19  | Rattle       | B    | A car noise, then Jev narrows 30 faults by choosing each next question and rates the urgency            |
-| 20  | Plainly      | B    | The on-device model rewrites a notice in Easy Read, and Jev checks each sentence against the source     |
-| 21  | Scenekeeper  | C    | Music and lights that follow the game master's story as it turns                                        |
-| 22  | Crewline     | C    | Event radio calls become merged, ranked, and routed tickets within a second                             |
-| 23  | Turn         | C    | AAC that ranks the user's own phrases by what a partner just said                                       |
-| 24  | Gavel        | C    | Spoken Robert's Rules, tracked live on every member's phone                                             |
-| 25  | Close Enough | C    | A live quiz that grades a room's free-text answers within a second                                      |
-| 26  | Tableside    | C    | Threaded group captions for hard-of-hearing adults that buzz when they're asked something               |
-| 27  | Standby      | C    | Sound cues that fire on the line, even when the actor paraphrases                                       |
-| 28  | Orders       | C    | A real-time tactics game where the player commands a squad in plain English                             |
-| 29  | Waypoint     | C    | A sign reader for blind travelers that voices only the signs that serve their goal                      |
-| 30  | Flowsheet    | C    | A live debate flow that links rebuttals to arguments and flags the dropped ones                         |
+| #   | Candidate               | Lens | Pitch                                                                                                                               |
+| --- | ----------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Chorus                  | A    | Group meetings a Deaf student can follow: every phone captions its owner, and Jev flags what's for them                             |
+| 2   | Qualified               | A    | Twenty questions that find the scholarships a student qualifies for, re-screened after every answer                                 |
+| 3   | Same Boat               | A    | Office hours that group students stuck on the same bug, merged live on the TA's iPad                                                |
+| 4   | Headcount               | A    | Friends on a night out, where Jev reads motion, battery, and check-ins and nudges the nearest friend                                |
+| 5   | Lull                    | A    | Study spots ranked for each student's senses from on-device sound labels, never audio                                               |
+| 6   | Finders                 | A    | Campus lost and found that matches a photo to a report and checks the owner's hidden detail                                         |
+| 7   | Fair Game               | A    | A career-fair plan that re-ranks booths as the student scans banners and records notes                                              |
+| 8   | Porchlight              | A    | Friends get a vetted nudge when someone's daily check-ins go quiet; the words stay private                                          |
+| 9   | Bench                   | A    | A hands-free lab notebook: spoken notes tick protocol steps and flag deviations                                                     |
+| 10  | Backed                  | A    | Every citation in an essay checked against its source while the student writes                                                      |
+| 11  | Bench                   | B    | Talk through a lab protocol hands-free: steps tick, values log, timers start, and slips get caught                                  |
+| 12  | Crosstalk               | B    | Friends' phones caption their owners, and Jev taps a hard-of-hearing user when a line needs them                                    |
+| 13  | Tableside (game master) | B    | Players say what they do, and the game master's phone calls the check and its difficulty                                            |
+| 14  | Pointer                 | B    | Augmentative and alternative communication (AAC) that reads the place and a partner's question and puts the user's own phrase first |
+| 15  | Cue                     | B    | The stage manager's script follows the actors and stands by each cue a line early                                                   |
+| 16  | Muster                  | B    | Volunteers speak reports, and Jev triages and routes them to the nearest free volunteer                                             |
+| 17  | Proof                   | B    | A photo-riddle hunt where Jev rules on every photo and rival teams vote on close calls                                              |
+| 18  | Range                   | B    | A strapped-on phone counts rehab reps, and "that's sharp" stops the set by the physio's rules                                       |
+| 19  | Rattle                  | B    | A car noise, then Jev narrows 30 faults by choosing each next question and rates the urgency                                        |
+| 20  | Plainly                 | B    | The on-device model rewrites a notice in Easy Read, and Jev checks each sentence against the source                                 |
+| 21  | Scenekeeper             | C    | Music and lights that follow the game master's story as it turns                                                                    |
+| 22  | Crewline                | C    | Event radio calls become merged, ranked, and routed tickets within a second                                                         |
+| 23  | Turn                    | C    | AAC that ranks the user's own phrases by what a partner just said                                                                   |
+| 24  | Gavel                   | C    | Spoken Robert's Rules, tracked live on every member's phone                                                                         |
+| 25  | Close Enough            | C    | A live quiz that grades a room's free-text answers within a second                                                                  |
+| 26  | Tableside (captions)    | C    | Threaded group captions for hard-of-hearing adults that buzz when they're asked something                                           |
+| 27  | Standby                 | C    | Sound cues that fire on the line, even when the actor paraphrases                                                                   |
+| 28  | Orders                  | C    | A real-time tactics game where the player commands a squad in plain English                                                         |
+| 29  | Waypoint                | C    | A sign reader for blind travelers that voices only the signs that serve their goal                                                  |
+| 30  | Flowsheet               | C    | A live debate flow that links rebuttals to arguments and flags the dropped ones                                                     |
 
 Seven ideas repeat another's core and are merged into one of them:
 
@@ -335,8 +338,9 @@ Backed misses the cut by half a point. They go to round 5.
 sources: rival apps, the 2026 gallery, evidence that the problem matters,
 the devices a student team has, Jev's jagged edges, whether plain code,
 embeddings, or Apple's on-device model could do Jev's job, and the harm a
-wrong decision could do. The [evidence notes](next-gen-evidence.md) have the
-sources. A score changes only where the evidence changes it.
+wrong decision could do. The
+[evidence notes](/docs/research/next-gen-evidence.md) have the sources. A score
+changes only where the evidence changes it.
 
 - **Turn.** For: the best-documented need of the five, with "approximately 5
   million Americans" who may benefit from AAC by ASHA's figure, and aided
@@ -617,10 +621,10 @@ on AAC pricing, and Next Gen's purchase rules to Turn.
   need a Stripe account; and ads, which have no place in someone's voice.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
-[ev-sayso]: idea-evidence.md#sayso-an-aac-phrase-finder
-[ev-turn-rivals]: next-gen-evidence.md#turn-rival-apps
-[jev-prices]: jev.md#jev-prices
-[expo-server]: revenuecat-expo.md#checking-entitlements-from-a-server
+[ev-sayso]: /docs/research/idea-evidence.md#sayso-an-aac-phrase-finder
+[ev-turn-rivals]: /docs/research/next-gen-evidence.md#turn-rival-apps
+[jev-prices]: /docs/research/jev.md#jev-prices
+[expo-server]: /docs/research/revenuecat-expo.md#checking-entitlements-from-a-server
 [rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
 
 **Decision:** one entitlement, `listen`, sold once for $24.99 through a
@@ -704,9 +708,9 @@ from the video on September 28.
   announced. The Test Store public SDK key is committed for debug builds, a
   choice no RevenueCat page settles; no secret key is.
 
-[ev-turn-devices]: next-gen-evidence.md#turn-on-students-devices
-[jp-routing]: jev-patterns.md#confidence-gated-routing-pattern
-[cf-secrets]: cloudflare-workers.md#secrets-configuration-and-wrangler
+[ev-turn-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
+[jp-routing]: /docs/research/jev-patterns.md#confidence-gated-routing-pattern
+[cf-secrets]: /docs/research/cloudflare-workers.md#secrets-configuration-and-wrangler
 
 ### Schedule to September 30
 
@@ -804,4 +808,4 @@ Triggers:
 
 **Decision:** go. Turn is the idea, and `docs/IDEA.md` states it.
 
-[ng-purchase]: next-gen.md#the-purchase-requirement-for-next-gen
+[ng-purchase]: /docs/research/next-gen.md#the-purchase-requirement-for-next-gen
