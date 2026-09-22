@@ -121,19 +121,20 @@ The path of one question:
 
 ### Versions on September 22, 2026
 
-| Part               | Choice                                                      | Why                                                   |
-| ------------------ | ----------------------------------------------------------- | ----------------------------------------------------- |
-| App framework      | Expo SDK 57 (`expo` 57.0.24), React Native 0.86.3           | The latest stable SDK; SDK 58 is a beta               |
-| Language           | TypeScript, in the app, the Worker, and the scripts         | One language, as the idea chose                       |
-| Minimum iOS        | 16.4, Expo SDK 57's floor                                   | Every device then uses StoreKit 2 (COMPAT-1)          |
-| Build image        | EAS `macos-tahoe-26.5-xcode-26.6`, pinned                   | Xcode 26.6 with the iOS 26.5 SDK (COMPAT-2)           |
-| Purchases          | `react-native-purchases` and `-ui` 10.10.1                  | RevenueCat's SDK and Paywalls; needs a dev build      |
-| Backend            | Cloudflare Workers Paid, Wrangler 4.136.1, `wrangler.jsonc` | Free caps 100,000 requests a day and 10 ms of CPU     |
-| Jev client         | `@typesafe-ai/sdk` 0.6.0, every option set in code          | Ran in a local workerd test; defaults wait too long   |
-| Jev model          | `jev-1.13.0`, pinned                                        | An alias "moves when a new release ships"             |
-| Worker tests       | `@cloudflare/vitest-plugin` 1.2.1 with Vitest 4.1           | The plugin needs Vitest 4.1, not 5                    |
-| Jev mocks in tests | `@msw/cloudflare` 0.0.1 with `msw` 2.14 or later            | Cloudflare's documented way to mock outbound requests |
-| Package manager    | Bun, already used by this repository                        |                                                       |
+| Part                   | Choice                                                                                                                            | Why                                                                      |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| App framework          | Expo SDK 57 (`expo` 57.0.24), React Native 0.86.3                                                                                 | The latest stable SDK; SDK 58 is a beta                                  |
+| Language               | TypeScript, in the app, the Worker, and the scripts                                                                               | One language, as the idea chose                                          |
+| Minimum iOS            | 16.4, Expo SDK 57's floor                                                                                                         | Every device then uses StoreKit 2 (COMPAT-1)                             |
+| Build image            | EAS `macos-tahoe-26.5-xcode-26.6`, pinned                                                                                         | Xcode 26.6 with the iOS 26.5 SDK (COMPAT-2)                              |
+| Purchases              | `react-native-purchases` and `-ui` 10.10.1                                                                                        | RevenueCat's SDK and Paywalls; needs a dev build                         |
+| Drawing, motion, sound | Reanimated 4.5.1, react-native-svg 15.15.4, `expo-glass-effect`, `expo-symbols`, and `expo-haptics` ~57.0.3, `expo-audio` ~57.0.5 | SDK 57's pins; `npx expo install` picks them ([iOS notes][ios-versions]) |
+| Backend                | Cloudflare Workers Paid, Wrangler 4.136.1, `wrangler.jsonc`                                                                       | Free caps 100,000 requests a day and 10 ms of CPU                        |
+| Jev client             | `@typesafe-ai/sdk` 0.6.0, every option set in code                                                                                | Ran in a local workerd test; defaults wait too long                      |
+| Jev model              | `jev-1.13.0`, pinned                                                                                                              | An alias "moves when a new release ships"                                |
+| Worker tests           | `@cloudflare/vitest-plugin` 1.2.1 with Vitest 4.1                                                                                 | The plugin needs Vitest 4.1, not 5                                       |
+| Jev mocks in tests     | `@msw/cloudflare` 0.0.1 with `msw` 2.14 or later                                                                                  | Cloudflare's documented way to mock outbound requests                    |
+| Package manager        | Bun, already used by this repository                                                                                              |                                                                          |
 
 - The Worker's `compatibility_date` is the newest date Wrangler accepts on
   the day the project starts; on September 21, Wrangler 4.136.1 refused
@@ -149,6 +150,7 @@ The path of one question:
 
 [cf-nodejs]: /docs/research/cloudflare-workers.md#nodejs-compatibility-by-default
 [rc-eas-update]: /docs/research/revenuecat-expo.md#eas-update-and-app-store-rules
+[ios-versions]: /docs/research/ios-design.md#package-versions-in-sdk-57
 
 ### Repository layout
 
