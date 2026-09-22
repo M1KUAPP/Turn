@@ -142,8 +142,10 @@ says how each is built.
   question from reaching TypeSafe, and switching them back on lets the next
   one through.
 - **NOTICE-5, Must.** When the server's notice changes version, the app
-  shows the new notice before the next question can reach TypeSafe. Check:
-  raising the version on the server brings the notice back.
+  shows the new notice before the next question can reach TypeSafe, and
+  the server answers a question sent under an older version as if AI
+  answers were off. Check: raising the version on the server brings the
+  notice back, and a request with the old version reaches no Jev call.
 
 [idea-jev]: /docs/IDEA.md#how-jev-fits
 
@@ -313,8 +315,9 @@ https://apps.apple.com/app/id<APP_ID>
   played. Check: three days after the first daily date, the list shows #11
   to #13 and #1 to #10.
 - **ARCHIVE-2, Must.** Without Guessling+, every archive puzzle shows as
-  locked, and tapping one opens the paywall. Check: a free player sees
-  locks.
+  locked, and tapping one opens the paywall, except a round of the
+  player's that TODAY-5 keeps open. Check: a free player sees locks, and an
+  unfinished round from yesterday opens free.
 - **ARCHIVE-3, Must.** With Guessling+, any archive puzzle opens and plays
   by the same rules as today's, with the answers its day's players got and
   any fixes made since. Check: an archive round matches a recorded day's
@@ -401,8 +404,10 @@ https://apps.apple.com/app/id<APP_ID>
   (ASK-9) and a retry, and uses no turn. Check: with Jev switched off on a
   test server.
 - **STATE-4, Must.** When today's puzzle can't be loaded, the app says so
-  and retries, and never shows an empty screen. Check: with the server
-  unreachable.
+  and retries, and never shows an empty screen; when the server rejects
+  the device's date, the app asks the player to check the date and time
+  instead of retrying. Check: with the server unreachable, and with the
+  device's date set a week ahead.
 - **STATE-5, Must.** When the server can't confirm Guessling+, the app says
   so and offers a retry, instead of showing a subscriber the paywall. Check:
   with RevenueCat's API unreachable from a test server.
