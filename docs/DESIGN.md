@@ -251,8 +251,9 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
   drawn in one 200 × 230 view box so the parts line up, then drawn with
   `react-native-svg`, which SDK 57 bundles.
 - **Who.** A teammate draws and poses the final parts. AI tools may explore
-  the look first, and the write-up credits them, as the idea's safe default
-  says ([idea open questions][idea-open]). The Shipaton rules ask for
+  the look first, and the write-up credits them. That narrows the idea's
+  safe default, AI-assisted art credited openly
+  ([idea open questions][idea-open]), because the Shipaton rules ask for
   "original work product" that is "solely owned", and the US Copyright
   Office protects AI output only where a person set "sufficient expressive
   elements" ([game notes on AI art][game-ai]).
@@ -493,9 +494,10 @@ scaling][ios-scaling]).
   `numberOfLines`, or a fixed height, and from AX1, when the font scale
   reaches 1.786, rows stack their parts (A11Y-2).
 - **Weights.** Regular, Semibold, Bold, and Heavy only; no Thin or Light.
-  React Native 0.86 doesn't read Bold Text, so the app follows
+  React Native 0.86's font code doesn't read Bold Text, so the app follows
   `AccessibilityInfo`'s `boldTextChanged` and steps every weight up one
-  level while it's on.
+  level while it's on. Whether system text also thickens by itself isn't
+  documented, so check on a device first, and drop the step if it does.
 - **Figures.** Counts use tabular figures, `fontVariant: ['tabular-nums']`,
   so the countdown doesn't jitter.
 - **Sizes.** Body text is 17 points, and nothing is under 11 at the default
@@ -1368,7 +1370,8 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 - Do show the words and the glyph with every answer, within 100 ms.
 - Do keep Marigold for the Guessling, the primary action, and the right
   guess, and green and red for Yes and No.
-- Do take every color, size, and timing from a token.
+- Do take every color from a token, and every size and timing from this
+  document.
 - Don't mock a miss: no red flash, no buzzer, and no "Wrong" from the
   Guessling.
 - Don't make the player wait for an animation.
@@ -1391,7 +1394,12 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   tokens, and `bunx @google/design.md@0.4.0 spec` prints the format. Pin the
   version: the format is still alpha.
 - **Other tools.** Hand this file to RevenueCat's Paywall AI Editor, and to
-  Google Stitch if the team sketches screens there.
+  Google Stitch if the team sketches screens there. The tokens sit in
+  fenced yaml blocks rather than the front matter the specification
+  describes; Google's linter reads them, but whether Stitch's and
+  RevenueCat's importers do is untested ([trends notes][ft-style]).
+
+[ft-style]: /docs/research/frontend-trends.md#a-designmd-that-follows-this-repos-style-guide
 
 ### Keeping code in step
 
@@ -1420,11 +1428,27 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   and grayscale, through Color Filters.
 - **Screens.** 375 × 667 and 440 × 956 points, and an iPad at phone size
   (COMPAT-3).
+- **Real strings.** The longest reply, hint, and answer name, at 375 × 667
+  and at AX5.
 - **Colors.** After any color change, the contrast table is recomputed with
   `check_contrast.py`, from the [design plan's appendix][plan-checks], and
   still passes.
 
 [plan-checks]: /docs/superpowers/plans/2026-09-22-guessling-design.md#appendix-check-scripts
+
+### If the day runs short
+
+If September 23 runs out, ship these and polish in an update, as the
+idea's art risk plans ([idea risks][idea-risks]):
+
+- The eight key poses as stills, with the 200 ms fade between them.
+- No confetti, and a cross-fade instead of the answer card's turn.
+- The solid composer on every iOS version.
+- The sounds and their switch after launch, since the product makes sound a
+  Should (SET-2); the theme's unit test right after submission.
+
+Never cut: the words and glyph with every answer, the four appearances,
+the type ramps, and the Reduce Motion versions.
 
 ## Open questions
 
