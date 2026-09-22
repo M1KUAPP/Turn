@@ -22,6 +22,7 @@ Contents:
 1.  [Shapes](#shapes)
 1.  [Components](#components)
 1.  [Motion](#motion)
+1.  [Sound and haptics](#sound-and-haptics)
 1.  [See also](#see-also)
 
 ## Overview
@@ -247,7 +248,6 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
   ([iOS notes on drawing the character][ios-character]).
 
 [ios-character]: /docs/research/ios-design.md#drawing-and-animating-the-character
-[game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
 [idea-open]: /docs/IDEA.md#assumptions-and-open-questions
 
 ## Colors
@@ -944,6 +944,40 @@ sound starts; and VoiceOver announces the words. Then the body moves:
   back to face, and the rest fades in together.
 - **Presses** use `snap`.
 
+## Sound and haptics
+
+- **Four sounds**, each a soft mallet on wood and felt, like a card tapped
+  on the table:
+  - **Yes**: two rising notes, under 300 ms.
+  - **No**: two falling notes, under 300 ms; never a buzzer. A wrong guess
+    plays it too.
+  - **Shrug**: one wavering note, under 300 ms, for the free replies.
+  - **Solve**: four rising notes and a soft chime, under 1.2 seconds.
+  - Picking, resting, banners, and errors are silent.
+- **Where they come from.** Made by the team, or taken from a CC0 source
+  whose link sits in a text file beside each sound, since Apple asks for
+  content "that you created or that you have a license to use" ([game
+  notes on AI art][game-ai]).
+- **The audio mode.** Sounds play in the ambient category, so the silent
+  switch mutes them and the player's music keeps playing, as the TRD's
+  [reactions section][trd-reactions] sets up: `setAudioModeAsync` with
+  `playsInSilentMode` false and `interruptionMode` set to `mixWithOthers`
+  before the first sound, and the expo-audio plugin with
+  `enableBackgroundPlayback` and `microphonePermission` false
+  ([iOS notes on sounds][ios-sounds]).
+- **Haptics.** A light impact with each Yes, No, wrong guess, and free
+  reply; a success notification with the solve; nothing for picking,
+  resting, banners, or errors. No warning or error pattern for a No, which
+  isn't an error, and nothing that only a haptic says, since iOS skips
+  haptics in Low Power Mode ([iOS notes on haptics][ios-haptics]).
+- **Timing.** The haptic and the sound start at 0 ms, with the words.
+- **Switches.** Sound and Haptics in Settings, both on by default (SET-2).
+  The round is complete without either.
+
+[trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
+[ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
+[ios-haptics]: /docs/research/ios-design.md#haptics-in-expo
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
@@ -960,3 +994,4 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 [gdm]: https://github.com/google-labs-code/design.md
 [idea-risks]: /docs/IDEA.md#risks
 [game-findings]: /docs/research/game-design.md#findings-for-designmd
+[game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
