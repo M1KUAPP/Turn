@@ -179,7 +179,8 @@ requirements.
   the category names, with names swapped for tags, and the place's name
   leave it.
 - **Useful offline.** Speaking needs no network, and without one, Listen mode
-  ranks phrases by the place and the letters typed.
+  ranks phrases on the phone by the words of the partner's line, the place,
+  and the letters typed.
 
 [aac-fail]: /docs/research/aac-practice.md#why-prestored-phrase-systems-work-or-fail
 
@@ -260,7 +261,7 @@ leaves the phone whole.
 | Personal Voice and system voices                 | Yes  | Yes         |
 | Listen mode for the first 20 partner lines       | Yes  | Yes         |
 | Listen mode after 20 partner lines               | No   | Yes         |
-| Ranking by place and typed letters, on the phone | Yes  | Yes         |
+| Suggestions from the letters typed, on the phone | Yes  | Yes         |
 
 - **Price:** $24.99, paid once, for the entitlement `listen`. The idea's
   [monetization][idea-money] section has the reasoning: AAC users resent
@@ -308,8 +309,9 @@ named.
   top-1 and top-6 accuracy for each ranker, and how often the row holds when
   no phrase fits, each with its interval. Eighty lines settle only large
   differences, so Jev earns its place when it clearly beats the other
-  rankers on top-6 accuracy; if it doesn't, the README says so, as the
-  idea's [risks][idea-risks] require.
+  rankers on top-6 accuracy; if it still trails after re-ranking an
+  embedding shortlist, the README says so, as the idea's
+  [risks][idea-risks] require.
 - **Speed:** the time from the end of the partner's speech to the row, kept
   apart from the user's own time to choose, and from a tap to speech; the
   PRD's [performance requirements][prd-perf] set the targets.
@@ -322,8 +324,9 @@ named.
     logs after a session.
   - Degraded lines: the share of partner lines the phone ranks because the
     relay failed.
-- **The purchase,** from RevenueCat's sandbox data: paywall views and Test
-  Store purchases, with no revenue target.
+- **The purchase:** Test Store purchases, which RevenueCat reports as
+  sandbox data, with no revenue target. Its charts, paywall views included,
+  count production data only, so the entry reports no conversion rate.
 
 [aac-measures]: /docs/research/aac-practice.md#rate-savings-and-acceptance-measures
 [prd-eval]: /docs/PRD.md#evaluation-requirements

@@ -78,7 +78,7 @@ Goals for the first version, each with the measure that shows it's met:
 4.  **Consent and privacy hold.** Measure: the privacy check passes
     (RELEASE-3).
 5.  **The purchase is real code.** Measure: a Test Store purchase unlocks
-    Listen mode on an iPhone, and Restore Purchases brings it back (PAY-4,
+    Listen mode on an iPhone, and Restore Purchases reports it (PAY-4,
     PAY-6).
 6.  **Judges can run it.** Measure: someone outside the team follows the
     README from a Mac to a spoken reply in the Simulator (SUBMIT-2).
@@ -158,9 +158,9 @@ says how each is built.
   speak a new sentence, then find it under Typed; speak it again, and it
   isn't added twice.
 - **SPEAK-4, Must.** As the user types, the row offers up to six saved
-  phrases containing a word that starts with the letters typed, the place's
-  phrases first. Check: at Home, type "wa"; "Wait, I'm typing" and "Water,
-  please" appear.
+  phrases, other than the strip's, containing a word that starts with the
+  letters typed, the place's phrases first. Check: at Home, type "wa"; saved
+  phrases such as "Water, please" appear, and "Wait, I'm typing" doesn't.
 - **SPEAK-5, Must.** Speaking never waits on the network, the relay,
   RevenueCat, the paywall, or the consent flow. Check: in Airplane Mode, and
   with the relay's address blocked, every phrase and typed sentence speaks.
@@ -235,10 +235,12 @@ says how each is built.
   Simulator, see the explanation.
 - **VOICE-3, Must.** The user can set the speech rate in five steps. Check:
   the slowest and fastest steps are audibly different.
-- **VOICE-4, Must.** Turn speaks from the loudspeaker, or from connected
-  headphones or a speaker, at the phone's volume, in Listen mode as well,
-  and with the Ring/Silent switch set to silent. Check: in Listen mode with
-  the switch on silent, a phrase is heard from the bottom speaker.
+- **VOICE-4, Must.** Turn speaks at the phone's volume with the Ring/Silent
+  switch set to silent. Outside Listen mode, speech follows the phone's
+  current audio route; in Listen mode, it plays from the loudspeaker, so the
+  partner hears it. Check: in Listen mode with the switch on silent, a
+  phrase is heard from the bottom speaker; outside it, with headphones
+  connected, from the headphones.
 
 ### Permission and consent
 
