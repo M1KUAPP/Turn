@@ -2323,7 +2323,7 @@
       "node_kind": "heading",
       "norm_label": "accessibility",
       "source_file": "docs/TRD.md",
-      "source_location": "L913"
+      "source_location": "L921"
     },
     {
       "id": "docs_trd_answer_pipeline",
@@ -2335,7 +2335,7 @@
       "node_kind": "heading",
       "norm_label": "answer pipeline",
       "source_file": "docs/TRD.md",
-      "source_location": "L400"
+      "source_location": "L402"
     },
     {
       "id": "docs_trd_build_configuration",
@@ -2347,7 +2347,7 @@
       "node_kind": "heading",
       "norm_label": "build configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L940"
+      "source_location": "L948"
     },
     {
       "id": "docs_trd_data_inventory",
@@ -2359,7 +2359,7 @@
       "node_kind": "heading",
       "norm_label": "data inventory",
       "source_file": "docs/TRD.md",
-      "source_location": "L1023"
+      "source_location": "L1031"
     },
     {
       "id": "docs_trd_data_model",
@@ -2371,7 +2371,7 @@
       "node_kind": "heading",
       "norm_label": "data model",
       "source_file": "docs/TRD.md",
-      "source_location": "L169"
+      "source_location": "L171"
     },
     {
       "id": "docs_trd_dates_and_numbers",
@@ -2383,7 +2383,7 @@
       "node_kind": "heading",
       "norm_label": "dates and numbers",
       "source_file": "docs/TRD.md",
-      "source_location": "L606"
+      "source_location": "L608"
     },
     {
       "id": "docs_trd_environments_and_release",
@@ -2395,7 +2395,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1153"
+      "source_location": "L1161"
     },
     {
       "id": "docs_trd_failure_modes",
@@ -2407,7 +2407,7 @@
       "node_kind": "heading",
       "norm_label": "failure modes",
       "source_file": "docs/TRD.md",
-      "source_location": "L1057"
+      "source_location": "L1065"
     },
     {
       "id": "docs_trd_fixing_a_puzzle_after_its_day",
@@ -2419,7 +2419,7 @@
       "node_kind": "heading",
       "norm_label": "fixing a puzzle after its day",
       "source_file": "docs/TRD.md",
-      "source_location": "L683"
+      "source_location": "L685"
     },
     {
       "id": "docs_trd_from_draft_to_published_puzzle",
@@ -2431,7 +2431,7 @@
       "node_kind": "heading",
       "norm_label": "from draft to published puzzle",
       "source_file": "docs/TRD.md",
-      "source_location": "L644"
+      "source_location": "L646"
     },
     {
       "id": "docs_trd_guessling_technical_requirements",
@@ -2455,7 +2455,7 @@
       "node_kind": "heading",
       "norm_label": "logs and counts",
       "source_file": "docs/TRD.md",
-      "source_location": "L1074"
+      "source_location": "L1082"
     },
     {
       "id": "docs_trd_networking",
@@ -2467,7 +2467,7 @@
       "node_kind": "heading",
       "norm_label": "networking",
       "source_file": "docs/TRD.md",
-      "source_location": "L842"
+      "source_location": "L844"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -2479,7 +2479,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1232"
+      "source_location": "L1240"
     },
     {
       "id": "docs_trd_overview",
@@ -2503,7 +2503,7 @@
       "node_kind": "heading",
       "norm_label": "player data in each puzzle's durable object",
       "source_file": "docs/TRD.md",
-      "source_location": "L224"
+      "source_location": "L226"
     },
     {
       "id": "docs_trd_published_data_in_workers_kv",
@@ -2515,7 +2515,7 @@
       "node_kind": "heading",
       "norm_label": "published data in workers kv",
       "source_file": "docs/TRD.md",
-      "source_location": "L176"
+      "source_location": "L178"
     },
     {
       "id": "docs_trd_purchases_and_entitlements",
@@ -2527,7 +2527,7 @@
       "node_kind": "heading",
       "norm_label": "purchases and entitlements",
       "source_file": "docs/TRD.md",
-      "source_location": "L697"
+      "source_location": "L699"
     },
     {
       "id": "docs_trd_purchases_in_the_app",
@@ -2539,7 +2539,7 @@
       "node_kind": "heading",
       "norm_label": "purchases in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L721"
+      "source_location": "L723"
     },
     {
       "id": "docs_trd_puzzle_days_and_content_tooling",
@@ -2551,7 +2551,7 @@
       "node_kind": "heading",
       "norm_label": "puzzle days and content tooling",
       "source_file": "docs/TRD.md",
-      "source_location": "L604"
+      "source_location": "L606"
     },
     {
       "id": "docs_trd_reactions_sound_and_haptics",
@@ -2563,7 +2563,7 @@
       "node_kind": "heading",
       "norm_label": "reactions, sound, and haptics",
       "source_file": "docs/TRD.md",
-      "source_location": "L876"
+      "source_location": "L878"
     },
     {
       "id": "docs_trd_reliability_and_observability",
@@ -2575,7 +2575,7 @@
       "node_kind": "heading",
       "norm_label": "reliability and observability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1055"
+      "source_location": "L1063"
     },
     {
       "id": "docs_trd_repository_layout",
@@ -2587,7 +2587,7 @@
       "node_kind": "heading",
       "norm_label": "repository layout",
       "source_file": "docs/TRD.md",
-      "source_location": "L153"
+      "source_location": "L155"
     },
     {
       "id": "docs_trd_requirements_traceability",
@@ -2599,7 +2599,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1203"
+      "source_location": "L1211"
     },
     {
       "id": "docs_trd_revenuecat_and_app_store_connect_setup",
@@ -2611,7 +2611,7 @@
       "node_kind": "heading",
       "norm_label": "revenuecat and app store connect setup",
       "source_file": "docs/TRD.md",
-      "source_location": "L699"
+      "source_location": "L701"
     },
     {
       "id": "docs_trd_screens_and_navigation",
@@ -2623,7 +2623,7 @@
       "node_kind": "heading",
       "norm_label": "screens and navigation",
       "source_file": "docs/TRD.md",
-      "source_location": "L817"
+      "source_location": "L819"
     },
     {
       "id": "docs_trd_secrets_and_configuration",
@@ -2635,7 +2635,7 @@
       "node_kind": "heading",
       "norm_label": "secrets and configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L982"
+      "source_location": "L990"
     },
     {
       "id": "docs_trd_security_and_privacy",
@@ -2647,7 +2647,7 @@
       "node_kind": "heading",
       "norm_label": "security and privacy",
       "source_file": "docs/TRD.md",
-      "source_location": "L980"
+      "source_location": "L988"
     },
     {
       "id": "docs_trd_see_also",
@@ -2659,7 +2659,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1261"
+      "source_location": "L1269"
     },
     {
       "id": "docs_trd_service_life",
@@ -2671,7 +2671,7 @@
       "node_kind": "heading",
       "norm_label": "service life",
       "source_file": "docs/TRD.md",
-      "source_location": "L1105"
+      "source_location": "L1113"
     },
     {
       "id": "docs_trd_sharing_one_jev_call_per_wording",
@@ -2683,7 +2683,7 @@
       "node_kind": "heading",
       "norm_label": "sharing one jev call per wording",
       "source_file": "docs/TRD.md",
-      "source_location": "L453"
+      "source_location": "L455"
     },
     {
       "id": "docs_trd_stack_and_repository",
@@ -2707,7 +2707,7 @@
       "node_kind": "heading",
       "norm_label": "state, storage, and time",
       "source_file": "docs/TRD.md",
-      "source_location": "L830"
+      "source_location": "L832"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -2731,7 +2731,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1113"
+      "source_location": "L1121"
     },
     {
       "id": "docs_trd_the_daily_check",
@@ -2743,7 +2743,7 @@
       "node_kind": "heading",
       "norm_label": "the daily check",
       "source_file": "docs/TRD.md",
-      "source_location": "L1096"
+      "source_location": "L1104"
     },
     {
       "id": "docs_trd_the_iphone_app",
@@ -2755,7 +2755,7 @@
       "node_kind": "heading",
       "norm_label": "the iphone app",
       "source_file": "docs/TRD.md",
-      "source_location": "L815"
+      "source_location": "L817"
     },
     {
       "id": "docs_trd_the_judges_offer_code",
@@ -2767,7 +2767,7 @@
       "node_kind": "heading",
       "norm_label": "the judges' offer code",
       "source_file": "docs/TRD.md",
-      "source_location": "L793"
+      "source_location": "L795"
     },
     {
       "id": "docs_trd_the_live_request",
@@ -2779,7 +2779,7 @@
       "node_kind": "heading",
       "norm_label": "the live request",
       "source_file": "docs/TRD.md",
-      "source_location": "L536"
+      "source_location": "L538"
     },
     {
       "id": "docs_trd_the_match_request",
@@ -2791,7 +2791,7 @@
       "node_kind": "heading",
       "norm_label": "the match request",
       "source_file": "docs/TRD.md",
-      "source_location": "L489"
+      "source_location": "L491"
     },
     {
       "id": "docs_trd_the_notice_sharing_and_settings",
@@ -2803,7 +2803,7 @@
       "node_kind": "heading",
       "norm_label": "the notice, sharing, and settings",
       "source_file": "docs/TRD.md",
-      "source_location": "L855"
+      "source_location": "L857"
     },
     {
       "id": "docs_trd_the_server_s_entitlement_check",
@@ -2815,7 +2815,7 @@
       "node_kind": "heading",
       "norm_label": "the server's entitlement check",
       "source_file": "docs/TRD.md",
-      "source_location": "L748"
+      "source_location": "L750"
     },
     {
       "id": "docs_trd_timeouts_retries_and_the_jev_budget",
@@ -2827,7 +2827,7 @@
       "node_kind": "heading",
       "norm_label": "timeouts, retries, and the jev budget",
       "source_file": "docs/TRD.md",
-      "source_location": "L558"
+      "source_location": "L560"
     },
     {
       "id": "docs_trd_validation_and_abuse_limits",
@@ -2839,7 +2839,7 @@
       "node_kind": "heading",
       "norm_label": "validation and abuse limits",
       "source_file": "docs/TRD.md",
-      "source_location": "L1006"
+      "source_location": "L1014"
     },
     {
       "id": "docs_trd_versions_on_september_22_2026",
@@ -2863,7 +2863,7 @@
       "node_kind": "heading",
       "norm_label": "what the device keeps",
       "source_file": "docs/TRD.md",
-      "source_location": "L269"
+      "source_location": "L271"
     },
     {
       "id": "docs_trd_worker_api",
@@ -2875,7 +2875,7 @@
       "node_kind": "heading",
       "norm_label": "worker api",
       "source_file": "docs/TRD.md",
-      "source_location": "L283"
+      "source_location": "L285"
     },
     {
       "id": "docs_research_cloudflare_workers",
@@ -7159,7 +7159,7 @@
       "node_kind": "heading",
       "norm_label": "appendix: check scripts",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L832"
+      "source_location": "L836"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_assumptions",
@@ -7171,7 +7171,7 @@
       "node_kind": "heading",
       "norm_label": "assumptions",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L241"
+      "source_location": "L245"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_decisions_the_document_records",
@@ -7183,7 +7183,7 @@
       "node_kind": "heading",
       "norm_label": "decisions the document records",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L140"
+      "source_location": "L144"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_design",
@@ -7195,7 +7195,7 @@
       "node_kind": "heading",
       "norm_label": "design",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L84"
+      "source_location": "L88"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_global_constraints",
@@ -7231,7 +7231,7 @@
       "node_kind": "heading",
       "norm_label": "rejected alternatives",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L251"
+      "source_location": "L255"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_sections_of_the_design_document",
@@ -7243,7 +7243,7 @@
       "node_kind": "heading",
       "norm_label": "sections of the design document",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L101"
+      "source_location": "L105"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_10_components",
@@ -7255,7 +7255,7 @@
       "node_kind": "heading",
       "norm_label": "task 10: components",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L548"
+      "source_location": "L552"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_11_motion",
@@ -7267,7 +7267,7 @@
       "node_kind": "heading",
       "norm_label": "task 11: motion",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L570"
+      "source_location": "L574"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_12_sound_and_haptics",
@@ -7279,7 +7279,7 @@
       "node_kind": "heading",
       "norm_label": "task 12: sound and haptics",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L591"
+      "source_location": "L595"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_13_screens",
@@ -7291,7 +7291,7 @@
       "node_kind": "heading",
       "norm_label": "task 13: screens",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L611"
+      "source_location": "L615"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_14_words_on_screen",
@@ -7303,7 +7303,7 @@
       "node_kind": "heading",
       "norm_label": "task 14: words on screen",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L633"
+      "source_location": "L637"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_15_accessibility",
@@ -7315,7 +7315,7 @@
       "node_kind": "heading",
       "norm_label": "task 15: accessibility",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L653"
+      "source_location": "L657"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_16_web_pages",
@@ -7327,7 +7327,7 @@
       "node_kind": "heading",
       "norm_label": "task 16: web pages",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L674"
+      "source_location": "L678"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_17_app_icon_and_store_assets",
@@ -7339,7 +7339,7 @@
       "node_kind": "heading",
       "norm_label": "task 17: app icon and store assets",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L694"
+      "source_location": "L698"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_18_do_s_and_don_ts_and_guidance_for_coding_agents",
@@ -7351,7 +7351,7 @@
       "node_kind": "heading",
       "norm_label": "task 18: do's and don'ts, and guidance for coding agents",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L715"
+      "source_location": "L719"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_19_open_questions",
@@ -7363,7 +7363,7 @@
       "node_kind": "heading",
       "norm_label": "task 19: open questions",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L736"
+      "source_location": "L740"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_1_research_notes_and_this_plan",
@@ -7375,7 +7375,7 @@
       "node_kind": "heading",
       "norm_label": "task 1: research notes and this plan",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L317"
+      "source_location": "L321"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_20_links_from_the_other_documents",
@@ -7387,7 +7387,7 @@
       "node_kind": "heading",
       "norm_label": "task 20: links from the other documents",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L755"
+      "source_location": "L759"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_21_final_checks",
@@ -7399,7 +7399,7 @@
       "node_kind": "heading",
       "norm_label": "task 21: final checks",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L781"
+      "source_location": "L785"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_22_pull_request_review_and_merge",
@@ -7411,7 +7411,7 @@
       "node_kind": "heading",
       "norm_label": "task 22: pull request, review, and merge",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L803"
+      "source_location": "L807"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_2_trd_fixes",
@@ -7423,7 +7423,7 @@
       "node_kind": "heading",
       "norm_label": "task 2: trd fixes",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L347"
+      "source_location": "L351"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_3_frame_and_overview",
@@ -7435,7 +7435,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: frame and overview",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L378"
+      "source_location": "L382"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_4_influences_and_trends",
@@ -7447,7 +7447,7 @@
       "node_kind": "heading",
       "norm_label": "task 4: influences and trends",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L410"
+      "source_location": "L414"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_5_the_guessling",
@@ -7459,7 +7459,7 @@
       "node_kind": "heading",
       "norm_label": "task 5: the guessling",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L433"
+      "source_location": "L437"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_6_colors",
@@ -7471,7 +7471,7 @@
       "node_kind": "heading",
       "norm_label": "task 6: colors",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L455"
+      "source_location": "L459"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_7_typography",
@@ -7483,7 +7483,7 @@
       "node_kind": "heading",
       "norm_label": "task 7: typography",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L483"
+      "source_location": "L487"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_8_layout",
@@ -7495,7 +7495,7 @@
       "node_kind": "heading",
       "norm_label": "task 8: layout",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L505"
+      "source_location": "L509"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_task_9_elevation_and_shapes",
@@ -7507,7 +7507,7 @@
       "node_kind": "heading",
       "norm_label": "task 9: elevation and shapes",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L526"
+      "source_location": "L530"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_tasks",
@@ -7519,7 +7519,7 @@
       "node_kind": "heading",
       "norm_label": "tasks",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L311"
+      "source_location": "L315"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_verification_gate",
@@ -7531,7 +7531,7 @@
       "node_kind": "heading",
       "norm_label": "verification gate",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L270"
+      "source_location": "L274"
     },
     {
       "id": "docs_superpowers_plans_2026_09_22_guessling_design_what_goes_where",
@@ -7543,7 +7543,7 @@
       "node_kind": "heading",
       "norm_label": "what goes where",
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L90"
+      "source_location": "L94"
     },
     {
       "id": "docs_design",
@@ -7567,7 +7567,7 @@
       "node_kind": "heading",
       "norm_label": "accessibility",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1206"
+      "source_location": "L1269"
     },
     {
       "id": "docs_design_do_s_and_don_ts",
@@ -7579,7 +7579,7 @@
       "node_kind": "heading",
       "norm_label": "do's and don'ts",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1333"
+      "source_location": "L1396"
     },
     {
       "id": "docs_design_elevation",
@@ -7591,7 +7591,7 @@
       "node_kind": "heading",
       "norm_label": "elevation",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L547"
+      "source_location": "L566"
     },
     {
       "id": "docs_design_guessling_design",
@@ -7627,7 +7627,7 @@
       "node_kind": "heading",
       "norm_label": "layout",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L508"
+      "source_location": "L525"
     },
     {
       "id": "docs_design_open_questions",
@@ -7639,7 +7639,7 @@
       "node_kind": "heading",
       "norm_label": "open questions",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1389"
+      "source_location": "L1482"
     },
     {
       "id": "docs_design_see_also",
@@ -7651,7 +7651,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1406"
+      "source_location": "L1504"
     },
     {
       "id": "docs_design_shapes",
@@ -7663,7 +7663,7 @@
       "node_kind": "heading",
       "norm_label": "shapes",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L586"
+      "source_location": "L606"
     },
     {
       "id": "docs_design_sound_and_haptics",
@@ -7675,7 +7675,7 @@
       "node_kind": "heading",
       "norm_label": "sound and haptics",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L967"
+      "source_location": "L1017"
     },
     {
       "id": "docs_design_typography",
@@ -7687,7 +7687,7 @@
       "node_kind": "heading",
       "norm_label": "typography",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L391"
+      "source_location": "L407"
     },
     {
       "id": "docs_design_web_pages",
@@ -7699,7 +7699,7 @@
       "node_kind": "heading",
       "norm_label": "web pages",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1250"
+      "source_location": "L1314"
     },
     {
       "id": "docs_design_words_on_screen",
@@ -7711,7 +7711,7 @@
       "node_kind": "heading",
       "norm_label": "words on screen",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1161"
+      "source_location": "L1215"
     },
     {
       "id": "docs_research_ios_design_apple_s_motion_guidance",
@@ -7975,7 +7975,7 @@
       "node_kind": "heading",
       "norm_label": "answer chips",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L744"
+      "source_location": "L776"
     },
     {
       "id": "docs_design_banners",
@@ -7987,7 +7987,7 @@
       "node_kind": "heading",
       "norm_label": "banners",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L845"
+      "source_location": "L887"
     },
     {
       "id": "docs_design_buttons",
@@ -7999,7 +7999,7 @@
       "node_kind": "heading",
       "norm_label": "buttons",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L716"
+      "source_location": "L738"
     },
     {
       "id": "docs_design_components",
@@ -8011,7 +8011,7 @@
       "node_kind": "heading",
       "norm_label": "components",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L610"
+      "source_location": "L632"
     },
     {
       "id": "docs_design_symbols",
@@ -8023,7 +8023,7 @@
       "node_kind": "heading",
       "norm_label": "symbols",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L811"
+      "source_location": "L853"
     },
     {
       "id": "docs_design_the_composer",
@@ -8035,7 +8035,7 @@
       "node_kind": "heading",
       "norm_label": "the composer",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L792"
+      "source_location": "L830"
     },
     {
       "id": "docs_design_the_notepad",
@@ -8047,7 +8047,7 @@
       "node_kind": "heading",
       "norm_label": "the notepad",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L775"
+      "source_location": "L811"
     },
     {
       "id": "docs_design_the_speech_bubble",
@@ -8059,7 +8059,7 @@
       "node_kind": "heading",
       "norm_label": "the speech bubble",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L730"
+      "source_location": "L752"
     },
     {
       "id": "docs_design_the_turn_meter",
@@ -8071,7 +8071,7 @@
       "node_kind": "heading",
       "norm_label": "the turn meter",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L756"
+      "source_location": "L792"
     },
     {
       "id": "docs_design_every_answer_drawn",
@@ -8083,7 +8083,7 @@
       "node_kind": "heading",
       "norm_label": "every answer, drawn",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1026"
+      "source_location": "L1076"
     },
     {
       "id": "docs_design_launch",
@@ -8095,7 +8095,7 @@
       "node_kind": "heading",
       "norm_label": "launch",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1151"
+      "source_location": "L1205"
     },
     {
       "id": "docs_design_screens",
@@ -8107,7 +8107,7 @@
       "node_kind": "heading",
       "norm_label": "screens",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1001"
+      "source_location": "L1051"
     },
     {
       "id": "docs_design_settings",
@@ -8119,7 +8119,7 @@
       "node_kind": "heading",
       "norm_label": "settings",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1102"
+      "source_location": "L1155"
     },
     {
       "id": "docs_design_the_archive",
@@ -8131,7 +8131,7 @@
       "node_kind": "heading",
       "norm_label": "the archive",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1087"
+      "source_location": "L1140"
     },
     {
       "id": "docs_design_the_end_of_a_round",
@@ -8143,7 +8143,7 @@
       "node_kind": "heading",
       "norm_label": "the end of a round",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1055"
+      "source_location": "L1105"
     },
     {
       "id": "docs_design_the_notice",
@@ -8155,7 +8155,7 @@
       "node_kind": "heading",
       "norm_label": "the notice",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1075"
+      "source_location": "L1127"
     },
     {
       "id": "docs_design_the_paywall",
@@ -8167,7 +8167,7 @@
       "node_kind": "heading",
       "norm_label": "the paywall",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1119"
+      "source_location": "L1173"
     },
     {
       "id": "docs_design_today",
@@ -8179,7 +8179,7 @@
       "node_kind": "heading",
       "norm_label": "today",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1008"
+      "source_location": "L1058"
     },
     {
       "id": "docs_research_ios_design",
@@ -8443,7 +8443,7 @@
       "node_kind": "heading",
       "norm_label": "making the art",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L242"
+      "source_location": "L257"
     },
     {
       "id": "docs_design_parts_of_the_guessling",
@@ -8467,7 +8467,7 @@
       "node_kind": "heading",
       "norm_label": "poses",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L205"
+      "source_location": "L209"
     },
     {
       "id": "docs_design_the_answer_card",
@@ -8479,7 +8479,7 @@
       "node_kind": "heading",
       "norm_label": "the answer card",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L232"
+      "source_location": "L238"
     },
     {
       "id": "docs_design_the_guessling",
@@ -8623,7 +8623,7 @@
       "node_kind": "heading",
       "norm_label": "answer colors",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L366"
+      "source_location": "L382"
     },
     {
       "id": "docs_design_colors",
@@ -8635,7 +8635,7 @@
       "node_kind": "heading",
       "norm_label": "colors",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L265"
+      "source_location": "L281"
     },
     {
       "id": "docs_design_colors_in_every_appearance",
@@ -8647,7 +8647,7 @@
       "node_kind": "heading",
       "norm_label": "colors in every appearance",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L295"
+      "source_location": "L311"
     },
     {
       "id": "docs_design_contrast",
@@ -8659,7 +8659,7 @@
       "node_kind": "heading",
       "norm_label": "contrast",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L340"
+      "source_location": "L356"
     },
     {
       "id": "commitlint_config",
@@ -8682,7 +8682,7 @@
       "node_kind": "heading",
       "norm_label": "app icon and store assets",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1277"
+      "source_location": "L1341"
     },
     {
       "id": "docs_design_devpost_images_and_the_video",
@@ -8694,7 +8694,7 @@
       "node_kind": "heading",
       "norm_label": "devpost images and the video",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1316"
+      "source_location": "L1379"
     },
     {
       "id": "docs_design_screenshots",
@@ -8706,7 +8706,7 @@
       "node_kind": "heading",
       "norm_label": "screenshots",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1298"
+      "source_location": "L1361"
     },
     {
       "id": "docs_design_the_app_icon",
@@ -8718,7 +8718,7 @@
       "node_kind": "heading",
       "norm_label": "the app icon",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1279"
+      "source_location": "L1343"
     },
     {
       "id": "docs_design_checks_before_a_screen_ships",
@@ -8730,7 +8730,7 @@
       "node_kind": "heading",
       "norm_label": "checks before a screen ships",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1377"
+      "source_location": "L1450"
     },
     {
       "id": "docs_design_guidance_for_coding_agents",
@@ -8742,7 +8742,19 @@
       "node_kind": "heading",
       "norm_label": "guidance for coding agents",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1348"
+      "source_location": "L1412"
+    },
+    {
+      "id": "docs_design_if_the_day_runs_short",
+      "label": "If the day runs short",
+      "_origin": "ast",
+      "community": 131,
+      "community_name": "Guidance for coding agents",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "if the day runs short",
+      "source_file": "docs/DESIGN.md",
+      "source_location": "L1467"
     },
     {
       "id": "docs_design_keeping_code_in_step",
@@ -8754,7 +8766,7 @@
       "node_kind": "heading",
       "norm_label": "keeping code in step",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1363"
+      "source_location": "L1432"
     },
     {
       "id": "docs_design_using_this_file",
@@ -8766,7 +8778,7 @@
       "node_kind": "heading",
       "norm_label": "using this file",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1350"
+      "source_location": "L1414"
     },
     {
       "id": "docs_design_motion",
@@ -8778,7 +8790,7 @@
       "node_kind": "heading",
       "norm_label": "motion",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L854"
+      "source_location": "L898"
     },
     {
       "id": "docs_design_reactions",
@@ -8790,7 +8802,7 @@
       "node_kind": "heading",
       "norm_label": "reactions",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L907"
+      "source_location": "L951"
     },
     {
       "id": "docs_design_reduce_motion",
@@ -8802,7 +8814,7 @@
       "node_kind": "heading",
       "norm_label": "reduce motion",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L933"
+      "source_location": "L978"
     },
     {
       "id": "docs_design_screen_motion",
@@ -8814,7 +8826,7 @@
       "node_kind": "heading",
       "norm_label": "screen motion",
       "source_file": "docs/DESIGN.md",
-      "source_location": "L953"
+      "source_location": "L998"
     },
     {
       "id": "docs_design_overview",
@@ -22969,7 +22981,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1279",
+      "source_location": "L1343",
       "weight": 1.0
     },
     {
@@ -22980,7 +22992,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1298",
+      "source_location": "L1361",
       "weight": 1.0
     },
     {
@@ -22991,7 +23003,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1316",
+      "source_location": "L1379",
       "weight": 1.0
     },
     {
@@ -23002,7 +23014,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L295",
+      "source_location": "L311",
       "weight": 1.0
     },
     {
@@ -23013,7 +23025,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L340",
+      "source_location": "L356",
       "weight": 1.0
     },
     {
@@ -23024,7 +23036,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L366",
+      "source_location": "L382",
       "weight": 1.0
     },
     {
@@ -23035,7 +23047,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L716",
+      "source_location": "L738",
       "weight": 1.0
     },
     {
@@ -23046,7 +23058,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L730",
+      "source_location": "L752",
       "weight": 1.0
     },
     {
@@ -23057,7 +23069,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L744",
+      "source_location": "L776",
       "weight": 1.0
     },
     {
@@ -23068,7 +23080,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L756",
+      "source_location": "L792",
       "weight": 1.0
     },
     {
@@ -23079,7 +23091,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L775",
+      "source_location": "L811",
       "weight": 1.0
     },
     {
@@ -23090,7 +23102,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L792",
+      "source_location": "L830",
       "weight": 1.0
     },
     {
@@ -23101,7 +23113,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L811",
+      "source_location": "L853",
       "weight": 1.0
     },
     {
@@ -23112,7 +23124,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L845",
+      "source_location": "L887",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_design_guessling_design",
+      "target": "docs_design_sound_and_haptics",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/DESIGN.md",
+      "source_location": "L1017",
       "weight": 1.0
     },
     {
@@ -23123,7 +23146,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1001",
+      "source_location": "L1051",
       "weight": 1.0
     },
     {
@@ -23145,7 +23168,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1161",
+      "source_location": "L1215",
       "weight": 1.0
     },
     {
@@ -23156,7 +23179,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1206",
+      "source_location": "L1269",
       "weight": 1.0
     },
     {
@@ -23167,7 +23190,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1250",
+      "source_location": "L1314",
       "weight": 1.0
     },
     {
@@ -23178,7 +23201,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1277",
+      "source_location": "L1341",
       "weight": 1.0
     },
     {
@@ -23189,7 +23212,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1333",
+      "source_location": "L1396",
       "weight": 1.0
     },
     {
@@ -23200,7 +23223,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1348",
+      "source_location": "L1412",
       "weight": 1.0
     },
     {
@@ -23211,7 +23234,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1389",
+      "source_location": "L1482",
       "weight": 1.0
     },
     {
@@ -23222,7 +23245,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1406",
+      "source_location": "L1504",
       "weight": 1.0
     },
     {
@@ -23244,7 +23267,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L265",
+      "source_location": "L281",
       "weight": 1.0
     },
     {
@@ -23266,7 +23289,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L391",
+      "source_location": "L407",
       "weight": 1.0
     },
     {
@@ -23277,7 +23300,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L508",
+      "source_location": "L525",
       "weight": 1.0
     },
     {
@@ -23288,7 +23311,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L547",
+      "source_location": "L566",
       "weight": 1.0
     },
     {
@@ -23299,7 +23322,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L586",
+      "source_location": "L606",
       "weight": 1.0
     },
     {
@@ -23310,7 +23333,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L610",
+      "source_location": "L632",
       "weight": 1.0
     },
     {
@@ -23321,18 +23344,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L854",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_design_guessling_design",
-      "target": "docs_design_sound_and_haptics",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/DESIGN.md",
-      "source_location": "L967",
+      "source_location": "L898",
       "weight": 1.0
     },
     {
@@ -23343,7 +23355,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1350",
+      "source_location": "L1414",
       "weight": 1.0
     },
     {
@@ -23354,7 +23366,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1363",
+      "source_location": "L1432",
       "weight": 1.0
     },
     {
@@ -23365,7 +23377,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1377",
+      "source_location": "L1450",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_design_guidance_for_coding_agents",
+      "target": "docs_design_if_the_day_runs_short",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/DESIGN.md",
+      "source_location": "L1467",
       "weight": 1.0
     },
     {
@@ -23376,7 +23399,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L907",
+      "source_location": "L951",
       "weight": 1.0
     },
     {
@@ -23387,7 +23410,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L933",
+      "source_location": "L978",
       "weight": 1.0
     },
     {
@@ -23398,7 +23421,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L953",
+      "source_location": "L998",
       "weight": 1.0
     },
     {
@@ -23442,7 +23465,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1008",
+      "source_location": "L1058",
       "weight": 1.0
     },
     {
@@ -23453,7 +23476,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1026",
+      "source_location": "L1076",
       "weight": 1.0
     },
     {
@@ -23464,7 +23487,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1055",
+      "source_location": "L1105",
       "weight": 1.0
     },
     {
@@ -23475,7 +23498,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1075",
+      "source_location": "L1127",
       "weight": 1.0
     },
     {
@@ -23486,7 +23509,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1087",
+      "source_location": "L1140",
       "weight": 1.0
     },
     {
@@ -23497,7 +23520,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1102",
+      "source_location": "L1155",
       "weight": 1.0
     },
     {
@@ -23508,7 +23531,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1119",
+      "source_location": "L1173",
       "weight": 1.0
     },
     {
@@ -23519,7 +23542,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L1151",
+      "source_location": "L1205",
       "weight": 1.0
     },
     {
@@ -23541,7 +23564,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L205",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -23552,7 +23575,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L232",
+      "source_location": "L238",
       "weight": 1.0
     },
     {
@@ -23563,7 +23586,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/DESIGN.md",
-      "source_location": "L242",
+      "source_location": "L257",
       "weight": 1.0
     },
     {
@@ -39667,7 +39690,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L101",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -39678,7 +39701,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L140",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -39689,7 +39712,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L241",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -39700,7 +39723,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L251",
+      "source_location": "L255",
       "weight": 1.0
     },
     {
@@ -39711,7 +39734,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L90",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -39722,7 +39745,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L270",
+      "source_location": "L274",
       "weight": 1.0
     },
     {
@@ -39733,7 +39756,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L311",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -39755,7 +39778,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L832",
+      "source_location": "L836",
       "weight": 1.0
     },
     {
@@ -39766,7 +39789,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L84",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -39777,7 +39800,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L317",
+      "source_location": "L321",
       "weight": 1.0
     },
     {
@@ -39788,7 +39811,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L347",
+      "source_location": "L351",
       "weight": 1.0
     },
     {
@@ -39799,7 +39822,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L378",
+      "source_location": "L382",
       "weight": 1.0
     },
     {
@@ -39810,7 +39833,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L410",
+      "source_location": "L414",
       "weight": 1.0
     },
     {
@@ -39821,7 +39844,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L433",
+      "source_location": "L437",
       "weight": 1.0
     },
     {
@@ -39832,7 +39855,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L455",
+      "source_location": "L459",
       "weight": 1.0
     },
     {
@@ -39843,7 +39866,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L483",
+      "source_location": "L487",
       "weight": 1.0
     },
     {
@@ -39854,7 +39877,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L505",
+      "source_location": "L509",
       "weight": 1.0
     },
     {
@@ -39865,7 +39888,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L526",
+      "source_location": "L530",
       "weight": 1.0
     },
     {
@@ -39876,7 +39899,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L548",
+      "source_location": "L552",
       "weight": 1.0
     },
     {
@@ -39887,7 +39910,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L570",
+      "source_location": "L574",
       "weight": 1.0
     },
     {
@@ -39898,7 +39921,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L591",
+      "source_location": "L595",
       "weight": 1.0
     },
     {
@@ -39909,7 +39932,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L611",
+      "source_location": "L615",
       "weight": 1.0
     },
     {
@@ -39920,7 +39943,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L633",
+      "source_location": "L637",
       "weight": 1.0
     },
     {
@@ -39931,7 +39954,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L653",
+      "source_location": "L657",
       "weight": 1.0
     },
     {
@@ -39942,7 +39965,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L674",
+      "source_location": "L678",
       "weight": 1.0
     },
     {
@@ -39953,7 +39976,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L694",
+      "source_location": "L698",
       "weight": 1.0
     },
     {
@@ -39964,7 +39987,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L715",
+      "source_location": "L719",
       "weight": 1.0
     },
     {
@@ -39975,7 +39998,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L736",
+      "source_location": "L740",
       "weight": 1.0
     },
     {
@@ -39986,7 +40009,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L755",
+      "source_location": "L759",
       "weight": 1.0
     },
     {
@@ -39997,7 +40020,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L781",
+      "source_location": "L785",
       "weight": 1.0
     },
     {
@@ -40008,7 +40031,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-09-22-guessling-design.md",
-      "source_location": "L803",
+      "source_location": "L807",
       "weight": 1.0
     },
     {
@@ -40767,7 +40790,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L453",
+      "source_location": "L455",
       "weight": 1.0
     },
     {
@@ -40778,7 +40801,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L489",
+      "source_location": "L491",
       "weight": 1.0
     },
     {
@@ -40789,7 +40812,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L536",
+      "source_location": "L538",
       "weight": 1.0
     },
     {
@@ -40800,7 +40823,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L558",
+      "source_location": "L560",
       "weight": 1.0
     },
     {
@@ -40811,7 +40834,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L176",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -40822,7 +40845,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L224",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -40833,7 +40856,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L269",
+      "source_location": "L271",
       "weight": 1.0
     },
     {
@@ -40844,7 +40867,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1055",
+      "source_location": "L1063",
       "weight": 1.0
     },
     {
@@ -40855,7 +40878,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1113",
+      "source_location": "L1121",
       "weight": 1.0
     },
     {
@@ -40866,7 +40889,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1153",
+      "source_location": "L1161",
       "weight": 1.0
     },
     {
@@ -40888,7 +40911,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1203",
+      "source_location": "L1211",
       "weight": 1.0
     },
     {
@@ -40899,7 +40922,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1232",
+      "source_location": "L1240",
       "weight": 1.0
     },
     {
@@ -40910,7 +40933,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1261",
+      "source_location": "L1269",
       "weight": 1.0
     },
     {
@@ -40921,7 +40944,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L169",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -40932,7 +40955,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L283",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -40954,7 +40977,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L400",
+      "source_location": "L402",
       "weight": 1.0
     },
     {
@@ -40976,7 +40999,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L604",
+      "source_location": "L606",
       "weight": 1.0
     },
     {
@@ -40987,7 +41010,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L697",
+      "source_location": "L699",
       "weight": 1.0
     },
     {
@@ -40998,7 +41021,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L815",
+      "source_location": "L817",
       "weight": 1.0
     },
     {
@@ -41009,7 +41032,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L980",
+      "source_location": "L988",
       "weight": 1.0
     },
     {
@@ -41020,7 +41043,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L699",
+      "source_location": "L701",
       "weight": 1.0
     },
     {
@@ -41031,7 +41054,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L721",
+      "source_location": "L723",
       "weight": 1.0
     },
     {
@@ -41042,7 +41065,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L748",
+      "source_location": "L750",
       "weight": 1.0
     },
     {
@@ -41053,7 +41076,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L793",
+      "source_location": "L795",
       "weight": 1.0
     },
     {
@@ -41064,7 +41087,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L606",
+      "source_location": "L608",
       "weight": 1.0
     },
     {
@@ -41075,7 +41098,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L644",
+      "source_location": "L646",
       "weight": 1.0
     },
     {
@@ -41086,7 +41109,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L683",
+      "source_location": "L685",
       "weight": 1.0
     },
     {
@@ -41097,7 +41120,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1057",
+      "source_location": "L1065",
       "weight": 1.0
     },
     {
@@ -41108,7 +41131,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1074",
+      "source_location": "L1082",
       "weight": 1.0
     },
     {
@@ -41119,7 +41142,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1096",
+      "source_location": "L1104",
       "weight": 1.0
     },
     {
@@ -41130,7 +41153,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1105",
+      "source_location": "L1113",
       "weight": 1.0
     },
     {
@@ -41141,7 +41164,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1006",
+      "source_location": "L1014",
       "weight": 1.0
     },
     {
@@ -41152,7 +41175,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1023",
+      "source_location": "L1031",
       "weight": 1.0
     },
     {
@@ -41163,7 +41186,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L982",
+      "source_location": "L990",
       "weight": 1.0
     },
     {
@@ -41185,7 +41208,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L153",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -41196,7 +41219,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L817",
+      "source_location": "L819",
       "weight": 1.0
     },
     {
@@ -41207,7 +41230,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L830",
+      "source_location": "L832",
       "weight": 1.0
     },
     {
@@ -41218,7 +41241,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L842",
+      "source_location": "L844",
       "weight": 1.0
     },
     {
@@ -41229,7 +41252,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L855",
+      "source_location": "L857",
       "weight": 1.0
     },
     {
@@ -41240,7 +41263,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L876",
+      "source_location": "L878",
       "weight": 1.0
     },
     {
@@ -41251,7 +41274,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L913",
+      "source_location": "L921",
       "weight": 1.0
     },
     {
@@ -41262,7 +41285,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L940",
+      "source_location": "L948",
       "weight": 1.0
     },
     {
@@ -41487,5 +41510,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7e1fdcf2d1d3550344f9655f17c13d1e2a8d0649"
+  "built_at_commit": "64a8a4ad28806305a26294b8de69bba3755d1944"
 }
