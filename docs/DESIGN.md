@@ -954,7 +954,9 @@ The row's height and its six slots are fixed for the text size and the width
   slot shows the board, with no frame, so it doesn't look like a button. When
   all six are empty, the first two slots' space shows a note in `subheadline`,
   `ink-secondary`: "Replies to your partner appear here.", or, with the
-  under-18 switch on, "Listen mode is off for this partner." (CONSENT-6)
+  under-18 switch on, "Listen mode is off for this partner." (CONSENT-6).
+  Until the starter phrases are reviewed, the empty row holds their
+  invitation instead ([the first launch](#the-first-launch)).
 - **A phrase too long for its slot.** A slot holds two lines of
   `title3-emphasized`; a longer phrase steps down to `headline`'s size, still
   two lines, and past that ends with an ellipsis. VoiceOver reads the whole
@@ -1186,7 +1188,7 @@ Each screen uses the components above; the TRD's
 
 | State                 | The caption                                              | The row                                             | The Listen control      |
 | --------------------- | -------------------------------------------------------- | --------------------------------------------------- | ----------------------- |
-| First launch          | "Listen mode is off."                                    | Empty, with its note                                | Off, "20 free"          |
+| First launch          | "Listen mode is off."                                    | The starter phrases' invitation (BANK-10)           | Off, "20 free"          |
 | Listen mode off       | "Listen mode is off."                                    | Typing's matches while the keyboard is up (SPEAK-4) | Off                     |
 | A session opening     | "Listening", large                                       | Empty                                               | Listening               |
 | A partner speaking    | "They're saying", the words so far, and Done             | As it was                                           | Listening, symbol fades |
@@ -1294,10 +1296,13 @@ order SET-1 gives:
 
 ### The first launch
 
-The home screen is ready to speak within two seconds (PERF-3). At the top of
-the grid, inside its scroll view so nothing above moves, a card says the
-starter phrases are the team's words, with Review, which walks the editor
-category by category, and Not now (BANK-10).
+The home screen is ready to speak within two seconds (PERF-3), with the grid
+showing phrases at once (SPEAK-1). The empty row holds the invitation, in place
+of its note: a card that says the starter phrases are the team's words, with
+Review, which walks the editor category by category, and Not now (BANK-10). It
+sits inside the row's fixed frame, so nothing moves when it goes; replies take
+its place whenever the row has them, and it returns to an empty row until
+every category is reviewed or the user taps Not now.
 
 ### The paywall
 
