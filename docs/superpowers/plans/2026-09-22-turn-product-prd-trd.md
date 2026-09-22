@@ -346,7 +346,7 @@ The research notes supply the facts behind them.
     claimed gets `409` and no call to Jev; the claim is released if Jev
     fails, so a line counts only when Jev answers it; and the relay's
     configuration returns each user's free lines left and entitlement, so
-    they survive a relaunch. The offline fallback and the grid never count.
+    they survive a relaunch. The phone's own ranking and the grid never count.
 1.  **Entitlement check.** Past the free lines, the relay asks RevenueCat's
     REST API v2 for the customer's active entitlements, caches a yes for 24
     hours, since the purchase is one-time, and a no for 1 minute, and skips
