@@ -281,6 +281,9 @@ these headers:
 - `X-Guessling-Player`: the RevenueCat app user ID; the Worker hashes it
   before storing anything.
 - `X-Guessling-AI`: `on` or `off`, the player's notice choice (NOTICE-3).
+- `X-Guessling-Date`: the device's local date, `YYYY-MM-DD`, which the
+  Worker accepts only while it's today somewhere on Earth; see
+  [Dates and numbers](#dates-and-numbers).
 - `X-Guessling-Version`: the app's version, so the Worker can ask an old
   build to update.
 - `X-Guessling-Refresh: 1`, only on the first archive request after a
@@ -289,19 +292,22 @@ these headers:
 | Method and path                      | What it does                                        | Guessling+  |
 | ------------------------------------ | --------------------------------------------------- | ----------- |
 | `GET /v1/config`                     | The notice, the policy links, and the kill switch   | No          |
-| `GET /v1/today?date=YYYY-MM-DD`      | Today's puzzle for the device's date, with progress | No          |
+| `GET /v1/today`                      | Today's puzzle for the device's date, with progress | No          |
 | `GET /v1/archive`                    | Every past puzzle's number, date, and hint          | No          |
-| `GET /v1/puzzles/<n>`                | An archive puzzle, with progress                    | Yes         |
+| `GET /v1/puzzles/<n>`                | A puzzle by number, with progress                   | For archive |
 | `GET /v1/puzzles/<n>/bank`           | The category's bank questions, for the list         | For archive |
 | `POST /v1/puzzles/<n>/ask`           | Answers a question                                  | For archive |
 | `POST /v1/puzzles/<n>/guess`         | Decides a guess                                     | For archive |
 | `POST /v1/puzzles/<n>/reports`       | Stores a report                                     | No          |
 | `GET /privacy`, `/terms`, `/support` | The policy and support pages, as static assets      | No          |
 
-"For archive" means the Worker confirms Guessling+ when `n` isn't today's
-puzzle for the player and isn't a round they started before midnight
-(TODAY-5). A puzzle's view never includes `names` or `card`; the end of a
-round adds `reveal`:
+"For archive" means the Worker confirms Guessling+ unless `n` is the daily
+puzzle dated `X-Guessling-Date`, or a round the player started that is
+still `playing` inside the window TODAY-5 allows (ARCHIVE-4). A player who
+sets their clock to another date that is still today somewhere can open
+that date's puzzle, as Wordle allows; the team accepts that. A puzzle's
+view never includes `names` or `card`, so the answer can't reach the app
+early (SEC-2); the end of a round adds `reveal`:
 
 ```ts
 interface PuzzleView {
@@ -542,10 +548,10 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 - **Numbering.** Starters are #1 to #10 and have no date. Daily puzzle `n`,
   from #11 on, belongs to September 13, 2026 plus `n` days, so #11 is
   Thursday, September 24 and #17 is Wednesday, September 30 (TODAY-3).
-- **Today.** The app sends the device's local date (TODAY-2). A date is
-  today somewhere from 10:00 UTC the day before until 12:00 UTC the day
-  after, about 50 hours, so the Worker accepts a date only in that window
-  ([Cloudflare notes][cf-dates]):
+- **Today.** The app sends the device's local date with every request
+  (TODAY-2). A date is today somewhere from 10:00 UTC the day before until
+  12:00 UTC the day after, about 50 hours, so the Worker accepts a date
+  only in that window ([Cloudflare notes][cf-dates]):
 
 ```ts
 function isPlayableDate(localDate: string, now = Date.now()): boolean {
@@ -914,12 +920,13 @@ export default {
 - **Logs.** Workers Logs, enabled in `wrangler.jsonc`, with one JSON event
   per question: the step that answered, Jev's latency and status, and the
   outcome.
-- **Counts.** Workers Analytics Engine, one data point per event, for
-  players who allowed AI answers: puzzle opened, question answered, with
-  its answer and source, guess, round solved or lost, report, and busy. The
-  index is the hashed player ID, so distinct players and the return rate
-  are `count(DISTINCT index1)` queries; at high volume the data is sampled,
-  so totals use `SUM(_sample_interval)` (METRIC-1, METRIC-2)
+- **Counts.** Workers Analytics Engine, one data point per event, for players
+  who allowed AI answers: puzzle opened, question answered, with its answer
+  and source, guess, round solved or lost, report, and busy, each with the
+  puzzle and the player's date, so a finish on its date is countable. The
+  index is the hashed player ID, so distinct players and the return rate are
+  `count(DISTINCT index1)` queries; at high volume the data is sampled, so
+  totals use `SUM(_sample_interval)` (METRIC-1, METRIC-2)
   ([Cloudflare notes][cf-ae]).
 - **Numbers for the write-up.** `stats.ts` queries the SQL API and prints
   the idea's numbers with the latest consistency results (METRIC-5);

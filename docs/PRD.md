@@ -309,8 +309,9 @@ https://apps.apple.com/app/id<APP_ID>
   any fixes made since. Check: an archive round matches a recorded day's
   answers.
 - **ARCHIVE-4, Must.** The server serves an archive puzzle only after
-  confirming the player's Guessling+ entitlement with RevenueCat. Check: a
-  request without the entitlement is refused.
+  confirming the player's Guessling+ entitlement with RevenueCat. Check:
+  with the device's date set to September 27, a request for #13, dated
+  September 26, without the entitlement is refused.
 
 ### The paywall and purchases
 
