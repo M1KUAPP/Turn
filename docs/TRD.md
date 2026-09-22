@@ -6,10 +6,10 @@ data, the API, how questions are answered, purchases, the app, security and
 privacy, reliability, tests, and release. It's written on September 22,
 2026, before the code, as the contract the code is built to, and it changes
 with the code. The [product](/docs/PRODUCT.md) says why, the
-[idea](/docs/IDEA.md) owns the schedule and the risks, and four research
+[idea](/docs/IDEA.md) owns the schedule and the risks, and five research
 notes, on [RevenueCat in Expo][rc-notes], the [Cloudflare backend][cf-notes],
-[Apple's requirements][apple-notes], and [daily puzzles][daily-notes], hold
-the sources.
+[Apple's requirements][apple-notes], [daily puzzles][daily-notes], and
+[designing for iOS][ios-notes], hold the sources.
 
 Contents:
 
@@ -879,18 +879,20 @@ The [design](/docs/DESIGN.md) draws the Guessling's parts and poses, times
 each reaction, and specifies the sounds; this section says how they're
 built.
 
-- The Guessling is four poses, nod, head shake, shrug, and celebration,
-  animated with Reanimated. With Reduce Motion on, each reaction becomes a
-  fade to its pose, and every such fade sets its `reduceMotion` option to
-  `ReduceMotion.Never`: Reanimated's default makes an animation jump to its
-  end, and a nod built from a sequence would show nothing at all. The app
-  reads the setting from `AccessibilityInfo` and follows its
-  `reduceMotionChanged` event, since `useReducedMotion()` keeps the value it
-  had at launch (ASK-2, A11Y-3) ([iOS notes on Reduce
-  Motion][ios-reduce-motion]).
+- The Guessling's poses, which the design draws, are animated with
+  Reanimated; four of them, the nod, head shake, shrug, and celebration,
+  answer questions. With Reduce Motion on, each reaction becomes a fade to
+  its pose. The app reads the setting from `AccessibilityInfo` and follows
+  its `reduceMotionChanged` event, and every animation, full or faded, sets
+  its `reduceMotion` option to `ReduceMotion.Never`: `useReducedMotion()`
+  and Reanimated's default both keep the value from launch, the default
+  makes an animation jump to its end, and a nod built from a sequence would
+  show nothing at all (ASK-2, A11Y-3)
+  ([iOS notes on Reduce Motion][ios-reduce-motion]).
 - Sounds play in the ambient audio category, so the silent switch mutes
-  them and the player's music keeps playing; a light haptic marks each
-  answer and a success haptic the solve. Both follow Settings' switches
+  them and the player's music keeps playing; a light haptic marks each Yes,
+  No, wrong guess, and reply that uses no turn, and a success haptic the
+  solve, as the design's answer table lists. Both follow Settings' switches
   (SET-2) ([Apple notes on sound][apple-sound]).
 - The ambient category needs an explicit call before the first sound,
   since without it the first sound stops the player's music:
@@ -1265,8 +1267,8 @@ product and legal ones.
   tokens and rules a coding agent can follow.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
 - [RevenueCat notes][rc-notes], [Cloudflare notes][cf-notes],
-  [Apple notes][apple-notes], and [daily puzzle notes][daily-notes]: the
-  sources behind the choices here.
+  [Apple notes][apple-notes], [daily puzzle notes][daily-notes], and
+  [iOS design notes][ios-notes]: the sources behind the choices here.
 - [Jev notes](/docs/research/jev.md): the API, the SDKs, the limits, and the
   terms.
 
@@ -1274,4 +1276,5 @@ product and legal ones.
 [cf-notes]: /docs/research/cloudflare-workers.md
 [apple-notes]: /docs/research/apple-requirements.md
 [daily-notes]: /docs/research/daily-puzzles.md
+[ios-notes]: /docs/research/ios-design.md
 [rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
