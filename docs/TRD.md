@@ -876,14 +876,21 @@ Expo Router, with one stack:
 ### Reactions, sound, and haptics
 
 - The Guessling is four poses, nod, head shake, shrug, and celebration,
-  animated with Reanimated. With Reduce Motion on, `useReducedMotion()`
-  swaps the motion for a fade between poses (ASK-2, A11Y-3).
+  animated with Reanimated. With Reduce Motion on, each reaction becomes a
+  fade to its pose, and every such fade sets its `reduceMotion` option to
+  `ReduceMotion.Never`: Reanimated's default makes an animation jump to its
+  end, and a nod built from a sequence would show nothing at all. The app
+  reads the setting from `AccessibilityInfo` and follows its
+  `reduceMotionChanged` event, since `useReducedMotion()` keeps the value it
+  had at launch (ASK-2, A11Y-3) ([iOS notes on Reduce
+  Motion][ios-reduce-motion]).
 - Sounds play in the ambient audio category, so the silent switch mutes
   them and the player's music keeps playing; a light haptic marks each
   answer and a success haptic the solve. Both follow Settings' switches
   (SET-2) ([Apple notes on sound][apple-sound]).
 
 [apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
+[ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
 
 ### Accessibility
 
