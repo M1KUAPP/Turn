@@ -190,8 +190,10 @@ says how each is built.
   The place, taps, and the row never reorder the grid. Check: change the
   place and speak ten phrases; the grid is unchanged.
 - **BANK-5, Must.** The fixed buttons can't be deleted or renamed, and the
-  Quick category, which holds them, comes first in the grid. Check: the
-  editor offers no delete for Yes, No, or Not sure.
+  Quick category, which holds them, comes first in the grid. The starter
+  category for body and pain can be renamed but not deleted, since the
+  safety rules in ROW-3 follow it. Check: the editor offers no delete for
+  Yes, No, Not sure, or the body and pain category.
 - **BANK-6, Must.** Every spoken phrase adds one to its tap count, which the
   shortlist uses. Check: speak a phrase that no line has suggested three
   times; with no other signal, it enters the next shortlist among the
@@ -334,9 +336,10 @@ says how each is built.
 - **ROW-3, Must.** One big button shows the top phrase when its probability
   is above the big-button bar, the line isn't a yes-or-no question, and its
   topic isn't one that never gets a big button, which starts as body and
-  pain. Otherwise the row shows up to six phrases at or above the floor.
-  Below the floor, the row doesn't change. Check: replay recorded answers at
-  0.9, 0.7, and 0.5, and a pain line at 0.9.
+  pain, and agreeing to or refusing care. Otherwise the row shows up to six
+  phrases at or above the floor. Below the floor, the row doesn't change. Check:
+  replay recorded answers at 0.9, 0.7, and 0.5, and a pain line and a consent
+  line at 0.9.
 - **ROW-4, Must.** For a yes-or-no question, Yes, No, and Not sure take the
   first three slots in that order, phrases at or above the floor take the
   other three, and no big button shows. Check: scenario 2.
@@ -430,7 +433,8 @@ says how each is built.
 
 - **SET-1, Must.** Settings holds the voice and its rate, Personal Voice,
   Listen mode's permission and its withdrawal, the under-18 switch, the
-  places, the phrase bank editor, Restore Purchases, the privacy notice, the
+  places, the phrase bank editor, Turn Listen, which opens the paywall,
+  Restore Purchases, the privacy notice, the
   open-source licenses, and the app's version and the relay's status.
   Check: each entry opens.
 - **SET-2, Must.** The privacy notice reads in the app with no network.
