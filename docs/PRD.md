@@ -494,8 +494,9 @@ says how each is built.
   Check: a script counts them and prints the labelers' agreement.
 - **EVAL-2, Must.** Jev's floor, big-button bar, margin, and question
   wording are committed before the first run, and Jev is reported on all 80
-  lines. The keyword and embedding rankers' cut-offs for holding are set by
-  five-fold cross-validation and reported out of fold. If anything of Jev's
+  lines. The embedding ranker's cut-off for holding is set by five-fold
+  cross-validation and reported out of fold, and the keyword ranker holds
+  when no word is shared, as the phone's own ranking does. If anything of Jev's
   changes after the team sees results, the README reports Jev only on at
   least 20 new lines, written and labeled by a teammate who hasn't seen
   them. Check: the history shows the settings committed before the results.
@@ -513,8 +514,10 @@ says how each is built.
 - **EVAL-4, Must.** Jev "trails" embeddings only when a paired bootstrap
   interval for the difference in top-6 accuracy lies wholly below zero;
   otherwise the README says there's no clear difference. When Jev trails,
-  the script also scores Jev re-ranking an embedding shortlist, the relay
-  uses the better of the two, and the README reports both, as the idea's
+  the script also scores Jev re-ranking the 40 phrases nearest by Apple's
+  sentence embeddings, computed on a Mac as the phone would, since the phone
+  builds the shortlist; if that does better, the phone's shortlist switches
+  to those embeddings, and the README reports both, as the idea's
   [risks][idea-risks] say. Check: the table shows the interval.
 - **EVAL-5, Must.** No big button is wrong on a yes-or-no, pain, or consent
   line. If one is, the relay's configuration gives those lines only the

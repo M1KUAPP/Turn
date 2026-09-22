@@ -46,7 +46,7 @@ are.
   timeout, at most one retry, and a `signal`, and handles a 402 itself. See
   [Errors, retries, and timeouts](#errors-retries-and-timeouts).
 - **A line costs about 1,700 to 1,900 input tokens,** not the idea's 1,500:
-  up to about $0.00008, or $5.30 to $5.70 a year at 200 lines a day. See
+  up to about $0.00008, or $5.20 to $5.80 a year at 200 lines a day. See
   [How a Jev request is billed](#how-a-jev-request-is-billed).
 - **Count free lines in one Durable Object per device.** KV can't count
   concurrent lines, D1 now fails hard past its Free limits, and a SQLite
@@ -386,7 +386,7 @@ a missing key are in the [Jev notes][jev-api]. New, or specific to Turn:
   296-token example puts a request's fixed overhead near 280 tokens. A Turn
   request with 40 phrases of about 14 characters then comes to roughly 1,700
   to 1,900 input tokens, depending on the layout: about $0.00007 to $0.00008
-  a line, or $5.30 to $5.70 a year at 200 lines a day, against the idea's
+  a line, or $5.20 to $5.80 a year at 200 lines a day, against the idea's
   "about 1,500" tokens and $4.60 ([idea-money]). TypeSafe's tokenizer isn't
   published, so the relay should log `usage.input_tokens` from its first
   real call.

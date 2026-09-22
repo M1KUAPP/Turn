@@ -311,7 +311,7 @@ the [reasoning][r8]; this is how Turn applies them.
   once, from $24.99 to $159.99, and a one-time price answers the fear of
   losing one's voice when a payment lapses.
 - **What a user costs.** At 200 partner lines a day for a year, Jev costs
-  about $5.30 to $5.70, so one payment covers about four years of Jev at that
+  about $5.20 to $5.80, so one payment covers over four years of Jev at that
   pace, with the relay's hosting on top ([billing][svc-billing]).
 - **Trying first.** Listen mode is free for the first 20 partner lines,
   counted by the relay, so the user sees it work before the paywall.
