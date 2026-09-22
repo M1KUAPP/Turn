@@ -923,10 +923,13 @@ Expo Router, with one stack:
   the system sheets in light mode ([iOS notes on Dark Mode][ios-dark]).
 - The paywall is RevenueCat's native view; the VoiceOver and Larger Text
   checks run on it too, since a label can be claimed only if the purchase
-  works with that feature (A11Y-6).
+  works with that feature (A11Y-6). The iOS SDK hides paywall images from
+  VoiceOver, whatever alt text the editor holds, so nothing the paywall
+  must say goes in an image ([iOS notes on the paywall][ios-paywall]).
 
 [ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
 [ios-scaling]: /docs/research/ios-design.md#how-react-native-scales-text
+[ios-paywall]: /docs/research/ios-design.md#limits-on-matching-the-app
 
 ### Build configuration
 
