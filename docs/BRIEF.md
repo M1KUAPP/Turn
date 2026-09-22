@@ -509,9 +509,9 @@ settles several of them and gives a different winners date.
 - [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten
   rounds of ideation, with Jev built in.
 - [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
-  Turn superseded, with the [product](/docs/PRODUCT.md),
+  Turn superseded. The [product](/docs/PRODUCT.md),
   [product requirements](/docs/PRD.md), [technical requirements](/docs/TRD.md),
-  and [design](/docs/DESIGN.md) documents built on it.
+  and [design](/docs/DESIGN.md) documents built on it are superseded too.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,

@@ -720,7 +720,7 @@ What the sources don't say that the PRD needs, as of September 22, 2026:
 
 ## See also
 
-- [Shipaton 2026 idea](/docs/archive/guessling-idea.md), especially
+- [Guessling idea](/docs/archive/guessling-idea.md), especially
   [What the app does](/docs/archive/guessling-idea.md#what-the-app-does) and
   [Monetization](/docs/archive/guessling-idea.md#monetization).
 - [Evidence for the top five ideas](/docs/research/idea-evidence.md#hunch-a-daily-20-questions-game),
