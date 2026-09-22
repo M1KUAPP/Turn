@@ -41,8 +41,9 @@ description: >-
 
 ### Rules that don't bend
 
-Every screen keeps these ten rules; each names the requirement it serves and
-the test that shows it holds. The rest of this document says how.
+Every screen keeps these ten rules; each names the requirement or principle
+it serves and the test that shows it holds. The rest of this document says
+how.
 
 1.  **Nothing moves under a finger.** The strip, the row's six slots, and the
     grid keep their places and sizes whatever the row shows; only the words
@@ -72,11 +73,13 @@ the test that shows it holds. The rest of this document says how.
     read live, stills them all (A11Y-6). Test: turn Reduce Motion on
     mid-session.
 8.  **No glass behind words.** Phrases, the caption, notes, and the consent card
-    sit on solid fills; Liquid Glass stays in the system's bars, sheets, and
-    alerts. Test: both ends of the Liquid Glass slider.
+    sit on solid fills, so their contrast holds at every glass setting; Liquid
+    Glass stays in the system's bars, sheets, and alerts (A11Y-7). Test: both
+    ends of the Liquid Glass slider.
 9.  **The system decides the look.** Turn follows the iPhone's appearance,
-    Increase Contrast, and Bold Text, and has no theme of its own. Test: all
-    four appearances, with Bold Text on and off.
+    Increase Contrast, and Bold Text, and has no theme of its own, so text
+    keeps its size and contrast in every appearance (A11Y-4, A11Y-7). Test:
+    all four appearances, with Bold Text on and off.
 10. **Plain words, no AI badges.** No percentages, sparkles, "smart", or
     exclamation marks, and a reply looks like any other phrase of the user's,
     because it is one ([product principles][product-principles]). Test: read
@@ -1450,9 +1453,10 @@ The longer texts, where `{service}` is as above:
   for the fallback recognizer: "Turn uses speech recognition only in Listen
   mode, after your partner agrees, to turn their words into text when this
   iPhone can't do it by itself." (LISTEN-9)
-- **Starter phrases** put their key words first and stay under about 30
-  characters where they can, so most fit a slot at the default size without an
-  ellipsis; CONTENT-1's limit of 120 still holds.
+- **What a slot fits.** At the default size a slot shows about 28 characters
+  before its text steps down, and a phrase that puts its key words first
+  still reads when the row cuts it; CONTENT-1 sets the starter phrases'
+  length.
 
 ## Accessibility
 
@@ -1563,8 +1567,6 @@ listing, since each label has published criteria
   [pitch](/docs/IDEA.md#pitch) opens with, whose first frame tells the story,
   since GitHub pauses GIFs for people who reduce motion
   ([motionsites notes][ms-readme]).
-- **Social preview.** 1280 by 640 pixels, the thumbnail's type on the board's
-  color.
 
 [ms-readme]: /docs/research/turn-motionsites.md#the-readme-on-github
 
