@@ -418,9 +418,9 @@ says how each is built.
   Check: a request with a fresh ID's 21st line and no purchase gets the
   paywall response.
 - **PAY-8, Must.** If the dashboard's form can't make a one-time Test Store
-  product, the team makes it through RevenueCat's API, which supports one,
-  as the idea's [risks][idea-risks] plan. Check: the
-  product's type in the dashboard on September 22.
+  product, the team makes it through RevenueCat's API, which supports one, as
+  the idea's [risks][idea-risks] plan. Check: the product's type in the
+  dashboard on September 22.
 - **PAY-9, Must.** Judges can use Listen mode, free of charge and without
   restriction, until judging ends on October 13, 2026, as the
   [official rules][ctx-rules] require: the Test Store purchase works in the
@@ -434,12 +434,11 @@ says how each is built.
 
 ### Settings
 
-- **SET-1, Must.** Settings holds the voice and its rate, Personal Voice,
-  Listen mode's permission and its withdrawal, the under-18 switch, the
-  places, the phrase bank editor, Turn Listen, which opens the paywall,
-  Restore Purchases, the privacy notice, the
-  open-source licenses, and the app's version and the relay's status.
-  Check: each entry opens.
+- **SET-1, Must.** Settings holds the voice and its rate, Personal Voice, Listen
+  mode's permission and its withdrawal, the under-18 switch, the places, the
+  phrase bank editor, Turn Listen, which opens the paywall, Restore Purchases,
+  the privacy notice, the open-source licenses, and the app's version and the
+  relay's status. Check: each entry opens.
 - **SET-2, Must.** The privacy notice reads in the app with no network.
   Check: open it in Airplane Mode.
 - **SET-3, Should.** "Erase all data" deletes the bank, the places, the tap
@@ -468,14 +467,13 @@ says how each is built.
   and CONSENT-4 require in plain words. Check: a teammate compares each
   version with the requirements.
 - **CONTENT-4, Must.** The privacy notice says what stays on the phone, what
-  leaves with each partner line (ROW-2) and to whom (the relay on
-  Cloudflare, then TypeSafe, in the United States), that lines
-  and phrases can reveal health, such as a clinic visit or pain, what
-  RevenueCat receives for purchases, as its terms require, what is never
-  kept (audio and transcripts), what TypeSafe may keep and
-  why, that Turn isn't for children and doesn't listen to partners under 18,
-  and how to reach the team. Check: a teammate compares it with the TRD's
-  data inventory.
+  leaves with each partner line (ROW-2) and to whom (the relay on Cloudflare,
+  then TypeSafe, in the United States), that lines and phrases can reveal
+  health, such as a clinic visit or pain, what RevenueCat receives for
+  purchases, as its terms require, what is never kept (audio and transcripts),
+  what TypeSafe may keep and why, that Turn isn't for children and doesn't
+  listen to partners under 18, and how to reach the team. Check: a teammate
+  compares it with the TRD's data inventory.
 - **CONTENT-5, Should.** A campus speech-language pathology clinic reviews
   Turn with a one-page feature chart in ASHA's terms and five questions:
   whether the starter phrases suit adults with ALS, stroke, or
@@ -506,16 +504,15 @@ says how each is built.
   least 20 new lines, written and labeled by a teammate who hasn't seen
   them. Check: the history shows the settings committed before the results.
 - **EVAL-3, Must.** One command scores four rankers on the same lines: the
-  place's phrases alone, keyword
-  ranking on the line, Workers AI embeddings, and Jev. On lines with an
-  acceptable reply, it reports top-1 and top-6 accuracy and mean reciprocal
-  rank, beside the rates chance would give; on every line, what the user would
-  see (a right or wrong big button, a right or wrong row, a missed reply, or a
-  right hold), with coverage, risk, and an always-hold baseline; and the
-  shortlist's recall at 40, the question-kind accuracy, and the latency at the
-  median and the 95th percentile. Rates carry 95% intervals, and yes-or-no, pain
-  and consent, and no-shared-word lines are also reported apart. Check: run it
-  and read the table.
+  place's phrases alone, keyword ranking on the line, Workers AI embeddings, and
+  Jev. On lines with an acceptable reply, it reports top-1 and top-6 accuracy
+  and mean reciprocal rank, beside the rates chance would give; on every line,
+  what the user would see (a right or wrong big button, a right or wrong row, a
+  missed reply, or a right hold), with coverage, risk, and an always-hold
+  baseline; and the shortlist's recall at 40, the question-kind accuracy, and
+  the latency at the median and the 95th percentile. Rates carry 95% intervals,
+  and yes-or-no, pain and consent, and no-shared-word lines are also reported
+  apart. Check: run it and read the table.
 - **EVAL-4, Must.** Jev "trails" embeddings only when a paired bootstrap
   interval for the difference in top-6 accuracy lies wholly below zero;
   otherwise the README says there's no clear difference. When Jev trails,
@@ -577,9 +574,8 @@ says how each is built.
 - **PRIV-3, Must.** Nothing reaches TypeSafe before the user's permission,
   after its withdrawal, or while the under-18 switch is on, and each request
   carries only what CONSENT-1 names. Check: the relay's logs and a capture.
-- **PRIV-4, Must.** RevenueCat receives only what its SDK sends for
-  purchases, under a random app user ID that names no one, and Turn sets no
-  attributes.
+- **PRIV-4, Must.** RevenueCat receives only what its SDK sends for purchases,
+  under a random app user ID that names no one, and Turn sets no attributes.
   Check: the code sets none.
 - **PRIV-5, Must.** The app has no analytics or advertising SDK and doesn't
   track. Check: the dependency list.
