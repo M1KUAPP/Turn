@@ -1,14 +1,14 @@
 # Turn's frontend trends research notes
 
 What changed in trending frontend services and design after September 22,
-2026, read for Turn, an accessibility-first iPhone app that people use in the
-middle of a conversation: Google's DESIGN.md convention and its linter, AI
-generators that build native apps and the evidence on how accessible
-generated interfaces are, React Native libraries for Expo SDK 57, and the
-visual trends of 2025 and 2026. These notes feed Turn's `docs/DESIGN.md`.
-Every source was read on September 23, 2026, and judgment starts with
-"Synthesis:". The [frontend trends notes](/docs/research/frontend-trends.md)
-written for Guessling on September 22 are linked, not repeated.
+2026, read for Turn's `docs/DESIGN.md`, the design of an accessibility-first
+iPhone app that people use in the middle of a conversation: Google's DESIGN.md
+convention and its linter, AI generators that build native apps and the
+evidence on how accessible generated interfaces are, React Native libraries for
+Expo SDK 57, and the visual trends of 2025 and 2026. Every source was read on
+September 23, 2026, and judgment starts with "Synthesis:". The
+[frontend trends notes](/docs/research/frontend-trends.md) written for
+Guessling on September 22 are linked, not repeated.
 
 Contents:
 

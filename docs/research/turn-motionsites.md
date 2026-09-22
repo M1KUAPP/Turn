@@ -3,7 +3,7 @@
 What changed on motionsites.ai since the [earlier motionsites note][ms-note]
 of September 22, 2026, what its prompt corpus holds that is close to Turn, how
 the corpus's common patterns fare against WCAG 2.2, and which of them suit
-Turn's app, demo video, Devpost images, and README. These notes feed Turn's
+Turn's app, demo video, Devpost images, and README, for Turn's
 `docs/DESIGN.md`, beside three sibling notes on frontend trends, AAC design,
 and iOS design. Every source was read on September 23, 2026, so counts and
 page text are as of that date, and judgment starts with "Synthesis:". Facts

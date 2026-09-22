@@ -2,22 +2,20 @@
 
 What Apple's platform, Expo SDK 57, React Native 0.86, and RevenueCat's paywall
 mean for the look and feel of Turn, the AAC app the
-[product document][product] describes, as input to the rewrite of
-[DESIGN.md][design-md] as Turn's design system and art direction. Every source
-below was read on September 23, 2026, so versions and limits are as of that
-date, and judgment starts with "Synthesis:". The [iOS design notes][ios-design]
-of September 22 already cover iOS 26's Liquid Glass, fonts, color, motion,
-icons, symbols, the paywall editor, and store art, for Guessling; the
-[iPhone build notes][turn-ios] cover speech, audio, and Personal Voice; and the
-[AAC practice notes][aac-notes] cover iOS access features and React Native's
-accessibility API. This note links them instead of repeating them, and adds
-what Xcode 27 and the iOS 27 SDK change, what moved since September 22, and
-what each fact means for Turn.
-
-Apple's documentation was read as DocC JSON and WWDC transcripts, the SF Pro,
-New York, and SF Symbols installers were expanded without installing them, and
-the purchases-ios 5.90.1 source fills RevenueCat's gaps. Nothing ran on a
-device.
+[product document][product] describes, for the rewrite of
+[DESIGN.md][design-md] as its design system: what Xcode 27 and the iOS 27 SDK
+change, what moved since September 22, and what each fact means for Turn.
+Every source below was read on September 23, 2026, so versions and limits are
+as of that date, and judgment starts with "Synthesis:"; Apple's documentation
+was read as DocC JSON and WWDC transcripts, the SF Pro, New York, and SF
+Symbols installers were expanded without installing them, the purchases-ios
+5.90.1 source fills RevenueCat's gaps, and nothing ran on a device. The
+[iOS design notes][ios-design] of September 22 already cover iOS 26's Liquid
+Glass, fonts, color, motion, icons, symbols, the paywall editor, and store art,
+for Guessling; the [iPhone build notes][turn-ios] cover speech, audio, and
+Personal Voice; and the [AAC practice notes][aac-notes] cover iOS access
+features and React Native's accessibility API, so this note links them
+instead of repeating them.
 
 Contents:
 
