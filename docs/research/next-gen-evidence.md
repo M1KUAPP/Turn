@@ -189,13 +189,14 @@ own task.
 
 ## Turn, AAC that ranks the user's own phrases
 
-Candidate 23. For adults who can't rely on speech, after ALS, a stroke, or other
-causes: a consenting partner's speech is transcribed on the phone, Jev ranks the
-user's own saved phrases (a Choice over up to 240, plus question type and
-topic), and the top ones fill a row of big buttons above a fixed grid. A tap
-speaks the phrase, in the user's Personal Voice if set; with no partner speech,
-the place and typed letters rank instead. Speaking is always free, and Listen
-mode is a one-time unlock.
+Candidate 23, an augmentative and alternative communication (AAC) app, for
+adults who can't rely on speech after ALS, a stroke, or other causes: a
+consenting partner's speech is transcribed on the phone, Jev ranks the user's
+own saved phrases (a Choice over up to 240, plus question type and topic), and
+the top ones fill a row of big buttons above a fixed grid. A tap speaks the
+phrase, in the user's Personal Voice if set; with no partner speech, the place
+and typed letters rank instead. Speaking is always free, and Listen mode is a
+one-time unlock.
 
 ### Turn rival apps
 

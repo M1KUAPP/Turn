@@ -2,7 +2,7 @@
 
 How far Jev, TypeSafe's hosted decision model, stretches in a demanding app: the
 pattern pages, the multi-step cookbooks, the demos, the evals and what TypeSafe
-publishes on calibration, what changed since the first Jev notes, programs and
+publishes on calibration, what changed since the Jev notes, programs and
 licenses, and how Jev pairs with generative and perception models. These notes
 extend the [Jev research notes][jev-notes] and link to them instead of repeating
 them. Every source was read on September 22, 2026.
@@ -14,7 +14,7 @@ Contents:
 1.  [Multi-step and real-time cookbooks](#multi-step-and-real-time-cookbooks)
 1.  [Demos](#demos)
 1.  [Evals, calibration, and consistency](#evals-calibration-and-consistency)
-1.  [What changed since the first Jev notes](#what-changed-since-the-first-jev-notes)
+1.  [What changed since the Jev notes](#what-changed-since-the-jev-notes)
 1.  [Programs, licenses, and open source](#programs-licenses-and-open-source)
 1.  [Jev with generative and perception models](#jev-with-generative-and-perception-models)
 1.  [Conflicts between sources](#conflicts-between-sources)
@@ -68,7 +68,7 @@ Contents:
 - **LLMs have documented roles.** Splitter, router target, verifier, escalation
   target, question proposer, and labeler, with Jev adding "negligible latency"
   in front of an LLM ([ts-smart-home]; [ts-build]; [cb-sde]).
-- **Changes since the first Jev notes.** The status page lists a new "API
+- **Changes since the Jev notes.** The status page lists a new "API
   issues" incident, and the Python SDK docs now show OpenRouter and Vercel AI
   Gateway access. The models page and SDK versions are unchanged ([ts-status];
   [ts-py-usage]).
@@ -726,7 +726,7 @@ workflow configurations is this note's ordering of the published numbers.
   as making similar decisions when the meaning stays similar, even if the
   wording changes. Jev is designed for consistency." ([ts-home])
 
-## What changed since the first Jev notes
+## What changed since the Jev notes
 
 The Jev notes were committed at 18:03 and 20:40 UTC on September 21, 2026, early
 on September 22 at UTC+8 (`git log`). This comparison uses what those notes
@@ -786,7 +786,7 @@ record.
   make all the data ourselves. We wouldn't train on your data even if you asked
   us to (no offense)." and "We deliberately chose not to publish performance
   against public benchmarks." ([ts-blog-launch])
-- **Community reports since the first Jev notes (secondary).** An issue filed at
+- **Community reports since the Jev notes (secondary).** An issue filed at
   23:15 UTC on September 21 says every console sign-in attempt returned HTTP 500
   for two days and that the status page "only monitors `api.typesafe.ai`"
   ([gh-skills-10]); no maintainer had replied, and the login page itself loaded
@@ -990,7 +990,7 @@ Roles that TypeSafe's own pages give an LLM next to Jev:
   more than half" instead of "drop by more than half" ([cb-skill-suggestion]).
   Their conflict about the Python docs changelog is resolved, and the launch
   post's FAQ answers are in the page data (see
-  [What changed since the first Jev notes](#what-changed-since-the-first-jev-notes));
+  [What changed since the Jev notes](#what-changed-since-the-jev-notes));
   the notes' other conflicts are in [their own list][jev-conflicts].
 
 [jev-conflicts]: /docs/research/jev.md#conflicts-between-sources
