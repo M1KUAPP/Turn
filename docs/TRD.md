@@ -287,7 +287,8 @@ these headers:
 - `X-Guessling-Version`: the app's version, so the Worker can ask an old
   build to update.
 - `X-Guessling-Refresh: 1`, only on the first archive request after a
-  purchase or restore, to skip the entitlement cache (PAY-5).
+  purchase or restore, to skip a cached no (PAY-5); the Worker honors it
+  at most once a minute per player.
 
 | Method and path                      | What it does                                        | Guessling+  |
 | ------------------------------------ | --------------------------------------------------- | ----------- |
@@ -705,7 +706,10 @@ export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boo
   const url =
     `https://api.revenuecat.com/v2/projects/${env.RC_PROJECT_ID}` +
     `/customers/${encodeURIComponent(appUserId)}/active_entitlements`
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${env.RC_SECRET_KEY}` } })
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${env.RC_SECRET_KEY}` },
+    signal: AbortSignal.timeout(2000) // a timeout is answered as unconfirmed too
+  })
   if (res.status === 404) return false // RevenueCat has never seen this ID
   if (!res.ok) throw new Unconfirmed(res.status) // answered as 503 unconfirmed (STATE-5)
   const body = (await res.json()) as { items: { entitlement_id: string; expires_at: number | null }[] }
@@ -715,9 +719,15 @@ export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boo
 }
 ```
 
-- A yes is cached, by the hashed ID, until the entitlement expires or for
-  15 minutes, whichever comes first; a no for 1 minute. The refresh header
-  skips the cache.
+- The answer is cached in the Worker's Cache API, keyed by the hashed ID: a
+  yes until the entitlement expires or for 15 minutes, whichever comes
+  first, and a no for 1 minute. The cache is per Cloudflare data center, so
+  a player whose requests move to another one is simply checked again.
+- The refresh header skips only a cached no, at most once a minute per
+  player, so no client can spend RevenueCat's limit of 480 requests a
+  minute for everyone.
+- A timeout, a `429`, or any other failure is answered `unconfirmed`, and
+  the app offers a retry (STATE-5).
 - An app user ID works like a bearer value: nothing ties it to a device.
   Guessing one is impractical, but a player who shares theirs shares
   Guessling+, which the team accepts.
