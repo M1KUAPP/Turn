@@ -1511,8 +1511,8 @@ Each has a safe default, which this document follows until someone decides.
 - [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
 - [Product requirements](/docs/PRD.md): the checks this design must pass.
 - [Technical requirements](/docs/TRD.md): how the app draws and animates it.
-- [Idea](/docs/archive/guessling-idea.md): the schedule, the art risk, and the
-  video.
+- [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the art risk,
+  and the video.
 - [motionsites.ai notes](/docs/research/motionsites.md),
   [trends notes](/docs/research/frontend-trends.md),
   [iOS notes](/docs/research/ios-design.md), and

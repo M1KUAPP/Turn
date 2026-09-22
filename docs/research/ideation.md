@@ -801,6 +801,7 @@ numbers will rest on about a day live in the video, recorded on September
   responses until at least October 22, the later of the dates given for the
   winners.
 
-**Decision:** go. Guessling is the idea, and `docs/IDEA.md` states it.
+**Decision:** go. Guessling is the idea, stated first in `docs/IDEA.md` and
+now in the [archived Guessling idea](/docs/archive/guessling-idea.md).
 
 [brief-pitch]: /docs/BRIEF.md#pitch-the-submission
