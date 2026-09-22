@@ -386,8 +386,8 @@ step that answers:
     gets the stored response again (STATE-2).
 2.  **Normalize.** Lowercase, trim, collapse spaces, drop a final `?`, `.`,
     or `!`, and straighten curly quotes. The result is the _wording_.
-3.  **A named guess.** A wording shaped "is it a/an/the X" whose X,
-    normalized the same way, is an accepted name is `right` (GUESS-4).
+3.  **A named guess.** A wording shaped "is it a/an/the X" whose X, in
+    name form, is an accepted name is `right` (GUESS-4).
 4.  **Letters.** A wording about the name's letters, such as its first or
     last letter, a letter it contains, or its length, is answered in code
     from `display` (ASK-7); one the rules can't parse is `rephrase`.
@@ -415,6 +415,12 @@ takes a turn, and anything else doesn't (ASK-3, GUESS-3), and the
 twentieth turn or a right guess ends the round (END-1).
 
 [cf-gates]: /docs/research/cloudflare-workers.md#single-threaded-execution-and-input-and-output-gates
+
+A guess takes the same limits and retry handling, and never reaches Jev.
+It's compared in _name form_: lowercase, trimmed, with punctuation dropped,
+spaces collapsed, and a leading "a", "an", or "the" removed, so "An
+Octopus!" becomes "octopus". `publish.ts` stores `names` in the same form,
+so a guess is right exactly when its name form is in `names` (GUESS-2).
 
 ### Sharing one Jev call per wording
 
@@ -1033,20 +1039,26 @@ pre-flight (RELEASE-1).
 Release steps for version 1.0, which the idea's
 [schedule](/docs/IDEA.md#schedule-to-september-30) dates:
 
-1.  Deploy the production Worker, publish the 17 puzzles and the config,
+1.  On September 22, set up the App Store Connect record: the name, subtitle,
+    category, description, and keywords (STORE-1); the privacy, terms, and
+    support URLs (STORE-3); and availability in every storefront except China
+    mainland and Vietnam, with Brazil after its tax form and the EU after
+    trader verification, which starts that day (STORE-8). The subscriptions
+    get the same storefronts.
+2.  Deploy the production Worker, publish the 17 puzzles and the config,
     and check them through the API (CONTENT-1).
-2.  Build with the `production` profile and upload with `eas submit`; the
+3.  Build with the `production` profile and upload with `eas submit`; the
     build appears in TestFlight after processing.
-3.  Run the release criteria on that build against the production server
+4.  Run the release criteria on that build against the production server
     with sandbox purchases (RELEASE-1 to RELEASE-4).
-4.  Submit it for review with both subscriptions, the metadata, the privacy
-    answers, and the review notes, set to release automatically, with Mac
-    and Apple Vision Pro availability turned off (STORE-1 to STORE-8,
-    COMPAT-4).
-5.  Once it's live: create the judges' offer code, wait for it to work,
+5.  Add the final screenshots (STORE-2), the age rating answers (STORE-4),
+    the privacy answers (STORE-5), and the review notes STORE-7 lists, then
+    submit with both subscriptions (STORE-6), set to release automatically,
+    with Mac and Apple Vision Pro availability turned off (COMPAT-4).
+6.  Once it's live: create the judges' offer code, wait for it to work,
     redeem it on a real device, and confirm a production purchase
     (RELEASE-5).
-6.  Before 11:45 PM PT on September 30, complete the brief's submission
+7.  Before 11:45 PM PT on September 30, complete the brief's submission
     checklist on Devpost with the App Store link, the RevenueCat project ID,
     and the judges' code (RELEASE-6).
 
@@ -1065,7 +1077,7 @@ Every PRD requirement, and the sections of this document that meet it:
 | TODAY-1, TODAY-2, TODAY-3, TODAY-4, TODAY-5                                                       | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [The iPhone app](#the-iphone-app)                                  |
 | ASK-1, ASK-2, ASK-3, ASK-4, ASK-5, ASK-6, ASK-7, ASK-8, ASK-9, ASK-10, ASK-11, ASK-12             | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
 | GUESS-1, GUESS-2, GUESS-3, GUESS-4                                                                | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline)                                                                          |
-| END-1, END-2, END-3, END-4, END-5                                                                 | [Worker API](#worker-api), [The iPhone app](#the-iphone-app)                                                                            |
+| END-1, END-2, END-3, END-4, END-5                                                                 | [Worker API](#worker-api), [Answer pipeline](#answer-pipeline), [The iPhone app](#the-iphone-app)                                       |
 | SHARE-1, SHARE-2, SHARE-3                                                                         | [The iPhone app](#the-iphone-app)                                                                                                       |
 | STREAK-1, STREAK-2                                                                                | [The iPhone app](#the-iphone-app)                                                                                                       |
 | ARCHIVE-1, ARCHIVE-2, ARCHIVE-3, ARCHIVE-4                                                        | [Puzzle days and content tooling](#puzzle-days-and-content-tooling), [Purchases and entitlements](#purchases-and-entitlements)          |
