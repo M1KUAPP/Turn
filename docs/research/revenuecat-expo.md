@@ -1182,8 +1182,8 @@ What the sources didn't settle on September 22, 2026:
 - [Best practices](/docs/research/best-practices.md): App Review, sandbox
   testing, and privacy labels.
 - [Jev notes](/docs/research/jev.md): the API the Worker calls for answers.
-- [Idea](/docs/archive/guessling-idea.md): Guessling's design, stack, and
-  schedule.
+- [Guessling idea](/docs/archive/guessling-idea.md): Guessling's design, stack,
+  and schedule.
 
 [expo-sdk57]: https://expo.dev/changelog/sdk-57
 [npm-expo]: https://www.npmjs.com/package/expo

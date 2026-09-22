@@ -1305,8 +1305,8 @@ What the sources don't say that Guessling's backend needs, as of September
 
 ## See also
 
-- [Idea](/docs/archive/guessling-idea.md): how Jev fits Guessling, and the build
-  plan this note serves.
+- [Guessling idea](/docs/archive/guessling-idea.md): how Jev fits Guessling, and
+  the build plan this note serves.
 - [Jev notes](/docs/research/jev.md): Jev's API, SDKs, prices, limits, and
   terms.
 - [Ideation log, round 9](/docs/research/ideation.md#round-9-scope-stack-and-schedule):

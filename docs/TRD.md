@@ -1279,8 +1279,8 @@ product and legal ones.
 - [Product](/docs/PRODUCT.md): what Guessling is and why.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
-- [Idea](/docs/archive/guessling-idea.md): the schedule, the risks, and the
-  pitch.
+- [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,
+  and the pitch.
 - [RevenueCat notes][rc-notes], [Cloudflare notes][cf-notes],
   [Apple notes][apple-notes], [daily puzzle notes][daily-notes], and
   [iOS design notes][ios-notes]: the sources behind the choices here.

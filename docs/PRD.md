@@ -750,8 +750,8 @@ safe default:
   every requirement here traced.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
-- [Idea](/docs/archive/guessling-idea.md): the schedule, the risks, and the
-  pitch.
+- [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,
+  and the pitch.
 - [RevenueCat notes](/docs/research/revenuecat-expo.md),
   [Cloudflare notes](/docs/research/cloudflare-workers.md),
   [Apple notes](/docs/research/apple-requirements.md), and

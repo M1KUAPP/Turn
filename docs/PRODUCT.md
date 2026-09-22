@@ -340,8 +340,8 @@ is named; the rest are watched and reported as rates, as the idea's
 
 ## See also
 
-- [Idea](/docs/archive/guessling-idea.md): why Guessling was chosen for Shipaton
-  2026, its categories, schedule, risks, and pitch.
+- [Guessling idea](/docs/archive/guessling-idea.md): why Guessling was chosen
+  for Shipaton 2026, its categories, schedule, risks, and pitch.
 - [Product requirements](/docs/PRD.md): what version 1.0 must do, as
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built.
