@@ -158,8 +158,10 @@ says how each is built.
   on the device, the puzzle number goes up by one.
 - **TODAY-3, Must.** Daily puzzle #11 belongs to Thursday, September 24,
   2026, and each later date's number is one higher; #1 to #10 are the
-  starter puzzles. Every player on the same date gets the same puzzle.
-  Check: two devices set to the same date show the same number and hint.
+  starter puzzles. Every player on the same date gets the same puzzle, and
+  before September 24, every date gets #11, so App Review never meets a
+  day without a puzzle. Check: two devices set to the same date show the
+  same number and hint, and a device set to September 23 gets #11.
 - **TODAY-4, Must.** A round's questions, answers, and turns survive closing
   and reopening the app. Check: force-quit mid-round and reopen.
 - **TODAY-5, Must.** A round still open at local midnight can be finished,
