@@ -44,8 +44,8 @@ Contents:
   - Jev, pinned to `jev-1.13.0`, is called in play only from the puzzles'
     Durable Objects, with the key as a Worker secret, so neither the key
     nor the answer reaches the phone. The daily check and the team's
-    scripts are its only other callers, and one shared budget covers them
-    all.
+    scripts are its only other callers, and budgets for each keep them
+    together under TypeSafe's limit.
   - A question goes through code rules, exact bank wordings, stored
     answers, Jev's match, and only then Jev's live answer; the first step
     that answers wins, and the answer is stored for everyone.
@@ -90,8 +90,8 @@ What each part owns:
   of Jev in play. It's created with `locationHint: "wnam"`, near where
   `api.typesafe.ai` resolved on September 22, 2026, AWS us-west-2 by DNS
   alone ([Cloudflare notes][cf-latency]).
-- **The Jev budget**, one more Durable Object, hands out tokens for Jev
-  requests, so every caller together stays under TypeSafe's limit.
+- **The Jev budget**, one more Durable Object, also created in `wnam`,
+  hands out tokens for Jev requests in play.
 - **Workers KV** holds the published puzzles, the banks, and the config.
 - **Jev** matches questions to the bank and answers the rest.
 - **RevenueCat** runs purchases, the paywall, entitlements, and the charts.
@@ -486,12 +486,19 @@ the Choice stays within its 255 options.
         "true": "A yes-or-no question, such as 'Does it fly?' or 'Is it bigger than a car?'",
         "false": "A statement, a command, an open question such as 'What color is it?', or not a question"
       }
+    },
+    "about_letters": {
+      "type": "noul",
+      "instructions": "The text asks about the letters, spelling, or length of a name"
     }
   }
 }
 ```
 
 - `is_question` below 0.5 gives `not_question` (ASK-4).
+- `about_letters` above 0.5 gives `rephrase`: a letter question the code
+  rules didn't parse never reaches the live request, whose state holds the
+  name (ASK-7).
 - Otherwise, a `match` choice other than `none` whose probability is at
   least `MATCH_MIN` gives that entry's checked answer (ASK-6). `MATCH_MIN`
   starts at 0.6, and the consistency test sets it on September 24:
@@ -543,14 +550,17 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 - Past the budget, the Worker answers `busy` and stores nothing, so the
   next attempt can still reach Jev (STATE-3, PERF-2).
 - Every Jev request in play first takes a token from one Durable Object,
-  `jev-budget`, which hands out at most 1,000 a minute across all puzzles. The
-  SDK's injected `fetch` asks for a token before each attempt, so a retry
-  counts too, and a new wording without one gets `busy`. The count lives in
-  memory, since losing it on eviction only resets one minute's window. The
-  scripts cap themselves at 100 a minute and the daily check sends one
-  question, so everything stays under TypeSafe's 1,200 requests a minute
-  (AVAIL-2, SEC-3). A cap per puzzle couldn't: three dates can be live at
-  once, besides rounds past midnight and archive puzzles.
+  `jev-budget`, which hands out at most `JEV_BUDGET` a minute across all
+  puzzles: 1,000 in production and 50 in the test environment. The SDK's
+  injected `fetch` asks for a token before each attempt, so a retry counts
+  too. Without a token, it returns a made-up `409`, a status the SDK
+  doesn't retry, and the object answers `busy`. The count lives in memory,
+  since losing it on eviction only resets one minute's window.
+- The scripts cap themselves at 100 a minute and the daily check sends one
+  question, so production, the test environment, and the scripts together
+  stay under TypeSafe's 1,200 requests a minute even on one key (AVAIL-2,
+  SEC-3). A cap per puzzle couldn't: three dates can be live at once,
+  besides rounds past midnight and archive puzzles.
 - Cloudflare warns that one object for a global counter "funnels all
   traffic through a single instance"; at 1,000 a minute, about 17 a
   second, the budget stays far under an object's guidance of 500 to 1,000
@@ -869,18 +879,19 @@ export default {
 
 ### Secrets and configuration
 
-| Name                     | Kind          | Holds                                                 |
-| ------------------------ | ------------- | ----------------------------------------------------- |
-| `TYPESAFE_API_KEY`       | Worker secret | Jev's key (SEC-1)                                     |
-| `RC_SECRET_KEY`          | Worker secret | RevenueCat v2 key, read-only on customers (SEC-1)     |
-| `PLAYER_SALT`            | Worker secret | The salt for hashing player IDs                       |
-| `ADMIN_TOKEN`            | Worker secret | The admin routes' bearer token                        |
-| `ALERT_WEBHOOK_URL`      | Worker secret | Where the daily check posts a failure (AVAIL-3)       |
-| `RC_PROJECT_ID`          | Worker var    | RevenueCat's project ID                               |
-| `RC_ENTITLEMENT_ID`      | Worker var    | The Guessling+ entitlement's object ID                |
-| `MATCH_MIN`              | Worker var    | The match threshold, 0.6 until the consistency test   |
-| `EXPO_PUBLIC_API_URL`    | App, public   | The Worker's address on the team's domain             |
-| `EXPO_PUBLIC_RC_IOS_KEY` | App, public   | RevenueCat's `appl_` key; `test_` only in development |
+| Name                     | Kind          | Holds                                                           |
+| ------------------------ | ------------- | --------------------------------------------------------------- |
+| `TYPESAFE_API_KEY`       | Worker secret | Jev's key (SEC-1)                                               |
+| `RC_SECRET_KEY`          | Worker secret | RevenueCat v2 key, read-only on customers (SEC-1)               |
+| `PLAYER_SALT`            | Worker secret | The salt for hashing player IDs                                 |
+| `ADMIN_TOKEN`            | Worker secret | The admin routes' bearer token                                  |
+| `ALERT_WEBHOOK_URL`      | Worker secret | Where the daily check posts a failure (AVAIL-3)                 |
+| `RC_PROJECT_ID`          | Worker var    | RevenueCat's project ID                                         |
+| `RC_ENTITLEMENT_ID`      | Worker var    | The Guessling+ entitlement's object ID                          |
+| `MATCH_MIN`              | Worker var    | The match threshold, 0.6 until the consistency test             |
+| `JEV_BUDGET`             | Worker var    | Jev requests a minute in play: 1,000, or 50 for the test Worker |
+| `EXPO_PUBLIC_API_URL`    | App, public   | The Worker's address on the team's domain                       |
+| `EXPO_PUBLIC_RC_IOS_KEY` | App, public   | RevenueCat's `appl_` key; `test_` only in development           |
 
 - The five secrets are listed in `wrangler.jsonc` under `secrets.required`,
   so a deploy without one fails. `EXPO_PUBLIC_` values are "visible in
@@ -1104,6 +1115,10 @@ product and legal ones.
 - **Jev's rate-limit scope.** No TypeSafe page says whether 1,200 requests
   a minute apply per key or per account. Safe default: one key, with the
   shared budget of 1,000 a minute in play and 100 for the scripts.
+- **Jev's concurrency.** TypeSafe's own cookbook caps its pool near eight
+  requests at once, but only the limit of 1,200 a minute is documented.
+  Safe default: the scripts stay at eight at once, and the Worker's budget
+  counts requests, not concurrency; watch for `429` responses at launch.
 - **Jev out of credits.** No TypeSafe page says what the API returns when
   credits run out. Safe default: treat any unexpected `4xx` as busy, alert,
   and keep auto-refill on.
