@@ -581,10 +581,10 @@ Sizes are points: the format's `px` means a point on the iPhone.
   the chips, or the answer card: "Don't use Liquid Glass in the content
   layer."
 - **Headers.** Today draws its own top bar on the table. Archive and
-  Settings use the native large-title header over the table: transparent,
-  with the system's scroll edge effect, on iOS 26 and later, and opaque in
-  the table's color below iOS 26, with the title and items in Chalk either
-  way ([iOS notes on headers][ios-headers]).
+  Settings use Expo Router's opaque large-title header in Table blue, with
+  the title and items in Chalk, on every iOS version. A transparent header
+  would let white cards scroll under Chalk text at close to 1 to 1
+  ([iOS notes on headers][ios-headers]).
 
 [ios-key]: /docs/research/ios-design.md#the-compatibility-key
 [ios-glass-views]: /docs/research/ios-design.md#glass-views-in-expo
@@ -802,9 +802,11 @@ property for.
 - **Guesses.** "Guess" in `meta`, then the name the player guessed, and its
   chip.
 - **Reporting.** Tapping a row opens an action sheet with "Report this
-  answer", then the reasons "Wrong" and "Unclear". Once sent, the row shows
+  answer", then a choice of reason, "Wrong", "Unclear", or "No reason",
+  since REPORT-1 makes the reason optional. Once sent, the row shows
   "Reported" in `meta` under the chip (REPORT-1, REPORT-3). VoiceOver offers
-  the same as a custom action.
+  the same as a custom action. Rows for picking and resting have no report
+  action, since a report carries an answer, and those aren't answers.
 
 ### The composer
 
@@ -1088,8 +1090,8 @@ added only when a turn is used.
 - **The buttons.** Share, primary, and "Play yesterday’s?", secondary,
   which reads "Play another?" when no daily puzzle is dated before today
   (END-3).
-- **Statistics**, when there are any (END-5): Played, Solved, Streak, and
-  Longest, four counts in `count` over labels in `meta`.
+- **Statistics**, when there are any (END-5): Played, Solved as a
+  percentage, Streak, and Longest, in `count` over labels in `meta`.
 - **At once.** The screen appears without waiting for the statistics, and
   the history stays below it, scrolled to the top.
 
@@ -1100,10 +1102,11 @@ added only when a turn is used.
 - **How it opens.** As a sheet over Today on a fresh install, which swiping
   can't dismiss, since the question field stays disabled until the player
   chooses (NOTICE-1).
-- **Inside.** The Guessling, idle, at the top; the title "Before you ask" in
-  `title`; the server's text in `body`; the privacy policy as a link; and
-  two full-width buttons stacked in the secondary style, "Allow AI answers"
-  and then "Not now", the same in size, color, and weight.
+- **Inside.** On an Index white sheet: the Guessling, idle, at the top; the
+  title "Before you ask" in `title`, Ballpoint; the server's text in `body`;
+  the privacy policy as a Link blue link; and two full-width buttons
+  stacked in the secondary style, "Allow AI answers" and then "Not now",
+  the same in size, color, and weight.
 
 ### The archive
 
@@ -1198,29 +1201,35 @@ phrases. The PRD quotes some strings; this section fixes the rest.
   offline”, and in the PRD's strings too, such as “Play yesterday’s?”.
 - **No emoji** anywhere but the share text, which SHARE-1 fixes.
 
-| Where                         | Words                                     | Fixed by      |
-| ----------------------------- | ----------------------------------------- | ------------- |
-| The bubble before a question  | I’m thinking of something.                | This document |
-| The bubble while loading      | Getting today’s puzzle                    | This document |
-| The question field            | Ask a yes-or-no question                  | This document |
-| The guess field               | Name the thing                            | This document |
-| Above the guess field         | A guess uses a turn.                      | This document |
-| The turn meter                | 14 turns left · 1 turn left               | This document |
-| The three answers             | Yes · No · Ask another way                | ASK-2         |
-| Not a question                | Ask a yes-or-no question                  | ASK-4         |
-| The guesses                   | You got it! · Not it                      | This document |
-| The notice's buttons          | Allow AI answers · Not now                | NOTICE-1      |
-| The notice's title            | Before you ask                            | This document |
-| A row's action                | Report this answer · Wrong · Unclear      | REPORT-1      |
-| After a report                | Reported                                  | REPORT-3      |
-| After a timeout               | Send again                                | ASK-8         |
-| A round solved                | Solved in 9 of 20                         | This document |
-| A round not solved            | Out of turns                              | This document |
-| The end screen                | Share · Play yesterday’s? · Play another? | END-3         |
-| The countdown                 | Next Guessling in 5:42:10                 | This document |
-| The statistics                | Played · Solved · Streak · Longest        | This document |
-| The archive, for free players | Past puzzles open with Guessling+.        | This document |
-| The paywall's title           | Every past puzzle, any day                | This document |
+| Where                              | Words                                                            | Fixed by      |
+| ---------------------------------- | ---------------------------------------------------------------- | ------------- |
+| The bubble before a question       | I’m thinking of something.                                       | This document |
+| The bubble while loading           | Getting today’s puzzle                                           | This document |
+| The question field                 | Ask a yes-or-no question                                         | This document |
+| The guess field                    | Name the thing                                                   | This document |
+| Above the guess field              | A guess uses a turn.                                             | This document |
+| The turn meter                     | 14 turns left · 1 turn left                                      | This document |
+| The three answers                  | Yes · No · Ask another way                                       | ASK-2         |
+| Not a question                     | Ask a yes-or-no question                                         | ASK-4         |
+| The guesses                        | You got it! · Not it                                             | This document |
+| The notice's buttons               | Allow AI answers · Not now                                       | NOTICE-1      |
+| The notice's title                 | Before you ask                                                   | This document |
+| A row's action                     | Report this answer · Wrong · Unclear                             | REPORT-1      |
+| A report with no reason            | No reason                                                        | This document |
+| After a report                     | Reported                                                         | REPORT-3      |
+| After a timeout                    | Send again                                                       | ASK-8         |
+| Banners                            | The state table under Screens                                    | This document |
+| The replies to picking and resting | The answer table under Screens                                   | This document |
+| A round solved                     | Solved in 9 of 20                                                | This document |
+| A round not solved                 | Out of turns                                                     | This document |
+| The end screen                     | Share · Play yesterday’s? · Play another?                        | END-3         |
+| The countdown                      | Next Guessling in 5:42:10                                        | This document |
+| The statistics                     | Played · Solved · Streak · Longest                               | This document |
+| The archive, for free players      | Past puzzles open with Guessling+.                               | This document |
+| The paywall's title                | Every past puzzle, any day                                       | This document |
+| What Guessling+ holds              | All past puzzles, from #1 to yesterday’s, and one more every day | This document |
+| The yearly plan's badge            | 3 days free                                                      | This document |
+| Under the plans                    | Cancel anytime in Settings                                       | This document |
 
 [product-character]: /docs/PRODUCT.md#the-guessling-character
 
