@@ -1390,41 +1390,41 @@ The PRD fixes the strip's phrases, the Quick category's, "Listening", "Allow",
 "Not now", "They agreed", "They said no", "My partner is under 18", "What did
 they say?", and the names of buttons and settings; these are the rest.
 
-| Where                           | Words                                                                                                   | For                           |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| The Listen control              | "Listen", and "20 free" counting down; "Unlock" once none are left                                      | PAY-1, PAY-2                  |
-| Paused, and its End             | "Paused" and "End"                                                                                      | CONSENT-5                     |
-| Under 18                        | "Mic off"                                                                                               | CONSENT-6                     |
-| The caption, out of Listen mode | "Listen mode is off."                                                                                   | LISTEN-1                      |
-| The caption, while hearing      | "They're saying"                                                                                        | LISTEN-1                      |
-| The caption, after a line       | "They said"                                                                                             | LISTEN-1                      |
-| The caption, when the row holds | "Still answering “How was physio?”"                                                                     | ROW-3                         |
-| Notes                           | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                | STATE-1 to STATE-3, CONSENT-6 |
-| No live transcription           | "Live transcription isn't available here. Tap here to type what they say."                              | LISTEN-9                      |
-| The speech model                | "Getting Apple's English speech model", with its progress                                               | LISTEN-1                      |
-| The empty row                   | "Replies to your partner appear here."                                                                  | ROW-1                         |
-| The empty row, under 18         | "Listen mode is off for this partner."                                                                  | CONSENT-6                     |
-| A changed row, to VoiceOver     | "3 replies", or "1 reply"                                                                               | A11Y-2                        |
-| The composer                    | "Type what to say", "Speak", and "Replying to “How was physio?”"                                        | SPEAK-3                       |
-| The partner's composer          | "Send"                                                                                                  | LISTEN-4                      |
-| The tabs and the bottom bar     | "All"; "Type", "Repeat", "Stop", "Up", and "Down"                                                       | ROW-9, SPEAK-1                |
-| The permission step             | Its title, "Before Listen mode starts", and its body, below                                             | CONSENT-1                     |
-| The consent card                | Its lead and facts, below, and "Read aloud"                                                             | CONSENT-4                     |
-| The paywall                     | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"     | PAY-2                         |
-| After a purchase                | "Listen mode is unlocked."                                                                              | PAY-4                         |
-| A purchase that fails           | "The purchase didn't go through. Listen mode is still locked."                                          | PAY-5                         |
-| Restore, with nothing to find   | "No purchase found for this phone. Listen mode is still locked."                                        | PAY-6                         |
-| Personal Voice refused          | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again." | VOICE-2                       |
-| Personal Voice unavailable      | "There's no Personal Voice on this iPhone that Turn can use, so it keeps the system voice."             | VOICE-2                       |
-| Erase all data                  | "Erase all data?", its message, below, "Erase", and "Cancel"                                            | SET-3                         |
-| Speech rate                     | "Slowest", "Slower", "Normal", "Faster", and "Fastest"                                                  | VOICE-3                       |
-| Listen mode's permission        | "Allowed on" and its date, with "Withdraw"; or "Not allowed", with "Allow"                              | CONSENT-1, CONSENT-3          |
-| After Withdraw                  | "Listen mode is off, and nothing more leaves this phone until you allow it again."                      | CONSENT-3                     |
-| The relay's status              | "Listen service: working", "Listen service: can't be reached", or "Listen service: off for now"         | SET-1, STATE-3                |
-| Deleting a category             | "Where should its phrases go?"                                                                          | BANK-2                        |
-| Undo                            | "Deleted." and "Undo"                                                                                   | BANK-9                        |
-| The starter card                | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"   | BANK-10                       |
-| A starter phrase                | "Starter"                                                                                               | BANK-10                       |
+| Where                           | Words                                                                                                                                                                  | For                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| The Listen control              | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                     | PAY-1, PAY-2                  |
+| Paused, and its End             | "Paused" and "End"                                                                                                                                                     | CONSENT-5                     |
+| Under 18                        | "Mic off"                                                                                                                                                              | CONSENT-6                     |
+| The caption, out of Listen mode | "Listen mode is off."                                                                                                                                                  | LISTEN-1                      |
+| The caption, while hearing      | "They're saying"                                                                                                                                                       | LISTEN-1                      |
+| The caption, after a line       | "They said"                                                                                                                                                            | LISTEN-1                      |
+| The caption, when the row holds | "Still answering “How was physio?”"                                                                                                                                    | ROW-3                         |
+| Notes                           | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                                                                               | STATE-1 to STATE-3, CONSENT-6 |
+| No live transcription           | "Live transcription isn't available here. Tap here to type what they say."                                                                                             | LISTEN-9                      |
+| The speech model                | "Getting Apple's English speech model", with its progress                                                                                                              | LISTEN-1                      |
+| The empty row                   | "Replies to your partner appear here."                                                                                                                                 | ROW-1                         |
+| The empty row, under 18         | "Listen mode is off for this partner."                                                                                                                                 | CONSENT-6                     |
+| A changed row, to VoiceOver     | "3 replies", or "1 reply"                                                                                                                                              | A11Y-2                        |
+| The composer                    | "Type what to say", "Speak", and "Replying to “How was physio?”"                                                                                                       | SPEAK-3                       |
+| The partner's composer          | "Send"                                                                                                                                                                 | LISTEN-4                      |
+| The tabs and the bottom bar     | "All"; "Type", "Repeat", "Stop", "Up", and "Down"                                                                                                                      | ROW-9, SPEAK-1                |
+| The permission step             | Its title, "Before Listen mode starts", and its body, below                                                                                                            | CONSENT-1                     |
+| The consent card                | Its lead and facts, below, and "Read aloud"                                                                                                                            | CONSENT-4                     |
+| The paywall                     | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"                                                                    | PAY-2                         |
+| After a purchase                | "Listen mode is unlocked."                                                                                                                                             | PAY-4                         |
+| A purchase that fails           | "The purchase didn't go through. Listen mode is still locked."                                                                                                         | PAY-5                         |
+| Restore, with nothing to find   | "No purchase found for this phone. Listen mode is still locked."                                                                                                       | PAY-6                         |
+| Personal Voice refused          | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                | VOICE-2                       |
+| Personal Voice unavailable      | "There's no Personal Voice Turn can use on this iPhone. If you've made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice." | VOICE-2                       |
+| Erase all data                  | "Erase all data?", its message, below, "Erase", and "Cancel"                                                                                                           | SET-3                         |
+| Speech rate                     | "Slowest", "Slower", "Normal", "Faster", and "Fastest"                                                                                                                 | VOICE-3                       |
+| Listen mode's permission        | "Allowed on" and its date, with "Withdraw"; or "Not allowed", with "Allow"                                                                                             | CONSENT-1, CONSENT-3          |
+| After Withdraw                  | "Listen mode is off, and nothing more leaves this phone until you allow it again."                                                                                     | CONSENT-3                     |
+| The relay's status              | "Listen service: working", "Listen service: can't be reached", or "Listen service: off for now"                                                                        | SET-1, STATE-3                |
+| Deleting a category             | "Where should its phrases go?"                                                                                                                                         | BANK-2                        |
+| Undo                            | "Deleted." and "Undo"                                                                                                                                                  | BANK-9                        |
+| The starter card                | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"                                                                  | BANK-10                       |
+| A starter phrase                | "Starter"                                                                                                                                                              | BANK-10                       |
 
 The longer texts, where `{service}` is as above:
 
@@ -1442,6 +1442,14 @@ The longer texts, where `{service}` is as above:
   "I can pause it at any time." (CONSENT-4)
 - **Erase all data's message.** "This deletes your phrases, places, tap
   counts, and settings, and brings back the starter phrases." (SET-3)
+- **iOS's microphone alert,** `NSMicrophoneUsageDescription`, worded for both
+  people as the TRD's build configuration asks: "Turn listens only in Listen
+  mode, after your partner agrees, to turn their words into text on this
+  iPhone so you can answer in your own phrases. No audio is kept."
+- **iOS's speech recognition alert,** `NSSpeechRecognitionUsageDescription`,
+  for the fallback recognizer: "Turn uses speech recognition only in Listen
+  mode, after your partner agrees, to turn their words into text when this
+  iPhone can't do it by itself." (LISTEN-9)
 - **Starter phrases** put their key words first and stay under about 30
   characters where they can, so most fit a slot at the default size without an
   ellipsis; CONTENT-1's limit of 120 still holds.
