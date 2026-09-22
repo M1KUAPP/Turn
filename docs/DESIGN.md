@@ -236,6 +236,9 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
 - **Back.** Table blue with a Marigold "?" in the middle.
 - **Face.** The answer's name in `reveal` and the hint under it in `meta`,
   both in Ballpoint.
+- **Size.** As wide as the stage less 48 points, up to 280, and at least
+  5 to 7 in shape. At large text it grows taller, and the name wraps
+  between words rather than shrinking.
 - **When.** Only at the end of a round, when the Guessling turns it over,
   as the end of a round under Screens describes.
 
@@ -538,8 +541,8 @@ Sizes are points: the format's `px` means a point on the iPhone.
   to 64 points in one row with its bubble, so the newest answers stay in
   view above the composer.
 - **Large text.** From AX1, the stage stays compact, history rows put the
-  chip under the question, and the whole screen scrolls; nothing truncates
-  (A11Y-2).
+  chip under the question, the composer stacks, and the whole screen
+  scrolls; nothing truncates (A11Y-2).
 - **Screens.** Laid out for 390 × 844 points, and checked at 375 × 667 and
   at 440 × 956, the 6.9-inch size, and on an iPad at phone size
   (COMPAT-3).
@@ -815,6 +818,9 @@ property for.
   question list are disabled (ASK-8).
 - **AI answers off.** With the field empty, a Questions button with
   `list.bullet` replaces send and opens the searchable list (ASK-9).
+- **Large text.** From AX1 the composer stacks: the field on its own line,
+  growing with its text, and under it Guess, with its symbol and word, and
+  send.
 - **Surface.** Glass, or its fallback; see [Elevation](#elevation).
 
 ### Symbols
