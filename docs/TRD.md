@@ -373,7 +373,8 @@ reports only errors, so Turn sets its own rule
   level, and no new words have arrived, for the window, the module calls
   `finalize(through: nil)` and reports the settled text as one line
   (LISTEN-2). The window starts at 0.5 seconds, the evaluation notes' budget
-  for detecting the end of a turn, and the replay test tunes it against two
+  for detecting the end of a turn, and the [replay test](#testing) tunes it
+  against two
   pulls: a longer window slows the row (PERF-1), and a shorter one cuts the
   partner off (PERF-5) ([evaluation notes][eval-latency]).
 - **Manual ends.** Done ends a spoken line at once, the same way, and a
@@ -1196,16 +1197,11 @@ see ([evaluation notes][eval-scoring]):
 [eval-scoring]: /docs/research/turn-evaluation.md#a-scoring-scheme-for-turns-80-lines
 [eval-power]: /docs/research/turn-evaluation.md#what-80-lines-can-and-cant-detect
 
-### The replay test and script
+### The replay script
 
-- **The replay test** checks timing on the phone (PERF-1, PERF-5) and tunes
-  the silence window: at least 50 recorded partner lines, each with its end
-  of speech marked by hand, play from a second device to the iPhone in
-  Listen mode, and the app logs each stage against `turn-listen`'s stamp of
-  the line's end. It counts lines cut off before the recording's marked end.
-- **The replay script** (EVAL-7) sends the same lines' text, in
-  conversation order, through the relay and the shared row rules, with no
-  microphone, and counts slot changes per line (ROW-5).
+The replay script (EVAL-7) sends the replay test's lines as text, in
+conversation order, through the relay and the shared row rules, with no
+microphone, and counts slot changes per line (ROW-5).
 
 ### The report
 
@@ -1234,8 +1230,13 @@ in the first version.
 - **Device checks,** on the video's iPhone: transcription and line ends
   (LISTEN-1, LISTEN-2), Turn not hearing itself (LISTEN-3), the background
   and interruptions (LISTEN-7, LISTEN-10), Personal Voice (VOICE-2), the
-  loudspeaker and the silent switch (VOICE-4), and timings (PERF-1 to
+  loudspeaker and the silent switch (VOICE-4), and timings (PERF-2,
   PERF-3).
+- **The replay test** checks timing on the phone (PERF-1, PERF-5) and tunes
+  the silence window: at least 50 recorded partner lines, each with its end
+  of speech marked by hand, play from a second device to the iPhone in
+  Listen mode, and the app logs each stage against `turn-listen`'s stamp of
+  the line's end. It counts lines cut off before the recording's marked end.
 - **Purchase checks:** each Test Store outcome, restore, and the next line
   after a purchase (PAY-4 to PAY-6).
 - **Accessibility checks:** VoiceOver, Switch Control, Voice Control, the
@@ -1302,7 +1303,7 @@ how the team does it:
 | SET-1, SET-2, SET-3, SET-4                                                                          | [The iPhone app]                                                                                           |
 | CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5                                               | [Stack and repository], [The iPhone app], [Security and privacy], [Evaluation], [Environments and release] |
 | EVAL-1, EVAL-2, EVAL-3, EVAL-4, EVAL-5, EVAL-6, EVAL-7, EVAL-8                                      | [Evaluation]                                                                                               |
-| PERF-1, PERF-2, PERF-3, PERF-4, PERF-5                                                              | [Decision pipeline], [Evaluation], [Testing]                                                               |
+| PERF-1, PERF-2, PERF-3, PERF-4, PERF-5                                                              | [Decision pipeline], [Testing]                                                                             |
 | AVAIL-1, AVAIL-2                                                                                    | [Reliability and observability]                                                                            |
 | PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                              | [Security and privacy], [Data model], [Listening and speaking on the phone], [Purchases and entitlements]  |
 | SEC-1, SEC-2, SEC-3, SEC-4, SEC-5, SEC-6                                                            | [Security and privacy], [Relay API], [Reliability and observability]                                       |
