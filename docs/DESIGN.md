@@ -509,13 +509,15 @@ spacing:
   caption: 86px
   button: 52px
   bar: 52px
+  edge-width: 2px
+  edge-width-strong: 3px
 ```
 
 Sizes are points: the format's `px` means a point on the iPhone. `target` is
 the smallest control, `strip-cell` the strip's shortest phrase button, `slot`
 the row's slot and the grid's shortest phrase button, `caption` the caption's
-height, `button` a capsule button's height, and `bar` the top and bottom bars'
-height.
+height, `button` a capsule button's height, `bar` the top and bottom bars'
+height, and `edge-width` and `edge-width-strong` the thickness of edges.
 
 - **Why 78 points.** Speech buttons should be at least 12 mm on their short
   side for people with tremor or weakness, and errors kept falling up to 18 mm
@@ -623,7 +625,7 @@ points, about 13 characters of `title3-emphasized` inside 12-point padding.
 ## Elevation
 
 - **Depth by color and edges.** The board is the floor, cards sit on it with a
-  2-point `edge`, and the big button stands out by its marker blue; nothing
+  `edge`, and the big button stands out by its marker blue; nothing
   casts a shadow.
 - **Liquid Glass from the system only.** Bars, sheets, alerts, and switches
   turn to glass by themselves, and Xcode 27 ignores
@@ -667,9 +669,10 @@ rounded:
 - **Capsules** for controls that hold one word or two: the Listen control,
   the place picker, tabs, and the caption's and the composer's buttons take
   `full`, "a radius that's half the height" ([iOS design notes][ios-capsule]).
-- **Edges.** Cards and secondary buttons have a 2-point `edge`; Yes, No, and
-  Not sure a 3-point edge in their own color; the selected tab and marker-blue
-  fills need none.
+- **Edges.** Cards and secondary buttons have an `edge` as thick as
+  `spacing.edge-width`, 2 points; Yes, No, and Not sure one as thick as
+  `spacing.edge-width-strong`, 3 points, in their own color; the selected tab
+  and marker-blue fills need none.
 - **Concentric.** A shape inside another takes the outer radius minus the
   padding between them; `sm` is for small marks inside cards, such as the
   speaking symbol.
@@ -802,16 +805,16 @@ components:
     typography: '{typography.largeTitle-emphasized}'
   edge:
     backgroundColor: '{colors.edge.light}'
-    height: 2px
+    height: '{spacing.edge-width}'
   yes-edge:
     backgroundColor: '{colors.yes-edge.light}'
-    height: 3px
+    height: '{spacing.edge-width-strong}'
   no-edge:
     backgroundColor: '{colors.no-edge.light}'
-    height: 3px
+    height: '{spacing.edge-width-strong}'
   unsure-edge:
     backgroundColor: '{colors.unsure-edge.light}'
-    height: 3px
+    height: '{spacing.edge-width-strong}'
   phrase-dark:
     backgroundColor: '{colors.surface.dark}'
     textColor: '{colors.ink.dark}'
@@ -957,7 +960,7 @@ components:
 
 ### The phrase button
 
-- **Look.** A `surface` card with a 2-point `edge`, `md` corners, 12-point
+- **Look.** A `surface` card with an `edge`, `md` corners, 12-point
   padding, and the phrase in `title3-emphasized`, `ink`, left-aligned and
   wrapped; at least 78 points tall and as wide as its column. The whole card is
   the target.
@@ -999,7 +1002,7 @@ The row's height and its six slots are fixed for the text size and the screen
   the first free slot afterward if it stays at or above the floor (ROW-5).
 - **Yes, No, and Not sure.** In slots 1 to 3 for a yes-or-no question (ROW-4),
   as `yes`, `no`, and `unsure`: the word in `title3-emphasized`, `ink`, on its
-  tint, inside a 3-point edge of its color, with no symbol, since `checkmark`
+  tint, inside a strong edge of its color, with no symbol, since `checkmark`
   and `xmark` already mean Done and Cancel in iOS
   ([Turn's iOS design notes][ios-symbols]). The Quick category shows them the
   same way.
@@ -1141,7 +1144,7 @@ A 52-point bar above the home indicator, with four capsule buttons in
 
 - **Primary.** `button-primary`: a marker-blue capsule, 52 points tall, its
   word in `headline`, `on-accent`; at most one to a screen.
-- **Secondary.** `button-secondary`: a card capsule with a 2-point edge.
+- **Secondary.** `button-secondary`: a card capsule with an `edge`.
 - **Equal pairs.** "Allow" and "Not now", and "They agreed" and "They said no",
   are two secondary buttons of one size and style, side by side, stacked from
   AX1: Apple marks a preferred choice by "style — not size", and neither of
