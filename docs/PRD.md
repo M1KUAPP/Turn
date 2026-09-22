@@ -232,6 +232,128 @@ says how each is built.
   and with the Ring/Silent switch set to silent. Check: in Listen mode with
   the switch on silent, a phrase is heard from the bottom speaker.
 
+### Permission and consent
+
+- **CONSENT-1, Must.** The first time Listen mode is turned on, before any
+  phrase or line leaves the phone, Turn asks the user's permission. The step
+  says what is sent with each partner line (the line with names Turn
+  recognizes swapped for tags, the place's name, and up to 40 of the user's
+  phrases), to whom (TypeSafe, or "a third-party AI service in the United
+  States" until TypeSafe agrees to be named), that audio and the rest of the
+  bank never are, and that the service may keep data to monitor its
+  service; it links the privacy notice, and offers "Allow" and "Not now"
+  with equal weight. Check: read the step on a fresh install.
+- **CONSENT-2, Must.** "Not now" leaves Listen mode off and everything else
+  working, and the step returns the next time Listen mode is turned on.
+  Check: choose "Not now", speak a phrase, then turn Listen mode on again.
+- **CONSENT-3, Must.** The user can withdraw permission in Settings. Listen
+  mode stops at once, and nothing more leaves the phone until they allow it
+  again. Check: withdraw during Listen mode; the light goes out, and no
+  request follows.
+- **CONSENT-4, Must.** Each time Listen mode starts, Turn shows the consent
+  card for the partner, short and in large text, so it doesn't make more of
+  the user's device than it must: the phone will listen to transcribe
+  their words on the phone; the words, with the names it recognizes
+  replaced, go to the service named in CONSENT-1 to pick replies from the
+  user's own phrases; no audio is recorded; and listening can be paused at
+  any time. The card has "They agreed" and "They said no", and the microphone
+  turns on only after "They agreed". Check: tap "They said no"; the iOS
+  microphone indicator never appears.
+- **CONSENT-5, Must.** While the microphone is on, the listening light shows
+  on the home screen with the word "Listening", as Apple's developer
+  agreement asks of any app that captures speech; one tap pauses it, and a
+  second tap resumes without the card within the same session. Check: pause
+  and resume; the iOS indicator follows.
+- **CONSENT-6, Must.** The consent card and Settings show the switch "My
+  partner is under 18", which stays as set until changed. While it's on, the
+  microphone stays off, typed partner lines are ranked on the phone and never
+  sent, and the row says Listen mode is off for this partner. Check: with the
+  switch on, type a line; the relay's logs show no request.
+- **CONSENT-7, Must.** Whether the permission step, the consent card, and the
+  privacy notice name TypeSafe follows the relay's configuration, which
+  starts with naming off. Check: turn the setting on, relaunch, and the texts
+  name TypeSafe.
+
+### Listening
+
+- **LISTEN-1, Must.** In Listen mode, Turn transcribes the partner's speech
+  live on the phone, and a caption shows the words as they're heard. The
+  first time, Turn downloads Apple's English speech model with a progress
+  bar; after that, transcription needs no network. Check: once the model is
+  installed, in Airplane Mode, the caption still follows a partner's speech.
+- **LISTEN-2, Must.** A partner line ends after a short silence, 0.5
+  seconds to start and tuned so PERF-1 and PERF-5 both hold, or when the
+  user taps Done, and each line is ranked once. Check: say two sentences
+  with a pause; two lines are ranked.
+- **LISTEN-3, Must.** Turn never transcribes its own speech: listening pauses
+  while Turn speaks, and resumes when it stops. Check: scenario 12.
+- **LISTEN-4, Must.** A field takes a typed partner line, "What did they
+  say?", and sends it as a line; it works with no microphone and in the
+  Simulator. Check: scenario 10.
+- **LISTEN-5, Must.** Before a line leaves the phone, every name Turn
+  recognizes in the line or the shortlist is swapped for a tag, the same tag
+  for the same name across the request. Check: the line "Did Anna call?" and
+  the phrase "Anna is my sister" reach the relay as `[PERSON 1]` in both,
+  with "Anna" nowhere.
+- **LISTEN-6, Must.** A partner line longer than 300 characters keeps its
+  last 300 characters. Check: a typed line of 400 characters reaches the
+  relay as its last 300.
+- **LISTEN-7, Must.** When Turn leaves the foreground, listening stops, and
+  when it returns, Listen mode is paused until the user taps the light.
+  Check: switch apps; the iOS microphone indicator goes out.
+- **LISTEN-8, Must.** The caption lives only in memory and is cleared on
+  pause, on stop, and two minutes after the line ends. Check: wait two
+  minutes; the caption is gone.
+- **LISTEN-9, Must.** When live transcription isn't available on the
+  device, Turn says so and offers the typed-line field, and uses the fallback
+  recognizer where it works. Check: on the Simulator, the message and the
+  field appear.
+- **LISTEN-10, Should.** A phone call or Siri pauses listening, and Listen
+  mode stays paused afterward. Check: receive a call during Listen mode.
+
+### The reply row
+
+- **ROW-1, Must.** The row has a fixed height above the grid. It shows one
+  big button across the row, or up to six phrase buttons in six fixed slots,
+  and its height never changes with its content. Check: the grid's first
+  button doesn't move across every state of the row.
+- **ROW-2, Must.** For each partner line, the phone sends the relay the
+  line, the place's name, the category names, and a shortlist of 40 of the
+  user's phrases, never the fixed buttons; the shortlist holds the phrases
+  already in the row. Check: a captured request.
+- **ROW-3, Must.** One big button shows the top phrase when its probability
+  is above the big-button bar, the line isn't a yes-or-no question, and its
+  topic isn't one that never gets a big button, which starts as body and
+  pain. Otherwise the row shows up to six phrases at or above the floor.
+  Below the floor, the row doesn't change. Check: replay recorded answers at
+  0.9, 0.7, and 0.5, and a pain line at 0.9.
+- **ROW-4, Must.** For a yes-or-no question, Yes, No, and Not sure take the
+  first three slots in that order, phrases at or above the floor take the
+  other three, and no big button shows. Check: scenario 2.
+- **ROW-5, Must.** A phrase already shown keeps its slot while its new
+  probability stays at or above the floor, unless the fixed buttons need
+  the first three slots. A new phrase replaces the lowest one shown only
+  when it beats it by the margin, and the others don't move. After a big
+  button, that phrase takes the first free slot if it stays at or above the
+  floor. Check: replay recorded answers that shift by less, and by more,
+  than the margin.
+- **ROW-6, Must.** Nothing speaks until the user taps; a tap speaks the phrase
+  and adds to its tap count. Check: leave a big button untouched for a
+  minute; nothing speaks.
+- **ROW-7, Must.** An answer for a line older than the newest line is
+  dropped. Check: delay one answer past the next line's; the older one never
+  shows.
+- **ROW-8, Must.** The floor, the big-button bar, the margin, whether
+  yes-or-no questions also get phrases, the topics that never get a big
+  button, and the topics that get only the fixed buttons come from the relay
+  with each answer, so the team can change them without an app build. Check:
+  change a value in the relay; the next line follows it.
+- **ROW-9, Must.** The topic Jev picks marks its category's tab in the grid,
+  without scrolling or reordering it. Check: after "What do you want for
+  lunch?", the food tab is marked.
+- **ROW-10, Must.** A Clear button empties the row, and stopping Listen mode
+  clears it too. Check: tap Clear.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why.
