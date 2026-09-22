@@ -69,8 +69,10 @@ Contents:
 - Every pair in the Colors section's contrast table passes
   `check_contrast.py`: text at 4.5 to 1 or more in all four appearances
   (A11Y-5), and marks and boundaries at 3 to 1. Every other pair the
-  document names reuses one of those pairs, which review checks, and the
-  app's theme test computes them all.
+  document names reuses one of those pairs, and the app's theme test, which
+  the design's cut line never drops, computes every pair the app uses. The
+  paywall, set up by hand in RevenueCat's editor, relies on the design
+  naming each color by its token.
 - Trend claims cite the research notes, and a trend the design rejects says
   why.
 - Design values the document sets, such as colors, sizes, and durations, are
@@ -161,11 +163,11 @@ reasons given, and each is stated as a decision in the document.
     Ballpoint ink for text, Pencil for secondary text, Rule blue and Margin
     pink for the notepad's lines, Link blue, and Marigold (`#FFC53D`) for
     the Guessling, the primary action, and the right guess, never for a Yes
-    or a No. Yes green and
-    No red take the hues of 🟩 and 🟥, each with a text and a tint shade; a
-    neutral Stone marks the free replies. Every token has light, dark, and
-    Increase Contrast values for `DynamicColorIOS`, the app follows the
-    system's appearance, and there's no appearance setting.
+    or a No. Yes green and No red take the hues of 🟩 and 🟥, each with a
+    text and a tint shade; a neutral Stone marks the free replies. Every
+    token has light, dark, and Increase Contrast values for
+    `DynamicColorIOS`, the app follows the system's appearance, and there's
+    no appearance setting.
 1.  **A glyph for every answer.** A check for Yes, a cross for No and a
     wrong guess, a question mark for "Ask another way" and "Ask a yes-or-no
     question", and a target for the right guess, beside the word, because 🟩
