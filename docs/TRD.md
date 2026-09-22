@@ -386,8 +386,8 @@ reports only errors, so Turn sets its own rule
 
 ### Names as tags
 
-Before a request, `turn-listen` tags the line, the 40 candidates, and the
-category names together (LISTEN-5):
+Before a request, `turn-listen` tags the line, the 40 candidates, the
+category names, and the place's name together (LISTEN-5):
 
 - **The tagger.** `NLTagger` with the `nameType` scheme and the options
   `joinNames`, `omitPunctuation`, and `omitWhitespace`, as in Apple's recipe
@@ -403,8 +403,8 @@ category names together (LISTEN-5):
   name gets the same tag everywhere in the request.
 - The candidates' ids don't change, so Jev's answers map back to the user's
   own text, and the tag map stays on the phone.
-- The place's name is sent as the user wrote it, since the user chose it for
-  that purpose (PLACE-3).
+- The place's name is tagged like the rest, so no name the tagger finds
+  leaves the phone; a place such as Clinic or Home has none (PLACE-3).
 
 [ios-names]: /docs/research/turn-ios.md#swapping-names-for-tags-with-nltagger
 
