@@ -23,6 +23,7 @@ Contents:
 1.  [Components](#components)
 1.  [Motion](#motion)
 1.  [Sound and haptics](#sound-and-haptics)
+1.  [Screens](#screens)
 1.  [See also](#see-also)
 
 ## Overview
@@ -977,6 +978,164 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 [trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
 [ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
 [ios-haptics]: /docs/research/ios-design.md#haptics-in-expo
+
+## Screens
+
+The TRD's [screens and navigation][trd-screens] set the routes; this is what
+each one shows, top to bottom.
+
+[trd-screens]: /docs/TRD.md#screens-and-navigation
+
+### Today
+
+(TODAY-1, ASK-1 to ASK-12, GUESS-1 to GUESS-4)
+
+1.  **The top bar**, on the table: the puzzle's number and date in `meta`,
+    Chalk, such as "#12 · Friday, September 25", or "#3 · Starter"; then
+    the Archive (`calendar`) and Settings (`gearshape`) buttons on the
+    trailing side.
+1.  **The stage**, on the table: the Guessling, 160 points tall, and its
+    speech bubble beside it, with the latest reply.
+1.  **The notepad**: the hint, the turn meter, the Margin pink line, and the
+    history.
+1.  **The composer**, over the notepad's lower edge.
+
+While today's puzzle loads, the bubble says "Getting today’s puzzle", the
+notepad's lines are drawn empty, and nothing else moves; it's never an empty
+screen (STATE-4).
+
+### Every answer, drawn
+
+Each answer from the Worker's `TurnResponse`, and each state that isn't an
+answer, has one pose, one line of words, and one set of cues. A pip is
+added only when a turn is used.
+
+| Answer         | Words in the bubble and chip                     | Glyph          | The Guessling | Turn | Pip         | Haptic  | Sound |
+| -------------- | ------------------------------------------------ | -------------- | ------------- | ---- | ----------- | ------- | ----- |
+| `yes`          | Yes                                              | `checkmark`    | Nod           | Used | Yes         | Light   | Yes   |
+| `no`           | No                                               | `xmark`        | Head shake    | Used | No          | Light   | No    |
+| `rephrase`     | Ask another way                                  | `questionmark` | Shrug         | Free | None        | Light   | Shrug |
+| `not_question` | Ask a yes-or-no question                         | `questionmark` | Shrug         | Free | None        | Light   | Shrug |
+| `pick`         | Pick a question from the list                    | `list.bullet`  | Shrug         | Free | None        | None    | None  |
+| `rest`         | The Guessling needs a rest. You can still guess. | `moon.zzz`     | Resting       | Free | None        | None    | None  |
+| `right`        | You got it!                                      | `target`       | Celebration   | Used | Right guess | Success | Solve |
+| `wrong`        | Not it                                           | `xmark`        | Head shake    | Used | Wrong guess | Light   | No    |
+
+| State                     | Banner                                               | The Guessling | Offers                         |
+| ------------------------- | ---------------------------------------------------- | ------------- | ------------------------------ |
+| No answer after 300 ms    | None; the bubble's dots pulse                        | Thinking      | Nothing; the composer waits    |
+| No answer after 5 seconds | No answer yet.                                       | Idle          | Send again (ASK-8)             |
+| Offline                   | You’re offline. Your question is saved.              | Idle          | Send again (STATE-1)           |
+| `busy`                    | The Guessling is busy. Pick a question or try again. | Thinking      | The list, Send again (STATE-3) |
+| `slow_down`               | One moment, then try again.                          | Idle          | Send again                     |
+| Today's puzzle can't load | Can’t reach the Guessling. Trying again.             | Idle          | Retries by itself (STATE-4)    |
+| `bad_date`                | Check your iPhone’s date and time.                   | Idle          | Try again (STATE-4)            |
+| `update`                  | Update Guessling to keep playing.                    | Idle          | Update, to the App Store       |
+| `unconfirmed`             | Couldn’t confirm Guessling+.                         | Idle          | Try again (STATE-5)            |
+
+### The end of a round
+
+(END-1 to END-5, SHARE-1 to SHARE-3)
+
+- **The stage.** After the hold and the card's turn, the Guessling stands
+  in its celebration, with the tuft as "!", or presents the card in its
+  bow, and the answer card shows its face: the answer's name in `reveal`
+  and the hint under it (END-2).
+- **The result**, at the top of the notepad: "Solved in 9 of 20" or "Out of
+  turns"; the turn meter exactly as it will be shared; and "Next Guessling
+  in 5:42:10" in `count`, counting down.
+- **The buttons.** Share, primary, and "Play yesterday’s?", secondary,
+  which reads "Play another?" when no daily puzzle is dated before today
+  (END-3).
+- **Statistics**, when there are any (END-5): Played, Solved, Streak, and
+  Longest, four counts in `count` over labels in `meta`.
+- **At once.** The screen appears without waiting for the statistics, and
+  the history stays below it, scrolled to the top.
+
+### The notice
+
+(NOTICE-1 to NOTICE-5)
+
+- **How it opens.** As a sheet over Today on a fresh install, which swiping
+  can't dismiss, since the question field stays disabled until the player
+  chooses (NOTICE-1).
+- **Inside.** The Guessling, idle, at the top; the title "Before you ask" in
+  `title`; the server's text in `body`; the privacy policy as a link; and
+  two full-width buttons stacked in the secondary style, "Allow AI answers"
+  and then "Not now", the same in size, color, and weight.
+
+### The archive
+
+(ARCHIVE-1 to ARCHIVE-4)
+
+- **Layout.** The table, with a native large-title header, "Archive", and
+  one group of rows on an Index white card with `lg` corners.
+- **Each row.** The number and date in `meta`, such as "#13 · Saturday,
+  September 26", or "#3 · Starter"; the hint in `body-strong`; and at the
+  trailing end the result chip, "9/20" or "X", a `lock.fill` for a locked
+  puzzle, or nothing for one not played.
+- **For a free player.** One line on the table above the list, "Past puzzles
+  open with Guessling+.", with no button, since only a locked puzzle and
+  "Play yesterday’s?" open the paywall (PAY-4). Tapping a locked row opens
+  it; a round TODAY-5 keeps open has no lock.
+
+### Settings
+
+(SET-1, SET-2, NOTICE-4, PAY-6, PAY-8)
+
+- **Layout.** The table, with a native large-title header, "Settings", and
+  groups of rows on Index white cards.
+- **Groups.**
+  - **Answers:** the AI answers switch, with a footer line that says what it
+    does.
+  - **Sound and haptics:** Sound and Haptics switches.
+  - **Guessling+:** Restore Purchases, Redeem Code, and Manage Subscription.
+  - **About:** Privacy Policy, Terms of Use, Support, Your ID, which copies
+    the player's RevenueCat ID, and Version.
+- **Switches** are the system's, with their "on" track in Table blue, since
+  green belongs to answers.
+
+### The paywall
+
+(PAY-1 to PAY-5, A11Y-6)
+
+RevenueCat's paywall, configured in its editor, which the SDK in version
+10.10.1 presents as a page sheet ([iOS notes on the paywall][ios-paywall]).
+
+1.  **Header art**: the Guessling celebrating with a fan of answer cards, a
+    PNG under 1 MB in a light and a dark version. Nothing essential lives in
+    it, because the iOS SDK hides paywall images from VoiceOver.
+1.  **The title**, "Every past puzzle, any day", and a line that says what
+    Guessling+ holds today: "All past puzzles, from #1 to yesterday’s, and
+    one more every day" (PAY-2).
+1.  **The two plans** as Index white cards, the yearly preselected with a
+    Marigold border and a "3 days free" badge, each with its billed amount as
+    the largest price, the trial, and the renewal (PAY-1, PAY-2).
+1.  **The purchase button**, Marigold with a Ballpoint label, then "Cancel
+    anytime in Settings".
+1.  **Restore Purchases, Terms of Use, Privacy Policy, and Close** (PAY-3).
+
+- **Colors** come from the tokens, Table blue behind white cards, and every
+  color and image has a dark value, since a color without one shows its
+  light value in Dark Mode.
+- **Type** is the editor's system font, since SF Pro Rounded can't be
+  uploaded; font scaling stays on.
+- **Icons** come from the editor's Tabler set, the nearest to the app's
+  symbols: a check, a calendar, and a card.
+- **The AI Editor** takes "a design.md file to define your brand colors,
+  fonts, and styling guidelines", so the team hands it this file.
+
+[ios-paywall]: /docs/research/ios-design.md#revenuecat-paywalls-styling
+
+### Launch
+
+- A solid Table blue, in the dark value in Dark Mode, with no text and no
+  image, since Apple asks for a launch screen "nearly identical to the first
+  screen" and not "a branding opportunity" ([iOS notes on launch
+  screens][ios-launch]). `expo-splash-screen` sets `backgroundColor` and a
+  `dark` value.
+
+[ios-launch]: /docs/research/ios-design.md#launch-screens
 
 ## See also
 
