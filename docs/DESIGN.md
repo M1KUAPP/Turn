@@ -27,6 +27,7 @@ Contents:
 1.  [Words on screen](#words-on-screen)
 1.  [Accessibility](#accessibility)
 1.  [Web pages](#web-pages)
+1.  [App icon and store assets](#app-icon-and-store-assets)
 1.  [See also](#see-also)
 
 ## Overview
@@ -1254,6 +1255,61 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 
 [trd-layout]: /docs/TRD.md#repository-layout
 [css-ui-rounded]: https://www.w3.org/TR/css-fonts-4/#valdef-font-family-ui-rounded
+
+## App icon and store assets
+
+### The app icon
+
+- **One file.** A `.icon` file from Icon Composer, set as `ios.icon`, which
+  Expo supports since SDK 54; Xcode generates the images for iOS 18 and
+  earlier from it ([iOS notes on icons][ios-icons]).
+- **Design.** A solid Table blue background, and the Guessling's body, face,
+  and "?" tuft in at most four flat foreground layers. No text, no SF
+  Symbol or anything like one, and no baked shadows or highlights, which
+  the system adds.
+- **Variants.** Dark puts the same shapes on the dark table color; mono
+  makes the Guessling white.
+- **Checks.** Legible at 29 points, in the dark, clear, and tinted looks,
+  and on an iOS 18 simulator.
+- **For Devpost.** A 1024 × 1024 PNG of the default look, which Shipaton's
+  rules ask for.
+
+[ios-icons]: /docs/research/ios-design.md#ios-26-icons-and-icon-composer
+
+### Screenshots
+
+- **Format.** Five at 1320 × 2868, the 6.9-inch size, flat RGB with no alpha
+  (STORE-2). Each is a frameless capture of the app from the simulator,
+  under a Table blue caption band with one short phrase in Nunito, white.
+- **Order.** The first three appear in search results, so they carry the
+  game:
+  1.  "Ask anything": Today, with a question and the Guessling's nod.
+  1.  "Yes, no, or ask another way": the shrug.
+  1.  "Find it in twenty": the celebration and the answer card.
+  1.  "Share without spoilers": the end screen, in Dark Mode.
+  1.  "Every past puzzle with Guessling+": the archive, which says it needs
+      Guessling+, as guideline 2.3.2 asks.
+- **What they show.** A starter puzzle, never an upcoming day's answer; no
+  prices, URLs, or awards.
+- **For Devpost.** One frameless 1179 × 2556 capture of Today, with no
+  caption band (STORE-2).
+
+### Devpost images and the video
+
+- **Thumbnail.** 3:2, such as 1500 × 1000, under 5 MB, with the Guessling in
+  the middle on Table blue, since the gallery crops thumbnails around their
+  center.
+- **Gallery.** Landscape images that set two or three screenshots side by
+  side on Table blue, since a lone portrait screenshot shows small.
+- **The video.** A screen recording on an iPhone, following the idea's
+  [script][idea-video]: title cards in Nunito on Table blue, short captions,
+  the app's own sounds, and no music the team doesn't own.
+- **No app preview** in version 1.0. If one comes later: 886 × 1920, 15 to
+  30 seconds at 30 frames a second, a screen capture only, saying that the
+  archive needs Guessling+ ([iOS notes on store assets][ios-store]).
+
+[idea-video]: /docs/IDEA.md#launch-and-pitch
+[ios-store]: /docs/research/ios-design.md#store-and-pitch-assets
 
 ## See also
 
