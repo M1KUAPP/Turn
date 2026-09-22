@@ -1277,29 +1277,42 @@ Every PRD requirement, and the sections of this document that meet it or,
 for work outside the build, such as the video or the clinic's review, say
 how the team does it:
 
-| Requirements                                                                                        | Met in                                                                                                                                                                                                            |
-| --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SPEAK-1, SPEAK-2, SPEAK-3, SPEAK-4, SPEAK-5, SPEAK-6, SPEAK-7                                       | [The iPhone app](#the-iphone-app), [Listening and speaking on the phone](#listening-and-speaking-on-the-phone), [Data model](#data-model)                                                                         |
-| BANK-1, BANK-2, BANK-3, BANK-4, BANK-5, BANK-6, BANK-7, BANK-8, BANK-9, BANK-10                     | [Data model](#data-model), [Decision pipeline](#decision-pipeline), [The iPhone app](#the-iphone-app)                                                                                                             |
-| PLACE-1, PLACE-2, PLACE-3                                                                           | [Data model](#data-model), [Decision pipeline](#decision-pipeline), [The iPhone app](#the-iphone-app)                                                                                                             |
-| VOICE-1, VOICE-2, VOICE-3, VOICE-4                                                                  | [Listening and speaking on the phone](#listening-and-speaking-on-the-phone), [The iPhone app](#the-iphone-app)                                                                                                    |
-| CONSENT-1, CONSENT-2, CONSENT-3, CONSENT-4, CONSENT-5, CONSENT-6, CONSENT-7                         | [The iPhone app](#the-iphone-app), [Relay API](#relay-api), [Security and privacy](#security-and-privacy)                                                                                                         |
-| LISTEN-1, LISTEN-2, LISTEN-3, LISTEN-4, LISTEN-5, LISTEN-6, LISTEN-7, LISTEN-8, LISTEN-9, LISTEN-10 | [Listening and speaking on the phone](#listening-and-speaking-on-the-phone), [Decision pipeline](#decision-pipeline)                                                                                              |
-| ROW-1, ROW-2, ROW-3, ROW-4, ROW-5, ROW-6, ROW-7, ROW-8, ROW-9, ROW-10                               | [Decision pipeline](#decision-pipeline), [Relay API](#relay-api), [The iPhone app](#the-iphone-app)                                                                                                               |
-| STATE-1, STATE-2, STATE-3, STATE-4                                                                  | [Decision pipeline](#decision-pipeline), [Reliability and observability](#reliability-and-observability)                                                                                                          |
-| PAY-1, PAY-2, PAY-3, PAY-4, PAY-5, PAY-6, PAY-7, PAY-8, PAY-9, PAY-10                               | [Purchases and entitlements](#purchases-and-entitlements), [Relay API](#relay-api)                                                                                                                                |
-| SET-1, SET-2, SET-3, SET-4                                                                          | [The iPhone app](#the-iphone-app)                                                                                                                                                                                 |
-| CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5                                               | [Stack and repository](#stack-and-repository), [The iPhone app](#the-iphone-app), [Security and privacy](#security-and-privacy), [Evaluation](#evaluation), [Environments and release](#environments-and-release) |
-| EVAL-1, EVAL-2, EVAL-3, EVAL-4, EVAL-5, EVAL-6, EVAL-7, EVAL-8                                      | [Evaluation](#evaluation)                                                                                                                                                                                         |
-| PERF-1, PERF-2, PERF-3, PERF-4, PERF-5                                                              | [Decision pipeline](#decision-pipeline), [Testing](#testing)                                                                                                                                                      |
-| AVAIL-1, AVAIL-2                                                                                    | [Reliability and observability](#reliability-and-observability)                                                                                                                                                   |
-| PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                              | [Security and privacy](#security-and-privacy), [Data model](#data-model), [Listening and speaking on the phone](#listening-and-speaking-on-the-phone)                                                             |
-| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                   | [Security and privacy](#security-and-privacy), [Relay API](#relay-api), [Reliability and observability](#reliability-and-observability)                                                                           |
-| A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6, A11Y-7, A11Y-8                                      | [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                                                                                                            |
-| COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                              | [Stack and repository](#stack-and-repository), [Environments and release](#environments-and-release)                                                                                                              |
-| METRIC-1, METRIC-2, METRIC-3, METRIC-4                                                              | [Reliability and observability](#reliability-and-observability), [The iPhone app](#the-iphone-app), [Purchases and entitlements](#purchases-and-entitlements)                                                     |
-| SUBMIT-1, SUBMIT-2, SUBMIT-3, SUBMIT-4, SUBMIT-5, SUBMIT-6                                          | [Environments and release](#environments-and-release)                                                                                                                                                             |
-| RELEASE-1, RELEASE-2, RELEASE-3, RELEASE-4, RELEASE-5                                               | [Testing](#testing), [Environments and release](#environments-and-release)                                                                                                                                        |
+| Requirements                                                                                        | Met in                                                                                                     |
+| --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| SPEAK-1, SPEAK-2, SPEAK-3, SPEAK-4, SPEAK-5, SPEAK-6, SPEAK-7                                       | [The iPhone app], [Listening and speaking on the phone], [Data model]                                      |
+| BANK-1, BANK-2, BANK-3, BANK-4, BANK-5, BANK-6, BANK-7, BANK-8, BANK-9, BANK-10                     | [Data model], [Decision pipeline], [The iPhone app]                                                        |
+| PLACE-1, PLACE-2, PLACE-3                                                                           | [Data model], [Decision pipeline], [The iPhone app]                                                        |
+| VOICE-1, VOICE-2, VOICE-3, VOICE-4                                                                  | [Listening and speaking on the phone], [The iPhone app]                                                    |
+| CONSENT-1, CONSENT-2, CONSENT-3, CONSENT-4, CONSENT-5, CONSENT-6, CONSENT-7                         | [The iPhone app], [Relay API], [Security and privacy]                                                      |
+| LISTEN-1, LISTEN-2, LISTEN-3, LISTEN-4, LISTEN-5, LISTEN-6, LISTEN-7, LISTEN-8, LISTEN-9, LISTEN-10 | [Listening and speaking on the phone], [Decision pipeline]                                                 |
+| ROW-1, ROW-2, ROW-3, ROW-4, ROW-5, ROW-6, ROW-7, ROW-8, ROW-9, ROW-10                               | [Decision pipeline], [Relay API], [The iPhone app]                                                         |
+| STATE-1, STATE-2, STATE-3, STATE-4                                                                  | [Decision pipeline], [Reliability and observability]                                                       |
+| PAY-1, PAY-2, PAY-3, PAY-4, PAY-5, PAY-6, PAY-7, PAY-8, PAY-9, PAY-10                               | [Purchases and entitlements], [Relay API]                                                                  |
+| SET-1, SET-2, SET-3, SET-4                                                                          | [The iPhone app]                                                                                           |
+| CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5                                               | [Stack and repository], [The iPhone app], [Security and privacy], [Evaluation], [Environments and release] |
+| EVAL-1, EVAL-2, EVAL-3, EVAL-4, EVAL-5, EVAL-6, EVAL-7, EVAL-8                                      | [Evaluation]                                                                                               |
+| PERF-1, PERF-2, PERF-3, PERF-4, PERF-5                                                              | [Decision pipeline], [Evaluation], [Testing]                                                               |
+| AVAIL-1, AVAIL-2                                                                                    | [Reliability and observability]                                                                            |
+| PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                              | [Security and privacy], [Data model], [Listening and speaking on the phone], [Purchases and entitlements]  |
+| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                   | [Security and privacy], [Relay API], [Reliability and observability]                                       |
+| A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6, A11Y-7, A11Y-8                                      | [The iPhone app], [Testing]                                                                                |
+| COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                              | [Stack and repository], [Environments and release]                                                         |
+| METRIC-1, METRIC-2, METRIC-3, METRIC-4                                                              | [Reliability and observability], [The iPhone app], [Purchases and entitlements]                            |
+| SUBMIT-1, SUBMIT-2, SUBMIT-3, SUBMIT-4, SUBMIT-5, SUBMIT-6                                          | [Environments and release]                                                                                 |
+| RELEASE-1, RELEASE-2, RELEASE-3, RELEASE-4, RELEASE-5                                               | [Testing], [Environments and release]                                                                      |
+
+[the iphone app]: #the-iphone-app
+[listening and speaking on the phone]: #listening-and-speaking-on-the-phone
+[data model]: #data-model
+[decision pipeline]: #decision-pipeline
+[relay api]: #relay-api
+[security and privacy]: #security-and-privacy
+[reliability and observability]: #reliability-and-observability
+[purchases and entitlements]: #purchases-and-entitlements
+[stack and repository]: #stack-and-repository
+[evaluation]: #evaluation
+[environments and release]: #environments-and-release
+[testing]: #testing
 
 ## Open technical questions
 
