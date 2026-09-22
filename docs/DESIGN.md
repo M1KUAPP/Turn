@@ -1473,10 +1473,11 @@ idea's art risk plans ([idea risks][idea-risks]):
 - No confetti, and a cross-fade instead of the answer card's turn.
 - The solid composer on every iOS version.
 - The sounds and their switch after launch, since the product makes sound a
-  Should (SET-2); the theme's unit test right after submission.
+  Should (SET-2).
 
 Never cut: the words and glyph with every answer, the four appearances,
-the type ramps, and the Reduce Motion versions.
+the type ramps, the Reduce Motion versions, and the theme's unit test,
+which checks every color pair.
 
 ## Open questions
 
