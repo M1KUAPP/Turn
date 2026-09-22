@@ -200,7 +200,9 @@ Guessling's role, personality, and voice; this section draws it.
   Reanimated.
 - **Face.** Large and simple, since the face does most of the work: two
   tall oval eyes set high, short rounded brows, and a small mouth. No line
-  is thinner than 2 points at the default size.
+  is thinner than 2 points at the default size. The eyes, lids, brows, and
+  mouth also sit in one face group, so the head shake can slide them
+  together.
 
 [game-silhouette]: /docs/research/game-design.md#silhouette-and-staging
 
@@ -209,21 +211,23 @@ Guessling's role, personality, and voice; this section draws it.
 Each pose is a set of part states, and each key pose reads as a still, so
 it doubles as the Reduce Motion frame. Every pose appears with its words.
 
-| Pose        | When                                                   | Key shape                                                                                                              | Moves along |
-| ----------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ----------- |
-| Idle        | Between answers                                        | Upright, eyes forward, a small smile                                                                                   | Nothing     |
-| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°                                                                          | A tilt      |
-| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs                                                                             | Vertical    |
-| Head shake  | No, and a wrong guess                                  | Face slid 6 points to one side and body turned 3°, or 4 points and 2° for a wrong guess; eyes open, a small kind smile | Horizontal  |
-| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°                                                                    | Shoulders   |
-| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open                                                                | Up          |
-| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                                                                                | Down        |
-| Presenting  | The reveal of a round not solved                       | Arms out toward the answer card beside it, in a small bow                                                              | Forward     |
+| Pose        | When                                                   | Key shape                                                                                                               | Moves along |
+| ----------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Idle        | Between answers                                        | Upright, eyes forward, a small smile                                                                                    | Nothing     |
+| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°                                                                           | A tilt      |
+| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs                                                                              | Vertical    |
+| Head shake  | No, and a wrong guess                                  | Face slid 6 points to one side and body leaning 3°, or 4 points and 2° for a wrong guess; eyes open, a small kind smile | Horizontal  |
+| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°                                                                     | Shoulders   |
+| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open                                                                 | Up          |
+| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                                                                                 | Down        |
+| Presenting  | The reveal of a round not solved                       | Arms out toward the answer card beside it, in a small bow                                                               | Forward     |
 
 - **The signature.** The tuft turns from "?" to "!" on a solve and stays
   "!" on the end screen.
-- **No loops.** After each reaction, the Guessling blinks once and returns
-  to idle; nothing moves while it waits for the next question.
+- **No loops.** After each reaction, the Guessling blinks once and holds its
+  key pose until the next question is sent, as the game notes suggest, so
+  the latest answer's pose stays on screen; nothing moves while it waits.
+  The end poses, and resting, hold for as long as their state lasts.
 - **Kind poses.** The head shake is a friendly "no", like Duolingo's and
   Brilliant's characters, and a round not solved ends in the presenting
   bow, like Akinator's genie, never in a defeated pose
@@ -362,10 +366,10 @@ need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
 | `ink-muted`  | `card`        | Secondary text, field borders, and empty pips                             | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
 | `link`       | `card`        | Links, and the switches' "on" track                                       | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
 | `on-desk`    | `desk`        | The top bar, titles, and symbols on the table, and the card back's border | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
-| `on-primary` | `primary`     | Primary buttons; the right-guess chip, badge, and pip; the Guess label    | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
+| `on-primary` | `primary`     | Primary buttons, and the right-guess chip, badge, and pip                 | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
 | `yes-ink`    | `yes-tint`    | Yes chips                                                                 | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
 | `no-ink`     | `no-tint`     | No and wrong-guess chips                                                  | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
-| `unsure-ink` | `unsure-tint` | Free-reply chips and banners                                              | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
+| `unsure-ink` | `unsure-tint` | Free-reply chips, banners, and the Guess label                            | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
 | `yes-ink`    | `card`        | "Yes" in the speech bubble                                                | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
 | `no-ink`     | `card`        | "No" and "Not it" in the speech bubble                                    | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
 | `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges                              | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
@@ -776,11 +780,11 @@ property for.
   points and semibold, then the words in `chip`.
 - **Styles.** `chip-yes` for Yes, `chip-no` for No and for "Not it",
   `chip-unsure` for the free replies, and `chip-right` for "You got it!".
+  The glyphs are the ones in [Answer colors](#answer-colors).
 - **Short labels.** The three replies too long for a chip get short labels:
   "Not a question" for "Ask a yes-or-no question", "Pick one" for picking,
   and "Resting" for the rest. The bubble keeps the full words, which are
   also the chip's VoiceOver label.
-  The glyphs are the ones in [Answer colors](#answer-colors).
 - **Pending.** A question just sent shows a Stone chip with "…" until the
   answer arrives, and after a timeout the chip becomes a "Send again"
   button (ASK-8, STATE-1).
@@ -821,7 +825,7 @@ property for.
   since REPORT-1 makes the reason optional. Once sent, the row shows
   "Reported" in `meta` under the chip (REPORT-1, REPORT-3). VoiceOver offers
   the same as a custom action. Rows for picking and resting have no report
-  action, since a report carries an answer, and those aren't answers.
+  action, since the TRD's `ReportRequest` has no answer value for them.
 
 ### The composer
 
@@ -831,7 +835,7 @@ property for.
   question"; and a Marigold send button with an `arrow.up` once there's
   text (ASK-1).
 - **Guessing.** Guess turns the field into "Name the thing", with a
-  "Guess" label inside it in the `chip-right` style, a 60-character limit,
+  "Guess" label inside it in the `chip-unsure` style, a 60-character limit,
   and the line "A guess uses a turn." above the composer; the send button
   shows a `target`. An `xmark.circle.fill` button returns to asking
   (GUESS-1, GUESS-3).
@@ -954,7 +958,7 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 | Reaction    | The moves                                                                                                                                                                                                                        | About  |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
 | Nod         | Dips 8 points with `lead`, then springs back with `nod`, whose overshoot makes a second, smaller nod; eyes close to arcs                                                                                                         | 500 ms |
-| Head shake  | Slides the face 6 points with `lead` as the body turns 3°, then springs back with `shake`, swinging past center and back; 4 points and 2° for a wrong guess                                                                      | 550 ms |
+| Head shake  | Slides the face 6 points with `lead` as the body leans 3°, then springs back with `shake`, swinging past center and back; 4 points and 2° for a wrong guess                                                                      | 550 ms |
 | Shrug       | Arms and brows up with `shrug`, a head tilt of 8°, a 200 ms hold, then down with `snap`                                                                                                                                          | 750 ms |
 | Celebration | Squashes to 92% with `lead`, hops 40 points with `hop`, the tuft fades from "?" to "!" at the top, and lands in a squash to 95%; 24 pieces of confetti in Marigold, Yes green, Table blue, and Index white fall for 900 ms, once | 1.2 s  |
 | Thinking    | After 300 ms without an answer, eyes and brows move with `settle`                                                                                                                                                                | 500 ms |
@@ -966,7 +970,8 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 - **Never in the way.** The field is usable the moment an answer arrives;
   a new answer cuts the running reaction short and starts its own from the
   current pose.
-- **One blink** ends each reaction, then idle.
+- **One blink** ends each reaction, which then holds its key pose until the
+  next question is sent.
 
 [game-timing]: /docs/research/game-design.md#reaction-durations
 
@@ -1109,8 +1114,8 @@ added only when a turn is used.
   the share row, and Share show without scrolling.
 - **The result**, at the top of the notepad: "Solved in 9 of 20" or "Out of
   turns"; the turn meter without its empty rings, so it shows the share's
-  symbols one for one; and "Next Guessling
-  in 5:42:10" in `count`, counting down.
+  symbols one for one; and "Next Guessling in 5:42:10" in `count`, counting
+  down.
 - **The buttons.** Share, primary, and "Play yesterday’s?", secondary,
   which reads "Play another?" when no daily puzzle is dated before today
   (END-3).
@@ -1154,8 +1159,9 @@ added only when a turn is used.
 - **Layout.** The table, with a native large-title header, "Settings", and
   groups of rows on Index white cards.
 - **Groups.**
-  - **Answers:** the AI answers switch, with a footer line that says what it
-    does.
+  - **Answers:** the AI answers switch, with the footer "When this is on,
+    your typed questions go to an AI service to be answered. When it’s off,
+    you pick questions from a list."
   - **Sound and haptics:** Sound and Haptics switches.
   - **Guessling+:** Restore Purchases, Redeem Code, and Manage Subscription.
   - **About:** Privacy Policy, Terms of Use, Support, Your ID, which copies
@@ -1225,36 +1231,38 @@ phrases. The PRD quotes some strings; this section fixes the rest.
   offline”, and in the PRD's strings too, such as “Play yesterday’s?”.
 - **No emoji** anywhere but the share text, which SHARE-1 fixes.
 
-| Where                              | Words                                                            | Fixed by      |
-| ---------------------------------- | ---------------------------------------------------------------- | ------------- |
-| The bubble before a question       | I’m thinking of something.                                       | This document |
-| The bubble while loading           | Getting today’s puzzle                                           | This document |
-| The question field                 | Ask a yes-or-no question                                         | This document |
-| The guess field                    | Name the thing                                                   | This document |
-| Above the guess field              | A guess uses a turn.                                             | This document |
-| The turn meter                     | 14 turns left · 1 turn left                                      | This document |
-| The three answers                  | Yes · No · Ask another way                                       | ASK-2         |
-| Not a question                     | Ask a yes-or-no question                                         | ASK-4         |
-| The guesses                        | You got it! · Not it                                             | This document |
-| Short chip labels                  | Not a question · Pick one · Resting                              | This document |
-| The notice's buttons               | Allow AI answers · Not now                                       | NOTICE-1      |
-| The notice's title                 | Before you ask                                                   | This document |
-| A row's action                     | Report this answer · Wrong · Unclear                             | REPORT-1      |
-| A report with no reason            | No reason                                                        | This document |
-| After a report                     | Reported                                                         | REPORT-3      |
-| After a timeout                    | Send again                                                       | ASK-8         |
-| Banners                            | The state table under Screens                                    | This document |
-| The replies to picking and resting | The answer table under Screens                                   | This document |
-| A round solved                     | Solved in 9 of 20                                                | This document |
-| A round not solved                 | Out of turns                                                     | This document |
-| The end screen                     | Share · Play yesterday’s? · Play another?                        | END-3         |
-| The countdown                      | Next Guessling in 5:42:10                                        | This document |
-| The statistics                     | Played · Solved · Streak · Longest                               | This document |
-| The archive, for free players      | Past puzzles open with Guessling+.                               | This document |
-| The paywall's title                | Every past puzzle, any day                                       | This document |
-| What Guessling+ holds              | All past puzzles, from #1 to yesterday’s, and one more every day | This document |
-| The yearly plan's badge            | 3 days free                                                      | This document |
-| Under the plans                    | Cancel anytime in Settings                                       | This document |
+| Where                              | Words                                                                                                                    | Fixed by      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| The bubble before a question       | I’m thinking of something.                                                                                               | This document |
+| The bubble while loading           | Getting today’s puzzle                                                                                                   | This document |
+| The question field                 | Ask a yes-or-no question                                                                                                 | This document |
+| The guess field                    | Name the thing                                                                                                           | This document |
+| Above the guess field              | A guess uses a turn.                                                                                                     | This document |
+| The turn meter                     | 14 turns left · 1 turn left                                                                                              | This document |
+| The three answers                  | Yes · No · Ask another way                                                                                               | ASK-2         |
+| Not a question                     | Ask a yes-or-no question                                                                                                 | ASK-4         |
+| The guesses                        | You got it! · Not it                                                                                                     | This document |
+| Short chip labels                  | Not a question · Pick one · Resting                                                                                      | This document |
+| The notice's buttons               | Allow AI answers · Not now                                                                                               | NOTICE-1      |
+| The notice's title                 | Before you ask                                                                                                           | This document |
+| The AI answers switch's footer     | When this is on, your typed questions go to an AI service to be answered. When it’s off, you pick questions from a list. | This document |
+| Leaving guess mode, for VoiceOver  | Stop guessing                                                                                                            | This document |
+| A row's action                     | Report this answer · Wrong · Unclear                                                                                     | REPORT-1      |
+| A report with no reason            | No reason                                                                                                                | This document |
+| After a report                     | Reported                                                                                                                 | REPORT-3      |
+| After a timeout                    | Send again                                                                                                               | ASK-8         |
+| Banners                            | The state table under Screens                                                                                            | This document |
+| The replies to picking and resting | The answer table under Screens                                                                                           | This document |
+| A round solved                     | Solved in 9 of 20                                                                                                        | This document |
+| A round not solved                 | Out of turns                                                                                                             | This document |
+| The end screen                     | Share · Play yesterday’s? · Play another?                                                                                | END-3         |
+| The countdown                      | Next Guessling in 5:42:10                                                                                                | This document |
+| The statistics                     | Played · Solved · Streak · Longest                                                                                       | This document |
+| The archive, for free players      | Past puzzles open with Guessling+.                                                                                       | This document |
+| The paywall's title                | Every past puzzle, any day                                                                                               | This document |
+| What Guessling+ holds              | All past puzzles, from #1 to yesterday’s, and one more every day                                                         | This document |
+| The yearly plan's badge            | 3 days free                                                                                                              | This document |
+| Under the plans                    | Cancel anytime in Settings                                                                                               | This document |
 
 [product-character]: /docs/PRODUCT.md#the-guessling-character
 
@@ -1271,7 +1279,8 @@ what each iPhone setting changes.
     No.", with the custom action "Report this answer".
   - The turn meter is one element that counts the turns by answer.
   - Every symbol button has a label: Archive, Settings, Guess, Send,
-    Questions, and Share.
+    Questions, Share, and Stop guessing, for the button that leaves guess
+    mode.
   - On the paywall, nothing lives only in an image.
 - **Larger Text (A11Y-2).** Every text style follows its `dynamicTypeRamp`;
   from AX1, rows stack and the stage stays compact; screens scroll; symbols
@@ -1447,8 +1456,8 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   and grayscale, through Color Filters.
 - **Screens.** 375 × 667 and 440 × 956 points, and an iPad at phone size
   (COMPAT-3).
-- **Real strings.** The longest reply, hint, and answer name, at 375 × 667
-  and at AX5.
+- **Real strings.** The longest reply, chip, banner, hint, and answer name,
+  at 375 × 667 and at AX5.
 - **Colors.** After any color change, the contrast table is recomputed with
   `check_contrast.py`, from the [design plan's appendix][plan-checks], and
   still passes.
