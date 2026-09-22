@@ -432,9 +432,8 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
   the typed-line field; the consent controls; steady slots and the fixed
   buttons; ask the campus clinic for a review.
 - **Friday, September 25:** run the evaluation, with Jev's thresholds frozen
-  beforehand; the
-  paywall, the Test Store purchase, Restore, and the relay's free-line count
-  and entitlement check; Settings.
+  beforehand; the paywall, the Test Store purchase, Restore, and the relay's
+  free-line count and entitlement check; Settings.
 - **Saturday, September 26:** the clinic's review, if booked, and its fixes;
   the README, the license, the Simulator build, and the replay script.
 - **Sunday, September 27:** polish; the 1024 × 1024 icon and the 1179 × 2556
@@ -621,10 +620,9 @@ Still open, each with a safe default:
   version control and advise rotating them ([Test Store key][svc-key]). Safe
   default: commit it for judging, since every build a judge runs carries it
   anyway, and rotate it after the winners are announced.
-- **Jev credits.** No page read names a free tier or student program, and
-  no page says
-  what the API returns when credits run out. Safe default: buy credits on
-  September 22, turn on auto-refill, and watch usage through the winners'
+- **Jev credits.** No page read names a free tier or student program, and no
+  page says what the API returns when credits run out. Safe default: buy credits
+  on September 22, turn on auto-refill, and watch usage through the winners'
   announcement ([programs][jp-programs]).
 - **Naming Jev.** Safe default: ask TypeSafe on September 22, including
   about its SDK in the public repository, and follow the trigger under

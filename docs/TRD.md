@@ -369,14 +369,13 @@ reports only errors, so Turn sets its own rule
   Apple's sample does, and treats text as settled once the analyzer's
   `resultsFinalizationTime` passes its end, not only when a result arrives
   with `isFinal`.
-- **The silence rule.** When the tapped audio has stayed below a speech
-  level, and no new words have arrived, for the window, the module calls
-  `finalize(through: nil)` and reports the settled text as one line
-  (LISTEN-2). The window starts at 0.5 seconds, the evaluation notes' budget
-  for detecting the end of a turn, and the [replay test](#testing) tunes it
-  against two
-  pulls: a longer window slows the row (PERF-1), and a shorter one cuts the
-  partner off (PERF-5) ([evaluation notes][eval-latency]).
+- **The silence rule.** When the tapped audio has stayed below a speech level,
+  and no new words have arrived, for the window, the module calls
+  `finalize(through: nil)` and reports the settled text as one line (LISTEN-2).
+  The window starts at 0.5 seconds, the evaluation notes' budget for detecting
+  the end of a turn, and the [replay test](#testing) tunes it against two pulls:
+  a longer window slows the row (PERF-1), and a shorter one cuts the partner off
+  (PERF-5) ([evaluation notes][eval-latency]).
 - **Manual ends.** Done ends a spoken line at once, the same way, and a
   typed line ends when the user sends it (LISTEN-4).
 - **Length.** The app keeps a line's last 300 characters once its names are
@@ -1007,11 +1006,11 @@ ran under Wrangler 4.136.2:
 }
 ```
 
-- **Secrets** are set with Wrangler and listed under `secrets.required`, so
-  a deploy without them fails. For local work they live
-  in `worker/.dev.vars`, which Git ignores, and a committed
-  `.dev.vars.example` names them for anyone who runs the relay with their
-  own keys (SEC-1) ([services notes][svc-secrets]).
+- **Secrets** are set with Wrangler and listed under `secrets.required`, so a
+  deploy without them fails. For local work they live in `worker/.dev.vars`,
+  which Git ignores, and a committed `.dev.vars.example` names them for anyone
+  who runs the relay with their own keys (SEC-1)
+  ([services notes][svc-secrets]).
 - **The Test Store key** is the only RevenueCat key the app carries, and it
   sits in the app's committed configuration so judges can build from source.
   RevenueCat's blogs keep test keys out of version control and advise
@@ -1037,10 +1036,9 @@ ran under Wrangler 4.136.2:
   like global ones ([services notes][svc-ratelimit]).
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
-  lines nor `listen` guards Jev's credits. One more Durable Object counts
-  Jev calls per UTC day, retries included, and past 10,000, about $0.80, the
-  relay answers
-  `jev_unavailable` until midnight UTC ([services notes][svc-abuse]).
+  lines nor `listen` guards Jev's credits. One more Durable Object counts Jev
+  calls per UTC day, retries included, and past 10,000, about $0.80, the relay
+  answers `jev_unavailable` until midnight UTC ([services notes][svc-abuse]).
 - **The switch:** `JEV_ON` set to false stops every call to Jev at once
   (STATE-3).
 - **Errors** carry only the codes above (SEC-4).
@@ -1176,12 +1174,11 @@ see ([evaluation notes][eval-scoring]):
   reply made the 40, since Jev can't pick a phrase the shortlist dropped.
 - **Kind:** accuracy and a confusion matrix for the question-kind Choice,
   since a yes-or-no call brings up the fixed buttons.
-- **Intervals.** Every rate carries a 95% Wilson interval: a top-6 rate of
-  56 of 80 spans 59% to 79%, and a big button right on all 40 lines where
-  it shows can still be wrong up to 7.2% of the time, by a one-sided 95%
-  bound. Differences between
-  two rankers use a paired bootstrap over lines, and 80 lines settle only
-  gaps of about 15 to 18 points (EVAL-4) ([evaluation notes][eval-power]).
+- **Intervals.** Every rate carries a 95% Wilson interval: a top-6 rate of 56 of
+  80 spans 59% to 79%, and a big button right on all 40 lines where it shows can
+  still be wrong up to 7.2% of the time, by a one-sided 95% bound. Differences
+  between two rankers use a paired bootstrap over lines, and 80 lines settle
+  only gaps of about 15 to 18 points (EVAL-4) ([evaluation notes][eval-power]).
 - **Frozen settings.** Jev's 0.6 and 0.85 come from TypeSafe's routing
   example, and 80 lines are too few to refit them, so they, the margin, and
   the question wording are committed before the first run (EVAL-2). Cosine
