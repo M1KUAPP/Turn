@@ -200,7 +200,7 @@ colors:
     dark: '#1C1C1E'
     light-hc: '#FFFFFF'
     dark-hc: '#1C1C1E'
-  pressed:
+  surface-pressed:
     light: '#E1E1E6'
     dark: '#3A3A3C'
     light-hc: '#D6D6DC'
@@ -281,25 +281,25 @@ colors:
 
 ### Color roles
 
-| Token            | Name                 | Role                                                                  |
-| ---------------- | -------------------- | --------------------------------------------------------------------- |
-| `board`          | Board                | The home screen's background, and Settings' and the editor's          |
-| `surface`        | Card                 | Phrase buttons, the caption, tabs, list rows, and sheets' backgrounds |
-| `pressed`        | Card, pressed        | A card while a finger is on it                                        |
-| `ink`            | Marker black         | Phrases and every other text on cards and on the board                |
-| `ink-secondary`  | Pencil               | Speaker labels, counts, placeholders, and notes                       |
-| `edge`           | Card edge            | The edge of every card and secondary button                           |
-| `accent`         | Marker blue          | The big button, Speak, links, and the dot on a marked tab             |
-| `accent-pressed` | Marker blue, pressed | The big button and Speak while pressed                                |
-| `on-accent`      | On blue              | Text and symbols on marker blue                                       |
-| `yes-fill`       | Yes                  | Yes's fill, in the row and in the Quick category                      |
-| `yes-edge`       | Yes, edge            | Yes's edge                                                            |
-| `no-fill`        | No                   | No's fill                                                             |
-| `no-edge`        | No, edge             | No's edge                                                             |
-| `unsure-fill`    | Not sure             | Not sure's fill                                                       |
-| `unsure-edge`    | Not sure, edge       | Not sure's edge                                                       |
-| `listen`         | Listening orange     | The light while the microphone is on                                  |
-| `on-listen`      | On orange            | "Listening" and its symbol                                            |
+| Token             | Name                 | Role                                                                  |
+| ----------------- | -------------------- | --------------------------------------------------------------------- |
+| `board`           | Board                | The home screen's background, and Settings' and the editor's          |
+| `surface`         | Card                 | Phrase buttons, the caption, tabs, list rows, and sheets' backgrounds |
+| `surface-pressed` | Card, pressed        | A card while a finger is on it                                        |
+| `ink`             | Marker black         | Phrases and every other text on cards and on the board                |
+| `ink-secondary`   | Pencil               | Speaker labels, counts, placeholders, and notes                       |
+| `edge`            | Card edge            | The edge of every card and secondary button                           |
+| `accent`          | Marker blue          | The big button, Speak, links, and the dot on a marked tab             |
+| `accent-pressed`  | Marker blue, pressed | The big button and Speak while pressed                                |
+| `on-accent`       | On blue              | Text and symbols on marker blue                                       |
+| `yes-fill`        | Yes                  | Yes's fill, in the row and in the Quick category                      |
+| `yes-edge`        | Yes, edge            | Yes's edge                                                            |
+| `no-fill`         | No                   | No's fill                                                             |
+| `no-edge`         | No, edge             | No's edge                                                             |
+| `unsure-fill`     | Not sure             | Not sure's fill                                                       |
+| `unsure-edge`     | Not sure, edge       | Not sure's edge                                                       |
+| `listen`          | Listening orange     | The light while the microphone is on                                  |
+| `on-listen`       | On orange            | "Listening" and its symbol                                            |
 
 - **Four inks, fixed jobs.** Blue is Turn's own: its actions and the one reply
   it's sure of, never Yes or No. Green and red appear only on Yes and No, and
@@ -330,31 +330,31 @@ small text" ([AAC design notes][aac-polarity]); labels and notes need 4.5 to
 1; and edges and fills that mark a control need 3 to 1 against what's next to
 them (A11Y-7).
 
-| Text or mark    | On               | Used for                                   | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| --------------- | ---------------- | ------------------------------------------ | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`           | `surface`        | Phrases, the caption, and labels on cards  | 17.0:1 | 15.6:1 | 21.0:1               | 17.0:1              | 7:1      |
-| `ink`           | `pressed`        | A card under a finger                      | 13.0:1 | 10.4:1 | 14.5:1               | 9.1:1               | 7:1      |
-| `ink`           | `board`          | Text on the board                          | 15.2:1 | 19.2:1 | 18.8:1               | 21.0:1              | 7:1      |
-| `on-accent`     | `accent`         | The big button, Speak, and paywall buttons | 7.9:1  | 8.6:1  | 9.9:1                | 13.0:1              | 7:1      |
-| `on-accent`     | `accent-pressed` | The same, pressed                          | 10.0:1 | 11.2:1 | 11.9:1               | 15.7:1              | 7:1      |
-| `ink`           | `yes-fill`       | Yes                                        | 14.7:1 | 13.5:1 | 16.9:1               | 16.4:1              | 7:1      |
-| `ink`           | `no-fill`        | No                                         | 14.1:1 | 14.8:1 | 15.3:1               | 17.6:1              | 7:1      |
-| `ink`           | `unsure-fill`    | Not sure                                   | 14.1:1 | 12.7:1 | 15.5:1               | 15.6:1              | 7:1      |
-| `surface`       | `ink`            | The selected tab, and its dot when marked  | 17.0:1 | 15.6:1 | 21.0:1               | 17.0:1              | 7:1      |
-| `on-listen`     | `listen`         | "Listening" and its symbol                 | 5.2:1  | 9.3:1  | 7.1:1                | 11.9:1              | 4.5:1    |
-| `ink-secondary` | `surface`        | Labels, counts, and notes on cards         | 7.4:1  | 7.6:1  | 11.3:1               | 11.1:1              | 4.5:1    |
-| `ink-secondary` | `board`          | Notes and placeholders on the board        | 6.6:1  | 9.4:1  | 10.1:1               | 13.8:1              | 4.5:1    |
-| `accent`        | `surface`        | Links, and the dot on a marked tab         | 7.9:1  | 8.1:1  | 9.9:1                | 10.6:1              | 4.5:1    |
-| `accent`        | `board`          | The big button's fill against the board    | 7.1:1  | 10.0:1 | 8.8:1                | 13.0:1              | 3:1      |
-| `edge`          | `board`          | Card edges against the board               | 3.2:1  | 4.0:1  | 6.7:1                | 8.1:1               | 3:1      |
-| `edge`          | `surface`        | Card edges against the card                | 3.6:1  | 3.2:1  | 7.5:1                | 6.6:1               | 3:1      |
-| `yes-edge`      | `board`          | Yes's edge against the board               | 4.8:1  | 9.4:1  | 7.2:1                | 12.6:1              | 3:1      |
-| `yes-edge`      | `yes-fill`       | Yes's edge against its fill                | 4.6:1  | 6.6:1  | 6.5:1                | 9.9:1               | 3:1      |
-| `no-edge`       | `board`          | No's edge against the board                | 5.8:1  | 8.2:1  | 8.1:1                | 10.9:1              | 3:1      |
-| `no-edge`       | `no-fill`        | No's edge against its fill                 | 5.4:1  | 6.3:1  | 6.6:1                | 9.2:1               | 3:1      |
-| `unsure-edge`   | `board`          | Not sure's edge against the board          | 5.3:1  | 7.3:1  | 8.1:1                | 12.4:1              | 3:1      |
-| `unsure-edge`   | `unsure-fill`    | Not sure's edge against its fill           | 4.9:1  | 4.8:1  | 6.7:1                | 9.3:1               | 3:1      |
-| `listen`        | `board`          | The light against the board                | 4.6:1  | 10.2:1 | 6.4:1                | 11.9:1              | 3:1      |
+| Text or mark    | On                | Used for                                   | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| --------------- | ----------------- | ------------------------------------------ | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`           | `surface`         | Phrases, the caption, and labels on cards  | 17.0:1 | 15.6:1 | 21.0:1               | 17.0:1              | 7:1      |
+| `ink`           | `surface-pressed` | A card under a finger                      | 13.0:1 | 10.4:1 | 14.5:1               | 9.1:1               | 7:1      |
+| `ink`           | `board`           | Text on the board                          | 15.2:1 | 19.2:1 | 18.8:1               | 21.0:1              | 7:1      |
+| `on-accent`     | `accent`          | The big button, Speak, and paywall buttons | 7.9:1  | 8.6:1  | 9.9:1                | 13.0:1              | 7:1      |
+| `on-accent`     | `accent-pressed`  | The same, pressed                          | 10.0:1 | 11.2:1 | 11.9:1               | 15.7:1              | 7:1      |
+| `ink`           | `yes-fill`        | Yes                                        | 14.7:1 | 13.5:1 | 16.9:1               | 16.4:1              | 7:1      |
+| `ink`           | `no-fill`         | No                                         | 14.1:1 | 14.8:1 | 15.3:1               | 17.6:1              | 7:1      |
+| `ink`           | `unsure-fill`     | Not sure                                   | 14.1:1 | 12.7:1 | 15.5:1               | 15.6:1              | 7:1      |
+| `surface`       | `ink`             | The selected tab, and its dot when marked  | 17.0:1 | 15.6:1 | 21.0:1               | 17.0:1              | 7:1      |
+| `on-listen`     | `listen`          | "Listening" and its symbol                 | 5.2:1  | 9.3:1  | 7.1:1                | 11.9:1              | 4.5:1    |
+| `ink-secondary` | `surface`         | Labels, counts, and notes on cards         | 7.4:1  | 7.6:1  | 11.3:1               | 11.1:1              | 4.5:1    |
+| `ink-secondary` | `board`           | Notes and placeholders on the board        | 6.6:1  | 9.4:1  | 10.1:1               | 13.8:1              | 4.5:1    |
+| `accent`        | `surface`         | Links, and the dot on a marked tab         | 7.9:1  | 8.1:1  | 9.9:1                | 10.6:1              | 4.5:1    |
+| `accent`        | `board`           | The big button's fill against the board    | 7.1:1  | 10.0:1 | 8.8:1                | 13.0:1              | 3:1      |
+| `edge`          | `board`           | Card edges against the board               | 3.2:1  | 4.0:1  | 6.7:1                | 8.1:1               | 3:1      |
+| `edge`          | `surface`         | Card edges against the card                | 3.6:1  | 3.2:1  | 7.5:1                | 6.6:1               | 3:1      |
+| `yes-edge`      | `board`           | Yes's edge against the board               | 4.8:1  | 9.4:1  | 7.2:1                | 12.6:1              | 3:1      |
+| `yes-edge`      | `yes-fill`        | Yes's edge against its fill                | 4.6:1  | 6.6:1  | 6.5:1                | 9.9:1               | 3:1      |
+| `no-edge`       | `board`           | No's edge against the board                | 5.8:1  | 8.2:1  | 8.1:1                | 10.9:1              | 3:1      |
+| `no-edge`       | `no-fill`         | No's edge against its fill                 | 5.4:1  | 6.3:1  | 6.6:1                | 9.2:1               | 3:1      |
+| `unsure-edge`   | `board`           | Not sure's edge against the board          | 5.3:1  | 7.3:1  | 8.1:1                | 12.4:1              | 3:1      |
+| `unsure-edge`   | `unsure-fill`     | Not sure's edge against its fill           | 4.9:1  | 4.8:1  | 6.7:1                | 9.3:1               | 3:1      |
+| `listen`        | `board`           | The light against the board                | 4.6:1  | 10.2:1 | 6.4:1                | 11.9:1              | 3:1      |
 
 - **One table, every pair.** Every text and background pair the components
   name is in this table, and `check_contrast.py` fails a component whose pair
@@ -501,12 +501,15 @@ spacing:
   target: 44px
   strip-cell: 48px
   slot: 78px
+  caption: 86px
+  button: 52px
   bar: 52px
 ```
 
 Sizes are points: the format's `px` means a point on the iPhone. `target` is
 the smallest control, `strip-cell` the strip's shortest phrase button, `slot`
-the row's slot and the grid's shortest phrase button, and `bar` the top bar's
+the row's slot and the grid's shortest phrase button, `caption` the caption's
+height, `button` a capsule button's height, and `bar` the top and bottom bars'
 height.
 
 - **Why 78 points.** Speech buttons should be at least 12 mm on their short
@@ -670,8 +673,9 @@ Each component below is written for the light appearance. For every pair of
 text and background colors, one component also appears as `-dark`,
 `-light-hc`, and `-dark-hc`, naming that appearance's colors, so the linter
 checks all four; edges appear the same way, and every other property is the
-light entry's. The format has no border property, so an edge is a component of
-its own whose `height` is its width.
+light entry's. Heights and padding name the spacing tokens. The format has no
+border property, so each edge color is a component of its own, whose `height`
+holds the edge's thickness.
 
 ```yaml
 components:
@@ -680,62 +684,62 @@ components:
     textColor: '{colors.ink.light}'
     typography: '{typography.title3-emphasized}'
     rounded: '{rounded.md}'
-    padding: 12px
-    height: 78px
+    padding: '{spacing.md}'
+    height: '{spacing.slot}'
   phrase-pressed:
-    backgroundColor: '{colors.pressed.light}'
+    backgroundColor: '{colors.surface-pressed.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.title3-emphasized}'
     rounded: '{rounded.md}'
-    padding: 12px
-    height: 78px
+    padding: '{spacing.md}'
+    height: '{spacing.slot}'
   big:
     backgroundColor: '{colors.accent.light}'
     textColor: '{colors.on-accent.light}'
     typography: '{typography.title1-emphasized}'
     rounded: '{rounded.lg}'
-    padding: 16px
+    padding: '{spacing.lg}'
   big-pressed:
     backgroundColor: '{colors.accent-pressed.light}'
     textColor: '{colors.on-accent.light}'
     typography: '{typography.title1-emphasized}'
     rounded: '{rounded.lg}'
-    padding: 16px
+    padding: '{spacing.lg}'
   yes:
     backgroundColor: '{colors.yes-fill.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.title3-emphasized}'
     rounded: '{rounded.md}'
-    padding: 12px
-    height: 78px
+    padding: '{spacing.md}'
+    height: '{spacing.slot}'
   no:
     backgroundColor: '{colors.no-fill.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.title3-emphasized}'
     rounded: '{rounded.md}'
-    padding: 12px
-    height: 78px
+    padding: '{spacing.md}'
+    height: '{spacing.slot}'
   unsure:
     backgroundColor: '{colors.unsure-fill.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.title3-emphasized}'
     rounded: '{rounded.md}'
-    padding: 12px
-    height: 78px
+    padding: '{spacing.md}'
+    height: '{spacing.slot}'
   strip-phrase:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.subheadline-emphasized}'
     rounded: '{rounded.md}'
-    padding: 8px
-    height: 48px
+    padding: '{spacing.sm}'
+    height: '{spacing.strip-cell}'
   caption:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.title3}'
     rounded: '{rounded.md}'
-    padding: 8px
-    height: 86px
+    padding: '{spacing.sm}'
+    height: '{spacing.caption}'
   caption-label:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink-secondary.light}'
@@ -744,41 +748,41 @@ components:
     backgroundColor: '{colors.board.light}'
     textColor: '{colors.ink-secondary.light}'
     typography: '{typography.subheadline}'
-  light:
+  listening:
     backgroundColor: '{colors.listen.light}'
     textColor: '{colors.on-listen.light}'
     typography: '{typography.headline}'
     rounded: '{rounded.full}'
-    padding: 12px
-    height: 44px
+    padding: '{spacing.md}'
+    height: '{spacing.target}'
   tab:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.headline}'
     rounded: '{rounded.full}'
-    padding: 12px
-    height: 44px
+    padding: '{spacing.md}'
+    height: '{spacing.target}'
   tab-selected:
     backgroundColor: '{colors.ink.light}'
     textColor: '{colors.surface.light}'
     typography: '{typography.headline}'
     rounded: '{rounded.full}'
-    padding: 12px
-    height: 44px
+    padding: '{spacing.md}'
+    height: '{spacing.target}'
   button-primary:
     backgroundColor: '{colors.accent.light}'
     textColor: '{colors.on-accent.light}'
     typography: '{typography.headline}'
     rounded: '{rounded.full}'
-    padding: 16px
-    height: 52px
+    padding: '{spacing.lg}'
+    height: '{spacing.button}'
   button-secondary:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.headline}'
     rounded: '{rounded.full}'
-    padding: 16px
-    height: 52px
+    padding: '{spacing.lg}'
+    height: '{spacing.button}'
   link:
     backgroundColor: '{colors.surface.light}'
     textColor: '{colors.accent.light}'
@@ -809,13 +813,13 @@ components:
     backgroundColor: '{colors.surface.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
   phrase-pressed-dark:
-    backgroundColor: '{colors.pressed.dark}'
+    backgroundColor: '{colors.surface-pressed.dark}'
     textColor: '{colors.ink.dark}'
   phrase-pressed-light-hc:
-    backgroundColor: '{colors.pressed.light-hc}'
+    backgroundColor: '{colors.surface-pressed.light-hc}'
     textColor: '{colors.ink.light-hc}'
   phrase-pressed-dark-hc:
-    backgroundColor: '{colors.pressed.dark-hc}'
+    backgroundColor: '{colors.surface-pressed.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
   big-dark:
     backgroundColor: '{colors.accent.dark}'
@@ -880,13 +884,13 @@ components:
   note-dark-hc:
     backgroundColor: '{colors.board.dark-hc}'
     textColor: '{colors.ink-secondary.dark-hc}'
-  light-dark:
+  listening-dark:
     backgroundColor: '{colors.listen.dark}'
     textColor: '{colors.on-listen.dark}'
-  light-light-hc:
+  listening-light-hc:
     backgroundColor: '{colors.listen.light-hc}'
     textColor: '{colors.on-listen.light-hc}'
-  light-dark-hc:
+  listening-dark-hc:
     backgroundColor: '{colors.listen.dark-hc}'
     textColor: '{colors.on-listen.dark-hc}'
   tab-selected-dark:
@@ -948,9 +952,9 @@ components:
   padding, and the phrase in `title3-emphasized`, `ink`, left-aligned and
   wrapped; at least 78 points tall and as wide as its column. The whole card is
   the target.
-- **Press.** The fill turns `pressed` at once and back on release, with no
-  change of size; the phrase speaks on release, and sliding off cancels
-  ([motionsites notes][ms-app]).
+- **Press.** The fill turns `surface-pressed` at once and back on release,
+  with no change of size; the phrase speaks on release, and sliding off
+  cancels ([motionsites notes][ms-app]).
 - **Speaking.** While its phrase speaks, the card shows `speaker.wave.2` at its
   top trailing corner, in its text's color: `ink` on cards and tints, and
   `on-accent` on the big button.
@@ -1048,13 +1052,13 @@ The caption shows the partner's words in Listen mode; outside it, it says so:
 The top bar's trailing control, in `headline`, with its symbol before its
 word:
 
-| State     | Looks                                                       | A tap                                                                 |
-| --------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
-| Off       | A card capsule: `ear`, "Listen", and the free lines left    | Starts Listen mode: the permission step the first time, then the card |
-| Locked    | A card capsule: `lock`, "Listen", and "Unlock"              | Opens the paywall (PAY-2)                                             |
-| Listening | The `light`: an orange capsule, `mic.fill`, and "Listening" | Pauses (CONSENT-5)                                                    |
-| Paused    | A card capsule: `mic.slash`, "Paused", with End beside it   | Resumes without the card; End stops Listen mode and clears the row    |
-| Mic off   | A card capsule: `mic.slash`, "Mic off", with End beside it  | Nothing: the caption says why (CONSENT-6, LISTEN-9); End stops it     |
+| State     | Looks                                                            | A tap                                                                 |
+| --------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Off       | A card capsule: `ear`, "Listen", and the free lines left         | Starts Listen mode: the permission step the first time, then the card |
+| Locked    | A card capsule: `lock`, "Listen", and "Unlock"                   | Opens the paywall (PAY-2)                                             |
+| Listening | The `listening` capsule, orange, with `mic.fill` and "Listening" | Pauses (CONSENT-5)                                                    |
+| Paused    | A card capsule: `mic.slash`, "Paused", with End beside it        | Resumes without the card; End stops Listen mode and clears the row    |
+| Mic off   | A card capsule: `mic.slash`, "Mic off", with End beside it       | Nothing: the caption says why (CONSENT-6, LISTEN-9); End stops it     |
 
 - **The light.** Its symbol fades in and out while the partner's words
   arrive, for at most five seconds a line, and holds still otherwise, and
@@ -1345,10 +1349,9 @@ editor to match:
 
 ### Launch
 
-The launch screen is the board's color, `#F2F2F7` in light and `#000000` in
-dark, with no image, since Apple says to "Avoid using a launch screen as a
-branding opportunity" ([iOS notes][ios-launch]); the grid follows within two
-seconds.
+The launch screen is the `board` color in each appearance, with no image,
+since Apple says to "Avoid using a launch screen as a branding opportunity"
+([iOS notes][ios-launch]); the grid follows within two seconds.
 
 [ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
 
