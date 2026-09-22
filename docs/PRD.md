@@ -201,8 +201,8 @@ says how each is built.
 - **BANK-7, Must.** The bank works at 2,000 phrases within PERF-3 and PERF-4.
   Check: seed 2,000 phrases and run both checks.
 - **BANK-8, Must.** The bank, the places, and the tap counts stay on the
-  phone: nothing syncs, and only the shortlist and the category names leave
-  it, per partner line. Check: a capture of the app's traffic shows no other
+  phone: nothing syncs, and only what ROW-2 sends leaves it, per partner
+  line. Check: a capture of the app's traffic shows no other
   phrase text.
 - **BANK-9, Should.** Deleting a phrase can be undone for five seconds. Check:
   delete a phrase and tap Undo.
@@ -248,9 +248,8 @@ says how each is built.
 
 - **CONSENT-1, Must.** The first time Listen mode is turned on, before any
   phrase or line leaves the phone, Turn asks the user's permission. The step
-  says what is sent with each partner line (the line, up to 40 of the
-  user's phrases, and their category names, with names Turn recognizes
-  swapped for tags, and the place's name), to whom (TypeSafe, or "a third-party
+  says what ROW-2 sends with each partner line, with the names Turn
+  recognizes swapped for tags, to whom (TypeSafe, or "a third-party
   AI service in the United States" until TypeSafe agrees to be named), that
   audio and the rest of the bank never are, and that the service may keep data
   to monitor its service; it links the privacy notice, and offers "Allow" and
@@ -303,10 +302,9 @@ says how each is built.
   say?", and sends it as a line; it works with no microphone and in the
   Simulator. Check: scenario 10.
 - **LISTEN-5, Must.** Before a line leaves the phone, every name Turn
-  recognizes in the line, the shortlist, or the category names is swapped
-  for a tag, the same tag for the same name across the request. Check: the line
-  "Did Anna call?" and the phrase "Anna is my sister" reach the relay as
-  `[PERSON 1]` in both, with "Anna" nowhere.
+  recognizes in what ROW-2 sends is swapped for a tag, the same tag for the same
+  name across the request. Check: the line "Did Anna call?" and the phrase "Anna
+  is my sister" reach the relay as `[PERSON 1]` in both, with "Anna" nowhere.
 - **LISTEN-6, Must.** A partner line longer than 300 characters keeps its
   last 300 characters. Check: a typed line of 400 characters reaches the
   relay as its last 300.
@@ -463,8 +461,8 @@ says how each is built.
   and CONSENT-4 require in plain words. Check: a teammate compares each
   version with the requirements.
 - **CONTENT-4, Must.** The privacy notice says what stays on the phone, what
-  leaves with each partner line and to whom (the relay on Cloudflare, then
-  TypeSafe, in the United States), including the category names, that lines
+  leaves with each partner line (ROW-2) and to whom (the relay on
+  Cloudflare, then TypeSafe, in the United States), that lines
   and phrases can reveal health, such as a clinic visit or pain, what
   RevenueCat receives for purchases, as its terms require, what is never
   kept (audio and transcripts), what TypeSafe may keep and

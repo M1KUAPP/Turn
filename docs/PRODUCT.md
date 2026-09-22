@@ -175,14 +175,14 @@ requirements.
 - **Speech is never sold.** The grid, typing, saved phrases, and Personal
   Voice are free, and the paywall never stands between the user and speech.
 - **Private by default.** No accounts, and the phrase bank stays on the
-  phone. For each partner line, only the line, the phrases sent with it, and
-  the category names, with names swapped for tags, and the place's name
-  leave it.
+  phone. For each partner line, only what ranking it needs leaves it, with
+  names swapped for tags; the PRD's [reply row][prd-row] lists it.
 - **Useful offline.** Speaking needs no network, and without one, Listen mode
   ranks phrases on the phone by the words of the partner's line, the place,
   and the letters typed.
 
 [aac-fail]: /docs/research/aac-practice.md#why-prestored-phrase-systems-work-or-fail
+[prd-row]: /docs/PRD.md#the-reply-row
 
 ## The experience
 
