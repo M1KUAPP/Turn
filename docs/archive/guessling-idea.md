@@ -1,9 +1,10 @@
 # Guessling idea
 
-> **Superseded on September 22, 2026.** The team moved to the Next Gen
-> Award, and [Turn](/docs/IDEA.md) replaced this idea. It's kept because the
-> [product](/docs/PRODUCT.md), [PRD](/docs/PRD.md), [TRD](/docs/TRD.md), and
-> [design](/docs/DESIGN.md) documents were built on it.
+> **Superseded on September 22, 2026.** The team moved to the Next Gen Award,
+> and [Turn](/docs/IDEA.md) replaced this idea. It's kept because the
+> [product](/docs/archive/guessling-product.md),
+> [PRD](/docs/archive/guessling-prd.md), [TRD](/docs/archive/guessling-trd.md),
+> and [design](/docs/DESIGN.md) documents were built on it.
 
 Guessling is the app this team will ship for RevenueCat Shipaton 2026: a
 daily 20-questions game in which Jev answers any yes-or-no question a player
@@ -255,7 +256,7 @@ Guessling applies them.
   RevenueCat's charts, which count production purchases only.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
-[prd-pay]: /docs/PRD.md#the-paywall-and-purchases
+[prd-pay]: /docs/archive/guessling-prd.md#the-paywall-and-purchases
 
 ## Categories to enter
 
@@ -380,7 +381,7 @@ Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
   [business model][product-money] explains.
 
 [brief-checklist]: /docs/BRIEF.md#submission-checklist
-[product-money]: /docs/PRODUCT.md#business-model
+[product-money]: /docs/archive/guessling-product.md#business-model
 
 ### Review-safety checklist
 
@@ -396,7 +397,7 @@ items specific to Guessling:
 - The app stays out of the Kids category.
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
-[prd-store]: /docs/PRD.md#app-store-listing-and-review
+[prd-store]: /docs/archive/guessling-prd.md#app-store-listing-and-review
 
 ## Launch and pitch
 
@@ -570,12 +571,12 @@ Still open, each with a safe default:
   and judging.
 - [Context](/docs/CONTEXT.md): the official rules, past winners, store
   review, monetization, and pitch guidance.
-- [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why, with
-  its principles, metrics, and roadmap.
-- [Product requirements](/docs/PRD.md): what version 1.0 must do, as
-  numbered requirements with checks.
-- [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
-  to the product requirements.
+- [Product](/docs/archive/guessling-product.md): what Guessling is, for whom,
+  and why, with its principles, metrics, and roadmap.
+- [Product requirements](/docs/archive/guessling-prd.md): what version 1.0 must
+  do, as numbered requirements with checks.
+- [Technical requirements](/docs/archive/guessling-trd.md): how version 1.0 is
+  built, traced to the product requirements.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
 - [Ideation log](/docs/research/ideation.md): the ten rounds that chose

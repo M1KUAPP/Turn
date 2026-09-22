@@ -1,17 +1,19 @@
 # Guessling product
 
-> **Superseded on September 22, 2026.** This document describes Guessling,
-> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
-> Award, replaced it, and this document's links to the idea point at the
-> [archived Guessling idea](/docs/archive/guessling-idea.md).
+> **Superseded on September 22, 2026, and archived.** This document describes
+> Guessling, the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next
+> Gen Award, replaced it, and [`docs/PRODUCT.md`](/docs/PRODUCT.md) now holds
+> Turn's product document. This document's links to Guessling's idea, product,
+> PRD, and TRD point at their archived copies in `docs/archive/`.
 
 Guessling is a daily 20-questions game for iPhone: everyone gets the same
 hidden thing each day and finds it by typing yes-or-no questions in their
 own words. This document says what the product is, who it's for, the
 principles behind its decisions, and where it goes after version 1.0. The
 [idea](/docs/archive/guessling-idea.md) records why the team chose it for
-Shipaton 2026, the [product requirements](/docs/PRD.md) say what version 1.0
-must do, and the [technical requirements](/docs/TRD.md) say how it's built.
+Shipaton 2026, the [product requirements](/docs/archive/guessling-prd.md) say
+what version 1.0 must do, and the
+[technical requirements](/docs/archive/guessling-trd.md) say how it's built.
 Facts are as of September 22, 2026.
 
 Contents:
@@ -178,7 +180,7 @@ The moments that carry the product:
   more: after today's round, or on a locked archive puzzle. Today's round
   never waits behind it.
 
-[prd-functional]: /docs/PRD.md#functional-requirements
+[prd-functional]: /docs/archive/guessling-prd.md#functional-requirements
 
 ## The Guessling character
 
@@ -260,7 +262,7 @@ The moments that carry the product:
   subscription ends ([Apple notes on subscriptions][apple-subs]).
 
 [idea-money]: /docs/archive/guessling-idea.md#monetization
-[prd-pay]: /docs/PRD.md#the-paywall-and-purchases
+[prd-pay]: /docs/archive/guessling-prd.md#the-paywall-and-purchases
 [apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
 
 ## Success metrics
@@ -298,7 +300,7 @@ is named; the rest are watched and reported as rates, as the idea's
 
 [idea-launch]: /docs/archive/guessling-idea.md#launch-and-pitch
 [idea-risks]: /docs/archive/guessling-idea.md#risks
-[prd-perf]: /docs/PRD.md#performance
+[prd-perf]: /docs/archive/guessling-prd.md#performance
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
 
 ## Roadmap
@@ -342,9 +344,10 @@ is named; the rest are watched and reported as rates, as the idea's
 
 - [Guessling idea](/docs/archive/guessling-idea.md): why Guessling was chosen
   for Shipaton 2026, its categories, schedule, risks, and pitch.
-- [Product requirements](/docs/PRD.md): what version 1.0 must do, as
-  numbered requirements with checks.
-- [Technical requirements](/docs/TRD.md): how version 1.0 is built.
+- [Product requirements](/docs/archive/guessling-prd.md): what version 1.0 must
+  do, as numbered requirements with checks.
+- [Technical requirements](/docs/archive/guessling-trd.md): how version 1.0 is
+  built.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
 - [Evidence notes](/docs/research/idea-evidence.md): rivals, reviews, and

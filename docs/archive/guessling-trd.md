@@ -1,16 +1,17 @@
 # Guessling technical requirements
 
-> **Superseded on September 22, 2026.** This document describes Guessling,
-> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
-> Award, replaced it, and this document's links to the idea point at the
-> [archived Guessling idea](/docs/archive/guessling-idea.md).
+> **Superseded on September 22, 2026, and archived.** This document describes
+> Guessling, the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next
+> Gen Award, replaced it, and [`docs/TRD.md`](/docs/TRD.md) now holds Turn's
+> technical requirements. This document's links to Guessling's idea, product,
+> PRD, and TRD point at their archived copies in `docs/archive/`.
 
 How version 1.0 of Guessling is built to meet the
-[product requirements](/docs/PRD.md): the architecture, the versions, the
-data, the API, how questions are answered, purchases, the app, security and
-privacy, reliability, tests, and release. It's written on September 22,
-2026, before the code, as the contract the code is built to, and it changes
-with the code. The [product](/docs/PRODUCT.md) says why, the
+[product requirements](/docs/archive/guessling-prd.md): the architecture, the
+versions, the data, the API, how questions are answered, purchases, the app,
+security and privacy, reliability, tests, and release. It's written on September
+22, 2026, before the code, as the contract the code is built to, and it changes
+with the code. The [product](/docs/archive/guessling-product.md) says why, the
 [idea](/docs/archive/guessling-idea.md) owns the schedule and the risks, and
 five research notes, on [RevenueCat in Expo][rc-notes], the
 [Cloudflare backend][cf-notes], [Apple's requirements][apple-notes],
@@ -1270,13 +1271,13 @@ product and legal ones.
   appear everywhere. Safe default: publish two days ahead (CONTENT-2) and
   never rewrite a revision.
 
-[prd-open]: /docs/PRD.md#open-questions
+[prd-open]: /docs/archive/guessling-prd.md#open-questions
 
 ## See also
 
-- [Product requirements](/docs/PRD.md): every requirement this document
-  traces.
-- [Product](/docs/PRODUCT.md): what Guessling is and why.
+- [Product requirements](/docs/archive/guessling-prd.md): every requirement this
+  document traces.
+- [Product](/docs/archive/guessling-product.md): what Guessling is and why.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,
