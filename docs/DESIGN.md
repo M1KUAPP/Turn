@@ -20,6 +20,7 @@ Contents:
 1.  [Layout](#layout)
 1.  [Elevation](#elevation)
 1.  [Shapes](#shapes)
+1.  [Components](#components)
 1.  [See also](#see-also)
 
 ## Overview
@@ -586,6 +587,249 @@ rounded:
   padding between them, as Apple's layouts do.
 - **Soft everywhere.** No sharp corners, and no square and round corners
   in the same view.
+
+## Components
+
+```yaml
+components:
+  button-primary:
+    backgroundColor: '{colors.primary}'
+    textColor: '{colors.on-primary}'
+    typography: '{typography.button}'
+    rounded: '{rounded.full}'
+    height: 50px
+  button-secondary:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink}'
+    typography: '{typography.button}'
+    rounded: '{rounded.full}'
+    height: 50px
+  top-bar:
+    backgroundColor: '{colors.desk}'
+    textColor: '{colors.on-desk}'
+    typography: '{typography.meta}'
+  speech-bubble:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink}'
+    typography: '{typography.reply}'
+    rounded: '{rounded.full}'
+    padding: 12px
+  notepad:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink}'
+    typography: '{typography.body}'
+    rounded: '{rounded.lg}'
+    padding: 16px
+  notepad-meta:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink-muted}'
+    typography: '{typography.meta}'
+  notepad-rule:
+    backgroundColor: '{colors.rule}'
+    height: 1px
+  hint-rule:
+    backgroundColor: '{colors.rule-margin}'
+    height: 2px
+  list-row:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink}'
+    typography: '{typography.body-strong}'
+    rounded: '{rounded.lg}'
+    height: 44px
+  link:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.link}'
+    typography: '{typography.body}'
+  chip-yes:
+    backgroundColor: '{colors.yes-tint}'
+    textColor: '{colors.yes-ink}'
+    typography: '{typography.chip}'
+    rounded: '{rounded.full}'
+    height: 28px
+  chip-no:
+    backgroundColor: '{colors.no-tint}'
+    textColor: '{colors.no-ink}'
+    typography: '{typography.chip}'
+    rounded: '{rounded.full}'
+    height: 28px
+  chip-unsure:
+    backgroundColor: '{colors.unsure-tint}'
+    textColor: '{colors.unsure-ink}'
+    typography: '{typography.chip}'
+    rounded: '{rounded.full}'
+    height: 28px
+  chip-right:
+    backgroundColor: '{colors.primary}'
+    textColor: '{colors.on-primary}'
+    typography: '{typography.chip}'
+    rounded: '{rounded.full}'
+    height: 28px
+  pip-yes:
+    backgroundColor: '{colors.yes}'
+    rounded: '{rounded.pip}'
+    size: 14px
+  pip-no:
+    backgroundColor: '{colors.no}'
+    rounded: '{rounded.pip}'
+    size: 14px
+  pip-right:
+    backgroundColor: '{colors.primary}'
+    rounded: '{rounded.pip}'
+    size: 14px
+  composer:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink}'
+    typography: '{typography.body}'
+    rounded: '{rounded.full}'
+    height: 50px
+  answer-card:
+    backgroundColor: '{colors.card}'
+    textColor: '{colors.ink}'
+    typography: '{typography.reveal}'
+    rounded: '{rounded.md}'
+```
+
+Each entry gives a component's light colors; the Colors table gives the
+rest. A pip's glyph is Index white (`card`) and a wrong-guess pip is an
+Index white square with a 2-point No red ring, which the format has no
+property for.
+
+### Buttons
+
+- **Primary.** A Marigold capsule, 50 points tall, with its label in
+  `button`, Ballpoint; full width in sheets and on the end screen. At most
+  one per screen, as Apple asks: "Keep the number of prominent buttons to
+  one or two per view."
+- **Secondary.** An Index white capsule with a 1-point Pencil border on
+  cards; on the table it needs no border.
+- **Symbol buttons.** A symbol in Chalk on the table, or Ballpoint on a
+  card, in a 44-point hit area, each with an accessibility label.
+- **Press.** Every custom button scales to 0.97 with `snap` while pressed
+  and springs back; a disabled one shows at 40% opacity and doesn't
+  respond.
+
+### The speech bubble
+
+- **Where.** An Index white capsule on the table beside the Guessling, with
+  a small tail toward it; below it on screens too narrow for both.
+- **What it holds.** The latest reply: a 22-point badge, a circle in the
+  answer's color with the glyph in Index white, then the words in `reply`,
+  colored `yes-ink`, `no-ink`, or `unsure-ink`, or Ballpoint beside
+  Marigold for a right guess. Before the first question it says "I’m
+  thinking of something." in Ballpoint, with no badge.
+- **Waiting.** After 300 ms without an answer, three dots in Stone pulse in
+  opacity, which isn't motion, until the answer comes (ASK-8).
+- **For VoiceOver.** The Guessling and its bubble are one element, labeled
+  with the reply's words.
+
+### Answer chips
+
+- **Where.** At the trailing end of each history row.
+- **Anatomy.** A capsule 28 points tall at the default size: the glyph, 13
+  points and semibold, then the words in `chip`.
+- **Styles.** `chip-yes` for Yes, `chip-no` for No and for "Not it",
+  `chip-unsure` for the free replies, and `chip-right` for "You got it!".
+  The glyphs are the ones in [Answer colors](#answer-colors).
+- **Pending.** A question just sent shows a Stone chip with "…" until the
+  answer arrives, and after a timeout the chip becomes a "Send again"
+  button (ASK-8, STATE-1).
+
+### The turn meter
+
+- **What.** Twenty pips in two rows of ten, like the share, on the notepad
+  under the hint, with "14 turns left" beside them in `meta` (TODAY-1). A
+  pip appears only for a turn used, so free replies add none (ASK-3).
+- **Pips.** 14 points at the default size, 4 apart, with `pip` corners:
+  - Empty: a 1.5-point Pencil ring.
+  - Yes: `yes`, with an Index white `checkmark`.
+  - No: `no`, with an Index white `xmark`.
+  - A wrong guess: Index white with a 2-point `no` ring and a `no`
+    `xmark`, like the share's ❌.
+  - The right guess: Marigold with a Ballpoint `target`, like the share's
+    🎯.
+- **Large text.** Pips grow with the text up to 1.6 times, and from AX1
+  the meter wraps into four rows of five.
+- **For VoiceOver.** One element: "6 of 20 turns used: 4 Yes, 1 No, 1 wrong
+  guess. 14 turns left."
+
+### The notepad
+
+- **Card.** Index white, `lg` corners at the top, 16 points of padding, and
+  a 1-point `rule` edge in Dark Mode; it runs under the composer to the
+  bottom of the screen.
+- **Header.** The hint in `hint`, in curly quotes as in the share: “An
+  animal”. Then the turn meter, then a 2-point Margin pink line.
+- **Rows.** The question in `body`, Ballpoint, and its chip; at least 44
+  points tall, with 1-point Rule blue lines between rows; oldest first,
+  with the newest kept in view (ASK-11).
+- **Guesses.** "Guess" in `meta`, then the name the player guessed, and its
+  chip.
+- **Reporting.** Tapping a row opens an action sheet with "Report this
+  answer", then the reasons "Wrong" and "Unclear". Once sent, the row shows
+  "Reported" in `meta` under the chip (REPORT-1, REPORT-3). VoiceOver offers
+  the same as a custom action.
+
+### The composer
+
+- **Asking.** A capsule 50 points tall, floating 16 points from the edges
+  over the notepad: a Guess button on the leading side, a `target` and the
+  word "Guess" in the secondary style; the field, "Ask a yes-or-no
+  question"; and a Marigold send button with an `arrow.up` once there's
+  text (ASK-1).
+- **Guessing.** Guess turns the field into "Name the thing", with a
+  Marigold "Guess" label inside it, a 60-character limit, and the line "A
+  guess uses a turn." above the composer; the send button shows a `target`.
+  An `xmark.circle.fill` button returns to asking (GUESS-1, GUESS-3).
+- **Counts.** Characters left show in `meta` from 120 of 140 for a question
+  and from 50 of 60 for a guess.
+- **Pending.** While an answer is pending, the field, Guess, and the
+  question list are disabled (ASK-8).
+- **AI answers off.** With the field empty, a Questions button with
+  `list.bullet` replaces send and opens the searchable list (ASK-9).
+- **Surface.** Glass, or its fallback; see [Elevation](#elevation).
+
+### Symbols
+
+SF Symbols through `expo-symbols`, monochrome in the text's color, sized
+with the text by the font scale, since `expo-symbols` doesn't follow Dynamic
+Type:
+
+| Use                                 | Symbol                |
+| ----------------------------------- | --------------------- |
+| Yes                                 | `checkmark`           |
+| No, and a wrong guess               | `xmark`               |
+| The free replies                    | `questionmark`        |
+| A right guess, and the Guess button | `target`              |
+| Picking from the list               | `list.bullet`         |
+| Resting                             | `moon.zzz`            |
+| Send                                | `arrow.up`            |
+| Leave guess mode                    | `xmark.circle.fill`   |
+| Share                               | `square.and.arrow.up` |
+| Archive                             | `calendar`            |
+| Settings                            | `gearshape`           |
+| A locked puzzle                     | `lock.fill`           |
+| Report                              | `flag`                |
+| Offline                             | `wifi.slash`          |
+| Try again                           | `arrow.clockwise`     |
+
+- **iOS 16.4.** Each symbol must exist on iOS 16.4, where a missing one
+  draws nothing, and no meaning rides on a symbol effect, since iOS 16
+  plays none.
+- **Never as art.** Apple's license bars symbols, "or images that are
+  confusingly similar", from app icons, logos, "or any other trademarked
+  use", so none goes into the icon, the Guessling, or the paywall's images
+  ([iOS notes on the symbol license][ios-symbols-license]).
+
+[ios-symbols-license]: /docs/research/ios-design.md#sf-symbols-license-terms
+
+### Banners
+
+- **What.** One line above the composer for a state that isn't an answer:
+  offline, busy, resting, no answer yet, or an error. It's a Stone capsule
+  with its symbol, its words from Words on screen, and
+  its action, such as "Send again".
+- **Rules.** One banner at a time; it stays until its state ends, with no
+  timer; VoiceOver announces it when it appears.
 
 ## See also
 
