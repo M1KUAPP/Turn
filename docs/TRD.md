@@ -293,15 +293,18 @@ carries these headers:
 | `X-Turn-Build`   | `device` or `simulator`, set at build time |
 | `Content-Type`   | `application/json`, for `POST`             |
 
-`GET /v1/config` returns what the app caches at launch: whether Jev is on,
-whether the texts name TypeSafe (CONSENT-7), the number of free lines, and
-the current policy.
+`GET /v1/config` returns what the app caches at launch and when Listen mode
+starts: whether Jev is on, whether the texts name TypeSafe (CONSENT-7), the
+free lines this user has left, whether the relay has confirmed `listen`, and
+the current policy. The Worker asks the user's Durable Object for the two
+per-user values, so they survive a relaunch (PAY-1, PAY-2).
 
 ```ts
 type Config = {
   jevOn: boolean
   typesafeNamed: boolean
-  freeLines: number // 20
+  freeLinesLeft: number // 20 for a new user
+  entitled: boolean // the object's cached yes
   policy: Policy
 }
 ```
@@ -853,7 +856,9 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   3-second abort, and no retry (STATE-2).
 - **The configuration** is fetched at launch and when Listen mode starts,
   and the last copy is kept; without one, the texts don't name TypeSafe
-  (CONSENT-7).
+  (CONSENT-7). Turning Listen mode on opens the paywall at once when the
+  configuration shows no free lines left and RevenueCat's customer info has
+  no active `listen` (PAY-2).
 
 ### Flows on the phone
 
