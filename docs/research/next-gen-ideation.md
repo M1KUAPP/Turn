@@ -796,8 +796,9 @@ Triggers:
   `expo-speech-recognition` and its older recognizer.
 - **No clinic review by September 27:** the description says no clinician has
   reviewed Turn yet.
-- **No consent from TypeSafe by September 28:** the video calls Jev "a hosted
-  decision model".
+- **No consent from TypeSafe by September 28:** the video, the description,
+  and the README call Jev "a hosted decision model", and the consent card
+  says "a third-party AI service in the United States".
 - **No iPhone 15 Pro or later for the video:** a system voice speaks instead
   of a Personal Voice.
 
