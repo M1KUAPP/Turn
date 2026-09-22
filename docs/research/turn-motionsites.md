@@ -449,7 +449,7 @@ and "4.499:1 would not meet the 4.5:1 threshold" ([u-contrast]).
   `214-innovation-summit`), a 10.5 px badge and 12 px terms
   (`333-place-saver`), an 8 px logo line (`206-health-portal`), and table text
   down to 8.5 px (`ms-pet-diagnostics`).
-- **The best spec.** `ms-pet-diagnostics` has "no scroll, entrance, or
+- **A spec with checks.** `ms-pet-diagnostics` has "no scroll, entrance, or
   decorative animations", a "Total motion inventory", no video under reduced
   motion, and acceptance checks. Synthesis: DESIGN.md should read like it.
 
