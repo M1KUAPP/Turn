@@ -132,7 +132,9 @@ The path of one question:
 | Jev mocks in tests | `@msw/cloudflare` 0.0.1 with `msw` 2.14 or later            | Cloudflare's documented way to mock outbound requests |
 | Package manager    | Bun, already used by this repository                        |                                                       |
 
-- The Worker's `compatibility_date` is the day the project starts. From
+- The Worker's `compatibility_date` is the newest date Wrangler accepts on
+  the day the project starts; on September 21, Wrangler 4.136.1 refused
+  2026-09-22 as a future date. From
   2026-08-04 on, Node.js compatibility is on by default and fills
   `process.env` with the Worker's variables, which Jev's SDK reads, so the
   Worker passes every SDK option in code
@@ -338,6 +340,13 @@ interface GuessRequest {
   text: string // 1–60 characters (GUESS-1)
 }
 
+// POST /v1/puzzles/<n>/reports
+interface ReportRequest {
+  text: string // the question as the player typed it
+  answer: 'yes' | 'no' | 'rephrase' | 'not_question'
+  reason?: 'wrong' | 'unclear' // REPORT-1
+}
+
 interface TurnResponse {
   answer: 'yes' | 'no' | 'rephrase' | 'not_question' | 'pick' | 'rest' | 'right' | 'wrong'
   turnsLeft: number
@@ -349,7 +358,8 @@ interface TurnResponse {
 - `rephrase` shows "Ask another way", `not_question` shows "Ask a yes-or-no
   question", `pick` brings up the question list for a player with AI
   answers off, and `rest` says the player has used the 40 answers that
-  don't use a turn (ASK-10). None of the four uses a turn.
+  don't use a turn (ASK-10). None of the four uses a turn, and `pick`
+  doesn't count toward the 40.
 - `right` and `wrong` answer a guess, or a question that names an accepted
   name (GUESS-4); both use a turn.
 
@@ -372,8 +382,6 @@ with the `ADMIN_TOKEN` secret:
 - `GET /v1/admin/reports?number=<n>` lists a puzzle's reports (REPORT-2).
 - `POST /v1/admin/puzzles/<n>/forget` deletes stored answers for given
   wordings after a fix, and refuses until the puzzle closes (CONTENT-8).
-- `GET /v1/admin/stats?from=YYYY-MM-DD&to=YYYY-MM-DD` returns the counts
-  behind the idea's numbers (METRIC-5).
 
 ## Answer pipeline
 
@@ -577,8 +585,12 @@ const match = await client.systemOne(matchRequest, { signal: budget })
 ### Dates and numbers
 
 - **Numbering.** Starters are #1 to #10 and have no date. Daily puzzle `n`,
-  from #11 on, belongs to September 13, 2026 plus `n` days, so #11 is
-  Thursday, September 24 and #17 is Wednesday, September 30 (TODAY-3).
+  from #11 on, belongs to `FIRST_DAILY_DATE` plus `n` − 11 days. In
+  production that date is 2026-09-24, so #11 is Thursday, September 24 and
+  #17 is Wednesday, September 30 (TODAY-3); the test environment sets an
+  earlier date, so it has a today before launch. For a date before
+  `FIRST_DAILY_DATE`, `GET /v1/today` answers `not_found`, and the app
+  says the first puzzle arrives on September 24.
 - **Today.** The app sends the device's local date with every request
   (TODAY-2). A date is today somewhere from 10:00 UTC the day before until
   12:00 UTC the day after, about 50 hours, so the Worker accepts a date
@@ -651,7 +663,8 @@ puzzle is published (CONTENT-7, CONTENT-9).
     closes.
 3.  `forget.ts <n> <wording>...` deletes the corrected wordings' stored
     answers, which the Worker allows only once the puzzle closes. Archive
-    players then get the fixed answer (ARCHIVE-3).
+    players then get the fixed answer (ARCHIVE-3). A starter has no date,
+    so it has no day to wait for, and a fix to it applies at once.
 
 ## Purchases and entitlements
 
@@ -755,8 +768,10 @@ export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boo
 
 - Once the app is Ready for Sale, the team creates a custom offer code on
   the monthly product: one month free, auto-renewal off, open to new,
-  existing, and expired subscribers, with a redemption limit of a few
-  dozen. Codes can take up to an hour to work (PAY-7).
+  existing, and expired subscribers, with a redemption limit of about 100,
+  since no note says whether Devpost shows the code publicly. The team
+  watches redemptions and keeps a second code ready. Codes can take up to
+  an hour to work (PAY-7).
 - Judges get the redemption link, in the format RevenueCat documents,
   rather than the in-app sheet, which RevenueCat calls "extremely
   unstable":
@@ -811,6 +826,14 @@ Expo Router, with one stack:
 
 ### The notice, sharing, and settings
 
+- Each answer in the history, shown oldest first (ASK-11), has "Report this
+  answer", which sends `POST /v1/puzzles/<n>/reports` and records the
+  wording in `reported:<n>`, so the button turns into "Reported"
+  (REPORT-1, REPORT-3).
+- A finished puzzle shows its end screen, with Share and "Play
+  yesterday's?", until the next puzzle starts (END-3, END-4).
+- Settings shows the player's RevenueCat ID under support, so the team can
+  look up a judge's Guessling+ (SET-1).
 - `/notice` shows the text from `GET /v1/config` with two buttons of equal
   weight; the choice and the notice's version go to the device store, and a
   newer version brings the modal back before the next question (NOTICE-1,
@@ -890,6 +913,7 @@ export default {
 | `RC_ENTITLEMENT_ID`      | Worker var    | The Guessling+ entitlement's object ID                          |
 | `MATCH_MIN`              | Worker var    | The match threshold, 0.6 until the consistency test             |
 | `JEV_BUDGET`             | Worker var    | Jev requests a minute in play: 1,000, or 50 for the test Worker |
+| `FIRST_DAILY_DATE`       | Worker var    | The date of daily puzzle #11: 2026-09-24 in production          |
 | `EXPO_PUBLIC_API_URL`    | App, public   | The Worker's address on the team's domain                       |
 | `EXPO_PUBLIC_RC_IOS_KEY` | App, public   | RevenueCat's `appl_` key; `test_` only in development           |
 
@@ -898,8 +922,7 @@ export default {
   plain-text in your compiled application", so nothing secret goes there.
 - The EAS development profile is the only one with the `test_` key;
   preview, TestFlight, and review builds are release builds, which crash on
-  purpose with it, and a build script refuses a release build whose key
-  starts with `test_` (SEC-5).
+  purpose with it, so the TestFlight build would crash at launch (SEC-5).
 
 ### Validation and abuse limits
 
@@ -960,6 +983,10 @@ export default {
 | No network on the phone                  | Offline, with the question kept (STATE-1)           | Nothing is sent, so no turn is used                               |
 | A player leaves mid-question             | The answer on return, by the same `requestId`       | The object stores the answer as soon as Jev returns               |
 
+Whether a player's disconnect also cancels the object's call to Jev isn't
+documented; if it does, the retry with the same `requestId` simply asks
+again.
+
 ### Logs and counts
 
 - **Logs.** Workers Logs, enabled in `wrangler.jsonc`, with one JSON event
@@ -973,9 +1000,10 @@ export default {
   `count(DISTINCT index1)` queries; at high volume the data is sampled, so
   totals use `SUM(_sample_interval)` (METRIC-1, METRIC-2)
   ([Cloudflare notes][cf-ae]).
-- **Numbers for the write-up.** `stats.ts` queries the SQL API and prints
-  the idea's numbers with the latest consistency results (METRIC-5);
-  RevenueCat's charts give the money (METRIC-3).
+- **Numbers for the write-up.** `stats.ts` queries the SQL API, with a token
+  kept on the team's machines, not in the Worker, and prints the idea's
+  numbers with the latest consistency results (METRIC-5); RevenueCat's charts
+  give the money (METRIC-3).
 
 [cf-ae]: /docs/research/cloudflare-workers.md#workers-analytics-engine
 
@@ -985,7 +1013,8 @@ A Cron Trigger at 09:00 UTC, an hour before the next date first becomes
 today in UTC+14, confirms that `live:<n>` exists for the next two dates,
 sends Jev one test question, and posts to the team's webhook if either
 fails (AVAIL-3). It also makes the first call to the next date's object with
-`locationHint: "wnam"`, so no player pays for creating it.
+`locationHint: "wnam"`, so no player pays for creating it, and deletes
+reports more than 30 days old.
 
 ### Service life
 
