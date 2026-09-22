@@ -797,10 +797,10 @@ what the numbers were.
 - Synthesis: for the 80 lines, hit at 1 and hit at 6 are Kristensson et al.'s
   hit at 4 with Turn's row sizes, and a miss should carry a cost, as in Cai et
   al., rather than drop out of the average.
-- Synthesis: the offline fallback ranks by place and typed letters, so its
-  natural score is Kristensson's: letters typed before an acceptable phrase
-  reaches the row, over 0, 1, 2, and 3 letters. The partner-line rankers are
-  scored with no letters typed.
+- Synthesis: the typing suggestions rank by place and typed letters, as the
+  idea's first offline fallback did, so their natural score is Kristensson's:
+  letters typed before an acceptable phrase reaches the row, over 0, 1, 2, and 3
+  letters. The partner-line rankers are scored with no letters typed.
 - Synthesis: run the evaluation twice, on the typed lines and on the same lines
   spoken and transcribed on the phone, since Jev "accepts text input only" and
   ranks a misheard line as heard ([ev-jagged]).
