@@ -448,7 +448,9 @@ The idea's [assumptions](/docs/IDEA.md#assumptions-and-open-questions) hold,
 plus:
 
 - The code lives in this repository, which is private and has no license on
-  September 22, 2026, and goes public before submission.
+  September 22, 2026, and goes public before submission, unless TypeSafe
+  hasn't agreed to be named by September 29, when a public copy of the code
+  goes public instead, as the PRD's open questions say.
 - The team creates Cloudflare and RevenueCat accounts on September 22 if it
   has none.
 - Nobody has interviewed an AAC user or a partner yet, so the product's
