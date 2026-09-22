@@ -26,6 +26,7 @@ Contents:
 1.  [Screens](#screens)
 1.  [Words on screen](#words-on-screen)
 1.  [Accessibility](#accessibility)
+1.  [Web pages](#web-pages)
 1.  [See also](#see-also)
 
 ## Overview
@@ -1226,6 +1227,33 @@ what each iPhone setting changes.
 
 [game-color]: /docs/research/game-design.md#apple-on-color-and-feedback
 [apple-labels]: /docs/research/apple-requirements.md#what-each-label-claims
+
+## Web pages
+
+The Worker serves `/privacy`, `/terms`, and `/support` as static files
+([TRD repository layout][trd-layout]).
+
+- **Layout.** A Table blue band at the top with the Guessling as an inline
+  SVG, labeled "Guessling", and the name beside it; under it, an Index
+  white card with `lg` corners that holds the text, at most `65ch` wide,
+  with 16px margins on a phone.
+- **Type.** Headings in `ui-rounded, system-ui, sans-serif`, bold; text in
+  `system-ui, sans-serif` at 17px with a line height of 1.5. CSS defines
+  `ui-rounded` as "the rounded variant of the system's user interface"
+  ([CSS Fonts 4][css-ui-rounded]), which is SF Pro Rounded on an iPhone;
+  where a system has none, the next name applies.
+- **Color.** The tokens as CSS custom properties. A `prefers-color-scheme`
+  query for dark swaps in the dark values, and a `prefers-contrast` query
+  for more swaps in the "more contrast" ones. Links are Link blue and
+  underlined.
+- **Private.** Inline CSS and nothing else: no scripts, no web fonts, no
+  cookies, and no image or request from another host.
+- **Still.** No motion at all.
+- **Support.** The support email, where to find Your ID in Settings, and
+  how to restore Guessling+.
+
+[trd-layout]: /docs/TRD.md#repository-layout
+[css-ui-rounded]: https://www.w3.org/TR/css-fonts-4/#valdef-font-family-ui-rounded
 
 ## See also
 
