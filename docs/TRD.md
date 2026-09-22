@@ -1,15 +1,21 @@
 # Guessling technical requirements
 
+> **Superseded on September 22, 2026.** This document describes Guessling,
+> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
+> Award, replaced it, and this document's links to the idea point at the
+> [archived Guessling idea](/docs/archive/guessling-idea.md).
+
 How version 1.0 of Guessling is built to meet the
 [product requirements](/docs/PRD.md): the architecture, the versions, the
 data, the API, how questions are answered, purchases, the app, security and
 privacy, reliability, tests, and release. It's written on September 22,
 2026, before the code, as the contract the code is built to, and it changes
 with the code. The [product](/docs/PRODUCT.md) says why, the
-[idea](/docs/IDEA.md) owns the schedule and the risks, and five research
-notes, on [RevenueCat in Expo][rc-notes], the [Cloudflare backend][cf-notes],
-[Apple's requirements][apple-notes], [daily puzzles][daily-notes], and
-[designing for iOS][ios-notes], hold the sources.
+[idea](/docs/archive/guessling-idea.md) owns the schedule and the risks, and
+five research notes, on [RevenueCat in Expo][rc-notes], the
+[Cloudflare backend][cf-notes], [Apple's requirements][apple-notes],
+[daily puzzles][daily-notes], and [designing for iOS][ios-notes], hold the
+sources.
 
 Contents:
 
@@ -680,7 +686,7 @@ many. The schedule is reviewed against the content rules before each
 puzzle is published (CONTENT-7, CONTENT-9).
 
 [cf-fetch]: /docs/research/cloudflare-workers.md#calling-the-system-one-api-with-fetch
-[idea-stack]: /docs/IDEA.md#stack-and-data-flow
+[idea-stack]: /docs/archive/guessling-idea.md#stack-and-data-flow
 
 ### Fixing a puzzle after its day
 
@@ -1174,7 +1180,7 @@ pre-flight (RELEASE-1).
   record exists from September 22 for the subscriptions.
 
 Release steps for version 1.0, which the idea's
-[schedule](/docs/IDEA.md#schedule-to-september-30) dates:
+[schedule](/docs/archive/guessling-idea.md#schedule-to-september-30) dates:
 
 1.  On September 22, set up the App Store Connect record: the name, subtitle,
     category, description, and keywords (STORE-1); the privacy, terms, and
@@ -1273,7 +1279,8 @@ product and legal ones.
 - [Product](/docs/PRODUCT.md): what Guessling is and why.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
-- [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
+- [Idea](/docs/archive/guessling-idea.md): the schedule, the risks, and the
+  pitch.
 - [RevenueCat notes][rc-notes], [Cloudflare notes][cf-notes],
   [Apple notes][apple-notes], [daily puzzle notes][daily-notes], and
   [iOS design notes][ios-notes]: the sources behind the choices here.

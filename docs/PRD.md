@@ -1,10 +1,15 @@
 # Guessling product requirements
 
+> **Superseded on September 22, 2026.** This document describes Guessling,
+> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
+> Award, replaced it, and this document's links to the idea point at the
+> [archived Guessling idea](/docs/archive/guessling-idea.md).
+
 What version 1.0 of Guessling must do, as numbered requirements, each with a
 priority and a check a tester can run. The [product](/docs/PRODUCT.md) says
 why, the [technical requirements](/docs/TRD.md) say how it's built, and the
-[idea](/docs/IDEA.md) owns the schedule and the risks. Facts are as of
-September 22, 2026.
+[idea](/docs/archive/guessling-idea.md) owns the schedule and the risks. Facts
+are as of September 22, 2026.
 
 Contents:
 
@@ -42,8 +47,8 @@ Contents:
   gives through the server; the _bank_ is the category's list of common
   questions with checked answers.
 
-[idea-schedule]: /docs/IDEA.md#schedule-to-september-30
-[idea-scope]: /docs/IDEA.md#scope-of-the-first-version
+[idea-schedule]: /docs/archive/guessling-idea.md#schedule-to-september-30
+[idea-scope]: /docs/archive/guessling-idea.md#scope-of-the-first-version
 [trd-trace]: /docs/TRD.md#requirements-traceability
 
 ## Goals and non-goals
@@ -71,7 +76,7 @@ document adds:
 - Android and an iPad layout.
 - Languages other than English, and ads.
 
-[idea-launch]: /docs/IDEA.md#launch-and-pitch
+[idea-launch]: /docs/archive/guessling-idea.md#launch-and-pitch
 
 ## Player scenarios
 
@@ -147,7 +152,7 @@ says how each is built.
   answers were off. Check: raising the version on the server brings the
   notice back, and a request with the old version reaches no Jev call.
 
-[idea-jev]: /docs/IDEA.md#how-jev-fits
+[idea-jev]: /docs/archive/guessling-idea.md#how-jev-fits
 
 ### Today's puzzle
 
@@ -745,11 +750,12 @@ safe default:
   every requirement here traced.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
-- [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
+- [Idea](/docs/archive/guessling-idea.md): the schedule, the risks, and the
+  pitch.
 - [RevenueCat notes](/docs/research/revenuecat-expo.md),
   [Cloudflare notes](/docs/research/cloudflare-workers.md),
   [Apple notes](/docs/research/apple-requirements.md), and
   [daily puzzle notes](/docs/research/daily-puzzles.md): the sources behind
   the requirements.
 
-[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
+[idea-open]: /docs/archive/guessling-idea.md#assumptions-and-open-questions

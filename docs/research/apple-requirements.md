@@ -149,7 +149,7 @@ rating each answer brings under the current global values ([asc-age-ref]):
   any of the above) from a minor must include a privacy policy and must comply
   with all applicable children's privacy statutes." ([apple-guidelines])
 
-[idea-jev]: /docs/IDEA.md#how-jev-fits
+[idea-jev]: /docs/archive/guessling-idea.md#how-jev-fits
 
 ### Age assurance laws in US states
 
@@ -1071,8 +1071,8 @@ Apple's table of the two categories a game uses ([hig-audio]):
 - **Codes for judges.** The [idea][idea-money] plans one-time-use codes for a
   few judges; a batch starts at 500 codes ([asc-offer-codes]).
 
-[idea-scope]: /docs/IDEA.md#scope-of-the-first-version
-[idea-money]: /docs/IDEA.md#monetization
+[idea-scope]: /docs/archive/guessling-idea.md#scope-of-the-first-version
+[idea-money]: /docs/archive/guessling-idea.md#monetization
 
 ## Gaps
 
@@ -1132,7 +1132,7 @@ Apple's table of the two categories a game uses ([hig-audio]):
 [news-age-social]: https://developer.apple.com/news/?id=tlur8uvi
 [asc-age-ref]: https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions
 [nr-child-safety]: https://www.apple.com/newsroom/2026/09/apples-new-child-safety-features-now-available/
-[idea-review]: /docs/IDEA.md#review-safety-checklist
+[idea-review]: /docs/archive/guessling-idea.md#review-safety-checklist
 [jev-store]: /docs/research/jev.md#store-review-and-jev
 [news-age-feb2026]: https://developer.apple.com/news/?id=f5zj08ey
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
@@ -1144,7 +1144,7 @@ Apple's table of the two categories a game uses ([hig-audio]):
 [news-guidelines-feb2026]: https://developer.apple.com/news/?id=d75yllv4
 [news-guidelines-nov2025]: https://developer.apple.com/news/?id=ey6d8onl
 [asc-sub-availability]: https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-availability-for-an-auto-renewable-subscription
-[idea-schedule]: /docs/IDEA.md#schedule-to-september-30
+[idea-schedule]: /docs/archive/guessling-idea.md#schedule-to-september-30
 [apple-review]: https://developer.apple.com/distribute/app-review/
 [asc-a11y-overview]: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels
 [asc-a11y-larger-text]: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria
