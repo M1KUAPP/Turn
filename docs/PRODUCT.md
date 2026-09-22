@@ -175,8 +175,9 @@ requirements.
 - **Speech is never sold.** The grid, typing, saved phrases, and Personal
   Voice are free, and the paywall never stands between the user and speech.
 - **Private by default.** No accounts, and the phrase bank stays on the
-  phone. For each partner line, only the line and the phrases sent with it,
-  names swapped for tags, and the place's name leave it.
+  phone. For each partner line, only the line, the phrases sent with it, and
+  the category names, with names swapped for tags, and the place's name
+  leave it.
 - **Useful offline.** Speaking needs no network, and without one, Listen mode
   ranks phrases by the place and the letters typed.
 

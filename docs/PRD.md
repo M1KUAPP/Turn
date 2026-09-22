@@ -179,9 +179,10 @@ says how each is built.
   (CONTENT-1), and every starter phrase and category can be edited. Check:
   edit a starter phrase and relaunch; the edit stays.
 - **BANK-2, Must.** The user can add, edit, delete, and move phrases between
-  categories, and add, rename, reorder, and delete categories; deleting a
+  categories, and add, rename, reorder, and delete categories, up to 12
+  categories of up to 40 characters, Quick and Typed included; deleting a
   category that holds phrases asks where they go. Check: each action in the
-  editor.
+  editor, and a 13th category can't be added.
 - **BANK-3, Must.** A phrase holds 1 to 200 characters, and each can be tied
   to any of the user's places. Check: a 201st character can't be typed in
   the editor.
@@ -198,8 +199,9 @@ says how each is built.
 - **BANK-7, Must.** The bank works at 2,000 phrases within PERF-3 and PERF-4.
   Check: seed 2,000 phrases and run both checks.
 - **BANK-8, Must.** The bank, the places, and the tap counts stay on the
-  phone: nothing syncs, and only the shortlist leaves it, per partner line.
-  Check: a capture of the app's traffic shows no other phrase text.
+  phone: nothing syncs, and only the shortlist and the category names leave
+  it, per partner line. Check: a capture of the app's traffic shows no other
+  phrase text.
 - **BANK-9, Should.** Deleting a phrase can be undone for five seconds. Check:
   delete a phrase and tap Undo.
 - **BANK-10, Should.** Starter phrases are the team's words until the user
@@ -242,13 +244,13 @@ says how each is built.
 
 - **CONSENT-1, Must.** The first time Listen mode is turned on, before any
   phrase or line leaves the phone, Turn asks the user's permission. The step
-  says what is sent with each partner line (the line with names Turn
-  recognizes swapped for tags, the place's name, and up to 40 of the user's
-  phrases), to whom (TypeSafe, or "a third-party AI service in the United
-  States" until TypeSafe agrees to be named), that audio and the rest of the
-  bank never are, and that the service may keep data to monitor its
-  service; it links the privacy notice, and offers "Allow" and "Not now"
-  with equal weight. Check: read the step on a fresh install.
+  says what is sent with each partner line (the line, up to 40 of the
+  user's phrases, and their category names, with names Turn recognizes
+  swapped for tags, and the place's name), to whom (TypeSafe, or "a third-party
+  AI service in the United States" until TypeSafe agrees to be named), that
+  audio and the rest of the bank never are, and that the service may keep data
+  to monitor its service; it links the privacy notice, and offers "Allow" and
+  "Not now" with equal weight. Check: read the step on a fresh install.
 - **CONSENT-2, Must.** "Not now" leaves Listen mode off and everything else
   working, and the step returns the next time Listen mode is turned on.
   Check: choose "Not now", speak a phrase, then turn Listen mode on again.
@@ -297,10 +299,10 @@ says how each is built.
   say?", and sends it as a line; it works with no microphone and in the
   Simulator. Check: scenario 10.
 - **LISTEN-5, Must.** Before a line leaves the phone, every name Turn
-  recognizes in the line or the shortlist is swapped for a tag, the same tag
-  for the same name across the request. Check: the line "Did Anna call?" and
-  the phrase "Anna is my sister" reach the relay as `[PERSON 1]` in both,
-  with "Anna" nowhere.
+  recognizes in the line, the shortlist, or the category names is swapped
+  for a tag, the same tag for the same name across the request. Check: the line
+  "Did Anna call?" and the phrase "Anna is my sister" reach the relay as
+  `[PERSON 1]` in both, with "Anna" nowhere.
 - **LISTEN-6, Must.** A partner line longer than 300 characters keeps its
   last 300 characters. Check: a typed line of 400 characters reaches the
   relay as its last 300.
@@ -456,10 +458,10 @@ says how each is built.
   version with the requirements.
 - **CONTENT-4, Must.** The privacy notice says what stays on the phone, what
   leaves with each partner line and to whom (the relay on Cloudflare, then
-  TypeSafe, in the United States), that lines and phrases can reveal
-  health, such as a clinic visit or pain, what RevenueCat receives for
-  purchases, as its terms require,
-  what is never kept (audio and transcripts), what TypeSafe may keep and
+  TypeSafe, in the United States), including the category names, that lines
+  and phrases can reveal health, such as a clinic visit or pain, what
+  RevenueCat receives for purchases, as its terms require, what is never
+  kept (audio and transcripts), what TypeSafe may keep and
   why, that Turn isn't for children and doesn't listen to partners under 18,
   and how to reach the team. Check: a teammate compares it with the TRD's
   data inventory.

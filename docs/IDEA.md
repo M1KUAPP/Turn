@@ -251,9 +251,9 @@ How it's wired:
 
 Data, consent, and terms:
 
-- **What leaves the phone:** per request, the partner's line and 40 of the
-  user's phrases, with the names the phone recognizes swapped for tags in
-  both, and the place's name. TypeSafe hosts Jev
+- **What leaves the phone:** per request, the partner's line, 40 of the
+  user's phrases, and the names of their categories, with the names the
+  phone recognizes swapped for tags, and the place's name. TypeSafe hosts Jev
   in the United States, and "Jev is not trained on customer requests or
   responses", but it keeps rights "in perpetuity" to use the data for telemetry
   and abuse monitoring ([data handling][jev-data]).
