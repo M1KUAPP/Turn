@@ -227,8 +227,9 @@ The four new notes supply the facts behind them.
     date, with a new one at local midnight, as NYT's daily games do. A round
     open at midnight can still be finished, for at least 24 hours, but
     counts toward the streak only if solved on its date, as in Wordle. The
-    Worker accepts a date only while it's today somewhere on Earth, about 50
-    hours.
+    app sends the device's date with every request, and the Worker accepts
+    it only while it's today somewhere on Earth, about 50 hours; a puzzle
+    dated before it is archive.
 2.  **Numbers.** Starters are #1 to #10, undated, so the archive holds the
     ten puzzles the idea promises on launch day; daily puzzle #11 is
     Thursday, September 24, 2026, the day of the first submission, so App

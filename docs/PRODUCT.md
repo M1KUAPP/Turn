@@ -262,8 +262,9 @@ The moments that carry the product:
 ## Success metrics
 
 The **north star** is daily finishers: players who finish the day's puzzle,
-with a right guess or twenty turns, on its date. It measures the habit the
-product exists for, and it grows only if rounds are fair and fun.
+with a right guess or twenty turns, on its date, counted among players who
+allowed AI answers. It measures the habit the product exists for, and it
+grows only if rounds are fair and fun.
 
 The targets below are decisions this document sets, except where a source
 is named; the rest are watched and reported as rates, as the idea's
