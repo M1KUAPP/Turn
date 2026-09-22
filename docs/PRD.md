@@ -305,9 +305,9 @@ says how each is built.
   recognizes in what ROW-2 sends is swapped for a tag, the same tag for the same
   name across the request. Check: the line "Did Anna call?" and the phrase "Anna
   is my sister" reach the relay as `[PERSON 1]` in both, with "Anna" nowhere.
-- **LISTEN-6, Must.** A partner line longer than 300 characters keeps its
-  last 300 characters. Check: a typed line of 400 characters reaches the
-  relay as its last 300.
+- **LISTEN-6, Must.** A partner line longer than 300 characters once its
+  names are tagged keeps its last 300 characters. Check: a typed line of 400
+  characters reaches the relay as its last 300.
 - **LISTEN-7, Must.** When Turn leaves the foreground, listening stops, and
   when it returns, Listen mode is paused until the user taps the light.
   Check: switch apps; the iOS microphone indicator goes out.

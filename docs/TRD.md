@@ -379,7 +379,8 @@ reports only errors, so Turn sets its own rule
   partner off (PERF-5) ([evaluation notes][eval-latency]).
 - **Manual ends.** Done ends a spoken line at once, the same way, and a
   typed line ends when the user sends it (LISTEN-4).
-- **Length.** The app keeps a line's last 300 characters (LISTEN-6).
+- **Length.** The app keeps a line's last 300 characters once its names are
+  tagged (LISTEN-6).
 
 [ios-line-end]: /docs/research/turn-ios.md#ending-the-partners-line
 [eval-latency]: /docs/research/turn-evaluation.md#a-latency-target-for-turn
@@ -399,8 +400,12 @@ category names, and the place's name together (LISTEN-5):
   with capitals, and rebuilds it after each edit.
 - **Tags.** Each distinct personal name becomes `[PERSON n]`, place name
   `[PLACE n]`, and organization name `[ORG n]`, numbered by first
-  appearance, and the same
-  name gets the same tag everywhere in the request.
+  appearance, and the same name gets the same tag everywhere in the request.
+- **Tag, then cut.** A tag can make text longer, so the app tags first, then
+  keeps the line's last 300 characters, cuts the place's and the categories'
+  names to 40, and swaps any candidate over 200 characters for the next
+  phrase in the shortlist, so a request never breaks the relay's limits
+  (LISTEN-6, SEC-2).
 - The candidates' ids don't change, so Jev's answers map back to the user's
   own text, and the tag map stays on the phone.
 - The place's name is tagged like the rest, so no name the tagger finds
