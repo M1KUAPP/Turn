@@ -18,6 +18,8 @@ Contents:
 1.  [Elevation](#elevation)
 1.  [Shapes](#shapes)
 1.  [Components](#components)
+1.  [Motion](#motion)
+1.  [Sound and haptics](#sound-and-haptics)
 1.  [See also](#see-also)
 
 ## Overview
@@ -292,7 +294,6 @@ colors:
   on text ([AAC design notes][aac-color]).
 
 [ios-grays]: /docs/research/turn-ios-design.md#system-colors-and-grays
-[ios-light]: /docs/research/turn-ios-design.md#a-pulsing-listening-light
 [ms-contrast]: /docs/research/turn-motionsites.md#text-contrast-143
 [aac-color]: /docs/research/aac-design.md#color-coding-and-backgrounds
 
@@ -924,7 +925,6 @@ components:
   and Move are named actions, never long presses (A11Y-2, A11Y-8)
   ([TRD][trd-a11y]).
 
-[ms-app]: /docs/research/turn-motionsites.md#the-native-iphone-app
 [trd-a11y]: /docs/TRD.md#accessibility-in-the-app
 
 ### The row
@@ -1092,6 +1092,62 @@ chooses it (PLACE-1).
 
 [ios-hig-changes]: /docs/research/turn-ios-design.md#hig-changes-since-june-2025
 
+## Motion
+
+Motion answers someone: the user, the partner, or a reply arriving. The format
+has no motion tokens, and its maintainer points motion to prose, so this table
+is the whole inventory ([trends notes][ft-proposals]).
+
+| What moves         | When                             | How                                                 | Under Reduce Motion |
+| ------------------ | -------------------------------- | --------------------------------------------------- | ------------------- |
+| A slot's phrase    | A new answer changes the slot    | The old phrase fades out and the new one in, 150 ms | Swaps at once       |
+| The big button     | It appears or leaves             | Cross-fades over the six slots' frame, 200 ms       | Swaps at once       |
+| The light's symbol | While the partner's words arrive | Opacity from 100% to 35% and back, 1.2 s a cycle    | Holds at 100%       |
+| A pressed control  | While a finger is on it          | Its fill changes at once                            | The same            |
+| The line's words   | As the partner speaks            | Words appear as they're heard, with no animation    | The same            |
+| Sheets and menus   | They open or close               | The system's own                                    | The system's own    |
+
+- **Nothing else moves.** No entrances, staggers, springs, parallax, shimmer,
+  skeletons, or loops; the grid never animates; and a press changes the fill,
+  never the size, so the target stays where the finger is
+  ([motionsites notes][ms-app]).
+- **Fades, not slides.** A new phrase appears in its slot's frame, with no
+  movement or scaling, so it stays where a finger, a pointer, or a gaze left it
+  ([iOS notes][ios-put]).
+- **The light's fade has an end.** It runs only while words arrive, so it
+  stops within seconds of the partner's last word; a light that pulses all
+  session is the ambient loop WCAG 2.2.2 asks to pause
+  ([motionsites notes][ms-motion]).
+- **One flag.** A store reads `AccessibilityInfo.isReduceMotionEnabled()` at
+  launch and follows `reduceMotionChanged`, and every animation reads it,
+  because Reanimated's `useReducedMotion()` reports only the setting at launch
+  and its CSS animations ignore it ([trends notes][ft-reanimated]). Each
+  animation sets `reduceMotion: ReduceMotion.Never`, so the flag, not
+  Reanimated, decides.
+- **No symbol effects.** The light's fade is Reanimated's, not an SF Symbols
+  effect, since `expo-symbols` never reads Reduce Motion
+  ([iOS notes][ios-light]).
+
+[ft-proposals]: /docs/research/turn-frontend-trends.md#modes-motion-and-accessibility-in-open-proposals
+[ios-put]: /docs/research/turn-ios-design.md#motion-when-buttons-stay-put
+[ms-motion]: /docs/research/turn-motionsites.md#motion-222-and-233
+[ft-reanimated]: /docs/research/turn-frontend-trends.md#reanimated-and-moti
+
+## Sound and haptics
+
+- **Speech is the only sound.** No clicks, chimes, or earcons: the partner
+  would hear them, and they'd compete with the words Turn speaks.
+- **No haptics.** A recording app plays no haptics unless it opts in, since
+  `allowHapticsAndSystemSoundsDuringRecording` defaults to false, and a
+  vibration could disrupt the microphone during Listen mode; elsewhere a
+  phrase's feedback is its pressed fill and its speech, so a haptic would carry
+  no meaning ([iOS notes][ios-haptics]).
+- **Volume and route.** Speech follows the phone's volume and plays from the
+  loudspeaker in Listen mode, as VOICE-4 and the
+  [TRD's audio session](/docs/TRD.md#the-audio-session) set.
+
+[ios-haptics]: /docs/research/turn-ios-design.md#haptics-while-turn-listens-or-speaks
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): who Turn is for, and the principles this
@@ -1117,3 +1173,5 @@ chooses it (PLACE-1).
 [ft-calm]: /docs/research/turn-frontend-trends.md#calm-technology
 [ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
 [ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
+[ios-light]: /docs/research/turn-ios-design.md#a-pulsing-listening-light
+[ms-app]: /docs/research/turn-motionsites.md#the-native-iphone-app
