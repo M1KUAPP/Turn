@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 101 files · ~348,146 words
+- 101 files · ~349,378 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 1840 nodes · 1744 edges · 136 communities (130 shown, 3 thin omitted)
+- 1841 nodes · 1745 edges · 136 communities (130 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `7e1fdcf2`
+- Built from commit: `64a8a4ad`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -804,8 +804,8 @@ Nodes (4): App icon and store assets, Devpost images and the video, Screenshots,
 
 ### Community 131 - "Guidance for coding agents"
 
-Cohesion: 0.50
-Nodes (4): Checks before a screen ships, Guidance for coding agents, Keeping code in step, Using this file
+Cohesion: 0.40
+Nodes (5): Checks before a screen ships, Guidance for coding agents, If the day runs short, Keeping code in step, Using this file
 
 ### Community 132 - "Motion"
 
@@ -829,8 +829,8 @@ Nodes (4): expo-symbols in SDK 57, SF Symbols, SF Symbols license terms, Symbol 
 
 ## Knowledge Gaps
 
-- **1449 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1444 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1542 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1450 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+1445 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1543 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -840,7 +840,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _1449 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1450 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**

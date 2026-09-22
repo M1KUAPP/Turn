@@ -253,7 +253,7 @@
         </div>
         <div id="legend"></div>
       </div>
-      <div id="stats">1840 nodes &middot; 1744 edges &middot; 136 communities</div>
+      <div id="stats">1841 nodes &middot; 1745 edges &middot; 136 communities</div>
     </div>
     <script>
       const RAW_NODES = [
@@ -9738,14 +9738,27 @@
           id: 'docs_design_guidance_for_coding_agents',
           label: 'Guidance for coding agents',
           color: { background: '#F28E2B', border: '#F28E2B', highlight: { background: '#ffffff', border: '#F28E2B' } },
-          size: 12.1,
+          size: 12.6,
           font: { size: 0, color: '#ffffff' },
           title: 'Guidance for coding agents',
           community: 131,
           community_name: 'Guidance for coding agents',
           source_file: 'docs/DESIGN.md',
           file_type: 'document',
-          degree: 4
+          degree: 5
+        },
+        {
+          id: 'docs_design_if_the_day_runs_short',
+          label: 'If the day runs short',
+          color: { background: '#F28E2B', border: '#F28E2B', highlight: { background: '#ffffff', border: '#F28E2B' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'If the day runs short',
+          community: 131,
+          community_name: 'Guidance for coding agents',
+          source_file: 'docs/DESIGN.md',
+          file_type: 'document',
+          degree: 1
         },
         {
           id: 'docs_design_keeping_code_in_step',
@@ -30354,6 +30367,16 @@
         },
         {
           from: 'docs_design_guessling_design',
+          to: 'docs_design_sound_and_haptics',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_design_guessling_design',
           to: 'docs_design_screens',
           label: 'contains',
           title: 'contains [EXTRACTED]',
@@ -30505,16 +30528,6 @@
         {
           from: 'docs_design_guessling_design',
           to: 'docs_design_motion',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'docs_design_guessling_design',
-          to: 'docs_design_sound_and_haptics',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -31325,6 +31338,16 @@
         {
           from: 'docs_design_guidance_for_coding_agents',
           to: 'docs_design_keeping_code_in_step',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_design_guidance_for_coding_agents',
+          to: 'docs_design_if_the_day_runs_short',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -41805,7 +41828,7 @@
         { cid: 128, color: '#9C755F', label: 'RevenueCat Paywalls styling', count: 5 },
         { cid: 129, color: '#BAB0AC', label: 'Colors', count: 4 },
         { cid: 130, color: '#4E79A7', label: 'App icon and store assets', count: 4 },
-        { cid: 131, color: '#F28E2B', label: 'Guidance for coding agents', count: 4 },
+        { cid: 131, color: '#F28E2B', label: 'Guidance for coding agents', count: 5 },
         { cid: 132, color: '#E15759', label: 'Motion', count: 4 },
         { cid: 133, color: '#76B7B2', label: 'Overview', count: 4 },
         { cid: 134, color: '#59A14F', label: 'App icon and launch screen', count: 4 },
