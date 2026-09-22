@@ -875,9 +875,12 @@ Expo Router, with one stack:
 
 ### Reactions, sound, and haptics
 
-The [design](/docs/DESIGN.md) draws the Guessling's parts and poses, times
-each reaction, and specifies the sounds; this section says how they're
-built.
+The design draws [the Guessling][design-guessling], times its
+[motion][design-motion], and specifies [the sounds][design-sound]; this
+section says how they're built. The rig draws with `react-native-svg`, the
+composer's glass comes from `expo-glass-effect`, and symbols from
+`expo-symbols`, all pinned by SDK 57, and a unit test keeps
+`app/src/constants/theme.ts` in step with the design's tokens.
 
 - The Guessling's poses, which the design draws, are animated with
   Reanimated; four of them, the nod, head shake, shrug, and celebration,
@@ -891,9 +894,9 @@ built.
   ([iOS notes on Reduce Motion][ios-reduce-motion]).
 - Sounds play in the ambient audio category, so the silent switch mutes
   them and the player's music keeps playing; a light haptic marks each Yes,
-  No, wrong guess, and reply that uses no turn, and a success haptic the
-  solve, as the design's answer table lists. Both follow Settings' switches
-  (SET-2) ([Apple notes on sound][apple-sound]).
+  No, wrong guess, "Ask another way", and "Ask a yes-or-no question", and a
+  success haptic the solve, as the design's answer table lists. Both
+  follow Settings' switches (SET-2) ([Apple notes on sound][apple-sound]).
 - The ambient category needs an explicit call before the first sound,
   since without it the first sound stops the player's music:
 
@@ -907,6 +910,9 @@ built.
   ([iOS notes on sounds][ios-sounds]).
 
 [apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
+[design-guessling]: /docs/DESIGN.md#the-guessling
+[design-motion]: /docs/DESIGN.md#motion
+[design-sound]: /docs/DESIGN.md#sound-and-haptics
 [ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
 [ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
 
