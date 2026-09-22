@@ -144,10 +144,9 @@ The path of one partner line:
 | `@cloudflare/vitest-plugin`     | 1.2.1, with Vitest 4.1 | the relay's tests ([Cloudflare notes][cf-notes])                         |
 | `@revenuecat/cli`               | 0.1.3                  | headless Test Store purchases for the relay's tests                      |
 
-The iPhone build notes have the [libraries' dates and licenses][ios-libs];
-all of them are MIT.
+The iPhone build notes have the dates and licenses of the Expo libraries
+and MiniSearch, all MIT ([iPhone build notes][ios-libs]).
 
-[tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
 [rc-expo]: /docs/research/revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [ios-libs]: /docs/research/turn-ios.md#libraries-on-september-22-2026
 
@@ -263,9 +262,9 @@ CREATE TABLE entitlement (
 - **The name.** The Worker reaches the object with `getByName()` on the
   SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
   so a stored record can't be traced back to an ID without the salt.
-- **The Free plan's budget.** Each new free line writes 2 rows, so the Free
-  plan's 100,000 rows a day cover about 2,500 devices spending all 20 lines
-  in one day.
+- **The Free plan's budget.** Each new free line writes 2 rows in the
+  device's object and 1 in the daily budget's, so the Free plan's 100,000
+  rows a day cover about 1,600 devices spending all 20 lines in one day.
 
 [svc-count]: /docs/research/turn-services.md#counting-free-partner-lines-per-device
 
@@ -414,12 +413,19 @@ without duplicates (ROW-2):
     ([iPhone build notes][ios-ranker]).
 3.  Up to 8 of the user's most-tapped phrases of the last 30 days.
 4.  Up to 8 of the place's phrases, most-tapped first.
-5.  The rest by all-time taps, then by the grid's order, until there are 40.
+5.  The rest by taps over the last 30 days, then by the grid's order, until
+    there are 40.
+
+If the evaluation finds Jev trailing (EVAL-4), step 2 ranks by Apple's
+sentence embedding instead of keywords, as the idea plans: the iPhone build
+notes' test scanned 2,000 stored vectors in 2.3 ms on a Mac
+([iPhone build notes][ios-embed]).
 
 At 2,000 phrases, the BM25 index is built once at launch and updated on each
 edit, so a shortlist takes at most 50 milliseconds (PERF-4, BANK-7).
 
 [ios-ranker]: /docs/research/turn-ios.md#a-phrase-ranker-in-typescript
+[ios-embed]: /docs/research/turn-ios.md#sentence-embeddings-for-a-shortlist
 
 ### The Jev request
 
@@ -885,7 +891,10 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   changed, since the Devpost entry names it (SUBMIT-5).
 - **`ios.deploymentTarget`:** `"26"`, the built-in property that replaced
   the build-properties setting in SDK 56 (COMPAT-1).
-- **`ios.enableSceneSupport`:** `true`, for the iOS 27 SDK.
+- **`expo-build-properties`:** the plugin with `ios.enableSceneSupport` set
+  to `true`, for the iOS 27 SDK, since "expo@57.0.23 adds opt-in scene
+  support, enabled with the ios.enableSceneSupport property of
+  expo-build-properties" ([technology notes][tech-expo]).
 - **`ios.supportsTablet`:** `false`, and `orientation` `portrait`.
 - **`ios.infoPlist`:** `NSMicrophoneUsageDescription`, worded for the user
   and the partner, and `NSSpeechRecognitionUsageDescription` for the last
@@ -1075,13 +1084,13 @@ line to the phone's own ranking, and speaking never depends on the relay.
 
 ### The rankers
 
-| Ranker       | What it does                                                                                                                       |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `fallback`   | the place's phrases in the bank's order, the phone's offline view before any line                                                  |
-| `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                          |
-| `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off |
-| `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                              |
-| `jev-rerank` | Jev over the 40 phrases nearest by embeddings, run only when Jev trails `embeddings` (EVAL-4)                                      |
+| Ranker       | What it does                                                                                                                                        |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fallback`   | the place's phrases in the bank's order, the phone's offline view before any line                                                                   |
+| `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                           |
+| `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off                  |
+| `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                                               |
+| `jev-rerank` | Jev over the 40 phrases nearest by Apple's sentence embedding, computed on a Mac as the phone would, run only when Jev trails `embeddings` (EVAL-4) |
 
 - **Extras (EVAL-8).** `bge-reranker-base` over the keyword shortlist, an
   off-the-shelf cross-encoder; `qwen3-embedding-0.6b` with the instruction
@@ -1119,14 +1128,16 @@ see ([evaluation notes][eval-scoring]):
   since a yes-or-no call brings up the fixed buttons.
 - **Intervals.** Every rate carries a 95% Wilson interval: a top-6 rate of
   56 of 80 spans 59% to 79%, and a big button right on all 40 lines where
-  it shows can still be wrong up to 7.2% of the time. Differences between
+  it shows can still be wrong up to 7.2% of the time, by a one-sided 95%
+  bound. Differences between
   two rankers use a paired bootstrap over lines, and 80 lines settle only
   gaps of about 15 to 18 points (EVAL-4) ([evaluation notes][eval-power]).
 - **Frozen settings.** Jev's 0.6 and 0.85 come from TypeSafe's routing
   example, and 80 lines are too few to refit them, so they, the margin, and
-  the question wording are committed before the first run (EVAL-2). BM25
-  and cosine scores aren't probabilities, so those rankers' cut-offs come
-  from five-fold cross-validation, reported out of fold, and every ranker's
+  the question wording are committed before the first run (EVAL-2). Cosine
+  scores aren't probabilities, so the embedding ranker's cut-off comes from
+  five-fold cross-validation, reported out of fold; the keyword ranker holds
+  when no word is shared, as the phone does; and every ranker's
   risk-coverage curve is plotted.
 - **Latency:** each ranker's own work and network trip at the median, the
   95th percentile, and the maximum, over at least three passes with warm-up
@@ -1295,3 +1306,4 @@ product and legal ones.
 [cf-notes]: /docs/research/cloudflare-workers.md
 [ios-modules]: /docs/research/turn-ios.md#two-local-swift-modules-in-expo
 [svc-key]: /docs/research/turn-services.md#the-test-store-api-key
+[tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
