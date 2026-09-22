@@ -313,6 +313,13 @@ The research notes supply the facts behind them.
     one tap. The grid's Quick category keeps the fixed buttons.
 1.  **Starter phrases.** They are the team's words until the user keeps
     them, so setup invites a review, and the editor marks unreviewed ones.
+1.  **Small conveniences.** A few requirements follow from the row's rules
+    and from the bank being the user's voice, not from the idea: Clear, a
+    Must, since a row that holds when nothing fits needs a way to empty it;
+    Repeat, since partners miss synthesized speech; Undo and Erase all data,
+    since a mistaken delete loses the user's words; and stats that stay on
+    the phone, since the product's north star is counted in rehearsals. All
+    but Clear are Shoulds.
 1.  **The phone's own ranking.** Offline, after a failure, with Jev off, or
     for a partner under 18, the phone ranks the heard or typed line itself,
     by the words it shares with each phrase, and the same slot rules apply.
@@ -335,10 +342,11 @@ The research notes supply the facts behind them.
     costs about 1,700 to 1,900 input tokens, not the idea's 1,500, so the
     idea's cost figures change with it.
 1.  **Free lines.** Twenty per app user ID, claimed by line ID inside one
-    SQLite Durable Object per ID, so the count is exact and a repeated
-    request counts once; the claim is released if Jev fails, so a line
-    counts only when Jev answers it. The offline fallback and the grid never
-    count.
+    SQLite Durable Object per ID, so the count is exact; a line ID already
+    claimed gets `409` and no call to Jev; the claim is released if Jev
+    fails, so a line counts only when Jev answers it; and the relay's
+    configuration returns each user's free lines left and entitlement, so
+    they survive a relaunch. The offline fallback and the grid never count.
 1.  **Entitlement check.** Past the free lines, the relay asks RevenueCat's
     REST API v2 for the customer's active entitlements, caches a yes for 24
     hours, since the purchase is one-time, and a no for 1 minute, and skips
