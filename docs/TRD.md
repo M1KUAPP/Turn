@@ -150,7 +150,8 @@ The path of one partner line:
 
 The iPhone build notes have the dates and licenses of the Expo libraries
 and MiniSearch, all MIT ([iPhone build notes][ios-libs]), and the iOS design
-notes have Reanimated's pins in SDK 57 ([iOS design notes][ios-rea]).
+notes have Reanimated's pins in SDK 57 ([iOS design notes][ios-rea]), which
+the [design's motion][design-motion] uses.
 
 [rc-expo]: /docs/research/revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [ios-libs]: /docs/research/turn-ios.md#libraries-on-september-22-2026
@@ -864,9 +865,11 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **The permission step** is a `formSheet` that sets
   `headerTransparent: false` and a solid background, since Expo Router makes
   form sheets transparent where Liquid Glass is available
-  ([Turn's iOS design notes][ios-glass-expo]).
+  ([Turn's iOS design notes][ios-glass-expo]), as the
+  [design's permission step][design-permission] asks.
 
 [design-home]: /docs/DESIGN.md#the-home-screen
+[design-permission]: /docs/DESIGN.md#the-permission-step
 [ios-glass-expo]: /docs/research/turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
 
 ### State and storage
@@ -891,11 +894,11 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 ### Flows on the phone
 
-- **Typing (SPEAK-3).** The composer, docked above the keyboard, takes up to
-  500 characters and speaks them on Speak. Text of up to 200 characters that
-  the bank doesn't already hold, compared after trimming and ignoring case,
-  goes into the Typed category, which the app creates on first use and counts
-  among the 12.
+- **Typing (SPEAK-3).** The [design's composer][design-composer], docked
+  above the keyboard, takes up to 500 characters and speaks them on Speak.
+  Text of up to 200 characters that the bank doesn't already hold, compared
+  after trimming and ignoring case, goes into the Typed category, which the
+  app creates on first use and counts among the 12.
 - **Repeat (SPEAK-6).** The last spoken text stays in memory, and Repeat
   speaks it again.
 - **Undo (BANK-9).** A deleted phrase stays hidden, with an Undo button,
@@ -914,16 +917,19 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   SQLite file and the settings and loads the starter bank as on first
   launch; the Keychain ID stays, since it holds the purchase.
 
+[design-composer]: /docs/DESIGN.md#the-composer
+
 ### Accessibility in the app
 
 - **A steady row.** The six slots have fixed sizes and are keyed by slot
   position, since slots never move and only their phrases change, and the
   big button fills the same area (ROW-1, A11Y-1)
   ([iPhone build notes][ios-row]). A slot's height follows the text size and
-  the width, never its phrase: its text takes `numberOfLines={2}`, steps down
+  the screen, never its phrase: its text takes `numberOfLines={2}`, steps down
   to the `headline` size before it ends with an ellipsis, and keeps the whole
-  phrase as its label (A11Y-4), as the [design's row][design-row] sets. An
-  answer that would change a slot waits while a finger is on it.
+  phrase as its label, and the big button's steps down to `title3`'s size
+  the same way (A11Y-4), as the [design's row][design-row] sets. An answer
+  that would change a slot waits while a finger is on it.
 - **Labels and roles.** Each phrase is a `Pressable` with
   `accessibilityRole="button"`, the only role besides `togglebutton` that
   becomes the iOS button trait, and its visible text as its label, which
@@ -938,21 +944,23 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   it doesn't cut off Turn's own speech (A11Y-2).
 - **Order.** Layout order sets focus order, so the strip and the row come
   before the grid, and Switch Control reaches them first (A11Y-3).
-- **Paging.** The bottom bar's Up and Down scroll the grid by a screen, so it
-  works with taps alone (A11Y-5).
+- **Paging.** The [design's bottom bar][design-bottom-bar] has Up and Down,
+  which scroll the grid by a screen, so it works with taps alone (A11Y-5).
 - **No detection.** `AccessibilityInfo` reports VoiceOver and Reduce Motion
   but not Switch Control or Voice Control, so the app works the same for
   every input method.
-- **Text.** Every text style comes from the theme with its
-  `dynamicTypeRamp`, font scaling stays on, and phrase text wraps everywhere
+- **Text.** Every text style comes from the theme with the
+  `dynamicTypeRamp` the [design's typography][design-type] names, font scaling
+  stays on, and phrase text wraps everywhere
   but the row's slots; from AX1, when `PixelRatio.getFontScale()` reaches
   1.786, the row, the strip, and the grid take one column each (A11Y-4)
   ([Turn's iOS design notes][ios-scale-turn]).
 - **Accessibility settings.** A store reads Reduce Motion, Bold Text, Reduce
   Transparency, Increase Contrast, and the text size at launch and follows
   each change event, since Reanimated reads Reduce Motion only at launch.
-  Reduce Motion stills the light's pulse and the row's fades, which run with
-  `ReduceMotion.Never` so the store decides, and Bold Text moves each text
+  Reduce Motion stills the light's pulse and the row's fades, the
+  [design's motion][design-motion], which run with `ReduceMotion.Never` so the
+  store decides, and Bold Text moves each text
   style to its heavier weight (A11Y-6)
   ([Turn's iOS design notes][ios-rn-settings]).
 - **The theme.** `app/src/constants/theme.ts` holds the design's tokens:
@@ -968,6 +976,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 [ios-row]: /docs/research/turn-ios.md#a-steady-row-in-react-native
 [design-row]: /docs/DESIGN.md#the-row
+[design-bottom-bar]: /docs/DESIGN.md#the-bottom-bar
+[design-type]: /docs/DESIGN.md#typography
 [aac-rn]: /docs/research/aac-practice.md#react-natives-accessibility-api
 [ios-rn-settings]: /docs/research/turn-ios-design.md#colors-and-settings-in-react-native-086
 [ios-scale-turn]: /docs/research/turn-ios-design.md#scaling-text-in-react-native-086
@@ -988,7 +998,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   expo-build-properties" ([technology notes][tech-expo]).
 - **`ios.supportsTablet`:** `false`, and `orientation` `portrait`.
 - **`userInterfaceStyle`:** `'automatic'`, so the app follows the system's
-  appearance; without it, Expo writes the light style into Info.plist
+  appearance, as the [design's colors][design-colors] ask; without it, Expo
+  writes the light style into Info.plist
   ([Turn's iOS design notes][ios-launch]).
 - **`ios.icon`:** `./assets/turn.icon`, the design's Icon Composer file
   ([design][design-icon]).
@@ -996,13 +1007,16 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
   with no image ([design][design-launch]).
 - **`ios.infoPlist`:** `NSMicrophoneUsageDescription`, worded for the user
   and the partner, and `NSSpeechRecognitionUsageDescription` for the last
-  fallback; no location key (PLACE-2).
+  fallback, in the [design's words][design-words]; no location key
+  (PLACE-2).
 - **`extra`:** the relay's URL, the Test Store public key, and the build's
   kind, `device` or `simulator`, for `X-Turn-Build`.
 
 [ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
 [design-icon]: /docs/DESIGN.md#the-app-icon
 [design-launch]: /docs/DESIGN.md#launch
+[design-colors]: /docs/DESIGN.md#colors
+[design-words]: /docs/DESIGN.md#strings-the-prd-leaves-open
 
 ## Security and privacy
 
@@ -1443,3 +1457,4 @@ product and legal ones.
 [ios-modules]: /docs/research/turn-ios.md#two-local-swift-modules-in-expo
 [svc-key]: /docs/research/turn-services.md#the-test-store-api-key
 [tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
+[design-motion]: /docs/DESIGN.md#motion
