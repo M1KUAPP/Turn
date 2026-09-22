@@ -372,6 +372,8 @@ named.
 - [Product requirements](/docs/PRD.md): what the first version must do, as
   numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how the first version is built.
+- [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and
+  rules a coding agent can follow.
 - [AAC practice notes][aac-notes]: design conventions, access, outcome
   measures, and ethics in AAC.
 - [Evidence notes](/docs/research/next-gen-evidence.md): rivals, need, and
