@@ -1,15 +1,17 @@
 # Guessling product requirements
 
-> **Superseded on September 22, 2026.** This document describes Guessling,
-> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
-> Award, replaced it, and this document's links to the idea point at the
-> [archived Guessling idea](/docs/archive/guessling-idea.md).
+> **Superseded on September 22, 2026, and archived.** This document describes
+> Guessling, the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next
+> Gen Award, replaced it, and [`docs/PRD.md`](/docs/PRD.md) now holds Turn's
+> product requirements. This document's links to Guessling's idea, product, PRD,
+> and TRD point at their archived copies in `docs/archive/`.
 
 What version 1.0 of Guessling must do, as numbered requirements, each with a
-priority and a check a tester can run. The [product](/docs/PRODUCT.md) says
-why, the [technical requirements](/docs/TRD.md) say how it's built, and the
-[idea](/docs/archive/guessling-idea.md) owns the schedule and the risks. Facts
-are as of September 22, 2026.
+priority and a check a tester can run. The
+[product](/docs/archive/guessling-product.md) says why, the
+[technical requirements](/docs/archive/guessling-trd.md) say how it's built, and
+the [idea](/docs/archive/guessling-idea.md) owns the schedule and the risks.
+Facts are as of September 22, 2026.
 
 Contents:
 
@@ -49,7 +51,7 @@ Contents:
 
 [idea-schedule]: /docs/archive/guessling-idea.md#schedule-to-september-30
 [idea-scope]: /docs/archive/guessling-idea.md#scope-of-the-first-version
-[trd-trace]: /docs/TRD.md#requirements-traceability
+[trd-trace]: /docs/archive/guessling-trd.md#requirements-traceability
 
 ## Goals and non-goals
 
@@ -117,7 +119,7 @@ Each scenario must work end to end on the release build.
 The flows follow the product's [principles][product-principles]; the TRD
 says how each is built.
 
-[product-principles]: /docs/PRODUCT.md#product-principles
+[product-principles]: /docs/archive/guessling-product.md#product-principles
 
 ### The AI notice
 
@@ -466,7 +468,7 @@ https://apps.apple.com/app/id<APP_ID>
   schedule of dates and categories.
 
 [cf-kv]: /docs/research/cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
-[product-puzzles]: /docs/PRODUCT.md#puzzles
+[product-puzzles]: /docs/archive/guessling-product.md#puzzles
 
 ## Non-functional requirements
 
@@ -745,9 +747,10 @@ safe default:
 
 ## See also
 
-- [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why.
-- [Technical requirements](/docs/TRD.md): how version 1.0 is built, with
-  every requirement here traced.
+- [Product](/docs/archive/guessling-product.md): what Guessling is, for whom,
+  and why.
+- [Technical requirements](/docs/archive/guessling-trd.md): how version 1.0 is
+  built, with every requirement here traced.
 - [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
   tokens and rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,

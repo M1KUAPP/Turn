@@ -878,7 +878,7 @@ Machado, Oliveira, and Fernandes's matrices ([machado]); see
   and 🟧 instead, and App Store Connect's, a shape change such as 🟢 for Yes.
   Either changes SHARE-1 ([PRD][prd-share]), so it's a PRD decision.
 
-[prd-share]: /docs/PRD.md#sharing-a-result
+[prd-share]: /docs/archive/guessling-prd.md#sharing-a-result
 
 ## Sound and haptics in puzzle games
 
@@ -1002,7 +1002,7 @@ Machado, Oliveira, and Fernandes's matrices ([machado]); see
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
 [usco-ai]: https://www.copyright.gov/newsnet/2025/1060.html
 [brief-lessons]: /docs/BRIEF.md#lessons-from-past-winners
-[product-character]: /docs/PRODUCT.md#the-guessling-character
+[product-character]: /docs/archive/guessling-product.md#the-guessling-character
 
 ## Findings for DESIGN.md
 
@@ -1099,7 +1099,7 @@ Machado, Oliveira, and Fernandes's matrices ([machado]); see
   TRD plans. The round must be complete without any of them. See
   [Sound and haptics in puzzle games](#sound-and-haptics-in-puzzle-games).
 
-[trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
+[trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
 [rn-text-style]: https://reactnative.dev/docs/0.86/text-style-props
 [hig-typography]: https://developer.apple.com/design/human-interface-guidelines/typography
 
@@ -1208,12 +1208,12 @@ What the sources don't say that DESIGN.md needs, as of September 22, 2026:
 
 ## See also
 
-- [Product](/docs/PRODUCT.md#the-guessling-character): the Guessling's role,
-  personality, voice, and art direction.
-- [Product requirements](/docs/PRD.md#accessibility): the accessibility,
-  sharing, and settings rules the design has to meet.
-- [Technical requirements](/docs/TRD.md#reactions-sound-and-haptics): how the
-  reactions, sound, and haptics are built.
+- [Product](/docs/archive/guessling-product.md#the-guessling-character): the
+  Guessling's role, personality, voice, and art direction.
+- [Product requirements](/docs/archive/guessling-prd.md#accessibility): the
+  accessibility, sharing, and settings rules the design has to meet.
+- [Technical requirements](/docs/archive/guessling-trd.md#reactions-sound-and-haptics):
+  how the reactions, sound, and haptics are built.
 - [Daily puzzle notes][daily]: release times, share formats, streaks,
   archives, and end-of-round screens.
 - [Apple notes](/docs/research/apple-requirements.md#sharing-haptics-and-sound):

@@ -645,9 +645,11 @@ Still open, each with a safe default:
   costs, and how to use it well.
 - [Evidence notes](/docs/research/next-gen-evidence.md): rivals, need, and
   risks for the five finalists.
-- [Guessling idea][guessling]: the first idea, archived; the
-  [product](/docs/PRODUCT.md), [PRD](/docs/PRD.md), [TRD](/docs/TRD.md), and
-  [design](/docs/DESIGN.md) documents built on it stay in `docs/`, marked
+- [Guessling idea][guessling]: the first idea, archived with the
+  [product](/docs/archive/guessling-product.md),
+  [PRD](/docs/archive/guessling-prd.md), and
+  [TRD](/docs/archive/guessling-trd.md) built on it; the
+  [design](/docs/DESIGN.md) document built on it stays in `docs/`, marked
   superseded.
 
 [guessling]: /docs/archive/guessling-idea.md

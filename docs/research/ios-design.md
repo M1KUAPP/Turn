@@ -2060,7 +2060,7 @@ Between the sources:
   that matches the iOS 26.5 SDK, but the release for iOS 27 ([sf-symbols];
   [sf-symbols-archive]).
 
-[trd-a11y]: /docs/TRD.md#accessibility
+[trd-a11y]: /docs/archive/guessling-trd.md#accessibility
 [doc-glass-clear]: https://developer.apple.com/documentation/swiftui/glass/clear
 [apple-trademarks]: https://www.apple.com/legal/intellectual-property/guidelinesfor3rdparties.html
 
@@ -2120,7 +2120,7 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 - [Screenshots and app previews on Apple][bp-screenshots] and the
   [Devpost form walkthrough][ship-devpost].
 
-[trd-app]: /docs/TRD.md#the-iphone-app
+[trd-app]: /docs/archive/guessling-trd.md#the-iphone-app
 [apple-notes]: /docs/research/apple-requirements.md
 [rc-notes]: /docs/research/revenuecat-expo.md
 [sf-symbols-archive]: https://web.archive.org/web/20251115121846/https://developer.apple.com/sf-symbols/
@@ -2175,7 +2175,7 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [rea-spring]: https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring/
 [rea-a11y]: https://docs.swmansion.com/react-native-reanimated/docs/guides/accessibility/
 [rea-use-reduced]: https://docs.swmansion.com/react-native-reanimated/docs/device/useReducedMotion/
-[prd-a11y]: /docs/PRD.md#accessibility
+[prd-a11y]: /docs/archive/guessling-prd.md#accessibility
 [expo-svg]: https://docs.expo.dev/versions/v57.0.0/sdk/svg/
 [lottie-reduced]: https://github.com/airbnb/lottie-ios/blob/4.6.0/Sources/Public/Configuration/ReducedMotionOption.swift
 [rive-rn]: https://rive.app/docs/runtimes/react-native/react-native
@@ -2227,8 +2227,8 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [devpost-85]: https://help.devpost.com/article/85-uploading-a-demo-video
 [shipaton-rules]: https://revenuecat-shipaton-2026.devpost.com/rules
 [ship-devpost]: /docs/research/shipaton-2026.md#devpost-form-walkthrough
-[trd-build]: /docs/TRD.md#build-configuration
-[trd-reactions]: /docs/TRD.md#reactions-sound-and-haptics
-[prd-compat]: /docs/PRD.md#compatibility
-[product-character]: /docs/PRODUCT.md#the-guessling-character
+[trd-build]: /docs/archive/guessling-trd.md#build-configuration
+[trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
+[prd-compat]: /docs/archive/guessling-prd.md#compatibility
+[product-character]: /docs/archive/guessling-product.md#the-guessling-character
 [apple-share]: /docs/research/apple-requirements.md#share-sheet-rules
