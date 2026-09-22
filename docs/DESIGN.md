@@ -575,16 +575,15 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 ([iOS notes][ios-resize]). A phrase column needs at least 154 points, about
 13 characters of `title3-emphasized` inside 12-point padding.
 
-| Width available      | The row                    | The strip                           | The grid                  |
-| -------------------- | -------------------------- | ----------------------------------- | ------------------------- |
-| Under 352 points     | One column of six slots    | One column                          | One column                |
-| 352 to 517 points    | Two columns of three slots | Three columns, the fourth spans two | Two columns               |
-| 518 points and wider | Three columns of two slots | Three columns, the fourth spans two | An even number of columns |
+| Width available      | The row                    | The strip                           | The grid    |
+| -------------------- | -------------------------- | ----------------------------------- | ----------- |
+| Under 352 points     | One column of six slots    | One column                          | One column  |
+| 352 points and wider | Two columns of three slots | Three columns, the fourth spans two | Two columns |
 
 - **Slots keep their order.** Slots 1 to 6 read left to right, then down, at
   every width, so Yes, No, and Not sure are always first.
-- **Checked at** 320, 375, 402, and 440 points wide, and on an iPad in a
-  resized window.
+- **Checked at** 320, 375, 402, and 440 points wide; a wider window, as on an
+  iPad, keeps two columns with wider phrases.
 
 ### Short screens and large text
 
