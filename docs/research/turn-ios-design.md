@@ -1,21 +1,13 @@
 # Turn's iOS design research notes
 
-What Apple's platform, Expo SDK 57, React Native 0.86, and RevenueCat's paywall
-mean for the look and feel of Turn, the AAC app the
+What Xcode 27, the iOS 27 SDK, Expo SDK 57, React Native 0.86, and
+RevenueCat's paywall mean for the look and feel of Turn, the AAC app the
 [product document][product] describes, for the rewrite of
-[DESIGN.md][design-md] as its design system: what Xcode 27 and the iOS 27 SDK
-change, what moved since September 22, and what each fact means for Turn.
-Every source below was read on September 23, 2026, so versions and limits are
-as of that date, and judgment starts with "Synthesis:"; Apple's documentation
-was read as DocC JSON and WWDC transcripts, the SF Pro, New York, and SF
-Symbols installers were expanded without installing them, the purchases-ios
-5.90.1 source fills RevenueCat's gaps, and nothing ran on a device. The
-[iOS design notes][ios-design] of September 22 already cover iOS 26's Liquid
-Glass, fonts, color, motion, icons, symbols, the paywall editor, and store art,
-for Guessling; the [iPhone build notes][turn-ios] cover speech, audio, and
-Personal Voice; and the [AAC practice notes][aac-notes] cover iOS access
-features and React Native's accessibility API, so this note links them
-instead of repeating them.
+[DESIGN.md][design-md] as its design system. Every source below was read on
+September 23, 2026, so versions and limits are as of that date, and judgment
+starts with "Synthesis:". The earlier [iOS design notes][ios-design],
+[iPhone build notes][turn-ios], and [AAC practice notes][aac-notes] are
+linked, not repeated.
 
 Contents:
 
@@ -102,7 +94,9 @@ Synthesis: each line condenses its linked section, where the sources are.
 ## What Xcode 27 and the iOS 27 SDK change
 
 Apple's WWDC26 sessions, the HIG's What's new page, the Xcode 27 release notes,
-and Apple's support pages own these facts.
+and Apple's support pages own these facts. Apple's documentation was read as
+DocC JSON and WWDC transcripts, the SF Pro, New York, and SF Symbols installers
+were expanded without installing them, and nothing ran on a device.
 
 ### Liquid Glass in iOS 27
 
@@ -215,8 +209,8 @@ Source for the table: [What's new in design][hig-whats-new].
 
 - **A steady screen.** "Keep content and controls in consistent, predictable
   positions, and use natural animations to ease transitions."
-  ([Design principles][hig-principles]) That's Turn's "Steady beats clever"
-  ([product principles][product-principles]).
+  ([Design principles][hig-principles]) Synthesis: that's Turn's "Steady
+  beats clever" ([product principles][product-principles]).
 - **Brand color in the content.** "Apply your app’s accent color judiciously."
   "To express your brand through color, consider moving it into the content
   layer, where it scrolls beneath Liquid Glass controls and gets picked up
