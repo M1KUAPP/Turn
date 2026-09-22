@@ -20,6 +20,8 @@ Contents:
 1.  [Components](#components)
 1.  [Motion](#motion)
 1.  [Sound and haptics](#sound-and-haptics)
+1.  [Screens](#screens)
+1.  [Words on screen](#words-on-screen)
 1.  [See also](#see-also)
 
 ## Overview
@@ -99,7 +101,6 @@ being said, and nothing to wait for.
   anything that moves on its own.
 
 [aac-criticize]: /docs/research/aac-design.md#what-users-criticize
-[aac-stigma]: /docs/research/aac-design.md#social-acceptability-and-stigma
 
 ### Scope
 
@@ -1148,6 +1149,223 @@ is the whole inventory ([trends notes][ft-proposals]).
 
 [ios-haptics]: /docs/research/turn-ios-design.md#haptics-while-turn-listens-or-speaks
 
+## Screens
+
+Each screen uses the components above; the TRD's
+[routes](/docs/TRD.md#screens-and-navigation) name them.
+
+### The home screen, state by state
+
+| State                 | The line                                                 | The row                                             | The Listen control      |
+| --------------------- | -------------------------------------------------------- | --------------------------------------------------- | ----------------------- |
+| First launch          | "You said" and "Nothing said yet."                       | Empty, with its note                                | Off, "20 free"          |
+| Listen mode off       | "You said" and the last phrase spoken                    | Typing's matches while the keyboard is up (SPEAK-4) | Off                     |
+| A session opening     | "Listening", large                                       | Empty                                               | Listening               |
+| A partner speaking    | "They're saying", the words so far, and Done             | As it was                                           | Listening, symbol fades |
+| Replies ready         | "They said", the line, and Clear                         | Up to six, the big button, or Yes, No, Not sure     | Listening               |
+| Nothing fits          | "They said", the new line, and "Still answering" note    | As it was (ROW-3)                                   | Listening               |
+| Ranked on the phone   | A "Ranked on this phone" note (STATE-1, STATE-2)         | The phone's replies                                 | Listening               |
+| Degraded              | A "Listen mode is degraded" note (STATE-2, STATE-3)      | The phone's replies                                 | Listening               |
+| Paused                | "Paused", with the words cleared (LISTEN-8)              | As it was                                           | Paused, with End        |
+| A partner under 18    | The CONSENT-6 note and "Tap here to type what they say." | The phone's replies to typed lines                  | Mic off, with End       |
+| No live transcription | The LISTEN-9 note and "Tap here to type what they say."  | Replies to typed lines                              | Listening               |
+| Turn speaking         | Stop in place of Repeat                                  | The spoken phrase's card shows its speaker symbol   | Unchanged               |
+| Free lines used up    | Unchanged                                                | Empty                                               | Locked                  |
+
+- **Stopping Listen mode** clears the row (ROW-10) and returns the line to
+  "You said".
+- **Leaving the app** pauses listening, and on return the control shows Paused
+  until a tap (LISTEN-7).
+
+### Typing
+
+The composer docks above the keyboard, with "Replying to" and the partner's
+line above the field in Listen mode; the row shows the phrases matching the
+letters typed (SPEAK-4) and returns to its last answer when the keyboard
+closes. Speak says the text and adds it to Typed (SPEAK-3), and the line then
+shows it as "You said".
+
+### The permission step
+
+`/permission`, a form sheet at full height, since it's for reading, on a
+`surface` background (CONSENT-1):
+
+- A title in `title2`, then short paragraphs in `body` that say what leaves
+  the phone with each partner line (ROW-2), that names Turn recognizes are
+  swapped for tags, to whom it goes, that audio and the rest of the bank never
+  leave, and that the service may keep data to monitor its service.
+- A link to the privacy notice, which reads with no network (SET-2).
+- "Allow" and "Not now" as an equal pair at the bottom.
+- Every word is text, never an image, so Accessibility Reader and VoiceOver
+  read it ([iOS notes][ios-reader]).
+
+[ios-reader]: /docs/research/turn-ios-design.md#accessibility-features-in-ios-26-and-27
+
+### The consent card
+
+`/consent`, full screen on the board, laid out to be read at arm's length
+from across a table or beside a mounted phone (CONSENT-4)
+([AAC design notes][aac-mounted]):
+
+- **The lead**, one sentence in the partner's terms, in
+  `largeTitle-emphasized`.
+- **The facts** CONSENT-4 lists, one to a line, in `title2`: what the phone
+  does with their words, where the words go and why, that no audio is
+  recorded, and that listening can be paused at any time.
+- **The switch** "My partner is under 18" in a list row (CONSENT-6).
+- **Read aloud**, a secondary button that speaks the lead and the facts in the
+  chosen voice on the user's tap, since talking one to one beats a written
+  notice and guests want to be told by the owner
+  ([AAC design notes][aac-consent]).
+- **"They agreed" and "They said no"**, an equal pair at the bottom, within a
+  thumb's reach; the microphone starts only after "They agreed".
+- **One decision.** The card asks one thing and shows no other choice, so the
+  partner can answer at a glance ([AAC design notes][aac-consent]).
+
+[aac-mounted]: /docs/research/aac-design.md#mounted-phones-and-wheelchairs
+[aac-consent]: /docs/research/aac-design.md#consent-notices-people-read
+
+### Settings
+
+`/settings`, a native stack screen with grouped lists on the board, in the
+order SET-1 gives:
+
+- **Voice.** The voice, with a preview for each; the speech rate as a list of
+  five steps, each chosen with one tap, since a slider needs a drag (A11Y-5);
+  and Personal Voice, with VOICE-2's explanation when iOS says no.
+- **Listen mode.** Its permission, with Withdraw (CONSENT-3), and the under-18
+  switch (CONSENT-6).
+- **Your words.** Places and the phrase bank.
+- **Turn Listen.** "Unlock Listen mode", which opens the paywall, or
+  "Unlocked"; and Restore Purchases (PAY-6).
+- **About.** The privacy notice, the open-source licenses, and the version
+  with the relay's status.
+- **Last.** Stats on this phone (SET-4), then Erase all data (SET-3), whose
+  confirmation is a system alert with a destructive button.
+
+### The phrase bank editor
+
+`/bank/[category]`, a native stack screen for one category (BANK-2):
+
+- **Rows.** Each phrase in `body`, wrapped, with its places under it in
+  `subheadline`; a starter phrase nobody has reviewed shows "Starter"
+  (BANK-10).
+- **Order without dragging.** In edit mode, each row shows Move up and Move
+  down; Edit, Move, and Delete are also named accessibility actions (A11Y-8).
+- **Delete and Undo.** A deleted phrase hides, and an Undo bar stays at the
+  bottom until the user leaves the editor, with no timer (BANK-9, A11Y-5).
+- **What can't be deleted.** Yes, No, Not sure, and the body and pain category
+  offer no Delete (BANK-5).
+- **Adding or editing.** A sheet with the phrase field, which stops at 200
+  characters and counts down near the end (BANK-3), its category, and its
+  places.
+
+### The first launch
+
+The home screen is ready to speak within two seconds (PERF-3). At the top of
+the grid, inside its scroll view so nothing above moves, a card says the
+starter phrases are the team's words, with Review, which walks the editor
+category by category, and Not now (BANK-10).
+
+### The paywall
+
+RevenueCat's paywall, over the current screen (PAY-2), built in RevenueCat's
+editor to match:
+
+- **Content.** Text only: a title, one line saying Turn Listen is one payment
+  and speaking stays free, the package's price, a marker-blue purchase button
+  with white text, Restore Purchases, the legal links, and the close button.
+- **Nothing that moves.** No images, carousel, video, or transitions, since
+  paywalls keep carousels and component transitions moving under Reduce
+  Motion ([iOS notes][ios-paywall-a11y]).
+- **Colors and type.** The tokens' light and dark values, since paywalls have
+  no increased-contrast values, each pair at 4.5 to 1 or more without
+  Increase Contrast; the system font, since Apple's license bars uploading SF
+  Pro; and sizes that follow Dynamic Type, which paywalls do unless the
+  dashboard turns it off ([iOS notes][ios-paywall-limits];
+  [iOS notes][ios-paywall-a11y]).
+- **Test Store's alert.** Test Store's purchase alert is UIKit's own, so
+  there's nothing to design, and the video names it as a test purchase
+  ([iOS notes][ios-test-store]).
+
+[ios-paywall-a11y]: /docs/research/turn-ios-design.md#dynamic-type-voiceover-and-reduce-motion-in-paywalls
+[ios-paywall-limits]: /docs/research/turn-ios-design.md#limits-on-matching-turns-design
+[ios-test-store]: /docs/research/turn-ios-design.md#the-paywall-under-test-store
+
+### Launch
+
+The launch screen is the board's color, `#F2F2F7` in light and `#000000` in
+dark, with no image, since Apple says to "Avoid using a launch screen as a
+branding opportunity" ([iOS notes][ios-launch]); the grid follows within two
+seconds.
+
+[ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
+
+## Words on screen
+
+### Tone
+
+- **Plain, calm, and adult.** Short sentences in sentence case, with no
+  exclamation marks, celebrations, streaks, or pity: in one survey, 93% of
+  adults who need AAC named being spoken to "as an adult" as a need
+  ([AAC design notes][aac-tone]).
+- **The words are the user's.** Turn never hedges, labels, or rates a phrase,
+  and never calls a reply suggested, smart, or AI; "AI" appears only in the
+  words CONSENT-1 fixes.
+- **Speakers by name of role.** "They said" and "You said", never "partner"
+  or "user" on screen.
+- **Unnamed until agreed.** Jev and TypeSafe appear in no string until
+  TypeSafe agrees, and the texts follow the relay's setting (CONSENT-7,
+  SUBMIT-6); `{service}` below is "TypeSafe" or "a third-party AI service in
+  the United States".
+- **Failures stay quiet.** A note says what happened and what still works, in
+  one line, with no alarm color, since a breakdown in public is a social one
+  too ([AAC design notes][aac-stigma]).
+
+[aac-tone]: /docs/research/aac-design.md#identity-and-tone
+
+### Strings the PRD leaves open
+
+The PRD fixes the strip's phrases, the Quick category's, "Listening", "Allow",
+"Not now", "They agreed", "They said no", "My partner is under 18", "What did
+they say?", and the names of buttons and settings; these are the rest.
+
+| Where                         | Words                                                                                                                                                                                          | For                           |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| The Listen control            | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                                             | PAY-1, PAY-2                  |
+| Paused, and its End           | "Paused" and "End"                                                                                                                                                                             | CONSENT-5                     |
+| Under 18                      | "Mic off"                                                                                                                                                                                      | CONSENT-6                     |
+| The line, before speech       | "You said" and "Nothing said yet."                                                                                                                                                             | SPEAK-1                       |
+| The line, while hearing       | "They're saying"                                                                                                                                                                               | LISTEN-1                      |
+| The line, after a line        | "They said"                                                                                                                                                                                    | LISTEN-1                      |
+| The line, when the row holds  | "Still answering “How was physio?”"                                                                                                                                                            | ROW-3                         |
+| Notes                         | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                                                                                                       | STATE-1 to STATE-3, CONSENT-6 |
+| No live transcription         | "Live transcription isn't available here. Tap here to type what they say."                                                                                                                     | LISTEN-9                      |
+| The speech model              | "Getting Apple's English speech model", with its progress                                                                                                                                      | LISTEN-1                      |
+| The empty row                 | "Replies to your partner appear here."                                                                                                                                                         | ROW-1                         |
+| A changed row, to VoiceOver   | "3 replies", or "1 reply"                                                                                                                                                                      | A11Y-2                        |
+| The composer                  | "Type what to say", "Speak", and "Replying to “How was physio?”"                                                                                                                               | SPEAK-3                       |
+| The partner's composer        | "Send"                                                                                                                                                                                         | LISTEN-4                      |
+| The tabs                      | "All" and "Type"                                                                                                                                                                               | ROW-9, SPEAK-1                |
+| The permission step's title   | "Before Listen mode starts"                                                                                                                                                                    | CONSENT-1                     |
+| The consent card's lead       | "Can my phone listen while we talk?"                                                                                                                                                           | CONSENT-4                     |
+| The consent card's facts      | "It turns your words into text on this phone." "Your words, with names removed, go to {service} to pick my replies from my own phrases." "No audio is recorded." "I can pause it at any time." | CONSENT-4                     |
+| The consent card's button     | "Read aloud"                                                                                                                                                                                   | CONSENT-4                     |
+| The paywall                   | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"                                                                                            | PAY-2                         |
+| After a purchase              | "Listen mode is unlocked."                                                                                                                                                                     | PAY-4                         |
+| A purchase that fails         | "The purchase didn't go through. Listen mode is still locked."                                                                                                                                 | PAY-5                         |
+| Restore, with nothing to find | "No purchase found for this phone. Listen mode is still locked."                                                                                                                               | PAY-6                         |
+| Personal Voice refused        | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                                        | VOICE-2                       |
+| Erase all data                | "Erase all data?", "This deletes your phrases, places, tap counts, and settings, and brings back the starter phrases.", "Erase", and "Cancel"                                                  | SET-3                         |
+| Deleting a category           | "Where should its phrases go?"                                                                                                                                                                 | BANK-2                        |
+| Undo                          | "Deleted." and "Undo"                                                                                                                                                                          | BANK-9                        |
+| The starter card              | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"                                                                                          | BANK-10                       |
+| A starter phrase              | "Starter"                                                                                                                                                                                      | BANK-10                       |
+
+- **Starter phrases** put their key words first and stay under about 30
+  characters where they can, so most fit a slot at the default size without an
+  ellipsis; CONTENT-1's limit of 120 still holds.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): who Turn is for, and the principles this
@@ -1170,6 +1388,7 @@ is the whole inventory ([trends notes][ft-proposals]).
 [gdm]: https://github.com/google-labs-code/design.md
 [product-principles]: /docs/PRODUCT.md#product-principles
 [ft-tokens]: /docs/research/turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
+[aac-stigma]: /docs/research/aac-design.md#social-acceptability-and-stigma
 [ft-calm]: /docs/research/turn-frontend-trends.md#calm-technology
 [ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
 [ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
