@@ -563,9 +563,9 @@ says how each is built.
 
 ### Privacy
 
-- **PRIV-1, Must.** Audio never leaves the phone and is never written to
-  storage. Check: a capture of the app's traffic, and the app's container,
-  after a session.
+- **PRIV-1, Must.** Audio never leaves the phone, and neither audio nor a
+  transcript is written to storage on the phone. Check: a capture of the
+  app's traffic, and the app's container, after a session.
 - **PRIV-2, Must.** No transcript, phrase, place, or category name is
   written to storage in the relay or to its logs. Check: the relay's storage
   and logs after a session.
