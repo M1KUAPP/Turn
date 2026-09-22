@@ -17,6 +17,7 @@ Contents:
 1.  [Round 3: screening](#round-3-screening)
 1.  [Round 4: scoring](#round-4-scoring)
 1.  [Round 5: evidence](#round-5-evidence)
+1.  [Round 6: red team](#round-6-red-team)
 
 ## Round 1: constraints and rubric
 
@@ -399,3 +400,104 @@ What the finalists carry forward:
   what keywords catch.
 
 **Decision:** top three: Turn, Same Boat, and Scenekeeper go to round 6.
+
+## Round 6: red team
+
+**Question:** why would each finalist lose, and can it be fixed?
+
+**Method:** one subagent read rounds 1 to 5 and the six notes, then attacked
+each finalist in the stance of `/grilling`, in three roles: a Next Gen judge
+with two minutes of video, the description, and the README; a RevenueCat
+developer advocate who clones the repository on October 1 and tries to run
+it without the team's keys; and a TypeSafe engineer who knows Jev's jagged
+edges, limits, and terms. For each finalist it named the five worst failure
+modes, rated from 1 to 5, each with a fix and its cost in build hours, which
+are the subagent's estimates.
+
+### Failures every finalist shares
+
+- **A clean clone may not launch or sell (4).** "Apps built with the iOS 27
+  SDK must use the UIKit scene-based life cycle, or they do not launch
+  correctly on iOS 27", and without a RevenueCat key the paywall is empty.
+  Fix, 2 hours: turn on `ios.enableSceneSupport` (Expo 57.0.23 or later),
+  commit the Test Store key, a public SDK key rather than a secret, or script
+  its setup, and ship debug builds only, since the iOS SDK crashes release
+  builds that carry a Test Store key.
+- **The relay (3).** The Jev key must stay confidential while the relay runs
+  until judging ends on October 13; there's no free tier, nothing says what
+  happens when credits run out, the status page logged an "API issues"
+  incident on September 21, and `jev-latest` can move under tuned
+  thresholds. Fix, 3 hours: questions fixed on the server, per-device rate
+  limits, a credit alert, `jev-1.13.0` pinned, and a visible degraded mode.
+- **Naming Jev (2).** TypeSafe's agreement bars announcing the relationship
+  without consent, so the team asks on September 22. Fix: half an hour.
+- **RevenueCat weighs more than the rubric says.** It is one of the rules'
+  four unweighted criteria but 15 of the rubric's 100 points. Weighting round
+  5's scores by the four criteria alone, equally, still puts Turn first, at
+  about 76, ahead of Scenekeeper at 73 and Same Boat at 72.5.
+
+### Turn under attack
+
+| Role     | Failure mode                                                                                                              | Severity | Fix                                                                                                                                                               | Hours |
+| -------- | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| Judge    | "What's new, and why Jev?" Rejoin Voice already listens, "Tea or coffee?" is a word match, and the fallback is a strawman | 4        | Score 80 partner lines against gold replies for the fallback, keyword ranking on the partner's line, embeddings, and Jev; publish it; claim "only your own words" | 8     |
+| Judge    | "Who types the phrases, and has an AAC user seen this?" A 240-phrase bank takes hours at "8–10 wpm"                       | 3        | About 150 editable starter phrases, every typed reply saved to the bank, and a 30-minute review by a campus speech-language pathology clinic                      | 6     |
+| Advocate | Listen mode needs a phone: live transcription doesn't run in the Simulator, and Personal Voice needs an iPhone 15 Pro     | 4        | A field to type the partner's line, a Simulator build in the repository's releases, and a README path through the paid feature                                    | 4     |
+| Engineer | One 240-option Choice sits at the reliability limit, always picks something, and flipped on 2 of 8 questions in repeats   | 4        | Code shortlists 40 phrases; Jev asks one Noul per candidate, which can all come back low; buttons keep their slots; yes-or-no questions get fixed buttons         | 6     |
+| Engineer | The partner never agreed to TypeSafe, which keeps telemetry rights "in perpetuity", and partners may be under 18          | 3        | A consent card the user shows, a listening light with one-tap pause, no listening for partners marked under 18, and names swapped for tags                        | 3     |
+
+Verdict: build it, with about 27 hours of fixes, all design and evaluation.
+A Noul's probability had a standard deviation of about 0.01 over TypeSafe's
+repeats, so the row can hold steady, and if Jev doesn't beat embeddings on
+the evaluation, it
+re-ranks an embedding shortlist instead, TypeSafe's own pattern, and still
+decides the row.
+
+### Same Boat under attack
+
+- **"Why not embeddings?" (judge and engineer, 5).** Apple suggests sentence
+  embeddings for FAQ matching, and cosine grouping cut simulated waits. Fix,
+  8 hours on the first day: label 80 questions from the team's own courses,
+  let embeddings shortlist the groups and Jev judge "same underlying bug, not
+  same topic", and publish both; if Jev loses, the idea fails the goal.
+- **"Who buys the Course Pass?" (judge, 4).** A TA paying alone sits
+  awkwardly with FERPA guidance. Fix, 5 hours: the course is the RevenueCat
+  customer, bought on the instructor's iPad, and TAs who join inherit it.
+- **Students write the state (engineer, 4).** Urgent wording moves an effort
+  score, injected text "can move the answer", and some students in a course
+  may be under 18, which breaks N5. Fix, 2 hours: drop the effort score, add
+  an injection Noul, and confirm each student's age when they join.
+- **"Why would 300 students install an app?" (judge, 3).** Fix, 4 hours: a
+  web join screen for students.
+- **Three phones hide the problem (judge and advocate, 3).** Fix, 3 hours: a
+  seed script that replays 40 labeled questions into a demo course.
+
+Verdict: conditional, with about 22 hours of fixes, and worth building only
+if Jev beats embeddings on the first day.
+
+### Scenekeeper under attack
+
+- **"Bardy does this; is there a need?" (judge, 5).** Keyword cues such as "a
+  skeleton lurches out!" don't need Jev, and the lines that would, such as
+  "the torches gutter", land on its literal reading. Fix, 8 hours: keywords
+  in code for explicit cues and Jev for effects and check calls, measured on
+  100 lines; the thin need can't be fixed.
+- **One phone hears everything (engineer, 4),** including its own music and
+  players who haven't consented. Fix, 2 hours: push-to-narrate, transcribing
+  only the game master.
+- **The video would contradict the design (judge, 3),** since cues change
+  only after two confident phrases. Fix, 3 hours: one-shot effects at 0.9
+  with a cooldown, and slower changes for music and light.
+- **The repository can't carry the product (advocate, 4):** licensed audio,
+  a smart bulb, and a physical iPhone. Fix, 9 hours: free-licensed audio for
+  two worlds, a mode that replays a transcript, and an on-screen light.
+- **Rate limits (engineer, 3).** Cookbook authors hit them at about eight
+  requests in flight, and 48 tables at 25 calls a minute would use the whole
+  listed limit. Fix, 3 hours: one request per finished phrase with a
+  sequence number, and stale answers dropped, never retried.
+
+Verdict: not worth building over the other two, with about 25 hours of fixes
+on the heaviest base build, and Jev's share still unmeasured.
+
+**Decision:** the red team ranks Turn first, Same Boat second, and
+Scenekeeper third. All three go to round 7 with their fixes.
