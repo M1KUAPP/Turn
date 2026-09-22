@@ -20,6 +20,10 @@ Contents:
 1.  [Product principles](#product-principles)
 1.  [The experience](#the-experience)
 1.  [The phrase bank](#the-phrase-bank)
+1.  [Business model](#business-model)
+1.  [Success metrics](#success-metrics)
+1.  [Roadmap](#roadmap)
+1.  [What Turn is not](#what-turn-is-not)
 1.  [See also](#see-also)
 
 ## Turn in brief
@@ -246,6 +250,122 @@ leaves the phone whole.
   user taps most rise in the shortlist.
 
 [aac-strip]: /docs/research/aac-practice.md#quick-fire-turn-holding-and-repair-messages
+
+## Business model
+
+| What                                             | Free | Turn Listen |
+| ------------------------------------------------ | ---- | ----------- |
+| Speaking: the grid, typing, and saved phrases    | Yes  | Yes         |
+| Personal Voice and system voices                 | Yes  | Yes         |
+| Listen mode for the first 20 partner lines       | Yes  | Yes         |
+| Listen mode after 20 partner lines               | No   | Yes         |
+| Ranking by place and typed letters, on the phone | Yes  | Yes         |
+
+- **Price:** $24.99, paid once, for the entitlement `listen`. The idea's
+  [monetization][idea-money] section has the reasoning: AAC users resent
+  paying for speech, the established text AAC apps sell once, and a one-time
+  price answers the fear of losing one's voice when a payment lapses.
+- **What a user costs:** a partner line comes to about 1,700 to 1,900 input
+  tokens, so at 200 lines a day for a year, Jev costs about $5.30 to $5.70,
+  and one payment covers about four years of Jev at that pace, with the
+  relay's hosting on top ([services notes][svc-billing]).
+- **When it asks:** when the free lines run out, or when the user turns
+  Listen mode on after that. The paywall closes with one tap, and Settings
+  holds Restore Purchases, so a caregiver can buy from there.
+- **For Next Gen:** the purchase runs through RevenueCat's Test Store, which
+  the organizers accept for Next Gen, so the entry reports no revenue; the
+  PRD's [purchase requirements][prd-pay] say how.
+- **What it never sells:** speech, the user's words or data, or ads.
+- **What a purchase promises:** for the entry, the relay runs until the
+  winners are announced on October 21 or 22, 2026, and afterward Listen mode
+  falls back to the phone's own ranking. A store release would first have to
+  say how long a one-time purchase keeps Listen mode working; see the PRD's
+  [open questions][prd-open].
+
+[idea-money]: /docs/IDEA.md#monetization
+[svc-billing]: /docs/research/turn-services.md#how-a-jev-request-is-billed
+[prd-pay]: /docs/PRD.md#the-paywall-and-purchases
+[prd-open]: /docs/PRD.md#open-questions
+
+## Success metrics
+
+The **north star** is replies from the row: partner lines the user answers
+by tapping a phrase the row offered, out of all partner lines they answer.
+It measures the promise, the user's own words in time, and it grows only if
+the ranking is right and the row stays steady. AAC research favors time to
+the spoken reply and acceptance of what's offered over keystrokes saved,
+which didn't predict rate or success ([AAC notes][aac-measures]).
+
+In the first version, these numbers come from the evaluation, rehearsals,
+and the relay's logs; Turn has no analytics SDK and sends no usage data.
+The targets below are decisions this document sets, except where a source is
+named.
+
+- **Replies from the row:** counted on the team's phones during rehearsals,
+  and in the clinic's session if one is booked; the counts stay on the phone.
+- **Ranking quality,** from the [evaluation][prd-eval] of 80 partner lines:
+  top-1 and top-6 accuracy for each ranker, and how often the row holds when
+  no phrase fits, each with its interval. Eighty lines settle only large
+  differences, so Jev earns its place when it clearly beats the other
+  rankers on top-6 accuracy; if it doesn't, the README says so, as the
+  idea's [risks][idea-risks] require.
+- **Speed:** the time from the end of the partner's speech to the row, kept
+  apart from the user's own time to choose, and from a tap to speech; the
+  PRD's [performance requirements][prd-perf] set the targets.
+- **Guardrails:**
+  - No wrong big button on a yes-or-no, pain, or consent line in the
+    evaluation.
+  - Steadiness: slots that change per partner line, on replayed
+    conversations.
+  - Privacy: no audio and no transcript found on the phone or in the relay's
+    logs after a session.
+  - Degraded lines: the share of partner lines the phone ranks because the
+    relay failed.
+- **The purchase,** from RevenueCat's sandbox data: paywall views and Test
+  Store purchases, with no revenue target.
+
+[aac-measures]: /docs/research/aac-practice.md#rate-savings-and-acceptance-measures
+[prd-eval]: /docs/PRD.md#evaluation-requirements
+[idea-risks]: /docs/IDEA.md#risks
+[prd-perf]: /docs/PRD.md#performance
+
+## Roadmap
+
+- **The first version, filmed on September 28, 2026:** the PRD's Must
+  requirements.
+- **Through October 22:** the PRD's Should requirements, such as the replay
+  script, the clinic's fixes, and an alert when Jev's credits run low, with
+  the relay running for judges.
+- **Later, if AAC users and clinicians want it:** candidates, each with the
+  signal that would justify it.
+  - An App Store release, with a paid Apple Developer Program membership and
+    a real one-time purchase, if clinicians or users ask to use Turn day to
+    day.
+  - The partner's own phone joining the conversation, if partners ask to
+    type or speak into their own device.
+  - Switch and eye-gaze access designed around the row, if users whose
+    motor control changes find iOS's own access too slow.
+  - An iPad layout, since many AAC users carry an iPad; the iPhone layout
+    already runs there.
+  - Languages other than English, once Jev's accuracy outside English is
+    known; English is "where accuracy is currently best"
+    ([Jev notes][jev-lang]).
+  - Android, from the same Expo code, once live transcription and a personal
+    voice work there.
+  - A backup of the phrase bank the user controls, if users fear losing it
+    with a phone.
+
+[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
+
+## What Turn is not
+
+- **Not a writer.** Jev returns probabilities, and every reply is a phrase
+  the user saved or typed.
+- **Not a recorder.** No audio or transcript is kept.
+- **Not a medical device or an emergency service,** and not a substitute for
+  an AAC assessment by a speech-language pathologist.
+- **Not for children.**
+- **Not a subscription.** Speech is free, and Listen mode is sold once.
 
 ## See also
 
