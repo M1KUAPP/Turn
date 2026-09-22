@@ -145,8 +145,9 @@ others between them; custom sections sit where a reader needs them.
 1.  **Elevation**: depth by color and edges, and where Liquid Glass goes.
 1.  **Shapes**: corner tokens and rules.
 1.  **Components**: component tokens per appearance, and the phrase button,
-    the row, the strip, the line, the Listen control, the place picker, the
-    category tabs, the grid, the bottom bar, the composer, notes, and lists.
+    the row, the strip, the caption, the Listen control, the place picker,
+    the category tabs, the grid, the bottom bar, the composer, notes, and
+    lists.
 1.  **Motion**: every animation, its Reduce Motion version, and the one flag
     that decides.
 1.  **Sound and haptics**: speech as the only sound.
@@ -213,11 +214,12 @@ reasons given, and each is stated as a decision in the document.
     thin. Atkinson Hyperlegible Next, under the OFL, sets the video's
     titles and the images' captions, where Apple's license bars SF Pro.
 1.  **The home screen.** Bands in the PRD's order, top to bottom: the top bar
-    (Settings, the place picker, the Listen control), the line (the latest
-    words, the partner's or the user's, with Done or Clear), the strip, the
-    row, the category tabs, the grid, and the bottom bar (Type, Repeat,
-    Stop). There's no navigation bar, and the strip and the row sit outside
-    the grid's scroll view.
+    (Settings, the place picker, the Listen control), the caption (the
+    partner's words in Listen mode and the user's last phrase outside it,
+    with Done or Clear), the strip, the row, the category tabs, the grid, and
+    the bottom bar (Type, Repeat or Stop, and Up and Down, which page the
+    grid so it never needs a swipe). There's no navigation bar, and the strip
+    and the row sit outside the grid's scroll view.
 1.  **The row.** Six slots in two columns of three, each 78 points tall, at
     least 12 mm on every iPhone Turn runs on, with 12 points between them, so
     a slot holds about 14 characters a line. Heights follow the text size and
@@ -229,7 +231,7 @@ reasons given, and each is stated as a decision in the document.
 1.  **The row's states.** Empty, with a quiet placeholder; up to six
     replies, filled from the first slot; one big button over the six slots'
     frame, in marker blue; Yes, No, and Not sure in slots 1 to 3; and a row
-    that holds, with the line saying which partner line it still answers.
+    that holds, with the caption saying which partner line it still answers.
     No percentages, no AI badge on a reply, and no dimming of an older
     phrase; a slot never changes while it's pressed.
 1.  **The strip.** Five phrase buttons with their whole text, in three
@@ -245,19 +247,21 @@ reasons given, and each is stated as a decision in the document.
     color alone.
 1.  **The light.** Listening shows as a solid orange pill with a microphone
     symbol and "Listening", whose symbol fades in and out only while the
-    partner's words arrive and holds still otherwise, and always under
-    Reduce Motion. Paused is a neutral pill with a struck microphone and
-    "Paused", with End beside it. When a session starts, the line says
-    "Listening" in large type until the first words arrive.
+    partner's words arrive, for at most five seconds a line, and holds still
+    otherwise, and always under Reduce Motion. Paused is a neutral pill
+    with a struck microphone and "Paused", with End beside it, and "Mic off"
+    shows when there's no microphone to use. When a session starts, the
+    caption says "Listening" in large type until the first words arrive.
 1.  **Consent.** The consent card is full screen and solid: a lead sentence
     in the partner's terms, the four facts CONSENT-4 lists, one to a line,
-    the under-18 switch, Read aloud, which speaks the card on the user's tap
-    because talking beats a written notice, and "They agreed" and "They said
-    no" as an equal pair. The permission step is a form sheet with its own
-    background and "Allow" and "Not now" as an equal pair.
-1.  **Glass.** None of Turn's own. System bars, sheets, alerts, switches, and
-    the keyboard take Liquid Glass, which Xcode 27 no longer lets an app turn
-    off; phrases, the line, and the consent card are content and stay solid.
+    the under-18 switch, Read aloud, an addition to what CONSENT-4 lists,
+    which speaks the card on the user's tap because talking beats a written
+    notice, and "They agreed" and "They said no" as an equal pair. The
+    permission step is a form sheet with its own background and "Allow" and
+    "Not now" as an equal pair.
+1.  **Glass.** None of Turn's own. System bars, sheets, alerts, and switches
+    take Liquid Glass, which Xcode 27 no longer lets an app turn off; phrases,
+    the caption, and the consent card are content and stay solid.
 1.  **Motion.** A slot's new phrase cross-fades in place in 150 ms, the big
     button in 200 ms, and the light's symbol fades while words arrive;
     nothing else animates, and a press changes the fill, never the size.
@@ -268,8 +272,8 @@ reasons given, and each is stated as a decision in the document.
     carry no meaning elsewhere.
 1.  **Words.** Plain, calm, adult, in sentence case, with no exclamation
     marks, no "smart", "magic", or sparkles, "AI" only in the words
-    CONSENT-1 fixes, and no pity. The line labels speakers "They said" and
-    "You said". Jev and TypeSafe go unnamed until TypeSafe agrees
+    CONSENT-1 fixes, and no pity. The caption labels speakers "They said"
+    and "You said". Jev and TypeSafe go unnamed until TypeSafe agrees
     (CONSENT-7, SUBMIT-6). A table fixes every string the PRD leaves open.
 1.  **Icon and pitch assets.** One Icon Composer `.icon` file: an open speech
     bubble drawn as one stroke that curls back like a turn arrow, white on
@@ -290,12 +294,15 @@ reasons given, and each is stated as a decision in the document.
 1.  **The PRD's row and large text.** ROW-1's fixed height can't hold every
     phrase whole at every size, as A11Y-4 asks, so A11Y-4 changes to allow
     the row's ellipsis, with the whole phrase in VoiceOver, in speech, and in
-    the grid; its check changes with it.
+    the grid; its check changes with it. A11Y-8 then names a cut-off phrase
+    by its whole text, which begins with the visible words, and the PRD's
+    definition of the row leaves the slots' arrangement to the design.
 1.  **The TRD in step.** The TRD gains `userInterfaceStyle: 'automatic'`, the
     icon and launch screen settings, text styles with ramps and Bold Text
     weights, the accessibility settings store, the row's fixed slots and
-    ellipsis, the press guard, the permission sheet's background, no
-    haptics, and the theme file and its test, and it links the design.
+    ellipsis, the press guard, the bottom bar's paging, the permission
+    sheet's background, no haptics, and the theme file and its test, and it
+    links the design.
 
 ### Assumptions
 
