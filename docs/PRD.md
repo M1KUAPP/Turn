@@ -668,9 +668,11 @@ says how each is built.
 The brief's [submission checklist][brief-checklist] owns the full list;
 these are what it means for Turn.
 
-- **SUBMIT-1, Must.** The repository is public by September 29, 2026, with an
-  MIT `LICENSE` at its root that GitHub detects, after the secret scan in
-  SEC-1. Check: GitHub shows the repository as public with the MIT license.
+- **SUBMIT-1, Must.** The repository, or the public copy the
+  [open questions](#open-questions) describe, is public by September 29,
+  2026, with an MIT `LICENSE` at its root that GitHub detects, after the
+  secret scan in SEC-1. Check: GitHub shows the repository as public with the
+  MIT license.
 - **SUBMIT-2, Must.** The README opens with the logline and the evaluation's
   table, then gives setup from a Mac with Xcode 27, the Simulator path by
   typing a partner line, the Test Store purchase, the privacy notice, and
@@ -745,10 +747,15 @@ code lives in this repository, which goes public before submission
 The idea's [open questions][idea-open] still apply. New ones, each with a
 safe default:
 
-- **Publishing this repository.** It is private on September 22, 2026, and
-  `docs/sources/` holds full captures of the contest's web pages. Safe
-  default: run the secret scan, and ask the organizers on Discord whether
-  the captures may stay before making it public.
+- **Publishing this repository.** It is private on September 22, 2026;
+  `docs/sources/` holds full captures of the contest's web pages; and
+  `docs/` names Jev and TypeSafe throughout, which TypeSafe's agreement bars
+  announcing without its consent, while SUBMIT-6 keeps the names out until
+  then. Safe default: run the secret scan, ask the organizers on Discord
+  whether the captures may stay, and include `docs/` in the September 22
+  naming request to TypeSafe; if TypeSafe hasn't agreed by September 29,
+  publish the code, the README, and the LICENSE in a new public repository,
+  and keep this one private.
 - **Voices nearby.** The consent card covers the partner, but the microphone
   also hears anyone talking nearby. Safe default: the card and the privacy
   notice ask the user to pause listening when others are talking close by.
