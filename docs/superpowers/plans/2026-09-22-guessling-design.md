@@ -158,7 +158,8 @@ reasons given, and each is stated as a decision in the document.
 1.  **Palette.** Table blue for the field (`#2E5BD8`), Index white for cards,
     Ballpoint ink for text, Pencil for secondary text, Rule blue and Margin
     pink for the notepad's lines, Link blue, and Marigold (`#FFC53D`) for
-    the Guessling and the primary action, never for an answer. Yes green and
+    the Guessling, the primary action, and the right guess, never for a Yes
+    or a No. Yes green and
     No red take the hues of 🟩 and 🟥, each with a text and a tint shade; a
     neutral Stone marks the free replies. Every token has light, dark, and
     Increase Contrast values for `DynamicColorIOS`, the app follows the
@@ -193,8 +194,9 @@ reasons given, and each is stated as a decision in the document.
     aren't used, since they ignore Reduce Motion.
 1.  **Reduce Motion.** Each reaction becomes a 200 ms cross-fade to its key
     pose, with no confetti, and the app follows `AccessibilityInfo` and its
-    `reduceMotionChanged` event, because `useReducedMotion()` reads the
-    setting only at launch and Reanimated's default snaps every fade.
+    `reduceMotionChanged` event, because `useReducedMotion()` and
+    Reanimated's default both read the setting only at launch, so every
+    animation sets `ReduceMotion.Never` and the app picks the version.
 1.  **Glass.** Only the composer floats in glass, through `GlassView` on
     iOS 26 and later; below iOS 26, and with Reduce Transparency on, it's an
     Index white capsule with a Pencil border. It's never faded with
