@@ -30,6 +30,7 @@ Contents:
 1.  [App icon and store assets](#app-icon-and-store-assets)
 1.  [Do's and don'ts](#dos-and-donts)
 1.  [Guidance for coding agents](#guidance-for-coding-agents)
+1.  [Open questions](#open-questions)
 1.  [See also](#see-also)
 
 ## Overview
@@ -255,7 +256,6 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
   ([iOS notes on drawing the character][ios-character]).
 
 [ios-character]: /docs/research/ios-design.md#drawing-and-animating-the-character
-[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
 
 ## Colors
 
@@ -1368,6 +1368,23 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 - **Colors.** After any color change, the contrast table is recomputed and
   still passes.
 
+## Open questions
+
+Each has a safe default, which this document follows until someone decides.
+
+- **The share row's colors.** 🟩 and 🟥 differ only in color, so the shared
+  pattern is hard to read for deuteranopes. Safe default: SHARE-1 as it is
+  for version 1.0, since the app itself never relies on color alone; the
+  PRD may add Wordle's remedy, a high-contrast share with 🟦 and 🟧, in an
+  update.
+- **Who draws the Guessling.** The idea leaves it open
+  ([idea open questions][idea-open]). Safe default: explore with AI, then a
+  teammate draws and poses the parts, credited in the write-up.
+- **Rive later.** Safe default: Reanimated for version 1.0; Rive only if
+  the poses outgrow a rig, with a paid plan for exports.
+- **An app preview.** Safe default: none in version 1.0; the demo recording
+  can become one with the first update.
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
@@ -1385,3 +1402,4 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 [idea-risks]: /docs/IDEA.md#risks
 [game-findings]: /docs/research/game-design.md#findings-for-designmd
 [game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
+[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
