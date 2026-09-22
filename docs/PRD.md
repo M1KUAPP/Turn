@@ -739,9 +739,10 @@ What the first version depends on, each owned by the team:
   and a Mac with Xcode 27.
 - **A campus speech-language pathology clinic,** for the Should review.
 
-The idea's [assumptions][idea-open] hold, and this document adds one: the
+The idea's [assumptions][idea-open] hold, and this document adds two: the
 code lives in this repository, which goes public before submission
-(SUBMIT-1).
+(SUBMIT-1), and the team creates Cloudflare and RevenueCat accounts on
+September 22 if it has none.
 
 ## Open questions
 
