@@ -111,8 +111,8 @@ The [evidence notes][ev-turn] have the sources, and the
     none fits. A yes-or-no question puts Yes, No, and Not sure first.
     Nothing speaks until the user taps.
 1.  **Without the partner's voice.** The partner's line can be typed, and
-    with no network, Turn ranks phrases on the phone by the place and the
-    letters typed.
+    with no network, Turn ranks phrases on the phone by the words of the
+    partner's line, the place, and the letters typed.
 1.  **Keep listening.** Listen mode is free for the first 20 partner lines;
     after that, a paywall offers a one-time unlock, and speaking stays free.
 
@@ -179,8 +179,10 @@ yes-or-no Noul, with probabilities, and it never writes text
 on: which of the user's own phrases answer what the partner just said.
 
 **The request.** For each partner line, the relay sends Jev one request. The
-state holds the line, with names swapped for tags, the place, and the 40
-candidates. The questions:
+state holds only the line, with names swapped for tags, and the place; each of
+the 40 candidates rides in its own question, as TypeSafe's Noul page does,
+since unrelated state "costs you accuracy" ([request][svc-request]). The
+questions:
 
 - a Choice for the kind of question: yes-or-no, a choice between options,
   open, or not a question;
@@ -226,8 +228,8 @@ Why Jev decides this way:
   114 ms. The phone's trip to the relay, and the relay's to TypeSafe on the
   US West Coast, come on top ([limits][jev-limits]).
 - **Cheap enough to run on every line.** At $0.042 per million input
-  tokens, a request of about 1,500 tokens costs about $0.00006
-  ([round 8][r8]).
+  tokens, a request of about 1,700 to 1,900 tokens costs up to about
+  $0.00008 ([billing][svc-billing]).
 
 How it's wired:
 
@@ -249,8 +251,9 @@ How it's wired:
 
 Data, consent, and terms:
 
-- **What leaves the phone:** per request, the partner's line with names swapped
-  for tags, the place's name, and 40 of the user's phrases. TypeSafe hosts Jev
+- **What leaves the phone:** per request, the partner's line and 40 of the
+  user's phrases, with the names the phone recognizes swapped for tags in
+  both, and the place's name. TypeSafe hosts Jev
   in the United States, and "Jev is not trained on customer requests or
   responses", but it keeps rights "in perpetuity" to use the data for telemetry
   and abuse monitoring ([data handling][jev-data]).
@@ -289,6 +292,7 @@ Data, consent, and terms:
 [jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
 [jp-keys]: /docs/research/jev-patterns.md#keys-in-open-source-code
 [ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
+[svc-request]: /docs/research/turn-services.md#the-request-body-for-one-partner-line
 
 ## Monetization
 
@@ -307,8 +311,8 @@ the [reasoning][r8]; this is how Turn applies them.
   once, from $24.99 to $159.99, and a one-time price answers the fear of
   losing one's voice when a payment lapses.
 - **What a user costs.** At 200 partner lines a day for a year, Jev costs
-  about $4.60, so one payment covers about five years of Jev at that pace,
-  with the relay's hosting on top.
+  about $5.30 to $5.70, so one payment covers about four years of Jev at that
+  pace, with the relay's hosting on top ([billing][svc-billing]).
 - **Trying first.** Listen mode is free for the first 20 partner lines,
   counted by the relay, so the user sees it work before the paywall.
 - **The paywall.** A RevenueCat Paywall, configured remotely, opens when the
@@ -406,10 +410,11 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
   transcription needs a physical iPhone; and the evaluation's table.
 - **Running it without the team's keys:** the app's config points at the
   team's relay, which runs until the winners are announced. The Test Store
-  public SDK key is committed for debug builds; no secret key is. A
-  Simulator build goes in the repository's releases, since building for iOS
-  needs a Mac with Xcode 27 on macOS Tahoe 26.6 or later
-  ([what a judge needs][ng-judge]).
+  key is committed for judging and rotated after the winners are announced;
+  no secret key is. A Debug Simulator build goes in the repository's
+  releases, since a Release build with a Test Store key crashes at launch
+  ([Test Store key][svc-key]) and building for iOS needs a Mac with Xcode 27
+  on macOS Tahoe 26.6 or later ([what a judge needs][ng-judge]).
 
 [ng-license]: /docs/research/next-gen.md#open-source-license-and-setup-instructions
 [ng-judge]: /docs/research/next-gen.md#what-a-judge-needs-to-run-the-app
@@ -426,7 +431,8 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
 - **Thursday, September 24:** Listen mode, with the transcription module and
   the typed-line field; the consent controls; steady slots and the fixed
   buttons; ask the campus clinic for a review.
-- **Friday, September 25:** run the evaluation and set the thresholds; the
+- **Friday, September 25:** run the evaluation, with Jev's thresholds frozen
+  beforehand; the
   paywall, the Test Store purchase, Restore, and the relay's free-line count
   and entitlement check; Settings.
 - **Saturday, September 26:** the clinic's review, if booked, and its fixes;
@@ -484,8 +490,9 @@ description alone and read the code to check them.
 
 ## Risks
 
-- **Jev doesn't beat embeddings.** Trigger: on September 25, Jev's top-6
-  accuracy trails embeddings on the 80 lines; then Jev re-ranks an embedding
+- **Jev doesn't beat embeddings.** Trigger: on September 25, a paired
+  interval puts Jev's top-6 accuracy below embeddings' on the 80 lines
+  ([paired comparisons][eval-paired]); then Jev re-ranks an embedding
   shortlist and the evaluation runs again. If Jev still trails, the README
   says so, and the pitch rests on "none" and steady rows.
 - **No Jev key in time.** Request it on September 22. Trigger: no key by noon
@@ -500,10 +507,12 @@ description alone and read the code to check them.
   of September 24; then switch to `expo-speech-recognition` and its older
   recognizer.
 - **Test Store can't sell a one-time product.** RevenueCat's Test Store pages
-  don't say whether a one-time product can be made there ([gaps][ng-gaps]).
-  Trigger: the dashboard offers none on September 22; then the demo sells Listen
-  as a yearly Test Store product, which renews at most five times before it
-  ends, and the one-time design stays for a store release ([round 8][r8]).
+  don't say whether a one-time product can be made there, but REST API v2 and
+  the iOS SDK both handle non-consumable Test Store products
+  ([one-time products][svc-one-time]). Trigger: the dashboard offers none on
+  September 22; then the team creates the product through REST API v2. A
+  yearly Test Store product is no fallback: it renews hourly and ends after
+  five hours.
 - **A wrong reply.** A mis-ranked row costs time more than words, since
   nothing speaks until the user taps, but a wrong tap on a question about
   pain or consent matters. Yes-or-no questions get the fixed Yes, No, and
@@ -534,6 +543,8 @@ description alone and read the code to check them.
   the credits, and the phone's own ranking keeps Turn usable meanwhile.
 
 [ev-harm]: /docs/research/next-gen-evidence.md#harm-from-a-wrong-turn-decision
+[svc-one-time]: /docs/research/turn-services.md#one-time-products-in-test-store
+[eval-paired]: /docs/research/turn-evaluation.md#paired-comparisons-of-the-four-rankers
 
 ## How the idea was chosen
 
@@ -597,15 +608,19 @@ Still open, each with a safe default:
   be sandboxed"; but the rules never name Test Store, and the brief's safe
   default for the purchase rule is "at least one real purchase or ad". Safe
   default: cite those answers in the description ([purchase rule][ng-rule]).
-- **Test Store and one-time products.** Safe default: the yearly fallback
-  under [Risks](#risks).
-- **Test Store in the Simulator.** RevenueCat never says outright that Test
-  Store runs on the iOS Simulator ([gaps][ng-gaps]). Safe default: try it
-  there on September 25; if it fails, the README's Simulator path skips the
-  purchase, and the video shows it on a device.
-- **The Test Store key in a public repository.** No RevenueCat page says whether
-  it may be committed. Safe default: commit only the public Test Store key, and
-  rotate it if RevenueCat objects.
+- **Test Store and one-time products.** Safe default: create the product
+  through REST API v2, as under [Risks](#risks).
+- **Test Store in the Simulator.** RevenueCat's docs never say outright that
+  Test Store runs on the iOS Simulator, though a company post lists
+  "simulators" ([Test Store in the Simulator][svc-sim]). Safe default: try it
+  there on September 25; if it fails, the relay lifts the free-line limit for
+  the Simulator build until judging ends, and the video shows the purchase
+  on a device.
+- **The Test Store key in a public repository.** No RevenueCat docs page says
+  whether it may be committed, while RevenueCat's blogs keep test keys out of
+  version control and advise rotating them ([Test Store key][svc-key]). Safe
+  default: commit it for judging, since every build a judge runs carries it
+  anyway, and rotate it after the winners are announced.
 - **Jev credits.** No page read names a free tier or student program, and
   no page says
   what the API returns when credits run out. Safe default: buy credits on
@@ -627,6 +642,7 @@ Still open, each with a safe default:
 
 [jp-programs]: /docs/research/jev-patterns.md#programs-and-credits
 [ng-rule]: /docs/research/next-gen.md#whether-the-revenuecat-rule-applies
+[svc-sim]: /docs/research/turn-services.md#test-store-in-debug-builds-and-the-simulator
 
 ## See also
 
@@ -663,7 +679,8 @@ Still open, each with a safe default:
 [ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
 [ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
 [ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
-[ng-gaps]: /docs/research/next-gen.md#gaps
 [r8]: /docs/research/next-gen-ideation.md#round-8-monetization
 [r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
 [r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
+[svc-billing]: /docs/research/turn-services.md#how-a-jev-request-is-billed
+[svc-key]: /docs/research/turn-services.md#the-test-store-api-key
