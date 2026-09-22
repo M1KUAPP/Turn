@@ -1,9 +1,11 @@
 # Guessling design
 
-> **Superseded on September 22, 2026.** This document describes Guessling, the
-> team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen Award,
-> replaced it, and this document's links to Guessling's idea, product, PRD, and
-> TRD point at their archived copies in `docs/archive/`.
+> **Superseded on September 22, 2026, and archived on September 23.** This
+> document describes Guessling, the team's first idea. [Turn](/docs/IDEA.md), an
+> entry for the Next Gen Award, replaced it, and
+> [`docs/DESIGN.md`](/docs/DESIGN.md) now holds Turn's design. This document's
+> links to Guessling's idea, product, PRD, and TRD point at their archived
+> copies in `docs/archive/`.
 
 How Guessling looks, moves, sounds, and reads: the design system and art
 direction for the iPhone app, the paywall's styling, the three web pages,

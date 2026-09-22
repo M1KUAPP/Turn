@@ -739,10 +739,10 @@ before relying on an answer; the brief's
   traced to the product requirements.
 - [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
   Turn superseded. The [product](/docs/archive/guessling-product.md),
-  [product requirements](/docs/archive/guessling-prd.md), and
-  [technical requirements](/docs/archive/guessling-trd.md) built on it are
-  archived with it, and the [design](/docs/DESIGN.md) document is superseded
-  too.
+  [product requirements](/docs/archive/guessling-prd.md),
+  [technical requirements](/docs/archive/guessling-trd.md), and
+  [design](/docs/archive/guessling-design.md) built on it are archived with
+  it.
 - [Official rules][rules]: the binding terms, on Devpost.
 - [Past winners notes](/docs/research/past-winners.md): every placed entry of
   the 2024 Ship-a-ton, Shipaton 2025, and Shipyard 2026, with sources.
