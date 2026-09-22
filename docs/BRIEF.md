@@ -506,16 +506,12 @@ settles several of them and gives a different winners date.
 - [Context](/docs/CONTEXT.md): what the official rules settle or change,
   what past winners did, best practices from primary sources, and related
   materials.
-- [Idea](/docs/IDEA.md): the app chosen for Shipaton 2026 through ten rounds
-  of ideation, with Jev built in.
-- [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why, with
-  its principles, metrics, and roadmap.
-- [Product requirements](/docs/PRD.md): what version 1.0 must do, as
-  numbered requirements with checks.
-- [Technical requirements](/docs/TRD.md): how version 1.0 is built, traced
-  to the product requirements.
-- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
-  tokens and rules a coding agent can follow.
+- [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten
+  rounds of ideation, with Jev built in.
+- [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which
+  Turn superseded, with the [product](/docs/PRODUCT.md),
+  [product requirements](/docs/PRD.md), [technical requirements](/docs/TRD.md),
+  and [design](/docs/DESIGN.md) documents built on it.
 - [Devpost page capture][devpost]: the authoritative 2026 overview,
   requirements, prizes, and judges.
 - [Official rules][rules]: the source of truth for eligibility, deadlines,
