@@ -92,7 +92,7 @@ yet.
   time listening starts, and a light while it listens.
 - **The person who sets it up** is often a family member or caregiver, who
   adds names, places, and phrases, and may buy Turn Listen. Turn gives them a
-  phrase bank editor, and Restore Purchases in Settings.
+  phrase bank editor, and Turn Listen and Restore Purchases in Settings.
 - **The clinician** is a speech-language pathologist who recommends AAC
   tools and may review Turn. They want to see that it is safe when it's
   wrong and honest about what it does. Turn gives them fixed Yes, No, and Not
@@ -273,7 +273,8 @@ leaves the phone whole.
   relay's hosting on top ([services notes][svc-billing]).
 - **When it asks:** when the free lines run out, or when the user turns
   Listen mode on after that. The paywall closes with one tap, and Settings
-  holds Restore Purchases, so a caregiver can buy from there.
+  offers Turn Listen and Restore Purchases, so a caregiver can buy from
+  there.
 - **For Next Gen:** the purchase runs through RevenueCat's Test Store, which
   the organizers accept for Next Gen, so the entry reports no revenue; the
   PRD's [purchase requirements][prd-pay] say how.

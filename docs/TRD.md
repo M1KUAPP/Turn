@@ -192,7 +192,7 @@ CREATE TABLE category (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL CHECK (length(name) BETWEEN 1 AND 40),
   position INTEGER NOT NULL,
-  fixed INTEGER NOT NULL DEFAULT 0          -- 1 for Quick, which stays first
+  fixed INTEGER NOT NULL DEFAULT 0          -- 1 for Quick and body-pain, which can't be deleted
 );
 CREATE TABLE phrase (
   id TEXT PRIMARY KEY,
@@ -312,7 +312,7 @@ type LineRequest = {
   seq: number // increases with every line on this install
   line: string // at most 300 characters, names as tags (LISTEN-5, LISTEN-6)
   place: string // at most 40 characters (PLACE-3)
-  categories: string[] // at most 12, each at most 40 characters
+  categories: { id: string; name: string }[] // at most 12; names of 40 characters
   candidates: { id: string; text: string }[] // at most 40, text at most 200
   refresh?: boolean // the first line after a purchase (PAY-4)
 }
@@ -320,7 +320,7 @@ type LineRequest = {
 type LineAnswer = {
   seq: number
   kind: Record<'yes_no' | 'either_or' | 'open' | 'not_a_question', number>
-  topic: Record<string, number> // one probability per category name
+  topic: Record<string, number> // one per category id, plus "consent"
   scores: Record<string, number> // candidate id -> Noul, 0 to 1
   policy: Policy
   freeLinesLeft: number | null // null once the user is entitled
@@ -332,7 +332,7 @@ type Policy = {
   bigAbove: number // 0.85
   margin: number // 0.15
   yesNoPhrases: boolean // true: phrases may fill slots 4 to 6
-  noBigTopics: string[] // never a big button; starts as ["Body and pain"]
+  noBigTopics: string[] // never a big button; starts as ["body-pain", "consent"]
   fixedOnlyTopics: string[] // only the fixed buttons; starts empty
 }
 ```
@@ -448,9 +448,10 @@ with the model pinned (SEC-2):
       "type": "choice",
       "instructions": "What topic is `partner_line` about?",
       "criteria": {
-        "Feelings": null,
-        "Body and pain": null,
-        "Food and drink": null
+        "feelings": "Feelings",
+        "body-pain": "Body and pain",
+        "food": "Food and drink",
+        "consent": "Agreeing to or refusing care, treatment, or a procedure"
       }
     },
     "c00": {
@@ -474,9 +475,11 @@ with the model pinned (SEC-2):
 - **Keys.** `c00` to `c39` stand for the candidates in the request's order,
   and the object maps each answer back to the phone's phrase id; the key "is
   not sent to the underlying model" ([Jev notes][jev-api]).
-- **The topic's options** are the user's category names, at most 12, far
-  below a Choice's limit of 255, and nothing documented caps 42 questions:
-  TypeSafe's own cookbooks send 54 and 62 in one request.
+- **The topic's options** are the user's category ids, each described by
+  its name as the user wrote it, plus a fixed `consent` option, so the
+  safety rules follow ids a rename can't change (ROW-3). That is at most 13
+  options, far below a Choice's limit of 255, and nothing documented caps 42
+  questions: TypeSafe's own cookbooks send 54 and 62 in one request.
 - **The call.** `@typesafe-ai/sdk` 0.6.0 with every option in code:
   `defaultModel: 'jev-1.13.0'`, `logLevel: 'off'`, `timeout: 1500` per
   attempt, and `retry: { maxRetries: 1, respectRetryAfter: false }`, under
@@ -817,7 +820,7 @@ Expo Router, with routes under `app/src/app/`:
 | `/`                | the grid, the row, the conversation strip, the place picker, the Listen button, the light, the caption, and the keyboard |
 | `/permission`      | the user's permission step, as a sheet (CONSENT-1)                                                                       |
 | `/consent`         | the consent card, full screen (CONSENT-4)                                                                                |
-| `/settings`        | Settings (SET-1), with voice, places, bank, privacy, licenses, and stats                                                 |
+| `/settings`        | Settings (SET-1), with voice, places, bank, Turn Listen, Restore Purchases, privacy, licenses, and stats                 |
 | `/bank/[category]` | the phrase bank editor for one category (BANK-2)                                                                         |
 
 The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
