@@ -268,8 +268,8 @@ leaves the phone whole.
   paying for speech, the established text AAC apps sell once, and a one-time
   price answers the fear of losing one's voice when a payment lapses.
 - **What a user costs:** a partner line comes to about 1,700 to 1,900 input
-  tokens, so at 200 lines a day for a year, Jev costs about $5.30 to $5.70,
-  and one payment covers about four years of Jev at that pace, with the
+  tokens, so at 200 lines a day for a year, Jev costs about $5.20 to $5.80,
+  and one payment covers over four years of Jev at that pace, with the
   relay's hosting on top ([services notes][svc-billing]).
 - **When it asks:** when the free lines run out, or when the user turns
   Listen mode on after that. The paywall closes with one tap, and Settings
