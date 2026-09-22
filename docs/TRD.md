@@ -401,6 +401,19 @@ step that answers:
     yet, and return what storage then holds, `rephrase` and `not_question`
     included.
 
+A question can be sent again while its first request still waits on Jev:
+by the app's "Send again" after its timeout, or by the Worker's retry. So
+the object also keeps pending requests by `requestId`, and a repeat awaits
+the first one's result instead of taking a second turn. When Jev returns,
+the object checks the round again, still `playing`, turns left, the
+free-answer limit, and `last_request`, and applies the turn in one
+synchronous update: the check-and-set Cloudflare prescribes after an
+outside call ([Cloudflare notes][cf-gates]). A Yes, a No, or a guess then
+takes a turn, and anything else doesn't (ASK-3, GUESS-3), and the
+twentieth turn or a right guess ends the round (END-1).
+
+[cf-gates]: /docs/research/cloudflare-workers.md#single-threaded-execution-and-input-and-output-gates
+
 ### Sharing one Jev call per wording
 
 A `fetch` inside a Durable Object lets other requests run while it waits, so
@@ -969,7 +982,7 @@ The Worker integration tests that matter most:
 - Two simultaneous first requests for one wording make one Jev call, and
   both players get the stored answer (ASK-5).
 - A repeated `requestId` returns the first response and uses no second turn
-  (STATE-2).
+  (STATE-2), including a repeat sent while the first still waits on Jev.
 - The 41st free answer returns `rest`, and a guess still works (ASK-10).
 - With `X-Guessling-AI: off`, no Jev call happens, nothing is stored, and no
   count is written (NOTICE-3).
