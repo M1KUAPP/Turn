@@ -62,17 +62,18 @@ Contents:
 | RevenueCat SDK and     |------>| validate, rate-limit,        |      (Guessling+ check)
 | Paywalls               |       | confirm Guessling+, route    |----> Analytics Engine
 +-----------+------------+       | static /privacy /terms       |      (counts)
-            |                    +--------------+---------------+
-            v                                   | one object per puzzle, in wnam
-+------------------------+       +--------------v---------------+       +--------------+
-| App Store, RevenueCat  |       | Durable Object puzzle-<n>    |------>| Jev          |
-| (purchases, paywall)   |       | answers, players, reports    |       | (TypeSafe)   |
-+------------------------+       +--------------+---------------+       |              |
-                                                |                       +--------------+
-                                 +--------------v---------------+
-                                 | Workers KV                   |
-                                 | puzzles, banks, config       |
-                                 +------------------------------+
+            |                    | cron 09:00 UTC: daily check  |
+            v                    +--------------+---------------+
++------------------------+                      | one object per puzzle, in wnam
+| App Store, RevenueCat  |       +--------------v---------------+       +--------------+
+| (purchases, paywall)   |       | Durable Object puzzle-<n>    |------>| Jev          |
++------------------------+       | answers, players, reports    |   ^   | (TypeSafe)   |
+                                 +--------------+---------------+   |   +--------------+
+                                                |                   |
+                                 +--------------v---------------+   |   +--------------+
+                                 | Workers KV                   |   +---| jev-budget   |
+                                 | puzzles, banks, config       |       | tokens/min   |
+                                 +------------------------------+       +--------------+
 ```
 
 What each part owns:
@@ -630,7 +631,8 @@ take a puzzle from draft to published:
     the public endpoint "rate-limits above roughly eight"
     ([Cloudflare notes][cf-fetch]). It writes `content/review/<n>.csv` with
     each probability and flags every answer between 0.3 and 0.7 and every
-    pair whose answers agree when they should differ (CONTENT-4).
+    question and negation whose answers contradict each other, both Yes or
+    both No (CONTENT-4).
 2.  **A person** fills in `checked` for every flagged entry and copies the
     clear answers as they stand.
 3.  **`publish.ts <n>`** refuses a puzzle unless every bank id and negation
@@ -688,9 +690,7 @@ puzzle is published (CONTENT-7, CONTENT-9).
   downgrade.
 - The Worker needs the entitlement's object ID, such as `entla1b2c3d4e5`,
   not its lookup key; `GET /v2/projects/{project_id}/entitlements` lists
-  both ([RevenueCat notes][rc-v2-ids]).
-
-[rc-v2-ids]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+  both ([RevenueCat notes][rc-v2]).
 
 ### Purchases in the app
 
@@ -761,8 +761,6 @@ export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boo
 - An app user ID works like a bearer value: nothing ties it to a device.
   Guessing one is impractical, but a player who shares theirs shares
   Guessling+, which the team accepts.
-
-[rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
 
 ### The judges' offer code
 
@@ -1026,17 +1024,20 @@ tracked revenue.
 
 ## Testing
 
-| Layer                | What runs                                                                                                                                                     | Proves                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| Unit                 | Vitest on normalization, letter rules, guesses, dates and numbers, thresholds, and the share text                                                             | ASK-5, ASK-7, ASK-12, GUESS-2, TODAY-3, SHARE-1 |
-| Worker integration   | `@cloudflare/vitest-plugin` with Jev and RevenueCat mocked by `@msw/cloudflare`                                                                               | The pipeline, limits, retries, and access       |
-| Recorded Jev answers | Real match and live responses saved as fixtures from the test environment                                                                                     | The request shapes and thresholds               |
-| Consistency          | `consistency.ts` on each category's paraphrase set                                                                                                            | CONTENT-6                                       |
-| Purchases            | A TestFlight build with a sandbox account: trial, purchase, restore, offer code                                                                               | PAY, RELEASE-2                                  |
-| Devices              | The smallest and largest iPhones and an iPad simulator, VoiceOver, the largest text, Reduce Motion, airplane mode                                             | COMPAT-3, A11Y, STATE-1                         |
-| Load                 | 30 questions a second for a minute at the test server, half of them repeats                                                                                   | AVAIL-2                                         |
-| Timing               | 50 questions timed in the app on the release build, and a cold start on the oldest iPhone the team has                                                        | PERF-1, PERF-2, PERF-3                          |
-| Deploy check         | On the first day, a deployed test Worker makes one real Jev call through the SDK; if it fails there, `fetch` calls the HTTP API directly, as the idea planned | The SDK in production                           |
+| Layer                | What runs                                                                                                         | Proves                                          |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Unit                 | Vitest on normalization, letter rules, guesses, dates and numbers, thresholds, and the share text                 | ASK-5, ASK-7, ASK-12, GUESS-2, TODAY-3, SHARE-1 |
+| Worker integration   | `@cloudflare/vitest-plugin` with Jev and RevenueCat mocked by `@msw/cloudflare`                                   | The pipeline, limits, retries, and access       |
+| Recorded Jev answers | Real match and live responses saved as fixtures from the test environment                                         | The request shapes and thresholds               |
+| Consistency          | `consistency.ts` on each category's paraphrase set                                                                | CONTENT-6                                       |
+| Purchases            | A TestFlight build with a sandbox account: trial, purchase, restore, offer code                                   | PAY, RELEASE-2                                  |
+| Devices              | The smallest and largest iPhones and an iPad simulator, VoiceOver, the largest text, Reduce Motion, airplane mode | COMPAT-3, A11Y, STATE-1                         |
+| Load                 | 30 questions a second for a minute at the test server, half of them repeats                                       | AVAIL-2                                         |
+| Timing               | 50 questions timed in the app on the release build, and a cold start on the oldest iPhone the team has            | PERF-1, PERF-2, PERF-3                          |
+
+On the first day, a deployed test Worker also makes one real Jev call
+through the SDK, which the notes only ran locally; if it fails there, the
+Worker calls the HTTP API directly with `fetch`, as the idea planned.
 
 The Worker integration tests that matter most:
 
@@ -1181,3 +1182,4 @@ product and legal ones.
 [cf-notes]: /docs/research/cloudflare-workers.md
 [apple-notes]: /docs/research/apple-requirements.md
 [daily-notes]: /docs/research/daily-puzzles.md
+[rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
