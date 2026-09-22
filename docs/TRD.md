@@ -528,7 +528,8 @@ on answer(a)
   if the row was a big button: put its phrase in the first free slot
     if it still scores P.floor or more                             # ROW-5
   if fixedOnly: slots 1-3 = Yes, No, Not sure                     # ROW-4
-    usable = slots 4-6 if yesNo and P.yesNoPhrases, else none
+    if yesNo and P.yesNoPhrases: usable = slots 4-6
+    else: empty slots 4-6; usable = none                          # EVAL-5
   else: empty the slots the fixed buttons held; usable = all six
   each shown phrase takes its new score; below P.floor, it's stale
   for each fresh phrase not shown, highest first:
