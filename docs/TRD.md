@@ -372,6 +372,7 @@ Errors come back as `{ "error": { "code": string, "message": string } }`:
 | 403    | `needs_plus`  | An archive puzzle without a confirmed Guessling+                |
 | 404    | `not_found`   | A puzzle that isn't published, or a date not yet today anywhere |
 | 409    | `finished`    | A turn on a round that has ended                                |
+| 409    | `pending`     | A new turn while the player's earlier one is still pending      |
 | 426    | `update`      | An app version below `minAppVersion`                            |
 | 429    | `slow_down`   | A player over the burst limit (SEC-3)                           |
 | 503    | `busy`        | Jev didn't answer in time and no stored answer fits (STATE-3)   |
@@ -408,28 +409,31 @@ step that answers:
     `pick`, and store nothing (NOTICE-3, ASK-9).
 8.  **Jev.** The match request, then, if nothing matched, the live request;
     both below.
-9.  **Store.** Insert the answer under the wording if no answer is there
-    yet, and return what storage then holds, `rephrase` and `not_question`
+9.  **Store.** Insert the answer under the wording if no answer is there yet,
+    and return what storage then holds, `rephrase` and `not_question`
     included.
 
-A question can be sent again while its first request still waits on Jev:
-by the app's "Send again" after its timeout, or by the Worker's retry. So
-the object also keeps pending requests by `requestId`, and a repeat awaits
-the first one's result instead of taking a second turn. When Jev returns,
-the object checks the round again, still `playing`, turns left, the
-free-answer limit, and `last_request`, and applies the turn in one
-synchronous update: the check-and-set Cloudflare prescribes after an
-outside call ([Cloudflare notes][cf-gates]). A Yes, a No, or a guess then
-takes a turn, and anything else doesn't (ASK-3, GUESS-3), and the
-twentieth turn or a right guess ends the round (END-1).
-
-[cf-gates]: /docs/research/cloudflare-workers.md#single-threaded-execution-and-input-and-output-gates
+A question can be sent again while its first request still waits on Jev: by
+the app's "Send again" after its timeout, or by the Worker's retry. So the
+object also keeps pending requests by `requestId`, and a repeat awaits the
+first one's result instead of taking a second turn. When Jev returns, the
+object checks the round again, still `playing`, turns left, the free-answer
+limit, and `last_request`, and applies the turn in one synchronous update: the
+check-and-set Cloudflare prescribes after an outside call
+([Cloudflare notes][cf-gates]). A Yes, a No, or a guess then takes a turn, and
+anything else doesn't (ASK-3, GUESS-3), and the twentieth turn or a right
+guess ends the round (END-1). The object also refuses a new `requestId` from a
+player whose earlier one is still pending, with `pending`, so a round has one
+turn in flight at a time. The Guessling+ check's 1-second timeout and the
+3-second Jev budget keep the server's worst case under the app's 5 seconds.
 
 A guess takes the same limits and retry handling, and never reaches Jev.
 It's compared in _name form_: lowercase, trimmed, with punctuation dropped,
 spaces collapsed, and a leading "a", "an", or "the" removed, so "An
 Octopus!" becomes "octopus". `publish.ts` stores `names` in the same form,
 so a guess is right exactly when its name form is in `names` (GUESS-2).
+
+[cf-gates]: /docs/research/cloudflare-workers.md#single-threaded-execution-and-input-and-output-gates
 
 ### Sharing one Jev call per wording
 
@@ -739,7 +743,7 @@ export async function hasGuesslingPlus(appUserId: string, env: Env): Promise<boo
     `/customers/${encodeURIComponent(appUserId)}/active_entitlements`
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${env.RC_SECRET_KEY}` },
-    signal: AbortSignal.timeout(2000) // a timeout is answered as unconfirmed too
+    signal: AbortSignal.timeout(1000) // a timeout is answered as unconfirmed too
   })
   if (res.status === 404) return false // RevenueCat has never seen this ID
   if (!res.ok) throw new Unconfirmed(res.status) // answered as 503 unconfirmed (STATE-5)
@@ -821,7 +825,9 @@ Expo Router, with one stack:
   it's typed, and is kept with the round until an answer arrives. "Send
   again" resends the same ID, so a retry never costs a second turn
   (STATE-1, STATE-2).
-- The question field is disabled while a request is pending (ASK-8).
+- The question field, the Guess button, and the question list are
+  disabled while a request is pending, and after a timeout the app offers
+  only "Send again", with the same `requestId` (ASK-8).
 
 ### The notice, sharing, and settings
 
