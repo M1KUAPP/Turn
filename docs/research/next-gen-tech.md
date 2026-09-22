@@ -37,7 +37,8 @@ are. None of it picks an idea.
 - **iOS 27 is current; Expo SDK 57 still is too.** iOS 27 and Xcode 27
   shipped on September 14, 2026. SDK 57 is Expo's latest stable release, and
   SDK 58, "built for iOS 27", is a beta that should run past September 30.
-  Calling iOS 27-only APIs from Expo today means a local Xcode 27 build. See
+  Calling iOS 27-only APIs from Expo on September 22, 2026 means a local Xcode
+  27 build. See
   [Platform versions on September 22, 2026](#platform-versions-on-september-22-2026)
   and [Expo SDK 57, SDK 58, and Xcode 27](#expo-sdk-57-sdk-58-and-xcode-27).
 - **The phone now has a free, offline text generator.** Foundation Models
