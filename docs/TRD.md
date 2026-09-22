@@ -467,8 +467,7 @@ with the model pinned (SEC-2):
 - **One Noul per candidate, a small state.** The state holds only the tagged
   line and the place, and each candidate rides in its own Noul's
   `instructions`, as TypeSafe's Noul page does for records; unrelated state
-  "costs you accuracy", and more questions don't. This refines the idea,
-  which puts the 40 candidates in the state
+  "costs you accuracy", and more questions don't
   ([services notes][svc-request]). Nouls can all come back low, which is
   how the row learns that nothing fits.
 - **Keys.** `c00` to `c39` stand for the candidates in the request's order,
@@ -486,8 +485,8 @@ with the model pinned (SEC-2):
   `jev_unavailable`. Running out of credits has no documented status: the
   SDK passes a `402` as its base `APIError`, which the object logs as
   `credits` and answers as `jev_unavailable` (AVAIL-2).
-- **Size and cost.** About 1,700 to 1,900 input tokens a line, more than
-  the idea's estimate of 1,500, or up to about $0.00008 at $0.042 per
+- **Size and cost.** About 1,700 to 1,900 input tokens a line, by the
+  services notes' estimate, or up to about $0.00008 at $0.042 per
   million; the object logs `usage.input_tokens` and the `model` field of
   each answer, so a silent model change would show.
 
@@ -706,9 +705,9 @@ Listen mode says so and offers the typed-line field.
   using a key with `project_configuration:products:read_write` (PAY-3,
   PAY-8). A saved product's price can't be edited; a new product replaces
   it in the package.
-- **Not a yearly product.** The idea's fallback, a yearly Test Store
-  product, renews every hour and ends after five hours, which would lock
-  Listen mode mid-judging ([services notes][svc-one-time]).
+- **Not a yearly product.** A yearly Test Store product renews every hour and
+  ends after five hours, which would lock Listen mode mid-judging
+  ([services notes][svc-one-time]).
 - **Entitlement:** `listen`, with the Test Store product attached.
 - **Offering:** `default`, with one package for the product, and a Paywall
   built in the dashboard that shows the price once and says speaking stays

@@ -365,9 +365,8 @@ says how each is built.
 - **STATE-1, Must.** With no network, Listen mode still transcribes, and the
   phone ranks each line itself: up to six phrases sharing a word with the
   line other than common words, the place's phrases first among ties, or no
-  change when none does, under a note that the phone ranked them. This
-  refines the idea's fallback by place and typed letters, which SPEAK-4 keeps
-  for typing. Check: scenario 6.
+  change when none does, under a note that the phone ranked them. SPEAK-4
+  covers ranking by the letters typed. Check: scenario 6.
 - **STATE-2, Must.** When the relay or Jev fails, or no answer arrives within
   3 seconds, the phone ranks that line itself. After two failures in the
   last three lines, the app says Listen mode is degraded until a line
@@ -408,9 +407,9 @@ says how each is built.
   Check: a request with a fresh ID's 21st line and no purchase gets the
   paywall response.
 - **PAY-8, Must.** If the dashboard's form can't make a one-time Test Store
-  product, the team makes it through RevenueCat's API, which supports one.
-  The idea's yearly fallback, in its [risks][idea-risks], isn't used: a
-  yearly Test Store product ends after five hours, mid-judging. Check: the
+  product, the team makes it through RevenueCat's API, which supports one,
+  as the idea's [risks][idea-risks] plan. A yearly Test Store product is no
+  fallback, since it ends after five hours, mid-judging. Check: the
   product's type in the dashboard on September 22.
 - **PAY-9, Must.** Judges can use Listen mode, free of charge and without
   restriction, until judging ends on October 13, 2026, as the
