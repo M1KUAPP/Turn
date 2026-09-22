@@ -447,8 +447,11 @@ https://apps.apple.com/app/id<APP_ID>
 - **CONTENT-8, Must.** A published daily puzzle changes only once it
   closes, at 12:00 UTC two days after its date, when its date has ended
   everywhere and every round begun on it has had the 24 hours TODAY-5
-  allows; the change is checked again before it's republished. Check: the
-  server refuses to forget answers earlier.
+  allows; the change is checked again before it's republished, and every
+  stored paraphrase of a corrected bank entry is forgotten with it. Check:
+  the server refuses to forget answers earlier, `publish.ts` refuses to
+  repoint an open puzzle, and after a fix, a stored paraphrase of the entry
+  gets the new answer.
 - **CONTENT-9, Should.** No category runs two days in a row. Check: the
   schedule of dates and categories.
 
