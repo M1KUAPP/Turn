@@ -189,9 +189,11 @@ Guessling's role, personality, and voice; this section draws it.
   must still read at the app icon's smallest sizes, because a character is
   recognized by its silhouette before its details
   ([game notes][game-silhouette]).
-- **Color.** The body is Marigold (`primary`), with a Ballpoint outline a
-  40th of its height, 4 points at the default 160; the eyes are white with
-  Ballpoint pupils. No gradients or textures.
+- **Color.** The body is Marigold (`primary`); the outline, pupils, brows,
+  and mouth are Ballpoint on Marigold (`on-primary`), the outline a 40th of
+  the height, 4 points at the default 160; the eye whites are Chalk
+  (`on-desk`). These three don't change in Dark Mode, so the Guessling
+  looks the same in every appearance. No gradients or textures.
 - **Parts, back to front.** Feet, body, arms (short nubs ending in round
   hands), mouth, eyes with lids, brows, and the tuft. Each part is its own
   layer, moved only by transforms and opacity, as the TRD animates it with
@@ -207,16 +209,16 @@ Guessling's role, personality, and voice; this section draws it.
 Each pose is a set of part states, and each key pose reads as a still, so
 it doubles as the Reduce Motion frame. Every pose appears with its words.
 
-| Pose        | When                                                   | Key shape                                                          | Moves along |
-| ----------- | ------------------------------------------------------ | ------------------------------------------------------------------ | ----------- |
-| Idle        | Between answers                                        | Upright, eyes forward, a small smile                               | Nothing     |
-| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°                      | A tilt      |
-| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs                         | Vertical    |
-| Head shake  | No, and a wrong guess                                  | Turned 10°, or 8° for a wrong guess, eyes open, a small kind smile | Horizontal  |
-| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°                | Shoulders   |
-| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open            | Up          |
-| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                            | Down        |
-| Presenting  | The reveal of a round not solved                       | Holding the answer card out, in a small bow                        | Forward     |
+| Pose        | When                                                   | Key shape                                                                                                              | Moves along |
+| ----------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Idle        | Between answers                                        | Upright, eyes forward, a small smile                                                                                   | Nothing     |
+| Thinking    | An answer takes longer than 300 ms                     | Eyes up to one side, brows up, head tilted 6°                                                                          | A tilt      |
+| Nod         | Yes                                                    | Dipped 8 points, eyes closed in happy arcs                                                                             | Vertical    |
+| Head shake  | No, and a wrong guess                                  | Face slid 6 points to one side and body turned 3°, or 4 points and 2° for a wrong guess; eyes open, a small kind smile | Horizontal  |
+| Shrug       | Ask another way, Ask a yes-or-no question, and picking | Arms up and out, palms up, brows up, head tilted 8°                                                                    | Shoulders   |
+| Celebration | A right guess                                          | Arms up in a jump, the tuft straight as "!", mouth open                                                                | Up          |
+| Resting     | The Guessling needs a rest (ASK-10)                    | Lids half closed, body lowered 4 points                                                                                | Down        |
+| Presenting  | The reveal of a round not solved                       | Holding the answer card out, in a small bow                                                                            | Forward     |
 
 - **The signature.** The tuft turns from "?" to "!" on a solve and stays
   "!" on the end screen.
@@ -231,11 +233,12 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
 
 ### The answer card
 
-- **Shape.** A playing card, 5 to 7, in Index white with a Ballpoint
-  outline and 12-point corners (`md`).
-- **Back.** Table blue with a Marigold "?" in the middle.
+- **Shape.** A playing card, 5 to 7, in Index white (`card`) with a
+  Ballpoint (`ink`) outline and 12-point corners (`md`).
+- **Back.** Table blue (`desk`) with a Marigold (`primary`) "?" in the
+  middle.
 - **Face.** The answer's name in `reveal` and the hint under it in `meta`,
-  both in Ballpoint.
+  both in Ballpoint (`ink`).
 - **Size.** As wide as the stage less 48 points, up to 280, and at least
   5 to 7 in shape. At large text it grows taller, and the name wraps
   between words rather than shrinking.
@@ -776,9 +779,9 @@ property for.
   - No: `no`, with an Index white `xmark`.
   - A wrong guess: Index white with a 2-point `no` ring and a `no`
     `xmark`, like the share's ❌.
-  - The right guess: Marigold with a Ballpoint `target`, like the share's
-    🎯, and a 1.5-point `ink` ring, since Marigold on Index white is only
-    1.5 to 1.
+  - The right guess: Marigold with a `target` in `on-primary`, like the
+    share's 🎯, and a 1.5-point `ink` ring, since Marigold on Index white is
+    only 1.5 to 1.
 - **Large text.** Pips grow with the text up to 1.6 times, and from AX1
   the meter wraps into four rows of five.
 - **For VoiceOver.** One element: "6 of 20 turns used: 4 Yes, 1 No, 1 wrong
@@ -929,7 +932,7 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 | Reaction    | The moves                                                                                                                                                                                                                        | About  |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
 | Nod         | Dips 8 points with `lead`, then springs back with `nod`, whose overshoot makes a second, smaller nod; eyes close to arcs                                                                                                         | 500 ms |
-| Head shake  | Turns 10° with `lead`, then springs back with `shake`, swinging past center and back; 8° at most for a wrong guess                                                                                                               | 550 ms |
+| Head shake  | Slides the face 6 points with `lead` as the body turns 3°, then springs back with `shake`, swinging past center and back; 4 points and 2° for a wrong guess                                                                      | 550 ms |
 | Shrug       | Arms and brows up with `shrug`, a head tilt of 8°, a 200 ms hold, then down with `snap`                                                                                                                                          | 750 ms |
 | Celebration | Squashes to 92% with `lead`, hops 40 points with `hop`, the tuft fades from "?" to "!" at the top, and lands in a squash to 95%; 24 pieces of confetti in Marigold, Yes green, Table blue, and Index white fall for 900 ms, once | 1.2 s  |
 | Thinking    | After 300 ms without an answer, eyes and brows move with `settle`                                                                                                                                                                | 500 ms |
