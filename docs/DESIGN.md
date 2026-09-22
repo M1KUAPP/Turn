@@ -15,6 +15,7 @@ Contents:
 1.  [Overview](#overview)
 1.  [Influences and trends](#influences-and-trends)
 1.  [The Guessling](#the-guessling)
+1.  [Colors](#colors)
 1.  [See also](#see-also)
 
 ## Overview
@@ -156,7 +157,6 @@ What Guessling does with them:
 [trd-app]: /docs/TRD.md#the-iphone-app
 [ios-findings]: /docs/research/ios-design.md#findings-for-designmd
 [ms-license]: /docs/research/motionsites.md#license-and-terms
-[game-findings]: /docs/research/game-design.md#findings-for-designmd
 
 ## The Guessling
 
@@ -244,6 +244,131 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
 [game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
 [idea-open]: /docs/IDEA.md#assumptions-and-open-questions
 
+## Colors
+
+The table is blue, the cards are white, and the ink is a dark blue-black,
+like a ballpoint pen's. Marigold belongs to the Guessling and to the one
+action that matters most on a screen. Green and red belong to answers, and
+only to answers, the way NYT keeps its brand colors apart from its
+gameplay colors ([game notes][game-findings]).
+
+```yaml
+colors:
+  primary: '#FFC53D'
+  on-primary: '#15203B'
+  desk: '#2E5BD8'
+  on-desk: '#FFFFFF'
+  card: '#FFFFFF'
+  ink: '#15203B'
+  ink-muted: '#56617A'
+  link: '#2248B5'
+  rule: '#C9DAF2'
+  rule-margin: '#F29BA6'
+  yes: '#0E9C0C'
+  yes-ink: '#12692C'
+  yes-tint: '#E3F5E6'
+  no: '#D72F18'
+  no-ink: '#B3261E'
+  no-tint: '#FCE7E4'
+  unsure-ink: '#4E5870'
+  unsure-tint: '#EDF0F5'
+```
+
+### Colors in every appearance
+
+The format has no appearance modes, so the yaml above holds the light
+values and this table holds all four. In code, each token becomes one
+`DynamicColorIOS({ light, dark, highContrastLight, highContrastDark })`,
+because Apple asks for light and dark values "and an increased contrast
+option for each variant" ([iOS notes on color][ios-color]).
+
+| Token         | Name                  | Role                                                            | Light     | Dark      | Light, more contrast | Dark, more contrast |
+| ------------- | --------------------- | --------------------------------------------------------------- | --------- | --------- | -------------------- | ------------------- |
+| `primary`     | Marigold              | The Guessling, primary buttons, and the right-guess pip         | `#FFC53D` | `#FFC53D` | `#FFC53D`            | `#FFC53D`           |
+| `on-primary`  | Ballpoint on Marigold | Text and glyphs on Marigold                                     | `#15203B` | `#15203B` | `#0B1226`            | `#0B1226`           |
+| `desk`        | Table blue            | The field behind everything                                     | `#2E5BD8` | `#0D1B40` | `#2248B5`            | `#08122E`           |
+| `on-desk`     | Chalk                 | Text and symbols on the table                                   | `#FFFFFF` | `#FFFFFF` | `#FFFFFF`            | `#FFFFFF`           |
+| `card`        | Index white           | The notepad, the speech bubble, the answer card, and pip glyphs | `#FFFFFF` | `#263353` | `#FFFFFF`            | `#212D4B`           |
+| `ink`         | Ballpoint             | Text on cards                                                   | `#15203B` | `#F1F4FA` | `#0B1226`            | `#FFFFFF`           |
+| `ink-muted`   | Pencil                | Secondary text, field borders, and empty pips                   | `#56617A` | `#B3BDD1` | `#3E4860`            | `#D3DAE7`           |
+| `link`        | Link blue             | Links on cards                                                  | `#2248B5` | `#A9C1FF` | `#1A3A99`            | `#C8D7FF`           |
+| `rule`        | Rule blue             | The notepad's lines, and its edge in Dark Mode                  | `#C9DAF2` | `#3B4B72` | `#93AEDA`            | `#5D6F98`           |
+| `rule-margin` | Margin pink           | The line under the hint                                         | `#F29BA6` | `#A3546A` | `#D86677`            | `#C8778B`           |
+| `yes`         | Yes green             | Yes pips and badges                                             | `#0E9C0C` | `#2FC42C` | `#0B7F0A`            | `#5BDB58`           |
+| `yes-ink`     | Yes green, text       | The word "Yes"                                                  | `#12692C` | `#8BE39A` | `#0B5222`            | `#B0F2BA`           |
+| `yes-tint`    | Yes green, fill       | Yes chips                                                       | `#E3F5E6` | `#1F4630` | `#D2EED8`            | `#183A27`           |
+| `no`          | No red                | No and wrong-guess pips and badges                              | `#D72F18` | `#F0543C` | `#B42212`            | `#FF7A66`           |
+| `no-ink`      | No red, text          | "No" and "Not it"                                               | `#B3261E` | `#FFA396` | `#8E1B14`            | `#FFC4BC`           |
+| `no-tint`     | No red, fill          | No and wrong-guess chips                                        | `#FCE7E4` | `#522A31` | `#F8D6D1`            | `#44222A`           |
+| `unsure-ink`  | Stone                 | The free replies' words and badges                              | `#4E5870` | `#CAD2E0` | `#3A4359`            | `#E4E8F0`           |
+| `unsure-tint` | Stone, fill           | The free replies' chips                                         | `#EDF0F5` | `#33405F` | `#E1E6EE`            | `#2C3857`           |
+
+- **The system decides.** The app follows the iPhone's appearance, with
+  `userInterfaceStyle: 'automatic'` in its configuration, and has no
+  appearance setting of its own, as Apple asks: "Avoid offering an
+  app-specific appearance setting." Increase Contrast switches to the last
+  two columns by itself ([iOS notes on Dark Mode][ios-dark]).
+- **No pure black or white glare.** The dark table is a deep blue, not
+  black, and the dark cards are a lighter blue-gray, with a 1-point `rule`
+  edge to set them off from the table.
+- **No system accent colors for text.** Apple's default accents reach only
+  1.5 to 5.1 to 1 on white, so text uses the tokens above
+  ([iOS notes on system colors][ios-system-colors]).
+
+[ios-color]: /docs/research/ios-design.md#semantic-and-system-colors
+[ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
+[ios-system-colors]: /docs/research/ios-design.md#semantic-and-system-colors
+
+### Contrast
+
+Each ratio is WCAG 2.2's, truncated to one decimal so none is rounded up to
+pass. Text needs 4.5 to 1 in every appearance, and 7 to 1 for questions and
+body text, as Apple asks for small text; glyphs, pips, and the Guessling
+need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
+
+| Text or mark | On            | Used for                                           | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| ------------ | ------------- | -------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`        | `card`        | Questions and body text                            | 16.1:1 | 11.3:1 | 18.6:1               | 13.6:1              | 7:1      |
+| `ink-muted`  | `card`        | Secondary text, field borders, and empty pips      | 6.2:1  | 6.6:1  | 9.1:1                | 9.6:1               | 4.5:1    |
+| `link`       | `card`        | Links                                              | 7.8:1  | 6.9:1  | 9.9:1                | 9.4:1               | 4.5:1    |
+| `on-desk`    | `desk`        | The top bar, titles, and symbols on the table      | 5.8:1  | 16.8:1 | 7.8:1                | 18.4:1              | 4.5:1    |
+| `on-primary` | `primary`     | Primary buttons and the right-guess chip           | 10.2:1 | 10.2:1 | 11.7:1               | 11.7:1              | 4.5:1    |
+| `yes-ink`    | `yes-tint`    | Yes chips                                          | 5.9:1  | 6.8:1  | 7.5:1                | 9.7:1               | 4.5:1    |
+| `no-ink`     | `no-tint`     | No and wrong-guess chips                           | 5.5:1  | 6.3:1  | 6.7:1                | 9.2:1               | 4.5:1    |
+| `unsure-ink` | `unsure-tint` | Free-reply chips                                   | 6.2:1  | 6.7:1  | 7.8:1                | 9.4:1               | 4.5:1    |
+| `yes-ink`    | `card`        | "Yes" in the speech bubble                         | 6.8:1  | 8.0:1  | 9.3:1                | 10.5:1              | 4.5:1    |
+| `no-ink`     | `card`        | "No" and "Not it" in the speech bubble             | 6.5:1  | 6.5:1  | 9.0:1                | 8.9:1               | 4.5:1    |
+| `unsure-ink` | `card`        | Free replies in the bubble, and Stone badges       | 7.1:1  | 8.2:1  | 9.8:1                | 11.0:1              | 4.5:1    |
+| `card`       | `yes`         | A Yes pip's glyph, and the pip against the notepad | 3.6:1  | 5.3:1  | 5.1:1                | 7.6:1               | 3:1      |
+| `card`       | `no`          | A No pip's glyph and edge, and a wrong-guess ring  | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
+| `primary`    | `desk`        | The Guessling against the table                    | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
+
+[ios-wcag]: /docs/research/ios-design.md#wcag-22-contrast-minimums
+
+### Answer colors
+
+- **From the share.** Yes and No take the hues of the share's 🟩 and 🟥,
+  measured at `#10B50E` and `#D72F18` ([game notes][game-squares]), so a
+  round and its share read alike. The light Yes is a shade darker,
+  `#0E9C0C`, so a Yes pip still clears 3 to 1 on white.
+- **Never color alone.** 🟩 and 🟥 nearly merge for deuteranopes, at a
+  ΔE00 of 8.9, so every answer also shows a glyph and its words, as in
+  Apple's own example of a check in a green circle beside an X in a red
+  octagon (A11Y-4):
+
+| Answer                                        | Glyph (SF Symbol) | Colors                               |
+| --------------------------------------------- | ----------------- | ------------------------------------ |
+| Yes                                           | `checkmark`       | `yes`, `yes-ink`, `yes-tint`         |
+| No                                            | `xmark`           | `no`, `no-ink`, `no-tint`            |
+| A wrong guess                                 | `xmark`           | `no`, `no-ink`, `no-tint`, as a ring |
+| A right guess                                 | `target`          | `primary`, `on-primary`              |
+| Ask another way, and Ask a yes-or-no question | `questionmark`    | `unsure-ink`, `unsure-tint`          |
+
+- **Neither green nor red.** Marigold is never an answer color, and Stone,
+  for the replies that use no turn, is plainly neither.
+
+[game-squares]: /docs/research/game-design.md#the-share-squares-measured
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
@@ -259,3 +384,4 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
 
 [gdm]: https://github.com/google-labs-code/design.md
 [idea-risks]: /docs/IDEA.md#risks
+[game-findings]: /docs/research/game-design.md#findings-for-designmd
