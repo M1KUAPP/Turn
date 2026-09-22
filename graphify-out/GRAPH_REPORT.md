@@ -2,7 +2,7 @@
 
 ## Corpus Check
 
-- 125 files · ~534,863 words
+- 125 files · ~535,091 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
@@ -14,7 +14,7 @@
 
 ## Graph Freshness
 
-- Built from commit: `901b3d46`
+- Built from commit: `dcca8a5f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -861,8 +861,8 @@ Nodes (5): App icon and pitch assets, Screenshots and Devpost images, The app ic
 
 ### Community 131 - "Guidance for coding agents"
 
-Cohesion: 0.40
-Nodes (5): Checks before a screen ships, Guidance for coding agents, If the days run short, Keeping code in step, Using this file
+Cohesion: 0.50
+Nodes (4): Checks before a screen ships, Guidance for coding agents, Keeping code in step, Using this file
 
 ### Community 132 - "Turn's frontend trends research notes"
 
@@ -871,8 +871,8 @@ Nodes (39): A Turn-shaped sample through the linter, AI generators that build na
 
 ### Community 133 - "Overview"
 
-Cohesion: 0.50
-Nodes (4): Overview, Rules that don't bend, Scope, The reference
+Cohesion: 0.40
+Nodes (5): Assumptions, Overview, Rules that don't bend, Scope, The reference
 
 ### Community 134 - "App icon and launch screen"
 
