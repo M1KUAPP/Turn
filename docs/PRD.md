@@ -618,7 +618,11 @@ says how each is built.
   each.
 - **A11Y-4, Must.** At every Dynamic Type size, up to the largest
   accessibility size, phrase text wraps instead of being cut off, and the
-  grid scrolls. Check: at the largest size.
+  grid scrolls. The row's slots keep the height ROW-1 fixes, so a phrase too
+  long for its slot ends there with an ellipsis, while VoiceOver reads it
+  whole, a tap speaks it whole, and the grid shows it whole. Check: at the
+  largest size, every phrase reads whole in the grid, and a long one in the
+  row reads whole to VoiceOver.
 - **A11Y-5, Must.** No action has a time limit, and everything works with
   single taps. Check: walk every scenario with taps only.
 - **A11Y-6, Must.** Reduce Motion stops the light's pulse and the row's
