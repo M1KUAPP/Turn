@@ -743,6 +743,8 @@ safe default:
 - [Product](/docs/PRODUCT.md): what Guessling is, for whom, and why.
 - [Technical requirements](/docs/TRD.md): how version 1.0 is built, with
   every requirement here traced.
+- [Design](/docs/DESIGN.md): how Guessling looks, moves, and sounds, as
+  tokens and rules a coding agent can follow.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
 - [RevenueCat notes](/docs/research/revenuecat-expo.md),
   [Cloudflare notes](/docs/research/cloudflare-workers.md),
