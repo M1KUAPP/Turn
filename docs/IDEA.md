@@ -1,7 +1,8 @@
 # Shipaton 2026 idea
 
 Turn is the app this student team will build for RevenueCat Shipaton 2026's
-Next Gen Award: an AAC app for adults who can't rely on speech that listens to
+Next Gen Award: an augmentative and alternative communication (AAC) app for
+adults who can't rely on speech that listens to
 what a partner says and offers replies in the user's own saved words, with Jev
 deciding which of them answer. It replaces Guessling, the team's first idea,
 which the team judged too simple; the [Guessling idea][guessling] is archived.
@@ -97,10 +98,12 @@ The [evidence notes][ev-turn] have the sources, and the
     their Personal Voice, if they made one, or in a system voice. Every
     typed reply joins the phrase bank, which starts with about 150 editable
     phrases in categories.
-1.  **Listen, with consent.** The user turns on Listen mode and shows the
-    partner a consent card. A light shows while the phone listens, one tap
-    pauses it, and a switch stops listening when the partner is under 18.
-    The phone transcribes the partner on the device.
+1.  **Listen, with consent.** The first time the user turns on Listen mode,
+    Turn asks their own permission to send their phrases and the partner's
+    words to TypeSafe. Then the user shows the partner a consent card; a
+    light shows while the phone listens, one tap pauses it, and a switch
+    stops listening when the partner is under 18. These are Turn's consent
+    controls. The phone transcribes the partner on the device.
 1.  **Answer.** When the partner finishes, a row of big buttons above the
     grid offers the user's own phrases that answer what was said: one big
     button when Turn is confident, up to six otherwise, and no change when
@@ -220,7 +223,7 @@ Why Jev decides this way:
   US West Coast, come on top ([limits][jev-limits]).
 - **Cheap enough to run on every line.** At $0.042 per million input
   tokens, a request of about 1,500 tokens costs about $0.00006
-  ([round 8][log-r8]).
+  ([round 8][r8]).
 
 How it's wired:
 
@@ -247,6 +250,8 @@ Data, consent, and terms:
   Jev in the United States, and "Jev is not trained on customer requests or
   responses", but it keeps rights "in perpetuity" to use the data for
   telemetry and abuse monitoring ([data handling][jev-data]).
+- **The user's consent.** None of the user's phrases leave the phone until
+  the user agrees, the first time they turn on Listen mode.
 - **The partner's consent.** TypeSafe's agreement makes the team give the
   notices its use of input needs (section 5). The consent card asks the
   partner before listening starts and says where their words go: to
@@ -284,7 +289,7 @@ Data, consent, and terms:
 ## Monetization
 
 The context has the [paywall rules][ctx-money], and round 8 of the log has
-the [reasoning][log-r8]; this is how Turn applies them.
+the [reasoning][r8]; this is how Turn applies them.
 
 - **Speech is never sold.** The grid, saved phrases, typing, and Personal
   Voice stay free. One AAC app's reviewer calls "paying an ongoing
@@ -319,7 +324,6 @@ the [reasoning][log-r8]; this is how Turn applies them.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
 [expo-server]: /docs/research/revenuecat-expo.md#checking-entitlements-from-a-server
-[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
 
 ## Categories to enter
 
@@ -342,9 +346,7 @@ the [reasoning][log-r8]; this is how Turn applies them.
 
 ## Build plan
 
-Round 9 of the log has the [reasoning][log-r9] behind this plan.
-
-[log-r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
+Round 9 of the log has the [reasoning][r9] behind this plan.
 
 ### Stack and data flow
 
@@ -378,7 +380,7 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
 - **Must:** the grid, typing, and saved phrases, with about 150 editable
   starter phrases and every typed reply saved; Personal Voice, else a system
   voice; Listen mode with live transcription and a typed-line field; the
-  consent card, the listening light, pause, and the under-18 switch; names
+  consent controls; names
   swapped for tags; the shortlist and Jev's decisions; steady slots, the
   confidence bars, and the Yes, No, and Not sure buttons; the offline
   fallback; the paywall, the Test Store purchase, and Restore Purchases;
@@ -418,9 +420,8 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
   speech with Personal Voice; the relay's Jev request with its fixed
   questions and pinned model; the shortlist on the phone.
 - **Thursday, September 24:** Listen mode, with the transcription module and
-  the typed-line field; the consent card, the listening light, pause, and the
-  under-18 switch; steady slots and the fixed buttons; ask the campus clinic
-  for a review.
+  the typed-line field; the consent controls; steady slots and the fixed
+  buttons; ask the campus clinic for a review.
 - **Friday, September 25:** run the evaluation and set the thresholds; the
   paywall, the Test Store purchase, Restore, and the relay's free-line count
   and entitlement check; Settings.
@@ -443,7 +444,7 @@ Round 9 of the log has the [reasoning][log-r9] behind this plan.
 
 The brief's [pitch advice][brief-pitch] and the context's
 [video guidance][ctx-video] apply; round 10 of the log
-[tests this pitch][log-r10].
+[tests this pitch][r10].
 
 The video, under two minutes on an iPhone:
 
@@ -474,7 +475,6 @@ The repository's front page opens with the same logline, a short clip of the
 description alone and read the code to check them.
 
 [brief-pitch]: /docs/BRIEF.md#pitch-the-submission
-[log-r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
 [ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
 
 ## Risks
@@ -486,8 +486,11 @@ description alone and read the code to check them.
 - **No Jev key in time.** Request it on September 22. Trigger: no key by noon
   PT on September 23; then write to `support@typesafe.ai` and TypeSafe's
   Discord, and build on the phone's own ranking meanwhile, since Jev joins
-  at the relay with no app change. No key by September 26 means the video
-  can't show Jev, and the team decides whether to enter without it.
+  at the relay with no app change. No key by September 26 is the no-go
+  point for Jev: the video can't show it, and entering without it breaks
+  this idea's goal. The default is still to enter, with the phone's own
+  ranking and a README that says Jev is missing, since a working app scores
+  on the rules' other criteria; the team can overrule that on the day.
 - **Live transcription fails on the device.** Trigger: not working by the end
   of September 24; then switch to `expo-speech-recognition` and its older
   recognizer.
@@ -496,7 +499,7 @@ description alone and read the code to check them.
   ([gaps][ng-gaps]). Trigger: the dashboard offers none
   on September 22; then the demo sells Listen as a yearly Test Store product,
   which renews at most five times before it ends, and the one-time design
-  stays for a store release ([round 8][log-r8]).
+  stays for a store release ([round 8][r8]).
 - **A wrong reply.** A mis-ranked row costs time more than words, since
   nothing speaks until the user taps, but a wrong tap on a question about
   pain or consent matters. Yes-or-no questions get the fixed Yes, No, and
@@ -559,9 +562,6 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
 [r5]: /docs/research/next-gen-ideation.md#round-5-evidence
 [r6]: /docs/research/next-gen-ideation.md#round-6-red-team
 [r7]: /docs/research/next-gen-ideation.md#round-7-the-choice
-[r8]: /docs/research/next-gen-ideation.md#round-8-monetization
-[r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
-[r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
 
 ## Assumptions and open questions
 
@@ -572,7 +572,11 @@ Nobody could be asked while this was written, so the plan assumes:
   and Apple accounts, and any minor has a guardian's consent.
 - The team is two to four students starting on September 22, 2026, with a
   Mac, at least one recent iPhone, and TypeScript, and no paid Apple
-  Developer Program membership.
+  Developer Program membership. Swift is a plus, not a given, so the two
+  Swift modules stay small, and each has a fallback: `expo-speech-recognition`
+  for transcription and a system voice for speech.
+- "10-round ideation" means ten new rounds, each with its own question and
+  decision, not a revision of the first log.
 - The team can get a Jev API key on September 22, 2026.
 - "Include Jev" means Jev makes a decision the app depends on at run time.
 - "Too simple" is about the product: the idea needs parts that work
@@ -582,6 +586,13 @@ Nobody could be asked while this was written, so the plan assumes:
 
 Still open, each with a safe default:
 
+- **Test Store as the purchase.** Only a manager's forum answer, not the
+  rules, says "Test Store is enough for the Next Gen category", while the
+  brief's safe default for the purchase rule is "at least one real purchase
+  or ad". Safe default: cite the forum answer in the description, and if an
+  adult teammate's Stripe account clears verification in time, also sell
+  Turn Listen through a RevenueCat Web Purchase Link and make one real
+  purchase ([purchase paths][ng-purchase]).
 - **Test Store and one-time products.** Safe default: the yearly fallback
   under [Risks](#risks).
 - **Test Store in the Simulator.** RevenueCat never says outright that Test
@@ -636,8 +647,11 @@ Still open, each with a safe default:
 
 [guessling]: /docs/archive/guessling-idea.md
 [log]: /docs/research/next-gen-ideation.md
-[log-r8]: /docs/research/next-gen-ideation.md#round-8-monetization
 [ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
 [ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
 [ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
 [ng-gaps]: /docs/research/next-gen.md#gaps
+[r8]: /docs/research/next-gen-ideation.md#round-8-monetization
+[r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
+[r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
+[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
