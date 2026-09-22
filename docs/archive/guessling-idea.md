@@ -1,4 +1,9 @@
-# Shipaton 2026 idea
+# Guessling idea
+
+> **Superseded on September 22, 2026.** The team moved to the Next Gen
+> Award, and [Turn](/docs/IDEA.md) replaced this idea. It's kept because the
+> [product](/docs/PRODUCT.md), [PRD](/docs/PRD.md), [TRD](/docs/TRD.md), and
+> [design](/docs/DESIGN.md) documents were built on it.
 
 Guessling is the app this team will ship for RevenueCat Shipaton 2026: a
 daily 20-questions game in which Jev answers any yes-or-no question a player

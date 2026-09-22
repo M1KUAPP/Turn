@@ -989,7 +989,7 @@ The pitch reports players, puzzles solved, and questions asked
 ([idea-launch]); the Worker can count these without an analytics SDK in the
 app.
 
-[idea-launch]: /docs/IDEA.md#launch-and-pitch
+[idea-launch]: /docs/archive/guessling-idea.md#launch-and-pitch
 
 ### Workers Logs
 
@@ -1113,7 +1113,7 @@ GROUP BY event
 [cf-static-html]: https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/
 [cf-pages-limits]: https://developers.cloudflare.com/pages/platform/limits/
 [cf-pages-migrate]: https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/
-[idea-jev]: /docs/IDEA.md#how-jev-fits
+[idea-jev]: /docs/archive/guessling-idea.md#how-jev-fits
 
 ## Local development and tests
 
@@ -1305,8 +1305,8 @@ What the sources don't say that Guessling's backend needs, as of September
 
 ## See also
 
-- [Idea](/docs/IDEA.md): how Jev fits Guessling, and the build plan this
-  note serves.
+- [Idea](/docs/archive/guessling-idea.md): how Jev fits Guessling, and the build
+  plan this note serves.
 - [Jev notes](/docs/research/jev.md): Jev's API, SDKs, prices, limits, and
   terms.
 - [Ideation log, round 9](/docs/research/ideation.md#round-9-scope-stack-and-schedule):
@@ -1320,7 +1320,7 @@ What the sources don't say that Guessling's backend needs, as of September
 [cf-limits]: https://developers.cloudflare.com/workers/platform/limits/
 [cf-do-pricing]: https://developers.cloudflare.com/durable-objects/platform/pricing/
 [cf-workers-dev]: https://developers.cloudflare.com/workers/configuration/routing/workers-dev/
-[idea-stack]: /docs/IDEA.md#stack-and-data-flow
+[idea-stack]: /docs/archive/guessling-idea.md#stack-and-data-flow
 [cf-kv-how]: https://developers.cloudflare.com/kv/concepts/how-kv-works/
 [cf-kv-write]: https://developers.cloudflare.com/kv/api/write-key-value-pairs/
 [cf-kv-read]: https://developers.cloudflare.com/kv/api/read-key-value-pairs/

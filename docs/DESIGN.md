@@ -1,5 +1,10 @@
 # Guessling design
 
+> **Superseded on September 22, 2026.** This document describes Guessling,
+> the team's first idea. [Turn](/docs/IDEA.md), an entry for the Next Gen
+> Award, replaced it, and this document's links to the idea point at the
+> [archived Guessling idea](/docs/archive/guessling-idea.md).
+
 How Guessling looks, moves, sounds, and reads: the design system and art
 direction for the iPhone app, the paywall's styling, the three web pages,
 the app icon, and the store and pitch assets. It follows Google's
@@ -1390,7 +1395,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   30 seconds at 30 frames a second, a screen capture only, saying that the
   archive needs Guessling+ ([iOS notes on store assets][ios-store]).
 
-[idea-video]: /docs/IDEA.md#launch-and-pitch
+[idea-video]: /docs/archive/guessling-idea.md#launch-and-pitch
 [ios-store]: /docs/research/ios-design.md#store-and-pitch-assets
 
 ## Do's and don'ts
@@ -1506,7 +1511,8 @@ Each has a safe default, which this document follows until someone decides.
 - [Product](/docs/PRODUCT.md): the Guessling's role, personality, and voice.
 - [Product requirements](/docs/PRD.md): the checks this design must pass.
 - [Technical requirements](/docs/TRD.md): how the app draws and animates it.
-- [Idea](/docs/IDEA.md): the schedule, the art risk, and the video.
+- [Idea](/docs/archive/guessling-idea.md): the schedule, the art risk, and the
+  video.
 - [motionsites.ai notes](/docs/research/motionsites.md),
   [trends notes](/docs/research/frontend-trends.md),
   [iOS notes](/docs/research/ios-design.md), and
@@ -1515,7 +1521,7 @@ Each has a safe default, which this document follows until someone decides.
 - [Google's DESIGN.md format][gdm]: the specification and the linter.
 
 [gdm]: https://github.com/google-labs-code/design.md
-[idea-risks]: /docs/IDEA.md#risks
+[idea-risks]: /docs/archive/guessling-idea.md#risks
 [game-findings]: /docs/research/game-design.md#findings-for-designmd
 [game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
-[idea-open]: /docs/IDEA.md#assumptions-and-open-questions
+[idea-open]: /docs/archive/guessling-idea.md#assumptions-and-open-questions

@@ -1,11 +1,10 @@
 # Shipaton 2026 ideation log
 
-The ten rounds of ideation behind [the idea](/docs/IDEA.md), run on September
-22, 2026 for RevenueCat Shipaton 2026. They start from the
+The ten rounds of ideation behind [the idea](/docs/archive/guessling-idea.md),
+run on September 22, 2026 for RevenueCat Shipaton 2026. They start from the
 [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), the
-[Jev notes](jev.md), and the [gallery notes](gallery-2026.md), and narrow
-thirty candidates to one idea; each round ends with a decision the next one
-builds on.
+[Jev notes](jev.md), and the [gallery notes](gallery-2026.md), and narrow thirty
+candidates to one idea; each round ends with a decision the next one builds on.
 
 Contents:
 

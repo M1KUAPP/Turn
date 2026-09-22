@@ -50,7 +50,7 @@ Contents:
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
-[idea-build]: /docs/IDEA.md#build-plan
+[idea-build]: /docs/archive/guessling-idea.md#build-plan
 [rm-quickstart]: /docs/research/related-materials.md#quickstart-and-sdk-installation
 [bp-review]: /docs/research/best-practices.md#apple-app-store-review
 
@@ -262,7 +262,7 @@ What the SDK 57 modules declare, read from each package's manifest:
 [expo-submit-ios]: https://docs.expo.dev/submit/ios/
 [expo-submit]: https://docs.expo.dev/deploy/submit-to-app-stores/
 [expo-testflight]: https://docs.expo.dev/submit/testflight/
-[idea-schedule]: /docs/IDEA.md#schedule-to-september-30
+[idea-schedule]: /docs/archive/guessling-idea.md#schedule-to-september-30
 
 ### Public environment variables
 
@@ -1008,7 +1008,7 @@ The basics, including that a RevenueCat app declares "Purchases", are in the
 
 [bp-privacy]: /docs/research/best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
 [ios-podspec]: https://github.com/RevenueCat/purchases-ios/blob/5.90.1/RevenueCat.podspec
-[idea-review]: /docs/IDEA.md#review-safety-checklist
+[idea-review]: /docs/archive/guessling-idea.md#review-safety-checklist
 [jev-store]: /docs/research/jev.md#store-review-and-jev
 
 ## What RevenueCat documents about Expo
@@ -1182,7 +1182,8 @@ What the sources didn't settle on September 22, 2026:
 - [Best practices](/docs/research/best-practices.md): App Review, sandbox
   testing, and privacy labels.
 - [Jev notes](/docs/research/jev.md): the API the Worker calls for answers.
-- [Idea](/docs/IDEA.md): Guessling's design, stack, and schedule.
+- [Idea](/docs/archive/guessling-idea.md): Guessling's design, stack, and
+  schedule.
 
 [expo-sdk57]: https://expo.dev/changelog/sdk-57
 [npm-expo]: https://www.npmjs.com/package/expo
