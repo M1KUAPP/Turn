@@ -9153,27 +9153,14 @@
           id: 'docs_design_guidance_for_coding_agents',
           label: 'Guidance for coding agents',
           color: { background: '#F28E2B', border: '#F28E2B', highlight: { background: '#ffffff', border: '#F28E2B' } },
-          size: 12.6,
+          size: 12.1,
           font: { size: 0, color: '#ffffff' },
           title: 'Guidance for coding agents',
           community: 131,
           community_name: 'Guidance for coding agents',
           source_file: 'docs/DESIGN.md',
           file_type: 'document',
-          degree: 5
-        },
-        {
-          id: 'docs_design_if_the_days_run_short',
-          label: 'If the days run short',
-          color: { background: '#F28E2B', border: '#F28E2B', highlight: { background: '#ffffff', border: '#F28E2B' } },
-          size: 10.5,
-          font: { size: 0, color: '#ffffff' },
-          title: 'If the days run short',
-          community: 131,
-          community_name: 'Guidance for coding agents',
-          source_file: 'docs/DESIGN.md',
-          file_type: 'document',
-          degree: 1
+          degree: 4
         },
         {
           id: 'docs_design_keeping_code_in_step',
@@ -9722,17 +9709,30 @@
           degree: 1
         },
         {
+          id: 'docs_design_assumptions',
+          label: 'Assumptions',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Assumptions',
+          community: 133,
+          community_name: 'Overview',
+          source_file: 'docs/DESIGN.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
           id: 'docs_design_overview',
           label: 'Overview',
           color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
-          size: 12.1,
+          size: 12.6,
           font: { size: 0, color: '#ffffff' },
           title: 'Overview',
           community: 133,
           community_name: 'Overview',
           source_file: 'docs/DESIGN.md',
           file_type: 'document',
-          degree: 4
+          degree: 5
         },
         {
           id: 'docs_design_rules_that_don_t_bend',
@@ -40452,6 +40452,16 @@
         },
         {
           from: 'docs_design_components',
+          to: 'docs_design_the_strip',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_design_components',
           to: 'docs_design_the_caption',
           label: 'contains',
           title: 'contains [EXTRACTED]',
@@ -40533,16 +40543,6 @@
         {
           from: 'docs_design_components',
           to: 'docs_design_the_row',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'docs_design_components',
-          to: 'docs_design_the_strip',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -41501,16 +41501,6 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'docs_design_guidance_for_coding_agents',
-          to: 'docs_design_if_the_days_run_short',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
           from: 'docs_research_turn_frontend_trends',
           to: 'docs_research_turn_frontend_trends_turn_s_frontend_trends_research_notes',
           label: 'contains',
@@ -41893,6 +41883,16 @@
         {
           from: 'docs_research_turn_frontend_trends_visual_trends_through_an_accessibility_lens',
           to: 'docs_research_turn_frontend_trends_what_each_trend_means_mid_conversation',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_design_assumptions',
+          to: 'docs_design_overview',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -60093,9 +60093,9 @@
         { cid: 128, color: '#9C755F', label: 'RevenueCat Paywalls styling', count: 5 },
         { cid: 129, color: '#BAB0AC', label: 'Colors', count: 3 },
         { cid: 130, color: '#4E79A7', label: 'App icon and pitch assets', count: 5 },
-        { cid: 131, color: '#F28E2B', label: 'Guidance for coding agents', count: 5 },
+        { cid: 131, color: '#F28E2B', label: 'Guidance for coding agents', count: 4 },
         { cid: 132, color: '#E15759', label: 'Turn&#x27;s frontend trends research notes', count: 40 },
-        { cid: 133, color: '#76B7B2', label: 'Overview', count: 4 },
+        { cid: 133, color: '#76B7B2', label: 'Overview', count: 5 },
         { cid: 134, color: '#59A14F', label: 'App icon and launch screen', count: 4 },
         { cid: 135, color: '#EDC948', label: 'SF Symbols', count: 4 },
         { cid: 136, color: '#B07AA1', label: 'Next Gen idea evidence notes', count: 48 },
