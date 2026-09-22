@@ -229,8 +229,7 @@ CREATE TABLE answers (
   source     TEXT NOT NULL,    -- 'bank' | 'live'
   bank_id    TEXT,             -- the matched entry, such as 'q017' or 'q017_not'
   p          REAL,             -- the probability that decided it
-  model      TEXT NOT NULL,    -- 'jev-1.13.0'
-  created_at INTEGER NOT NULL
+  model      TEXT NOT NULL     -- 'jev-1.13.0'
 );
 
 CREATE TABLE players (
@@ -249,7 +248,7 @@ CREATE TABLE reports (
   wording    TEXT NOT NULL,
   answer     TEXT NOT NULL,
   reason     TEXT,             -- 'wrong' | 'unclear' | NULL
-  created_at INTEGER NOT NULL
+  day        TEXT NOT NULL     -- the UTC date it arrived, YYYY-MM-DD, and no finer
 );
 ```
 
@@ -257,7 +256,9 @@ CREATE TABLE reports (
   (NOTICE-3). Code-rule answers, such as letter questions, aren't stored,
   since code gives the same answer every time.
 - No table holds question text next to a player: `players` has counts, and
-  `answers` and `reports` have wordings without IDs (PRIV-3).
+  `answers` and `reports` have wordings without IDs (PRIV-3). Neither keeps
+  a time finer than a day, so a wording can't be matched to a player's turn
+  or count by when it arrived.
 
 ### What the device keeps
 
@@ -433,8 +434,8 @@ private answerViaJev(wording: string, text: string): Promise<Answer> {
     pending = this.askJev(text) // the match request, then the live request
       .then((answer) => {
         this.sql.exec(
-          'INSERT OR IGNORE INTO answers (wording, answer, source, bank_id, p, model, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
-          wording, answer.answer, answer.source, answer.bankId, answer.p, MODEL, Date.now()
+          'INSERT OR IGNORE INTO answers (wording, answer, source, bank_id, p, model) VALUES (?, ?, ?, ?, ?, ?)',
+          wording, answer.answer, answer.source, answer.bankId, answer.p, MODEL
         )
         return this.stored(wording) ?? answer // everyone gets what storage holds
       })
@@ -908,6 +909,7 @@ export default {
 | Round progress: turns and status       | `players`, under a salted hash of the ID   | Yes                | As long as the puzzle is served | Gameplay Content                     |
 | RevenueCat app user ID                 | RevenueCat; hashed on the server           | Yes                | RevenueCat's retention          | User ID                              |
 | Purchases                              | RevenueCat and Apple                       | Yes                | RevenueCat's retention          | Purchase History                     |
+| Paywall views                          | RevenueCat, recorded by its Paywalls       | Yes                | RevenueCat's retention          | Product Interaction                  |
 | Counts of plays, questions, and solves | Analytics Engine, indexed by the hash      | Yes                | Three months                    | Product Interaction                  |
 | Reports                                | `reports` in the puzzle's object           | No                 | Until triaged, then 30 days     | Customer Support                     |
 | Logs                                   | Workers Logs, with no text and no IDs      | No                 | Seven days on Workers Paid      | Not collected                        |
@@ -923,6 +925,8 @@ export default {
   or addresses (PRIV-3).
 - A player who declines the notice leaves round progress, and any report
   they choose to send, but no stored wordings and no counts (NOTICE-3).
+  RevenueCat still records paywall views, as part of the purchase flow, and
+  the privacy policy says so (PRIV-4).
 
 ## Reliability and observability
 
