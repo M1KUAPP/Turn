@@ -24,6 +24,12 @@ Contents:
 1.  [Purchases and entitlements](#purchases-and-entitlements)
 1.  [The iPhone app](#the-iphone-app)
 1.  [Security and privacy](#security-and-privacy)
+1.  [Reliability and observability](#reliability-and-observability)
+1.  [Evaluation](#evaluation)
+1.  [Testing](#testing)
+1.  [Environments and release](#environments-and-release)
+1.  [Requirements traceability](#requirements-traceability)
+1.  [Open technical questions](#open-technical-questions)
 1.  [See also](#see-also)
 
 ## Overview
@@ -753,7 +759,6 @@ Listen mode says so and offers the typed-line field.
   the team ships is a Debug build ([services notes][svc-key]).
 
 [svc-ids]: /docs/research/turn-services.md#identifiers-that-survive-a-reinstall
-[svc-key]: /docs/research/turn-services.md#the-test-store-api-key
 
 ### The relay's entitlement check
 
@@ -999,6 +1004,272 @@ monitoring, and "Jev is not trained on customer requests or responses"
 
 [jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
 
+## Reliability and observability
+
+### Failure modes
+
+| Failure                                     | Seen as                                                   | Response                                                         |
+| ------------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------- |
+| No network                                  | `fetch` fails at once                                     | the phone's own ranking, "Ranked on this phone" (STATE-1)        |
+| Relay slow or down                          | no answer in 3 seconds                                    | the phone's own ranking; degraded after two in three (STATE-2)   |
+| Jev slow, busy, or failing                  | `503 jev_unavailable`                                     | the same                                                         |
+| Jev out of credits                          | an undocumented status, likely `402`, logged as `credits` | the same, and the credit alert (AVAIL-2)                         |
+| The daily Jev budget spent                  | `503 jev_unavailable`                                     | the same, until midnight UTC                                     |
+| Over the Free plan's 100,000 requests a day | Cloudflare's Error 1027                                   | the same; the team moves to Workers Paid, $5 a month             |
+| Jev turned off                              | `503 jev_off`                                             | the same, with the degraded notice (STATE-3)                     |
+| RevenueCat down, past free lines            | the check fails                                           | a cached yes still answers; otherwise `503`, never a false `402` |
+| Transcription unavailable                   | `turn-listen` reports it                                  | the message, the typed field, the fallback recognizer (LISTEN-9) |
+| Personal Voice denied                       | `turn-voice` reports it                                   | the system voice, with the reason (VOICE-2)                      |
+
+### Logs and counts
+
+- **One log line per request** from the relay: the time, the first 8
+  characters of the ID's hash, the sequence number, the outcome (`answered`,
+  `paywall`, `limited`, `failed`, or `off`), and the milliseconds in Jev and
+  in all; never a line, phrase, place, or category (METRIC-1, PRIV-2).
+- **What else is logged.** The relay turns off automatic invocation logs,
+  which hold each request's details, and leaves tracing off: from October
+  1, 2026, traces count against the same quota, and a trace of the
+  RevenueCat call would keep the app user ID in its URL
+  ([services notes][svc-logs]).
+- **A script** in `worker/scripts/` reads a day of logs and prints the counts
+  and latencies METRIC-2 names. The Free plan keeps logs for 3 days, so the
+  team runs it daily during judging.
+- **The daily check** during judging sends one typed line to the relay from
+  a team member's phone or the Simulator and records the result (AVAIL-1).
+
+[svc-logs]: /docs/research/turn-services.md#workers-logs-and-traces-for-the-relay
+
+### Service life
+
+The relay and Jev's credits run until the winners are announced on October
+21 or 22, 2026 (AVAIL-1). After that, setting `JEV_ON` to false sends every
+line to the phone's own ranking, and speaking never depends on the relay.
+
+## Evaluation
+
+### The evaluation data
+
+- **`eval/lines.jsonl`:** 80 partner lines, each with an id, its author, the
+  text, its kind, a place, the topic, whether it concerns pain, health, or
+  consent, and the ids of every acceptable reply in the starter bank, or
+  none (EVAL-1). For yes-or-no lines, acceptable replies may include the
+  fixed buttons.
+- **By hand.** The public conversation sets are non-commercial,
+  share-alike, not redistributable, or unlicensed, so the team writes the
+  lines, before looking at the bank, in the mix real questions have: about
+  seven in ten questions yes-or-no, many of them declarative, such as
+  "You're tired?", and about a fifth of lines with no acceptable reply. A
+  second teammate labels the acceptable replies, and the script reports
+  their agreement ([evaluation notes][eval-data]).
+- **The starter bank** comes from the app's own file, so the evaluation
+  ranks the phrases a user starts with. A fresh bank has no taps, so the
+  shortlist's most-tapped slots fall back to the place's phrases and the
+  bank's order, and the evaluation says so.
+
+[eval-data]: /docs/research/turn-evaluation.md#writing-turns-80-lines
+
+### The rankers
+
+| Ranker       | What it does                                                                                                                       |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `fallback`   | the place's phrases in the bank's order, the phone's offline view before any line                                                  |
+| `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                          |
+| `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off |
+| `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                              |
+| `jev-rerank` | Jev over the 40 phrases nearest by embeddings, run only when Jev trails `embeddings` (EVAL-4)                                      |
+
+- **Extras (EVAL-8).** `bge-reranker-base` over the keyword shortlist, an
+  off-the-shelf cross-encoder; `qwen3-embedding-0.6b` with the instruction
+  "Given what a conversation partner just said, retrieve the reply that
+  answers it"; and Apple's sentence embedding, run on a Mac.
+- **Embeddings measure similarity.** General-purpose embeddings trailed
+  reply-trained encoders by about 25 points on a response-selection
+  benchmark, and Workers AI offers no reply-trained model, so a line such as
+  "How was physio?" is where keyword ranking and embeddings should fail and
+  Jev should earn its place ([evaluation notes][eval-baselines]).
+
+[eval-baselines]: /docs/research/turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
+
+### Metrics, intervals, and thresholds
+
+Each line is scored twice, as a pure ranking and as the row a user would
+see ([evaluation notes][eval-scoring]):
+
+| What the user sees | Line has an acceptable reply                 | Line has none    |
+| ------------------ | -------------------------------------------- | ---------------- |
+| One big button     | Right if acceptable, else a wrong big button | Wrong big button |
+| Up to six buttons  | Right if any is acceptable, else a wrong row | Wrong row        |
+| No change          | Missed reply                                 | Right hold       |
+
+- **Ranking,** on lines with an acceptable reply only: hit at 1, hit at 6,
+  and reciprocal rank, end to end and with every ranker over the same 40
+  phrases, beside chance rates: with one acceptable phrase among 40, 2.5%
+  at 1 and 15% at 6.
+- **The row:** the six outcomes above, coverage (the share of lines where
+  the row changes), risk (the share of those rows that are wrong), and an
+  always-hold baseline, which is right on every line with no reply.
+- **The shortlist's recall at 40:** the share of lines whose acceptable
+  reply made the 40, since Jev can't pick a phrase the shortlist dropped.
+- **Kind:** accuracy and a confusion matrix for the question-kind Choice,
+  since a yes-or-no call brings up the fixed buttons.
+- **Intervals.** Every rate carries a 95% Wilson interval: a top-6 rate of
+  56 of 80 spans 59% to 79%, and a big button right on all 40 lines where
+  it shows can still be wrong up to 7.2% of the time. Differences between
+  two rankers use a paired bootstrap over lines, and 80 lines settle only
+  gaps of about 15 to 18 points (EVAL-4) ([evaluation notes][eval-power]).
+- **Frozen settings.** Jev's 0.6 and 0.85 come from TypeSafe's routing
+  example, and 80 lines are too few to refit them, so they, the margin, and
+  the question wording are committed before the first run (EVAL-2). BM25
+  and cosine scores aren't probabilities, so those rankers' cut-offs come
+  from five-fold cross-validation, reported out of fold, and every ranker's
+  risk-coverage curve is plotted.
+- **Latency:** each ranker's own work and network trip at the median, the
+  95th percentile, and the maximum, over at least three passes with warm-up
+  calls dropped and one request in flight; end-to-end time comes from the
+  phone (PERF-1).
+
+[eval-scoring]: /docs/research/turn-evaluation.md#a-scoring-scheme-for-turns-80-lines
+[eval-power]: /docs/research/turn-evaluation.md#what-80-lines-can-and-cant-detect
+
+### The report
+
+`bun run eval` writes `eval/results.md`: one row per ranker with each
+metric, its interval, and the latency, plus the date, the model pin, and the
+commit; the README copies the table (EVAL-6). The script also lists every
+big button on a yes-or-no, pain, or consent line (EVAL-5).
+
+## Testing
+
+The shared code and the relay are tested with Vitest 4.1, the relay's tests
+running inside the Workers runtime through `@cloudflare/vitest-plugin`
+1.2.1, the Cloudflare notes' pairing. The app's screens and the Swift
+modules are checked on devices, by the checklist below, not with UI tests,
+in the first version.
+
+- **Unit tests,** for the shared code: the shortlist, BM25, the tag map, the
+  request builder, the row's rules against recorded answers (ROW-3 to
+  ROW-9), and the phone's own ranking (STATE-1).
+- **Relay tests,** in the Workers runtime: validation and limits (SEC-2,
+  SEC-3), the free-line count under concurrent requests (PAY-1), the
+  entitlement cache and refresh (PAY-7), and every error code, with Jev and
+  RevenueCat mocked.
+- **A contract test** keeps a snapshot of the Jev request, and a manual
+  smoke test sends one line to Jev with the team's key.
+- **Device checks,** on the video's iPhone: transcription and line ends
+  (LISTEN-1, LISTEN-2), Turn not hearing itself (LISTEN-3), the background
+  and interruptions (LISTEN-7, LISTEN-10), Personal Voice (VOICE-2), the
+  loudspeaker and the silent switch (VOICE-4), and timings (PERF-1 to
+  PERF-3).
+- **Purchase checks:** each Test Store outcome, restore, and the next line
+  after a purchase (PAY-4 to PAY-6).
+- **Accessibility checks:** VoiceOver, Switch Control, Voice Control, the
+  largest text size, Reduce Motion, and contrast (A11Y-1 to A11Y-7).
+- **The privacy check:** after a 10-minute session, the app's container and
+  the relay's storage and logs hold no audio, transcript, or phrase text
+  (RELEASE-3).
+
+## Environments and release
+
+- **Local:** the relay under `wrangler dev`, the app in the Simulator or on
+  a device, pointed at it by the app's configuration.
+- **The team's relay:** one deployment on `workers.dev`, used by the video's
+  build, the Simulator build, and judges; there is no separate staging
+  relay, so risky changes are tested locally first.
+- **Deploys:** `wrangler deploy` from `worker/`, after its tests pass; to undo
+  one, the team deploys the previous commit again, and `JEV_ON` can turn Jev
+  off at once meanwhile.
+- **Debug builds only.** A Release build with a Test Store key crashes at
+  launch, so every build the team ships uses the Debug configuration
+  ([services notes][svc-key]).
+- **The device build:** `npx expo run:ios --device` from a Mac with Xcode
+  27, signed by a free Personal Team, with Developer Mode on and the
+  certificate trusted on the phone. For timings and the video, Metro serves
+  production JavaScript with `npx expo start --no-dev --minify`. Free
+  profiles expire after seven days, so the video's build is installed on or
+  after September 22 (COMPAT-4) ([iPhone build notes][ios-free-build]).
+- **The Simulator build:** `xcodebuild` in the Debug configuration for the
+  `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the
+  JavaScript bundle embedded so it runs without Metro. That a Debug build
+  runs from its embedded bundle is unverified, so the September 25 check
+  covers it; if it can't, the README's Simulator path starts Metro first.
+  The `.app` is zipped into a GitHub release, and the README installs it
+  with `xcrun simctl install booted Turn.app` (SUBMIT-3, COMPAT-2).
+- **The repository goes public** after the secret scan, with the MIT
+  `LICENSE` at its root (SUBMIT-1).
+
+[ios-free-build]: /docs/research/turn-ios.md#building-to-an-iphone-with-a-free-account
+
+## Requirements traceability
+
+Every PRD requirement, and the sections of this document that meet it:
+
+| Requirements                                                                                        | Met in                                                                                                                                                        |
+| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SPEAK-1, SPEAK-2, SPEAK-3, SPEAK-4, SPEAK-5, SPEAK-6, SPEAK-7                                       | [The iPhone app](#the-iphone-app), [Listening and speaking on the phone](#listening-and-speaking-on-the-phone), [Data model](#data-model)                     |
+| BANK-1, BANK-2, BANK-3, BANK-4, BANK-5, BANK-6, BANK-7, BANK-8, BANK-9, BANK-10                     | [Data model](#data-model), [Decision pipeline](#decision-pipeline), [The iPhone app](#the-iphone-app)                                                         |
+| PLACE-1, PLACE-2, PLACE-3                                                                           | [Data model](#data-model), [Decision pipeline](#decision-pipeline), [The iPhone app](#the-iphone-app)                                                         |
+| VOICE-1, VOICE-2, VOICE-3, VOICE-4                                                                  | [Listening and speaking on the phone](#listening-and-speaking-on-the-phone), [The iPhone app](#the-iphone-app)                                                |
+| CONSENT-1, CONSENT-2, CONSENT-3, CONSENT-4, CONSENT-5, CONSENT-6, CONSENT-7                         | [The iPhone app](#the-iphone-app), [Relay API](#relay-api), [Security and privacy](#security-and-privacy)                                                     |
+| LISTEN-1, LISTEN-2, LISTEN-3, LISTEN-4, LISTEN-5, LISTEN-6, LISTEN-7, LISTEN-8, LISTEN-9, LISTEN-10 | [Listening and speaking on the phone](#listening-and-speaking-on-the-phone), [Decision pipeline](#decision-pipeline)                                          |
+| ROW-1, ROW-2, ROW-3, ROW-4, ROW-5, ROW-6, ROW-7, ROW-8, ROW-9, ROW-10                               | [Decision pipeline](#decision-pipeline), [Relay API](#relay-api)                                                                                              |
+| STATE-1, STATE-2, STATE-3, STATE-4                                                                  | [Decision pipeline](#decision-pipeline), [Reliability and observability](#reliability-and-observability)                                                      |
+| PAY-1, PAY-2, PAY-3, PAY-4, PAY-5, PAY-6, PAY-7, PAY-8, PAY-9, PAY-10                               | [Purchases and entitlements](#purchases-and-entitlements), [Relay API](#relay-api)                                                                            |
+| SET-1, SET-2, SET-3, SET-4                                                                          | [The iPhone app](#the-iphone-app)                                                                                                                             |
+| CONTENT-1, CONTENT-2, CONTENT-3, CONTENT-4, CONTENT-5                                               | [Stack and repository](#stack-and-repository), [The iPhone app](#the-iphone-app), [Security and privacy](#security-and-privacy), [Evaluation](#evaluation)    |
+| EVAL-1, EVAL-2, EVAL-3, EVAL-4, EVAL-5, EVAL-6, EVAL-7, EVAL-8                                      | [Evaluation](#evaluation)                                                                                                                                     |
+| PERF-1, PERF-2, PERF-3, PERF-4, PERF-5                                                              | [Decision pipeline](#decision-pipeline), [Testing](#testing)                                                                                                  |
+| AVAIL-1, AVAIL-2                                                                                    | [Reliability and observability](#reliability-and-observability)                                                                                               |
+| PRIV-1, PRIV-2, PRIV-3, PRIV-4, PRIV-5                                                              | [Security and privacy](#security-and-privacy), [Data model](#data-model), [Listening and speaking on the phone](#listening-and-speaking-on-the-phone)         |
+| SEC-1, SEC-2, SEC-3, SEC-4, SEC-5                                                                   | [Security and privacy](#security-and-privacy), [Relay API](#relay-api), [Reliability and observability](#reliability-and-observability)                       |
+| A11Y-1, A11Y-2, A11Y-3, A11Y-4, A11Y-5, A11Y-6, A11Y-7, A11Y-8                                      | [The iPhone app](#the-iphone-app), [Testing](#testing)                                                                                                        |
+| COMPAT-1, COMPAT-2, COMPAT-3, COMPAT-4                                                              | [Stack and repository](#stack-and-repository), [Environments and release](#environments-and-release)                                                          |
+| METRIC-1, METRIC-2, METRIC-3, METRIC-4                                                              | [Reliability and observability](#reliability-and-observability), [The iPhone app](#the-iphone-app), [Purchases and entitlements](#purchases-and-entitlements) |
+| SUBMIT-1, SUBMIT-2, SUBMIT-3, SUBMIT-4, SUBMIT-5, SUBMIT-6                                          | [Environments and release](#environments-and-release)                                                                                                         |
+| RELEASE-1, RELEASE-2, RELEASE-3, RELEASE-4, RELEASE-5                                               | [Testing](#testing), [Environments and release](#environments-and-release)                                                                                    |
+
+## Open technical questions
+
+Each with a safe default; the PRD's [open questions][prd-open] cover the
+product and legal ones.
+
+- **Forty Nouls in one request.** TypeSafe's cookbooks send up to 62
+  questions at once, but no published run has 40 per-candidate Nouls. Safe
+  default: send one real request on September 23 and record its time and
+  tokens; if it runs slow, cut the shortlist to 24 phrases.
+- **Jev's undocumented limits:** a body-size limit, the status for exhausted
+  credits, whether a `429` always carries `Retry-After`, and whether the
+  rate limit is per key or per account. Safe default: treat any unexpected
+  `4xx` as `jev_unavailable`, log it, and keep auto-refill on.
+- **How long the pin lasts.** No page says when `jev-1.13.0` retires. Safe
+  default: log each answer's `model`, and move to a new version only after
+  the evaluation runs on it.
+- **The Simulator build without Metro.** Nobody has tested whether a Debug
+  build with an embedded bundle runs alone. Safe default: check on September
+  25; if not, the README's Simulator path starts Metro first.
+- **A one-time product in the dashboard.** Test Store's form may offer no
+  such type. Safe default: create it through REST API v2 (PAY-8).
+- **The Keychain after deletion.** Apple doesn't say whether Keychain items
+  survive deleting the app, and Expo says not to rely on it. Safe default:
+  PAY-10 stays a Should, and the README says a reinstall may reset the free
+  lines and the purchase, which Restore can't bring back under Test Store.
+- **Transcription on the team's phones.** Apple lists no devices, asset
+  size, or latency for `SpeechTranscriber`. Safe default: test on each
+  teammate's iPhone by September 24, with `DictationTranscriber` and then
+  `expo-speech-recognition` behind it.
+- **Personal Voice by identifier.** No Apple page says the identifier
+  resolves. Safe default: the Swift module checks it, and a system voice
+  speaks otherwise.
+- **One clock for timings.** React Native's `performance.now()` counts from
+  boot, and nobody has checked it against the Swift module's timestamps.
+  Safe default: `turn-listen` stamps each line's end, and the app logs every
+  later stage on the same clock after checking the two agree on a device.
+- **The rate limiting binding on the Free plan.** Cloudflare states no price
+  or Free plan status for it. Safe default: if it isn't available, the
+  user's Durable Object counts requests per minute itself.
+
+[prd-open]: /docs/PRD.md#open-questions
+
 ## See also
 
 - [Product requirements](/docs/PRD.md): every requirement this document
@@ -1019,3 +1290,4 @@ monitoring, and "Jev is not trained on customer requests or responses"
 [jev-notes]: /docs/research/jev.md
 [cf-notes]: /docs/research/cloudflare-workers.md
 [ios-modules]: /docs/research/turn-ios.md#two-local-swift-modules-in-expo
+[svc-key]: /docs/research/turn-services.md#the-test-store-api-key
