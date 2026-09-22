@@ -892,11 +892,17 @@ Expo Router, with one stack:
   reads each new answer (A11Y-1, A11Y-4).
 - Text uses the system's Dynamic Type sizes, and screens scroll rather than
   truncate at the largest sizes (A11Y-2).
-- Colors come from one theme with light and dark variants, and text keeps a
-  contrast of at least 4.5 to 1 (A11Y-5).
+- Colors come from one theme with light, dark, and Increase Contrast
+  values, each a `DynamicColorIOS`, and text keeps a contrast of at least
+  4.5 to 1 in all four (A11Y-5). The app follows the system's appearance
+  with `userInterfaceStyle: 'automatic'`: without it, Expo writes
+  `UIUserInterfaceStyle` as `Light`, which locks the app, the paywall, and
+  the system sheets in light mode ([iOS notes on Dark Mode][ios-dark]).
 - The paywall is RevenueCat's native view; the VoiceOver and Larger Text
   checks run on it too, since a label can be claimed only if the purchase
   works with that feature (A11Y-6).
+
+[ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
 
 ### Build configuration
 
@@ -907,6 +913,7 @@ export default {
   name: 'Guessling',
   slug: 'guessling',
   orientation: 'portrait',
+  userInterfaceStyle: 'automatic', // follow the system's appearance (A11Y-5)
   ios: {
     bundleIdentifier: 'com.<team>.guessling',
     supportsTablet: false, // iPhone only, the default (COMPAT-1)
