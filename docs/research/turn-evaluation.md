@@ -419,9 +419,9 @@ for two independent samples don't apply.
   each sample: "If, say, one system outperforms the other system 95% of the
   time, we draw the conclusion that it is better with 95% statistical
   significance. We call this method paired bootstrap resampling, since we
-  compare a pair of systems." He reports that "Even for small test sizes of only
-  300 sentences, our methods may give us assurances that test result differences
-  are real." ([koehn-2004])
+  compare a pair of systems." Koehn reports that "Even for small test sizes of
+  only 300 sentences, our methods may give us assurances that test result
+  differences are real." ([koehn-2004])
 - **As a p-value.** Berg-Kirkpatrick, Burkett, and Klein's procedure: "Draw b
   bootstrap samples x(i) of size n by sampling with replacement from x", count
   the samples whose gain exceeds twice the observed gain, and take that share as
@@ -974,7 +974,7 @@ pages read "Last updated Sep 17, 2026" ([cf-ai-pricing]; [cf-ai-limits]).
 | DailyDialog ([dd-card]; [dd-home-2019])                          | "licensed under CC BY-NC-SA 4.0"; originally "only for research purposes", and "The original copyright of all the conversations belongs to the source owner" | Not without permission                    |
 | Persona-Chat ([personachat]; [parlai-license]; [parlai-convai2]) | Released "open source in ParlAI", whose code is MIT; the data archive has no license file, and ParlAI's ConvAI2 page says "License: CC 4.0 BY"               | Unclear                                   |
 | Switchboard-1 ([ldc-swb]; [ldc-nonmember])                       | Only for "non-commercial linguistic education, research and technology development"; no redistribution "to others outside of User's Research Group"          | No                                        |
-| Switchboard Dialog Act Corpus ([swda-potts]; [swda-github])      | Every transcript "should not be redistributed"; Potts's page is CC BY-NC-SA 3.0 and his repository GPL-2.0                                                   | No                                        |
+| Switchboard Dialog Act Corpus ([swda-potts]; [swda-github])      | Every transcript "should not be redistributed"; Potts's page is CC BY-NC-SA 3.0 and the repository GPL-2.0                                                   | No                                        |
 | Taskmaster-1, 2, and 3 ([taskmaster])                            | "made available under the Creative Commons Attribution 4.0 License"                                                                                          | Yes, credited and marked CC BY; task talk |
 | Crowdsourced AAC messages, 2011 ([aac-imagine])                  | CC BY 4.0, "With the exception of lm_test_switch.txt and lm_test_comm.txt"                                                                                   | Yes, credited and marked CC BY            |
 | Turk dialogues and COMM2 ([aac-turk]; [aac-comm2])               | The pages say CC BY 4.0; the readmes inside the zips say "Attribution-NoDerivs 3.0 Unported License"                                                         | Unclear; no edits under ND                |
@@ -1278,7 +1278,7 @@ Stivers' shares of questions:
   COMM2 say CC BY 4.0, while the readmes inside their zips say
   "Attribution-NoDerivs 3.0 Unported License" ([aac-turk]; [aac-comm2]).
 - **The Switchboard dialogue-act transcripts.** Each file says it "should not be
-  redistributed", Potts's page is CC BY-NC-SA 3.0, his repository is GPL-2.0,
+  redistributed", Potts's page is CC BY-NC-SA 3.0, the repository is GPL-2.0,
   and Switchboard itself is under LDC's terms ([swda-potts]; [swda-github];
   [ldc-swb]).
 - **Stivers et al.'s means.** Levinson and Torreira give the languages' means as
