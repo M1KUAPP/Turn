@@ -248,16 +248,20 @@ Data, consent, and terms:
   responses", but it keeps rights "in perpetuity" to use the data for
   telemetry and abuse monitoring ([data handling][jev-data]).
 - **The partner's consent.** TypeSafe's agreement makes the team give the
-  notices its use of input needs (section 5). The consent card names
-  TypeSafe and asks the partner before listening starts, the privacy notice
-  names it too, and the user can pause at any time.
+  notices its use of input needs (section 5). The consent card asks the
+  partner before listening starts and says where their words go: to
+  TypeSafe by name once TypeSafe agrees to be named, and otherwise to "a
+  third-party AI service in the United States". The privacy notice says the
+  same, and the user can pause at any time.
 - **No minors' data.** TypeSafe's services aren't "directed to children",
   and it doesn't knowingly handle personal data from anyone under 18, so
   Turn is for adults, and the under-18 switch keeps a younger partner's
   words from reaching Jev ([ages and accounts][ng-minors]).
 - **Naming Jev.** Section 16.4 bars announcing the relationship without
-  consent, so the team asks TypeSafe on September 22 before naming Jev in the
-  video and the description ([terms][jev-terms]).
+  consent, so the team asks TypeSafe on September 22 before naming Jev or
+  TypeSafe in the app, the video, the description, or the README
+  ([terms][jev-terms]). The public repository lists TypeSafe's SDK among its
+  dependencies, so the same request asks whether that is fine.
 - **Open source.** TypeSafe's SDKs are MIT-licensed, and its only key advice
   is "Keep API credentials server-side in web apps." The repository holds
   the relay's code but never its key ([keys in open source][jp-keys]).
@@ -487,9 +491,9 @@ description alone and read the code to check them.
 - **Live transcription fails on the device.** Trigger: not working by the end
   of September 24; then switch to `expo-speech-recognition` and its older
   recognizer.
-- **Test Store can't sell a one-time product.** RevenueCat's Test Store page
-  describes products by identifier, price, and duration without saying
-  whether a one-time product can be made. Trigger: the dashboard offers none
+- **Test Store can't sell a one-time product.** RevenueCat's Test Store
+  pages don't say whether a one-time product can be made there
+  ([gaps][ng-gaps]). Trigger: the dashboard offers none
   on September 22; then the demo sells Listen as a yearly Test Store product,
   which renews at most five times before it ends, and the one-time design
   stays for a store release ([round 8][log-r8]).
@@ -497,18 +501,23 @@ description alone and read the code to check them.
   nothing speaks until the user taps, but a wrong tap on a question about
   pain or consent matters. Yes-or-no questions get the fixed Yes, No, and
   Not sure buttons, and the grid is always one tap away
-  ([harm][ev-harm]).
+  ([harm][ev-harm]). Trigger: on September 25, the evaluation puts a wrong
+  answer to a yes-or-no or pain line in the big button; then those lines get
+  only the fixed buttons and the grid.
 - **The partner's privacy.** AAC users asked "how they could turn off the
   system from hearing the conversations all the time", and California bars
   recording "confidential communication" without the consent of all
   parties; whether live transcription counts is unsettled. The consent card,
-  the light, and pause answer both, and no audio is stored.
+  the light, and pause answer both, and no audio is stored. Trigger: a check
+  on September 26 finds any audio or transcript kept after its request, on
+  the phone or in the relay; then it's fixed before the video.
 - **No clinical eyes.** Trigger: no clinic review by September 27; then the
   description says no clinician has reviewed Turn yet.
 - **TypeSafe doesn't consent to being named.** Trigger: no answer by
-  September 28, when the video is recorded; then the video calls Jev "a
-  hosted decision model", and the description names it only if consent
-  arrives before the deadline.
+  September 28, when the video is recorded; then the video, the
+  description, and the README call Jev "a hosted decision model", the consent
+  card and privacy notice say "a third-party AI service in the United
+  States", and the names go in only if consent arrives before the deadline.
 - **The wrong phone.** Personal Voice needs an iPhone 15 Pro or later by one
   Apple page. Trigger: no such phone for the video; then a system voice
   speaks.
@@ -540,7 +549,7 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
 1.  [Round 8][r8] made speech free and Listen mode a one-time purchase.
 1.  [Round 9][r9] cut the scope to one loop and set the schedule to
     September 30.
-1.  [Round 10][r10] tested the pitch and set the triggers under
+1.  [Round 10][r10] tested the pitch and set most of the triggers under
     [Risks](#risks).
 
 [r1]: /docs/research/next-gen-ideation.md#round-1-constraints-and-rubric
@@ -575,15 +584,21 @@ Still open, each with a safe default:
 
 - **Test Store and one-time products.** Safe default: the yearly fallback
   under [Risks](#risks).
+- **Test Store in the Simulator.** RevenueCat never says outright that Test
+  Store runs on the iOS Simulator ([gaps][ng-gaps]). Safe default: try it
+  there on September 25; if it fails, the README's Simulator path skips the
+  purchase, and the video shows it on a device.
 - **The Test Store key in a public repository.** No RevenueCat page says
   whether it may be committed. Safe default: commit only the public Test
   Store key, and rotate it if RevenueCat objects.
-- **Jev credits.** No free tier or student program exists, and no page says
+- **Jev credits.** No page read names a free tier or student program, and
+  no page says
   what the API returns when credits run out. Safe default: buy credits on
   September 22, turn on auto-refill, and watch usage through the winners'
   announcement ([programs][jp-programs]).
-- **Naming Jev.** Safe default: ask TypeSafe on September 22, and follow the
-  trigger under [Risks](#risks).
+- **Naming Jev.** Safe default: ask TypeSafe on September 22, including
+  about its SDK in the public repository, and follow the trigger under
+  [Risks](#risks).
 - **Personal Voice devices.** Apple's iOS 27 guide says iPhone 15 Pro and
   later, and another Apple page says iPhone 12. Safe default: plan the video
   on an iPhone 15 Pro or later.
@@ -625,3 +640,4 @@ Still open, each with a safe default:
 [ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
 [ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
 [ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
+[ng-gaps]: /docs/research/next-gen.md#gaps
