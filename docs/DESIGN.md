@@ -24,6 +24,9 @@ Contents:
 1.  [Words on screen](#words-on-screen)
 1.  [Accessibility](#accessibility)
 1.  [App icon and pitch assets](#app-icon-and-pitch-assets)
+1.  [Do's and don'ts](#dos-and-donts)
+1.  [Guidance for coding agents](#guidance-for-coding-agents)
+1.  [Open questions](#open-questions)
 1.  [See also](#see-also)
 
 ## Overview
@@ -555,8 +558,6 @@ with the iOS 27 SDK resizes on iPad and in iPhone Mirroring
 - **Checked at** 320, 375, 402, and 440 points wide, and on an iPad in a
   resized window.
 
-[ios-resize]: /docs/research/turn-ios-design.md#resizable-iphone-apps-and-iphone-duo
-
 ### Short screens and large text
 
 - **Short screens.** Where the space between the top bar and the screen's
@@ -970,7 +971,6 @@ The row's height and its six slots are fixed for the text size and the width
 [aac-cost]: /docs/research/aac-design.md#what-prediction-displays-cost
 [ios-symbols]: /docs/research/turn-ios-design.md#symbols-for-speaking-listening-and-answering
 [aac-stale]: /docs/research/aac-design.md#stale-rows-empty-rows-and-targets-that-move
-[aac-confidence]: /docs/research/aac-design.md#whether-to-show-confidence
 
 ### The strip
 
@@ -1499,6 +1499,114 @@ listing, since each label has published criteria
 [ms-video]: /docs/research/turn-motionsites.md#the-demo-video
 [ios-capture]: /docs/research/turn-ios-design.md#simulator-screenshots-and-recordings-in-xcode-27
 
+## Do's and don'ts
+
+- Do take every color from a token and every size from this document.
+- Do keep the strip, the row's slots, and the grid still; change only words.
+- Do give every color that means something a word or a shape too.
+- Do let text wrap at every size, and cut a phrase only in the row.
+- Don't put glass, gradients, shadows, images, or video behind words.
+- Don't shrink a button on press; change its fill.
+- Don't animate anything that isn't in the [Motion](#motion) table.
+- Don't mark a reply as AI, show a percentage, or dim an older phrase.
+- Don't add sounds or haptics; speech is the feedback.
+- Don't use the system's accent colors as fills under white text.
+- Don't name Jev or TypeSafe on screen until TypeSafe agrees.
+
+## Guidance for coding agents
+
+### Using this file
+
+- **Read the rules first.** The [rules that don't bend](#rules-that-dont-bend)
+  come before any token; then read the section for the screen at hand. The
+  tokens are the values to use, and the prose says how to apply them.
+- **Where values live.** Colors, in all four appearances, type, spacing,
+  corners, and components are in the `yaml` blocks, each top-level key in one
+  block; motion is in its table.
+- **Lint.** `bunx @google/design.md@0.4.0 lint docs/DESIGN.md` checks the
+  tokens and prints JSON. Read `summary.warnings`, not the exit code, since a
+  contrast failure is only a warning; the one warning allowed is
+  `missing-primary`, because the format wants a single `primary` value and
+  Turn's colors hold four ([trends notes][ft-linter]). `bunx
+@google/design.md@0.4.0 spec` prints the format; pin the version, since the
+  format is alpha.
+- **Generators.** Use AI generators for sketches only; their output starts
+  over from these tokens and rules ([trends notes][ft-generators]).
+- **Pointing agents here.** Once `app/` exists, a rule scoped to its screen
+  files can point agents to this file, rather than an import that loads it
+  into every session ([trends notes][ft-agents]).
+
+[ft-linter]: /docs/research/turn-frontend-trends.md#what-the-linter-checks
+[ft-generators]: /docs/research/turn-frontend-trends.md#generators-that-emit-expo-or-native-code
+[ft-agents]: /docs/research/turn-frontend-trends.md#where-agents-meet-the-file
+
+### Keeping code in step
+
+- **The theme file.** `app/src/constants/theme.ts` exports each color as
+  `DynamicColorIOS({ light, dark, highContrastLight, highContrastDark })` from
+  the yaml's four values; each text style with its size, leading, weight, Bold
+  Text weight, and `dynamicTypeRamp`; and the spacing and corners.
+- **Its test.** A unit test reads this file's yaml and fails when `theme.ts`
+  differs, and recomputes every pair in the [contrast table](#contrast) and
+  every pair a component names, in all four appearances.
+- **One accessibility store.** It reads Reduce Motion, Bold Text, Reduce
+  Transparency, Increase Contrast, and the text size at launch and follows
+  each change event, and motion, weight, and layout read from it
+  ([iOS notes][ios-rn-settings]).
+- **Direction.** A change starts here, then reaches `theme.ts`, never the
+  other way.
+
+[ios-rn-settings]: /docs/research/turn-ios-design.md#colors-and-settings-in-react-native-086
+
+### Checks before a screen ships
+
+- **Where.** An iPhone on iOS 26, and an iPhone 16 simulator on iOS 27 resized
+  in Device Hub to 320, 375, 402, and 440 points wide.
+- **Settings.** Everything in [the test plan](#the-test-plan).
+- **Real words.** The longest starter phrase in a slot and in the grid, a
+  300-character partner line in the line, and the strip at AX5.
+- **Colors.** After any color change, `check_contrast.py`, from the
+  [design plan's appendix][plan-checks], still prints `OK`.
+
+[plan-checks]: /docs/superpowers/plans/2026-09-23-turn-design.md#appendix-check-scripts
+
+### If the days run short
+
+Ship first what the rules need: the tokens, the row and its states, the strip,
+the line, the light, the consent card, the ramps, and Reduce Motion. These can
+follow in an update: three-column widths for iPads, the All sheet while the
+categories fit on one line, the README's GIF, and the gallery's composites
+beyond the required screenshot. Never cut a rule.
+
+## Open questions
+
+Each has a safe default, which this document follows until someone decides.
+
+- **A show view for the partner.** Seven of twelve rival apps can fill the
+  screen with the last phrase, flipped toward the partner, and the PRD has no
+  such view ([AAC design notes][aac-partner]). Safe default: none in the first
+  version; outside Listen mode the line shows the last phrase spoken, and the
+  PRD can add a Should.
+- **Finishing a phrase first.** SPEAK-2 lets a stray tap cut off a phrase
+  mid-speech, which a tremor's second tap can do, and two rivals offer a
+  setting against it ([AAC design notes][aac-guards]). Safe default: SPEAK-2
+  as written.
+- **The strip's height.** Its cells are 48 points, under the row's 12 mm.
+  Safe default: 48, revisited with the clinic's review (CONTENT-5).
+- **Saying how well Listen mode does.** In one study, a short statement of
+  accuracy before use raised acceptance of an imperfect model
+  ([AAC design notes][aac-confidence]). Safe default: the README carries the
+  evaluation's table, and the app says nothing until the PRD gives it a place.
+- **Atkinson Hyperlegible Next in the app.** Safe default: the system face in
+  the app and the font only in the pitch, since no study shows it reads
+  better.
+- **iPhone Duo.** It reaches buyers on October 23, after judging, and nobody
+  has tested a portrait-locked iPhone app on its inner display. Safe default:
+  the width rules above ([iOS notes][ios-resize]).
+
+[aac-partner]: /docs/research/aac-design.md#displays-that-face-the-partner
+[aac-guards]: /docs/research/aac-design.md#guards-against-accidental-activation
+
 ## See also
 
 - [Product](/docs/PRODUCT.md): who Turn is for, and the principles this
@@ -1526,5 +1634,7 @@ listing, since each label has published criteria
 [ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
 [ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
 [ios-light]: /docs/research/turn-ios-design.md#a-pulsing-listening-light
+[ios-resize]: /docs/research/turn-ios-design.md#resizable-iphone-apps-and-iphone-duo
 [ms-app]: /docs/research/turn-motionsites.md#the-native-iphone-app
 [trd-a11y]: /docs/TRD.md#accessibility-in-the-app
+[aac-confidence]: /docs/research/aac-design.md#whether-to-show-confidence
