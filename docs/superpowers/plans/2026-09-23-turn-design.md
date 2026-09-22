@@ -215,7 +215,7 @@ reasons given, and each is stated as a decision in the document.
     titles and the images' captions, where Apple's license bars SF Pro.
 1.  **The home screen.** Bands in the PRD's order, top to bottom: the top bar
     (Settings, the place picker, the Listen control), the caption (the
-    partner's words in Listen mode and the user's last phrase outside it,
+    partner's words in Listen mode, and "Listen mode is off." outside it,
     with Done or Clear), the strip, the row, the category tabs, the grid, and
     the bottom bar (Type, Repeat or Stop, and Up and Down, which page the
     grid so it never needs a swipe). There's no navigation bar, and the strip
@@ -223,8 +223,8 @@ reasons given, and each is stated as a decision in the document.
 1.  **The row.** Six slots in two columns of three, each 78 points tall, at
     least 12 mm on every iPhone Turn runs on, with 12 points between them, so
     a slot holds about 14 characters a line. Heights follow the text size and
-    the width, never the content. From AX1, one column; where the width fits
-    three 154-point slots, as on an iPad, three. A phrase takes up to two
+    the width, never the content. From AX1, and under 352 points wide, one
+    column; wider windows keep two. A phrase takes up to two
     lines at `title3-emphasized`, then two at `headline`'s size, and past
     that the slot ends with an ellipsis, while VoiceOver and speech give the
     whole phrase and the grid shows it whole.
@@ -367,7 +367,7 @@ Every task runs this gate on each file it changes, after writing and before
 committing. `CHECKS` is a directory holding `check_md.py`, `fact_scan.py`,
 and `check_links.py` from the [first idea plan's appendix][idea-appendix],
 with `check_md.py` changed as in the [Guessling plan's
-appendix][ids-script], `lint_summary.py` from the [Guessling design plan's
+appendix][check-md-change], `lint_summary.py` from the [Guessling design plan's
 appendix][design-appendix], and `check_contrast.py` and `archive_design.py`
 from [this plan's appendix](#appendix-check-scripts); `corpus-top` in it
 holds copies of the brief, the context, the idea, the product, the PRD, and
@@ -408,7 +408,7 @@ check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" 2>/dev/null || ec
 ```
 
 [idea-appendix]: /docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
-[ids-script]: /docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
+[check-md-change]: /docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
 
 ## Tasks
 
