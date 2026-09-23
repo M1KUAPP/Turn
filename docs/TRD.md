@@ -1344,10 +1344,10 @@ monitoring, and "Jev is not trained on customer requests or responses"
   - `user`, the first 8 characters of the ID's hash;
   - `seq`, the sequence number;
   - `outcome`: `answered`, `paywall`, `failed`, or `off` for a line;
-    `credits` for a line Jev refused with a `402`; `spent` for a line past
-    the day's calls to Jev; `duplicate` for a line ID already used, and
-    `unverified` for a line past the free lines whose check got no answer
-    and no cached yes; `limited` for a request over a rate limit;
+    `credits` for a line Jev refused with a `402`; `spent` for a line the
+    day's budget stopped before any call; `duplicate` for a line ID already
+    used, and `unverified` for a line past the free lines whose check got no
+    answer and no cached yes; `limited` for a request over a rate limit;
     `invalid`, `not_found`, or `internal` for a request refused with that
     error; and `config` for the configuration;
   - `ms`, with the milliseconds in all as `total` and in Jev as `jev`;
