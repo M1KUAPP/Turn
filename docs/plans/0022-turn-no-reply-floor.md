@@ -116,6 +116,8 @@ Contents:
     - 20 lines, all meant to have no stored reply, five at each place in a
       fixed rotation, so any first few are spread over the places;
     - no yes-or-no lines, since Yes and No answer them;
+    - partners talking "face to face with the user or near them", so a
+      remark not addressed to the user can be a line;
     - a third user, an adult after a laryngectomy, whom the brief's "What
       Turn is" already names;
     - the labelers' rules 1 to 5, word for word, so the writer aims at the
