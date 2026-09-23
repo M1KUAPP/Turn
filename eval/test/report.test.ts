@@ -4,11 +4,13 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { beforeAll, expect, test } from 'vitest'
 import { main, rate } from '../src/report'
+import { fakeServices } from './services'
 
 const fixture = fileURLToPath(new URL('fixture/lines.jsonl', import.meta.url))
 let report = ''
 
 beforeAll(async () => {
+  fakeServices()
   const out = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'results.md')
   await main(['--lines', fixture, '--out', out])
   report = readFileSync(out, 'utf8')
@@ -24,7 +26,13 @@ const section = (heading: string) => {
   return end < 0 ? rest : rest.slice(0, end)
 }
 /** Words as the report wraps them, a line break wherever a space may be. */
-const prose = (text: string) => new RegExp(text.split(' ').join('\\s+'))
+const prose = (text: string) =>
+  new RegExp(
+    text
+      .split(' ')
+      .map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('\\s+')
+  )
 /** A table's row for a ranker or step, as its cells. */
 const cells = (text: string, first: string) =>
   text
@@ -166,6 +174,7 @@ test('says so in a whole sentence when a group has no lines', async () => {
   const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
   const [water] = readFileSync(fixture, 'utf8').split('\n')
   writeFileSync(join(dir, 'lines.jsonl'), water)
+  fakeServices()
   await main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
   const one = readFileSync(join(dir, 'results.md'), 'utf8')
   expect(one).toMatch(prose('There are no lines about pain or asking for consent, which EVAL-5 names.'))
@@ -180,4 +189,51 @@ test("says how the app picks each shortlist, and what that leaves of the line in
   expect(report).toMatch(prose('up to 24 phrases that share a word with the line'))
   expect(report).toMatch(prose("the place's first eight phrases in the bank's order"))
   expect(report).toMatch(prose("so the place ranker's top 1 and top 6 never depend on the line"))
+})
+
+test('scores all four rankers on the same lines, in every group and step (EVAL-3)', () => {
+  const rankers = ['place', 'keyword', 'embeddings', 'jev']
+  for (const group of ['all lines', 'yes-or-no lines', 'pain and consent lines']) {
+    for (const ranker of rankers) {
+      expect(cells(section(`### Ranking on ${group}`), ranker), `${group} ${ranker}`).toHaveLength(3)
+      expect(cells(section(`### The row on ${group}`), ranker), `${group} ${ranker}`).toHaveLength(8)
+    }
+  }
+  for (const step of ['shortlist', ...rankers]) expect(cells(section('## Latency'), step), step).toHaveLength(3)
+})
+
+test("names Jev's pin, what Jev answered as, and Workers AI's model (EVAL-6)", () => {
+  // 8 lines in four passes, and the stand-in counts 1,000 tokens and one more for each of 42 questions.
+  expect(report).toMatch(
+    prose(
+      '- **Models:** Jev, pinned to `jev-1.13.0` by `worker/wrangler.jsonc`, which answered as `jev-1.13.0` on all ' +
+        "32 calls, with a median of 1,042 input tokens a call; and Workers AI's `@cf/baai/bge-base-en-v1.5`, with " +
+        '`cls` pooling.'
+    )
+  )
+})
+
+test("gives Jev minus embeddings in top 6 with its paired interval, matching the table's counts (EVAL-4)", () => {
+  const ranking = section('### Ranking on all lines')
+  const hits = (ranker: string) => Number(cells(ranking, ranker)?.[1].split(' ')[0])
+  const gap =
+    /Jev minus embeddings in top 6: ([+-]?[\d.]+) points, with a 95% paired\s+interval\s+of\s+(-?[\d.]+)\s+to\s+(-?[\d.]+),\s+so\s+([^.]+)\./
+  const [, difference, low, high, verdict] = gap.exec(ranking) ?? []
+  expect(Number(difference)).toBeCloseTo(((hits('jev') - hits('embeddings')) / 6) * 100, 1)
+  expect(Number(low)).toBeLessThanOrEqual(Number(difference))
+  expect(Number(high)).toBeGreaterThanOrEqual(Number(difference))
+  const expected =
+    Number(high) < 0
+      ? 'Jev trails embeddings (EVAL-4)'
+      : Number(low) > 0
+        ? 'Jev leads embeddings'
+        : "there's no clear difference"
+  expect(verdict.replace(/\s+/g, ' ')).toBe(expected)
+})
+
+test("lists the embeddings ranker's five cut-offs, each chosen on the other folds", () => {
+  const cutOffs = section("## The embeddings ranker's cut-offs")
+  expect(cutOffs).toMatch(prose('Folds 1 to 5:'))
+  expect(cutOffs.match(/\d\.\d{3}|none, holding every line/g)).toHaveLength(5)
+  expect(report).toContain("1.  [The embeddings ranker's cut-offs](#the-embeddings-rankers-cut-offs)")
 })

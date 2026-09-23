@@ -3,12 +3,21 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { linesFrom, phrases, root, type Line } from './data'
+import { atCutOff, embeddingModel, embeddings, workersAi } from './embeddings'
+import { jev, relayModel, type JevCall } from './jev'
 import { listOf, wrap } from './prose'
 import { keyword, place } from './rankers'
-import { outcomes, scoreLines, sharesNoWord, summarize, type Count, type LineScore } from './score'
+import {
+  outcomes,
+  scoreLines,
+  sharesNoWord,
+  summarize,
+  topSixGap,
+  type Count,
+  type LineScore,
+  type Scores
+} from './score'
 import { percentile, wilson } from './stats'
-
-const rankers = { place, keyword }
 
 /** A share as the TRD writes one: in whole percents at or above 10%, and to one decimal below. */
 const percent = (share: number) => {
@@ -59,12 +68,34 @@ const provenance = (labeled: readonly Line[]) => {
   ]
 }
 
+/** A share in points, to one decimal. */
+const points = (share: number) => (share * 100).toFixed(1)
+
+/** What EVAL-4 reads from the paired interval, as a sentence's end. */
+const verdicts = {
+  trails: 'Jev trails embeddings (EVAL-4)',
+  leads: 'Jev leads embeddings',
+  'no clear difference': "there's no clear difference"
+}
+
+/** Jev's top 6 minus embeddings', with its paired interval and what it says, or nothing unless both ranked. */
+const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[]) => {
+  const gap = names.includes('jev') && names.includes('embeddings') ? topSixGap(scores, 'jev', 'embeddings') : null
+  if (gap === null) return []
+  const { difference, low, high, verdict } = gap
+  return [
+    wrap(
+      `Jev minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, with a 95% paired ` +
+        `interval of ${points(low)} to ${points(high)}, so ${verdicts[verdict]}.`
+    )
+  ]
+}
+
 /** One group's ranking and row, with each rate's interval. */
-const groupSections = (name: string, about: string, scores: readonly LineScore<Line>[]) => {
+const groupSections = (name: string, about: string, scores: readonly LineScore<Line>[], names: readonly string[]) => {
   const lower = name[0].toLowerCase() + name.slice(1)
   if (scores.length === 0) return [`## ${name}`, wrap(`There are no lines ${about}.`)]
   const summary = summarize(scores)
-  const names = Object.keys(rankers)
   const ranking =
     summary.recall.n === 0
       ? ['None of them has an acceptable phrase besides Yes, No, and Not sure.']
@@ -85,7 +116,8 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
               })
             ]
           ),
-          wrap(`The shortlist's recall at 40: ${rate(summary.recall)}.`)
+          wrap(`The shortlist's recall at 40: ${rate(summary.recall)}.`),
+          ...gapLine(scores, names)
         ]
   const capitalized = outcomes.map((outcome) => outcome[0].toUpperCase() + outcome.slice(1))
   const row = table(
@@ -113,9 +145,52 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
   ]
 }
 
-/** The report for the lines, in Markdown, scored with the app's own shortlist, rankers, and row rules. */
-const render = async (labeled: readonly Line[], { run, file }: { run: string; file: string }) => {
-  const { lines: scores, timings } = await scoreLines(labeled, phrases, rankers)
+/** Jev's pin, where it's set, and what Jev reported answering as, then Workers AI's model (EVAL-6). */
+const models = (pin: string, calls: readonly JevCall[]) => {
+  const byModel = [...Map.groupBy(calls, (call) => call.model)]
+  const answered = listOf(
+    byModel.map(([model, made]) => `\`${model}\` on ${made.length === calls.length ? 'all ' : ''}${made.length} calls`)
+  )
+  const tokens = Math.round(
+    percentile(
+      calls.map((call) => call.inputTokens),
+      50
+    )
+  ).toLocaleString('en-US')
+  return (
+    `- **Models:** Jev, pinned to \`${pin}\` by \`worker/wrangler.jsonc\`, which answered as ${answered}, with a ` +
+    `median of ${tokens} input tokens a call; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
+  )
+}
+
+/** Each fold's cut-off for the embeddings ranker, which holds a line when no phrase's cosine reaches it. */
+const cutOffSection = (cutOffs: readonly number[]) => {
+  const values = cutOffs.map((cutOff) => (cutOff === Infinity ? 'none, holding every line' : cutOff.toFixed(3)))
+  return [
+    "## The embeddings ranker's cut-offs",
+    wrap(
+      'The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable ' +
+        "reply. Each fold's lines were scored at the cut-off that made the most of the other four folds' lines " +
+        'right, a tie going to the higher, and a line holds when no phrase reaches its cut-off. Folds 1 to 5: ' +
+        `${listOf(values)}.`
+    )
+  ]
+}
+
+/** An anchor as GitHub makes one from a heading. */
+const slug = (heading: string) =>
+  heading
+    .toLowerCase()
+    .replace(/[^a-z0-9 _-]/g, '')
+    .replaceAll(' ', '-')
+
+/** The report for the lines, in Markdown, from their scores with the app's own shortlist, rankers, and row rules. */
+const render = (
+  labeled: readonly Line[],
+  { lines: scores, timings, cutOffs }: Scores<Line>,
+  { run, file, pin, calls }: { run: string; file: string; pin: string; calls: readonly JevCall[] }
+) => {
+  const names = Object.keys(timings.rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
     {
@@ -139,15 +214,20 @@ const render = async (labeled: readonly Line[], { run, file }: { run: string; fi
     ['Step', 'Median', '95th percentile', 'Maximum'],
     steps.map(([step, samples]) => [step, ...[50, 95, 100].map((q) => percentile(samples, q).toFixed(3))])
   )
-  const slug = (heading: string) => heading.toLowerCase().replaceAll(' ', '-')
-  const sections = ['Who wrote the data', ...groups.map(({ name }) => name), 'Latency']
+  const sections = [
+    'Who wrote the data',
+    ...groups.map(({ name }) => name),
+    ...(cutOffs.embeddings ? ["The embeddings ranker's cut-offs"] : []),
+    'Latency'
+  ]
   return (
     [
       "# Turn's evaluation",
       [
         `- **Run:** ${run}.`,
         `- **Lines:** the ${labeled.length} in \`${file}\`.`,
-        "- **Bank:** the app's own, `app/src/content/starter-bank.json`."
+        "- **Bank:** the app's own, `app/src/content/starter-bank.json`.",
+        wrap(models(pin, calls), '  ')
       ].join('\n'),
       wrap(
         'Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that ' +
@@ -158,13 +238,22 @@ const render = async (labeled: readonly Line[], { run, file }: { run: string; fi
           'among them can.'
       ),
       [
+        "- **Rankers:** place gives the place's phrases in the bank's order; keyword, the phone's own ranking by " +
+          "shared words; embeddings, the cosine between the line and each phrase, with the phone's yes-or-no rule " +
+          'and no big button, holding a line below a cut-off that five-fold cross-validation sets; and jev, ' +
+          "Jev's answer to the relay's request, which the row's rules take with their starting policy: a floor of " +
+          '0.6, a big button above 0.85, and a margin of 0.15.',
         '- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. ' +
           'A ranker ranks only the phrases it scores above 0, so keyword ranks none on a line that shares no word. ' +
           'Chance is a random order of the same phrases. The mean reciprocal rank is a mean of ranks, not a rate, ' +
           'so it has no interval.',
         '- **The row:** coverage is the share of lines where the row changes, and risk the share of those rows ' +
           'that are wrong. Always holding is right on every line with no acceptable reply.',
-        '- **Intervals:** every rate carries its 95% Wilson interval.'
+        '- **Intervals:** every rate carries its 95% Wilson interval. Jev minus embeddings in top 6 carries a 95% ' +
+          'paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed seed, and Jev ' +
+          'trails only when the whole interval lies below zero.',
+        "- **Jev's answers** vary a little from call to call, so each line is scored from the first of the three " +
+          'timed passes.'
       ]
         .map((item) => wrap(item, '  '))
         .join('\n'),
@@ -175,9 +264,11 @@ const render = async (labeled: readonly Line[], { run, file }: { run: string; fi
         groupSections(
           name,
           about,
-          scores.filter(({ line }) => keep(line))
+          scores.filter(({ line }) => keep(line)),
+          names
         )
       ),
+      ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings) : []),
       '## Latency',
       wrap(
         'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
@@ -201,15 +292,23 @@ const commit = () => {
 }
 
 /**
- * `bun run eval`: scores the place and keyword rankers on the labeled lines in `eval/lines.jsonl`, or the file
- * `--lines` names, and writes the report to `eval/results.md`, or the file `--out` names (EVAL-3).
+ * `bun run eval`: scores the four rankers on the labeled lines in `eval/lines.jsonl`, or the file `--lines` names, and
+ * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3). The embeddings ranker needs
+ * `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev `TYPESAFE_API_KEY`, in the environment.
  */
 export async function main(args: readonly string[]): Promise<void> {
   const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, out: { type: 'string' } } })
   const { lines: labeled, file } = linesFrom(values.lines)
+  const pin = relayModel()
+  const jevRanker = jev(pin)
+  const rankers = { place, keyword, embeddings: embeddings(workersAi()), jev: jevRanker }
+  const scores = await scoreLines(labeled, phrases, rankers, { embeddings: atCutOff })
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
   const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
-  writeFileSync(out, await render(labeled, { run: `${date}, at commit ${commit()}`, file }))
+  writeFileSync(
+    out,
+    render(labeled, scores, { run: `${date}, at commit ${commit()}`, file, pin, calls: jevRanker.calls })
+  )
   console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
 }
 
