@@ -86,6 +86,10 @@ node_modules/
 .env*
 !.env.example
 
+# Cloudflare Workers
+.wrangler/
+worker-configuration.d.ts
+
 # Graphify
 graphify-out/*
 !graphify-out/GRAPH_REPORT.md

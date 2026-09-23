@@ -160,7 +160,7 @@ directive's steps map to skills:
     ([local secrets][note-secrets]), and `worker/.dev.vars.example` names
     `TYPESAFE_API_KEY`, `RC_SECRET_KEY`, and `ID_SALT`, each with an empty
     value and a comment on its use from the TRD's table. `.gitignore` also
-    gains `.wrangler/`, the local state that tests and `wrangler dev` write.
+    gains `.wrangler/`, where Wrangler keeps its local state.
     `secrets.required` waits for the relay's ticket, whose criterion is that
     a deploy without the secrets fails.
 1.  **The hooks don't change.** They call `bunx lint-staged` and
@@ -445,8 +445,10 @@ In `.gitignore`, add `.wrangler/` and `worker-configuration.d.ts`.
 - [ ] **Step 4: Run it and see it pass.** The gate, then
       `git status --short` lists neither `.wrangler/` nor the generated
       types.
-- [ ] **Step 5: Update the TRD.** The plugin's row and the testing section
-      say 1.2.2 with Vitest 4.1.11, and why, citing the note.
+- [ ] **Step 5: Update the TRD.** The plugin's row says 1.2.2, keeping
+      its column's width, and the testing section says 1.2.2 with Vitest
+      4.1.11, and why, citing the note, whose link moves to the end of the
+      TRD, since two sections now use it.
 - [ ] **Step 6: Commit**
 
 ```shell
