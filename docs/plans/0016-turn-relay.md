@@ -174,9 +174,13 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     `refresh`, a boolean if present. Ids are 1 to 64 characters and unique
     in their list, and no category is `consent`, whose topic option is
     fixed. Other fields are ignored. Characters are Unicode code points, as
-    SQLite's `length()` counts them in the phone's `CHECK`s, so the relay
-    never refuses a text the phone stored; counting UTF-16 units would
-    refuse 200 emoji.
+    SQLite's `length()` counts them in the phone's `CHECK`s, so a text
+    within the phone's limits is within the relay's, where counting UTF-16
+    units would refuse 200 emoji. The 16 KB in all is the app's to keep:
+    40 candidates of 200 characters in a script of two or more bytes a
+    character pass it, so the app drops candidates from the end of the
+    shortlist until the request fits, which the TRD's "Tag, then cut" now
+    says; the first review round found that.
 1.  **The object's name** is `user-` and the hex SHA-256 of `ID_SALT`
     followed by the ID, reached with
     `getByName(name, { locationHint: 'wnam' })`. The log line keeps the
@@ -191,19 +195,27 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     - `policy` is `startingPolicy` with `POLICY`'s values over it. `POLICY`
       starts as `{}` and holds only the values the team changes, as JSON
       in `wrangler.jsonc` or as a string from `--var` or the dashboard.
-    - A `POLICY` with an unknown key or a wrong type, or a `FREE_LINES`
-      that isn't a whole number, answers `500 internal`, so a mistake shows
-      at the next request instead of passing unseen.
+    - A `POLICY` with an unknown key, a wrong type, or a number outside 0
+      to 1, a `FREE_LINES` that isn't a whole number, or no `JEV_MODEL`
+      answers `500 internal`, so a mistake shows at the next request
+      instead of passing unseen. Without a `JEV_MODEL`, the SDK would pick
+      a model of its own.
+    - With no `POLICY` at all, as after deleting it in the dashboard, the
+      starting policy holds; the first review round found that it answered
+      `500` instead.
 1.  **The Jev call,** in the object: a `TypeSafeClient` with every option
-    in code, since the SDK reads any it lacks from `process.env`, which
-    Workers fill with the vars and secrets ([SDK notes][note-sdk]):
-    `apiKey`, `defaultModel` from `JEV_MODEL`, `logLevel: 'off'`,
-    `timeout: 1500`, and `retry: { maxRetries: 1, respectRetryAfter: false }`,
-    called with `signal: AbortSignal.timeout(2500)`. The object returns a
-    plain result, never an error, whose message or body could hold text:
-    the ranking, the model, the input tokens, and the milliseconds in Jev;
-    or the outcome `failed` or `credits`, with Jev's status when it sent
-    one.
+    in code: `apiKey`, `baseURL: 'https://api.typesafe.ai'`, `defaultModel`
+    from `JEV_MODEL`, `logLevel: 'off'`, `timeout: 1500`, and
+    `retry: { maxRetries: 1, respectRetryAfter: false }`, called with
+    `signal: AbortSignal.timeout(2500)`. The SDK reads the key, the
+    address, the model, and the log level from `process.env` when the code
+    leaves them out, which Workers fill with the vars and secrets
+    ([SDK notes][note-sdk]); the first review round found the address
+    missing, which a stray `TYPESAFE_BASE_URL` var would have set. The
+    object returns a plain result, never an error, whose message or body
+    could hold text: the ranking, the model, the input tokens, and the
+    milliseconds in Jev; or the outcome `failed` or `credits`, with Jev's
+    status when it sent one.
 1.  **Failures.** A `402` from Jev is `credits`; any other error is
     `failed`: a `429`, a `529`, another status, a per-attempt timeout, the
     2.5-second budget, a lost connection, or an answer `readJevAnswer`
@@ -243,6 +255,12 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
       developer's shell environment is loaded into the pool unless
       `vitest.config.ts` overrides it, which it does. It also quiets the
       relay's log lines, which the log test reads from the same spy.
+    - `vitest.config.ts` sets the committed vars again, read with
+      Wrangler's `unstable_readConfig`, since Wrangler would take a var of
+      the same name from the shell, `.env`, or `.dev.vars`, and sets the
+      four names the SDK reads from `process.env` to wrong values, so the
+      contract and log tests fail if the code leaves one out. The first
+      review round found both.
     - Each test stands in for Jev with `vi.spyOn(globalThis, 'fetch')`,
       building every `Response` inside the mock, and reads the log lines
       with `vi.spyOn(console, 'log')`.
@@ -252,6 +270,12 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     - The contract test writes the parsed body the SDK sends to
       `worker/test/snapshots/jev-request.json` with `toMatchFileSnapshot`,
       two-space JSON that Prettier leaves as it is.
+    - A refused line is checked to reach neither Jev nor the user's
+      object, where #30 will count. After the first review round, tests
+      also cover a hung first attempt retried within the budget, a
+      `Retry-After` not waited for, a character split across the body's
+      chunks, and timings that count real time; before, each could break
+      with every test still passing.
 1.  **The deploy,** from `worker/` after the gate passes, on the head the
     review approved, before the merge, which copies that tree:
     - `ID_SALT` first, through a pipe, then `wrangler deploy`.
@@ -259,6 +283,11 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
       with three candidates, which costs about $0.00003, while
       `wrangler tail --format json` records the log lines. #28 sends the
       real line with 40 candidates and records its timing.
+    - `wrangler tail` shows lines as they happen, not what Workers Logs
+      keeps, which METRIC-1's check reads after a session. So the session
+      is read back from Workers Logs through Cloudflare's observability
+      API if Wrangler's login may, and otherwise the pull request says so
+      and leaves that reading to the dashboard.
     - The missing-secrets check deploys under `turn-relay-check`: Wrangler
       4.136.2 throws before it uploads a script, creates an object
       namespace, or adds a route, and `--dry-run` skips the check
@@ -266,10 +295,12 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
       finds no such Worker.
 1.  **The TRD** changes to match: the error table gains `not_found`; the
     limits gain the header, content type, code point, id, `lineId`, and
-    `seq` rules; the logs section lists the fields and outcomes; and the
-    configuration section says how `JEV_ON`, `TYPESAFE_NAMED`, and
-    `POLICY` are read, with `traces` and the two new vars in its
-    `wrangler.jsonc`.
+    `seq` rules; the logs section lists the fields and outcomes; the
+    configuration section says how `JEV_ON`, `TYPESAFE_NAMED`, `POLICY`,
+    and `JEV_MODEL` are read, with `traces` and the two new vars in its
+    `wrangler.jsonc`; the Jev request's call and errors name the options
+    set in code and the failures, an answer out of shape among them; and
+    "Tag, then cut" has the app keep a request within 16 KB.
 
 [note-sdk]: /docs/research/0037-turn-relay.md#the-sdks-client-and-call
 [note-logs]: /docs/research/0037-turn-relay.md#workers-logs
@@ -279,8 +310,11 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 
 - **The SDK's `choice` and `noul` helpers in `@turn/shared`:** the package
   the app installs would depend on the SDK for two object literals.
-- **`fetchMock`:** the plugin's 1.x releases dropped it; `@msw/cloudflare`
-  would add a dependency for what one spy does.
+- **`fetchMock`:** it left `@cloudflare/vitest-pool-workers` in 0.13.0,
+  before the plugin's 1.0.0, and `@msw/cloudflare` would add a dependency
+  for what one spy does.
+- **A cap above 16 KB:** SEC-2 sets it, and only 40 long texts in a script
+  of two or more bytes a character reach it, which the app can trim.
 - **Asking the object for the free lines now:** it would only return
   `FREE_LINES` until #30, which adds the call with the count.
 - **Logging in the object:** a line would log twice, once per side.
@@ -482,8 +516,9 @@ modify `worker/src/index.ts`, `worker/src/request.ts`,
 
 ### Task 13: The TRD
 
-- [ ] **Step 1: Edit** the TRD's Relay API, validation, configuration, and
-      logs sections as the design's last decision says.
+- [ ] **Step 1: Edit** the TRD's Relay API, Jev request, names as tags,
+      validation, configuration, and logs sections as the design's last
+      decision says.
 - [ ] **Step 2: Run the docs gate,** then commit each section on its own,
       such as `docs(trd): list the relay's log fields and outcomes`.
 
