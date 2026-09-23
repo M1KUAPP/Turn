@@ -409,8 +409,8 @@ Each task also has its own assertions, run first as a failing test:
 check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" 2>/dev/null || echo "MISSING: $p"; done; }
 ```
 
-[idea-appendix]: /docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
-[check-md-change]: /docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
+[idea-appendix]: /docs/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
+[check-md-change]: /docs/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
 
 ## Tasks
 
@@ -444,7 +444,7 @@ git commit -m "docs(research): add notes on Turn's iOS design"
 - [ ] **Step 1: Run the gate, then commit**
 
 ```shell
-git add docs/superpowers/plans/2026-09-23-turn-design.md
+git add docs/plans/2026-09-23-turn-design.md
 git commit -m "docs(plan): add the Turn design plan"
 ```
 
@@ -732,4 +732,4 @@ for f in FILES:
         print('updated', f)
 ```
 
-[design-appendix]: /docs/superpowers/plans/2026-09-22-guessling-design.md#appendix-check-scripts
+[design-appendix]: /docs/plans/2026-09-22-guessling-design.md#appendix-check-scripts
