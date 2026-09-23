@@ -27,7 +27,8 @@ const kindKeys = Object.keys(kinds) as Kind[]
 /** The topic every line may have besides the user's categories, which the row's safety rules follow (ROW-3). */
 const consent = 'Agreeing to or refusing care, treatment, or a procedure'
 
-const answers = '`phrase` answers what the partner just said in `partner_line`.'
+/** What each candidate's Noul asks about its phrase. */
+const noulQuestion = '`phrase` answers what the partner just said in `partner_line`.'
 
 /** The question's key for the candidate at an index: `c00` to `c39`, which never reach the model. */
 const keyFor = (index: number) => `c${String(index).padStart(2, '0')}`
@@ -47,7 +48,7 @@ export function buildJevRequest({ line, place, categories, candidates }: JevLine
       ...Object.fromEntries(
         candidates.map(({ text }, i) => [
           keyFor(i),
-          { type: 'noul', instructions: { phrase: text, question: answers } }
+          { type: 'noul', instructions: { phrase: text, question: noulQuestion } }
         ])
       )
     }
