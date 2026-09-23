@@ -551,7 +551,7 @@ with the model pinned (SEC-2):
 
 [svc-request]: /docs/research/0024-turn-services.md#the-request-body-for-one-partner-line
 [jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
-[relay-sdk]: /docs/research/0037-turn-relay.md#the-sdks-client-and-call
+[relay-sdk]: /docs/research/0038-turn-relay.md#the-sdks-client-and-call
 
 ### From probabilities to the row
 
@@ -1275,7 +1275,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
   a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
-[relay-logs]: /docs/research/0037-turn-relay.md#workers-logs
+[relay-logs]: /docs/research/0038-turn-relay.md#workers-logs
 
 ### Service life
 
