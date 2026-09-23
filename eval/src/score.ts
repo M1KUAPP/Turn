@@ -212,6 +212,18 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
   }
 }
 
+/** A big button a ranker showed: the line, its phrase, and whether the phrase is acceptable. */
+export type BigButton<Line extends ScoredLine> = { ranker: string; line: Line; phrase: string; right: boolean }
+
+/** Every ranker's big button on the lines, in the lines' order (EVAL-5). */
+export function bigButtons<Line extends ScoredLine>(scores: readonly LineScore<Line>[]): BigButton<Line>[] {
+  return scores.flatMap(({ line, rankers }) =>
+    Object.entries(rankers).flatMap(([ranker, { row }]) =>
+      row.big === null ? [] : [{ ranker, line, phrase: row.big, right: line.acceptable.includes(row.big) }]
+    )
+  )
+}
+
 /** How a ranker's top 6 compares with another's: `trails` and `leads` only when the whole interval lies on one side. */
 export type Verdict = 'trails' | 'leads' | 'no clear difference'
 
