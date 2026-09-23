@@ -1281,7 +1281,7 @@ ran under Wrangler 4.136.2:
     ([relay limits notes][limits-live]). The object's count is exact. The
     address keeps the binding, which let 250 requests from one address
     through in 18 seconds, so against a burst the daily budget is what
-    caps Jev's calls.
+    caps Jev's calls; #98 decides whether to count addresses exactly.
   - **Where:** once a request's headers and a line's lengths pass. The
     address's limit comes first, before any object, so once it holds, a
     flood from IDs minted on one address reaches none of their objects;
