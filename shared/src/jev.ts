@@ -1,5 +1,5 @@
 import type { LineRequest } from './relay'
-import type { Kind } from './row'
+import type { Kind, Ranking } from './row'
 
 /** What Jev reads for one line: the line and the place, the categories for its topic, and the shortlist to score. */
 export type JevLine = Pick<LineRequest, 'line' | 'place' | 'categories' | 'candidates'>
@@ -21,6 +21,8 @@ const kinds: Record<Kind, string> = {
   open: "Needs an answer in the listener's own words",
   not_a_question: 'A statement, greeting, or comment, not a question'
 }
+
+const kindKeys = Object.keys(kinds) as Kind[]
 
 /** The topic every line may have besides the user's categories, which the row's safety rules follow (ROW-3). */
 const consent = 'Agreeing to or refusing care, treatment, or a procedure'
@@ -49,5 +51,43 @@ export function buildJevRequest({ line, place, categories, candidates }: JevLine
         ])
       )
     }
+  }
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null
+
+/** A probability from Jev's answer, which must be a number from 0 to 1. */
+const probability = (value: unknown, key: string): number => {
+  if (typeof value !== 'number' || !(value >= 0 && value <= 1)) throw new Error(`Jev gave no probability for ${key}`)
+  return value
+}
+
+/** The probability of each option a Choice asked about, in the order it asked. */
+const readChoice = <K extends string>(answer: unknown, key: string, options: readonly K[]) => {
+  if (!isRecord(answer) || answer.type !== 'choice' || !isRecord(answer.probabilities)) {
+    throw new Error(`Jev's answer to ${key} isn't a Choice`)
+  }
+  const { probabilities } = answer
+  const read = (option: K) => probability(probabilities[option], key)
+  return Object.fromEntries(options.map((option) => [option, read(option)])) as Record<K, number>
+}
+
+/**
+ * Reads Jev's answers to the request `buildJevRequest` made for the same line into the row's ranking, with each
+ * candidate's score by its id in the candidates' order, which breaks ties. TypeSafe's SDK doesn't check Jev's answers,
+ * so one that is missing or out of shape throws.
+ */
+export function readJevAnswer(answers: unknown, { categories, candidates }: JevLine): Ranking {
+  if (!isRecord(answers)) throw new Error("Jev's answers aren't an object")
+  const noul = (key: string) => {
+    const answer = answers[key]
+    if (!isRecord(answer) || answer.type !== 'noul') throw new Error(`Jev's answer to ${key} isn't a Noul`)
+    return probability(answer.noul, key)
+  }
+  return {
+    kind: readChoice(answers.kind, 'kind', kindKeys),
+    topic: readChoice(answers.topic, 'topic', [...categories.map(({ id }) => id), 'consent']),
+    scores: new Map(candidates.map(({ id }, i) => [id, noul(keyFor(i))])),
+    onPhone: false
   }
 }
