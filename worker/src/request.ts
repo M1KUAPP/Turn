@@ -7,16 +7,14 @@ const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{1
 const version = /^[\x21-\x7e]{1,32}$/
 
 /** The two builds a request can come from: one on a phone, or one in the Simulator. */
-const builds: readonly string[] = ['device', 'simulator']
+const builds = ['device', 'simulator'] as const
 
-/** The app user ID, when every header each request carries is well formed, or null. */
-export function readUser(headers: Headers): string | null {
-  const user = headers.get('X-Turn-User') ?? ''
-  const valid =
-    uuid.test(user) &&
-    version.test(headers.get('X-Turn-Version') ?? '') &&
-    builds.includes(headers.get('X-Turn-Build') ?? '')
-  return valid ? user : null
+/** Who sent a request, the app user ID and the build, when every header each request carries is well formed. */
+export function readUser(headers: Headers): { id: string; build: (typeof builds)[number] } | null {
+  const id = headers.get('X-Turn-User') ?? ''
+  const build = builds.find((name) => name === headers.get('X-Turn-Build'))
+  const valid = uuid.test(id) && version.test(headers.get('X-Turn-Version') ?? '') && build !== undefined
+  return valid ? { id, build } : null
 }
 
 /** Whether a value is a JSON object: not null, and not a list. */

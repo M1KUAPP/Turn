@@ -3,7 +3,7 @@ import { startingPolicy, type Policy } from '@turn/shared/row'
 import { isRecord } from './request'
 
 /** Whether a switch is on: only `true` is, so a typo turns it off. */
-const isOn = (value: unknown) => String(value) === 'true'
+export const isOn = (value: unknown) => String(value) === 'true'
 
 /** Whether a value can take the place of one of the policy's, whose starting value sets its type. */
 const fits = (given: unknown, start: Policy[keyof Policy]) => {
