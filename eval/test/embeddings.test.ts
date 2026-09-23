@@ -60,7 +60,7 @@ test('gives the cosine of the angle between two vectors, whatever their lengths'
   expect(cosine([3, 4], [4, 3])).toBeCloseTo(24 / 25, 12)
 })
 
-test("scores each phrase by its cosine with the line, in the shortlist's order, with the phone's yes-or-no rule", async () => {
+test("scores each phrase's cosine with the line in the shortlist's order, and takes the phone's kind", async () => {
   const embed = vi.fn<Embed>(async (texts) => texts.map(fakeVector))
   const rank = embeddings(embed)
   const ranking = await rank('Do you want some water?', shortlist, new PhraseIndex(), home)

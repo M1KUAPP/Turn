@@ -99,7 +99,7 @@ test('scores a big button right only when its phrase is acceptable, and counts i
   ])
 })
 
-test('sums up the ranking over lines with an acceptable phrase besides the fixed buttons, and the row over all', async () => {
+test('sums up the ranking over lines with a phrase besides the fixed buttons, and the row over all lines', async () => {
   const summary = summarize((await run()).lines)
   expect(summary.lines).toBe(5)
   expect(summary.recall).toEqual({ k: 1, n: 2 })
@@ -194,7 +194,7 @@ test("ranks only the phrases a ranker scores above 0, so keyword gets no credit 
   ])
 })
 
-test('waits for each ranking before the next, so one request is in flight, and scores the first timed pass', async () => {
+test('waits for each ranking before the next, one request in flight, and scores the first timed pass', async () => {
   let inFlight = 0
   let most = 0
   let calls = 0
@@ -222,7 +222,7 @@ test('waits for each ranking before the next, so one request is in flight, and s
   ])
 })
 
-test("gives the paired interval for one ranker's top 6 minus another's, and trails only when it's wholly below 0", async () => {
+test("gives the paired interval of one ranker's top 6 minus another's, trailing only when wholly below 0", async () => {
   const firstPhrase =
     (acceptable: string): Ranker =>
     (_line, shortlist) => ({
