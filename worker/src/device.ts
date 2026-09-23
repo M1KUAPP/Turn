@@ -93,14 +93,14 @@ export class Device extends DurableObject<Env> {
    * answered. If RevenueCat can't answer, a cached yes of any age still counts, and nothing else is a no; a refresh it
    * couldn't answer leaves the cached no stale.
    */
-  private async entitled(user: string, refresh: boolean): Promise<Entitlement> {
+  private async entitled(userId: string, refresh: boolean): Promise<Entitlement> {
     const now = Date.now()
     const cached = this.cached()
     if (cached?.active && now - cached.checked_at < day) return 'yes'
     const freshNo = cached?.active === 0 && now - cached.checked_at < minute
     const refreshing = freshNo && refresh && (cached.refreshed_at === null || now - cached.refreshed_at >= minute)
     if (freshNo && !refreshing) return 'no'
-    const answer = await checkEntitlement(this.env, user)
+    const answer = await checkEntitlement(this.env, userId)
     if (answer === 'unknown') {
       // A refresh RevenueCat couldn't answer leaves the no it skipped stale, so the next line asks again rather than
       // meeting it after a purchase (PAY-4).
@@ -133,7 +133,7 @@ export class Device extends DurableObject<Env> {
    * past the free lines only for a user RevenueCat says has `listen` (PAY-7). A line that skips the count goes straight
    * to Jev (PAY-9). The app user ID is used only to ask RevenueCat, and never stored.
    */
-  async answer(line: LineRequest, user: string, terms: Terms): Promise<LineReply> {
+  async answer(line: LineRequest, userId: string, terms: Terms): Promise<LineReply> {
     const started = Date.now()
     if (terms.unlimited) {
       const reply = await this.ask(line, budgetMs)
@@ -142,14 +142,14 @@ export class Device extends DurableObject<Env> {
     const claim = this.claim(line.lineId, terms)
     if (claim === 'duplicate') return { outcome: 'duplicate' }
     if (claim === 'paid') {
-      const entitled = await this.entitled(user, line.refresh === true)
+      const entitled = await this.entitled(userId, line.refresh === true)
       if (entitled === 'no') return { outcome: 'paywall' }
       if (entitled === 'unknown') return { outcome: 'unverified' }
     }
     const [reply] = await Promise.all([
       this.ask(line, budgetMs - (Date.now() - started)),
       // A purchase made before the free lines ran out shows once a line with `refresh` asks RevenueCat (PAY-4).
-      claim === 'free' && line.refresh === true ? this.entitled(user, true) : undefined
+      claim === 'free' && line.refresh === true ? this.entitled(userId, true) : undefined
     ])
     if (reply.outcome !== 'answered') {
       // Only a free line's own claim: a paid copy of the same line ID may be failing while another copy holds one.
