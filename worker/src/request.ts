@@ -9,8 +9,11 @@ const version = /^[\x21-\x7e]{1,32}$/
 /** The two builds a request can come from: one on a phone, or one in the Simulator. */
 const builds = ['device', 'simulator'] as const
 
-/** Who sent a request, the app user ID and the build, when every header each request carries is well formed. */
-export function readUser(headers: Headers): { id: string; build: (typeof builds)[number] } | null {
+/** Who sent a request: the app user ID, and the build it came from. */
+export type User = { id: string; build: (typeof builds)[number] }
+
+/** Who sent a request, when every header each request carries is well formed, or null. */
+export function readUser(headers: Headers): User | null {
   const id = headers.get('X-Turn-User') ?? ''
   const build = builds.find((name) => name === headers.get('X-Turn-Build'))
   const valid = uuid.test(id) && version.test(headers.get('X-Turn-Version') ?? '') && build !== undefined

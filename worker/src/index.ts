@@ -1,7 +1,7 @@
-import type { ErrorCode, LineAnswer } from '@turn/shared/relay'
+import type { Config, ErrorCode, LineAnswer } from '@turn/shared/relay'
 import { isOn, readConfig } from './config'
 import type { Terms } from './device'
-import { readLine, readUser } from './request'
+import { readLine, readUser, type User } from './request'
 
 export { Device } from './device'
 
@@ -69,16 +69,13 @@ function refuse(log: LogFacts, outcome: keyof typeof codes) {
 }
 
 /** The hex SHA-256 of the salt and the user's ID, which can't be traced back to the ID without the salt. */
-async function hashUser(salt: string, user: string) {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + user))
+async function hashUser(salt: string, userId: string) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + userId))
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
 /** The user's object, named by the salted hash of their ID. */
 const deviceFor = (env: Env, hash: string) => env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' })
-
-/** Who sent a request, from its headers. */
-type User = NonNullable<ReturnType<typeof readUser>>
 
 /**
  * The count's terms: the free lines a new user gets, and whether this request skips the count, as one from the
@@ -94,9 +91,9 @@ async function answerLine(request: Request, env: Env, log: LogFacts, user: User,
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
-  const config = readConfig(env)
+  const { freeLines, ...config } = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
-  const reply = await deviceFor(env, hash).answer(line, user.id, termsFor(env, config.freeLinesLeft, user))
+  const reply = await deviceFor(env, hash).answer(line, user.id, termsFor(env, freeLines, user))
   if ('ms' in reply) log.jevMs = reply.ms
   if (reply.outcome !== 'answered') {
     if ('status' in reply && reply.status) log.jevStatus = reply.status
@@ -128,10 +125,10 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   const hash = await hashUser(env.ID_SALT, user.id)
   log.user = hash.slice(0, 8)
   if (isLine) return answerLine(request, env, log, user, hash)
-  const config = readConfig(env)
-  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, config.freeLinesLeft, user))
+  const { freeLines, ...config } = readConfig(env)
+  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, freeLines, user))
   log.outcome = 'config'
-  return Response.json({ ...config, freeLinesLeft })
+  return Response.json({ ...config, freeLinesLeft } satisfies Config)
 }
 
 export default {
