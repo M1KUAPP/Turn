@@ -1,5 +1,20 @@
 import { mean } from './stats'
 
+/** A two-by-two table of two labelings' calls, with how far they agree. */
+export type Table = {
+  a: number
+  b: number
+  c: number
+  d: number
+  percent: number
+  kappa: number
+  positive: number
+  negative: number
+}
+
+/** How far two labelings agree: on each line's call, on each line and candidate, and as alpha over the sets. */
+export type Agreement = { alpha: number; noneOrSome: Table; pairs: Table }
+
 /** One line as two labelings saw it: each one's acceptable replies, and the phrases either could have listed. */
 export type Unit = { first: readonly string[]; second: readonly string[]; candidates: readonly string[] }
 
@@ -8,7 +23,7 @@ export type Unit = { first: readonly string[]; second: readonly string[]; candid
  * neither), with percent agreement, Cohen's kappa, and the positive and negative agreement Cicchetti and Feinstein
  * ask to accompany kappa.
  */
-const agreementOf = (a: number, b: number, c: number, d: number) => {
+const agreementOf = (a: number, b: number, c: number, d: number): Table => {
   const n = a + b + c + d
   const observed = (a + d) / n
   const expected = ((a + b) * (a + c) + (c + d) * (b + d)) / (n * n)
@@ -61,7 +76,7 @@ const alphaOf = (units: readonly Unit[]) => {
  * phrase, and as Krippendorff's alpha over the sets. Kappa and negative agreement over the pairs move with the
  * candidates' count, as positive agreement doesn't.
  */
-export function compareLabelings(units: readonly Unit[]) {
+export function compareLabelings(units: readonly Unit[]): Agreement {
   return {
     alpha: alphaOf(units),
     noneOrSome: tableOf(units.map(({ first, second }) => [first.length > 0, second.length > 0])),

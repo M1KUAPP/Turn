@@ -52,7 +52,7 @@ export const phrases: ShortlistPhrase[] = bank.categories.flatMap((category) =>
 )
 
 /** Stops at the first line whose labels are missing or name a phrase the bank doesn't hold, naming it. */
-export function checkLabels(labeled: readonly { id: string; acceptable?: readonly string[] }[]) {
+export function checkLabels(labeled: readonly { id: string; acceptable?: readonly string[] }[]): void {
   const ids = new Set(phrases.map(({ id }) => id))
   for (const { id, acceptable } of labeled) {
     if (!Array.isArray(acceptable)) throw new Error(`${id} lists no acceptable replies, not even [] for none`)

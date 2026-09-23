@@ -1,5 +1,5 @@
 /** The mean of the values, NaN for none. */
-export const mean = (values: readonly number[]) => values.reduce((sum, value) => sum + value, 0) / values.length
+export const mean = (values: readonly number[]): number => values.reduce((sum, value) => sum + value, 0) / values.length
 
 /** The standard normal's 97.5th percentile, for two-sided 95% intervals. */
 const z = 1.959963984540054
