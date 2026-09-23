@@ -1,0 +1,8 @@
+{"id":"fixture-1","labeler":"test-labeler-2","acceptable":["yes","no","water-please"]}
+{"id":"fixture-2","labeler":"test-labeler-2","acceptable":["it-hurts","my-head-hurts","my-back-hurts"]}
+{"id":"fixture-3","labeler":"test-labeler-2","acceptable":["yes","no","yes-go-ahead","please-help-me-sit-up"]}
+{"id":"fixture-4","labeler":"test-labeler-2","acceptable":["i-dont-know"]}
+{"id":"fixture-5","labeler":"test-labeler-2","acceptable":[]}
+{"id":"fixture-6","labeler":"test-labeler-2","acceptable":["ill-pay-by-card"]}
+{"id":"fixture-7","labeler":"test-labeler-2","acceptable":["it-went-well"]}
+{"id":"fixture-8","labeler":"test-labeler-2","acceptable":["yes","no"]}
