@@ -65,9 +65,11 @@ Contents:
 - **Wrangler's OAuth scope.** Wrangler requests `ai:read` and `ai:write` at
   login (`cli.js:179440-179451`) and describes `ai:write` as "See and change
   Workers AI catalog and assets" (`cli.js:129549`). `wrangler ai models`
-  calls `/accounts/${account_id}/ai/models/search` (`cli.js:77377, 360761`);
-  nothing in `cli.js` calls `/ai/run`. Synthesis: the OAuth token reaches the
-  `/ai/` API family, but whether `/ai/run` accepts it is unverified.
+  calls `/accounts/${account_id}/ai/models/search` (`cli.js:77377, 360761`),
+  and `cli.js:77429-77434` bundles an `ai.run` method that posts to
+  `/ai/run/`, though no command was found calling it. Synthesis: the OAuth
+  token reaches the `/ai/` API family, but whether `/ai/run` accepts it is
+  unverified here.
 - **Request.** `text` is a string or an array; `pooling` is "`mean`" or
   "`cls`" with `"default": "mean"`, and "we highly suggest using the new `cls`
   pooling for better accuracy" ([cf-bge-json]). A second form takes
@@ -85,7 +87,9 @@ Contents:
 - **BAAI's card.** It pools "the last hidden state of the first token (i.e.,
   [CLS])", gives the query instruction "Represent this sentence for searching
   relevant passages:", and warns that "the similarity distribution of the
-  current BGE model is about in the interval [0.6, 1]" ([hf-bge]).
+  current BGE model is about in the interval [0.6, 1]", then advises: "Suggest
+  to use bge v1.5, which alleviates the issue of the similarity
+  distribution." ([hf-bge])
 - Synthesis: a request and its response, with vectors cut to two numbers:
 
   ```json
@@ -109,8 +113,9 @@ Contents:
   }
   ```
 
-  Because scores cluster in [0.6, 1], the ranker should rank rather than
-  apply an absolute cutoff, and any threshold must come from the tuning split.
+  Cosine scores aren't probabilities, whatever range v1.5 gives them, so the
+  ranker should rank rather than apply an absolute cutoff, and any threshold
+  must come from the tuning split.
 
 [cf-ai-run]: https://developers.cloudflare.com/api/resources/ai/methods/run/
 [eval-embed]: /docs/research/0025-turn-evaluation.md#workers-ai-embedding-models-on-september-22-2026
@@ -153,16 +158,18 @@ fallbacks, `systemOne`'s `{ model, answers, usage }`, and the
   (`index.mjs:401`); without one the constructor throws "No global `fetch` is
   available in this runtime" (`index.mjs:395, 520`). This machine has Bun
   1.4.2 and Node v26.9.0.
-- **Price and limits.** Jev charges input tokens only, and a Turn line costs
-  about $0.00007 to $0.00008 ([services notes][jev-billed]); the published
-  limit is "250,000 tokens per second / 1,200 requests per minute"
+- **Price and limits.** Jev charges input tokens only
+  ([services notes][jev-billed]), so a line of 40 candidates, which counted
+  2,146 and 2,147 input tokens in live runs on September 23, 2026 (issue #28
+  and this change's plan), costs about $0.00009 at $0.042 per million; the
+  published limit is "250,000 tokens per second / 1,200 requests per minute"
   ([Jev notes][jev-limits]).
 - Synthesis: 80 lines in sequence stay far under 1,200 a minute; the ranker
-  should pass `logLevel: "off"` so no line is logged, and record
-  `usage.input_tokens` and `model` beside each result.
+  should pass `logLevel: "off"` so no line is logged, and record each
+  answer's `model`, so a silent change of model shows.
 
 [jev-billed]: /docs/research/0024-turn-services.md#how-a-jev-request-is-billed
-[jev-limits]: /docs/research/0005-jev.md#pricing-limits-and-terms
+[jev-limits]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
 
 ## wrangler dev for the replay
 
@@ -197,8 +204,8 @@ fallbacks, `systemOne`'s `{ model, answers, usage }`, and the
 ## User agents and error 1010
 
 - **The error.** 1010 means "The owner of this website has banned your
-  access based on your browser's signature"; site owners "can disable Browser
-  Integrity Check in their Security Settings" ([cf-1010]).
+  access based on your browser's signature", and "Site owners can turn off
+  Browser Integrity Check in the Security Settings page." ([cf-1010])
 - **The check.** It "looks for common HTTP headers abused most commonly by
   spammers" and targets "visitors without a user agent or with a non-standard
   user agent such as commonly used by abusive bots, crawlers, or visitors";
