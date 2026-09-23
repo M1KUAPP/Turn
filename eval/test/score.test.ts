@@ -1,7 +1,7 @@
 import type { Phrase } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
 import { keyword, place, type Ranker } from '../src/rankers'
-import { scoreLines, summarize } from '../src/score'
+import { scoreLines, sharesNoWord, summarize } from '../src/score'
 
 const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
   id: `filler-${i + 1}`,
@@ -161,4 +161,21 @@ test('times the shortlist and each ranker three times per line, leaving out a wa
   expect(timings.rankers.slowAtFirst).toHaveLength(3 * lines.length)
   expect(Math.max(...timings.rankers.slowAtFirst)).toBeLessThan(5)
   for (const ms of [...timings.shortlist, ...timings.rankers.place]) expect(ms).toBeGreaterThanOrEqual(0)
+})
+
+test('finds the lines that share no word with a reply besides the fixed buttons, whose words still count', () => {
+  const replies: Phrase[] = [
+    ...bank.filter((phrase) => phrase.fixed),
+    { id: 'water-please', text: 'Water, please', places: ['home'] },
+    { id: 'it-went-well', text: 'It went well', places: [] },
+    { id: 'im-fine', text: "I'm fine", places: [] }
+  ]
+  const noWord = (text: string, acceptable: string[]) => sharesNoWord({ text, acceptable }, replies)
+  expect(noWord('How was physio?', ['it-went-well'])).toBe(true)
+  expect(noWord('Do you want some water?', ['yes', 'no', 'water-please'])).toBe(false)
+  expect(noWord('Are you sure?', ['yes', 'im-fine'])).toBe(true)
+  expect(noWord('Are you sure?', ['yes', 'not-sure', 'im-fine'])).toBe(false)
+  // Only the fixed buttons answer it, so it doesn't count, though it shares no word.
+  expect(noWord('Are you cold?', ['yes', 'no'])).toBe(false)
+  expect(noWord('Nice weather today.', [])).toBe(false)
 })

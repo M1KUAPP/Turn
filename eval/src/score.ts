@@ -139,3 +139,17 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
     )
   }
 }
+
+/**
+ * Whether a line shares no word with any of its acceptable replies, as the phone matches words, so its keyword
+ * ranking can't find them (EVAL-1). Only a line with a reply besides the fixed buttons counts, but their words count.
+ */
+export function sharesNoWord(line: Pick<ScoredLine, 'text' | 'acceptable'>, bank: readonly Phrase[]): boolean {
+  if (line.acceptable.every((id) => fixedButtons.includes(id))) return false
+  const index = new PhraseIndex()
+  // Without their flags, since the index leaves out the fixed buttons.
+  index.update(
+    bank.filter(({ id }) => line.acceptable.includes(id)).map(({ id, text, places }) => ({ id, text, places }))
+  )
+  return index.match(line.text).length === 0
+}
