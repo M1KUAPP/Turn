@@ -1,17 +1,23 @@
+import { runInDurableObject } from 'cloudflare:test'
+import { env } from 'cloudflare:workers'
 import { describe, expect, test } from 'vitest'
 import {
+  activeEntitlements,
   expectError,
   freeLinesLeft,
   headers,
+  jevAnswer,
   jevAnswers,
   jevError,
   lineFor,
   lineRequest,
+  listen,
   mockJev,
   mockRevenueCat,
   postLine,
   send,
-  unknownCustomer
+  unknownCustomer,
+  userHash
 } from './helpers'
 
 /** The free lines an answer carries. */
@@ -63,6 +69,40 @@ describe('the free lines (PAY-1)', () => {
     await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
     expect(await freeLinesLeft()).toBe(20)
     expect(await leftAfter(await postLine(lineRequest()))).toBe(19)
+  })
+
+  test("keep a free claim that a paid copy of its line ID doesn't release when its own call fails (SEC-6)", async () => {
+    const vars = { FREE_LINES: '1' }
+    // Jev's calls in the order they arrive: the first line's, failing late; the free copy's, answering later; and the
+    // paid copy's, failing.
+    mockJev(
+      async () => {
+        await scheduler.wait(150)
+        return jevError(402)()
+      },
+      async () => {
+        await scheduler.wait(400)
+        return Response.json(jevAnswer())
+      },
+      jevError(402)
+    )
+    mockRevenueCat(async () => {
+      await scheduler.wait(400)
+      return activeEntitlements(listen)()
+    })
+    const line = lineRequest()
+    const first = postLine(lineRequest(), vars)
+    await scheduler.wait(30)
+    const paidCopy = postLine(line, vars)
+    expect((await first).status).toBe(503)
+    const freeCopy = postLine(line, vars)
+    expect((await paidCopy).status).toBe(503)
+    expect((await freeCopy).status).toBe(200)
+    await expectError(await postLine(line, vars), 409, 'duplicate')
+    const rows = await runInDurableObject(env.DEVICE.getByName(`user-${await userHash()}`), (_, state) =>
+      state.storage.sql.exec('SELECT line_id FROM free_lines').toArray()
+    )
+    expect(rows).toEqual([{ line_id: line.lineId }])
   })
 
   test('show none left, not fewer, once FREE_LINES is lowered below the lines used', async () => {
