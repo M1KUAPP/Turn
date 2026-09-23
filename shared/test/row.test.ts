@@ -95,6 +95,25 @@ describe('applyAnswer', () => {
       expect(row.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'g'])
     })
 
+    test.each([
+      [0.67, 0.82, 0.15],
+      [0.6, 0.7, 0.1]
+    ])('lets a phrase beat %s by exactly the margin with %s at a margin of %s', (low, high, margin) => {
+      const policy = { ...startingPolicy, margin }
+      const row = replay(
+        answer(1, { a: 0.8, b: 0.8, c: 0.8, d: 0.8, e: 0.8, f: low }, { policy }),
+        answer(2, { g: high, a: 0.8, b: 0.8, c: 0.8, d: 0.8, e: 0.8, f: low }, { policy })
+      )
+      expect(row.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'g'])
+    })
+
+    test('never swaps phrases of equal score, even with no margin', () => {
+      const all = { a: 0.7, b: 0.7, c: 0.7, d: 0.7, e: 0.7, f: 0.7 }
+      const policy = { ...startingPolicy, margin: 0 }
+      const row = replay(answer(1, all, { policy }), answer(2, { ...all, g: 0.7, h: 0.7 }, { policy }))
+      expect(row.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
+    })
+
     test('keeps stale phrases until a phrase needs their slot, then the lowest-scoring goes', () => {
       // Just below the floor, so only the stale rule, not the margin, frees their slots.
       const stale = { a: 0.7, b: 0.55, c: 0.7, d: 0.5, e: 0.7, f: 0.7 }

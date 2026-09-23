@@ -201,7 +201,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
       free slot before any other fresh phrase, the first empty usable slot,
       or else the lowest-scoring stale one; with neither, it competes like
       the others. The TRD's pseudocode changes to match.
-    - "Beats the lowest shown by the margin" means by at least the margin.
+    - "Beats the lowest shown by the margin" means a higher score, by at
+      least the margin, with a slack of 1e-9 for floating-point error: 0.82
+      against 0.67 at 0.15 counts, and equal scores never swap, even at a
+      margin of 0. The first review round found both cases.
     - A shown phrase the answer doesn't score counts as 0, so it's stale.
     - The tab follows each applied answer: the topic when it reaches the
       floor, else none, even when the row holds.
