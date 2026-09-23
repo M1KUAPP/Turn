@@ -1723,6 +1723,12 @@ risk-coverage curve.
 - **The 80 lines from a clean tree.** The command scores any of the 80
   lines, whatever file holds them, only from a clean working tree, so the
   history shows Jev's settings committed before any result (EVAL-2).
+- **The two runs on the 80 lines.** The first is `eval/results.md`, at
+  `8ea25eb`, and the README's table copies it. The second is
+  `eval/results-extras.md`, at `1b3ff03`. It adds the three extra rankers and
+  Jev's calibration (EVAL-8), and its first four rankers' ranking tables match
+  the first run's. EVAL-4's verdict stays the first run's, and a wrong big
+  button in either run would count (EVAL-5).
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when
 one falls short, then the labelers' agreement
