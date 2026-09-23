@@ -23,7 +23,7 @@ graphify; the `gh` CLI; and subagents for research and review.
 
 **Spec:** [Issue #45][extras-issue] and its comments, under the spec in
 [issue #13][spec]; the PRD's [evaluation requirements][prd-eval], EVAL-8
-above all, with EVAL-2, EVAL-3, and EVAL-6; and the TRD's sections on
+above all, with EVAL-2 to EVAL-6; and the TRD's sections on
 [the rankers][trd-rankers], [metrics, intervals, and thresholds][trd-metrics],
 and [the report][trd-report]. The user's goal directive, verbatim:
 "/ask-matt Complete and close #45. Follow @docs/references/markdown-style.md
@@ -256,6 +256,15 @@ Contents:
       it writes a report, that report is the run's.
     - `eval/results.md`, the first run's, stays as it is, and the TRD and
       #45's closing comment say which run each number comes from.
+    - **EVAL-4's verdict stays the first run's.** That comparison was the
+      one written down before any result, and the second report's interval
+      is a second look at the same lines, which can't change it.
+    - **EVAL-5 holds for both runs.** It's a safety rule, so a wrong big
+      button on a yes-or-no, pain, or consent line, in any of the second
+      run's answers, counts as one in the first run's would. A ticket then
+      asks for the relay's policy to give those lines only the fixed buttons
+      and the grid, and #45's closing comment says so. The three new rankers
+      never bring a big button.
 1.  **The TRD** gains the three rankers' rows and how they're called, the
     calibration's method, the cut-offs of four rankers, the reliability
     plot, and, in the second pull request, the second run's report.
