@@ -1274,7 +1274,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
 | The daily Jev budget spent                  | `503 jev_unavailable`                                     | the same, until midnight UTC                                     |
 | Over the Free plan's 100,000 requests a day | Cloudflare's Error 1027                                   | the same; the team moves to Workers Paid, $5 a month             |
 | Jev turned off                              | `503 jev_off`                                             | the same, with the degraded notice (STATE-3)                     |
-| RevenueCat down, past free lines            | the check fails                                           | a cached yes still answers; otherwise `503`, never a false `402` |
+| RevenueCat down, past free lines            | the check fails; `unverified` with no yes cached          | a cached yes still answers; otherwise `503`, never a false `402` |
 | Transcription unavailable                   | `turn-listen` reports it                                  | the message, the typed field, the fallback recognizer (LISTEN-9) |
 | Personal Voice denied                       | `turn-voice` reports it                                   | the system voice, with the reason (VOICE-2)                      |
 
