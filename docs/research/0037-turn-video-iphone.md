@@ -68,9 +68,10 @@ Contents:
   '/dev/stdout' / '/dev/fd/1') to write the JSON to stdout instead of a
   file."
 - **Developer Mode.** Apple says "Enable Developer Mode on a device to run
-  your app on the device through Xcode." It adds "Developer Mode only
-  appears in Settings if you initiate pairing or if you previously paired
-  the device to a Mac." ([Enabling Developer Mode][devmode])
+  your app on the device through Xcode."
+  ([Enabling Developer Mode][devmode]) The setting appears only once the
+  phone has started pairing with a Mac or was paired with one before, as
+  the [setup notes][setup-apple] quote.
 - Synthesis: install, then launch, and keep both JSON files as proof.
 
   ```shell
@@ -141,11 +142,9 @@ Contents:
 
 ## Free and paid team App IDs
 
-- **Personal Team limits.** "You can register up to 10 App IDs, which
-  expire after 7 days. You can register up to 3 devices, which expire
-  after 7 days. You can install up to 3 apps per device. Provisioning
-  profiles that enable apps to be installed on a device will expire 7 days
-  from issuance." ([Compare memberships][memberships])
+- **Personal Team limits.** The [setup notes][setup-apple] quote Apple's
+  limits for a free team: 10 App IDs and 3 devices, each expiring after 7
+  days, 3 apps per device, and profiles that expire 7 days from issuance.
 - **Reinstalling.** "You'll need to rebuild and reinstall your app to your
   device after expiration." ([Compare memberships][memberships])
 - **Matching bundle IDs.** "The explicit App ID you enter here should
@@ -237,3 +236,5 @@ attached.
 
 - [Turn's setup research notes](/docs/research/0036-turn-setup.md)
 - [Distributing your app to registered devices](https://developer.apple.com/documentation/xcode/distributing-your-app-to-registered-devices)
+
+[setup-apple]: /docs/research/0036-turn-setup.md#apple-xcode-27-and-ios-27
