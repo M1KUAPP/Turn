@@ -32,6 +32,36 @@ describe('POST /v1/lines', () => {
     expect(jev).toHaveBeenCalledOnce()
   })
 
+  test('times the call to Jev and the whole request', async () => {
+    vi.mocked(globalThis.fetch).mockImplementationOnce(async () => {
+      await scheduler.wait(50)
+      return Response.json(jevAnswer())
+    })
+    const { ms } = (await (await postLine(lineRequest())).json()) as { ms: { jev: number; total: number } }
+    expect(ms.jev).toBeGreaterThanOrEqual(50)
+    expect(ms.total).toBeGreaterThanOrEqual(ms.jev)
+  })
+
+  test('reads a body whose chunks split a character', async () => {
+    const jev = mockJev(() => Response.json(jevAnswer()))
+    const bytes = new TextEncoder().encode(JSON.stringify(lineRequest({ line: 'Tea ☕ or coffee?' })))
+    const split = bytes.indexOf(0xe2) + 1
+    const body = new ReadableStream({
+      start(controller) {
+        controller.enqueue(bytes.slice(0, split))
+        controller.enqueue(bytes.slice(split))
+        controller.close()
+      }
+    })
+    const request = new Request('https://relay.test/v1/lines', {
+      method: 'POST',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body
+    })
+    expect((await send(request)).status).toBe(200)
+    expect(JSON.parse(String(jev.mock.calls[0][1]?.body)).state.partner_line).toBe('Tea ☕ or coffee?')
+  })
+
   test("reaches the user's object by the salted hash of their ID, in western North America", async () => {
     mockJev(() => Response.json(jevAnswer()))
     const getByName = vi.fn((name: string, options?: DurableObjectNamespaceGetDurableObjectOptions) =>
@@ -175,6 +205,27 @@ describe("Jev's failures", () => {
   test('answers after one retry when Jev fails once', async () => {
     const jev = mockJev(jevError(500), () => Response.json(jevAnswer()))
     expect((await postLine(lineRequest())).status).toBe(200)
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test('retries a hung first attempt after its 1.5 seconds, within the budget', async () => {
+    const jev = vi
+      .mocked(globalThis.fetch)
+      .mockImplementationOnce(
+        (_, init) =>
+          new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal?.reason)))
+      )
+      .mockImplementationOnce(async () => Response.json(jevAnswer()))
+    expect((await postLine(lineRequest())).status).toBe(200)
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test("retries at once, without waiting for Jev's Retry-After", async () => {
+    const busy = () => Response.json({ detail: 'Slow down' }, { status: 429, headers: { 'Retry-After': '5' } })
+    const jev = mockJev(busy, () => Response.json(jevAnswer()))
+    const started = Date.now()
+    expect((await postLine(lineRequest())).status).toBe(200)
+    expect(Date.now() - started).toBeLessThan(2500)
     expect(jev).toHaveBeenCalledTimes(2)
   })
 
