@@ -32,7 +32,7 @@ export type Ranking = {
   kind: Readonly<Record<Kind, number>>
   /** How likely the line is about each topic: the user's category ids, plus `consent`. */
   topic: Readonly<Record<string, number>>
-  /** Each candidate's score, from 0 to 1, in the shortlist's order, which breaks ties. */
+  /** Each candidate's score, from 0 to 1, in the order that breaks ties: the shortlist's, or the phone's own. */
   scores: ReadonlyMap<string, number>
   /** Whether the phone ranked the line itself, which never brings a big button (STATE-1). */
   onPhone: boolean
@@ -41,10 +41,10 @@ export type Ranking = {
 /** A ranking for one line, with the policy the rules follow. */
 export type Answer = Ranking & { seq: number; policy: Policy }
 
-/** Yes, No, and Not sure: the fixed buttons' phrase ids, in the order they take slots 1 to 3 (ROW-4). */
+/** Yes, No, and Not sure: the starter bank's ids for the fixed buttons, in the order they take slots 1 to 3 (ROW-4). */
 export const fixedButtons: readonly string[] = Object.freeze(['yes', 'no', 'not-sure'])
 
-/** What the row shows. The rules return a new row and never change the one they're given. */
+/** What the row shows. The rules never change the row they're given; a dropped answer gets that same row back. */
 export type Row = {
   /** The newest line's sequence number: the app raises it when a line starts, and an older line's answer is dropped. */
   seq: number
