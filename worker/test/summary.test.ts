@@ -95,6 +95,12 @@ describe("a day's summary (METRIC-2)", () => {
     )
   })
 
+  test('prints one line and one event in the singular', () => {
+    expect(formatSummary('2026-09-24', summarize([answered(900, 700)]), 1).split('\n')[0]).toBe(
+      "The relay's logs for 2026-09-24, in UTC: 1 log line, of 1 event the query matched"
+    )
+  })
+
   test('prints a day with no lines', () => {
     expect(formatSummary('2026-09-24', summarize([]), 0)).toBe(
       [
