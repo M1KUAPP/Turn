@@ -150,8 +150,9 @@ test("keeps its one user within the relay's 30 requests a minute, waiting only o
     expect(times).toHaveLength(41)
     // At most 29 of its requests in any 60 seconds, one fewer than the relay allows, in case two arrive closer.
     for (const start of times) expect(times.filter((t) => t >= start && t < start + 60_000).length).toBeLessThan(30)
-    // The configuration and the first 28 lines go at once.
+    // The configuration and the first 28 lines go at once, and the 29th once the configuration's minute is up.
     expect(times[28]).toBe(times[0])
+    expect(times[29]).toBe(times[0] + 60_000)
   } finally {
     vi.useRealTimers()
   }
