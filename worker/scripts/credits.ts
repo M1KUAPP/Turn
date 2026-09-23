@@ -1,6 +1,6 @@
 import { writeFile } from 'node:fs/promises'
 import { parseArgs } from 'node:util'
-import { alertWindow, assess, dollars, formatAlert } from './alert'
+import { alertWindow, assess, dollars, fires, formatAlert } from './alert'
 import { summarize } from './summary'
 import { accessFrom, accessMissing, messageOf, readLogs } from './telemetry'
 
@@ -31,9 +31,9 @@ export async function main(args: readonly string[], env: Record<string, string |
     console.log(
       `${lines.length} log lines since ${new Date(window.from).toISOString()}: ${finding.outOfCredits} out of ` +
         `credits, and ${dollars(finding.spent)} spent against a level of ${dollars(finding.level)}, so the alert ` +
-        `${finding.fires ? 'fires' : 'stays quiet'}.`
+        `${fires(finding) ? 'fires' : 'stays quiet'}.`
     )
-    if (finding.fires) {
+    if (fires(finding)) {
       const body = formatAlert(finding, window)
       if (values.out) await writeFile(values.out, `${body}\n`)
       else console.log(`\n${body}`)
