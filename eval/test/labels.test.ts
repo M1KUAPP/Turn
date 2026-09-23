@@ -10,13 +10,12 @@ const stripIds = bank.categories
   .flatMap((strip) => strip.phrases.map(({ id }) => id))
 
 /**
- * Holds one labeling's replies for a line to the rules: bank ids, no repeats, no strip phrase, and the fixed buttons
- * only on a yes-or-no line.
+ * Holds one labeling's replies for a line to the rules: bank ids in the bank's order without repeats, no strip phrase,
+ * and the fixed buttons only on a yes-or-no line.
  */
 const expectRepliesFollowRules = (line: Line, acceptable: string[]) => {
-  expect(new Set(acceptable).size, line.id).toBe(acceptable.length)
+  expect(acceptable, line.id).toEqual(phraseIds.filter((id) => acceptable.includes(id)))
   for (const id of acceptable) {
-    expect(id, line.id).toBeOneOf(phraseIds)
     expect(id, line.id).not.toBeOneOf(stripIds)
     if (line.kind !== 'yes_no') expect(id, line.id).not.toBeOneOf([...fixedButtons])
   }
