@@ -4,6 +4,22 @@ import { readLine, readUser } from './request'
 
 export { Device } from './device'
 
+/** How a request ended, in its log line; #30 and #35 add `paywall` and `limited` (METRIC-1). */
+type Outcome = 'config' | 'answered' | 'invalid' | 'not_found' | 'off' | 'failed' | 'credits' | 'internal'
+
+/** A request's log line, filled in as the request goes: each field once it's known, and never any text (PRIV-2). */
+type Log = {
+  /** The first 8 characters of the hash of the user's ID. */
+  user?: string
+  seq?: number
+  outcome?: Outcome
+  jevMs?: number
+  model?: string
+  inputTokens?: number
+  /** The status Jev failed with, if it sent one. */
+  jevStatus?: number
+}
+
 const statuses: Record<ErrorCode, number> = {
   invalid_request: 400,
   not_found: 404,
@@ -15,55 +31,95 @@ const statuses: Record<ErrorCode, number> = {
   internal: 500
 }
 
-/** An error's response, which carries its code and nothing else (SEC-4). */
-const failure = (code: ErrorCode) => Response.json({ error: code }, { status: statuses[code] })
+/** The error each failing outcome answers with. */
+const codes = {
+  invalid: 'invalid_request',
+  not_found: 'not_found',
+  off: 'jev_off',
+  failed: 'jev_unavailable',
+  credits: 'jev_unavailable',
+  internal: 'internal'
+} satisfies Partial<Record<Outcome, ErrorCode>>
 
-/** The name of a user's object: the hex SHA-256 of the salt and their ID, which can't be traced back without the salt. */
-async function objectName(salt: string, user: string) {
+/** Records how a request ended, and answers with that error's code and nothing else (SEC-4). */
+function refuse(log: Log, outcome: keyof typeof codes) {
+  log.outcome = outcome
+  const code = codes[outcome]
+  return Response.json({ error: code }, { status: statuses[code] })
+}
+
+/** The hex SHA-256 of the salt and the user's ID, which can't be traced back to the ID without the salt. */
+async function hashUser(salt: string, user: string) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + user))
-  return `user-${[...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')}`
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
 /** Checks a line before anything else (SEC-2), then asks the user's object for Jev's answer. */
-async function answerLine(request: Request, env: Env, started: number): Promise<Response> {
+async function answerLine(request: Request, env: Env, log: Log, started: number): Promise<Response> {
   const user = readUser(request.headers)
-  const line = user && (await readLine(request))
-  if (!user || !line) return failure('invalid_request')
+  if (!user) return refuse(log, 'invalid')
+  const hash = await hashUser(env.ID_SALT, user)
+  log.user = hash.slice(0, 8)
+  const line = await readLine(request)
+  if (!line) return refuse(log, 'invalid')
+  log.seq = line.seq
   const config = readConfig(env)
-  if (!config.jevOn) return failure('jev_off')
-  const device = env.DEVICE.getByName(await objectName(env.ID_SALT, user), { locationHint: 'wnam' })
-  const reply = await device.answer(line)
-  if (reply.outcome !== 'answered') return failure('jev_unavailable')
-  const { kind, topic, scores, ms } = reply
+  if (!config.jevOn) return refuse(log, 'off')
+  const reply = await env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' }).answer(line)
+  log.jevMs = reply.ms
+  if (reply.outcome !== 'answered') {
+    if (reply.status) log.jevStatus = reply.status
+    return refuse(log, reply.outcome)
+  }
+  log.outcome = 'answered'
+  log.model = reply.model
+  log.inputTokens = reply.inputTokens
   const answer: LineAnswer = {
     seq: line.seq,
-    kind,
-    topic,
-    scores,
+    kind: reply.kind,
+    topic: reply.topic,
+    scores: reply.scores,
     policy: config.policy,
     freeLinesLeft: config.freeLinesLeft,
-    ms: { jev: ms, total: Date.now() - started }
+    ms: { jev: reply.ms, total: Date.now() - started }
   }
   return Response.json(answer)
 }
 
-async function route(request: Request, env: Env, started: number): Promise<Response> {
+async function serveConfig(request: Request, env: Env, log: Log): Promise<Response> {
+  const user = readUser(request.headers)
+  if (!user) return refuse(log, 'invalid')
+  log.user = (await hashUser(env.ID_SALT, user)).slice(0, 8)
+  const config = readConfig(env)
+  log.outcome = 'config'
+  return Response.json(config)
+}
+
+function route(request: Request, env: Env, log: Log, started: number): Promise<Response> | Response {
   const { pathname } = new URL(request.url)
-  if (request.method === 'POST' && pathname === '/v1/lines') return answerLine(request, env, started)
-  if (request.method === 'GET' && pathname === '/v1/config') {
-    if (!readUser(request.headers)) return failure('invalid_request')
-    return Response.json(readConfig(env))
-  }
-  return failure('not_found')
+  if (request.method === 'POST' && pathname === '/v1/lines') return answerLine(request, env, log, started)
+  if (request.method === 'GET' && pathname === '/v1/config') return serveConfig(request, env, log)
+  return refuse(log, 'not_found')
 }
 
 export default {
+  /** Answers a request, then writes its one log line as an object, whose keys Workers Logs indexes (METRIC-1). */
   async fetch(request: Request, env: Env) {
     const started = Date.now()
+    const log: Log = {}
+    let response: Response
     try {
-      return await route(request, env, started)
+      response = await route(request, env, log, started)
     } catch {
-      return failure('internal')
+      response = refuse(log, 'internal')
     }
+    const { jevMs, ...facts } = log
+    const total = Date.now() - started
+    console.log({
+      at: new Date(started).toISOString(),
+      ...facts,
+      ms: jevMs === undefined ? { total } : { total, jev: jevMs }
+    })
+    return response
   }
 } satisfies ExportedHandler<Env>

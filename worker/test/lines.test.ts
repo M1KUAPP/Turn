@@ -1,13 +1,18 @@
 import { startingPolicy } from '@turn/shared/row'
 import { env } from 'cloudflare:workers'
 import { describe, expect, test, vi } from 'vitest'
-import { expectError, headers, jevAnswer, lineRequest, mockJev, postLine, send, user } from './helpers'
-
-/** The hex SHA-256 of the text, worked out apart from the relay's own code. */
-async function sha256(text: string) {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
-}
+import {
+  expectError,
+  headers,
+  jevAnswer,
+  jevError,
+  lineRequest,
+  mockJev,
+  postLine,
+  send,
+  sha256,
+  user
+} from './helpers'
 
 describe('POST /v1/lines', () => {
   test("answers with Jev's scores by candidate id, the kind, the topic, the policy, and the free lines", async () => {
@@ -132,10 +137,6 @@ describe("a line's limits (SEC-2)", () => {
 })
 
 describe("Jev's failures", () => {
-  /** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
-  const jevError = (status: number) => () =>
-    Response.json({ detail: 'Traceback: bad key test-typesafe-key' }, { status })
-
   test.each([
     ['busy', 529],
     ['rate-limited', 429],
