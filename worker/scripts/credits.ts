@@ -1,7 +1,7 @@
 import { writeFile } from 'node:fs/promises'
-import { parseArgs } from 'node:util'
 import { alertWindow, assess, dollars, fires, formatAlert } from './alert'
-import { summarize } from './summary'
+import { readFlags } from './flags'
+import { counted, summarize } from './summary'
 import { accessFrom, accessMissing, messageOf, readLogs } from './telemetry'
 
 /**
@@ -10,13 +10,11 @@ import { accessFrom, accessMissing, messageOf, readLogs } from './telemetry'
  * is when the last alert issue was closed. The account's ID and the token come from the environment, as for `logs.ts`.
  */
 export async function main(args: readonly string[], env: Record<string, string | undefined>): Promise<number> {
-  const { values } = parseArgs({
-    args: [...args],
-    options: { level: { type: 'string', default: '0.50' }, since: { type: 'string' }, out: { type: 'string' } }
-  })
-  const level = Number(values.level)
-  const window = alertWindow(values.since, Date.now())
-  if (values.level.trim() === '' || !Number.isFinite(level) || level < 0 || !window) {
+  const flags = readFlags(args, ['level', 'since', 'out'])
+  const { level: given = '0.50', since, out } = flags ?? {}
+  const level = Number(given)
+  const window = alertWindow(since, Date.now())
+  if (!flags || given.trim() === '' || !Number.isFinite(level) || level < 0 || !window) {
     console.error('--level takes dollars from 0, and --since a time that has passed, such as 2026-09-23T09:00:00Z.')
     return 2
   }
@@ -29,13 +27,13 @@ export async function main(args: readonly string[], env: Record<string, string |
     const { lines } = await readLogs(access, window)
     const finding = assess(summarize(lines), level)
     console.log(
-      `${lines.length} log lines since ${new Date(window.from).toISOString()}: ${finding.outOfCredits} out of ` +
-        `credits, and ${dollars(finding.spent)} spent against a level of ${dollars(finding.level)}, so the alert ` +
-        `${fires(finding) ? 'fires' : 'stays quiet'}.`
+      `${counted(lines.length, 'log line')} since ${new Date(window.from).toISOString()}: ` +
+        `${finding.outOfCredits} out of credits, and ${dollars(finding.spent)} spent against a level of ` +
+        `${dollars(finding.level)}, so the alert ${fires(finding) ? 'fires' : 'stays quiet'}.`
     )
     if (fires(finding)) {
       const body = formatAlert(finding, window)
-      if (values.out) await writeFile(values.out, `${body}\n`)
+      if (out) await writeFile(out, `${body}\n`)
       else console.log(`\n${body}`)
     }
     return 0
