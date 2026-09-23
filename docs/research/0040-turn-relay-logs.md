@@ -65,6 +65,12 @@ Contents:
   nests everything under `result`. `result.events.count` is the "Total
   number of events matching the query (may exceed the number returned due
   to limits)", and `result.events.events` is the list ([SDK][sdk]).
+- **The count, live.** A query for the relay's events on September 23,
+  2026, run with a token in the plan's shape, gave a `count` equal to the
+  events returned at every limit: 3 at a limit of 3, and 44 at 50 and at
+  2,000. A `count` calculation over the same range gave 44, and 0 for a
+  range with no events. Each event's `$metadata.service` was `turn-relay`,
+  and its `source` was the relay's object, with its fields as keys.
 - **One event.** Each has `$metadata`, "Structured metadata extracted from
   the event. These fields are indexed and available for filtering and
   aggregation."; `source`, the "Raw log payload. May be a string or a
@@ -201,21 +207,21 @@ The three commands below print without logging in.
   long an event takes to become queryable ([Workers Logs][cf-wlogs]).
 - Synthesis: at Turn's volume, 200,000 a day is far off, and with no
   `head_sampling_rate` every request is logged. Query the previous whole UTC
-  day, once that day has ended, and have the script print `result.events.count`
-  beside the rows it read, so a short or sampled day shows. A day run later than
-  3 days finds nothing.
+  day, once that day has ended, and have the script print a `count`
+  calculation's total beside the rows it read, since a page's own `count`
+  proved to be only its size, so a short or sampled day shows. A day run
+  later than 3 days finds nothing.
 
 [cf-wlogs]: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
 
 ## Gaps
 
-- **Nothing was run against the API.** No token was made, so no query's
-  response was seen.
-- **Key names for the relay's fields.** Whether a filter or calculation
-  names `outcome` or `source.outcome`, and how the nested `ms.total` is
-  keyed, is unconfirmed; the keys endpoint would say.
-- **`$metadata.service`.** That it holds the Worker's name, `turn-relay`,
-  is assumed.
+- **Run once, after the note.** The live facts under
+  [the telemetry query API](#the-telemetry-query-api) come from queries run
+  on September 23, 2026; everything else here is from documents.
+- **Key names in filters.** Whether a filter or calculation names
+  `outcome` or `source.outcome`, and how the nested `ms.total` is keyed,
+  is unconfirmed; the keys endpoint would say.
 - **Calculations.** Whether `median` and `p95` are exact, and what
   `sampleInterval` means, wasn't found.
 - **Read with `dry`.** Whether a Read-level token may run a `dry` query
