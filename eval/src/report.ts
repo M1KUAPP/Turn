@@ -163,10 +163,12 @@ const render = (scored: readonly Line[], { run, file }: { run: string; file: str
         "- **Bank:** the app's own, `app/src/content/starter-bank.json`."
       ].join('\n'),
       wrap(
-        "Each line is scored alone, from an empty row. The app picks its shortlist of 40 phrases at the line's " +
-          "place from a fresh bank, whose lack of taps leaves the most-tapped step empty and gives the place's step " +
-          "the place's first eight phrases in the bank's order. Each ranker orders those 40, and the row's rules " +
-          'turn its ranking into what the user would see.'
+        'Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that ' +
+          "share a word with the line, then, since a fresh bank has no taps, the place's first eight phrases in the " +
+          "bank's order, then the rest in the bank's order. Each ranker orders those 40, and the row's rules turn " +
+          "its ranking into what the user would see. The place's first eight phrases are always among the 40, so " +
+          "the place ranker's top 1 and top 6 never depend on the line, though which of its later phrases are " +
+          'among them can.'
       ),
       [
         '- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. ' +
