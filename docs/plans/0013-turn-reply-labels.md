@@ -135,9 +135,11 @@ Contents:
     buttons' words count. A line counts toward EVAL-1's 10 only if it has
     an acceptable reply besides the fixed buttons, since those come from the
     question-kind call, not the ranking, and every `yes_no` line they alone
-    answer would otherwise count. That's stricter than the criterion's
-    words, and implies them. The TRD records the rule, so #29's subset of
-    lines with no shared word uses it.
+    answer would otherwise count. That part is stricter than the
+    criterion's words, but like the phone, the rule doesn't stem, so "legs"
+    doesn't match "leg": 4 of the first labeling's 54 lines share only a
+    stem, and the other 50 still clear 10. The TRD records the rule, so
+    #29's subset of lines with no shared word uses it.
 1.  **The checks.** `eval/test/labels.test.ts`: every line's labeler is
     named and isn't its author; in each labeling, every id is in the bank,
     none repeats, none is a strip phrase, and the fixed buttons appear only
