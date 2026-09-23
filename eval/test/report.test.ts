@@ -55,7 +55,7 @@ test('says who wrote and labeled these lines, and who wrote the 80 lines and the
   expect(who).toMatch(prose('Two wrote 40 lines each from a brief that showed no phrase of the bank, as claude-a'))
   expect(who).toMatch(prose('a third wrote the bank without seeing the lines, and a fourth read every phrase'))
   expect(who).toMatch(prose("Two more, claude-c and claude-d, then labeled every line's replies, each alone"))
-  expect(who).toMatch(prose('from a brief that set no quota'))
+  expect(who).toMatch(prose('from a brief that set no quota. Their labels left too few lines with no reply,'))
   expect(who).toMatch(prose('so claude-f wrote 20 more lines meant to have none from a brief that showed no list'))
   expect(who).toMatch(prose("of the bank's phrases, only the labeling rules, which name the fixed buttons"))
   expect(who).toMatch(prose('of the 80 lines, it saw only the five that its first draft repeated, quoted back'))
