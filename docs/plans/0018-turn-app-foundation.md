@@ -6,7 +6,8 @@ and live accessibility preferences.
 **Architecture:** The app package owns Expo configuration and a small root
 screen. The theme exports the design's four appearance values and native
 dynamic colors. One accessibility store reads iOS preferences at launch and
-subscribes to their changes. The device build remains gated by #80.
+subscribes to their changes. The device build check remains pending on the
+video iPhone after #80 verified its signing setup.
 
 **Tech stack:** Expo SDK 57, React Native 0.86, React 19.2, TypeScript 6,
 Vitest 4, and Bun workspaces.
