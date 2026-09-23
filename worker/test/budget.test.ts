@@ -6,10 +6,10 @@ import {
   callsTo,
   expectError,
   freeLinesLeft,
+  headersFor,
   jevAnswers,
   jevError,
   lineRequest,
-  headersFor,
   loggedAt,
   mockJev,
   postLine,
@@ -101,16 +101,19 @@ describe("the day's calls to Jev (SEC-5)", () => {
 
   test("end a line within its 2.5 seconds while the budget's object is slow (STATE-2)", async () => {
     // The object answers after 3 seconds, as a slow one might; its callers await it either way.
-    vi.spyOn(Budget.prototype, 'take').mockImplementation(
-      () => scheduler.wait(3000).then(() => true) as unknown as boolean
-    )
+    const answers: Promise<boolean>[] = []
+    vi.spyOn(Budget.prototype, 'take').mockImplementation(() => {
+      const answer = scheduler.wait(3000).then(() => true)
+      answers.push(answer)
+      return answer as unknown as boolean
+    })
     mockJev(...jevAnswers(2))
     const started = Date.now()
     await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
     expect(Date.now() - started).toBeLessThan(2900)
     expect(callsTo('api.typesafe.ai')).toHaveLength(0)
-    // The object's slow answers finish before the next test resets it.
-    await scheduler.wait(1000)
+    // Every slow answer finishes before the next test resets the object.
+    await Promise.all(answers)
   }, 10_000)
 
   test("keep the day's count in one row of the relay's one budget object", async () => {
