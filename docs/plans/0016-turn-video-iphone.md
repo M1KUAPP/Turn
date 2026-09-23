@@ -109,8 +109,8 @@ pass to `/wizard`. The directive's steps map to skills:
     must list one device and expire seven days after its creation, and the
     Mac must then hold one valid signing identity.
 1.  **`devicectl` reads the phone.** One device's JSON gives the model, the
-    product type, the iOS version and build, and the pairing state under
-    `properties`, and Developer Mode's state ([model notes][note-model]).
+    product type, the iOS version and build, the pairing state, and
+    Developer Mode's state under `properties` ([model notes][note-model]).
     Xcode's own device table maps the product type to a name.
 1.  **The launch proves the trust.** `devicectl` installs the app. A launch
     before the person trusts the developer on the phone is expected to
@@ -166,11 +166,12 @@ Markdown files run the gate from [the plan-storage plan][docs-gate]:
 Prettier, `check_md.py` with `--contents`, and `fact_scan.py` for new prose;
 the research note also runs `check_links.py`.
 
-The device checks run from the scratchpad's `probe/` folder.
-`build_device.sh` runs `xcodebuild` with the flags under
-[Decisions](#decisions); it reads the team ID into a variable and redacts
-it, the account's email, and the team's name from the log. The phone's
-identifier goes into `UDID` and is never printed:
+The device checks run from the scratchpad's `probe/` folder, once the
+phone's tunnel has connected, since `list devices` leaves a phone's
+`reality` empty before then. `TEAM` holds the team ID from Xcode's
+preferences and `UDID` the phone's, and neither is printed; the build's log
+is kept only after they, the phone's name, and the account's email and name
+are redacted from it:
 
 ```shell
 xcrun devicectl list devices --json-output devices.json
@@ -182,8 +183,12 @@ jq -r '.result.devices[]
   | [.hardware.marketingName, .hardware.productType,
      .software.osVersionNumber.stringValue,
      .software.osBuildVersions.buildVersion.name,
-     .connection.pairingState] | @tsv' devices.json
-./build_device.sh "id=${UDID:?}" -allowProvisioningDeviceRegistration
+     .connection.pairingState,
+     (.state.developerModeStatus | keys[0])] | @tsv' devices.json
+xcodebuild -project TurnProbe.xcodeproj -scheme TurnProbe \
+  -configuration Debug -destination "id=${UDID:?}" -derivedDataPath build \
+  -allowProvisioningUpdates -allowProvisioningDeviceRegistration \
+  DEVELOPMENT_TEAM="${TEAM:?}" build
 APP=build/Build/Products/Debug-iphoneos/TurnProbe.app
 security cms -D -i "$APP/embedded.mobileprovision" > profile.plist
 for key in CreationDate ExpirationDate ProvisionedDevices; do
@@ -195,7 +200,7 @@ xcrun devicectl device process launch --device "$UDID" com.m1ku.turn
 ```
 
 - The device line must show a model, a product type, an iOS version and
-  build, and `paired`, and the JSON's Developer Mode field must read as on.
+  build, `paired`, and `enabled`.
 - The build must end with `** BUILD SUCCEEDED **`.
 - The profile must print a creation date, an expiry seven days later, and
   1 device, and the identity count must be 1.
