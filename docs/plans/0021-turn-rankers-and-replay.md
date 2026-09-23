@@ -154,17 +154,16 @@ Contents:
     keyword ranker's shape. The folds come from one seeded shuffle, after
     which the lines with an acceptable reply and those with none are each
     dealt round-robin into five folds, since without the shuffle the
-    file's order (one writer's 40, then the other's) would pick the folds
+    file's order (the lines grouped by writer) would pick the folds
     ([statistics notes][stats-notes]). Each fold's cut-off is chosen on the
     other four: of each of their lines' six highest cosines and one above
     them all (hold every line), the one that makes the most lines right (a
     right big button, row, or hold), ties going to the higher. The fold's
     lines are then scored at it, so every reported outcome is out of fold,
     and the report lists the five cut-offs. Plain accuracy rather than balanced
-    accuracy, scikit-learn's default: the lines are meant to follow a real
-    conversation's mix, about a fifth with no reply (EVAL-1's 16 of 80,
-    though only 8 today), and balanced accuracy would weigh those few as
-    much as all the lines with a reply.
+    accuracy, scikit-learn's default: the lines follow a real conversation's
+    mix, a fifth with no reply (EVAL-1's 16 of 80), and balanced accuracy
+    would weigh those 16 as much as the 64 with a reply.
 1.  **The Jev ranker** turns the app's shortlist into the relay's request:
     the line as written, the place's name from the bank, the grid's
     categories (the bank's, without the strip's, which the grid doesn't
