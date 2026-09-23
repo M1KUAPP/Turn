@@ -24,8 +24,9 @@ export type SentenceEmbedding = {
  * Apple's English sentence embedding at the pinned revision, as the phone would compute it (EVAL-8), from a helper
  * that stays open for the run, so each line's time is its embedding's, not a new process's: the Swift helper unless the
  * command names another. The helper names its revision, dimension, and system first, then answers each line of texts,
- * as JSON, with a line of their vectors. A helper that can't start, stops, has another revision, or answers with the
- * wrong number of vectors or numbers throws.
+ * as JSON, with a line of their vectors. A helper that can't start, stops, writes a line that isn't JSON, has another
+ * revision, or answers with the wrong number of vectors or numbers throws, and one that fails before it has named
+ * itself is stopped.
  */
 export async function sentenceEmbedding(
   command: readonly string[] = ['swift', helper, String(appleRevision)]
@@ -40,17 +41,29 @@ export async function sentenceEmbedding(
   const read = async (): Promise<unknown> => {
     const { value, done } = await Promise.race([lines.next(), failed])
     if (done) throw new Error("Apple's sentence embedding stopped")
-    return JSON.parse(value)
+    try {
+      return JSON.parse(value)
+    } catch {
+      throw new Error("Apple's sentence embedding answered with a line that isn't JSON")
+    }
   }
-  const { revision, dimension, system } = (await read()) as Record<string, unknown>
-  if (revision !== appleRevision || !Number.isInteger(dimension) || typeof system !== 'string') {
+  /** The helper's first line: its revision, which must be the pinned one, its dimension, and its system. */
+  const introduction = async () => {
+    const { revision, dimension, system } = ((await read()) ?? {}) as Record<string, unknown>
+    if (revision !== appleRevision) {
+      throw new Error(
+        `Apple's sentence embedding is at revision ${revision ?? 'none'}, not the pinned ${appleRevision}`
+      )
+    }
+    if (!Number.isInteger(dimension) || typeof system !== 'string') {
+      throw new Error("Apple's sentence embedding named no dimension or system")
+    }
+    return { revision, dimension: dimension as number, system }
+  }
+  const { revision, dimension, system } = await introduction().catch((error: unknown) => {
     child.kill()
-    throw new Error(
-      revision !== appleRevision
-        ? `Apple's sentence embedding is at revision ${revision}, not the pinned ${appleRevision}`
-        : "Apple's sentence embedding named no dimension or system"
-    )
-  }
+    throw error
+  })
   const embed: Embed = async (texts) => {
     child.stdin.write(`${JSON.stringify(texts)}\n`)
     const vectors = await read()
@@ -69,5 +82,5 @@ export async function sentenceEmbedding(
     child.stdin.end()
     return exited
   }
-  return { embed, revision, dimension: dimension as number, system, close }
+  return { embed, revision, dimension, system, close }
 }
