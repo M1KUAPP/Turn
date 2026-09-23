@@ -93,8 +93,11 @@ export const jevAnswer = (
   usage: { input_tokens: 512, output_tokens: 20 }
 })
 
-/** A response an API gives, built at its call, since the runtime won't share one across Durable Objects. */
-type Reply = () => Response | Promise<Response>
+/**
+ * A response an API gives, built at its call, since the runtime won't share one across Durable Objects, from the call's
+ * options, whose signal a reply that hangs listens to.
+ */
+type Reply = (init?: RequestInit) => Response | Promise<Response>
 
 /** The responses each API has left to give, by host. */
 const queues = new Map<string, Reply[]>()
@@ -105,10 +108,10 @@ const queues = new Map<string, Reply[]>()
  */
 export function routeFetch() {
   queues.clear()
-  vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+  vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
     const reply = queues.get(new URL(input instanceof Request ? input.url : String(input)).host)?.shift()
     if (!reply) throw new Error('This test called fetch without mocking it')
-    return reply()
+    return reply(init)
   })
 }
 
@@ -169,6 +172,10 @@ export const callsTo = (host: string) =>
   vi
     .mocked(globalThis.fetch)
     .mock.calls.filter(([input]) => new URL(input instanceof Request ? input.url : String(input)).host === host)
+
+/** A call that hangs until its signal aborts it. */
+export const hang: Reply = (init) =>
+  new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal?.reason)))
 
 /** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
 export const jevError = (status: number) => () =>
