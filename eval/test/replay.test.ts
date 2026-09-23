@@ -102,6 +102,13 @@ test('counts slot changes: steady slots, a phrase that beats the lowest by the m
   expect(replayed[0].ms).toMatchObject({ jev: 150, total: 290 })
 })
 
+test('drops an answer for an older line, as the app does, and counts the line as held', async () => {
+  fakeRelay((request) => answered({ ...request, seq: 1 }, request.seq === 1 ? {} : { [request.candidates[0].id]: 0.7 }))
+  const { replayed } = await replay(lines('One', 'Two'), relay)
+  expect(replayed[1]).toMatchObject({ by: 'relay', changes: 0, held: true })
+  expect(replayed[1].row.slots.every((id) => id === null)).toBe(true)
+})
+
 test('follows the policy each answer carries, not the one the configuration gave', async () => {
   fakeRelay(async (request) => {
     const answer = (await answered(request, { [request.candidates[0].id]: 0.55 }).json()) as LineAnswer
