@@ -1,10 +1,9 @@
 import type { Outcome } from '@turn/shared/relay'
 import type { Summary } from './summary'
+import { dayMs, type Range } from './telemetry'
 
 /** `jev-1.13.0`'s price, $0.042 a million input tokens, in nanodollars a token, so a spend is a whole number. */
 const nanodollarsPerToken = 42
-
-const dayMs = 24 * 60 * 60 * 1000
 
 /** What the alert found in a window of the relay's logs, with the spend and the level in nanodollars. */
 export type Finding = { outOfCredits: number; inputTokens: number; spent: number; level: number; fires: boolean }
@@ -24,7 +23,7 @@ export function assess(summary: Summary, dollars: number): Finding {
  * The window the alert reads: the last 24 hours, or from when the last alert issue was closed if that's later, so a
  * handled alert doesn't fire again from the same lines. Null for a close that doesn't parse or hasn't happened.
  */
-export function alertWindow(since: string | undefined, now: number): { from: number; to: number } | null {
+export function alertWindow(since: string | undefined, now: number): Range | null {
   if (since === undefined) return { from: now - dayMs, to: now }
   const closed = Date.parse(since)
   if (Number.isNaN(closed) || closed > now) return null
@@ -38,7 +37,7 @@ export function dollars(nanodollars: number): string {
 }
 
 /** The alert issue's body: what fired, over which window, and what the team does about it. */
-export function formatAlert(finding: Finding, window: { from: number; to: number }): string {
+export function formatAlert(finding: Finding, window: Range): string {
   const { outOfCredits, inputTokens, spent, level } = finding
   const from = new Date(window.from).toISOString()
   const to = new Date(window.to).toISOString()
