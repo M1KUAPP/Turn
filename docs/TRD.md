@@ -146,6 +146,7 @@ The path of one partner line:
 | Jev                             | `jev-1.13.0`           | the only model on September 22, 2026                                     |
 | Wrangler                        | 4.136.2                | needs Node.js 22 or later; `compatibility_date` `2026-09-22`             |
 | `@cloudflare/vitest-plugin`     | 1.2.1, with Vitest 4.1 | the relay's tests ([Cloudflare notes][cf-notes])                         |
+| TypeScript                      | 7.0.2                  | `tsc` in each workspace ([workspace notes][ws-notes])                    |
 | `@revenuecat/cli`               | 0.1.3                  | headless Test Store purchases for the relay's tests                      |
 
 The iPhone build notes have the dates and licenses of the Expo libraries
@@ -156,6 +157,7 @@ the [design's motion][design-motion] uses.
 [rc-expo]: /docs/research/0009-revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [ios-libs]: /docs/research/0023-turn-ios.md#libraries-on-september-22-2026
 [ios-rea]: /docs/research/0015-ios-design.md#reanimated-4-in-sdk-57
+[ws-notes]: /docs/research/0031-turn-workspace.md#versions-on-september-23-2026
 
 ### Repository layout
 
@@ -167,6 +169,7 @@ The code lives in this repository, as Bun workspaces, next to `docs/`:
 ├── modules/
 │   ├── turn-listen/      # SpeechTranscriber, line ends, name tagging
 │   └── turn-voice/       # Personal Voice authorization
+├── shared/               # shortlist, row rules, Jev request builder
 ├── worker/               # the relay: Worker, Durable Object, tests
 ├── eval/                 # partner lines, split, rankers, results
 ├── docs/
@@ -182,8 +185,13 @@ The code lives in this repository, as Bun workspaces, next to `docs/`:
   so the app imports from each module's `src` files
   ([iPhone build notes][ios-modules]).
 - **Shared code.** The shortlist, the row's rules, and the Jev request
-  builder live in small TypeScript files that the app, the relay, and the
-  evaluation import, so the evaluation measures the code the app runs.
+  builder live in small TypeScript files in `shared/`, the `@turn/shared`
+  package, which the app, the relay, and the evaluation import one file at a
+  time, such as `@turn/shared/shortlist`, so the evaluation measures the code
+  the app runs. The package ships its source, with no build step.
+- **Commands.** `bun install` at the root installs every workspace, and
+  `bun run test` and `bun run typecheck` run each package's Vitest tests and
+  TypeScript check. Bun's own test runner, `bun test`, isn't used.
 - **The starter bank** lives in `app/src/content/starter-bank.json`, which the
   app loads on first launch and the evaluation reads (CONTENT-1).
 
