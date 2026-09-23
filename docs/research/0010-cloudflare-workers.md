@@ -593,7 +593,7 @@ export class Day extends DurableObject<Env> {
 - Synthesis: `INSERT OR IGNORE` plus returning the stored row alone makes
   answers agree; the shared call also saves the duplicate Jev spend.
 
-[jev-flips]: /docs/research/jev.md#known-limitations-on-the-jaggedness-page
+[jev-flips]: /docs/research/0005-jev.md#known-limitations-on-the-jaggedness-page
 [cf-errors]: https://developers.cloudflare.com/workers/observability/errors/
 
 ## Limiting requests per device
@@ -756,8 +756,8 @@ Jev's methods, options, retries, and errors are in the Jev notes
 ([jev-js]; [jev-install]); this section covers only what changes in a
 Worker.
 
-[jev-js]: /docs/research/jev.md#javascript-sdk-methods
-[jev-install]: /docs/research/jev.md#installing-an-sdk-and-authenticating
+[jev-js]: /docs/research/0005-jev.md#javascript-sdk-methods
+[jev-install]: /docs/research/0005-jev.md#installing-an-sdk-and-authenticating
 
 ### What the SDK's published code uses
 
@@ -866,7 +866,7 @@ const result = await client.systemOne(request, { signal: AbortSignal.timeout(300
 
 [gh-sdk-issue-14]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/14
 [gh-sdk-issue-9]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/9
-[jev-issues]: /docs/research/jev.md#open-issues-on-typesafes-repositories
+[jev-issues]: /docs/research/0005-jev.md#open-issues-on-typesafes-repositories
 
 ### Calling the System One API with fetch
 
@@ -908,7 +908,7 @@ async function callSystemOne(env: Env, body: unknown, retried = false): Promise<
 }
 ```
 
-[jev-http]: /docs/research/jev.md#the-system-one-http-api
+[jev-http]: /docs/research/0005-jev.md#the-system-one-http-api
 [cf-historical-changelog]: https://developers.cloudflare.com/workers/platform/changelog/historical-changelog/
 [ts-entity]: https://docs.typesafe.ai/cookbooks/entity_alignment
 
@@ -1307,9 +1307,9 @@ What the sources don't say that Guessling's backend needs, as of September
 
 - [Guessling idea](/docs/archive/guessling-idea.md): how Jev fits Guessling, and
   the build plan this note serves.
-- [Jev notes](/docs/research/jev.md): Jev's API, SDKs, prices, limits, and
+- [Jev notes](/docs/research/0005-jev.md): Jev's API, SDKs, prices, limits, and
   terms.
-- [Ideation log, round 9](/docs/research/ideation.md#round-9-scope-stack-and-schedule):
+- [Ideation log, round 9](/docs/research/0007-ideation.md#round-9-scope-stack-and-schedule):
   why the stack is one Worker with KV and Durable Objects.
 - [Workers docs index](https://developers.cloudflare.com/workers/llms.txt),
   [Durable Objects docs index](https://developers.cloudflare.com/durable-objects/llms.txt),
@@ -1341,7 +1341,7 @@ What the sources don't say that Guessling's backend needs, as of September
 [cf-nodejs-default]: https://developers.cloudflare.com/changelog/post/2026-08-04-nodejs-compat-default/
 [npm-sdk]: https://registry.npmjs.org/@typesafe-ai/sdk
 [cf-web-standards]: https://developers.cloudflare.com/workers/runtime-apis/web-standards/
-[jev-limits]: /docs/research/jev.md#rate-limits-context-length-and-latency
+[jev-limits]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
 [cf-cron]: https://developers.cloudflare.com/workers/configuration/cron-triggers/
 [cf-request]: https://developers.cloudflare.com/workers/runtime-apis/request/
 [cf-workers-logs]: https://developers.cloudflare.com/workers/observability/logs/workers-logs/

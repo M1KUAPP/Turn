@@ -26,8 +26,8 @@ Contents:
 1.  [Conflicts between sources](#conflicts-between-sources)
 1.  [Gaps](#gaps)
 
-[shipaton-notes]: /docs/research/shipaton-2026.md
-[jev-notes]: /docs/research/jev.md
+[shipaton-notes]: /docs/research/0001-shipaton-2026.md
+[jev-notes]: /docs/research/0005-jev.md
 
 ## What a Next Gen entry must submit
 
@@ -96,7 +96,7 @@ Other official pages and the managers' forum answers add:
   blocked Next Gen entries "should now be fixed", a manager replied about a
   month before September 22 ([f-checkbox]).
 
-[notes-checklist]: /docs/research/shipaton-2026.md#devpost-submission-checklist
+[notes-checklist]: /docs/research/0001-shipaton-2026.md#devpost-submission-checklist
 [f-team]: https://revenuecat-shipaton-2026.devpost.com/forum_topics/44700-eligibility-for-the-nextgen-category
 [f-checkbox]: https://revenuecat-shipaton-2026.devpost.com/forum_topics/44872-next-gen-submission-blocked-by-required-store-release-checkbox
 
@@ -168,7 +168,7 @@ Other official pages and the managers' forum answers add:
   nor a Stripe account. Web Purchase Links add a web purchase that a judge can
   open in a browser, at the cost of a Stripe account in sandbox mode.
 
-[expo-keys]: /docs/research/revenuecat-expo.md#configuring-the-sdk-and-api-keys
+[expo-keys]: /docs/research/0009-revenuecat-expo.md#configuring-the-sdk-and-api-keys
 [rc-web]: https://www.revenuecat.com/docs/web/overview
 [rc-wpl]: https://www.revenuecat.com/docs/web/web-billing/web-purchase-links
 [rc-web-testing]: https://www.revenuecat.com/docs/web/web-billing/testing
@@ -213,7 +213,7 @@ Google Play release required." The four criteria, verbatim ([rules], section
 - **macOS is fine.** "submitting a macOS app will not put you at a
   disadvantage" ([f-macos]).
 
-[notes-judging]: /docs/research/shipaton-2026.md#judging-funnel-and-stages
+[notes-judging]: /docs/research/0001-shipaton-2026.md#judging-funnel-and-stages
 [f-macos]: https://revenuecat-shipaton-2026.devpost.com/forum_topics/44615-macos-app-submission
 
 ### What the category video asks for
@@ -367,7 +367,7 @@ Apple publishes the personal team's limits ([apple-account]):
 [expo-build-setup]: https://docs.expo.dev/build/setup/
 [expo-pricing]: https://expo.dev/pricing
 [expo-go]: https://docs.expo.dev/troubleshooting/expo-go-version-mismatch/
-[expo-dev]: /docs/research/revenuecat-expo.md#development-builds-expo-go-and-preview-api-mode
+[expo-dev]: /docs/research/0009-revenuecat-expo.md#development-builds-expo-go-and-preview-api-mode
 
 ### Android sideloading and developer verification
 
@@ -394,7 +394,7 @@ Apple publishes the personal team's limits ([apple-account]):
 [android-adb]: https://developer.android.com/tools/adb
 [android-dv-limited]: https://developer.android.com/developer-verification/guides/limited-distribution
 [play-internal]: https://support.google.com/googleplay/android-developer/answer/9845334
-[notes-review]: /docs/research/shipaton-2026.md#app-review-timing-and-late-approvals
+[notes-review]: /docs/research/0001-shipaton-2026.md#app-review-timing-and-late-approvals
 
 ### School fee waivers
 
@@ -451,8 +451,8 @@ Apple publishes the personal team's limits ([apple-account]):
 [expo-cli]: https://docs.expo.dev/more/expo-cli/
 [apple-xcode]: https://developer.apple.com/xcode/system-requirements/
 [android-studio]: https://developer.android.com/studio/install
-[jev-platform]: /docs/research/jev.md#jev-platform-and-language-support
-[cf-secrets]: /docs/research/cloudflare-workers.md#secrets-configuration-and-wrangler
+[jev-platform]: /docs/research/0005-jev.md#jev-platform-and-language-support
+[cf-secrets]: /docs/research/0010-cloudflare-workers.md#secrets-configuration-and-wrangler
 
 ## Open-source license and setup instructions
 
@@ -616,7 +616,7 @@ Apple publishes the personal team's limits ([apple-account]):
   video's bar is an app that "if you released it would actually be a really
   good app".
 
-[jev-mca]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
+[jev-mca]: /docs/research/0005-jev.md#master-customer-agreement-terms-for-apps
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
 
 ## What student competitions reward
@@ -711,7 +711,7 @@ Apple publishes the personal team's limits ([apple-account]):
   concrete problem the builder knew well, with technical depth a judge can see
   in a demo.
 
-[past-winners]: /docs/research/past-winners.md#hamm-and-peace-prize-write-ups-2025
+[past-winners]: /docs/research/0004-past-winners.md#hamm-and-peace-prize-write-ups-2025
 
 ## The 2026 Next Gen field
 
@@ -742,14 +742,14 @@ category; the [gallery notes][gallery-method] explain the method.
   ([p-brievly]).
 
 [gallery]: https://revenuecat-shipaton-2026.devpost.com/project-gallery
-[gallery-method]: /docs/research/gallery-2026.md#method-and-coverage
+[gallery-method]: /docs/research/0006-gallery-2026.md#method-and-coverage
 [s-next-gen]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22next+gen%22
 [s-next-gen-award]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22next+gen+award%22
 [s-student]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=student
 [s-students]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=students
 [s-university]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=university
 [s-high-school]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22high+school%22
-[gallery-clusters]: /docs/research/gallery-2026.md#idea-clusters-by-count
+[gallery-clusters]: /docs/research/0006-gallery-2026.md#idea-clusters-by-count
 [s-open-source]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22open+source%22
 [s-github]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=github
 [s-public-repo]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22public+repository%22
@@ -912,9 +912,9 @@ and [RepoLens][p-repolens], a macOS workspace for research code.
   (travel and accommodation not included)" and $20,000 ([rules], section 8).
 
 [campus]: https://www.shipaton.com/campus-leaderboard
-[notes-students]: /docs/research/shipaton-2026.md#students-next-gen-and-the-campus-leaderboard
+[notes-students]: /docs/research/0001-shipaton-2026.md#students-next-gen-and-the-campus-leaderboard
 [host]: https://www.shipaton.com/host
-[notes-events]: /docs/research/shipaton-2026.md#shipaton-irl-events-and-hosting
+[notes-events]: /docs/research/0001-shipaton-2026.md#shipaton-irl-events-and-hosting
 [dp-resources]: https://revenuecat-shipaton-2026.devpost.com/resources
 
 ## Conflicts between sources
@@ -1029,7 +1029,7 @@ What no source settled on September 22, 2026:
   Learning Party, and no date for the leaderboard's switch to submissions.
 
 [forum]: https://revenuecat-shipaton-2026.devpost.com/forum_topics
-[rm-rules]: /docs/research/related-materials.md#official-rules-and-devpost-pages
+[rm-rules]: /docs/research/0003-related-materials.md#official-rules-and-devpost-pages
 [rules]: https://revenuecat-shipaton-2026.devpost.com/rules
 [cat-ng]: https://www.shipaton.com/categories/next-gen-award
 [submit-guide]: https://www.revenuecat.com/blog/engineering/how-to-submit-your-app-for-shipaton
@@ -1063,7 +1063,7 @@ What no source settled on September 22, 2026:
 [ts-pp]: https://typesafe.ai/legal/privacy-policy
 [students]: https://www.shipaton.com/students
 [campus-data]: https://gist.githubusercontent.com/austboston/5a196bb60feebf7fcb10d54637e32e2d/raw/shipaton-campus-leaderboard.json
-[notes-ship-kit]: /docs/research/shipaton-2026.md#ship-kit-perks
+[notes-ship-kit]: /docs/research/0001-shipaton-2026.md#ship-kit-perks
 [rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
 [rc-sandbox]: https://www.revenuecat.com/docs/test-and-launch/sandbox
 [rc-products]: https://www.revenuecat.com/docs/offerings/products-overview

@@ -88,8 +88,8 @@ Contents:
 The [evidence notes][ev-turn] have the sources, and the
 [Next Gen notes][ng-field] map the field.
 
-[ev-turn]: /docs/research/next-gen-evidence.md#turn-aac-that-ranks-the-users-own-phrases
-[ng-field]: /docs/research/next-gen.md#the-2026-next-gen-field
+[ev-turn]: /docs/research/0021-next-gen-evidence.md#turn-aac-that-ranks-the-users-own-phrases
+[ng-field]: /docs/research/0019-next-gen.md#the-2026-next-gen-field
 
 ## What the app does
 
@@ -167,8 +167,8 @@ What makes it more than one screen around one model call:
   rank the same 80 partner lines: the place's phrases alone, keyword ranking
   on the partner's line, embeddings, and Jev.
 
-[tech-speech]: /docs/research/next-gen-tech.md#speechanalyzer-and-speechtranscriber
-[ev-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
+[tech-speech]: /docs/research/0018-next-gen-tech.md#speechanalyzer-and-speechtranscriber
+[ev-devices]: /docs/research/0021-next-gen-evidence.md#turn-on-students-devices
 
 ## How Jev fits
 
@@ -278,21 +278,21 @@ Data, consent, and terms:
   is "Keep API credentials server-side in web apps." The repository holds
   the relay's code but never its key ([keys in open source][jp-keys]).
 
-[jev-what]: /docs/research/jev.md#what-jev-is
-[jev-limits]: /docs/research/jev.md#rate-limits-context-length-and-latency
-[jp-choice]: /docs/research/jev-patterns.md#choice-size-and-high-cardinality-decisions
-[jp-consistency]: /docs/research/jev-patterns.md#consistency-results
-[jp-routing]: /docs/research/jev-patterns.md#confidence-gated-routing-pattern
-[jev-store]: /docs/research/jev.md#store-review-and-jev
-[ev-without]: /docs/research/next-gen-evidence.md#turn-without-jev
-[jev-terms]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
-[jev-gotchas]: /docs/research/jev.md#gotchas-in-the-api-and-sdks
-[jp-concurrency]: /docs/research/jev-patterns.md#concurrency-in-the-cookbooks
-[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
-[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
-[jp-keys]: /docs/research/jev-patterns.md#keys-in-open-source-code
-[ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
-[svc-request]: /docs/research/turn-services.md#the-request-body-for-one-partner-line
+[jev-what]: /docs/research/0005-jev.md#what-jev-is
+[jev-limits]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
+[jp-choice]: /docs/research/0017-jev-patterns.md#choice-size-and-high-cardinality-decisions
+[jp-consistency]: /docs/research/0017-jev-patterns.md#consistency-results
+[jp-routing]: /docs/research/0017-jev-patterns.md#confidence-gated-routing-pattern
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
+[ev-without]: /docs/research/0021-next-gen-evidence.md#turn-without-jev
+[jev-terms]: /docs/research/0005-jev.md#master-customer-agreement-terms-for-apps
+[jev-gotchas]: /docs/research/0005-jev.md#gotchas-in-the-api-and-sdks
+[jp-concurrency]: /docs/research/0017-jev-patterns.md#concurrency-in-the-cookbooks
+[jev-lang]: /docs/research/0005-jev.md#jev-platform-and-language-support
+[jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
+[jp-keys]: /docs/research/0017-jev-patterns.md#keys-in-open-source-code
+[ng-minors]: /docs/research/0019-next-gen.md#minors-ages-and-accounts
+[svc-request]: /docs/research/0024-turn-services.md#the-request-body-for-one-partner-line
 
 ## Monetization
 
@@ -331,8 +331,8 @@ the [reasoning][r8]; this is how Turn applies them.
   need a Stripe account; and ads, which have no place in someone's voice.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
-[expo-server]: /docs/research/revenuecat-expo.md#checking-entitlements-from-a-server
-[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
+[expo-server]: /docs/research/0009-revenuecat-expo.md#checking-entitlements-from-a-server
+[ng-purchase]: /docs/research/0019-next-gen.md#purchase-paths-without-a-store-listing
 
 ## Categories to enter
 
@@ -351,7 +351,7 @@ the [reasoning][r8]; this is how Turn applies them.
   iPhone-only app needs the paid Apple Developer Program to reach a store,
   and a team with a minor may enter only Next Gen.
 
-[ng-prizes]: /docs/research/next-gen.md#next-gen-and-the-other-prizes
+[ng-prizes]: /docs/research/0019-next-gen.md#next-gen-and-the-other-prizes
 
 ## Build plan
 
@@ -381,8 +381,8 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
   "none" handling, and latency for four rankers: the place's phrases alone,
   keyword ranking on the partner's line, embeddings from Workers AI, and Jev.
 
-[tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
-[cf-secrets]: /docs/research/cloudflare-workers.md#secrets-configuration-and-wrangler
+[tech-expo]: /docs/research/0018-next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
+[cf-secrets]: /docs/research/0010-cloudflare-workers.md#secrets-configuration-and-wrangler
 
 ### Scope of the first version
 
@@ -416,8 +416,8 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
   ([Test Store key][svc-key]) and building for iOS needs a Mac with Xcode 27
   on macOS Tahoe 26.6 or later ([what a judge needs][ng-judge]).
 
-[ng-license]: /docs/research/next-gen.md#open-source-license-and-setup-instructions
-[ng-judge]: /docs/research/next-gen.md#what-a-judge-needs-to-run-the-app
+[ng-license]: /docs/research/0019-next-gen.md#open-source-license-and-setup-instructions
+[ng-judge]: /docs/research/0019-next-gen.md#what-a-judge-needs-to-run-the-app
 
 ### Schedule to September 30
 
@@ -541,9 +541,9 @@ description alone and read the code to check them.
   October 1 and 13. Trigger: any failed call in the relay's logs; then top up
   the credits, and the phone's own ranking keeps Turn usable meanwhile.
 
-[ev-harm]: /docs/research/next-gen-evidence.md#harm-from-a-wrong-turn-decision
-[svc-one-time]: /docs/research/turn-services.md#one-time-products-in-test-store
-[eval-paired]: /docs/research/turn-evaluation.md#paired-comparisons-of-the-four-rankers
+[ev-harm]: /docs/research/0021-next-gen-evidence.md#harm-from-a-wrong-turn-decision
+[svc-one-time]: /docs/research/0024-turn-services.md#one-time-products-in-test-store
+[eval-paired]: /docs/research/0025-turn-evaluation.md#paired-comparisons-of-the-four-rankers
 
 ## How the idea was chosen
 
@@ -570,13 +570,13 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
 1.  [Round 10][r10] tested the pitch and set most of the triggers under
     [Risks](#risks).
 
-[r1]: /docs/research/next-gen-ideation.md#round-1-constraints-and-rubric
-[r2]: /docs/research/next-gen-ideation.md#round-2-thirty-candidates
-[r3]: /docs/research/next-gen-ideation.md#round-3-screening
-[r4]: /docs/research/next-gen-ideation.md#round-4-scoring
-[r5]: /docs/research/next-gen-ideation.md#round-5-evidence
-[r6]: /docs/research/next-gen-ideation.md#round-6-red-team
-[r7]: /docs/research/next-gen-ideation.md#round-7-the-choice
+[r1]: /docs/research/0020-next-gen-ideation.md#round-1-constraints-and-rubric
+[r2]: /docs/research/0020-next-gen-ideation.md#round-2-thirty-candidates
+[r3]: /docs/research/0020-next-gen-ideation.md#round-3-screening
+[r4]: /docs/research/0020-next-gen-ideation.md#round-4-scoring
+[r5]: /docs/research/0020-next-gen-ideation.md#round-5-evidence
+[r6]: /docs/research/0020-next-gen-ideation.md#round-6-red-team
+[r7]: /docs/research/0020-next-gen-ideation.md#round-7-the-choice
 
 ## Assumptions and open questions
 
@@ -638,9 +638,9 @@ Still open, each with a safe default:
   [open questions](/docs/CONTEXT.md#open-questions) apply. Safe default:
   expect at most one.
 
-[jp-programs]: /docs/research/jev-patterns.md#programs-and-credits
-[ng-rule]: /docs/research/next-gen.md#whether-the-revenuecat-rule-applies
-[svc-sim]: /docs/research/turn-services.md#test-store-in-debug-builds-and-the-simulator
+[jp-programs]: /docs/research/0017-jev-patterns.md#programs-and-credits
+[ng-rule]: /docs/research/0019-next-gen.md#whether-the-revenuecat-rule-applies
+[svc-sim]: /docs/research/0024-turn-services.md#test-store-in-debug-builds-and-the-simulator
 
 ## See also
 
@@ -658,14 +658,14 @@ Still open, each with a safe default:
   rules a coding agent can follow.
 - [Next Gen ideation log][log]: the ten rounds that chose Turn, with their
   scores.
-- [Next Gen notes](/docs/research/next-gen.md): what the award asks of a
+- [Next Gen notes](/docs/research/0019-next-gen.md): what the award asks of a
   student team.
-- [Technology notes](/docs/research/next-gen-tech.md): what a phone can do in
-  September 2026.
-- [Jev notes](/docs/research/jev.md) and
-  [Jev pattern notes](/docs/research/jev-patterns.md): what Jev is, what it
+- [Technology notes](/docs/research/0018-next-gen-tech.md): what a phone can do
+  in September 2026.
+- [Jev notes](/docs/research/0005-jev.md) and
+  [Jev pattern notes](/docs/research/0017-jev-patterns.md): what Jev is, what it
   costs, and how to use it well.
-- [Evidence notes](/docs/research/next-gen-evidence.md): rivals, need, and
+- [Evidence notes](/docs/research/0021-next-gen-evidence.md): rivals, need, and
   risks for the five finalists.
 - [Guessling idea][guessling]: the first idea, archived with the
   [product](/docs/archive/guessling-product.md),
@@ -674,12 +674,12 @@ Still open, each with a safe default:
   [design](/docs/archive/guessling-design.md) built on it.
 
 [guessling]: /docs/archive/guessling-idea.md
-[log]: /docs/research/next-gen-ideation.md
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
-[ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
-[ng-criteria]: /docs/research/next-gen.md#judging-criteria-and-the-category-video
-[r8]: /docs/research/next-gen-ideation.md#round-8-monetization
-[r9]: /docs/research/next-gen-ideation.md#round-9-scope-stack-and-schedule
-[r10]: /docs/research/next-gen-ideation.md#round-10-pitch-test
-[svc-billing]: /docs/research/turn-services.md#how-a-jev-request-is-billed
-[svc-key]: /docs/research/turn-services.md#the-test-store-api-key
+[log]: /docs/research/0020-next-gen-ideation.md
+[ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
+[ev-simpler]: /docs/research/0021-next-gen-evidence.md#what-simpler-methods-offer
+[ng-criteria]: /docs/research/0019-next-gen.md#judging-criteria-and-the-category-video
+[r8]: /docs/research/0020-next-gen-ideation.md#round-8-monetization
+[r9]: /docs/research/0020-next-gen-ideation.md#round-9-scope-stack-and-schedule
+[r10]: /docs/research/0020-next-gen-ideation.md#round-10-pitch-test
+[svc-billing]: /docs/research/0024-turn-services.md#how-a-jev-request-is-billed
+[svc-key]: /docs/research/0024-turn-services.md#the-test-store-api-key

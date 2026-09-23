@@ -759,7 +759,7 @@ one-code-per-offer limit; this section adds limits, timing, and eligibility.
   there, and Guessling claims no capability that limits it to iPhone. Test the
   iPhone build on an iPad before submitting.
 
-[bp-screenshots]: /docs/research/best-practices.md#screenshots-and-app-previews-on-apple
+[bp-screenshots]: /docs/research/0002-best-practices.md#screenshots-and-app-previews-on-apple
 
 ### Where an iPhone app runs
 
@@ -1127,18 +1127,18 @@ Apple's table of the two categories a game uses ([hig-audio]):
 - [Context](/docs/CONTEXT.md#apple-app-store-review-essentials): the review
   essentials for any Shipaton app.
 
-[bp-apple]: /docs/research/best-practices.md#apple-app-store-review
+[bp-apple]: /docs/research/0002-best-practices.md#apple-app-store-review
 [news-age-2025]: https://developer.apple.com/news/?id=ks775ehf
 [news-age-social]: https://developer.apple.com/news/?id=tlur8uvi
 [asc-age-ref]: https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions
 [nr-child-safety]: https://www.apple.com/newsroom/2026/09/apples-new-child-safety-features-now-available/
 [idea-review]: /docs/archive/guessling-idea.md#review-safety-checklist
-[jev-store]: /docs/research/jev.md#store-review-and-jev
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
 [news-age-feb2026]: https://developer.apple.com/news/?id=f5zj08ey
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
 [news-texas-2026]: https://developer.apple.com/news/?id=sg176nne
 [apple-age-qa]: https://developer.apple.com/support/age-assurance/
-[bp-privacy]: /docs/research/best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
+[bp-privacy]: /docs/research/0002-best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
 [apple-privacy-details]: https://developer.apple.com/app-store/app-privacy-details/
 [news-guidelines-jun2026]: https://developer.apple.com/news/?id=a233fmpw
 [news-guidelines-feb2026]: https://developer.apple.com/news/?id=d75yllv4
@@ -1148,7 +1148,7 @@ Apple's table of the two categories a game uses ([hig-audio]):
 [apple-review]: https://developer.apple.com/distribute/app-review/
 [asc-a11y-overview]: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels
 [asc-a11y-larger-text]: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria
-[bp-codes]: /docs/research/best-practices.md#codes-that-let-judges-unlock-premium
+[bp-codes]: /docs/research/0002-best-practices.md#codes-that-let-judges-unlock-premium
 [asc-offer-codes]: https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-up-subscription-offer-codes
 [news-offer-codes-2025]: https://developer.apple.com/news/?id=gf6mgrs6
 [doc-offer-codes]: https://developer.apple.com/documentation/storekit/supporting-offer-codes-in-your-app

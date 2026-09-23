@@ -97,8 +97,8 @@ The API reference, SDK methods, prices, and terms are in the
 makes per partner line, with 2 Choices and 40 Nouls, as the
 [idea][idea-jev] describes it.
 
-[jev-notes]: /docs/research/jev.md
-[jp-notes]: /docs/research/jev-patterns.md
+[jev-notes]: /docs/research/0005-jev.md
+[jp-notes]: /docs/research/0017-jev-patterns.md
 
 ### The request body for one partner line
 
@@ -287,7 +287,7 @@ const { data, requestId } = await client
   IDs, never by position, with the `model` field and the request ID, so a
   support request can name the exact call.
 
-[jp-routing]: /docs/research/jev-patterns.md#confidence-gated-routing-pattern
+[jp-routing]: /docs/research/0017-jev-patterns.md#confidence-gated-routing-pattern
 
 ### Errors, retries, and timeouts
 
@@ -363,7 +363,7 @@ a missing key are in the [Jev notes][jev-api]. New, or specific to Turn:
 
 [ts-sitemap]: https://docs.typesafe.ai/sitemap.xml
 [ts-status]: https://status.typesafe.ai/
-[jp-changed]: /docs/research/jev-patterns.md#what-changed-since-the-jev-notes
+[jp-changed]: /docs/research/0017-jev-patterns.md#what-changed-since-the-jev-notes
 
 ### How a Jev request is billed
 
@@ -399,7 +399,7 @@ section covers what changed since and what Turn's relay needs: it holds the
 Jev key and a RevenueCat secret key, counts 20 free lines per device, checks
 `listen` past them, and makes one Jev call per line ([idea-stack]).
 
-[cf-notes]: /docs/research/cloudflare-workers.md
+[cf-notes]: /docs/research/0010-cloudflare-workers.md
 [idea-stack]: /docs/IDEA.md#stack-and-data-flow
 
 ### Counting free partner lines per device
@@ -466,14 +466,14 @@ export class Device extends DurableObject<Env> {
   object, to commit or release the claim, which the TRD has to choose.
 
 [cf-storage-options]: https://developers.cloudflare.com/workers/platform/storage-options/
-[cf-kv]: /docs/research/cloudflare-workers.md#kv-consistency-and-caching
+[cf-kv]: /docs/research/0010-cloudflare-workers.md#kv-consistency-and-caching
 [cf-kv-how]: https://developers.cloudflare.com/kv/concepts/how-kv-works/
 [cf-kv-limits]: https://developers.cloudflare.com/kv/platform/limits/
 [cf-d1-limits]: https://developers.cloudflare.com/d1/platform/limits/
 [cf-d1-free-enforce]: https://developers.cloudflare.com/changelog/post/2026-09-01-d1-free-tier-limit-enforcement/
 [cf-d1-pricing]: https://developers.cloudflare.com/d1/platform/pricing/
 [cf-do-sqlite]: https://developers.cloudflare.com/durable-objects/api/sqlite-storage-api/
-[cf-do-free]: /docs/research/cloudflare-workers.md#durable-objects-on-the-free-and-paid-plans
+[cf-do-free]: /docs/research/0010-cloudflare-workers.md#durable-objects-on-the-free-and-paid-plans
 [cf-do-pricing]: https://developers.cloudflare.com/durable-objects/platform/pricing/
 
 ### The Rate Limiting binding for Turn
@@ -496,7 +496,7 @@ export class Device extends DurableObject<Env> {
   runs in one data center near us-west-2, so its per-location counters act
   almost like global ones; that is inference, not a documented property.
 
-[cf-ratelimit-notes]: /docs/research/cloudflare-workers.md#the-rate-limiting-binding
+[cf-ratelimit-notes]: /docs/research/0010-cloudflare-workers.md#the-rate-limiting-binding
 [cf-local-dev]: https://developers.cloudflare.com/workers/local-development/
 [cf-ratelimit-ga]: https://developers.cloudflare.com/changelog/post/2025-09-19-ratelimit-workers-ga/
 
@@ -564,7 +564,7 @@ export class Device extends DurableObject<Env> {
   SDK errors to the relay's own codes before logging, as the
   [Cloudflare notes][cf-sdk] advise.
 
-[cf-logs-notes]: /docs/research/cloudflare-workers.md#workers-logs
+[cf-logs-notes]: /docs/research/0010-cloudflare-workers.md#workers-logs
 [cf-tail-handler]: https://developers.cloudflare.com/workers/runtime-apis/handlers/tail/
 [cf-trace-spans]: https://developers.cloudflare.com/workers/observability/traces/spans-and-attributes/
 [cf-exception-logs]: https://developers.cloudflare.com/changelog/post/2026-08-24-preserve-exception-info/
@@ -603,7 +603,7 @@ export class Device extends DurableObject<Env> {
   Worker to its object, and the Worker to Jev.
 
 [cf-placement-hints]: https://developers.cloudflare.com/changelog/post/2026-01-22-explicit-placement-hints/
-[cf-latency]: /docs/research/cloudflare-workers.md#latency-and-placement
+[cf-latency]: /docs/research/0010-cloudflare-workers.md#latency-and-placement
 [cf-ips]: https://www.cloudflare.com/ips-v4
 
 ### Free and Paid limits for the relay
@@ -629,7 +629,7 @@ Plan prices are in the [Cloudflare notes][cf-prices]. What bears on judging:
   plan removes the daily cap; a global daily Jev budget and the phone's own
   ranking cover the rest.
 
-[cf-prices]: /docs/research/cloudflare-workers.md#workers-free-and-paid-prices
+[cf-prices]: /docs/research/0010-cloudflare-workers.md#workers-free-and-paid-prices
 [cf-limits]: https://developers.cloudflare.com/workers/platform/limits/
 
 ### Wrangler's version
@@ -647,7 +647,7 @@ Plan prices are in the [Cloudflare notes][cf-prices]. What bears on judging:
 - **Flags.** The newest default for JavaScript Workers is still Node.js
   compatibility from 2026-08-04 ([cf-compat-flags]).
 
-[cf-compat]: /docs/research/cloudflare-workers.md#config-files-and-compatibility-dates
+[cf-compat]: /docs/research/0010-cloudflare-workers.md#config-files-and-compatibility-dates
 [cf-compat-flags]: https://developers.cloudflare.com/workers/configuration/compatibility-flags/
 
 ### Workers AI for the evaluation script
@@ -686,7 +686,7 @@ New:
   and the reranker adds a pairwise baseline closer to Jev's Nouls. The
   README's table should name each model and its pooling.
 
-[tech-embeddings]: /docs/research/next-gen-tech.md#workers-ai-embeddings-and-vectorize
+[tech-embeddings]: /docs/research/0018-next-gen-tech.md#workers-ai-embeddings-and-vectorize
 [cf-ai-pricing]: https://developers.cloudflare.com/workers-ai/platform/pricing/
 [cf-ai-paid-models]: https://developers.cloudflare.com/changelog/post/2026-07-28-models-require-workers-paid/
 [cf-ai-deprecations]: https://developers.cloudflare.com/changelog/post/2026-05-08-planned-model-deprecations/
@@ -706,8 +706,8 @@ What Test Store is and its SDK minimums are in the
 one-time `listen` purchase, sold in debug builds through Test Store only
 ([idea-money]).
 
-[ng-purchase]: /docs/research/next-gen.md#purchase-paths-without-a-store-listing
-[rc-notes-keys]: /docs/research/revenuecat-expo.md#configuring-the-sdk-and-api-keys
+[ng-purchase]: /docs/research/0019-next-gen.md#purchase-paths-without-a-store-listing
+[rc-notes-keys]: /docs/research/0009-revenuecat-expo.md#configuring-the-sdk-and-api-keys
 
 ### Setting up Test Store in the dashboard
 
@@ -853,7 +853,7 @@ one-time `listen` purchase, sold in debug builds through Test Store only
 [rnp-changelog]: https://github.com/RevenueCat/react-native-purchases/blob/10.10.1/CHANGELOG.md
 [rc-ios-install]: https://www.revenuecat.com/docs/getting-started/installation/ios
 [rc-rn-install]: https://www.revenuecat.com/docs/getting-started/installation/reactnative
-[ng-gaps]: /docs/research/next-gen.md#gaps
+[ng-gaps]: /docs/research/0019-next-gen.md#gaps
 [idea-open]: /docs/IDEA.md#assumptions-and-open-questions
 
 ### The Test Store purchase sheet
@@ -977,7 +977,7 @@ The relay counts free lines per device and checks `listen` per RevenueCat
 customer. What the RevenueCat ID is and who can send one are in the
 [RevenueCat and Expo notes][rc-notes-who].
 
-[rc-notes-who]: /docs/research/revenuecat-expo.md#who-can-send-an-app-user-id
+[rc-notes-who]: /docs/research/0009-revenuecat-expo.md#who-can-send-an-app-user-id
 
 ### RevenueCat's anonymous ID for Turn
 
@@ -1032,7 +1032,7 @@ customer. What the RevenueCat ID is and who can send one are in the
   relay's key to a genuine iPhone on a free account.
 
 [apple-caps-ios]: https://developer.apple.com/help/account/reference/supported-capabilities-ios
-[ng-caps]: /docs/research/next-gen.md#apple-capabilities-on-a-free-account
+[ng-caps]: /docs/research/0019-next-gen.md#apple-capabilities-on-a-free-account
 [apple-dc-key]: https://developer.apple.com/help/account/capabilities/create-a-devicecheck-private-key
 [apple-account]: https://developer.apple.com/help/account/basics/about-your-developer-account
 [apple-dcdevice]: https://developer.apple.com/documentation/devicecheck/dcdevice
@@ -1130,8 +1130,8 @@ headed "Customer Obligations" and reads in full ([ts-mca]):
 - **Other terms** on training, hosting, and under-18 data are in the
   [Jev notes][jev-data] and the [Next Gen notes][ng-minors].
 
-[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
-[ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
+[jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
+[ng-minors]: /docs/research/0019-next-gen.md#minors-ages-and-accounts
 
 ### RevenueCat's terms on privacy notices
 
@@ -1251,7 +1251,7 @@ conflicts with it below describe the idea as first written.
   still "exit beta" ([cf-placement]).
 
 [idea-repo]: /docs/IDEA.md#the-repository
-[jev-js]: /docs/research/jev.md#javascript-sdk-methods
+[jev-js]: /docs/research/0005-jev.md#javascript-sdk-methods
 
 ## Gaps
 
@@ -1299,9 +1299,9 @@ What no source settled on September 22, 2026:
 [ts-jagged]: https://docs.typesafe.ai/model-jaggedness/jev-1.13
 [ts-primitives]: https://docs.typesafe.ai/primitives
 [cb-rerank]: https://docs.typesafe.ai/cookbooks/rerank_typesafe
-[jev-api]: /docs/research/jev.md#the-system-one-http-api
+[jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
 [npm-ts-sdk]: https://registry.npmjs.org/@typesafe-ai/sdk
-[cf-sdk]: /docs/research/cloudflare-workers.md#the-sdk-under-workerd
+[cf-sdk]: /docs/research/0010-cloudflare-workers.md#the-sdk-under-workerd
 [ts-models]: https://docs.typesafe.ai/models
 [ts-openapi]: https://api.typesafe.ai/openapi.json
 [gh-js-6]: https://github.com/typesafe-ai/typesafe-sdk-js/issues/6
@@ -1316,7 +1316,7 @@ What no source settled on September 22, 2026:
 [cf-wrangler-config]: https://developers.cloudflare.com/workers/wrangler/configuration/
 [cf-workers-logs]: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
 [cf-traces]: https://developers.cloudflare.com/workers/observability/traces/
-[rc-notes-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+[rc-notes-v2]: /docs/research/0009-revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
 [cf-placement]: https://developers.cloudflare.com/workers/configuration/placement/
 [npm-wrangler]: https://registry.npmjs.org/wrangler
 [npm-workerd]: https://registry.npmjs.org/workerd
@@ -1330,7 +1330,7 @@ What no source settled on September 22, 2026:
 [ios-sim-ui-src]: https://github.com/RevenueCat/purchases-ios/blob/5.90.1/Sources/Purchasing/SimulatedStore/SimulatedStorePurchaseUI.swift
 [gh-ios-changelog]: https://github.com/RevenueCat/purchases-ios/blob/main/CHANGELOG.md
 [npm-rnp]: https://registry.npmjs.org/react-native-purchases
-[rc-notes-versions]: /docs/research/revenuecat-expo.md#sdk-versions-on-september-22-2026
+[rc-notes-versions]: /docs/research/0009-revenuecat-expo.md#sdk-versions-on-september-22-2026
 [ios-orchestrator-src]: https://github.com/RevenueCat/purchases-ios/blob/5.90.1/Sources/Purchasing/Purchases/PurchasesOrchestrator.swift
 [rc-webhooks]: https://www.revenuecat.com/docs/integrations/webhooks
 [rc-webhook-events]: https://www.revenuecat.com/docs/integrations/webhooks/event-types-and-fields

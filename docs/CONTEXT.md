@@ -129,13 +129,13 @@ every other Shipaton page. What they add or change:
 More in the [rules notes][rm-rules].
 
 [dp-2026-gallery]: https://revenuecat-shipaton-2026.devpost.com/project-gallery
-[rm-rules]: /docs/research/related-materials.md#official-rules-and-devpost-pages
+[rm-rules]: /docs/research/0003-related-materials.md#official-rules-and-devpost-pages
 
 ## Past winners
 
 Three past RevenueCat hackathons set the precedent. The brief's
 [lessons from past winners](/docs/BRIEF.md#lessons-from-past-winners) name the
-headline winners; the [past winners notes](/docs/research/past-winners.md)
+headline winners; the [past winners notes](/docs/research/0004-past-winners.md)
 cover every placed entry.
 
 | Edition         | Dates on Devpost      | Cash     | Participants | Projects in the gallery |
@@ -357,13 +357,13 @@ brings little traffic.
 
 More in the [monetization notes][bp-money].
 
-[bp-money]: /docs/research/best-practices.md#monetization-and-paywall-benchmarks
+[bp-money]: /docs/research/0002-best-practices.md#monetization-and-paywall-benchmarks
 
 ## Getting through store review
 
 The brief covers [review timing](/docs/BRIEF.md#app-review-timing), account
 costs, and common rejections. The stores' own documents add the rules below,
-and the [best practices notes](/docs/research/best-practices.md) have the
+and the [best practices notes](/docs/research/0002-best-practices.md) have the
 sources. Synthesis: for a team submitting in the last week of September, the
 App Store is the realistic first store. A new personal Google Play account
 still needs production access and review after its 14-day test, so a test
@@ -471,7 +471,7 @@ Store needs commercial seller status and a supported SDK.
 
 More in the [listing notes][bp-listing].
 
-[bp-listing]: /docs/research/best-practices.md#store-listing-and-discoverability
+[bp-listing]: /docs/research/0002-best-practices.md#store-listing-and-discoverability
 
 ## Retention and push notifications
 
@@ -499,7 +499,7 @@ see [what wins each category](#what-wins-each-category).
 
 More in the [push notes][bp-push].
 
-[bp-push]: /docs/research/best-practices.md#retention-and-push-notifications
+[bp-push]: /docs/research/0002-best-practices.md#retention-and-push-notifications
 
 ## Demo video and write-up
 
@@ -530,12 +530,12 @@ Mapped to Shipaton (synthesis):
 
 More in the [pitch notes][bp-pitch].
 
-[bp-pitch]: /docs/research/best-practices.md#demo-video-and-write-up
+[bp-pitch]: /docs/research/0002-best-practices.md#demo-video-and-write-up
 
 ## Related materials
 
 These are the documents a team is most likely to need; the
-[related materials notes](/docs/research/related-materials.md) list many
+[related materials notes](/docs/research/0003-related-materials.md) list many
 more, with the key facts from each. All links were checked on
 September 21, 2026.
 
@@ -746,13 +746,13 @@ before relying on an answer; the brief's
   [design](/docs/archive/guessling-design.md) built on it are archived with
   it.
 - [Official rules][rules]: the binding terms, on Devpost.
-- [Past winners notes](/docs/research/past-winners.md): every placed entry of
-  the 2024 Ship-a-ton, Shipaton 2025, and Shipyard 2026, with sources.
-- [Best practices notes](/docs/research/best-practices.md): store review,
+- [Past winners notes](/docs/research/0004-past-winners.md): every placed entry
+  of the 2024 Ship-a-ton, Shipaton 2025, and Shipyard 2026, with sources.
+- [Best practices notes](/docs/research/0002-best-practices.md): store review,
   monetization, listing, push, and pitch guidance, with sources.
-- [Related materials notes](/docs/research/related-materials.md): checked
+- [Related materials notes](/docs/research/0003-related-materials.md): checked
   links to RevenueCat, store, and sponsor docs, and the rules in detail.
-- [Shipaton 2026 notes](/docs/research/shipaton-2026.md): the cited notes
+- [Shipaton 2026 notes](/docs/research/0001-shipaton-2026.md): the cited notes
   behind the brief.
 
 [rules]: https://revenuecat-shipaton-2026.devpost.com/rules

@@ -104,7 +104,7 @@ research note weighs the options, and this plan picks one.
 1.  **Every link and `git add` path into the old folder changes in the
     move's commit.** That's four references in three documents
     (`docs/DESIGN.md`, `docs/archive/guessling-design.md`, and
-    `docs/research/frontend-trends.md`), and inside the plans, 10 links and
+    `docs/research/0014-frontend-trends.md`), and inside the plans, 10 links and
     5 `git add` commands. A script rewrites only link targets and `git add`
     paths, so the directive's words and this plan's account of the old
     folder stay as written.
@@ -122,9 +122,9 @@ research note weighs the options, and this plan picks one.
     on its own only when the name matches the branch, while specs from
     `/to-spec`, tickets, and wayfinder maps stay in GitHub issues.
 
-[note-mp]: /docs/research/plan-storage.md#where-mattpocockskills-puts-documents
-[note-cr]: /docs/research/plan-storage.md#how-code-review-finds-a-spec
-[note-conv]: /docs/research/plan-storage.md#conventions-for-design-records-in-a-repo
+[note-mp]: /docs/research/0030-plan-storage.md#where-mattpocockskills-puts-documents
+[note-cr]: /docs/research/0030-plan-storage.md#how-code-review-finds-a-spec
+[note-conv]: /docs/research/0030-plan-storage.md#conventions-for-design-records-in-a-repo
 
 ### Rejected alternatives
 
@@ -148,7 +148,7 @@ these are the reasons this plan turns the others down.
 - **Leaving the folder:** no link would break, but the path would keep
   naming a skill set the repo removed.
 
-[note-options]: /docs/research/plan-storage.md#what-this-means-for-the-repos-plans
+[note-options]: /docs/research/0030-plan-storage.md#what-this-means-for-the-repos-plans
 
 ### Out of scope
 
@@ -198,7 +198,7 @@ prompt doesn't name or runs git.
 
 ### Task 1: Research note
 
-A background agent wrote `docs/research/plan-storage.md` in about four
+A background agent wrote `docs/research/0030-plan-storage.md` in about four
 minutes. It passed the gate, with fact-scan misses only for the plans' sizes,
 superpowers' release dates, and GitHub's unverified limit, and was committed
 as `docs(research): add notes on where plans and specs live`.
@@ -261,7 +261,7 @@ Expected: 21 changes in 11 files, the 16 links and 5 `git add` paths that
 `git diff --cached -M --name-status` must show eight renames.
 
 ```shell
-git add docs/plans docs/DESIGN.md docs/archive/guessling-design.md docs/research/frontend-trends.md
+git add docs/plans docs/DESIGN.md docs/archive/guessling-design.md docs/research/0014-frontend-trends.md
 git commit -m "docs(plans): move the plans from docs/superpowers to docs/plans"
 ```
 
@@ -316,5 +316,5 @@ git commit -m "docs(agents): say where plans live"
 1.  Rebase-merge the pull request and delete the branch, locally and on the
     remote.
 
-[note]: /docs/research/plan-storage.md
-[note-sp]: /docs/research/plan-storage.md#where-obrasuperpowers-put-plans-and-specs
+[note]: /docs/research/0030-plan-storage.md
+[note-sp]: /docs/research/0030-plan-storage.md#where-obrasuperpowers-put-plans-and-specs

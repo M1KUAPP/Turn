@@ -26,8 +26,8 @@ Contents:
 1.  [Conflicts between sources](#conflicts-between-sources)
 1.  [Gaps](#gaps)
 
-[rc-notes]: /docs/research/revenuecat-expo.md
-[apple-notes]: /docs/research/apple-requirements.md
+[rc-notes]: /docs/research/0009-revenuecat-expo.md
+[apple-notes]: /docs/research/0011-apple-requirements.md
 
 ## Findings for the ideation
 
@@ -132,7 +132,7 @@ Expo's newest stable SDK.
   0.86. Features that exist only in iOS 27 need the path under
   [Expo SDK 57, SDK 58, and Xcode 27](#expo-sdk-57-sdk-58-and-xcode-27).
 
-[rc-expo-versions]: /docs/research/revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
+[rc-expo-versions]: /docs/research/0009-revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [apple-releases]: https://developer.apple.com/news/releases/
 [xcode-reqs]: https://developer.apple.com/xcode/system-requirements/
 [android-qpr1]: https://developer.android.com/about/versions/17/qpr1/release-notes
@@ -401,7 +401,7 @@ on the device and hands the app labels, points, or text.
 [vision-segment]: https://developer.apple.com/documentation/vision/generateiterativesegmentationrequest
 [vision-ocrtool]: https://developer.apple.com/documentation/vision/ocrtool
 [vision-barcodetool]: https://developer.apple.com/documentation/vision/barcodereadertool
-[jev-limitations]: /docs/research/jev.md#known-limitations-on-the-jaggedness-page
+[jev-limitations]: /docs/research/0005-jev.md#known-limitations-on-the-jaggedness-page
 
 ### Sound Analysis
 
@@ -714,7 +714,7 @@ these facts. Versions and dates are the npm registry's.
 [gh-rn-ai-generating]: https://github.com/callstackincubator/ai/blob/main/website/src/docs/apple/generating.md
 [gh-rn-ai-transcription]: https://github.com/callstackincubator/ai/blob/main/website/src/docs/apple/transcription.md
 [executorch-docs]: https://docs.swmansion.com/react-native-executorch/llms.txt
-[design-haptics]: /docs/research/ios-design.md#haptics-in-expo
+[design-haptics]: /docs/research/0015-ios-design.md#haptics-in-expo
 [expo-haptics]: https://docs.expo.dev/versions/latest/sdk/haptics/
 [gh-expo-live-activity]: https://github.com/software-mansion-labs/expo-live-activity
 [gh-rn-ai]: https://github.com/callstackincubator/ai
@@ -758,7 +758,7 @@ these facts. Versions and dates are the npm registry's.
 
 [expo-dev-faq]: https://docs.expo.dev/develop/development-builds/faq/
 [expo-go-57]: https://expo.dev/changelog/expo-go-57-login
-[rc-dev-builds]: /docs/research/revenuecat-expo.md#development-builds-expo-go-and-preview-api-mode
+[rc-dev-builds]: /docs/research/0009-revenuecat-expo.md#development-builds-expo-go-and-preview-api-mode
 
 ## Real-time backends on Cloudflare
 
@@ -966,7 +966,7 @@ that turns camera, microphone, or sensor input into decisions.
 
 [ts-build]: https://docs.typesafe.ai/concepts/how-to-build-with-system-one
 [ts-api]: https://docs.typesafe.ai/api
-[cf-latency]: /docs/research/cloudflare-workers.md#latency-and-placement
+[cf-latency]: /docs/research/0010-cloudflare-workers.md#latency-and-placement
 
 ### Pairings the sources suggest
 
@@ -992,7 +992,7 @@ that turns camera, microphone, or sensor input into decisions.
   tests for `window.document` ([gh-js-runtime]), which a React Native app
   doesn't define, so the guard won't stop a key shipped in an app.
 
-[rc-public-env]: /docs/research/revenuecat-expo.md#public-environment-variables
+[rc-public-env]: /docs/research/0009-revenuecat-expo.md#public-environment-variables
 [gh-js-runtime]: https://github.com/typesafe-ai/typesafe-sdk-js/blob/v0.6.0/src/runtime.ts
 
 ## Accounts, entitlements, and devices for an eight-day build
@@ -1023,7 +1023,7 @@ The Next Gen page, Apple's account help, and Expo's docs own these facts.
 
 [shipaton-next-gen]: https://www.shipaton.com/categories/next-gen-award
 [apple-account-basics]: https://developer.apple.com/help/account/basics/about-your-developer-account
-[rm-test-store]: /docs/research/related-materials.md#test-store-and-sandbox-testing
+[rm-test-store]: /docs/research/0003-related-materials.md#test-store-and-sandbox-testing
 
 ### Simulator and hardware limits
 
@@ -1097,7 +1097,7 @@ covers it:
 [android-versions]: https://developer.android.com/about/versions
 [gh-expo-speech-145]: https://github.com/jamsch/expo-speech-recognition/issues/145
 [gh-rn-ai-embeddings]: https://github.com/callstackincubator/ai/blob/main/website/src/docs/apple/embeddings.md
-[jev-conflicts]: /docs/research/jev.md#conflicts-between-sources
+[jev-conflicts]: /docs/research/0005-jev.md#conflicts-between-sources
 
 ## Gaps
 
@@ -1129,10 +1129,10 @@ of September 22, 2026:
   "Pre-process non-text inputs", and no latency figures from outside the
   United States ([ts-models]; [ts-llms]).
 
-[sp-next-gen]: /docs/research/shipaton-2026.md#revenuecat-core-category-requirements
-[jev-notes]: /docs/research/jev.md
-[cf-notes]: /docs/research/cloudflare-workers.md
-[design-notes]: /docs/research/ios-design.md
+[sp-next-gen]: /docs/research/0001-shipaton-2026.md#revenuecat-core-category-requirements
+[jev-notes]: /docs/research/0005-jev.md
+[cf-notes]: /docs/research/0010-cloudflare-workers.md
+[design-notes]: /docs/research/0015-ios-design.md
 [android-17]: https://developer.android.com/blog/posts/android-17-is-here
 [expo-sdk57]: https://expo.dev/changelog/sdk-57
 [nr-ios27]: https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/

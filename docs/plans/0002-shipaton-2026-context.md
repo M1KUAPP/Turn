@@ -10,9 +10,9 @@ best practices, and related materials.
 
 **Architecture:** One new Markdown file distilled from three new research
 notes, each written from primary web sources with a citation for every claim:
-[past winners](/docs/research/past-winners.md),
-[best practices](/docs/research/best-practices.md), and
-[related materials](/docs/research/related-materials.md). It complements
+[past winners](/docs/research/0004-past-winners.md),
+[best practices](/docs/research/0002-best-practices.md), and
+[related materials](/docs/research/0003-related-materials.md). It complements
 [the brief](/docs/BRIEF.md): the brief says what the contest requires, and
 the context says what has worked and where the official docs live, linking to
 the brief instead of repeating it. Each task adds whole sections together
@@ -151,10 +151,10 @@ check() { for p in "$@"; do grep -qE -- "$p" docs/CONTEXT.md || echo "MISSING: $
 Sections appear in the document in the order of the [design](#design), not in
 task order: each task inserts its sections at their place and adds their
 `Contents:` entries in the same order. The notes are
-[past winners](/docs/research/past-winners.md) (PW),
-[best practices](/docs/research/best-practices.md) (BP),
-[related materials](/docs/research/related-materials.md) (RM), and
-[Shipaton 2026](/docs/research/shipaton-2026.md) (S26).
+[past winners](/docs/research/0004-past-winners.md) (PW),
+[best practices](/docs/research/0002-best-practices.md) (BP),
+[related materials](/docs/research/0003-related-materials.md) (RM), and
+[Shipaton 2026](/docs/research/0001-shipaton-2026.md) (S26).
 
 ### Task 1: Frame, official rules, and see also
 

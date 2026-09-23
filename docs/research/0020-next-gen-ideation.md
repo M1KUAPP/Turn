@@ -3,15 +3,16 @@
 The ten rounds of ideation behind [the idea](/docs/IDEA.md), run on September
 22, 2026, after the team gave this feedback on its first idea, Guessling:
 "The idea is too simple and our team is aiming for Next Gen category." The
-[first log](/docs/research/ideation.md) records why Guessling was chosen for
-Best Game. This one starts from the [brief](/docs/BRIEF.md), the
-[context](/docs/CONTEXT.md), the [Next Gen notes](/docs/research/next-gen.md),
-the [technology notes](/docs/research/next-gen-tech.md), the
-[Jev notes](/docs/research/jev.md), and the
-[Jev pattern notes](/docs/research/jev-patterns.md), and narrows thirty
+[first log](/docs/research/0007-ideation.md) records why Guessling was chosen
+for Best Game. This one starts from the [brief](/docs/BRIEF.md), the
+[context](/docs/CONTEXT.md), the
+[Next Gen notes](/docs/research/0019-next-gen.md), the
+[technology notes](/docs/research/0018-next-gen-tech.md), the
+[Jev notes](/docs/research/0005-jev.md), and the
+[Jev pattern notes](/docs/research/0017-jev-patterns.md), and narrows thirty
 candidates to one; each round ends with a decision the next one builds on.
-Rounds 8 to 10 record each round's decisions, with the corrections that
-review made to them; where the idea differs, it holds the current version.
+Rounds 8 to 10 record each round's decisions, with the corrections that review
+made to them; where the idea differs, it holds the current version.
 
 Contents:
 
@@ -88,14 +89,14 @@ An idea that breaks one is out.
   data it receives. That rules out covertly transcribing lectures or
   conversations. ([data handling][jev-data])
 
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
-[jev-what]: /docs/research/jev.md#what-jev-is
-[ng-judge]: /docs/research/next-gen.md#what-a-judge-needs-to-run-the-app
-[ng-free]: /docs/research/next-gen.md#building-without-a-paid-developer-account
+[ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
+[jev-what]: /docs/research/0005-jev.md#what-jev-is
+[ng-judge]: /docs/research/0019-next-gen.md#what-a-judge-needs-to-run-the-app
+[ng-free]: /docs/research/0019-next-gen.md#building-without-a-paid-developer-account
 [ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
-[ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
-[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
-[jev-store]: /docs/research/jev.md#store-review-and-jev
+[ng-minors]: /docs/research/0019-next-gen.md#minors-ages-and-accounts
+[jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
 
 ### Assumptions
 
@@ -145,7 +146,7 @@ Guessling is scored in round 4 as a control, with the same rubric. The idea
 chosen in round 7 must beat Guessling's total and score at least 2 points
 higher on technical ambition, or round 7 must say why not.
 
-[ng-criteria]: /docs/research/next-gen.md#next-gen-criteria-and-scoring
+[ng-criteria]: /docs/research/0019-next-gen.md#next-gen-criteria-and-scoring
 
 **Decision:** round 3 screens with N1 to N7, and rounds 4, 7, and 10 score
 with this rubric.
@@ -372,8 +373,8 @@ Backed misses the cut by half a point. They go to round 5.
 rival apps, the 2026 gallery, evidence that the problem matters, the devices a
 student team has, Jev's jagged edges, whether plain code, embeddings, or Apple's
 on-device model could do Jev's job, and the harm a wrong decision could do. The
-[evidence notes](/docs/research/next-gen-evidence.md) have the sources. A score
-changes only where the evidence changes it.
+[evidence notes](/docs/research/0021-next-gen-evidence.md) have the sources. A
+score changes only where the evidence changes it.
 
 - **Turn.** For: the best-documented need of the five, with "approximately 5
   million Americans" who may benefit from AAC by ASHA's figure, and aided speech
@@ -668,10 +669,10 @@ on AAC pricing, and Next Gen's purchase rules to Turn.
   need a Stripe account; and ads, which have no place in someone's voice.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
-[ev-sayso]: /docs/research/idea-evidence.md#sayso-an-aac-phrase-finder
-[ev-turn-rivals]: /docs/research/next-gen-evidence.md#turn-rival-apps
-[jev-prices]: /docs/research/jev.md#jev-prices
-[expo-server]: /docs/research/revenuecat-expo.md#checking-entitlements-from-a-server
+[ev-sayso]: /docs/research/0008-idea-evidence.md#sayso-an-aac-phrase-finder
+[ev-turn-rivals]: /docs/research/0021-next-gen-evidence.md#turn-rival-apps
+[jev-prices]: /docs/research/0005-jev.md#jev-prices
+[expo-server]: /docs/research/0009-revenuecat-expo.md#checking-entitlements-from-a-server
 [rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
 
 **Decision:** one entitlement, `listen`, sold once for $24.99 through a
@@ -755,9 +756,9 @@ from the video on September 28.
   announced. The Test Store public SDK key is committed for debug builds, a
   choice no RevenueCat page settles; no secret key is.
 
-[ev-turn-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
-[jp-routing]: /docs/research/jev-patterns.md#confidence-gated-routing-pattern
-[cf-secrets]: /docs/research/cloudflare-workers.md#secrets-configuration-and-wrangler
+[ev-turn-devices]: /docs/research/0021-next-gen-evidence.md#turn-on-students-devices
+[jp-routing]: /docs/research/0017-jev-patterns.md#confidence-gated-routing-pattern
+[cf-secrets]: /docs/research/0010-cloudflare-workers.md#secrets-configuration-and-wrangler
 
 ### Schedule to September 30
 
@@ -857,4 +858,4 @@ Triggers:
 
 **Decision:** go. Turn is the idea, and `docs/IDEA.md` states it.
 
-[ng-purchase]: /docs/research/next-gen.md#the-purchase-requirement-for-next-gen
+[ng-purchase]: /docs/research/0019-next-gen.md#the-purchase-requirement-for-next-gen

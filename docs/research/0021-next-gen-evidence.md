@@ -28,10 +28,10 @@ Contents:
 1.  [Conflicts between sources](#conflicts-between-sources)
 1.  [Gaps](#gaps)
 
-[ideation]: /docs/research/next-gen-ideation.md
-[jev-notes]: /docs/research/jev.md
-[tech-notes]: /docs/research/next-gen-tech.md
-[ng-notes]: /docs/research/next-gen.md
+[ideation]: /docs/research/0020-next-gen-ideation.md
+[jev-notes]: /docs/research/0005-jev.md
+[tech-notes]: /docs/research/0018-next-gen-tech.md
+[ng-notes]: /docs/research/0019-next-gen.md
 
 ## Method and coverage
 
@@ -68,7 +68,7 @@ Contents:
   purchase are as round 5's brief describes them, which extends [round 2's
   pitches][ideation-r2].
 
-[ideation-r2]: /docs/research/next-gen-ideation.md#round-2-thirty-candidates
+[ideation-r2]: /docs/research/0020-next-gen-ideation.md#round-2-thirty-candidates
 
 ## Key findings
 
@@ -324,7 +324,7 @@ ratings on the listing.
 [s-personal-voice]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22personal+voice%22
 [s-live-speech]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22live+speech%22
 [p-sidebell]: https://devpost.com/software/sidebell
-[gallery-list]: /docs/research/gallery-2026.md#full-project-list
+[gallery-list]: /docs/research/0006-gallery-2026.md#full-project-list
 
 ### Evidence that Turn's problem matters
 
@@ -414,9 +414,9 @@ ratings on the listing.
 [pv-auth]: https://developer.apple.com/documentation/avfaudio/avspeechsynthesizer/requestpersonalvoiceauthorization(completionhandler:)
 [wwdc23-10033]: https://developer.apple.com/videos/play/wwdc2023/10033/
 [expo-speech-src]: https://github.com/expo/expo/blob/main/packages/expo-speech/ios/SpeechModule.swift
-[tech-swift-bridge]: /docs/research/next-gen-tech.md#writing-a-swift-bridge-with-expo-modules
-[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
-[tech-android-speech]: /docs/research/next-gen-tech.md#speech-and-vision-on-android
+[tech-swift-bridge]: /docs/research/0018-next-gen-tech.md#writing-a-swift-bridge-with-expo-modules
+[jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
+[tech-android-speech]: /docs/research/0018-next-gen-tech.md#speech-and-vision-on-android
 
 ### Jev's jagged edges for Turn
 
@@ -707,9 +707,9 @@ listens to the table. Counts are US ratings on the listing.
 
 [avplayer-fade]: https://developer.apple.com/documentation/avfaudio/avaudioplayer/setvolume(_:fadeduration:)
 [homekit]: https://developer.apple.com/documentation/homekit
-[ng-free-caps]: /docs/research/next-gen.md#apple-capabilities-on-a-free-account
-[jp-concurrency]: /docs/research/jev-patterns.md#concurrency-in-the-cookbooks
-[jev-prices]: /docs/research/jev.md#jev-prices
+[ng-free-caps]: /docs/research/0019-next-gen.md#apple-capabilities-on-a-free-account
+[jp-concurrency]: /docs/research/0017-jev-patterns.md#concurrency-in-the-cookbooks
+[jev-prices]: /docs/research/0005-jev.md#jev-prices
 
 ### Jev's jagged edges for Scenekeeper
 
@@ -1015,11 +1015,11 @@ on the listing.
   Filming it needs a physical iPhone 15 Pro or later, gloves, and a quiet enough
   bench.
 
-[tech-vision]: /docs/research/next-gen-tech.md#vision-requests
+[tech-vision]: /docs/research/0018-next-gen-tech.md#vision-requests
 [bt-hfp]: https://developer.apple.com/documentation/avfaudio/avaudiosession/categoryoptions-swift.struct/allowbluetoothhfp
 [bt-hq]: https://developer.apple.com/documentation/avfaudio/avaudiosession/categoryoptions-swift.struct/bluetoothhighqualityrecording
 [la-doc]: https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities
-[tech-la]: /docs/research/next-gen-tech.md#live-activities
+[tech-la]: /docs/research/0018-next-gen-tech.md#live-activities
 
 ### Jev's jagged edges for Bench
 
@@ -1232,7 +1232,7 @@ their name or a question. Counts are US ratings on the listing.
   is open, but the name is taken.
 
 [s-deaf]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=deaf
-[gallery-open]: /docs/research/gallery-2026.md#open-idea-spaces
+[gallery-open]: /docs/research/0006-gallery-2026.md#open-idea-spaces
 [s-hoh]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22hard+of+hearing%22
 [s-hearing-loss]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22hearing+loss%22
 [s-hearing-aid]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22hearing+aid%22
@@ -1241,7 +1241,7 @@ their name or a question. Counts are US ratings on the listing.
 [s-speechtranscriber]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=SpeechTranscriber
 [p-textik]: https://devpost.com/software/textik
 [p-meeting-copilot]: https://devpost.com/software/meeting-copilot
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
+[ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
 [p-usme]: https://devpost.com/software/magpie-ask-your-life-a-question
 [p-chorus-other]: https://devpost.com/software/chorus-lbiwje
 
@@ -1317,7 +1317,7 @@ their name or a question. Counts are US ratings on the listing.
 [speech-topics]: https://developer.apple.com/documentation/speech
 [speech-detector]: https://developer.apple.com/documentation/speech/speechdetector
 [local-notif]: https://developer.apple.com/documentation/usernotifications/scheduling-a-notification-locally-from-your-app
-[ng-free-limits]: /docs/research/next-gen.md#free-provisioning-limits
+[ng-free-limits]: /docs/research/0019-next-gen.md#free-provisioning-limits
 
 ### Jev's jagged edges for Chorus
 
@@ -1511,7 +1511,7 @@ the listing.
 [s-teaching-assistant]: https://revenuecat-shipaton-2026.devpost.com/submissions/search?terms=%22teaching+assistant%22
 [p-ai-study]: https://devpost.com/software/ai-study-campanion-7xkblc
 [p-examcat]: https://devpost.com/software/examcat
-[gallery-saturated]: /docs/research/gallery-2026.md#saturated-idea-spaces
+[gallery-saturated]: /docs/research/0006-gallery-2026.md#saturated-idea-spaces
 
 ### Evidence that Same Boat's problem matters
 
@@ -1561,7 +1561,7 @@ the listing.
 - Synthesis: the easiest of the five to build and film. Its risk is the quality
   of the merge decision, not the plumbing.
 
-[jp-fanout]: /docs/research/jev-patterns.md#speculative-fan-out-pattern
+[jp-fanout]: /docs/research/0017-jev-patterns.md#speculative-fan-out-pattern
 
 ### Jev's jagged edges for Same Boat
 
@@ -1708,7 +1708,7 @@ applies.
   can halve with a first-stage filter. Same Boat is the only finalist whose
   users can write adversarial state.
 
-[jev-limits]: /docs/research/jev.md#known-limitations-on-the-jaggedness-page
+[jev-limits]: /docs/research/0005-jev.md#known-limitations-on-the-jaggedness-page
 
 ## Conflicts between sources
 
@@ -1755,8 +1755,8 @@ applies.
   tokens a session, while a WWDC26 code sample prints 8,192, as the [technology
   notes][tech-conflicts] record; this note uses the documented 4,096.
 
-[prior-earshot]: /docs/research/idea-evidence.md#earshot-announcement-alerts-for-deaf-and-hard-of-hearing-travelers
-[tech-conflicts]: /docs/research/next-gen-tech.md#conflicts-between-sources
+[prior-earshot]: /docs/research/0008-idea-evidence.md#earshot-announcement-alerts-for-deaf-and-hard-of-hearing-travelers
+[tech-conflicts]: /docs/research/0018-next-gen-tech.md#conflicts-between-sources
 
 ## Gaps
 
@@ -1802,32 +1802,32 @@ What no source settled on September 22, 2026:
 - **Lights in a demo.** No Apple page read gives how fast HomeKit applies a
   change to a bulb.
 
-[jp-notes]: /docs/research/jev-patterns.md
-[gallery-notes]: /docs/research/gallery-2026.md
+[jp-notes]: /docs/research/0017-jev-patterns.md
+[gallery-notes]: /docs/research/0006-gallery-2026.md
 [dv-gallery]: https://revenuecat-shipaton-2026.devpost.com/project-gallery
-[ng-gallery-counts]: /docs/research/next-gen.md#gallery-counts-on-september-22
+[ng-gallery-counts]: /docs/research/0019-next-gen.md#gallery-counts-on-september-22
 [ts-jagged]: https://docs.typesafe.ai/model-jaggedness/jev-1.13
-[tech-fm]: /docs/research/next-gen-tech.md#foundation-models-in-ios-27
-[tech-ai-devices]: /docs/research/next-gen-tech.md#apple-intelligence-devices
+[tech-fm]: /docs/research/0018-next-gen-tech.md#foundation-models-in-ios-27
+[tech-ai-devices]: /docs/research/0018-next-gen-tech.md#apple-intelligence-devices
 [t-lt]: https://play.google.com/store/apps/details?id=com.google.audio.hearing.visualization.accessibility.scribe
 [t-pv-support]: https://support.apple.com/en-us/104993
-[ng-field]: /docs/research/next-gen.md#entries-that-name-next-gen
-[prior-sayso]: /docs/research/idea-evidence.md#sayso-an-aac-phrase-finder
+[ng-field]: /docs/research/0019-next-gen.md#entries-that-name-next-gen
+[prior-sayso]: /docs/research/0008-idea-evidence.md#sayso-an-aac-phrase-finder
 [t-als-cdc]: https://www.cdc.gov/als/dashboard/index.html
 [t-kristensson]: https://doi.org/10.1145/3313831.3376525
-[tech-speech]: /docs/research/next-gen-tech.md#speechanalyzer-and-speechtranscriber
+[tech-speech]: /docs/research/0018-next-gen-tech.md#speechanalyzer-and-speechtranscriber
 [esr]: https://github.com/jamsch/expo-speech-recognition
-[tech-modules]: /docs/research/next-gen-tech.md#speech-camera-and-model-modules
+[tech-modules]: /docs/research/0018-next-gen-tech.md#speech-camera-and-model-modules
 [speech-context]: https://developer.apple.com/documentation/speech/analysiscontext/contextualstrings
 [pv-guide]: https://support.apple.com/guide/iphone/record-your-personal-voice-iph51936468d/ios
-[jev-api]: /docs/research/jev.md#the-system-one-http-api
+[jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
 [cb-classify-confidence]: https://docs.typesafe.ai/cookbooks/classification_using_confidence
-[jp-choice]: /docs/research/jev-patterns.md#choice-size-and-high-cardinality-decisions
-[jev-rate]: /docs/research/jev.md#rate-limits-context-length-and-latency
-[tech-accounts]: /docs/research/next-gen-tech.md#apple-accounts-for-a-student-team
-[jp-consistency]: /docs/research/jev-patterns.md#consistency-results
-[jev-what]: /docs/research/jev.md#what-jev-is
-[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
+[jp-choice]: /docs/research/0017-jev-patterns.md#choice-size-and-high-cardinality-decisions
+[jev-rate]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
+[tech-accounts]: /docs/research/0018-next-gen-tech.md#apple-accounts-for-a-student-team
+[jp-consistency]: /docs/research/0017-jev-patterns.md#consistency-results
+[jev-what]: /docs/research/0005-jev.md#what-jev-is
+[jev-lang]: /docs/research/0005-jev.md#jev-platform-and-language-support
 [t-pc632]: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632.
 [s-bardy-faq]: https://www.bardy.ai/faq
 [s-bardy-how]: https://www.bardy.ai/how-it-works
@@ -1838,9 +1838,9 @@ What no source settled on September 22, 2026:
 [b-csb-release]: https://www.csb.gov/csb-releases-investigation-into-2010-texas-tech-laboratory-accident-case-study-identifies-systemic-deficiencies-in-university-safety-management-practices/
 [b-csb-report]: https://www.csb.gov/file.aspx?DocumentId=5671
 [b-nces]: https://nces.ed.gov/programs/digest/d23/tables/dt23_322.10.asp
-[tech-do]: /docs/research/next-gen-tech.md#websockets-on-a-hibernating-durable-object
+[tech-do]: /docs/research/0018-next-gen-tech.md#websockets-on-a-hibernating-durable-object
 [cb-pre-parsed]: https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook
-[jp-calibration]: /docs/research/jev-patterns.md#calibration-claims-and-evidence
+[jp-calibration]: /docs/research/0017-jev-patterns.md#calibration-claims-and-evidence
 [b-nsdatadetector]: https://developer.apple.com/documentation/foundation/nsdatadetector
 [c-lt-ios]: https://apps.apple.com/us/app/live-transcribe/id1471473738
 [c-ada]: https://developer.apple.com/design/awards/
@@ -1857,4 +1857,4 @@ What no source settled on September 22, 2026:
 [sb-malan]: https://cs.harvard.edu/malan/publications/ccsce12.pdf
 [sb-parqr]: https://arxiv.org/pdf/1909.02043
 [sb-cs50-2024]: https://cs.harvard.edu/malan/publications/V1fp0567-liu.pdf
-[jev-cookbooks]: /docs/research/jev.md#cookbooks-and-demos
+[jev-cookbooks]: /docs/research/0005-jev.md#cookbooks-and-demos
