@@ -142,40 +142,49 @@ to the skills that are:
     install or launch fails, the session keeps the failure's redacted text
     for the ticket, installs and launches the same `.app` with `devicectl`
     as #80 did, and serves the bundle with
-    `EXPO_PUBLIC_BUILD_KIND=device bunx expo start`.
+    `EXPO_PUBLIC_BUILD_KIND=device bunx expo start`. Expo's launch also
+    falls back to `devicectl` on its own, logging that only at debug level,
+    so the records say the log can't show which path launched Turn.
 1.  **Metro over Wi-Fi.** The Debug app reads the Mac's address from
     `ip.txt` in the `.app` and loads its bundle from Metro on port 8081, so
     the phone must be on the Mac's Wi-Fi ([Metro notes][note-metro]). The
     first launch may meet iOS's Local Network alert, lose its request, and
     show "No script URL provided". The person then taps Allow, and the
-    session relaunches Turn with `devicectl`.
+    session relaunches Turn with `devicectl`. In the run, that relaunch
+    still failed, and a later launch loaded the bundle once Turn had access.
 1.  **Light and dark by `devicectl`.** The session saves the phone's
     appearance, sets light, dark, then light again with a screenshot after
     each, and then restores the saved style. `sample.py` converts each shot
-    to sRGB and needs 99% of the middle 80% of the screen within 2 of the
+    to sRGB and needs 99% of the middle 80% of the height within 2 of the
     board color, `#F2F2F7` in light and `#000000` in dark, and a drawn
-    status bar, which an asleep screen lacks. The light shots on either
-    side of the dark one show that Turn stayed in front. The screenshots
-    stay in the scratchpad, since they show the phone's status bar; only
-    the samples are recorded.
-1.  **No runtime error.** A red error screen or a LogBox banner would cover
-    part of the middle, so the sampler would fail it. Metro's log must also
-    show Turn's iOS bundle and no error, and Turn's process must still run
-    after the last screenshot.
+    status bar, which an asleep screen lacks. Since a LogBox toast sits
+    below that middle, `strict.py` then checks every pixel below the status
+    bar and allows none more than 2 off the board color. The light shots on
+    either side of the dark one show that Turn stayed in front. The
+    screenshots stay in the scratchpad, since they show the phone's status
+    bar; only the samples are recorded.
+1.  **No runtime error.** React Native's error screen or a LogBox banner
+    would show below the status bar, so `strict.py` would fail it. Metro's
+    log must also show Turn's iOS bundle and no error, and Turn's process
+    must still run after the last screenshot. The launch screen is the
+    board color too, so the samples can't tell it from the empty home; the
+    bundle line, with no error after it, shows the JavaScript ran.
 1.  **The records.**
     - #88 gets one comment with the evidence: the tested commit, the phone's
-      model and iOS version, Xcode's and CocoaPods' versions, each step's
-      result, the samples, and the install date and profile expiry. Then
-      its boxes are ticked.
-    - #22 gets its last box ticked and a comment that points to #88.
+      model and iOS version, and Xcode's version as read for this run,
+      CocoaPods' version, each step's result, the samples, and the install
+      date and profile expiry. It's posted right after the merge, so its
+      `blob/main` links answer, and then its boxes are ticked.
+    - #22 gets its last box ticked and a comment that points to #88 and
+      says COMPAT-4's install-date check stays with the video's build, #65.
     - The research note gets a hands-on check, and the TRD's device build
       gets the command that worked.
     - [Plan 0018][app-plan]'s last box, this same check, is ticked with a
       pointer to #88.
-1.  **Closing.** The pull request closes #88. #22's code merged in #85 and
-    its iOS 26 check in #87, and its teammate kept it open only for the
-    native runs, so with every box ticked the session closes it too, which
-    unblocks #27.
+1.  **Closing.** The pull request closes #88. #88 asks only that #22's last
+    box be ticked, and #22 has its own assignee, so the session leaves its
+    close, which unblocks #27, to them; its comment says every criterion is
+    met.
 
 [note-pods]: /docs/research/0045-turn-debug-iphone.md#cocoapods-when-pod-is-missing
 [note-run]: /docs/research/0045-turn-debug-iphone.md#the-run-command-on-a-device
@@ -242,7 +251,8 @@ xcrun devicectl device info processes --device "$UDID" --json-output processes.j
   authority an Apple Development certificate. The profile must expire
   after September 28 and list 1 device.
 - `sample.py` must exit 0 for `light-1.png`, `dark.png` with `#000000`, and
-  `light-2.png`.
+  `light-2.png`, and `strict.py` must find no pixel below the status bar
+  more than 2 off the board color in any of them.
 - `processes.json` must list an executable inside `Turn.app` after the last
   screenshot, and `idscan.py` must print `CLEAN` for the kept logs.
 
@@ -323,8 +333,8 @@ note passed the docs gate and `idscan.py`. It was committed as
     requests, and on peer branches; if another change took 0022 or 0045,
     renumber in one commit and fix every link. This plan was first 0020,
     until the review found `eval/no-reply-floor` had taken that number.
-1.  Comment on #88 with the evidence, then tick its boxes. Tick #22's last
-    box, comment, and close it, as [Decisions](#decisions) says.
-1.  Rebase-merge the pull request, delete the branch on the remote and
-    locally, stop Metro, remove both worktrees, and check that #88 closed
-    with every box ticked.
+1.  Rebase-merge the pull request. Right after, comment on #88 with the
+    evidence and tick its boxes, then tick #22's last box and comment, as
+    [Decisions](#decisions) says, leaving #22 open for its assignee.
+1.  Delete the branch on the remote and locally, stop Metro, remove both
+    worktrees, and check that #88 closed with every box ticked.
