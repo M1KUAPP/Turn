@@ -1,7 +1,7 @@
 import type { Phrase } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
 import { keyword, place, type Ranker } from '../src/rankers'
-import { scoreLines, sharesNoWord, summarize, topSixGap } from '../src/score'
+import { bigButtons, scoreLines, sharesNoWord, summarize, topSixGap } from '../src/score'
 import { smallBank, waitImTyping } from './small-bank'
 
 const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
@@ -263,4 +263,17 @@ test("gives the paired interval for one ranker's top 6 minus another's, and trai
   // Lines with no acceptable phrase besides the fixed buttons don't count.
   const { lines: fixedOnly } = await scoreLines([lines[3]], bank, { right: firstPhrase('good-night') })
   expect(topSixGap(fixedOnly, 'right', 'right')).toBeNull()
+})
+
+test('lists every big button with its ranker, line, and phrase, and whether the phrase is acceptable', async () => {
+  const sure = scoring((shortlist) => [[shortlist[0].id, 0.9]])
+  const { lines: scored } = await scoreLines(lines, bank, { sure, keyword })
+  // The first shortlisted phrase: the one sharing a word, else the place's first.
+  expect(bigButtons(scored).map(({ ranker, line, phrase, right }) => [ranker, line.id, phrase, right])).toEqual([
+    ['sure', 'water', 'water-please', true],
+    ['sure', 'physio', 'excuse-me', false],
+    ['sure', 'weather', 'good-morning', false],
+    ['sure', 'cold', 'im-cold', false],
+    ['sure', 'costs', 'how-much-is-this', false]
+  ])
 })

@@ -8,6 +8,7 @@ import { jev, relayModel, type JevCall } from './jev'
 import { listOf, wrap } from './prose'
 import { keyword, place } from './rankers'
 import {
+  bigButtons,
   outcomes,
   scoreLines,
   sharesNoWord,
@@ -163,6 +164,38 @@ const models = (pin: string, calls: readonly JevCall[]) => {
   )
 }
 
+/** A table's cell holding text, with any pipe escaped so it can't end the cell. */
+const cell = (text: string) => text.replaceAll('|', '\\|')
+
+/** Whether EVAL-5 names a line: its writer marked it yes-or-no, or its concerns name pain or consent. */
+const sensitive = (line: Line) =>
+  line.kind === 'yes_no' || line.concerns.includes('pain') || line.concerns.includes('consent')
+
+/** Every big button any ranker showed on a line EVAL-5 names, with its phrase and whether it's right. */
+const bigButtonSection = (scores: readonly LineScore<Line>[]) => {
+  const shown = bigButtons(scores.filter(({ line }) => sensitive(line)))
+  const text = (id: string) => phrases.find((phrase) => phrase.id === id)?.text ?? id
+  const which = 'a line its writer marked yes-or-no, or on one about pain or consent'
+  if (shown.length === 0) {
+    return ['## Big buttons on yes-or-no, pain, and consent lines', wrap(`No ranker showed a big button on ${which}.`)]
+  }
+  const wrong = shown.filter(({ right }) => !right).length
+  return [
+    '## Big buttons on yes-or-no, pain, and consent lines',
+    wrap(`Every big button a ranker showed on ${which} (EVAL-5): ${shown.length}, ${wrong} of them wrong.`),
+    table(
+      ['Ranker', 'Line', 'The partner said', 'Big button', 'Right or wrong'],
+      shown.map(({ ranker, line, phrase, right }) => [
+        ranker,
+        line.id,
+        cell(line.text),
+        cell(text(phrase)),
+        right ? 'right' : 'wrong'
+      ])
+    )
+  ]
+}
+
 /** Each fold's cut-off for the embeddings ranker, which holds a line when no phrase's cosine reaches it. */
 const cutOffSection = (cutOffs: readonly number[]) => {
   const values = cutOffs.map((cutOff) => (cutOff === Infinity ? 'none, holding every line' : cutOff.toFixed(3)))
@@ -217,6 +250,7 @@ const render = (
   const sections = [
     'Who wrote the data',
     ...groups.map(({ name }) => name),
+    'Big buttons on yes-or-no, pain, and consent lines',
     ...(cutOffs.embeddings ? ["The embeddings ranker's cut-offs"] : []),
     'Latency'
   ]
@@ -268,6 +302,7 @@ const render = (
           names
         )
       ),
+      ...bigButtonSection(scores),
       ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings) : []),
       '## Latency',
       wrap(
