@@ -1,3 +1,5 @@
+import type { Outcome } from '@turn/shared/relay'
+
 /** One of the relay's log lines, as `worker/src/index.ts` writes it, with the fields a summary reads. */
 export type LogLine = { outcome: string; ms?: { total?: number; jev?: number }; inputTokens?: number }
 
@@ -21,7 +23,10 @@ export type Summary = {
 }
 
 /** The outcomes that count as failures. */
-const failed = ['credits', 'failed', 'internal', 'unverified']
+const failingOutcomes: readonly Outcome[] = ['credits', 'failed', 'internal', 'unverified']
+
+/** Whether an outcome counts as a failure. */
+const isFailure = (outcome: string) => (failingOutcomes as readonly string[]).includes(outcome)
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -58,7 +63,7 @@ export function summarize(lines: readonly LogLine[]): Summary {
     outcomes,
     answered: outcomes.get('answered') ?? 0,
     paywall: outcomes.get('paywall') ?? 0,
-    failures: failed.reduce((sum, outcome) => sum + (outcomes.get(outcome) ?? 0), 0),
+    failures: failingOutcomes.reduce((sum, outcome) => sum + (outcomes.get(outcome) ?? 0), 0),
     total: latency('total'),
     jev: latency('jev'),
     inputTokens: lines.reduce((sum, { inputTokens }) => sum + (inputTokens ?? 0), 0)
@@ -77,8 +82,11 @@ const printed = ({ median, p95 }: Latency) => (median === null ? 'none' : `media
 
 /** A day's summary as the command prints it, beside the events the query matched, which may hold other payloads. */
 export function formatSummary(day: string, summary: Summary, matched: number): string {
-  const failures = listed(summary.outcomes, (outcome) => failed.includes(outcome))
-  const others = listed(summary.outcomes, (outcome) => !['answered', 'paywall', ...failed].includes(outcome))
+  const failures = listed(summary.outcomes, isFailure)
+  const others = listed(
+    summary.outcomes,
+    (outcome) => outcome !== 'answered' && outcome !== 'paywall' && !isFailure(outcome)
+  )
   return [
     `The relay's logs for ${day}, in UTC: ${summary.lines} log lines, of ${matched} events the query matched`,
     '',

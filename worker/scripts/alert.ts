@@ -1,3 +1,4 @@
+import type { Outcome } from '@turn/shared/relay'
 import type { Summary } from './summary'
 
 /** `jev-1.13.0`'s price, $0.042 a million input tokens, in nanodollars a token, so a spend is a whole number. */
@@ -13,7 +14,7 @@ export type Finding = { outOfCredits: number; inputTokens: number; spent: number
  * balance to warn from sooner, or when the window's estimated spend passes the level, given in dollars.
  */
 export function assess(summary: Summary, dollars: number): Finding {
-  const outOfCredits = summary.outcomes.get('credits') ?? 0
+  const outOfCredits = summary.outcomes.get('credits' satisfies Outcome) ?? 0
   const spent = summary.inputTokens * nanodollarsPerToken
   const level = Math.round(dollars * 1e9)
   return { outOfCredits, inputTokens: summary.inputTokens, spent, level, fires: outOfCredits > 0 || spent > level }

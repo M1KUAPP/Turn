@@ -63,6 +63,20 @@ export type LineAnswer = Pick<Ranking, 'kind' | 'topic'> & {
   ms: { jev: number; total: number }
 }
 
+/** How a request ended, in the relay's log line (METRIC-1), which the log scripts count. */
+export type Outcome =
+  | 'config'
+  | 'answered'
+  | 'paywall'
+  | 'duplicate'
+  | 'unverified'
+  | 'invalid'
+  | 'not_found'
+  | 'off'
+  | 'failed'
+  | 'credits'
+  | 'internal'
+
 /** The code in every error's body, `{ "error": code }`, which carries nothing else (SEC-4). */
 export type ErrorCode =
   | 'invalid_request'
