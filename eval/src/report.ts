@@ -17,7 +17,7 @@ const percent = (share: number) => {
 }
 
 /** A rate with its 95% Wilson interval, such as "56 of 80, 70% (59% to 79%)", or "0 of 0" over no lines. */
-export const rate = ({ k, n }: Count) => {
+export const rate = ({ k, n }: Count): string => {
   const interval = wilson(k, n)
   if (interval === null) return '0 of 0'
   return `${k} of ${n}, ${percent(k / n)} (${percent(interval.low)} to ${percent(interval.high)})`
@@ -199,7 +199,7 @@ const commit = () => {
  * `bun run eval`: scores the place and keyword rankers on the labeled lines in `eval/lines.jsonl`, or the file
  * `--lines` names, and writes the report to `eval/results.md`, or the file `--out` names (EVAL-3).
  */
-export function main(args: readonly string[]) {
+export function main(args: readonly string[]): void {
   const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, out: { type: 'string' } } })
   const { lines: labeled, file } = linesFrom(values.lines)
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
