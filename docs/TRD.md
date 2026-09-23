@@ -1249,13 +1249,13 @@ ran under Wrangler 4.136.2:
   `device` or `simulator`, and a line's `Content-Type` `application/json`,
   with or without parameters such as the charset; anything else gets
   `400`.
-- **Lengths:** as in [Relay API](#relay-api), checked before any count or
-  call (SEC-2). The relay stops reading a body once it passes 16 KB,
-  whatever its `Content-Length` says. A line and each name and text need at
-  least one character, and a place may be empty. Characters are Unicode
-  code points, as SQLite's `length()` counts them in the phone's checks, so
-  a text within the phone's limits is within the relay's; the 16 KB in all
-  is the app's to keep, as [tag, then cut](#names-as-tags) says.
+- **Lengths:** as in [Relay API](#relay-api), checked before the free-line
+  count or any call (SEC-2). The relay stops reading a body once it passes
+  16 KB, whatever its `Content-Length` says. A line and each name and text
+  need at least one character, and a place may be empty. Characters are
+  Unicode code points, as SQLite's `length()` counts them in the phone's
+  checks, so a text within the phone's limits is within the relay's; the
+  16 KB in all is the app's to keep, as [tag, then cut](#names-as-tags) says.
 - **Fields:** `lineId` is a lowercase version 4 UUID and `seq` a whole
   number from 0; category and candidate ids hold 1 to 64 characters and
   are unique in their list; and no category is `consent`, the topic option
@@ -1266,17 +1266,33 @@ ran under Wrangler 4.136.2:
   binding counts per Cloudflare location and is "permissive, eventually
   consistent"; with the relay placed in one region, its counters act almost
   like global ones ([services notes][svc-ratelimit]).
+  - **Where:** once the headers pass, before a line's body or any object.
+    The ID's limit comes first, keyed by the whole hash, then the
+    address's, keyed by `CF-Connecting-IP`, so a request the ID's own limit
+    refuses doesn't count against its address.
+  - **The answer:** `429 rate_limited` with `Retry-After: 60`, the binding's
+    whole period, since it reports only whether a call passed. Its windows
+    roll over on the minute in the local simulation, so the 31st request in
+    a clock minute is refused ([relay limits notes][limits-sim]).
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
   lines nor `listen` guards Jev's credits. One more Durable Object counts Jev
   calls per UTC day, retries included, and past 10,000, about $0.80, the relay
   answers `jev_unavailable` until midnight UTC ([services notes][svc-abuse]).
+  - **Each attempt counts.** The number is `JEV_DAILY_CALLS`. The user's
+    object gives the SDK a `fetch` that takes a call from `jev-calls` before
+    every attempt, the retry included ([relay limits notes][limits-sdk]).
+  - **A spent budget.** Once no call is left, the `fetch` aborts the call,
+    so the SDK doesn't retry, and the line ends as `spent`: it answers as a
+    failed call does, with no `Retry-After`, and keeps its free line.
 - **The switch:** `JEV_ON` set to false stops every call to Jev at once
   (STATE-3).
 - **Errors** carry only the codes above (SEC-4).
 
 [svc-ratelimit]: /docs/research/0024-turn-services.md#the-rate-limiting-binding-for-turn
 [svc-abuse]: /docs/research/0024-turn-services.md#limiting-abuse-of-the-free-lines
+[limits-sim]: /docs/research/0046-turn-relay-limits.md#the-local-simulation
+[limits-sdk]: /docs/research/0046-turn-relay-limits.md#the-sdks-attempts
 
 ### Data inventory
 
