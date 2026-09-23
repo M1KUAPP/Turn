@@ -164,7 +164,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     read as ', against the forms of "do", "be", and "have", the nine modals
     the British Council lists, their `n't` forms, and "cannot"
     ([openers][note-openers]). It is the TRD's rule, so "You're tired?"
-    doesn't count and "Do you want tea or coffee?" does.
+    doesn't count and "Do you want tea or coffee?" does. Every form counts,
+    the participles and "be" too, so "Been waiting long?" does, and so does
+    the command "Be careful", as "Have a seat" already did; the first review
+    round found the participles missing.
 1.  **The phone's own ranking** scores the shortlist: 1 for each phrase
     that shares a word with the line, other than common words, and 0 for
     the rest. The place's phrases come first, then taps, then the keyword
