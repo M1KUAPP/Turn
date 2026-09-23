@@ -72,7 +72,7 @@ const provenance = (scored: readonly Line[]) => {
 /** One group's ranking and row, with each rate's interval. */
 const groupSections = (name: string, about: string, scores: readonly LineScore<Line>[]) => {
   const lower = name[0].toLowerCase() + name.slice(1)
-  if (scores.length === 0) return [`## ${name}`, `No line is ${about}.`]
+  if (scores.length === 0) return [`## ${name}`, wrap(`There are no lines ${about}.`)]
   const summary = summarize(scores)
   const names = Object.keys(rankers)
   const ranking =
@@ -129,7 +129,11 @@ const render = (scored: readonly Line[], { run, file }: { run: string; file: str
   const { lines: scores, timings } = scoreLines(scored, phrases, rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
-    { name: 'Yes-or-no lines', about: 'their writer marked yes-or-no', keep: (line: Line) => line.kind === 'yes_no' },
+    {
+      name: 'Yes-or-no lines',
+      about: 'that their writer marked yes-or-no',
+      keep: (line: Line) => line.kind === 'yes_no'
+    },
     {
       name: 'Pain and consent lines',
       about: 'about pain or asking for consent, which EVAL-5 names',
