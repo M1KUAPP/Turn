@@ -10,7 +10,10 @@ const stripIds = bank.categories
   .filter(({ id }) => id === 'strip')
   .flatMap((strip) => strip.phrases.map(({ id }) => id))
 
-/** Holds one labeling's replies for a line to the rules: bank ids, no repeats, no strip phrase, and the fixed buttons only on a yes-or-no line. */
+/**
+ * Holds one labeling's replies for a line to the rules: bank ids, no repeats, no strip phrase, and the fixed buttons
+ * only on a yes-or-no line.
+ */
 const expectRepliesFollowRules = (line: Line, acceptable: string[]) => {
   expect(new Set(acceptable).size, line.id).toBe(acceptable.length)
   for (const id of acceptable) {
@@ -29,7 +32,7 @@ const sharesAWord = (line: Line) => {
 
 const count = (keep: (line: Line) => boolean) => lines.filter(keep).length
 
-test("lists each line's acceptable replies by starter-bank id, labeled by someone other than its writer (EVAL-1)", () => {
+test("lists each line's acceptable replies by bank id, labeled by someone other than its writer (EVAL-1)", () => {
   for (const line of lines) {
     expect(line.labeler, line.id).toMatch(/\S/)
     expect(line.labeler, line.id).not.toBe(line.author)
