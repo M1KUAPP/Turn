@@ -169,3 +169,9 @@ test('says so in a whole sentence when a group has no lines', () => {
   const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
   for (const line of empty.split('\n')) expect(line.length, line).toBeLessThanOrEqual(80)
 })
+
+test("says how the app picks each shortlist, and what that leaves of the line in the place ranker's order", () => {
+  expect(report).toMatch(prose('up to 24 phrases that share a word with the line'))
+  expect(report).toMatch(prose("the place's first eight phrases in the bank's order"))
+  expect(report).toMatch(prose("so the place ranker's top 1 and top 6 never depend on the line"))
+})
