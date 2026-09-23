@@ -39,6 +39,7 @@ Contents:
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
 1.  [What changed while building](#what-changed-while-building)
+1.  [Review, round 1](#review-round-1)
 1.  [Appendix: the run's script](#appendix-the-runs-script)
 
 [extras-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/45
@@ -545,6 +546,55 @@ lines with the real services and the Swift helper in 1 minute 42 seconds:
   394 ms, qwen3 1,076 ms (4,019 ms at the 95th percentile), and apple 9 ms.
 - **Naming off:** with `--unnamed`, neither the report nor either plot held
   "jev" or "TypeSafe".
+
+## Review, round 1
+
+One round on #97, [posted there][review-97], had three reviewers: Standards,
+Spec with #45 and this plan as the spec, and a fact-check and bug hunt. They
+found 52 things: 10 Standards judgement calls with no hard violation, 4 Spec
+findings, and 38 from the fact-check, which found no error in the rankers,
+PAV, the band, the Brier score, or the bootstrap. Fixes went in one commit
+each, or one for a group, and each code fix came with a test that fails
+without it.
+
+- **Fixed in the code:**
+  - The table's band column ran across a block's scores and could hide a
+    fit outside the band at every score; each block now counts the scores
+    where its fit leaves the band.
+  - Tests now pin the band against an exact count of every resample of
+    five lines, a block of several scores, the printed interval, all four
+    groups, and the helper's close, its kill, and a stop partway.
+  - The reranker refuses a score outside 0 to 1, and a helper whose first
+    line isn't JSON is stopped with a clear error.
+  - A band at one score draws as a bar, and the hidden model's name is in
+    lower case mid-sentence.
+  - The report now gives the skill score and the lines beyond reach, which
+    note 0049 had asked for. It also says that the band is pointwise, that
+    the decomposition adds up before rounding, where the Wilson intervals
+    apply, and that apple's time is a Mac's.
+  - Names that clashed or said too little were renamed. One bootstrap of a
+    mean, one grid, one grouping by score, and the fold count are shared.
+- **Fixed in the docs:** the TRD's Testing and calibration bullets; this
+  plan's rules for EVAL-4 and EVAL-5 after the rerun, its Spec line, and
+  its claims about the freeze, the helper's end of input, and the mutants;
+  and every note finding, each checked against its source first.
+- **Fixed on GitHub:** the body's "and closes #45", which linked the issue
+  to close on merge, and its links to the branch.
+- **Kept:**
+  - The seventh color's `fix` type: `plot` promised each curve its own color
+    and gave a seventh the first's orange whatever the report drew, and a
+    reword would force-push over reviewed commits.
+  - Adding a ranker still touches several places, since each says
+    something different about it: how to call it, how the report describes
+    it, its color, and its cut-off.
+  - The helper's first-line check stays, since it checks an outside
+    process's output as Workers AI's answers are checked, and it now stops
+    the helper too.
+  - The helper has no timeout: the run is attended, a helper that has named
+    itself answers in milliseconds, and the report is written only at the
+    end, so an interrupted run leaves nothing half-written.
+
+[review-97]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/97#issuecomment-5799598837
 
 ## Appendix: the run's script
 
