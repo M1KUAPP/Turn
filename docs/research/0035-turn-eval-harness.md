@@ -24,29 +24,29 @@ links to.
 
 - **Wilson.** Use NIST's formula with z = 1.959963984540054. Against 1.96 it
   moves 56 of 80 by about 0.0002 points, and both give 59% to 79%. Clamp to
-  [0, 1]: 0 of n has a lower bound of exactly 0, n of n an upper bound of
-  exactly 1, and n = 0 has no interval
-  ([details](#the-wilson-interval)).
+  [0, 1], since floating point can land just outside: 0 of n has a lower
+  bound of 0 and n of n an upper bound of 1, each within rounding, and n = 0
+  has no interval (see [the Wilson interval](#the-wilson-interval)).
 - **The TRD's 7.2% isn't a Wilson number.** It's the one-sided binomial-tail
   bound 1 − 0.05^(1/40); a two-sided Wilson interval for 0 wrong of 40 tops out
-  at 8.76% ([details](#the-wilson-interval)).
+  at 8.76% (see [the Wilson interval](#the-wilson-interval)).
 - **Percentiles.** Use Hyndman and Fan's type 7, NumPy's default `linear`:
   h = (n − 1)p on the sorted timings, interpolating between neighbors. The
   median is the usual one, p = 1 is the maximum, and a test can check against
-  `np.percentile` ([details](#percentiles-for-latency)).
+  `np.percentile` (see [percentiles for latency](#percentiles-for-latency)).
 - **Timing.** `performance.now()` is monotonic and stepped by 41 ns under both
   Bun 1.4.2 and Node 26.9 on this Mac, far below a ranker's work. Drop the
   first pass as warm-up, since JavaScriptCore compiles hot code in tiers
-  ([details](#timing-javascript)).
+  (see [timing JavaScript](#timing-javascript)).
 - **Chance.** The two formulas match exact enumeration. With N = 40, one
   acceptable phrase gives 2.5% at 1, 15% at 6, and a mean reciprocal rank of
   0.106964; two give 5%, 28.08%, and 0.168130. A run's chance rate is the mean
-  of each line's own chance ([details](#chance-rates)).
+  of each line's own chance (see [chance rates](#chance-rates)).
 - **Agreement.** Print three views: the none-versus-some 2×2 with percent
   agreement, Cohen's kappa, ppos, and pneg; ppos over line-and-phrase pairs,
   which unlike kappa doesn't move with the candidate count; and Krippendorff's
   alpha with MASI distance, where none against none is 0
-  ([details](#agreement-between-two-labelers)).
+  (see [agreement between two labelers](#agreement-between-two-labelers)).
 - **Oracle.** The six-unit example in
   [A test oracle for agreement](#a-test-oracle-for-agreement) gives
   alpha = 93/269 ≈ 0.345725, matched by NLTK 3.10.3 to the last digit.
@@ -76,19 +76,21 @@ links to.
   | 1.959963984540054 | 0.592318 | 0.789354 | 59% to 79%     |
 
 - Synthesis: the edge cases, with z = 1.959963984540054:
-  - **0 of n.** p̂ = 0, so the lower limit is exactly 0 and the upper is
-    z²/(n + z²): 4.58% for 0 of 80, 8.76% for 0 of 40.
+  - **0 of n.** p̂ = 0, so the lower limit is 0 and the upper is
+    z²/(n + z²): 4.58% for 0 of 80, 8.76% for 0 of 40. In floating point the
+    lower limit came out −1.2 × 10⁻¹⁷ for 0 of 21.
   - **n of n.** The upper limit is 1 and the lower is n/(n + z²): 95.42% for
     80 of 80, 91.24% for 40 of 40. In floating point the upper limit came out
-    0.9999999999999999 for 80 of 80 and 1.0000000000000002 for 40 of 40, so
+    0.9999999999999998 for 80 of 80 and 1.0000000000000002 for 40 of 40, so
     clamp both limits to [0, 1] and test with a tolerance.
   - **n = 0.** p̂ = 0/0 and z²/n divides by zero, so there's no interval; print
     "no lines" rather than `NaN`.
-- Synthesis: the TRD's "at most 7.2% wrong" for 0 wrong of 40 big buttons is
-  the earlier note's one-sided binomial-tail bound, 1 − 0.05^(1/40) =
-  0.072158 ([evaluation notes][eval-intervals]). A two-sided Wilson interval
-  gives 8.76% there and a one-sided Wilson (z = 1.644854) 6.34%, so a Wilson
-  test shouldn't expect 7.2%.
+- Synthesis: the TRD's 7.2%, that a big button right on all 40 lines "can
+  still be wrong up to 7.2% of the time", is the earlier note's one-sided
+  binomial-tail bound, 1 − 0.05^(1/40) = 0.072158, which that note tabulates
+  as "at most 7.2% wrong (one-sided)" ([evaluation notes][eval-intervals]).
+  A two-sided Wilson interval gives 8.76% there and a one-sided Wilson
+  (z = 1.644854) 6.34%, so a Wilson test shouldn't expect 7.2%.
 
 [nist-wilson]: https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm
 [eval-intervals]: /docs/research/0025-turn-evaluation.md#intervals-for-one-rankers-rate
@@ -96,9 +98,10 @@ links to.
 ## Percentiles for latency
 
 - **Hyndman and Fan's nine types.** R's `quantile` implements them:
-  Q_i(p) = (1 − γ)x_j + γx_{j+1}, with j = ⌊np + m⌋ and γ = np + m − j. Type 1
-  is the "Inverse of empirical distribution function" (m = 0; γ = 0 if g = 0,
-  else 1), which is nearest rank, x at ⌈np⌉. Type 7 has "m = 1-p.
+  Q_i(p) = (1 − γ)x_j + γx_{j+1}, with j = ⌊np + m⌋, g = np + m − j, and γ a
+  function of j and g that each type sets; type 7's γ is g. Type 1 is the
+  "Inverse of empirical distribution function" (m = 0; γ = 0 if g = 0, else
+  1), which is nearest rank, x at ⌈np⌉. Type 7 has "m = 1-p.
   p_k = (k - 1)/(n - 1)", and "The default method is type 7, as used by S and
   by R < 2.0.0"; Hyndman and Fan recommended type 8 ([r-quantile]).
 - **NumPy 2.5.** `numpy.percentile(a, q, ..., method='linear', ...)` lists the
