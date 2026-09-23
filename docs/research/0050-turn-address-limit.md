@@ -51,13 +51,15 @@ Contents:
   100,000 Worker requests, refused or not, so neither option protects that
   quota; each only protects what sits behind it. An exact count adds one
   object request per Worker request, refused ones included, where the
-  binding costs none. With today's per-device figures from the TRD (about
-  82 rows and 42 object requests for a device spending all 20 lines), one
-  more row and request per Worker request moves the rows ceiling from about
-  1,200 to about 960 such devices a day (inference). A new object per
-  address also keeps about 12 KB until it deletes its data: a flood from
-  distinct addresses, bounded by 100,000 requests a day, could add about
-  1.2 GB a day against 5 GB total, unless each object cleans up.
+  binding costs none, and one row per counted request. With the rows the
+  [local measurement](#local-measurement) found for each new object's
+  tables, a device spending all 20 lines in a day from one address writes
+  88 rows without the count and 112 with it, so the Free plan's rows cover
+  about 1,140 such devices a day without it and about 890 with it
+  (inference). A new object per address also keeps about 12 KB until its
+  data is removed. At 3 rows for each new object, the day's rows run out
+  near 33,000 new addresses, about 0.4 GB, before the Worker's 100,000
+  requests could add 1.2 GB; but the 5 GB is a total, which no day resets.
 
 [cf-limits]: https://developers.cloudflare.com/workers/platform/limits/
 
@@ -223,21 +225,28 @@ Contents:
   says "Last updated Aug 20, 2026" ([rules][cf-rules]).
 - **The binding.** "You are not waiting on a network request."
   ([binding page][cf-ratelimit])
-- Synthesis: the address object would be born near its first caller,
-  which is near that address, so no hint is needed. Only a flooding
-  address could reach its own object's few hundred writes a second, where
-  queueing slows only the flooder. The added hop's cost has no published
-  figure; it needs a measurement.
+- Synthesis: the address object would be born near its first caller, the
+  Worker, which the relay's placement runs next to Jev in `aws:us-west-2`
+  ([TRD][trd-architecture]), not near the address; the code passes `wnam`
+  anyway, as it does for the user's object. Only a flooding address could
+  reach its own object's few hundred writes a second, where queueing slows
+  only the flooder. The added hop's cost has no published figure; it needs
+  a measurement.
 
 [cf-location]: https://developers.cloudflare.com/durable-objects/reference/data-location/
 [cf-rules]: https://developers.cloudflare.com/durable-objects/best-practices/rules-of-durable-objects/
+[trd-architecture]: /docs/TRD.md#system-architecture
 
 ## IPv6 in CF-Connecting-IP
 
 - **Unchanged pages.** The headers page still says "Last updated May 5,
-  2026" and shows no IPv6 form ([headers][cf-headers]). The WAF rate
-  limiting parameters page, "Last updated Apr 29, 2026", has no "IPv6",
-  "/64", or "prefix" ([WAF parameters][cf-waf-params]).
+  2026". Its one IPv6 value is Cloudflare's own: "In cross-zone
+  subrequests from one Cloudflare zone to another Cloudflare zone, the
+  `CF-Connecting-IP` value will be set to the Worker client IP address
+  `'2a06:98c0:3600::103'` for security reasons." It shows no client's IPv6
+  form ([headers][cf-headers]). The WAF rate limiting parameters page,
+  "Last updated Apr 29, 2026", has no "IPv6", "/64", or "prefix"
+  ([WAF parameters][cf-waf-params]).
 - **Against IP keys.** "It is not recommended to use IP addresses or
   locations (regions or countries), since these can be shared by many
   users in many valid cases." Its sample adds: "many users may share a
@@ -246,7 +255,8 @@ Contents:
 - Synthesis: an object per full IPv6 address lets one client rotate within
   its /64 and get a fresh object, and fresh storage, each time. If #98
   picks the exact count, keying IPv6 by /64 is Turn's own choice, not
-  Cloudflare's advice.
+  Cloudflare's advice. Requests relayed through Workers on other zones all
+  arrive from that one address, so they would share one count.
 
 [cf-headers]: https://developers.cloudflare.com/fundamentals/reference/http-headers/
 [cf-waf-params]: https://developers.cloudflare.com/waf/rate-limiting-rules/parameters/
