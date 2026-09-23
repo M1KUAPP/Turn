@@ -1,20 +1,20 @@
-# Graph Report - revenuecat-video-iphone (2026-09-23)
+# Graph Report - revenuecat-relay (2026-09-23)
 
 ## Corpus Check
 
-- 179 files · ~598,982 words
+- 194 files · ~612,885 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 14 file(s) not represented in the graph (top: (none) 7, .jsonl 4, .lock 1)
 
 ## Summary
 
-- 3135 nodes · 3206 edges · 226 communities (216 shown, 4 thin omitted)
+- 3244 nodes · 3418 edges · 228 communities (219 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `d351f7d2`
+- Built from commit: `fe99c57f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -221,6 +221,8 @@
 - worker/tsconfig.json
 - eval/tsconfig.json
 - shared/tsconfig.json
+- index.ts
+- Tasks
 - Tasks
 - Turn's starter content research notes
 - data.ts
@@ -231,15 +233,16 @@
 - Tasks
 - Turn's setup research notes
 - score.ts
-- shortlist.ts
+- rankers.test.ts
 - Tasks
 - count.ts
-- shortlist.test.ts
+- shortlist.ts
 - row.ts
 - Turn's evaluation harness research notes
 - shortlist-speed.test.ts
 - Tasks
 - Turn's video iPhone research notes
+- Turn's relay research notes
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -264,14 +267,14 @@
   eval/src/score.ts → shared/src/shortlist.ts
 - `scoreLines()` --calls--> `pickShortlist()` [EXTRACTED]
   eval/src/score.ts → shared/src/shortlist.ts
-- `sharesNoWord()` --calls--> `PhraseIndex` [EXTRACTED]
-  eval/src/score.ts → shared/src/shortlist.ts
+- `answer()` --calls--> `applyAnswer()` [EXTRACTED]
+  eval/test/rankers.test.ts → shared/src/row.ts
 
 ## Import Cycles
 
 - None detected.
 
-## Communities (226 total, 4 thin omitted)
+## Communities (228 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1220,8 +1223,8 @@ Nodes (17): Decisions, Design, Global constraints, Out of scope, Rejected altern
 
 ### Community 196 - "worker/package.json"
 
-Cohesion: 0.12
-Nodes (15): @cloudflare/vitest-plugin, wrangler, devDependencies, @cloudflare/vitest-plugin, typescript, vitest, wrangler, typescript (+7 more)
+Cohesion: 0.09
+Nodes (21): @cloudflare/vitest-plugin, @typesafe-ai/sdk, wrangler, dependencies, @turn/shared, @typesafe-ai/sdk, devDependencies, @cloudflare/vitest-plugin (+13 more)
 
 ### Community 197 - "shared/package.json"
 
@@ -1236,7 +1239,7 @@ Nodes (11): Bun workspaces, Gaps, Hands-on check, One TypeScript source package 
 ### Community 199 - "eval/package.json"
 
 Cohesion: 0.12
-Nodes (16): dependencies, @turn/shared, devDependencies, @types/node, typescript, vitest, typescript, vitest (+8 more)
+Nodes (16): dependencies, @turn/shared, devDependencies, @types/node, typescript, vitest, @turn/shared, typescript (+8 more)
 
 ### Community 200 - "compilerOptions"
 
@@ -1258,10 +1261,20 @@ Nodes (5): compilerOptions, types, extends, include, ../tsconfig.base.json
 Cohesion: 0.50
 Nodes (3): extends, include, ../tsconfig.base.json
 
+### Community 204 - "index.ts"
+
+Cohesion: 0.06
+Nodes (58): buildJevRequest(), Choice, isRecord(), JevLine, JevRequest, keyFor(), kindKeys, kinds (+50 more)
+
 ### Community 205 - "Tasks"
 
 Cohesion: 0.09
 Nodes (21): Appendix: the bank's briefs, Appendix: the line writers' brief, Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills (+13 more)
+
+### Community 207 - "Tasks"
+
+Cohesion: 0.08
+Nodes (23): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: Jev's failures, Task 11: The log line (+15 more)
 
 ### Community 208 - "Turn's starter content research notes"
 
@@ -1308,10 +1321,10 @@ Nodes (8): A key in Git's history, Apple, Xcode 27, and iOS 27, Cloudflare and W
 Cohesion: 0.11
 Nodes (29): wrap(), commit(), groupSections(), main(), percent(), provenance(), rankers, rate() (+21 more)
 
-### Community 217 - "shortlist.ts"
+### Community 217 - "rankers.test.ts"
 
-Cohesion: 0.14
-Nodes (19): keyword, place(), Ranker, bank, home, toRank, bank, fillerIds (+11 more)
+Cohesion: 0.17
+Nodes (16): keyword, place(), Ranker, bank, home, toRank, bank, fillerIds (+8 more)
 
 ### Community 218 - "Tasks"
 
@@ -1321,17 +1334,17 @@ Nodes (25): Decisions, Design, Global constraints, Out of scope, Rejected altern
 ### Community 219 - "count.ts"
 
 Cohesion: 0.14
-Nodes (20): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+12 more)
+Nodes (19): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+11 more)
 
-### Community 220 - "shortlist.test.ts"
+### Community 220 - "shortlist.ts"
 
-Cohesion: 0.23
-Nodes (11): isYesNo(), PhraseIndex, pickShortlist(), rankable(), rankOnPhone(), ids(), phrase(), pick() (+3 more)
+Cohesion: 0.17
+Nodes (15): sharesNoWord(), commonWords, Context, isYesNo(), PhraseIndex, pickShortlist(), rankable(), rankOnPhone() (+7 more)
 
 ### Community 221 - "row.ts"
 
-Cohesion: 0.22
-Nodes (12): answer(), Answer, applyAnswer(), clearRow(), emptyRow, mostLikely(), phrasesInRow(), Policy (+4 more)
+Cohesion: 0.24
+Nodes (11): answer(), Answer, applyAnswer(), clearRow(), emptyRow, mostLikely(), phrasesInRow(), Row (+3 more)
 
 ### Community 222 - "Turn's evaluation harness research notes"
 
@@ -1353,27 +1366,32 @@ Nodes (16): Decisions, Design, Global constraints, Out of scope, Rejected altern
 Cohesion: 0.22
 Nodes (8): devicectl install and launch, Free and paid team App IDs, Gaps, Hands-on check, See also, The phone's model and iOS version, Turn's video iPhone research notes, xcodebuild automatic signing
 
+### Community 226 - "Turn's relay research notes"
+
+Cohesion: 0.22
+Nodes (8): Gaps, See also, Tests in the Workers pool, The SDK's client and call, The SDK's errors, fetch, and runtime, Turn's relay research notes, Workers Logs, Wrangler's config and deploy
+
 ## Knowledge Gaps
 
-- **2384 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2379 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2538 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2428 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2423 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2582 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `@typesafe-ai/sdk` connect `worker/package.json` to `index.ts`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Shipaton 2025 Winners` connect `Shipaton 2025 Winners` to `RevenueCat design award`, `#buildinpublic award`, `RevenueCat peace prize`, `Best vibes award`, `Buzziest launch award`, `HAMM award`, `OneSignal boost award`, `Kotlin multiplatform reach award`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2384 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2428 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
+- **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
+  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
