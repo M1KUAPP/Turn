@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { bank, linesFrom, phrasesOf, type Line } from './data'
+import { linesFrom, phrases, type Line } from './data'
 import { keyword, place } from './rankers'
 import { outcomes, scoreLines, sharesNoWord, summarize, type Count, type LineScore } from './score'
 import { percentile, wilson } from './stats'
@@ -127,7 +127,6 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
 
 /** The report for the lines, in Markdown, scored with the app's own shortlist, rankers, and row rules. */
 const render = (scored: readonly Line[], { run, file }: { run: string; file: string }) => {
-  const phrases = phrasesOf(bank)
   const { lines: scores, timings } = scoreLines(scored, phrases, rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
