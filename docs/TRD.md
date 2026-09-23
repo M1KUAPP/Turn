@@ -1030,8 +1030,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 `app/app.config.ts` sets ([iPhone build notes][ios-modules]):
 
-- **`ios.bundleIdentifier`:** one ID, chosen on September 22 and never
-  changed, since the Devpost entry names it (SUBMIT-5).
+- **`ios.bundleIdentifier`:** `com.m1ku.turn`, chosen on September 23 and
+  never changed, since the Devpost entry names it (SUBMIT-5).
 - **`ios.deploymentTarget`:** `"26"`, the built-in property that replaced
   the build-properties setting in SDK 56 (COMPAT-1).
 - **`expo-build-properties`:** the plugin with `ios.enableSceneSupport` set
