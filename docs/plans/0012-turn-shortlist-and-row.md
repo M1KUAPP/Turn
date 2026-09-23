@@ -200,7 +200,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     before that line's answer arrives.
 1.  **Reading the TRD's pseudocode:**
     - The kind is yes-or-no only when `yes_no` beats every other kind and
-      reaches the floor. The topic is the first highest.
+      reaches the floor. A tie for the most likely topic counts as each
+      tied topic, so the safer rule wins: no big button if any never gets
+      one, only the fixed buttons if any gets only those, and no tab. The
+      first review round found that the key order decided ties.
     - The remembered big phrase goes in after the fixed buttons take their
       slots and the shown phrases take their new scores; placed first, as
       the pseudocode lists it, Yes would cover it in slot 1. It takes a

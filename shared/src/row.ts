@@ -69,22 +69,21 @@ export const emptyRow: Row = Object.freeze({
 /** Floating-point slack, so a phrase that beats another by exactly the margin counts as beating it. */
 const slack = 1e-9
 
-/** The key with the highest value, the first of any tie, or null when there's none. */
-const mostLikely = <K extends string>(odds: Readonly<Record<K, number>>): K | null => {
-  let best: K | null = null
-  for (const [key, value] of Object.entries(odds) as [K, number][]) if (best === null || value > odds[best]) best = key
-  return best
+/** The keys with the highest probability: more than one for a tie, and none for an empty record. */
+const mostLikely = (probabilities: Readonly<Record<string, number>>): string[] => {
+  const highest = Math.max(...Object.values(probabilities))
+  return Object.keys(probabilities).filter((key) => probabilities[key] === highest)
 }
 
 /** Applies the TRD's rules for the row to an answer. Nothing here speaks; only a tap does (ROW-6). */
-export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy, onPhone }: Answer): Row {
+export function applyAnswer(row: Row, { seq, kind, topic, scores, policy, onPhone }: Answer): Row {
   if (seq < row.seq) return row
-  const topic = mostLikely(topics)
-  const tab = topic !== null && topics[topic] >= policy.floor ? topic : null
-  const yesNo =
-    kind.yes_no >= policy.floor &&
-    Object.entries(kind).every(([other, odds]) => other === 'yes_no' || odds < kind.yes_no)
-  const fixedTopic = topic !== null && policy.fixedOnlyTopics.includes(topic)
+  // A tie for the most likely topic counts as each tied topic for the safety rules, and marks no tab.
+  const topics = mostLikely(topic)
+  const tab = topics.length === 1 && topic[topics[0]] >= policy.floor ? topics[0] : null
+  const kinds = mostLikely(kind)
+  const yesNo = kinds.length === 1 && kinds[0] === 'yes_no' && kind.yes_no >= policy.floor
+  const fixedTopic = topics.some((likely) => policy.fixedOnlyTopics.includes(likely))
   const showFixed = yesNo || fixedTopic
   const phrasesAllowed = !fixedTopic && (!yesNo || policy.yesNoPhrases)
   // A stable sort, so the shortlist's order breaks ties.
@@ -92,7 +91,7 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   const top = fresh[0]
   // Nothing reaches the floor, so the row holds, still answering its earlier line (ROW-3).
   if (!showFixed && !top) return { ...row, seq, tab }
-  const bigAllowed = !showFixed && !onPhone && !(topic !== null && policy.noBigTopics.includes(topic))
+  const bigAllowed = !showFixed && !onPhone && !topics.some((likely) => policy.noBigTopics.includes(likely))
   if (bigAllowed && top && top[1] > policy.bigAbove) return { ...row, seq, answers: seq, big: top[0], tab }
   const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
