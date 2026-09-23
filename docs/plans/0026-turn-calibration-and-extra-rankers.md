@@ -632,22 +632,19 @@ September 23, 2026. The run followed decision 13:
   answers for the line, where the first run had it in 1. None is wrong, so
   the rule asks for nothing.
 - **Calibration:** Jev's top phrase was acceptable on 43 of the 80 lines,
-  and 22 were beyond reach. The fit's blocks:
+  and 22 were beyond reach. Every top phrase from 0.83 up, around the big
+  button's bar of 0.85, was right. Around the floor of 0.6, from 0.44 to 0.65,
+  top phrases were right 7 times in 30, well under what their scores say,
+  and the fit left the band at 11 of those 15 scores. The fit's blocks:
   - 0.24 to 0.43: 4 lines, none right.
   - 0.44 to 0.58: 14 lines, 3 right, outside the band at 5 of 9 scores.
   - 0.59 to 0.65: 16 lines, 4 right, outside at all 6 scores.
   - 0.66: 2 lines, 1 right.
   - 0.67 to 0.82: 23 lines, 14 right, outside at 6 of 13 scores.
   - 0.83 to 0.95: 21 lines, all right.
-
-  The Brier score was 0.211, with an interval of 0.170 to 0.254, against
-  0.249 for always forecasting the share, for a skill of 0.151. The
-  miscalibration was 0.069 and the discrimination 0.107. From 0.83 up,
-  around the big button's bar of 0.85, every top phrase was right. From
-  0.44 to 0.65, around the floor of 0.6, top phrases were right 7 times in
-  30, well under what their scores say, and the fit left the band at 11 of
-  those 15 scores.
-
+- **The Brier score:** 0.211, with an interval of 0.170 to 0.254, against 0.249
+  for always forecasting the share, for a skill of 0.151. The miscalibration
+  was 0.069 and the discrimination 0.107.
 - **Cut-offs:** embeddings 0.469 in four folds and 0.502 in one; the
   reranker 0.0449 in three, 0.0457, and 0.0233; qwen3 0.375 in four and
   0.410; apple 0.554 in four and 0.563.
