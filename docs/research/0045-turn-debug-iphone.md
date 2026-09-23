@@ -140,8 +140,8 @@ line numbers.
   returns `false` (`cocoapods.js:179-190`). Prebuild goes on
   (`prebuildAsync.js:191-198`), and a later run with `ios/` present throws
   `AbortCommandError` (`cocoapods.js:224-231`).
-- **This Mac.** `gem` is `/usr/bin/gem` (system Ruby 2.6.10), and `brew` is
-  `/opt/homebrew/bin/brew`.
+- **This Mac.** Before the hands-on check, `gem` was `/usr/bin/gem` (system
+  Ruby 2.6.10), and `brew` is `/opt/homebrew/bin/brew`.
 - Synthesis: running the command as-is installs software. The system gem
   directory likely needs `sudo`, so the gem step fails and Homebrew installs
   CocoaPods. Install CocoaPods on purpose first (with the person's say-so),
