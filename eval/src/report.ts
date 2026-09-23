@@ -31,10 +31,10 @@ const table = (header: readonly string[], rows: readonly (readonly string[])[]) 
 }
 
 /** Who wrote and labeled the lines, counted from the file, then who made the 80 lines and the bank, as the TRD says. */
-const provenance = (scored: readonly Line[]) => {
-  const authors = Map.groupBy(scored, (line) => line.author)
+const provenance = (labeled: readonly Line[]) => {
+  const authors = Map.groupBy(labeled, (line) => line.author)
   const writers = listOf([...authors].map(([author, written]) => `${author} wrote ${written.length}`))
-  const labelers = listOf([...new Set(scored.map((line) => line.labeler))])
+  const labelers = listOf([...new Set(labeled.map((line) => line.labeler))])
   return [
     '## Who wrote the data',
     [
@@ -109,8 +109,8 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
 }
 
 /** The report for the lines, in Markdown, scored with the app's own shortlist, rankers, and row rules. */
-const render = (scored: readonly Line[], { run, file }: { run: string; file: string }) => {
-  const { lines: scores, timings } = scoreLines(scored, phrases, rankers)
+const render = (labeled: readonly Line[], { run, file }: { run: string; file: string }) => {
+  const { lines: scores, timings } = scoreLines(labeled, phrases, rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
     {
@@ -141,7 +141,7 @@ const render = (scored: readonly Line[], { run, file }: { run: string; file: str
       "# Turn's evaluation",
       [
         `- **Run:** ${run}.`,
-        `- **Lines:** the ${scored.length} in \`${file}\`.`,
+        `- **Lines:** the ${labeled.length} in \`${file}\`.`,
         "- **Bank:** the app's own, `app/src/content/starter-bank.json`."
       ].join('\n'),
       wrap(
@@ -165,7 +165,7 @@ const render = (scored: readonly Line[], { run, file }: { run: string; file: str
         .join('\n'),
       'Contents:',
       sections.map((heading) => `1.  [${heading}](#${slug(heading)})`).join('\n'),
-      ...provenance(scored),
+      ...provenance(labeled),
       ...groups.flatMap(({ name, about, keep }) =>
         groupSections(
           name,
@@ -201,10 +201,10 @@ const commit = () => {
  */
 export function main(args: readonly string[]) {
   const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, out: { type: 'string' } } })
-  const { lines: scored, file } = linesFrom(values.lines)
+  const { lines: labeled, file } = linesFrom(values.lines)
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
   const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
-  writeFileSync(out, render(scored, { run: `${date}, at commit ${commit()}`, file }))
+  writeFileSync(out, render(labeled, { run: `${date}, at commit ${commit()}`, file }))
   console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
 }
 
