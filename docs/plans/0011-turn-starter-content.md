@@ -163,8 +163,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     `not-sure`. The strip's phrases aren't fixed, since the user can reword
     them (SPEAK-7); their category keeps them in place.
 1.  **Phrase ids are slugs of the text,** such as `water-please`, unique
-    across the bank, so #21's labels read as words. An id stays once
-    labeled, even if its phrase's text changes.
+    across the bank, so #21's labels read as words. A slug over 40
+    characters is cut to its first words, as the strip's
+    `i-use-this-app-to-talk` is. An id stays once labeled, even if its
+    phrase's text changes.
 1.  **Text conventions.** Straight apostrophes, as the PRD's strings and the
     other tickets' checks have them; no period after a one-sentence
     statement, and a question mark after a question; no personal names at
