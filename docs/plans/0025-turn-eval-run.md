@@ -125,37 +125,37 @@ Contents:
     The TRD's frozen settings say where they come from: 0.6 and 0.85 from
     TypeSafe's routing example, and 80 lines are too few to refit them.
 
-2.  **A test pins them.** `eval/test/frozen.test.ts` gains a test that
+1.  **A test pins them.** `eval/test/frozen.test.ts` gains a test that
     holds the policy's values and the request's wording as literals, so a
     later change fails a test named for EVAL-2. The pin already has tests,
     `eval/test/jev.test.ts` and `worker/test/jev-request.test.ts`, and
     `worker/test/config.test.ts` checks that the committed vars serve
     `startingPolicy`.
-3.  **The run's commit.** The run happens in a detached worktree at
+1.  **The run's commit.** The run happens in a detached worktree at
     `8ea25eb` with a clean tree, so the report names a commit that stays on
     `main`. GitHub's rebase merge "Always updates the committer information
     and creates new commit SHAs" ([merge methods][gh-merge]), so a run on
     this branch's head would name a commit `main` never holds. This plan,
     the test, and the note are pushed before the run, so GitHub's record of
     the push dates them before any result.
-4.  **Naming stays off.** `TYPESAFE_NAMED` is `"false"`, and #79, which
+1.  **Naming stays off.** `TYPESAFE_NAMED` is `"false"`, and #79, which
     would have asked TypeSafe, closed as not planned with no answer
     recorded, so SUBMIT-6 keeps the names out of the README. The run uses
     `--unnamed`, and its report is the README's table. No second run makes
     a named copy, since Jev's answers vary between calls; the pin's name
     stays in `worker/wrangler.jsonc`.
-5.  **One run.** `bun run eval --unnamed` runs once. It writes the report
+1.  **One run.** `bun run eval --unnamed` runs once. It writes the report
     only at its end and prints nothing but the report's path, so a run that
     stops first leaves no result: its cause is fixed without touching a
     setting, Task 7's log records the attempt, and the command runs again
     at the same commit, as the [run's notes][notes-deviation] advise. Once
     `eval/results.md` exists, nothing runs again, whatever it says.
-6.  **A preflight** on the fixture's 8 lines, none of them among the 80,
+1.  **A preflight** on the fixture's 8 lines, none of them among the 80,
     checks both keys and both services with the same script, writing into
     the scratchpad.
-7.  **EVAL-1's count** runs at the same commit: `bun run eval:count`, whose
+1.  **EVAL-1's count** runs at the same commit: `bun run eval:count`, whose
     output goes into the pull request and onto #40.
-8.  **EVAL-5's rule.** If the report's "Big buttons on yes-or-no, pain, and
+1.  **EVAL-5's rule.** If the report's "Big buttons on yes-or-no, pain, and
     consent lines" lists any wrong big button, in any of the four answers
     Jev gave a line, the relay's `POLICY` becomes this:
 
@@ -173,7 +173,7 @@ Contents:
     a change after the team sees results in EVAL-2's sense, and the floor,
     the bar, the margin, and the wording don't change.
 
-9.  **EVAL-4's rule.** Only the all-lines verdict counts. If it says Jev
+1.  **EVAL-4's rule.** Only the all-lines verdict counts. If it says Jev
     trails embeddings, Task 9 builds `jev-rerank` and runs the evaluation a
     second time with all five rankers; the first run's report stays as
     committed, and the second's is committed beside it.
@@ -190,10 +190,10 @@ Contents:
       the decision.
     - If the verdict is "leads" or "no clear difference", `jev-rerank`
       isn't built, and #40 records the verdict.
-10. **Nothing else changes after the run.** A later change to anything of
+1.  **Nothing else changes after the run.** A later change to anything of
     Jev's needs EVAL-2's 20 new lines, written and labeled by a teammate
     who hasn't seen them: a `ready-for-human` ticket, not this change.
-11. **RELEASE-2's check,** after the run and any EVAL-5 change, as the
+1.  **RELEASE-2's check,** after the run and any EVAL-5 change, as the
     [run's notes][notes-relay] describe. `GET /v1/config` on the team's
     relay must serve the evaluated policy with `jevOn` true. Wrangler's
     `deployments status --json` names the version serving all traffic, and
@@ -201,10 +201,10 @@ Contents:
     only `JEV_MODEL`, `JEV_ON`, and `POLICY` are printed. If one differs
     from `main`, the relay is deployed from `main` after the merge and
     checked again.
-12. **The report as written.** `eval/results.md` and
+1.  **The report as written.** `eval/results.md` and
     `eval/results-risk-coverage.svg` are committed byte for byte as the run
     wrote them, checked by SHA-256 after the commit.
-13. **The record.** The TRD changes only if EVAL-5's rule changes `POLICY`,
+1.  **The record.** The TRD changes only if EVAL-5's rule changes `POLICY`,
     when its `wrangler.jsonc` listing follows. The README is #64's.
 
 [gh-merge]: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github
