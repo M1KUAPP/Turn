@@ -1,20 +1,20 @@
-# Graph Report - revenuecat-relay-paywall (2026-09-23)
+# Graph Report - revenuecat-no-reply-floor (2026-09-23)
 
 ## Corpus Check
 
-- 232 files · ~642,407 words
+- 234 files · ~651,405 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 15 file(s) not represented in the graph (top: (none) 7, .jsonl 4, .example 2)
 
 ## Summary
 
-- 3528 nodes · 3880 edges · 253 communities (242 shown, 7 thin omitted)
+- 3560 nodes · 3910 edges · 255 communities (244 shown, 7 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `46c30d49`
+- Built from commit: `7f8f8471`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -233,10 +233,10 @@
 - Tasks
 - Turn's setup research notes
 - score.ts
-- shortlist.ts
+- rankers.test.ts
 - Tasks
 - count.ts
-- shortlist.test.ts
+- shortlist.ts
 - row.ts
 - Turn's evaluation harness research notes
 - Tasks
@@ -262,13 +262,15 @@
 - jev.ts
 - Tasks
 - request.ts
-- agreement.ts
+- Tasks
 - Device
 - Turn's free lines research notes
 - Turn's relay logs research notes
 - Turn's credit alert research notes
 - scripts/tsconfig.json
 - Turn's relay
+- Turn's no-reply floor research notes
+- shortlist-speed.test.ts
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -300,7 +302,7 @@
 
 - None detected.
 
-## Communities (253 total, 7 thin omitted)
+## Communities (255 total, 7 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1309,8 +1311,8 @@ Nodes (8): Consent and refusal for people who can't speak, Default content in te
 
 ### Community 209 - "data.ts"
 
-Cohesion: 0.12
-Nodes (19): bank, Category, checkLabels(), labelingFrom(), Labels, Line, lines, linesFrom() (+11 more)
+Cohesion: 0.11
+Nodes (20): bank, Category, checkLabels(), labelingFrom(), Labels, Line, lines, linesFrom() (+12 more)
 
 ### Community 210 - "Tasks"
 
@@ -1345,12 +1347,12 @@ Nodes (8): A key in Git's history, Apple, Xcode 27, and iOS 27, Cloudflare and W
 ### Community 216 - "score.ts"
 
 Cohesion: 0.11
-Nodes (28): wrap(), commit(), groupSections(), main(), percent(), provenance(), rankers, rate() (+20 more)
+Nodes (29): wrap(), commit(), groupSections(), main(), percent(), provenance(), rankers, rate() (+21 more)
 
-### Community 217 - "shortlist.ts"
+### Community 217 - "rankers.test.ts"
 
-Cohesion: 0.14
-Nodes (19): keyword, place(), Ranker, bank, home, toRank, bank, fillerIds (+11 more)
+Cohesion: 0.17
+Nodes (16): keyword, place(), Ranker, bank, home, toRank, bank, fillerIds (+8 more)
 
 ### Community 218 - "Tasks"
 
@@ -1359,13 +1361,13 @@ Nodes (25): Decisions, Design, Global constraints, Out of scope, Rejected altern
 
 ### Community 219 - "count.ts"
 
-Cohesion: 0.26
-Nodes (10): main(), names(), rounded(), listOf(), fixture(), jsonl(), meeting(), onFixture() (+2 more)
+Cohesion: 0.14
+Nodes (19): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+11 more)
 
-### Community 220 - "shortlist.test.ts"
+### Community 220 - "shortlist.ts"
 
-Cohesion: 0.16
-Nodes (16): sharesNoWord(), isYesNo(), PhraseIndex, pickShortlist(), rankOnPhone(), bank, lines, taps (+8 more)
+Cohesion: 0.17
+Nodes (15): sharesNoWord(), commonWords, Context, isYesNo(), PhraseIndex, pickShortlist(), rankable(), rankOnPhone() (+7 more)
 
 ### Community 221 - "row.ts"
 
@@ -1470,7 +1472,7 @@ Nodes (30): age(), paid, activeEntitlements(), callsTo(), expectError(), expectR
 ### Community 243 - "jev.ts"
 
 Cohesion: 0.13
-Nodes (22): buildJevRequest(), Choice, isRecord(), JevLine, JevRequest, keyFor(), kindKeys, kinds (+14 more)
+Nodes (21): buildJevRequest(), Choice, isRecord(), JevLine, JevRequest, keyFor(), kindKeys, kinds (+13 more)
 
 ### Community 244 - "Tasks"
 
@@ -1482,10 +1484,10 @@ Nodes (21): Decisions, Design, Global constraints, Out of scope, Rejected altern
 Cohesion: 0.26
 Nodes (12): checkEntitlement(), isItem(), Item, Settings, builds, isLineRequest(), isList(), isRecord() (+4 more)
 
-### Community 246 - "agreement.ts"
+### Community 246 - "Tasks"
 
-Cohesion: 0.26
-Nodes (11): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+3 more)
+Cohesion: 0.09
+Nodes (22): Appendix: the labelers' brief, Appendix: the scripts, Appendix: the writer's brief, Decisions, Design, Global constraints, Out of scope, Rejected alternatives (+14 more)
 
 ### Community 248 - "Turn's free lines research notes"
 
@@ -1512,10 +1514,20 @@ Nodes (5): compilerOptions, types, extends, include, ../../tsconfig.base.json
 Cohesion: 0.40
 Nodes (4): Daily counts from the logs, See also, The credit alert, Turn's relay
 
+### Community 253 - "Turn's no-reply floor research notes"
+
+Cohesion: 0.22
+Nodes (8): A judge's threshold and the batch it sees, Deliberately written no-answer items, Findings for the plan, Gaps, Replacing items and reporting a changed plan, See also, Turn's no-reply floor research notes, What 8 against 16 buys
+
+### Community 254 - "shortlist-speed.test.ts"
+
+Cohesion: 0.47
+Nodes (5): bank, lines, taps, vocabulary, words()
+
 ## Knowledge Gaps
 
-- **2561 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2556 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2737 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2587 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2582 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2765 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -1524,12 +1536,12 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `@typesafe-ai/sdk` connect `worker/package.json` to `jev.ts`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **Why does `Ranking` connect `shortlist.ts` to `jev.ts`, `src/index.ts`, `row.ts`?**
+- **Why does `Ranking` connect `rankers.test.ts` to `shortlist.ts`, `jev.ts`, `src/index.ts`, `row.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2561 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2587 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
