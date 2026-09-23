@@ -16,6 +16,9 @@ export const limits = {
   bytes: 16 * 1024
 }
 
+/** The requests one app user may send the relay in a clock minute, which their object counts (SEC-3). */
+export const requestsPerMinute = 30
+
 /** A category the line's topic may be: its id in the phone's bank, described by the name the user gave it. */
 export type Category = { id: string; name: string }
 

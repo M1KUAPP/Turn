@@ -1,5 +1,5 @@
 import { buildJevRequest, readJevAnswer, type JevLine } from '@turn/shared/jev'
-import type { LineAnswer, LineRequest } from '@turn/shared/relay'
+import { requestsPerMinute, type LineAnswer, type LineRequest } from '@turn/shared/relay'
 import { APIError, TypeSafeClient, type Fetch } from '@typesafe-ai/sdk'
 import { DurableObject } from 'cloudflare:workers'
 import { checkEntitlement, type Entitlement } from './entitlement'
@@ -41,9 +41,6 @@ const budgetMs = 2500
 
 const minute = 60_000
 const day = 24 * 60 * minute
-
-/** The requests one app user may send in a clock minute (SEC-3). */
-const requestsPerMinute = 30
 
 /** A promise's result, or its signal's reason if that aborts first, so no wait outlasts the call it's part of. */
 function unlessAborted<T>(promise: Promise<T>, signal: AbortSignal | null | undefined): Promise<T> {
