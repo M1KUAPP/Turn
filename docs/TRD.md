@@ -525,12 +525,15 @@ with the model pinned (SEC-2):
   safety rules follow ids a rename can't change (ROW-3). That is at most 13
   options, far below a Choice's limit of 255, and nothing documented caps 42
   questions: TypeSafe's own cookbooks send 54 and 62 in one request.
-- **The call.** `@typesafe-ai/sdk` 0.6.0 with every option in code, since
-  it reads any it lacks from `process.env`, which holds the Worker's vars
-  and secrets ([relay notes][relay-sdk]): `defaultModel: 'jev-1.13.0'`,
+- **The call.** `@typesafe-ai/sdk` 0.6.0 with every option in code:
+  `baseURL: 'https://api.typesafe.ai'`, `defaultModel: 'jev-1.13.0'`,
   `logLevel: 'off'`, `timeout: 1500` per attempt, and
   `retry: { maxRetries: 1, respectRetryAfter: false }`, under
-  `AbortSignal.timeout(2500)`. The SDK's defaults would let one call run
+  `AbortSignal.timeout(2500)`. The SDK reads the key, the address, the
+  model, and the log level from `process.env` when the code leaves them
+  out, and Workers put the vars and secrets there, so a stray var could
+  otherwise send each line and the key elsewhere
+  ([relay notes][relay-sdk]). The SDK's defaults would let one call run
   about 31.5 seconds.
 - **Errors.** Any failure becomes `jev_unavailable`: a `429`, a `529`, a
   `5xx`, another status, a timeout, a lost connection, or an answer out of
