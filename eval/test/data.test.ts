@@ -1,3 +1,6 @@
+import { copyFileSync, mkdtempSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { expect, test } from 'vitest'
 import { bank, checkLabels, linesFrom, phrasesOf, readRows, type Line } from '../src/data'
 
@@ -44,4 +47,10 @@ test("reads a command's lines from the file it names, or else the 80, naming the
   expect(linesFrom(fixture('lines.jsonl').pathname).lines).toHaveLength(8)
   expect(linesFrom(undefined)).toMatchObject({ file: 'eval/lines.jsonl' })
   expect(linesFrom(undefined).lines).toHaveLength(80)
+})
+
+test('names a file outside the repository by its absolute path', () => {
+  const outside = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'lines.jsonl')
+  copyFileSync(fixture('lines.jsonl'), outside)
+  expect(linesFrom(outside).file).toBe(outside)
 })

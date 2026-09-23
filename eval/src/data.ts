@@ -66,10 +66,12 @@ export function checkLabels(labeled: readonly { id: string; acceptable?: readonl
 
 /**
  * The labeled lines a command reads: the file its `--lines` names, or else the 80 in `eval/lines.jsonl`, checked
- * against the bank, with the file's path from the repository's root.
+ * against the bank, with the file's path from the repository's root, or its whole path when it lies outside.
  */
 export function linesFrom(path: string | undefined): { lines: Line[]; file: string } {
   const found: Line[] = path === undefined ? lines : readRows(path)
   checkLabels(found, bank)
-  return { lines: found, file: path === undefined ? 'eval/lines.jsonl' : relative(root, resolve(path)) }
+  if (path === undefined) return { lines: found, file: 'eval/lines.jsonl' }
+  const inRepository = relative(root, resolve(path))
+  return { lines: found, file: inRepository.startsWith('..') ? resolve(path) : inRepository }
 }
