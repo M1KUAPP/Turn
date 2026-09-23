@@ -23,8 +23,8 @@ export type LineReply =
   | Exclude<JevReply, { outcome: 'answered' }>
   | { outcome: 'duplicate' | 'paywall' | 'unverified' }
 
-/** What the Worker tells the object from its vars: how many free lines each user gets. */
-export type Terms = { freeLines: number }
+/** From the Worker's vars: the free lines each user gets, and whether this request skips the count (PAY-1, PAY-9). */
+export type Terms = { freeLines: number; unlimited: boolean }
 
 /** RevenueCat's last answer about `listen`, which the object keeps a day if yes and a minute if no (PAY-7). */
 type Cached = { active: number; checked_at: number; refreshed_at: number | null }
@@ -107,18 +107,25 @@ export class Device extends DurableObject<Env> {
     return answer
   }
 
-  /** The free lines this user has left, which the configuration and each answer carry, or null once they're entitled. */
-  freeLinesLeft({ freeLines }: Terms): number | null {
-    if (this.cached()?.active) return null
+  /**
+   * The free lines this user has left, which the configuration and each answer carry, or null once they're entitled or
+   * while their requests skip the count.
+   */
+  freeLinesLeft({ freeLines, unlimited }: Terms): number | null {
+    if (unlimited || this.cached()?.active) return null
     return Math.max(0, freeLines - this.claimed())
   }
 
   /**
    * Answers a line on a free line, releasing the claim if Jev doesn't answer, so only answered lines count (PAY-1), or
-   * past the free lines only for a user RevenueCat says has `listen` (PAY-7). The app user ID is used only to ask
-   * RevenueCat, and never stored.
+   * past the free lines only for a user RevenueCat says has `listen` (PAY-7). A line that skips the count goes straight
+   * to Jev (PAY-9). The app user ID is used only to ask RevenueCat, and never stored.
    */
   async answer(line: LineRequest, user: string, terms: Terms): Promise<LineReply> {
+    if (terms.unlimited) {
+      const reply = await this.ask(line)
+      return reply.outcome === 'answered' ? { ...reply, freeLinesLeft: null } : reply
+    }
     const claim = this.claim(line.lineId, terms)
     if (claim === 'duplicate') return { outcome: 'duplicate' }
     if (claim === 'paid') {

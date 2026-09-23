@@ -1,5 +1,6 @@
 import type { ErrorCode, LineAnswer } from '@turn/shared/relay'
-import { readConfig } from './config'
+import { isOn, readConfig } from './config'
+import type { Terms } from './device'
 import { readLine, readUser } from './request'
 
 export { Device } from './device'
@@ -76,14 +77,26 @@ async function hashUser(salt: string, user: string) {
 /** The user's object, named by the salted hash of their ID. */
 const deviceFor = (env: Env, hash: string) => env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' })
 
+/** Who sent a request, from its headers. */
+type User = NonNullable<ReturnType<typeof readUser>>
+
+/**
+ * The count's terms: the free lines a new user gets, and whether this request skips the count, as one from the
+ * Simulator build does while `SIMULATOR_UNLIMITED` is on (PAY-9).
+ */
+const termsFor = (env: Env, freeLines: number, { build }: User): Terms => ({
+  freeLines,
+  unlimited: build === 'simulator' && isOn(env.SIMULATOR_UNLIMITED)
+})
+
 /** Checks a line before anything else (SEC-2), then asks the user's object to count it and ask Jev. */
-async function answerLine(request: Request, env: Env, log: LogFacts, user: string, hash: string): Promise<Response> {
+async function answerLine(request: Request, env: Env, log: LogFacts, user: User, hash: string): Promise<Response> {
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
   const config = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
-  const reply = await deviceFor(env, hash).answer(line, user, { freeLines: config.freeLinesLeft })
+  const reply = await deviceFor(env, hash).answer(line, user.id, termsFor(env, config.freeLinesLeft, user))
   if ('ms' in reply) log.jevMs = reply.ms
   if (reply.outcome !== 'answered') {
     if ('status' in reply && reply.status) log.jevStatus = reply.status
@@ -112,11 +125,11 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   if (!isLine && !isConfig) return refuse(log, 'not_found')
   const user = readUser(request.headers)
   if (!user) return refuse(log, 'invalid')
-  const hash = await hashUser(env.ID_SALT, user)
+  const hash = await hashUser(env.ID_SALT, user.id)
   log.user = hash.slice(0, 8)
   if (isLine) return answerLine(request, env, log, user, hash)
   const config = readConfig(env)
-  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft({ freeLines: config.freeLinesLeft })
+  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, config.freeLinesLeft, user))
   log.outcome = 'config'
   return Response.json({ ...config, freeLinesLeft })
 }
