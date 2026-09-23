@@ -202,34 +202,49 @@ pass to `/wizard`. The directive's steps map to skills:
 Markdown files run the gate from [the plan-storage plan][docs-gate]:
 Prettier, `check_md.py` with `--contents`, and `fact_scan.py` for new prose.
 
-The setup checks run from `worker/` in this worktree, and each must show the
-result in its comment:
+The setup checks run from `worker/` in this worktree, with `SUBDOMAIN` set
+to the account's workers.dev subdomain from the Cloudflare dashboard:
 
 ```shell
-setopt pipefail
-bunx wrangler whoami                          # an OAuth login to "Turn"
-bunx wrangler secret list --name turn-relay   # TYPESAFE_API_KEY, RC_SECRET_KEY
+bunx wrangler whoami
+bunx wrangler secret list --name turn-relay
 curl -s -o /dev/null -w '%{http_code}\n' \
-  "https://turn-relay.$SUBDOMAIN.workers.dev/v1/config"   # 404 until #24
+  "https://turn-relay.${SUBDOMAIN:?}.workers.dev/v1/config"
 ```
 
-The key checks keep the key off every command line:
+`whoami` must report an OAuth login to the account named Turn. It also
+prints the login's email and the account's ID, so a ticket gets a summary,
+never its output. The secret list must name `TYPESAFE_API_KEY` and
+`RC_SECRET_KEY`, and the relay must answer 404 until #24.
+
+The key checks keep the key off every command line, and the scan stops at
+the first failed step, so a failure can't pass for a clean result:
 
 ```shell
-printf 'header = "Authorization: Bearer %s"\n' "$TYPESAFE_API_KEY" |
+printf 'header = "Authorization: Bearer %s"\n' "${TYPESAFE_API_KEY:?}" |
   curl -s -K - -o /dev/null -w '%{http_code}\n' \
-  https://api.typesafe.ai/v1/models           # 200
-git fetch origin
-git fetch origin $(git ls-remote origin 'refs/pull/*/head' | cut -f1)
-hits=$(git cat-file --batch-all-objects --batch |
-  grep -a -F -c -f <(printf '%s\n' "$TYPESAFE_API_KEY"))
-echo "objects holding the key: $hits"         # 0
+  https://api.typesafe.ai/v1/models
+(
+  set -eu -o pipefail
+  : "${TYPESAFE_API_KEY:?}"
+  git fetch -q origin
+  git ls-remote origin 'refs/pull/*/head' | cut -f1 > "$TMPDIR/heads.txt"
+  xargs git fetch -q origin < "$TMPDIR/heads.txt"
+  git cat-file --batch-all-objects --batch > "$TMPDIR/objects.bin"
+  git log --all --reflog -p --no-color > "$TMPDIR/log.txt"
+  wc -c "$TMPDIR/objects.bin" "$TMPDIR/log.txt"
+  for f in "$TMPDIR/objects.bin" "$TMPDIR/log.txt"; do
+    grep -a -F -c -f <(printf '%s\n' "$TYPESAFE_API_KEY") "$f" || true
+  done
+  rm "$TMPDIR/heads.txt" "$TMPDIR/objects.bin" "$TMPDIR/log.txt"
+)
 ```
 
-A glob refspec needs a destination, so the pull requests' heads are fetched
-by hash, which stores their objects without adding refs to the checkouts
-the peers share. `grep -c` exits 1 when it counts nothing, so the check
-reads the count, not the status.
+The model list must answer 200. The scan must print two sizes well above
+zero, then two counts of 0: `grep -c` counts matching lines, not objects,
+and exits 1 when it counts none, hence `|| true`. A glob refspec needs a
+destination, so the pull requests' heads are fetched by hash, which stores
+their objects without adding refs to the checkouts the peers share.
 
 [docs-gate]: /docs/plans/0009-plan-storage.md#verification-gate
 
