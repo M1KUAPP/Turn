@@ -44,6 +44,14 @@ describe('applyAnswer', () => {
     expect(big.big).toBe('water')
   })
 
+  test('says which line the row still answers after a hold (ROW-3)', () => {
+    const shown = replay(answer(1, { water: 0.7 }))
+    expect(shown.answers).toBe(1)
+    expect(applyAnswer(shown, answer(2, { juice: 0.4 }))).toMatchObject({ seq: 2, answers: 1 })
+    // An answer that fits but moves nothing isn't a hold.
+    expect(applyAnswer(shown, answer(2, { water: 0.7 }))).toMatchObject({ seq: 2, answers: 2, slots: shown.slots })
+  })
+
   test.each(['body-pain', 'consent'])('gives a %s line a row, never a big button (ROW-3)', (topic) => {
     const row = replay(answer(1, { water: 0.9 }, { topic: { food: 0.1, [topic]: 0.9 } }))
     expect(row.big).toBeNull()
@@ -177,7 +185,7 @@ describe('the policy each answer carries (ROW-8)', () => {
 describe('clearRow', () => {
   test('empties the six slots and forgets the remembered big phrase (ROW-10)', () => {
     const cleared = clearRow(replay(answer(1, { a: 0.7, b: 0.7 }), answer(2, { w: 0.9 })))
-    expect(cleared).toEqual({ seq: 2, big: null, slots: [null, null, null, null, null, null], tab: null })
+    expect(cleared).toEqual({ seq: 2, answers: 2, big: null, slots: [null, null, null, null, null, null], tab: null })
     // Remembered, w would come first; forgotten, it takes its turn.
     expect(applyAnswer(cleared, answer(3, { x: 0.7, w: 0.65 })).slots).toEqual(['x', 'w', null, null, null, null])
   })

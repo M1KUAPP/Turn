@@ -48,6 +48,8 @@ export const fixedButtons: readonly string[] = Object.freeze(['yes', 'no', 'not-
 export type Row = {
   /** The newest line's sequence number: the app raises it when a line starts, and an older line's answer is dropped. */
   seq: number
+  /** The line the row's phrases answer. A hold leaves it behind, so the caption can say which line that is (ROW-3). */
+  answers: number
   /** The big button's phrase, shown across the row over the six slots. */
   big: string | null
   /** The six slots' phrase ids, the fixed buttons' among them, or null for an empty slot. */
@@ -58,6 +60,7 @@ export type Row = {
 
 export const emptyRow: Row = Object.freeze({
   seq: 0,
+  answers: 0,
   big: null,
   slots: Object.freeze([null, null, null, null, null, null]),
   tab: null
@@ -87,9 +90,10 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   // A stable sort, so the shortlist's order breaks ties.
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
+  // Nothing reaches the floor, so the row holds, still answering its earlier line (ROW-3).
   if (!showFixed && !top) return { ...row, seq, tab }
   const bigAllowed = !showFixed && !onPhone && !(topic !== null && policy.noBigTopics.includes(topic))
-  if (bigAllowed && top && top[1] > policy.bigAbove) return { ...row, seq, big: top[0], tab }
+  if (bigAllowed && top && top[1] > policy.bigAbove) return { ...row, seq, answers: seq, big: top[0], tab }
   const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
   if (!phrasesAllowed) slots.fill(null, 3)
@@ -123,12 +127,12 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
     if (low === undefined || score <= scoreAt(low) || score - scoreAt(low) < policy.margin - slack) break
     slots[low] = id
   }
-  return { ...row, seq, big: null, slots, tab }
+  return { ...row, seq, answers: seq, big: null, slots, tab }
 }
 
 /** Empties the row, forgets the big button's phrase, and unmarks the tab, keeping the newest line's number (ROW-10). */
 export function clearRow(row: Row): Row {
-  return { ...emptyRow, seq: row.seq }
+  return { ...emptyRow, seq: row.seq, answers: row.seq }
 }
 
 /** The phrases in the row, for the shortlist's first step: the big button's, then the slots', never a fixed button. */

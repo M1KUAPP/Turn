@@ -177,8 +177,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     breaks ties, so the row's phrases come first among equals. The relay's
     JSON object can't carry that order: an id such as `911` would sort
     first. The app builds the `Map` from the shortlist it sent.
-1.  **The row's state** is `seq`, `big` (the big button's phrase or null),
-    `slots` (six phrase ids or null), and `tab`. `applyAnswer(row, answer)`
+1.  **The row's state** is `seq`, `answers` (the line its phrases answer),
+    `big` (the big button's phrase or null), `slots` (six phrase ids or
+    null), and `tab`. `applyAnswer(row, answer)`
     and `clearRow(row)` return a new row and never change their input;
     `phrasesInRow(row)` gives the shortlist's first step, and `emptyRow`
     starts a session. Nothing speaks, and the app renders and announces.
@@ -188,6 +189,11 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     and Not sure. The app speaks and counts every slot the same way, and a
     test can check their order (ROW-4); an earlier draft kept them out of
     the slots behind a flag, which left the order to the app.
+1.  **A hold says which line the row still answers.** `answers` moves to
+    each answer's line except when nothing reaches the floor, so the app can
+    show the "Still answering" note with that line (#43, #48), and the
+    evaluation can tell a hold from an answer that moves nothing (#29). The
+    first review round found that the two returned the same row.
 1.  **The newest line (ROW-7).** The app raises `row.seq` when a line
     starts, and the rules drop an answer with a lower `seq` and raise it for
     each answer they apply, so a late answer loses to its newer line even
@@ -409,6 +415,7 @@ and was committed as
   export type Answer = Ranking & { seq: number; policy: Policy }
   export type Row = {
     seq: number
+    answers: number
     big: string | null
     slots: readonly (string | null)[]
     tab: string | null
