@@ -4,8 +4,8 @@ How to check Jev's top-phrase score against whether that phrase is
 acceptable, for issue #45: which calibration this is, which reliability
 diagram suits 80 points, and the Brier score with its decompositions. It
 builds on the [evaluation notes' calibration section][calibration section]
-and the [statistics notes]; every source was read on September 23, 2026,
-and judgment starts with "Synthesis:".
+and the [statistics notes]; every source was read on September 23 or 24,
+2026, and judgment starts with "Synthesis:".
 
 [statistics notes]: /docs/research/0043-turn-eval-statistics.md
 
@@ -30,7 +30,7 @@ Contents:
   that extra condition can't be checked. Synthesis: call it "top-phrase
   calibration" and say it covers only the phrase the row would show.
 - **Diagram.** Synthesis: draw a CORP reliability diagram ([corp]) rather
-  than binned bars. The paper's own case of unstable bins has 86 forecasts,
+  than binned bars. The paper's own case of unstable bins has 92 forecasts,
   and CORP needs no bin count, handles tied scores by construction, and
   comes with a consistency band by resampling.
 - **Band.** A 90% consistency band as `reliabilitydiag` computes it for
@@ -91,8 +91,13 @@ Synthesis:
   under unavoidable, ad hoc implementation decisions." For EMOS forecasts,
   "choices of m = 9, 10, or 11 equidistant bins yield drastically distinct
   reliability diagrams" ([corp]).
-- **At about Turn's size.** That example's data are small: "The histograms
-  at bottom illustrate the distribution of the n = 86 forecast values."
+- **At about Turn's size.** The EMOS figure's caption gives no size, but
+  the Niamey data are small. In the arXiv copy, Fig. 1's caption, on the
+  same months' ENS, EPC, and Logistic forecasts, says "The histograms at
+  bottom illustrate the distribution of the n = 86 forecast values."
+  ([corp]) The PNAS version's Fig. 1 caption says "the n = 92 forecast
+  values" ([corp-pnas]), and the package's copy of the data, with EMOS as
+  one column, is "A data frame with 92 rows and 6 variables" ([rd-data]).
   "Under the binning and counting approach, small or sparsely populated bins
   are subject to overfitting and large estimation uncertainty" ([corp]).
 - **CORP.** It uses "nonparametric isotonic regression and the
@@ -102,15 +107,25 @@ Synthesis:
   tuning parameters or implementation decisions." A simulation "demonstrates
   that the efficiency of the CORP approach also holds in small samples", and
   CORP had "the smallest MSE, uniformly over all sample sizes and against
-  all alternative methods" ([corp]).
+  all alternative methods" ([corp]). The PNAS version keeps that sentence,
+  cites data-driven simulations in its supplement, and qualifies it: "Only
+  for simulation settings with nearly horizontal true CEPs, the efficiency
+  of the CORP approach is slightly inferior to binning and counting with
+  very small numbers of bins—exactly the choices that perform particularly
+  poorly in almost any other setting." ([corp-pnas])
 - **Consistency bars.** Bröcker and Smith introduce "A resampling method
   for assigning consistency bars to the observed frequencies" that shows
   "just how likely the observed relative frequencies are under the
-  assumption that the predicted probabilities are reliable"; "Both
-  presentations can easily be employed for any method of binning."
-  ([brocker-2007]; abstract only). CORP's authors: "They employ a resampling
-  technique for the binning and counting method in order to find
-  consistency bands under the assumption of calibration." ([corp])
+  assumption that the predicted probabilities are reliable", and a second
+  presentation, the reliability diagram on probability paper: "Further, an
+  alternative presentation of the same information on probability paper
+  eases quantitative evaluation and comparison." "Both presentations can
+  easily be employed for any method of binning." Each bar spans a bin's
+  frequencies over `N_boot` consistency resamples of the whole dataset:
+  "The bars extend from the 5% to the 95% quantiles, indicated by dashes."
+  ([brocker-2007]) CORP's authors: "They employ a resampling technique for
+  the binning and counting method in order to find consistency bands under
+  the assumption of calibration." ([corp])
 - **Equal width against equal mass.** The evaluation notes already cover
   it: equal-mass bins have lower bias, and too many bins hurt small samples
   ([calibration section]).
@@ -124,9 +139,9 @@ Synthesis:
   ties are pooled by construction, its steps show where the data can't
   separate scores, and Bröcker and Smith's idea survives as CORP's
   consistency band. Binned bars with consistency bars would still leave the
-  bin choice that CORP's Niamey figure shows to matter at n = 86.
+  bin choice that CORP's Niamey figure shows to matter at n = 92.
 
-[brocker-2007]: https://www.lse.ac.uk/CATS/Assets/PDFs/Publications/Papers/2007/73-IncreasingReliabilityDiagrams-2006-Brocker-Smith.pdf
+[brocker-2007]: https://journals.ametsoc.org/view/journals/wefo/22/3/waf993_1.xml
 
 ## PAV with ties and the consistency band
 
@@ -139,7 +154,10 @@ Synthesis:
 - **Ties in the package.** `reliabilitydiag` sorts with
   `ord <- order(x, -y)`, so tied scores put their hits first, then fits
   `monotone::monotone(y)`, or `stats::isoreg(y)$yf` without that package,
-  and forms bins with `rle(CEP_pav)` ([rd-coercion]).
+  and forms bins with `rle(CEP_pav)` ([rd-coercion]). In `monotone` 0.1.2,
+  `src/monotoneC.c` pools backward only on a strict `>` (`xbm1 > xb`,
+  `rx[b - 1] > xb`), and after a merge it also takes in later values while
+  the pooled mean is `>=` them (`xb >= rx[i + 1]`) ([monotone]).
 - **Band method.** "Consistency bands are generated under the assumption
   that the probability forecasts are calibrated, and so they are positioned
   around the diagonal." "For consistency bands, the resampling is based on
@@ -194,6 +212,7 @@ band(x, level = 0.9, B):
 ```
 
 [rd-coercion]: https://github.com/aijordan/reliabilitydiag/blob/master/R/coercion.R
+[monotone]: https://CRAN.R-project.org/package=monotone
 [rd-main]: https://github.com/aijordan/reliabilitydiag/blob/master/R/reliabilitydiag.R
 [rd-utils]: https://github.com/aijordan/reliabilitydiag/blob/master/R/utils.R
 
@@ -243,11 +262,12 @@ Synthesis:
   from CORP's equation by algebra. Murphy's formula is its usual form,
   not checked against the 1973 paper. When the hit rates of the distinct
   scores already rise with the score, PAV pools nothing and the two
-  decompositions agree; when it pools, MCB is the one that stays
-  non-negative.
-- With 16 lines always wrong, `ybar` is at most 0.8, so `UNC` is at least
-  0.16 and a constant forecast of `ybar` sets the bar the skill score is
-  measured against.
+  decompositions agree; when it pools, they differ, and CORP's is the one
+  the diagram draws.
+- With 16 lines always wrong, `ybar` is at most 0.8. `UNC` is at most 0.25,
+  when half the lines are acceptable, and falls below 0.16 only if `ybar`
+  drops under 0.2. A constant forecast of `ybar` sets the bar the skill
+  score is measured against.
 - **Interval.** Give one for the Brier score and the skill score: draw the
   80 lines with replacement, recompute both, and report the percentile
   interval, using the seeded generator and resample count of the
@@ -270,12 +290,16 @@ Synthesis:
 - **Which case.** "If the smallest distance between any two distinct
   forecast values is 0.01 or larger, we operate in the discrete setting,
   and else in the continuous one." ([corp])
-- **The diagonal and MCB.** Points of a calibrated forecast "ought to lie
-  on, or close to, the diagonal"; CORP's figures print MCB with each
-  diagram and show a 90% consistency band ([corp]).
-- **Counts.** Guo et al.'s diagrams "do not display the proportion of
-  samples in a given bin", as the evaluation notes quote
-  ([calibration section]); the package's bin table keeps `n`, `x_min`,
+- **The diagonal and MCB.** Of binned diagrams, CORP's authors write that
+  for calibrated forecasts "the points plotted ought to lie on, or close
+  to, the diagonal". The paper's CORP diagrams in Figs. 1–3 print MCB;
+  those in Figs. 1 and 2 and in Fig. 3(a, c) show 90% consistency bands,
+  while Fig. 3(b, d) shows 90% confidence bands ([corp]).
+- **Counts.** Guo et al. write of reliability diagrams in general: "Note
+  that reliability diagrams do not display the proportion of samples in a
+  given bin, and thus cannot be used to estimate how many samples are
+  calibrated." Their Figure 1 pairs reliability diagrams with confidence
+  histograms ([guo-2017]). The package's bin table keeps `n`, `x_min`,
   `x_max`, and `CEP_pav` for each PAV block ([rd-coercion-bins]).
 
 Synthesis:
@@ -303,31 +327,39 @@ Synthesis:
 - **What changes.** Synthesis: five equal-mass bins of 16 need an edge rule
   for tied scores, and their Wilson intervals treat each bin as fixed in
   advance. CORP's paper shows bin counts of 9, 10, and 11 giving
-  "drastically distinct" diagrams at n = 86 ([corp]), about Turn's size.
-  CORP is better for 80 lines: no bin count, ties pooled by construction,
-  a band made for small samples, and MCB, which replaces ECE without a
-  scheme to name.
+  "drastically distinct" diagrams at n = 92 ([corp]; [rd-data]), about
+  Turn's size. CORP is better for 80 lines: no bin count, ties pooled by
+  construction, a band made for small samples, and MCB, which replaces ECE
+  without a scheme to name.
 - **What stays.** The Wilson intervals remain right for single rates such
   as the floor's hit rate; they aren't needed on the diagram.
 
 ## Gaps
 
 - The PNAS version of CORP, titled "Stable reliability diagrams for
-  probabilistic classifiers": quotes here come from the arXiv copy dated
-  August 10, 2020, titled "Evaluating probabilistic classifiers: Reliability
-  diagrams and score decompositions revisited"; wording may differ.
-- CORP's simulations: the coverage figure's sample sizes start at 128, so
-  whether the 90% band's coverage holds at n = 80 wasn't confirmed, and the
-  MSE study's sample sizes in its appendix weren't read.
-- Bröcker and Smith (2007): only the abstract was read, as the journal page
-  refused the request, so their resample count and bar construction are
-  unconfirmed.
+  probabilistic classifiers", was read in PubMed Central's copy
+  ([corp-pnas]), as pnas.org answered with a bot check. Quotes here come
+  from the arXiv copy dated August 10, 2020, titled "Evaluating
+  probabilistic classifiers: Reliability diagrams and score decompositions
+  revisited". PNAS matches them apart from copyedits such as "in between"
+  and three changes: n = 92 in Fig. 1's caption, "PAV-transformed
+  probabilities" for the PAV values, and "PAV-(re)calibrated forecast" in
+  DSC's property.
+- CORP's simulations: the authors' replication code sets
+  `n.set <- 2^seq(6,13)` for both the coverage and the MSE studies, so the
+  sizes run from 64 to 8,192 in doublings, with none at 80 ([replication]).
+  Read by eye, the coverage figure's consistency-band points at 64 and 128
+  sit above the 0.90 line in all three panels.
+- Bröcker and Smith (2007): the article, read on the journal's page, names
+  the resample count `N_boot` but gives it no value in the text.
 - Murphy (1973): not read; the formula above is its usual form.
 - No source read gives an interval for the Brier score or its skill score;
   the bootstrap over lines is this note's own choice.
 - No source read gives a rule for tied scores at an equal-mass bin's edge.
-- `monotone::monotone` wasn't read; the tie reasoning rests on the
-  `order(x, -y)` sort and PAV's pooling.
+- `monotone` 0.1.2 was read, not run; the tie reasoning follows from its
+  code, not from a test in R.
+
+[replication]: https://github.com/TimoDimi/replication_DGJ20/tree/master/replication_paper
 
 ## See also
 
@@ -336,6 +368,8 @@ Synthesis:
 
 [calibration section]: /docs/research/0025-turn-evaluation.md#calibration-and-the-two-confidence-bars
 [guo-2017]: https://arxiv.org/abs/1706.04599
-[gupta-2022]: https://arxiv.org/abs/2107.08353
+[gupta-2022]: https://arxiv.org/abs/2107.08353v4
 [corp]: https://arxiv.org/abs/2008.03033
+[corp-pnas]: https://pmc.ncbi.nlm.nih.gov/articles/PMC7923594/
 [rd-region]: https://github.com/aijordan/reliabilitydiag/blob/master/R/region_method.R
+[rd-data]: https://github.com/aijordan/reliabilitydiag/blob/master/R/data.R
