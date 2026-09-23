@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect, test, vi } from 'vitest'
+import { relayModel } from '../src/jev'
 import { main } from '../src/report'
 import { fakeServices } from './services'
 
@@ -55,7 +56,7 @@ test("keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)",
   // The question wording, for a line with no categories and one candidate, compared as sent, in its keys' order.
   const request = buildJevRequest(
     { line: 'Tea?', place: 'Home', categories: [], candidates: [{ id: 'tea', text: 'Tea, please' }] },
-    'jev-1.13.0'
+    relayModel()
   )
   const frozen = {
     model: 'jev-1.13.0',
