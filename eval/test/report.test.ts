@@ -52,6 +52,10 @@ test('says who wrote and labeled these lines, and who wrote the 80 lines and the
   const who = section('## Who wrote the data')
   expect(who).toMatch(prose('test-writer-1 wrote 4 and test-writer-2 wrote 4, and test-labeler-1 labeled'))
   expect(who).toMatch(prose('Claude subagents wrote the 80 lines and the starter bank on September 23, 2026'))
+  expect(who).toMatch(prose('a third wrote the bank without seeing the lines, and a fourth read every phrase'))
+  expect(who).toMatch(prose("Two more, claude-c and claude-d, then labeled every line's replies, each alone"))
+  expect(who).toMatch(prose('from a brief that set no quota'))
+  expect(who).toMatch(prose("claude-c's labeling is the one the evaluation scores"))
   expect(who).toMatch(prose('no teammate had yet read the bank or labeled a line'))
 })
 
