@@ -13,6 +13,12 @@ export const headers: Record<string, string> = {
   'X-Turn-Build': 'device'
 }
 
+/** The hex SHA-256 of a text, worked out apart from the relay's own code. */
+export async function sha256(text: string) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
+}
+
 /** Sends a request to the Worker's handler with some vars changed, as the next request after a change would see them. */
 export const send = (request: Request, changes: Partial<Record<keyof Env, unknown>> = {}) =>
   worker.fetch(request, { ...env, ...changes } as Env)
@@ -81,3 +87,7 @@ export function mockJev(...responses: (() => Response)[]) {
   for (const response of responses) spy.mockImplementationOnce(async () => response())
   return spy
 }
+
+/** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
+export const jevError = (status: number) => () =>
+  Response.json({ detail: 'Traceback: bad key test-typesafe-key' }, { status })
