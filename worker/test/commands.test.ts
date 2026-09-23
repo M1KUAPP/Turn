@@ -7,7 +7,7 @@ import { mockCloudflare } from './helpers'
 /** The environment the commands read, with made-up values. */
 const env = { TURN_CF_ACCOUNT_ID: 'account-test', TURN_CF_LOGS_TOKEN: 'test-logs-token' }
 
-/** One page of the query's events, with these payloads. */
+/** One page of the query's events, with these payloads, then their count. */
 const page = (sources: unknown[]) => () =>
   Response.json({
     success: true,
@@ -16,6 +16,10 @@ const page = (sources: unknown[]) => () =>
       events: { events: sources.map((source, i) => ({ $metadata: { id: `e${i}` }, source })), count: sources.length }
     }
   })
+
+/** The count calculation's answer. */
+const total = (count: number) => () =>
+  Response.json({ success: true, errors: [], result: { calculations: [{ aggregates: [{ value: count }] }] } })
 
 /** An answered line's log fields. */
 const answered = { outcome: 'answered', ms: { total: 900, jev: 700 }, inputTokens: 512 }
@@ -33,7 +37,7 @@ const queried = () => JSON.parse(String(vi.mocked(globalThis.fetch).mock.calls[0
 describe('bun run logs', () => {
   test("prints a named day's summary, from its midnight to the next", async () => {
     const { printed } = output()
-    mockCloudflare(page([answered]))
+    mockCloudflare(page([answered]), total(1))
     expect(await printLogs(['--day', '2026-09-20'], env)).toBe(0)
     expect(queried()).toEqual({ from: Date.parse('2026-09-20T00:00:00Z'), to: Date.parse('2026-09-21T00:00:00Z') })
     expect(printed()).toContain("The relay's logs for 2026-09-20, in UTC: 1 log line, of 1 event the query matched")
@@ -64,7 +68,7 @@ describe('the credit check', () => {
   test('reads from the last close and prints the issue when the alert fires', async () => {
     const { printed } = output()
     const since = new Date(Date.now() - 60 * 60 * 1000).toISOString()
-    mockCloudflare(page([answered]))
+    mockCloudflare(page([answered]), total(1))
     expect(await checkCredits(['--level', '0', '--since', since], env)).toBe(0)
     expect(queried().from).toBe(Date.parse(since))
     expect(printed()).toMatch(/so the alert fires\.\n\nThe relay's logs from /)
@@ -73,7 +77,7 @@ describe('the credit check', () => {
 
   test('reads the last 24 hours at $0.50 unless told, and stays quiet under the level', async () => {
     const { printed } = output()
-    mockCloudflare(page([answered]))
+    mockCloudflare(page([answered]), total(1))
     expect(await checkCredits([], env)).toBe(0)
     const { from, to } = queried()
     expect(to - from).toBe(24 * 60 * 60 * 1000)
