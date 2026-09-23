@@ -45,12 +45,13 @@ Contents:
 - **Apple on this Mac: revision 1, 512 dimensions.** A probe on macOS 27.0
   found `revision` 1, `dimension` 512, current revision 1, and supported
   revisions `[1]`. `vector(for: "")` returned nil.
-- **Compile the helper once and pipe JSON.** A `swiftc -O` binary started in
+- **Start the helper once and pipe JSON.** A `swiftc -O` binary started in
   0.01 seconds here, against 0.28 seconds for `swift file.swift`. Node's
   `execFile` caps output at 1 MiB by default, so return ranks or distances,
   not vectors, or keep one helper open and stream them, as the probe did.
-
-[live probe]: #a-live-probe-of-both-models-and-apples-embedding
+  Settled since: `eval/src/apple.ts` runs `swift` on the helper once per run
+  with `spawn`, keeps it open, and reads a line of vectors for each line of
+  texts, so no output cap applies.
 
 ## bge-reranker-base on Workers AI
 
@@ -72,14 +73,17 @@ Contents:
   (see [Gaps](#gaps)). On workerd's `main`, `Ai_Cf_Baai_Bge_Reranker_Base_Input`
   has `top_k?: number;` and `contexts: { text?: string; }[];`, and the doc
   comment for the query is followed by no `query` property. The output is
-  `response?: { id?: number; score?: number; }[]` ([workerd-ai]).
+  `response?: { id?: number; score?: number; }[];` ([workerd-ai]). The
+  `contexts` and `response` spans leave out the doc comments inside their
+  braces.
 - **Score, per Cloudflare.** The model's description ends: "And the score can
   be mapped to a float value in [0,1] by sigmoid function." ([cf-rr-json]) The
   schema's `score` says nothing on range or sigmoid.
 - **Score, per BAAI.** "The reranker is optimized based cross-entropy loss, so
   the relevance score is not bounded to a specific range." ([hf-rr]) The card's
-  transformers example returns `model(**inputs, return_dict=True).logits`
-  after tokenizing pairs with `max_length=512` ([hf-rr]).
+  transformers example loads `BAAI/bge-reranker-large`, not the base model,
+  tokenizes pairs with `max_length=512`, and scores them with
+  `model(**inputs, return_dict=True).logits.view(-1, ).float()` ([hf-rr]).
 - **Score, per FlagEmbedding.** The `AbsReranker` constructor takes
   `normalize: bool = False`, "If true, normalize the result.", and its
   `max_length` ("Maximum length.") defaults to 512 ([fe-abs]). The
@@ -120,9 +124,10 @@ Contents:
 - **Who formats the instruction.** Neither Cloudflare's page nor its schema
   says how `instruction` reaches the model, or whether it touches `documents`
   ([cf-qwen]; [cf-qwen-json]).
-- **Limits and price.** `context_window` is "8192" and the price "$0.0118 per
-  M input tokens" ([cf-qwen-json]). Text embeddings allow "3000 requests per
-  minute" ([cf-limits]). No dimension is stated.
+- **Limits and price.** `context_window` is "8192" ([cf-qwen-json]), and
+  Cloudflare's page gives the price as "$0.0118 per M input tokens"
+  ([cf-qwen]). Text embeddings allow "3000 requests per minute" ([cf-limits]).
+  No dimension is stated.
 - **Qwen's query format.** The card's helper returns
   `f'Instruct: {task_description}\nQuery:{query}'`, with no space after
   `Query:`. Its comments say "Each query must come with a one-sentence
@@ -145,7 +150,10 @@ Contents:
   orders `data`. To learn whether Workers AI formats the instruction, embed one
   made-up line both ways: as `queries` with the instruction, and as
   `documents` with the card's `Instruct: ...\nQuery:` string. A cosine near 1
-  means Cloudflare adds the card's format.
+  means Cloudflare adds the card's format. The [live probe] settled both
+  questions for the texts it sent: a request with both `queries` and
+  `documents` failed with code 3030, and the two ways gave a cosine of
+  1.0000000, so Workers AI formats the instruction.
 - Synthesis: tokens are small. 80 lines at about 30 tokens with the
   instruction, plus about 150 phrases, come to a few thousand tokens, well
   under $0.001.
@@ -157,7 +165,10 @@ Contents:
 
 The [run notes] already cite `sentenceEmbedding(for:)`, `vector(for:)` and its
 nil, `distance(between:and:distanceType:)`, `dimension`, the concurrency
-warning, and Apple's silence on whether the model ships with the OS. New here:
+warning, and Apple's silence on whether the model ships with the OS; they also
+name the three revision APIs. Here is what Apple's pages say of each and of
+the `revision` and `dimension` properties, then what a probe on this Mac
+found:
 
 - **Pinning a revision.** `sentenceEmbedding(for:revision:)` is a class
   method taking `language: NLLanguage` and `revision: Int` and returning
@@ -180,8 +191,11 @@ warning, and Apple's silence on whether the model ships with the OS. New here:
   the supported set `[1]`, and `vector(for:)` gave 512 numbers. An empty
   string returned nil.
 - **Probe timing.** One run each, not a benchmark: loading took 25 ms and the
-  first vector 8 ms on the first launch, then 6 ms and 3 ms. The cosine
-  distance from "Would you like some tea?" to "Yes, please." was 1.116.
+  first vector 8 ms on the first launch, then 6 ms and 3 ms.
+  `distance(between:and:distanceType: .cosine)` from "Would you like some
+  tea?" to "Yes, please." returned 1.116, while 1 minus the cosine of their
+  vectors is 0.622; the [live probe] found this distance is the square root
+  of 2 minus twice the cosine.
 - Synthesis: the program asked for no asset, and the model loaded in
   milliseconds, but that doesn't show whether macOS ships it or fetched it
   earlier. Log `revision`, `dimension`, and the supported set in the run, and
@@ -225,6 +239,10 @@ warning, and Apple's silence on whether the model ships with the OS. New here:
   From Bun or Node, start the binary with `execFile` from `node:child_process`
   and write the JSON to `child.stdin`, or use `spawn` to stream larger output.
   Vitest can fake the helper, so the tests never need Swift.
+- Settled since: the evaluation took the `spawn` path. It keeps one helper
+  open, sends it a line of texts at a time, and reads back a line of their
+  vectors, so nothing is cut at 1 MiB and the cosines are computed in
+  TypeScript; its tests fake the helper with a Node script.
 
 [node-cp]: https://nodejs.org/api/child_process.html
 
@@ -303,6 +321,7 @@ Mac, all on made-up sentences, never the evaluation's lines:
 
 [services notes]: /docs/research/0042-turn-eval-services.md#workers-ais-rest-api-for-bge-base
 [run notes]: /docs/research/0047-turn-eval-run.md#apples-sentence-embedding-on-a-mac
+[live probe]: #a-live-probe-of-both-models-and-apples-embedding
 [workerd-ai]: https://github.com/cloudflare/workerd/blob/main/types/defines/ai.d.ts
 [cf-limits]: https://developers.cloudflare.com/workers-ai/platform/limits/
 [cf-rr-json]: https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/workers-ai-models/bge-reranker-base.json
