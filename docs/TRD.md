@@ -315,6 +315,11 @@ CREATE TABLE requests (
 - **The name.** The Worker reaches the object with `getByName()` on the
   SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
   so a stored record can't be traced back to an ID without the salt.
+- **Each address's count.** One more object per address, `address-<hash>`,
+  named by the SHA-256 of the address and the same salt, keeps a
+  `requests` table of the same shape and nothing else. It counts every
+  request from the address the same way, against 120 a minute, before the
+  user's object does (SEC-3).
 - **The day's calls.** The budget's object, `jev-calls`, keeps one more
   table, with one row:
 
@@ -331,13 +336,17 @@ CREATE TABLE requests (
   refuses the attempt and writes nothing. A new day starts again from 0,
   so the budget comes back at midnight UTC (SEC-5).
 
-- **The Free plan's budget.** Each request writes 1 row in the user's
-  object for its count, and each new free line 2 more there and 1 in the
-  daily budget's, so the Free plan's 100,000 rows a day cover about 1,200
-  devices spending all 20 lines in one day, with a configuration request or
-  two each.
+- **The Free plan's budget.** Each request writes 1 row in its address's
+  object and 1 in the user's for their counts, each new free line 2 more in
+  the user's and 1 in the daily budget's, and a new object 2 for each table
+  it creates ([address limit notes][addr-rows]). A device spending all 20
+  lines in one day from one address, with two configuration requests,
+  writes 112 rows, so the Free plan's 100,000 rows a day cover about 890
+  such devices; at 64 object requests each, its 100,000 requests a day
+  cover about 1,560.
 
 [svc-count]: /docs/research/0024-turn-services.md#counting-free-partner-lines-per-device
+[addr-rows]: /docs/research/0050-turn-address-limit.md#local-measurement
 
 ### What is never stored
 
