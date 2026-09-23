@@ -209,7 +209,7 @@ git cat-file --batch-all-objects --batch |
 
 ## Hands-on check
 
-The session ran these on September 23, 2026, between 08:45 and 09:15 UTC,
+The session ran these on September 23, 2026, between 08:48 and 09:30 UTC,
 on the Mac that deploys the relay. No command printed the key or took it as
 an argument: curl read its header from standard input.
 
