@@ -6,6 +6,20 @@ export type Access = { account: string; token: string }
 /** The most events one query returns. */
 export const pageSize = 2000
 
+const dayMs = 24 * 60 * 60 * 1000
+
+/**
+ * A UTC day's range in milliseconds since 1970, from its midnight to the next, or to now if that's sooner, for a day
+ * that has begun: yesterday unless one is named as `YYYY-MM-DD`. Null for any other name.
+ */
+export function dayRange(day: string | undefined, now: number): { day: string; from: number; to: number } | null {
+  const name = day ?? new Date(now - dayMs).toISOString().slice(0, 10)
+  const from = Date.parse(`${name}T00:00:00.000Z`)
+  // A name that parses back to itself, since some runtimes read February 30 as March 2.
+  if (Number.isNaN(from) || new Date(from).toISOString().slice(0, 10) !== name || from > now) return null
+  return { day: name, from, to: Math.min(from + dayMs, now) }
+}
+
 /** The query API's answer, unchecked, with the fields the script reads. */
 type Answer = {
   errors?: { message?: unknown }[]
