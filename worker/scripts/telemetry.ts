@@ -39,7 +39,7 @@ export function dayRange(day: string | undefined, now: number): (Range & { day: 
 type Answer = {
   errors?: { message?: unknown }[]
   result?: {
-    events?: { events?: { $metadata?: { id?: unknown }; source?: unknown }[] }
+    events?: { events?: { $metadata?: { id?: unknown; requestId?: unknown }; source?: unknown }[] }
     calculations?: { aggregates?: { value?: unknown }[] }[]
   }
 }
@@ -75,12 +75,13 @@ async function query({ account, token }: Access, { from, to }: Range, view: obje
 /**
  * The relay's log lines in a range, from Workers Logs through Cloudflare's telemetry query API, with the count of
  * events the query matched. It reads the `turn-relay` Worker's events 2,000 at a time, paging on from the last event's
- * ID until a page comes back short, and keeps each event once, only if its payload is one of the relay's lines. The
+ * ID until a page comes back short, and keeps each event once, by its ID and its request, only if its payload is one of
+ * the relay's lines. The
  * total comes from a count, since a page's own count is only how many it returned. It throws when the API refuses,
  * answers out of shape, or repeats a page.
  */
 export async function readLogs(access: Access, range: Range) {
-  const seen = new Set<unknown>()
+  const seen = new Set<string>()
   const lines: LogLine[] = []
   for (let offset: string | undefined; ;) {
     const answer = await query(access, range, {
@@ -92,8 +93,10 @@ export async function readLogs(access: Access, range: Range) {
     if (!Array.isArray(events)) throw new Error('The telemetry query answered out of shape')
     const known = seen.size
     for (const { $metadata, source } of events) {
-      if ($metadata?.id !== undefined && seen.has($metadata.id)) continue
-      seen.add($metadata?.id)
+      // Events logged in the same millisecond share an ID, so an event is its ID and its request together.
+      const key = `${$metadata?.id}:${$metadata?.requestId}`
+      if (seen.has(key)) continue
+      seen.add(key)
       if (isLogLine(source)) lines.push(source)
     }
     if (events.length < pageSize) break
