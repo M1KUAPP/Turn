@@ -135,6 +135,22 @@ test('has the phone rank a line when the relay fails, answers nothing, or answer
   expect(replayed[0].row.slots.slice(0, 3)).toEqual(fixedButtons)
 })
 
+test('has the phone rank a line the relay answers out of shape, and says so', async () => {
+  fakeRelay(async (request) => {
+    // A big button, but no times; then a page that isn't JSON.
+    const body = (await answered(request, { [request.candidates[0].id]: 0.9 }).json()) as Partial<LineAnswer>
+    if (request.seq === 1) return Response.json({ ...body, ms: undefined })
+    return new Response('<html>Bad gateway</html>', { status: 200 })
+  })
+  const { replayed } = await replay(lines('Hello', 'Good morning'), relay)
+  expect(replayed.map(({ by, failure }) => [by, failure])).toEqual([
+    ['phone', 'an answer out of shape'],
+    ['phone', 'an answer out of shape']
+  ])
+  // The phone's own ranking, which never brings a big button, not the relay's.
+  expect(replayed.map(({ row }) => row.big)).toEqual([null, null])
+})
+
 test('has the phone rank every line when Jev is off, sending none to the relay', async () => {
   const spy = fakeRelay((request) => answered(request), { ...config, jevOn: false })
   const { replayed } = await replay(lines('Do you want a cup of tea?', 'Hello'), relay)
