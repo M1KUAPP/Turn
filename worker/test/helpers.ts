@@ -1,6 +1,7 @@
 import type { LineRequest } from '@turn/shared/relay'
 import { env } from 'cloudflare:workers'
 import { expect, vi } from 'vitest'
+import type { Item } from '../src/entitlement'
 import worker from '../src/index'
 
 /** An app user's ID, a lowercase version 4 UUID. */
@@ -18,6 +19,9 @@ export async function sha256(text: string) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
+
+/** The salted hash of an app user's ID, which names their object, for the test's user unless another is given. */
+export const userHash = (id = user) => sha256(`test-salt${id}`)
 
 /** Sends a request to the Worker's handler with some vars changed, as the next request after a change sees them. */
 export const send = (request: Request, changes: Partial<Record<keyof Env, unknown>> = {}) =>
@@ -133,11 +137,38 @@ export const unknownCustomer = () =>
 /** Jev's answer, for each of `count` calls. */
 export const jevAnswers = (count: number) => Array.from({ length: count }, () => () => Response.json(jevAnswer()))
 
-/** The free lines the configuration shows the test's user, or the one the headers name, with some vars changed. */
-export async function freeLinesLeft(sent: Record<string, string> = headers, changes: Parameters<typeof send>[1] = {}) {
-  const response = await send(new Request('https://relay.test/v1/config', { headers: sent }), changes)
-  return ((await response.json()) as { freeLinesLeft: number | null }).freeLinesLeft
+/** Asks for the configuration as the app does, with some vars changed, from the test's user or the one the headers name. */
+export const getConfig = (changes: Parameters<typeof send>[1] = {}, sent: Record<string, string> = headers) =>
+  send(new Request('https://relay.test/v1/config', { headers: sent }), changes)
+
+/** The free lines the configuration shows, with some vars changed, to the test's user or the one the headers name. */
+export async function freeLinesLeft(changes: Parameters<typeof send>[1] = {}, sent: Record<string, string> = headers) {
+  return ((await (await getConfig(changes, sent)).json()) as { freeLinesLeft: number | null }).freeLinesLeft
 }
+
+/** `listen`, bought once, which never expires. */
+export const listen: Item = { entitlement_id: env.RC_ENTITLEMENT_ID, expires_at: null }
+
+/** RevenueCat's list of the user's active entitlements, in the spec's shape. */
+export const activeEntitlements =
+  (...items: Item[]) =>
+  () =>
+    Response.json({
+      object: 'list',
+      items: items.map((item) => ({ object: 'customer.active_entitlement', ...item })),
+      next_page: null,
+      url: `/v2/projects/${env.RC_PROJECT_ID}/customers/${user}/active_entitlements`
+    })
+
+/** RevenueCat's error body, with its status. */
+export const rcError = (status: number, type: string) => () =>
+  Response.json({ object: 'error', type, message: 'Something went wrong', retryable: status >= 500 }, { status })
+
+/** The calls that reached an API, by its host. */
+export const callsTo = (host: string) =>
+  vi
+    .mocked(globalThis.fetch)
+    .mock.calls.filter(([input]) => new URL(input instanceof Request ? input.url : String(input)).host === host)
 
 /** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
 export const jevError = (status: number) => () =>

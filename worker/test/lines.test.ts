@@ -12,8 +12,7 @@ import {
   mockJev,
   postLine,
   send,
-  sha256,
-  user
+  userHash
 } from './helpers'
 
 describe('POST /v1/lines', () => {
@@ -70,7 +69,7 @@ describe('POST /v1/lines', () => {
       env.DEVICE.getByName(name, options)
     )
     await postLine(lineRequest(), { DEVICE: { getByName } })
-    expect(getByName).toHaveBeenCalledExactlyOnceWith(`user-${await sha256(`test-salt${user}`)}`, {
+    expect(getByName).toHaveBeenCalledExactlyOnceWith(`user-${await userHash()}`, {
       locationHint: 'wnam'
     })
   })
