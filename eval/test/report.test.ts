@@ -185,7 +185,10 @@ test('says so in a whole sentence when a group has no lines', async () => {
     prose('There are no lines that share no word with an acceptable reply, as the phone matches words.')
   )
   expect(one).toMatch(
-    prose('No ranker showed a big button on a line its writer marked yes-or-no, or on one about pain or consent.')
+    prose(
+      'No ranker showed a big button on a line its writer marked yes-or-no, or on one about pain or consent, in any ' +
+        'of its answers.'
+    )
   )
   const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
   for (const line of empty.split('\n').filter((line) => !line.startsWith('|'))) {
@@ -253,8 +256,14 @@ test('lists every big button on a yes-or-no, pain, or consent line, and whether 
   const shown = section('## Big buttons on yes-or-no, pain, and consent lines')
   // The stand-in calls fixture-2 an open question and scores the phrase sharing "hurt" 0.9; on the yes-or-no lines it
   // brings the fixed buttons instead, and no other ranker shows a big button.
-  expect(shown).toMatch(prose('or on one about pain or consent (EVAL-5): 1, 1 of them wrong.'))
-  expect(cells(shown, 'jev')).toEqual(['fixture-2', 'Where does it hurt the most?', 'Is this going to hurt?', 'wrong'])
+  expect(shown).toMatch(prose('or on one about pain or consent, in any of its answers (EVAL-5): 1, 1 of them wrong.'))
+  expect(cells(shown, 'jev')).toEqual([
+    'fixture-2',
+    'Where does it hurt the most?',
+    'Is this going to hurt?',
+    'wrong',
+    '4 of 4'
+  ])
 })
 
 test("escapes a pipe in a line's text, so the big buttons' table keeps its columns", async () => {

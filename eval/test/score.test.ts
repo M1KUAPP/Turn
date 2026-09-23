@@ -276,6 +276,22 @@ test('lists every big button with its ranker, line, and phrase, and whether the 
     ['sure', 'cold', 'im-cold', false],
     ['sure', 'costs', 'how-much-is-this', false]
   ])
+  // It gave the same answer all four times: the warm-up and three timed passes.
+  for (const { answers } of bigButtons(scored)) expect(answers).toEqual({ k: 4, n: 4 })
+})
+
+test('lists a big button any answer showed, even when the scored answer showed none', async () => {
+  // A ranker whose second answer, the first timed pass's, brings no big button; its other three do.
+  let calls = 0
+  const wavering: Ranker = (_line, shortlist) => ({
+    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    topic: {},
+    scores: new Map([[shortlist[0].id, calls++ === 1 ? 0.7 : 0.9]]),
+    onPhone: false
+  })
+  const { lines: scored } = await scoreLines(lines.slice(0, 1), bank, { wavering })
+  expect(scored[0].rankers.wavering.row.big).toBeNull()
+  expect(bigButtons(scored)).toMatchObject([{ ranker: 'wavering', phrase: 'water-please', answers: { k: 3, n: 4 } }])
 })
 
 test("counts a ranker's most likely kind of question against its writer's, a tie apart", async () => {

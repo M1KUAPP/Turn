@@ -28,12 +28,13 @@ export type Outcome = (typeof outcomes)[number]
 
 /**
  * One line, scored: its shortlist's ids and, per ranker, its ranking, its order over the phrases it scored above 0,
- * the row the rules made of it, and what the user would see.
+ * the row the rules made of it, and what the user would see, all from the first timed pass; and the rows of every
+ * answer the ranker gave the line, the warm-up's included, since a model's answers can vary.
  */
 export type LineScore<Line extends ScoredLine> = {
   line: Line
   shortlist: string[]
-  rankers: Record<string, { ranking: Ranking; order: string[]; row: Row; outcome: Outcome }>
+  rankers: Record<string, { ranking: Ranking; order: string[]; row: Row; outcome: Outcome; rows: Row[] }>
 }
 
 /** A count of k lines out of n, for a rate. */
@@ -131,7 +132,7 @@ export async function scoreLines<Line extends ScoredLine>(
     return { ranked, timings }
   }
   // The warm-up pass, whose timings are left out.
-  await pass()
+  const warmUp = await pass()
   const passes = [await pass(), await pass(), await pass()]
   const { ranked } = passes[0]
   const fold = folds(lines, (line) => line.acceptable.length > 0)
@@ -157,8 +158,10 @@ export async function scoreLines<Line extends ScoredLine>(
         .sort(([, a], [, b]) => b - a)
         .map(([id]) => id)
       const cut = cutOffs[name]
-      const row = rowFor(cut ? cut(ranking, chosen[name][fold[i]]) : ranking)
-      return [name, { ranking, order, row, outcome: outcomeOf(row, acceptable) }] as const
+      const rowOf = (answer: Ranking) => rowFor(cut ? cut(answer, chosen[name][fold[i]]) : answer)
+      const rows = [warmUp, ...passes].map((each) => rowOf(each.ranked[i].rankings[name]))
+      const row = rowOf(ranking)
+      return [name, { ranking, order, row, outcome: outcomeOf(row, acceptable), rows }] as const
     })
     return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
   })
@@ -255,14 +258,34 @@ export function kindMatrix<Line extends ScoredLine & { kind: Kind }>(
 }
 
 /** A big button a ranker showed: the line, its phrase, and whether the phrase is acceptable. */
-export type BigButton<Line extends ScoredLine> = { ranker: string; line: Line; phrase: string; right: boolean }
+export type BigButton<Line extends ScoredLine> = {
+  ranker: string
+  line: Line
+  phrase: string
+  right: boolean
+  /** How many of the ranker's answers for the line showed it, and how many answers it gave. */
+  answers: Count
+}
 
-/** Every ranker's big button on the lines, in the lines' order (EVAL-5). */
+/**
+ * Every big button a ranker showed on the lines, in any of the answers it gave each line, in the lines' order (EVAL-5):
+ * a model's answers can vary, so a wrong big button in any of them counts.
+ */
 export function bigButtons<Line extends ScoredLine>(scores: readonly LineScore<Line>[]): BigButton<Line>[] {
   return scores.flatMap(({ line, rankers }) =>
-    Object.entries(rankers).flatMap(([ranker, { row }]) =>
-      row.big === null ? [] : [{ ranker, line, phrase: row.big, right: line.acceptable.includes(row.big) }]
-    )
+    Object.entries(rankers).flatMap(([ranker, { rows }]) => {
+      const shown = Map.groupBy(
+        rows.flatMap(({ big }) => (big === null ? [] : [big])),
+        (big) => big
+      )
+      return [...shown].map(([phrase, times]) => ({
+        ranker,
+        line,
+        phrase,
+        right: line.acceptable.includes(phrase),
+        answers: { k: times.length, n: rows.length }
+      }))
+    })
   )
 }
 
