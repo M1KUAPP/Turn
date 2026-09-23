@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { percentile, wilson } from '../src/stats'
+import { chanceHit, chanceReciprocalRank, percentile, wilson } from '../src/stats'
 
 const oneTo = (n: number) => Array.from({ length: n }, (_, i) => i + 1)
 
@@ -36,4 +36,25 @@ test('gives the least and the greatest value at 0 and 100, in any order, leaving
   expect(percentile(timings, 50)).toBe(5)
   expect(percentile(timings, 100)).toBe(9)
   expect(timings).toEqual([3, 9, 1, 7])
+})
+
+test('gives the chance a random order puts an acceptable phrase first or in the first k, as enumeration does', () => {
+  expect(chanceHit(6, 2, 1)).toBeCloseTo(1 / 3, 12)
+  expect(chanceHit(6, 2, 3)).toBeCloseTo(4 / 5, 12)
+  expect(chanceHit(40, 1, 1)).toBeCloseTo(0.025, 12)
+  expect(chanceHit(40, 1, 6)).toBeCloseTo(0.15, 12)
+  expect(chanceHit(40, 2, 6)).toBeCloseTo(73 / 260, 12)
+})
+
+test("gives a random order's expected reciprocal rank, as enumeration does", () => {
+  expect(chanceReciprocalRank(6, 2)).toBeCloseTo(29 / 50, 12)
+  expect(chanceReciprocalRank(40, 1)).toBeCloseTo(0.106964, 6)
+  expect(chanceReciprocalRank(40, 2)).toBeCloseTo(0.16813, 6)
+  expect(chanceReciprocalRank(3, 3)).toBe(1)
+})
+
+test('gives no chance with no acceptable phrase, and a sure hit when k covers every phrase', () => {
+  expect(chanceHit(40, 0, 6)).toBe(0)
+  expect(chanceReciprocalRank(40, 0)).toBe(0)
+  expect(chanceHit(4, 1, 6)).toBe(1)
 })
