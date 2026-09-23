@@ -107,4 +107,15 @@ describe('applyAnswer', () => {
       expect(afterBig(0.5)).toMatchObject({ big: null, slots: ['a', 'x', 'c', 'd', 'e', 'f'] })
     })
   })
+
+  test('returns the topic at or above the floor for its tab, and none below it (ROW-9)', () => {
+    expect(replay(answer(1, { water: 0.7 })).tab).toBe('food')
+    expect(replay(answer(1, { water: 0.7 }, { topic: { food: 0.5, drinks: 0.3, consent: 0.2 } })).tab).toBeNull()
+    // Even an answer that leaves the row as it is marks its topic.
+    const held = replay(
+      answer(1, { water: 0.7 }),
+      answer(2, { juice: 0.4 }, { topic: { 'body-pain': 0.7, food: 0.3 } })
+    )
+    expect(held).toMatchObject({ tab: 'body-pain', slots: ['water', null, null, null, null, null] })
+  })
 })
