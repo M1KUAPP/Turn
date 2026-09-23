@@ -53,8 +53,11 @@ export const postLine = (body: unknown, changes: Parameters<typeof send>[1] = {}
     changes
   )
 
-/** Jev's answer to `lineRequest()`: an open question about feelings, with the candidates scored as given, in order. */
-export const jevAnswer = (nouls: number[] = [0.9, 0.4, 0.7]) => ({
+/** Jev's answer: an open question, about feelings unless the topic says otherwise, scoring the candidates in order. */
+export const jevAnswer = (
+  nouls: number[] = [0.9, 0.4, 0.7],
+  topic: Record<string, number> = { feelings: 0.8, 'body-pain': 0.15, consent: 0.05 }
+) => ({
   model: 'jev-1.13.0',
   answers: {
     kind: {
@@ -63,12 +66,7 @@ export const jevAnswer = (nouls: number[] = [0.9, 0.4, 0.7]) => ({
       confidence: 0.7,
       probabilities: { yes_no: 0.1, either_or: 0.1, open: 0.7, not_a_question: 0.1 }
     },
-    topic: {
-      type: 'choice',
-      choice: 'feelings',
-      confidence: 0.8,
-      probabilities: { feelings: 0.8, 'body-pain': 0.15, consent: 0.05 }
-    },
+    topic: { type: 'choice', choice: 'feelings', confidence: 0.8, probabilities: topic },
     ...Object.fromEntries(nouls.map((noul, i) => [`c${String(i).padStart(2, '0')}`, { type: 'noul', noul }]))
   },
   usage: { input_tokens: 512, output_tokens: 20 }
