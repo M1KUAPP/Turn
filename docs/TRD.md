@@ -1370,7 +1370,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
   for Turn, by writers who haven't seen the bank, in the mix real questions
   have: about seven in ten questions yes-or-no, many of them declarative,
   such as "You're tired?", and about a fifth of lines with no acceptable
-  reply. A second labeler labels the acceptable replies, and the script
+  reply. A second teammate labels the acceptable replies, and the script
   reports their agreement ([evaluation notes][eval-data]).
 - **The starter bank** comes from the app's own file, so the evaluation
   ranks the phrases a user starts with. A fresh bank has no taps, so the
