@@ -30,6 +30,31 @@ export type LineScore<Line extends ScoredLine> = {
 /** A count of k lines out of n, for a rate. */
 export type Count = { k: number; n: number }
 
+/** Every line's score, and each step's timings in milliseconds: the shortlist's and each ranker's. */
+export type Scores<Line extends ScoredLine> = {
+  lines: LineScore<Line>[]
+  timings: { shortlist: number[]; rankers: Record<string, number[]> }
+}
+
+/** One ranker over a group of lines: its ranking, and what the user would see. */
+export type RankerSummary = {
+  top1: Count
+  top6: Count
+  meanReciprocalRank: number
+  outcomes: Record<Outcome, number>
+  coverage: Count
+  risk: Count
+}
+
+/** A group of lines, summed up for each ranker, beside chance, the shortlist's recall, and always holding. */
+export type Summary = {
+  lines: number
+  recall: Count
+  chance: { top1: number; top6: number; meanReciprocalRank: number }
+  alwaysHold: Record<Outcome, number>
+  rankers: Record<string, RankerSummary>
+}
+
 /** The row's answer carries sequence number 1, so a row still answering line 0, the empty row's, has held. */
 const seq = 1
 
@@ -57,7 +82,7 @@ export function scoreLines<Line extends ScoredLine>(
   lines: readonly Line[],
   bank: readonly Phrase[],
   rankers: Readonly<Record<string, Ranker>>
-) {
+): Scores<Line> {
   const index = new PhraseIndex()
   const names = Object.keys(rankers)
   const pass = () => {
@@ -109,7 +134,7 @@ const tally = (seen: readonly Outcome[]) => {
  * Sums up a group of scored lines. The ranking counts only lines with an acceptable phrase besides the fixed buttons,
  * which no ranker orders; its means over no such lines are NaN. The row counts every line.
  */
-export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Line>[]) {
+export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Line>[]): Summary {
   const ranked = scores
     .map((score) => ({ ...score, phrases: new Set(score.line.acceptable.filter((id) => !fixedButtons.includes(id))) }))
     .filter(({ phrases }) => phrases.size > 0)
