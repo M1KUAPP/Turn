@@ -50,6 +50,15 @@ describe('PhraseIndex', () => {
     expect(index.match('cold')).toEqual(['cold'])
   })
 
+  test("breaks ties by the bank's order, which an edit doesn't change and a move does", () => {
+    const index = new PhraseIndex()
+    index.update([phrase('first', 'Cold water'), phrase('second', 'Warm water')])
+    index.update([phrase('first', 'Iced water'), phrase('second', 'Warm water')])
+    expect(index.match('water')).toEqual(['first', 'second'])
+    index.update([phrase('second', 'Warm water'), phrase('first', 'Iced water')])
+    expect(index.match('water')).toEqual(['second', 'first'])
+  })
+
   test("never matches the fixed buttons or the strip's phrases", () => {
     const index = new PhraseIndex()
     index.update([

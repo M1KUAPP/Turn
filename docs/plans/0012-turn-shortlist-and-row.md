@@ -137,7 +137,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     The first call, at launch, builds the index; after that, an edit costs
     one lookup per phrase, so the app can't forget one. `discard` and
     `replace` aren't used, since they can give a match a score below 0
-    ([MiniSearch notes][note-ms]).
+    ([MiniSearch notes][note-ms]). The index also records each phrase's
+    place in the bank and breaks ties between equal scores by it, since
+    MiniSearch keeps the order phrases were indexed in, and an edit moves a
+    phrase to the end; the first review round found that.
 1.  **The common words** are NLTK's English list without its 45 contractions,
     which MiniSearch's tokenizer never produces, since it splits them into
     fragments the list already holds, such as `don` and `t`, plus "please":

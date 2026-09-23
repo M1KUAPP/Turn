@@ -27,12 +27,15 @@ export class PhraseIndex {
   private readonly search = new MiniSearch<{ id: string; text: string }>({ fields: ['text'], processTerm })
   /** Each indexed phrase's text, since MiniSearch removes a phrase by the text it indexed. */
   private readonly texts = new Map<string, string>()
+  /** Each phrase's place in the bank, which breaks ties between equal scores. */
+  private positions = new Map<string, number>()
 
   /**
    * Brings the index in line with the bank: adds new phrases, removes edited ones by their old text and adds them
    * again, and removes deleted ones. Removing keeps every match's score above 0, which MiniSearch's `discard` doesn't.
    */
   update(bank: readonly Phrase[]): void {
+    this.positions = new Map(bank.map((phrase, i) => [phrase.id, i]))
     const ids = new Set<string>()
     for (const { id, text } of bank.filter(rankable)) {
       ids.add(id)
@@ -51,7 +54,11 @@ export class PhraseIndex {
 
   /** The ids of the phrases that share a word with the line, other than common words, best first. */
   match(line: string): string[] {
-    return this.search.search(line).map((result) => result.id)
+    const position = (id: string) => this.positions.get(id) ?? 0
+    return this.search
+      .search(line)
+      .sort((a, b) => b.score - a.score || position(a.id) - position(b.id))
+      .map((result) => result.id)
   }
 }
 
