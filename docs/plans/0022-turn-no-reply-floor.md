@@ -231,8 +231,8 @@ so running it on the 80 lines leaves #40's run the first (EVAL-2). Markdown
 files run the gate from [the plan-storage plan][docs-gate]: Prettier,
 `check_md.py` with `--contents`, and `fact_scan.py` for new prose, with the
 session's copy of `check_md.py`, which closes a code block only on a fence
-at least as long as the one that opened it ([plan 0011's
-gate][content-gate]).
+at least as long as the one that opened it
+([plan 0011's gate][content-gate]).
 
 [docs-gate]: /docs/plans/0009-plan-storage.md#verification-gate
 [content-gate]: /docs/plans/0011-turn-starter-content.md#verification-gate
