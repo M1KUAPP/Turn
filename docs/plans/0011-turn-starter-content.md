@@ -196,7 +196,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     safety phrases CONTENT-1 lists, and doesn't see the lines either. The
     bank's writer, not this session, applies its fixes, since this session
     has read the lines; the reader then confirms the final file. Its
-    sign-off goes on #18 as an agent's read, not a teammate's.
+    sign-off goes on #18 as an agent's read, not a teammate's, and
+    [#75][teammate-read] asks for a teammate's read of every phrase before
+    #21 labels replies.
 
 [eval-writing]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 
@@ -217,8 +219,8 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 
 - The acceptable replies (#21), the quota script and the harness (#29), and
   the app's loader (#27).
-- A teammate's own read of the bank, and CONTENT-5's clinic review, which
-  remain the team's.
+- A teammate's own read of the bank, now [#75][teammate-read], and
+  CONTENT-5's clinic review, which remain the team's.
 
 ## Verification gate
 
@@ -690,3 +692,4 @@ The bank's writer applied your report: all four must-fix items and every could-f
 ```
 
 [trd-eval-data]: /docs/TRD.md#the-evaluation-data
+[teammate-read]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/75
