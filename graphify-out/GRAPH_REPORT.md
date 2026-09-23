@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 212 files · ~626,974 words
+- 217 files · ~630,114 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 17 file(s) not represented in the graph (top: (none) 6, .jsonl 4, .log 3)
 
 ## Summary
 
-- 3345 nodes · 3540 edges · 243 communities (232 shown, 6 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.84)
+- 3378 nodes · 3606 edges · 244 communities (233 shown, 6 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 13 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `c17d6acb`
+- Built from commit: `0113583b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -223,7 +223,7 @@
 - shared/tsconfig.json
 - src/index.ts
 - Tasks
-- helpers.ts
+- HomeScreen.tsx
 - Turn's starter content research notes
 - data.ts
 - Tasks
@@ -258,6 +258,7 @@
 - Turn's video iPhone research notes
 - Turn's relay research notes
 - Tasks
+- Turn speaking grid
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -289,7 +290,7 @@
 
 - None detected.
 
-## Communities (243 total, 6 thin omitted)
+## Communities (244 total, 6 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1278,18 +1279,18 @@ Nodes (3): extends, include, ../tsconfig.base.json
 
 ### Community 204 - "src/index.ts"
 
-Cohesion: 0.07
-Nodes (47): @typesafe-ai/sdk, buildJevRequest(), Choice, isRecord(), JevLine, JevRequest, keyFor(), kindKeys (+39 more)
+Cohesion: 0.06
+Nodes (60): @typesafe-ai/sdk, buildJevRequest(), Choice, isRecord(), JevLine, JevRequest, keyFor(), kindKeys (+52 more)
 
 ### Community 205 - "Tasks"
 
 Cohesion: 0.09
 Nodes (21): Appendix: the bank's briefs, Appendix: the line writers' brief, Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills (+13 more)
 
-### Community 207 - "helpers.ts"
+### Community 207 - "HomeScreen.tsx"
 
-Cohesion: 0.28
-Nodes (13): getConfig(), expectError(), expectRefused(), headers, jevAnswer(), jevError(), lineFor(), lineRequest() (+5 more)
+Cohesion: 0.23
+Nodes (8): BankDatabase, Category, localDay(), Phrase, StarterBank, Props, databases, react
 
 ### Community 208 - "Turn's starter content research notes"
 
@@ -1373,13 +1374,13 @@ Nodes (23): Decisions, Design, Global constraints, Out of scope, Rejected altern
 
 ### Community 224 - "theme.test.ts"
 
-Cohesion: 0.18
-Nodes (13): ColorName, colors, colorValues, textStyle(), typography, appearances, contrast(), design (+5 more)
+Cohesion: 0.17
+Nodes (15): ColorName, colors, colorValues, scaledTextStyle(), textStyle(), typography, HomeScreen(), appearances (+7 more)
 
 ### Community 225 - "app/package.json"
 
-Cohesion: 0.14
-Nodes (13): nativeModulesDir, expo, autolinking, @types/node, typescript, vitest, main, name (+5 more)
+Cohesion: 0.13
+Nodes (14): nativeModulesDir, expo, autolinking, @types/node, typescript, vitest, main, name (+6 more)
 
 ### Community 226 - "native.ts"
 
@@ -1388,8 +1389,8 @@ Nodes (8): nativeAccessibilitySource, AccessibilityPreferences, AccessibilitySou
 
 ### Community 227 - "App.tsx"
 
-Cohesion: 0.32
-Nodes (5): accessibilityStore, App(), HomeScreen(), expo, react
+Cohesion: 0.17
+Nodes (14): accessibilityStore, App(), start(), Ready, createBankStore(), createSpeechController(), speak(), SpeechPort (+6 more)
 
 ### Community 228 - "Tasks"
 
@@ -1403,8 +1404,8 @@ Nodes (6): compilerOptions, strict, types, extends, include, expo/tsconfig.base
 
 ### Community 230 - "dependencies"
 
-Cohesion: 0.33
-Nodes (6): dependencies, expo, expo-build-properties, expo-splash-screen, react, react-native
+Cohesion: 0.20
+Nodes (10): dependencies, expo, expo-audio, expo-build-properties, expo-speech, expo-splash-screen, expo-sqlite, react (+2 more)
 
 ### Community 231 - "devDependencies"
 
@@ -1451,24 +1452,29 @@ Nodes (8): Gaps, See also, Tests in the Workers pool, The SDK's client and call,
 Cohesion: 0.25
 Nodes (7): Global constraints, Task 1: Expo package and configuration, Task 2: Theme, Task 3: Accessibility preferences, Task 4: Native check and handoff, Tasks, Turn app foundation implementation plan
 
+### Community 243 - "Turn speaking grid"
+
+Cohesion: 0.50
+Nodes (3): Design, Steps, Turn speaking grid
+
 ## Knowledge Gaps
 
-- **2480 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2475 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2639 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2492 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2487 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2653 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@typesafe-ai/sdk` connect `src/index.ts` to `worker/package.json`?**
+- **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **Why does `@typesafe-ai/sdk` connect `src/index.ts` to `worker/package.json`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2480 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2492 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
