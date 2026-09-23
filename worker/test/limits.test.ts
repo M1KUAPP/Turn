@@ -88,10 +88,13 @@ describe("an ID's limit (SEC-3)", () => {
 })
 
 describe("an address's limit (SEC-3)", () => {
-  /** Sends an address's 120 requests of a minute, as configuration requests from five fresh IDs, each answered. */
-  async function useUpAddress(address: string) {
+  /**
+   * Sends an address's 120 requests of a minute, as configuration requests from five fresh IDs, each answered, with any
+   * headers added.
+   */
+  async function useUpAddress(address: string, added: Record<string, string> = {}) {
     for (let user = 0; user < 5; user++) {
-      const sent = from(address)
+      const sent = { ...from(address), ...added }
       for (let i = 0; i < 24; i++) expect((await getConfig({}, sent)).status).toBe(200)
     }
   }
@@ -121,6 +124,11 @@ describe("an address's limit (SEC-3)", () => {
       'internal'
     )
     expect(getByName).not.toHaveBeenCalled()
+  })
+
+  test('counts by the address Cloudflare sets, whatever X-Forwarded-For says', async () => {
+    await useUpAddress('203.0.113.19', { 'X-Forwarded-For': '192.0.2.1' })
+    await expectLimited(await getConfig({}, { ...from('203.0.113.19'), 'X-Forwarded-For': '192.0.2.2' }))
   })
 
   test('keeps one count through the whole clock minute', async () => {
