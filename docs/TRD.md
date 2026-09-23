@@ -1479,27 +1479,42 @@ line to the phone's own ranking, and speaking never depends on the relay.
 | `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                                                         |
 | `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with the phone's yes-or-no rule, no big button, and a cross-validated cut-off |
 | `jev`        | the app's shortlist, the relay's request builder with the relay's pin, and the row's rules                                                                                        |
+| `reranker`   | `@cf/baai/bge-reranker-base`: the cross-encoder's score for the line and each phrase, with the phone's yes-or-no rule, no big button, and a cross-validated cut-off               |
+| `qwen3`      | `@cf/qwen/qwen3-embedding-0.6b`: cosine similarity between the line, as a query under an instruction, and each phrase, with the rest as for `embeddings`                          |
+| `apple`      | Apple's English sentence embedding, computed on a Mac as the phone would: cosine similarity between the line and each phrase, with the rest as for `embeddings`                   |
 | `jev-rerank` | Jev over the 40 phrases nearest by Apple's sentence embedding, computed on a Mac as the phone would, run only when Jev trails `embeddings` (EVAL-4)                               |
 
 - **Over the same 40.** The place's first eight phrases are always among
   the 40, so `place`'s top 1 and top 6 never depend on the line, though
   which of its later phrases make the 40 can.
-- **Extras (EVAL-8).** `bge-reranker-base` over the keyword shortlist, an
-  off-the-shelf cross-encoder; `qwen3-embedding-0.6b` with the instruction
-  "Given what a conversation partner just said, retrieve the reply that
-  answers it"; and Apple's sentence embedding, run on a Mac.
+- **The extra rankers (EVAL-8).** Each ranks the app's shortlist, as the
+  others do ([extra rankers' notes][eval-extras]).
+  - `reranker` sends the line as the query and the shortlist's phrases as
+    the contexts, one request per line, and takes each score by its
+    context's index. A probe's scores came between 0 and 1, but a cut-off
+    needs only their order.
+  - `qwen3` embeds the line as a query under the instruction "Given what a
+    conversation partner just said, retrieve the reply that answers it",
+    which Workers AI formats as Qwen's card does, and the phrases as
+    documents, 32 to a request, since one request can't hold both.
+  - `apple` runs in a Swift helper, `eval/src/sentence-embedding.swift`,
+    which the command starts once and keeps open, so each line's time is
+    its embedding's. It loads English at revision 1, pinned so a Mac with
+    another fails, answers from one thread, and names its revision,
+    dimension, and system for the report.
 - **Embeddings measure similarity.** General-purpose embeddings trailed
   reply-trained encoders by about 25 points on a response-selection
   benchmark, and Workers AI offers no reply-trained model, so a line such as
   "How was physio?" is where keyword ranking and embeddings should fail and
   Jev should earn its place ([evaluation notes][eval-baselines]).
-- **Calling Workers AI.** The embeddings ranker posts to Workers AI's REST
-  API with `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, a token that
-  may run Workers AI, such as the Wrangler login's from
-  `wrangler auth token --json`. Each request holds at most 100 texts and asks
-  for `cls` pooling, and each phrase's vector is kept for the run. With no
-  question kind of its own, the ranker takes the phone's yes-or-no rule, and
-  since a cosine isn't a probability it never brings a big button
+- **Calling Workers AI.** The embeddings, reranker, and qwen3 rankers post
+  to Workers AI's REST API with `CLOUDFLARE_ACCOUNT_ID` and
+  `CLOUDFLARE_API_TOKEN`, a token that may run Workers AI, such as the
+  Wrangler login's from `wrangler auth token --json`. Each request to bge
+  holds at most 100 texts and asks for `cls` pooling, and each phrase's
+  vector is kept for the run. With no question kind of their own, the
+  embedding rankers and the reranker take the phone's yes-or-no rule, and
+  since their scores aren't probabilities they never bring a big button
   ([services notes][eval-services]).
 - **Calling Jev.** The Jev ranker sends the relay's request for the app's
   shortlist, with the place's name and the grid's categories, through
@@ -1513,6 +1528,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
   the line is listed.
 
 [eval-baselines]: /docs/research/0025-turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
+[eval-extras]: /docs/research/0048-turn-eval-extra-rankers.md
 [eval-services]: /docs/research/0042-turn-eval-services.md
 
 ### Metrics, intervals, and thresholds
@@ -1563,24 +1579,37 @@ see ([evaluation notes][eval-scoring]):
   make a false "trails" likelier.
 - **Frozen settings.** Jev's 0.6 and 0.85 come from TypeSafe's routing
   example, and 80 lines are too few to refit them, so they, the margin, and
-  the question wording are committed before the first run (EVAL-2). Cosine
-  scores aren't probabilities, so the embedding ranker's cut-off comes from
-  five-fold cross-validation, reported out of fold; the keyword ranker holds
-  when no word is shared, as the phone does; and every ranker's
-  risk-coverage curve is plotted.
+  the question wording are committed before the first run (EVAL-2). Cosines
+  and the reranker's scores aren't probabilities, so the cut-offs of
+  `embeddings`, `reranker`, `qwen3`, and `apple` come from five-fold
+  cross-validation, reported out of fold; the keyword ranker holds when no
+  word is shared, as the phone does; and every ranker's risk-coverage curve
+  is plotted.
 - **The cut-off.** One seeded shuffle, then the lines with an acceptable
-  reply and those with none are each dealt into five folds. Each fold's
-  cut-off is the one of the six highest cosines of each of the other four
-  folds' lines, or one above them all, that makes the most of those lines
-  right, a tie going to the higher; a cut-off between two of a line's six
-  changes which of its phrases show, and one elsewhere changes nothing.
-  At a cut-off, the phrases that reach it score 1 and the rest 0, so a line
-  whose top phrase falls short shows no phrase: the row holds, unless the
-  phone's yes-or-no rule brings the fixed buttons.
+  reply and those with none are each dealt into five folds. A ranker's
+  cut-off for a fold is the one of the six highest scores of each of the
+  other four folds' lines, or one above them all, that makes the most of
+  those lines right, a tie going to the higher; a cut-off between two of a
+  line's six changes which of its phrases show, and one elsewhere changes
+  nothing. At a cut-off, the phrases that reach it score 1 and the rest 0,
+  so a line whose top phrase falls short shows no phrase: the row holds,
+  unless the phone's yes-or-no rule brings the fixed buttons.
 - **The curves.** At each distinct top score, a line is covered when its top
   phrase reaches it, and right when one of its first six phrases at or above
   it is acceptable; the fixed buttons and the big button don't count. The
   report writes the plot as an SVG beside itself, with a table as its text.
+- **Calibration (EVAL-8).** Each line's top phrase in Jev's first timed
+  ranking, the first of its order, which breaks ties as the row does, is
+  scored against whether it's acceptable, on every line. The report draws
+  CORP's reliability diagram: the pool-adjacent-violators fit, one value for
+  each distinct score and never falling as the score rises, beside the
+  diagonal, with a 90% consistency band from 9,999 resamples of the lines,
+  each outcome redrawn as its score says, as `reliabilitydiag` draws one for
+  small samples. It needs no bins, so there's no bin count or rule for ties
+  to choose. The Brier score comes with a 95% percentile bootstrap interval
+  over the lines and CORP's decomposition into miscalibration,
+  discrimination, and the score of always forecasting the share acceptable
+  ([calibration notes][eval-calibration]).
 - **Latency:** each ranker's own work and network trip at the median, the
   95th percentile, and the maximum, by Hyndman and Fan's type 7, NumPy's
   default ([harness notes][harness-percentiles]), over at least three passes
@@ -1592,6 +1621,7 @@ see ([evaluation notes][eval-scoring]):
 [harness-chance]: /docs/research/0035-turn-eval-harness.md#chance-rates
 [harness-percentiles]: /docs/research/0035-turn-eval-harness.md#percentiles-for-latency
 [eval-stats]: /docs/research/0043-turn-eval-statistics.md
+[eval-calibration]: /docs/research/0049-turn-eval-calibration.md
 
 ### The replay script
 
@@ -1644,18 +1674,21 @@ coverage and risk with their intervals; and each step's latency. The README
 copies the table (EVAL-6). Once a ranker calls a model, the report also names
 the model pin (EVAL-6) and lists every big button on a yes-or-no, pain, or
 consent line, in any of the four answers each ranker gave the line (EVAL-5);
-`place` and `keyword` call no model and show no big button, and `embeddings`
-shows none. It also names the models Jev answered as and Workers AI's, gives Jev
-minus embeddings in top 6 with its paired interval (EVAL-4), Jev's question
-kind, and the embeddings ranker's five cut-offs, and plots every ranker's
+`place` and `keyword` call no model and show no big button, and `embeddings`,
+`reranker`, `qwen3`, and `apple` show none. It also names the models Jev
+answered as, Workers AI's three with qwen3's instruction, and Apple's sentence
+embedding with its revision, dimension, and system; gives Jev minus embeddings
+in top 6 with its paired interval (EVAL-4), Jev's question kind, and Jev's
+calibration, with the reliability diagram as an SVG beside it (EVAL-8); lists
+the five cut-offs of each ranker that has them; and plots every ranker's
 risk-coverage curve.
 
 - **Naming off.** `--unnamed` calls Jev the hosted decision model and gives
   its pin's version without the name, so the README can copy the table
   while naming is off (CONSENT-7).
-- **The 80 lines once.** The command scores any of the 80 lines, whatever
-  file holds them, only from a clean working tree, so the history shows
-  Jev's settings committed before any result (EVAL-2).
+- **The 80 lines from a clean tree.** The command scores any of the 80
+  lines, whatever file holds them, only from a clean working tree, so the
+  history shows Jev's settings committed before any result (EVAL-2).
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when
 one falls short, then the labelers' agreement
