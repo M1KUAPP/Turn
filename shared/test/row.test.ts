@@ -47,4 +47,13 @@ describe('applyAnswer', () => {
     expect(row.big).toBeNull()
     expect(row.slots).toEqual(['water', null, null, null, null, null])
   })
+
+  test('drops an answer for a line older than the newest (ROW-7)', () => {
+    const row = replay(answer(2, { water: 0.7 }))
+    expect(row.seq).toBe(2)
+    expect(applyAnswer(row, answer(1, { tea: 0.9 }))).toBe(row)
+    // The app raises seq when a line starts, so an older answer loses before the new line's arrives.
+    const started = { ...row, seq: 3 }
+    expect(applyAnswer(started, answer(2, { tea: 0.9 }))).toBe(started)
+  })
 })
