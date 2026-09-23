@@ -628,8 +628,9 @@ September 23, 2026. The run followed decision 13:
   with an interval of 17.2 to 42.2, as in the first run, whose verdict
   stands: Jev leads.
 - **EVAL-5:** the one big button on a yes-or-no, pain, or consent line is
-  line-05's "Yes, go ahead", right, in 2 of 4 answers against the first
-  run's 1. None is wrong, so the rule asks for nothing.
+  line-05's "Yes, go ahead", which is right. Jev gave it in 2 of its 4
+  answers for the line, where the first run had it in 1. None is wrong, so
+  the rule asks for nothing.
 - **Calibration:** Jev's top phrase was acceptable on 43 of the 80 lines,
   and 22 were beyond reach. The fit's blocks:
   - 0.24 to 0.43: 4 lines, none right.
