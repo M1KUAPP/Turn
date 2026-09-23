@@ -16,7 +16,7 @@ ships its TypeScript source, one file per import path, with no build step.
 The TRD's layout and versions change in the same commits as the code.
 
 **Tech Stack:** Bun 1.4.2 workspaces with isolated installs, TypeScript
-7.0.2, Vitest 4.1.11, `@cloudflare/vitest-plugin` 1.2.2, Wrangler 4.136.2,
+6.0.3, Vitest 4.1.11, `@cloudflare/vitest-plugin` 1.2.2, Wrangler 4.136.2,
 Prettier 3 run by husky and lint-staged, commitlint with Conventional
 Commits, graphify, the `gh` CLI, and subagents for research and review.
 
@@ -111,7 +111,7 @@ directive's steps map to skills:
     no barrel file, so the relay's bundle never carries the shortlist's
     MiniSearch. In a scratch prototype, a file imported this way resolved in
     Vitest on Node.js, in workerd through the plugin, in Wrangler's bundle,
-    and in TypeScript 7's `bundler` resolution. Metro's check comes with the
+    and in TypeScript's `bundler` resolution. Metro's check comes with the
     app's ticket, as [the note's gaps][note-gaps] say.
 1.  **One command each at the root.** `bun install` installs every package
     and still runs husky's `prepare` ([hands-on check][note-check]).
@@ -132,16 +132,18 @@ directive's steps map to skills:
     import `cloudflare:workers`, which is its red step. No package imports
     `@turn/shared` yet: the first ticket that uses it adds the
     `workspace:*` dependency with the first file.
-1.  **TypeScript 7.0.2, `strict`, from one base.** A root
+1.  **TypeScript 6.0.3, `strict`, from one base.** A root
     `tsconfig.base.json` sets `strict`, `noEmit`, `isolatedModules`,
     `verbatimModuleSyntax`, `skipLibCheck`, `moduleResolution: "bundler"`,
     ES2024, and `types: []`, so the shared code sees no Node.js, DOM, or
     Workers globals. Each package extends it, and the relay's adds the types
     `wrangler types` generates and `@cloudflare/vitest-plugin/types`, which
-    its tests need for `cloudflare:workers`. In the prototype, `tsc` 7.0.2
-    passed in all three packages and caught type errors planted in the
-    relay's test and in the shared code. The TRD's table has no TypeScript
-    row, so it gains one.
+    its tests need for `cloudflare:workers`. The version is 6.0.3, which
+    Expo SDK 57's template pins, so the shared code is checked by the
+    TypeScript the app will compile it with ([versions][note-versions]).
+    `tsc` 6.0.3 passes in all three packages and catches type errors planted
+    in the relay's test and in the shared code. The TRD's table has no
+    TypeScript row, so it gains one.
 1.  **The Workers types are generated, not committed.** The relay's
     `typecheck` runs `wrangler types` before `tsc`. The generated file is
     15,758 lines of runtime types in [the note's check][note-check], about
@@ -191,6 +193,9 @@ directive's steps map to skills:
   keep it current. Generating it in `typecheck` needs none of these.
 - **Plugin 1.2.3 with Wrangler 4.136.3,** the newest pair: it moves the
   TRD's Wrangler pin too, while 1.2.2 changes only the plugin's.
+- **TypeScript 7.0.2,** npm's `latest`, which the first commits used until
+  the review: the app will compile the shared code with Expo's 6.0.3, and
+  7.0.2's package has no compiler API and no `tsserver`.
 - **A smoke test that imports the shared package:** it needs a module there
   before any ticket defines one, so the prototype checked those imports
   instead.
@@ -323,7 +328,7 @@ test('Vitest runs TypeScript in this package', () => {
     "typecheck": "tsc"
   },
   "devDependencies": {
-    "typescript": "7.0.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.11"
   }
 }
@@ -333,11 +338,10 @@ test('Vitest runs TypeScript in this package', () => {
       [verification gate](#verification-gate).
 - [ ] **Step 5: Update the TRD.** In
       [the repository layout](/docs/TRD.md#repository-layout), add `shared/`
-      to the tree, name
-      the folder, the package, and the import by file in the shared-code
-      bullet, and add a bullet for the root commands, saying that Bun's own
-      `bun test` isn't used. In [the versions table][trd-stack], add
-      TypeScript 7.0.2.
+      to the tree, name the folder, the package, and the import by file in
+      the shared-code bullet, and add a bullet for the root commands, saying
+      that Bun's own `bun test` isn't used. In
+      [the versions table][trd-stack], add TypeScript 6.0.3.
 - [ ] **Step 6: Commit**
 
 ```shell
@@ -393,7 +397,7 @@ test('answers a request', async () => {
       fail.** `worker/package.json` is named `@turn/relay`, with
       `"test": "vitest run"`, `"typecheck": "wrangler types && tsc"`, and
       the dev dependencies `@cloudflare/vitest-plugin` 1.2.2, `typescript`
-      7.0.2, `vitest` 4.1.11, and `wrangler` 4.136.2. Add `worker` to the
+      6.0.3, `vitest` 4.1.11, and `wrangler` 4.136.2. Add `worker` to the
       root's `workspaces` between `shared` and `eval`, and run `bun install`.
       `bun run test` fails with "Cannot find package 'cloudflare:workers'".
 - [ ] **Step 3: Add the Worker and the plugin.** `worker/wrangler.jsonc`:
