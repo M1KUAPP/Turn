@@ -1077,7 +1077,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | `JEV_ON`                             | var    | the relay        | the switch that turns Jev off (STATE-3)     |
 | `TYPESAFE_NAMED`                     | var    | the relay        | whether the texts name TypeSafe (CONSENT-7) |
 | `FREE_LINES`                         | var    | the relay        | 20 (PAY-1)                                  |
-| `POLICY`                             | var    | the relay        | the row's policy, as JSON (ROW-8)           |
+| `POLICY`                             | var    | the relay        | the policy's changed values (ROW-8)         |
 | `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
 | `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
 | Test Store public key                | public | the app's config | RevenueCat's SDK in debug builds            |
@@ -1114,9 +1114,19 @@ ran under Wrangler 4.136.2:
       "simple": { "limit": 120, "period": 60 }
     }
   ],
-  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+  "observability": {
+    "enabled": true,
+    "logs": { "invocation_logs": false },
+    "traces": { "enabled": false }
+  },
   "secrets": { "required": ["TYPESAFE_API_KEY", "RC_SECRET_KEY", "ID_SALT"] },
-  "vars": { "JEV_MODEL": "jev-1.13.0", "JEV_ON": "true", "FREE_LINES": "20" }
+  "vars": {
+    "JEV_MODEL": "jev-1.13.0",
+    "JEV_ON": "true",
+    "TYPESAFE_NAMED": "false",
+    "FREE_LINES": "20",
+    "POLICY": {}
+  }
 }
 ```
 
@@ -1125,6 +1135,22 @@ ran under Wrangler 4.136.2:
   which Git ignores, and a committed `.dev.vars.example` names them for anyone
   who runs the relay with their own keys (SEC-1)
   ([services notes][svc-secrets]).
+- **The committed file,** `worker/wrangler.jsonc`, holds all of this but
+  `BUDGET` and `ratelimits`, which come with the rate limits and the daily
+  budget (#35).
+- **Vars** are read at every request, so a change reaches the next answer
+  or configuration with no app build (ROW-8, CONSENT-7):
+  - `JEV_ON` and `TYPESAFE_NAMED` are on only as `"true"`, so a typo turns
+    Jev off and leaves TypeSafe unnamed, and `TYPESAFE_NAMED` starts
+    `"false"`.
+  - `POLICY` holds only the values that differ from `startingPolicy` in
+    `@turn/shared/row`: JSON in `wrangler.jsonc`, or a string from
+    `wrangler deploy --var` or the dashboard.
+  - An unknown key or a value of the wrong type in `POLICY`, or a
+    `FREE_LINES` that isn't a whole number, answers `500 internal`, so a
+    mistake shows at the next request.
+  - A var changed in the dashboard lasts until the next `wrangler deploy`,
+    which puts back `wrangler.jsonc`'s values.
 - **The Test Store key** is the only RevenueCat key the app carries, and it
   sits in the app's committed configuration so judges can build from source.
   RevenueCat's blogs keep test keys out of version control and advise
