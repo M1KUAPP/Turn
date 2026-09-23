@@ -556,7 +556,7 @@ on answer(a)
   showFixed = yesNo or fixedTopic                                  # ROW-4
   phrasesAllowed = not fixedTopic and (not yesNo or P.yesNoPhrases)
   fresh = candidates scoring P.floor or more, highest first,
-          ties in the shortlist's order
+          ties in the answer's order
   if not showFixed and fresh is empty:
     keep the row as it is, answering its earlier line              # ROW-3
   else if not showFixed and fresh[0] > P.bigAbove
@@ -592,13 +592,16 @@ on answer(a)
   after the fixed buttons take their slots, so Yes can't cover it.
 - **The fixed buttons** hold their slots by their phrase ids, `yes`, `no`,
   and `not-sure`, so the app speaks and counts them like any phrase.
-- **Ties** go by the shortlist's order, so the app gives the rules each
-  answer's scores in that order; the relay's JSON object can't carry it.
+- **Ties** go by the answer's order: the shortlist's for Jev's answers, so
+  the app gives the rules their scores in that order, which the relay's
+  JSON object can't carry, and the phone's own for its ranking.
 - **A tie** for the most likely topic counts as each tied topic, so a tie
   with a topic that never gets a big button gets none, and a tie marks no
   tab.
 - **Clearing** empties the slots, forgets the big button's phrase, and
-  unmarks the tab, but keeps the newest line's number (ROW-10).
+  unmarks the tab, but keeps the newest line's number (ROW-10). An answer
+  still in flight for that line can fill the row again, so stopping Listen
+  mode also aborts its request.
 - **Nothing speaks** in these rules; only a tap does (ROW-6).
 
 ### Timeouts, sequence numbers, and fallbacks
