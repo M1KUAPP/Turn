@@ -238,7 +238,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     the `events` view, 2,000 at a time, with `dry: true`, passing the last
     event's `$metadata.id` as `offset` until a page comes back short
     ([relay logs notes][note-query]), and stops with an error when a full
-    page brings no event it hasn't read. It keeps each event whose `source`
+    page brings no event it hasn't read. It keeps each event, told apart by
+    its ID and its request ID, since events logged in the same millisecond
+    share an ID, whose `source`
     is an object with a string `outcome`. `worker/scripts/summary.ts`
     counts; `worker/scripts/logs.ts` is the command, `bun run logs`; and
     `worker/scripts/flags.ts` reads both commands' flags, since the Workers
