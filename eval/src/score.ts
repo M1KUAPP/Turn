@@ -1,7 +1,7 @@
 import { applyAnswer, emptyRow, fixedButtons, startingPolicy, type Row } from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, type Phrase } from '@turn/shared/shortlist'
 import type { Ranker } from './rankers'
-import { chanceHit, chanceReciprocalRank } from './stats'
+import { chanceHit, chanceReciprocalRank, mean } from './stats'
 
 /** What scoring reads from a labeled partner line: the ids of every acceptable reply, or none. */
 export type ScoredLine = { text: string; place: string; acceptable: readonly string[] }
@@ -91,7 +91,6 @@ export function scoreLines<Line extends ScoredLine>(
   }
 }
 
-const mean = (values: readonly number[]) => values.reduce((sum, value) => sum + value, 0) / values.length
 /** How many lines saw each outcome, naming every outcome. */
 const tally = (seen: readonly Outcome[]) => {
   const counts = Object.fromEntries(outcomes.map((outcome) => [outcome, 0])) as Record<Outcome, number>
