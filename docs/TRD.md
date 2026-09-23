@@ -864,7 +864,8 @@ Listen mode says so and offers the typed-line field.
 
 ### The relay's entitlement check
 
-The user's object checks only once the free lines are used (PAY-1, PAY-7):
+The user's object checks once the free lines are used, and on a free line
+that carries `refresh` (PAY-1, PAY-4, PAY-7):
 
 ```text
 on line(lineId, refresh)
@@ -872,7 +873,8 @@ on line(lineId, refresh)
   claim = claim(lineId)                  # free, duplicate, or paid
   if claim is duplicate: 409
   else if claim is free:
-    call Jev; if it fails: release(lineId)
+    call Jev, and with refresh ask RevenueCat alongside
+    if Jev fails: release(lineId)
   else if the cached yes is under 24 hours old: call Jev
   else if the cached no is under 1 minute old
           and not (refresh and the last refresh is over 1 minute old): 402
@@ -880,12 +882,13 @@ on line(lineId, refresh)
     if it answers: cache the answer; call Jev or answer 402
     else if a yes is cached, of any age: call Jev
     else: 503, logged as unverified      # never 402
+          # a refresh that got no answer also leaves the cached no stale
 ```
 
-- **The call** uses the secret key and waits at most half a second, so a
-  line that asks stays within the phone's 3 seconds beside Jev's 2.5; a
-  `404` means RevenueCat has never seen the ID, so the answer is no
-  ([RevenueCat notes][rc-v2]):
+- **The call** uses the secret key and waits at most half a second, and
+  Jev gets what's left of the line's 2.5 seconds after it, so every line
+  stays within the phone's 3 seconds; a `404` means RevenueCat has never
+  seen the ID, so the answer is no ([RevenueCat notes][rc-v2]):
 
   ```text
   GET https://api.revenuecat.com/v2/projects/{project_id}/customers/{customer_id}/active_entitlements
@@ -896,7 +899,8 @@ on line(lineId, refresh)
   the `listen` lookup key, and accepts an `expires_at` that is `null` or
   still ahead.
 - **No answer is never a no.** Another status, a `404` whose `type` isn't
-  `resource_missing`, a body out of the spec's shape, a timeout, or an
+  `resource_missing`, a body out of the spec's shape, such as a `200`
+  whose `object` isn't `list`, a timeout, or an
   unset `RC_PROJECT_ID` or `RC_ENTITLEMENT_ID` is no answer
   ([free lines notes][count-notes]), which the pseudocode above never
   turns into a `402`.
@@ -913,7 +917,8 @@ on line(lineId, refresh)
   Store can't buy in the Simulator, the relay's `SIMULATOR_UNLIMITED` switch
   skips the count for requests marked `simulator` until judging ends on
   October 13 (PAY-9). The header can be forged, which costs only Jev
-  credits, and the per-ID rate limit still applies.
+  credits; the per-ID rate limit (#35) will bound that, so the switch stays
+  off unless the check needs it.
 
 [rc-v2]: /docs/research/0009-revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
 [svc-server]: /docs/research/0024-turn-services.md#test-store-purchases-on-the-server
