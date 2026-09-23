@@ -359,8 +359,6 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   in JavaScript comes from the process running Metro, so restart Metro with
   the same variable.
 
-[expo-env]: https://docs.expo.dev/guides/environment-variables/
-
 ## Turn's entitlements
 
 - **Entitlements.** The introspected config has `ios.entitlements: {}`. It
@@ -455,6 +453,7 @@ it was kept.
 
 - [Turn's video iPhone research notes](/docs/research/0037-turn-video-iphone.md)
 - [Turn's setup research notes](/docs/research/0036-turn-setup.md)
-- [Expo: environment variables](https://docs.expo.dev/guides/environment-variables/)
+- [Expo: environment variables][expo-env]
 
 [setup-apple]: /docs/research/0036-turn-setup.md#apple-xcode-27-and-ios-27
+[expo-env]: https://docs.expo.dev/guides/environment-variables/
