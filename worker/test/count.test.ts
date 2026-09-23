@@ -1,8 +1,7 @@
-import { runInDurableObject } from 'cloudflare:test'
-import { env } from 'cloudflare:workers'
 import { describe, expect, test } from 'vitest'
 import {
   activeEntitlements,
+  claimedLines,
   expectError,
   freeLinesLeft,
   headers,
@@ -15,10 +14,8 @@ import {
   mockRevenueCat,
   postLine,
   postLineFrom,
-  send,
   simulator,
-  unknownCustomer,
-  userHash
+  unknownCustomer
 } from './helpers'
 
 /** The free lines an answer carries. */
@@ -100,10 +97,7 @@ describe('the free lines (PAY-1)', () => {
     expect((await paidCopy).status).toBe(503)
     expect((await freeCopy).status).toBe(200)
     await expectError(await postLine(line, vars), 409, 'duplicate')
-    const rows = await runInDurableObject(env.DEVICE.getByName(`user-${await userHash()}`), (_, state) =>
-      state.storage.sql.exec('SELECT line_id FROM free_lines').toArray()
-    )
-    expect(rows).toEqual([{ line_id: line.lineId }])
+    expect(await claimedLines()).toEqual([{ line_id: line.lineId }])
   })
 
   test('show none left, not fewer, once FREE_LINES is lowered below the lines used', async () => {
@@ -114,12 +108,10 @@ describe('the free lines (PAY-1)', () => {
 })
 
 describe('the Simulator switch (PAY-9)', () => {
-  const fromSimulator = (changes: Parameters<typeof send>[1]) => postLineFrom(simulator, changes)
-
   test("lets a simulator request skip the count while it's on, with no count shown", async () => {
     mockJev(...jevAnswers(25))
     for (let i = 0; i < 25; i++) {
-      const response = await fromSimulator({ SIMULATOR_UNLIMITED: 'true' })
+      const response = await postLineFrom(simulator, { SIMULATOR_UNLIMITED: 'true' })
       expect(response.status).toBe(200)
       expect(await leftAfter(response)).toBeNull()
     }
@@ -134,7 +126,7 @@ describe('the Simulator switch (PAY-9)', () => {
 
   test.each(['false', 'yes', undefined])('counts a simulator request while it is %j', async (value) => {
     mockJev(...jevAnswers(1))
-    expect(await leftAfter(await fromSimulator({ SIMULATOR_UNLIMITED: value }))).toBe(19)
+    expect(await leftAfter(await postLineFrom(simulator, { SIMULATOR_UNLIMITED: value }))).toBe(19)
     expect(await freeLinesLeft({ SIMULATOR_UNLIMITED: value }, simulator)).toBe(19)
   })
 })
