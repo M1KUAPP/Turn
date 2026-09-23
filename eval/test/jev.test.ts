@@ -4,7 +4,7 @@ import { APIError } from '@typesafe-ai/sdk'
 import { expect, test, vi } from 'vitest'
 import { bank, phrases } from '../src/data'
 import { jev, jevLine, relayModel } from '../src/jev'
-import { fakeJevAnswer, fakeServices } from './services'
+import { fakeServices } from './services'
 
 const line = 'Do you want some water?'
 const home = { bank: phrases, row: [], place: 'home', taps: new Map<string, number>() }
@@ -43,18 +43,12 @@ test("sends Jev the relay's request with the team's key, the code's address and 
   expect(ranking).toMatchObject({ kind: { yes_no: 0.9 }, onPhone: false })
 })
 
-test('keeps the model and the input tokens Jev reports for each call', async () => {
-  fakeServices().mockImplementationOnce(async (_url, init) =>
-    Response.json({ ...fakeJevAnswer(JSON.parse(String(init?.body))), model: 'jev-1.14.0' })
-  )
+test('keeps the model Jev reports for each call', async () => {
+  fakeServices((call) => (call === 0 ? 'jev-1.14.0' : undefined))
   const ranker = jev('jev-1.13.0')
   await ranker(line, shortlist, new PhraseIndex(), home)
   await ranker(line, shortlist, new PhraseIndex(), home)
-  const inputTokens = 1000 + 2 + shortlist.length
-  expect(ranker.calls).toEqual([
-    { model: 'jev-1.14.0', inputTokens },
-    { model: 'jev-1.13.0', inputTokens }
-  ])
+  expect(ranker.calls).toEqual([{ model: 'jev-1.14.0' }, { model: 'jev-1.13.0' }])
 })
 
 test("retries a failed call, and throws Jev's error once the retries run out", async () => {

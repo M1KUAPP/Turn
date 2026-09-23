@@ -214,12 +214,11 @@ test('scores all four rankers on the same lines, in every group and step (EVAL-3
 })
 
 test("names Jev's pin, what Jev answered as, and Workers AI's model (EVAL-6)", () => {
-  // 8 lines in four passes, and the stand-in counts 1,000 tokens and one more for each of 42 questions.
+  // 8 lines in four passes.
   expect(report).toMatch(
     prose(
       '- **Models:** Jev, pinned to `jev-1.13.0` by `worker/wrangler.jsonc`, which answered as `jev-1.13.0` on all ' +
-        "32 calls, with a median of 1,042 input tokens a call; and Workers AI's `@cf/baai/bge-base-en-v1.5`, with " +
-        '`cls` pooling.'
+        "32 calls; and Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling."
     )
   )
 })

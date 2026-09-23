@@ -180,16 +180,9 @@ const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
         (made.length === 1 ? 'call' : 'calls')
     )
   )
-  const tokens = Math.round(
-    percentile(
-      calls.map((call) => call.inputTokens),
-      50
-    )
-  ).toLocaleString('en-US')
   return (
     `- **Models:** ${naming.Jev}, pinned to ${naming.model(pin)} by \`worker/wrangler.jsonc\`, which answered as ` +
-    `${answered}, with a ` +
-    `median of ${tokens} input tokens a call; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
+    `${answered}; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
   )
 }
 
