@@ -53,4 +53,4 @@ the [TRD](/docs/TRD.md#build-configuration), and the
 - [ ] Run on an iOS 26 or 27 Simulator when Xcode is available.
 - [x] Record the iPhone build check as pending #80. Xcode is not installed in
       this environment, so the native run remains for the iPhone owner.
-- [ ] Update #22 with the verified code result and remaining device checks.
+- [x] Update #22 with the verified code result and remaining device checks.
