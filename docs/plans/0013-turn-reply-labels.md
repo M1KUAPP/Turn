@@ -83,8 +83,8 @@ Contents:
     each in its own context: `claude-c` and `claude-d`, neither of which
     wrote a line. That meets "other than its writer" but not "a teammate",
     so that part of the first criterion stays unticked on #21, and a new
-    `ready-for-human` ticket asks a teammate to label the lines before #40's
-    run. Two labelings by one model show consistency, not correctness, and
+    `ready-for-human` ticket, #76, asks a teammate to label the lines before
+    #40's run. Two labelings by one model show consistency, not correctness, and
     labels a model made may favor a ranker built on one
     ([labeling notes][notes-models]), so the TRD says who labeled, and #29's
     and #64's disclosure criteria add the labels.
@@ -196,7 +196,8 @@ Contents:
 
 - The count script, the agreement it prints, and the harness (#29), and
   the run (#40).
-- A teammate's labeling (the new ticket) and a teammate's read of the bank
+- A teammate's labeling (#76), meeting EVAL-1's floor of 16 lines with no
+  acceptable reply (#77), and a teammate's read of the bank
   ([#75][teammate-read]).
 
 [teammate-read]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/75
@@ -285,6 +286,25 @@ its own estimate of the pairs. It is committed as
       breaks one goes back to its own labeler with the rows and the rule it
       broke, and nothing else.
 
+The labelers took about 13 and 15 minutes, and a script confirmed that each
+one's prompt was its brief, word for word. Both files passed every rule a
+script can check, so neither went back. What they found:
+
+- **Too few lines with no reply.** The first labeling left 8 lines with no
+  acceptable reply and the second 7, against EVAL-1's 16. Every `yes_no`
+  line takes Yes and No in both, and in each, 8 more lines take only
+  replies such as "I don't know", "Thank you", or "Tell me more". By
+  decision 11, nothing changed: the check keeps the 16 as a `test.todo`,
+  #77 asks the team to meet it, #76 asks a teammate to label the lines, and
+  #40 now waits on both.
+- **No shared word.** 54 lines in the first labeling and 52 in the second
+  share no content word with their replies, against EVAL-1's 10.
+- **Agreement,** with 95% intervals from 2,000 bootstrap resamples of the
+  lines: the none-or-some call agrees on 79 of 80 lines, kappa 0.93 (0.74
+  to 1.00); over line and phrase pairs, positive agreement is 0.88 (0.85 to
+  0.91) and negative 0.996; the two sets match exactly on 32 lines; and
+  Krippendorff's alpha with the MASI distance is 0.65 (0.57 to 0.71).
+
 ### Task 5: The first labeling
 
 **Files:** modify `eval/lines.jsonl` and `eval/src/data.ts`; create
@@ -297,7 +317,9 @@ its own estimate of the pairs. It is committed as
       least 10 have an acceptable reply besides the fixed buttons and share
       no word with any of their replies, by `PhraseIndex` over those replies
       alone. `Line` gains `labeler` and `acceptable`.
-- [ ] **Step 2: See it fail:** the lines have no labels yet.
+- [ ] **Step 2: See it fail:** the lines have no labels yet. Once the
+      labels were in, the quota of 16 became a `test.todo` that points at
+      #77, by decision 11.
 - [ ] **Step 3: Add the labels.** Give each line in `eval/lines.jsonl`
       `"labeler": "claude-c"` and its `acceptable` ids from `claude-c`'s
       file, in the bank's order, changing nothing else in the line.
@@ -362,11 +384,12 @@ and `eval/test/labels.test.ts`.
       resolution.
 - [ ] **Step 3: Rebase-merge and delete the branch.**
 - [ ] **Step 4: Update the issues.** Tick what #21's labels meet, leaving
-      "a teammate" unticked with a pointer to a new `ready-for-human`
-      ticket for a teammate's labeling, blocked by #75; close #21 with a
-      comment; add the labels to #29's and #64's disclosure criteria; and
-      note on #29 the rule for a shared word and the agreement, and on #75
-      that the labels landed first.
+      "a teammate" unticked with a pointer to #76 and the quota of 16 with
+      a pointer to #77; close #21 with a comment; add the labels to #29's
+      and #64's disclosure criteria; and note on #29 the rule for a shared
+      word and the agreement, and on #75 that the labels landed first. #76
+      and #77 were opened once the labels were in, each `ready-for-human`,
+      with #76 blocked by #75, #77 by #76, and #40 by both.
 
 ## Appendix: the labelers' brief
 
