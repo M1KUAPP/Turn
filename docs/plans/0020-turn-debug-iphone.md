@@ -261,47 +261,47 @@ note passed the docs gate and `idscan.py`. It was committed as
 
 ### Task 2: This plan
 
-- [ ] **Step 1: Run the docs gate, then commit** as
+- [x] **Step 1: Run the docs gate, then commit** as
       `docs(plan): add the plan for Turn's Debug build on the iPhone`.
 
 ### Task 3: The clean checkout and CocoaPods
 
-- [ ] **Step 1: Check out `main`** with
+- [x] **Step 1: Check out `main`** with
       `git worktree add --detach ../revenuecat-turn-build origin/main`,
       run `bun install --frozen-lockfile` at its root, and check that
       `git status --short` prints nothing.
-- [ ] **Step 2: Install CocoaPods** with `brew install cocoapods`, and note
+- [x] **Step 2: Install CocoaPods** with `brew install cocoapods`, and note
       `pod --version`.
 
 ### Task 4: Build, install, and launch
 
-- [ ] **Step 1: The person** unlocks the phone, keeps it awake and on the
+- [x] **Step 1: The person** unlocks the phone, keeps it awake and on the
       Mac's Wi-Fi, and leaves the cable in.
-- [ ] **Step 2: Run** the ticket's command under
+- [x] **Step 2: Run** the ticket's command under
       [Verification gate](#verification-gate) in the background, and
       watch `run.log` for the build, the install, and the launch.
-- [ ] **Step 3: The person** taps Allow if the Local Network alert shows,
+- [x] **Step 3: The person** taps Allow if the Local Network alert shows,
       and the session relaunches Turn if its first launch missed Metro.
-- [ ] **Step 4: Check** the signature, the profile, and Metro's bundle
+- [x] **Step 4: Check** the signature, the profile, and Metro's bundle
       line. If Expo's install or launch failed, keep its redacted error and
       take the fallback in [Decisions](#decisions).
 
 ### Task 5: Light and dark
 
-- [ ] **Step 1: Save** the phone's appearance, then set light, dark, and
+- [x] **Step 1: Save** the phone's appearance, then set light, dark, and
       light again, with a screenshot and a sample after each.
-- [ ] **Step 2: Restore** the saved appearance, and check Turn's process
+- [x] **Step 2: Restore** the saved appearance, and check Turn's process
       and Metro's log.
 
 ### Task 6: The records
 
-- [ ] **Step 1: Add the run** to the research note as a hands-on check, run
+- [x] **Step 1: Add the run** to the research note as a hands-on check, run
       the docs gate, and commit as
       `docs(research): add Turn's Debug build to the hands-on check`.
-- [ ] **Step 2: Edit** the TRD's device build to give the command that
+- [x] **Step 2: Edit** the TRD's device build to give the command that
       worked, run the docs gate, and commit as
       `docs(trd): give the device build's command and its first run`.
-- [ ] **Step 3: Tick** plan 0018's device box with a pointer to #88, run
+- [x] **Step 3: Tick** plan 0018's device box with a pointer to #88, run
       the docs gate, and commit as
       `docs(plan): tick the app foundation's iPhone check`.
 
