@@ -120,6 +120,9 @@ export const mockJev = (...replies: Reply[]) => queue('api.typesafe.ai', replies
 /** Stands in for RevenueCat's API with these responses in turn, and returns the spy. */
 export const mockRevenueCat = (...replies: Reply[]) => queue('api.revenuecat.com', replies)
 
+/** Stands in for Cloudflare's API, which the log scripts query, with these responses in turn, and returns the spy. */
+export const mockCloudflare = (...replies: Reply[]) => queue('api.cloudflare.com', replies)
+
 /** RevenueCat's answer for an app user ID it has never seen. */
 export const unknownCustomer = () =>
   Response.json(
