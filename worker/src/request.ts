@@ -18,7 +18,8 @@ export function readUser(headers: Headers): string | null {
   return valid ? user : null
 }
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
+/** Whether a value is a JSON object: not null, and not a list. */
+export const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
 /** A JSON media type, with or without parameters such as the charset. */

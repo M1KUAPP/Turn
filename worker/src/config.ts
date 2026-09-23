@@ -1,5 +1,6 @@
 import type { Config } from '@turn/shared/relay'
 import { startingPolicy, type Policy } from '@turn/shared/row'
+import { isRecord } from './request'
 
 /** Whether a switch is on: only `true` is, so a typo turns it off. */
 const isOn = (value: unknown) => String(value) === 'true'
@@ -19,7 +20,7 @@ const fits = (given: unknown, start: Policy[keyof Policy]) => {
 function readPolicy(value: unknown): Policy {
   if (value === undefined) return startingPolicy
   const changes: unknown = typeof value === 'string' ? JSON.parse(value) : value
-  if (typeof changes !== 'object' || changes === null || Array.isArray(changes)) throw new Error('POLICY is no object')
+  if (!isRecord(changes)) throw new Error('POLICY is no object')
   for (const [key, given] of Object.entries(changes)) {
     if (!Object.hasOwn(startingPolicy, key) || !fits(given, startingPolicy[key as keyof Policy])) {
       throw new Error(`POLICY's ${key} is unknown or of the wrong type`)
