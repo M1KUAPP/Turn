@@ -145,7 +145,7 @@ The path of one partner line:
 | `@typesafe-ai/sdk`              | 0.6.0                  | in the relay and the evaluation; runs under workerd                      |
 | Jev                             | `jev-1.13.0`           | the only model on September 22, 2026                                     |
 | Wrangler                        | 4.136.2                | needs Node.js 22 or later; `compatibility_date` `2026-09-22`             |
-| `@cloudflare/vitest-plugin`     | 1.2.1, with Vitest 4.1 | the relay's tests ([Cloudflare notes][cf-notes])                         |
+| `@cloudflare/vitest-plugin`     | 1.2.2, with Vitest 4.1 | the relay's tests; pins Wrangler 4.136.2 ([workspace notes][ws-notes])   |
 | TypeScript                      | 7.0.2                  | `tsc` in each workspace ([workspace notes][ws-notes])                    |
 | `@revenuecat/cli`               | 0.1.3                  | headless Test Store purchases for the relay's tests                      |
 
@@ -157,7 +157,6 @@ the [design's motion][design-motion] uses.
 [rc-expo]: /docs/research/0009-revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [ios-libs]: /docs/research/0023-turn-ios.md#libraries-on-september-22-2026
 [ios-rea]: /docs/research/0015-ios-design.md#reanimated-4-in-sdk-57
-[ws-notes]: /docs/research/0031-turn-workspace.md#versions-on-september-23-2026
 
 ### Repository layout
 
@@ -1285,11 +1284,13 @@ big button on a yes-or-no, pain, or consent line (EVAL-5).
 
 ## Testing
 
-The shared code and the relay are tested with Vitest 4.1, the relay's tests
-running inside the Workers runtime through `@cloudflare/vitest-plugin`
-1.2.1, the Cloudflare notes' pairing. The app's screens and the Swift
-modules are checked on devices, by the checklist below, not with UI tests,
-in the first version.
+The shared code and the relay are tested with Vitest 4.1.11, the relay's
+tests running inside the Workers runtime through `@cloudflare/vitest-plugin`
+1.2.2, the release that depends on the relay's Wrangler, 4.136.2, where 1.2.1
+would bring a second Wrangler ([workspace notes][ws-notes]); the Cloudflare
+notes cover its setup ([Cloudflare notes][cf-notes]). The app's screens and
+the Swift modules are checked on devices, by the checklist below, not with UI
+tests, in the first version.
 
 - **Unit tests,** for the shared code: the shortlist, BM25, the tag map, the
   request builder, the row's rules against recorded answers (ROW-3 to
@@ -1451,7 +1452,7 @@ product and legal ones.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
 - [iPhone build notes][ios-notes], [relay and services notes][svc-notes],
   [evaluation notes][eval-notes], [Jev notes][jev-notes],
-  [Cloudflare notes][cf-notes], and
+  [Cloudflare notes][cf-notes], [workspace notes][ws-notes], and
   [RevenueCat notes](/docs/research/0009-revenuecat-expo.md): the sources behind
   the choices here.
 - [Guessling technical requirements](/docs/archive/guessling-trd.md): the
@@ -1462,6 +1463,7 @@ product and legal ones.
 [eval-notes]: /docs/research/0025-turn-evaluation.md
 [jev-notes]: /docs/research/0005-jev.md
 [cf-notes]: /docs/research/0010-cloudflare-workers.md
+[ws-notes]: /docs/research/0031-turn-workspace.md
 [ios-modules]: /docs/research/0023-turn-ios.md#two-local-swift-modules-in-expo
 [svc-key]: /docs/research/0024-turn-services.md#the-test-store-api-key
 [tech-expo]: /docs/research/0018-next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
