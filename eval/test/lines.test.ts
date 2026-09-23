@@ -34,7 +34,7 @@ test('holds 80 lines, each with every field (EVAL-1)', () => {
   }
 })
 
-test('has the yes-or-no, pain or health, and consent lines EVAL-1 counts', () => {
+test('has at least 24 yes-or-no, 8 pain or health, and 4 consent lines (EVAL-1)', () => {
   expect(count((line) => line.kind === 'yes_no')).toBeGreaterThanOrEqual(24)
   expect(count((line) => line.concerns.includes('pain') || line.concerns.includes('health'))).toBeGreaterThanOrEqual(8)
   expect(count((line) => line.concerns.includes('consent'))).toBeGreaterThanOrEqual(4)
