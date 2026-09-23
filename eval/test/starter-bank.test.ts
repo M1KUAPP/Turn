@@ -66,10 +66,7 @@ test('marks Quick, the strip, and body-pain fixed, as the data model does (BANK-
     'I use this app to talk. Please give me time.',
     "Something's wrong"
   ])
-  expect(bank.categories.filter(({ fixed }) => fixed).map(({ id }) => id)).toEqual(
-    expect.arrayContaining(['quick', 'body-pain', 'strip'])
-  )
-  expect(bank.categories.filter(({ fixed }) => fixed)).toHaveLength(3)
+  expect(bank.categories.filter(({ fixed }) => fixed).map(({ id }) => id)).toEqual(['quick', 'body-pain', 'strip'])
   expect(phrases.filter(({ fixed }) => fixed).map(({ text }) => text)).toEqual(['Yes', 'No', 'Not sure'])
 })
 
