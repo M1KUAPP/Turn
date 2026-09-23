@@ -317,9 +317,9 @@ CREATE TABLE requests (
   so a stored record can't be traced back to an ID without the salt.
 - **Each address's count.** One more object per address, `address-<hash>`,
   named by the SHA-256 of the address and the same salt, keeps a
-  `requests` table of the same shape and nothing else. It counts every
-  request from the address the same way, against 120 a minute, before the
-  user's object does (SEC-3).
+  `requests` table of the same shape and nothing else. It counts each
+  request from the address that passes its checks, the same way, against
+  120 a minute, before the user's object does (SEC-3).
 - **The day's calls.** The budget's object, `jev-calls`, keeps one more
   table, with one row:
 
