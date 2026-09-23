@@ -175,11 +175,16 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     JSON object can't carry that order: an id such as `911` would sort
     first. The app builds the `Map` from the shortlist it sent.
 1.  **The row's state** is `seq`, `big` (the big button's phrase or null),
-    `fixedButtons` (whether Yes, No, and Not sure hold slots 1 to 3),
     `slots` (six phrase ids or null), and `tab`. `applyAnswer(row, answer)`
     and `clearRow(row)` return a new row and never change their input;
     `phrasesInRow(row)` gives the shortlist's first step, and `emptyRow`
     starts a session. Nothing speaks, and the app renders and announces.
+1.  **The fixed buttons are phrase ids in the slots,** `yes`, `no`, and
+    `not-sure`, which `fixedButtons` lists in slot order and which the plan
+    for [the starter bank][bank-ticket], on its own branch, gives Yes, No,
+    and Not sure. The app speaks and counts every slot the same way, and a
+    test can check their order (ROW-4); an earlier draft kept them out of
+    the slots behind a flag, which left the order to the app.
 1.  **The newest line (ROW-7).** The app raises `row.seq` when a line
     starts, and the rules drop an answer with a lower `seq` and raise it for
     each answer they apply, so a late answer loses to its newer line even
@@ -211,6 +216,7 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 [note-words]: /docs/research/0033-turn-shortlist-and-row.md#common-word-lists
 [note-openers]: /docs/research/0033-turn-shortlist-and-row.md#yes-or-no-question-openers
 [note-timing]: /docs/research/0033-turn-shortlist-and-row.md#timing-tests-in-vitest-41
+[bank-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/18
 
 ### Rejected alternatives
 
@@ -398,10 +404,10 @@ and was committed as
   export type Row = {
     seq: number
     big: string | null
-    fixedButtons: boolean
     slots: readonly (string | null)[]
     tab: string | null
   }
+  export const fixedButtons: readonly string[]
   export const startingPolicy: Policy
   export const emptyRow: Row
   export function applyAnswer(row: Row, answer: Answer): Row
