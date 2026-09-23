@@ -8,7 +8,7 @@ export type Phrase = {
   text: string
   /** The ids of the places the phrase is tied to. */
   places: readonly string[]
-  /** Yes, No, and Not sure. */
+  /** Yes, No, and Not sure, whose ids the row's rules know as `fixedButtons`. */
   fixed?: boolean
   /** The conversation strip's five. */
   strip?: boolean
