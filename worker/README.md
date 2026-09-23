@@ -109,4 +109,4 @@ shell and prints the issue's body instead of opening it.
 ## See also
 
 - [Relay logs notes](/docs/research/0040-turn-relay-logs.md)
-- [The plan for free lines, logs, and the alert](/docs/plans/0018-turn-paywall-logs-alert.md)
+- [The plan for free lines, logs, and the alert](/docs/plans/0019-turn-paywall-logs-alert.md)
