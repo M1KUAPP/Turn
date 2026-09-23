@@ -600,7 +600,7 @@ without it.
 ## The second run
 
 The first pull request merged as `1b3ff03` at 18:11:26 UTC on
-September 23, 2026. The run followed decision 12:
+September 23, 2026. The run followed decision 13:
 
 - **How it ran.** Once, with the appendix's script, whose text hadn't
   changed since this plan was written, in a detached worktree at `1b3ff03`
