@@ -1,14 +1,7 @@
 import { fixedButtons } from '@turn/shared/row'
-import { readFileSync } from 'node:fs'
 import { expect, test } from 'vitest'
+import { bank } from '../src/data'
 
-type Phrase = { id: string; text: string; fixed: boolean; places: string[] }
-type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
-type StarterBank = { categories: Category[]; places: { id: string; name: string }[] }
-
-const bank: StarterBank = JSON.parse(
-  readFileSync(new URL('../../app/src/content/starter-bank.json', import.meta.url), 'utf8')
-)
 const phrases = bank.categories.flatMap((category) => category.phrases)
 const categoryById = (id: string) => bank.categories.find((category) => category.id === id)
 const phraseTexts = (categoryId: string) => categoryById(categoryId)?.phrases.map((phrase) => phrase.text)
