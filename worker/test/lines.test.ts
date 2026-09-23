@@ -28,7 +28,7 @@ describe('POST /v1/lines', () => {
       topic: { feelings: 0.8, 'body-pain': 0.15, consent: 0.05 },
       scores: { hard: 0.9, well: 0.4, tired: 0.7 },
       policy: startingPolicy,
-      freeLinesLeft: 20,
+      freeLinesLeft: 19,
       ms: { jev: expect.any(Number), total: expect.any(Number) }
     })
     expect(jev).toHaveBeenCalledOnce()

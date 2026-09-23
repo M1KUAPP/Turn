@@ -5,7 +5,8 @@ import { readLine, readUser } from './request'
 export { Device } from './device'
 
 /** How a request ended, in its log line (METRIC-1). */
-type Outcome = 'config' | 'answered' | 'invalid' | 'not_found' | 'off' | 'failed' | 'credits' | 'internal'
+type Outcome =
+  'config' | 'answered' | 'paywall' | 'duplicate' | 'invalid' | 'not_found' | 'off' | 'failed' | 'credits' | 'internal'
 
 /**
  * What a request's log line is made from, gathered as the request goes: each fact once it's known, and never any text
@@ -38,6 +39,8 @@ const statuses: Record<ErrorCode, number> = {
 
 /** The error each failing outcome answers with. */
 const codes = {
+  paywall: 'paywall',
+  duplicate: 'duplicate',
   invalid: 'invalid_request',
   not_found: 'not_found',
   off: 'jev_off',
@@ -59,17 +62,20 @@ async function hashUser(salt: string, user: string) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
-/** Checks a line before anything else (SEC-2), then asks the user's object, named by the hash, for Jev's answer. */
+/** The user's object, named by the salted hash of their ID. */
+const deviceFor = (env: Env, hash: string) => env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' })
+
+/** Checks a line before anything else (SEC-2), then asks the user's object to count it and ask Jev. */
 async function answerLine(request: Request, env: Env, log: LogFacts, hash: string): Promise<Response> {
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
   const config = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
-  const reply = await env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' }).answer(line)
-  log.jevMs = reply.ms
+  const reply = await deviceFor(env, hash).answer(line, { freeLines: config.freeLinesLeft })
+  if ('ms' in reply) log.jevMs = reply.ms
   if (reply.outcome !== 'answered') {
-    if (reply.status) log.jevStatus = reply.status
+    if ('status' in reply && reply.status) log.jevStatus = reply.status
     return refuse(log, reply.outcome)
   }
   log.outcome = 'answered'
@@ -81,7 +87,7 @@ async function answerLine(request: Request, env: Env, log: LogFacts, hash: strin
     topic: reply.topic,
     scores: reply.scores,
     policy: config.policy,
-    freeLinesLeft: config.freeLinesLeft,
+    freeLinesLeft: reply.freeLinesLeft,
     ms: { jev: reply.ms, total: Date.now() - log.started }
   }
   return Response.json(answer)
@@ -99,8 +105,9 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   log.user = hash.slice(0, 8)
   if (isLine) return answerLine(request, env, log, hash)
   const config = readConfig(env)
+  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft({ freeLines: config.freeLinesLeft })
   log.outcome = 'config'
-  return Response.json(config)
+  return Response.json({ ...config, freeLinesLeft })
 }
 
 export default {
