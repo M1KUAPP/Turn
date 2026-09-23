@@ -71,13 +71,14 @@ const mostLikely = <K extends string>(odds: Readonly<Record<K, number>>): K | nu
 }
 
 /** Applies the TRD's rules for the row to an answer. Nothing here speaks; only a tap does (ROW-6). */
-export function applyAnswer(row: Row, { topic: topics, scores, policy }: Answer): Row {
+export function applyAnswer(row: Row, { seq, topic: topics, scores, policy }: Answer): Row {
+  if (seq < row.seq) return row
   const topic = mostLikely(topics)
   // A stable sort, so the shortlist's order breaks ties.
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
   if (top && top[1] > policy.bigAbove && !(topic !== null && policy.noBigTopics.includes(topic))) {
-    return { ...row, big: top[0] }
+    return { ...row, seq, big: top[0] }
   }
   const slots = [...row.slots]
   for (const [id] of fresh) {
@@ -85,5 +86,5 @@ export function applyAnswer(row: Row, { topic: topics, scores, policy }: Answer)
     if (empty === -1) break
     slots[empty] = id
   }
-  return { ...row, slots }
+  return { ...row, seq, slots }
 }
