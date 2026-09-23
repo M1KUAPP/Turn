@@ -392,7 +392,7 @@ it was kept.
   status bar was drawn. The phone's own dark style was set back afterward.
 - **No error.** After the launch, Metro's log held only the bundle line, and
   Turn was still running after the last screenshot.
-- **A locked phone.** A screenshot at 12:47, before the person unlocked the
+- **A locked phone.** A screenshot at 12:46, before the person unlocked the
   phone, was entirely `#000000` with no status bar, and
   `device info lockState` read `"passcodeRequired": true` at 12:51.
 - Synthesis: Turn's Debug build installs and runs on the video iPhone under
