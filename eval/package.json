@@ -7,7 +7,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@turn/shared": "workspace:*"
+    "@turn/shared": "workspace:*",
+    "@typesafe-ai/sdk": "0.6.0"
   },
   "devDependencies": {
     "@types/node": "26.6.1",
