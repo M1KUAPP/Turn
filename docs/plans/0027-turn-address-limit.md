@@ -201,17 +201,23 @@ with `/tdd`, runs the full suite at the end, and closes with
     - exactly 120 of 150 simultaneous requests answer;
     - a line that fails its checks counts against nothing;
     - the object's name is `address-` and the salted hash of the address,
-      or of nothing for a request without one, never the address.
+      or of nothing for a request without one, never the address;
+    - from review round 1: a failing address object answers
+      `500 internal` and reaches no user's object, `X-Forwarded-For` never
+      picks the count, Simulator requests count too (PAY-9), and one count
+      lasts from a minute's first millisecond to its last.
 
     Before the object, the local binding counts exactly, so only the tests
     of the next minute and of the name fail against it. The other tests
-    send no address, as now, so each shares one address's count and stays
-    under 120, and `reset()` clears it after each test.
+    send no address, as before, so each shares one address's count and
+    stays under 120, and `reset()` clears it after each test.
 
 1.  **Every guard is mutated once.** Before the pull request, the limit,
     the comparison, the minute, the order of the two counts, the key, the
     hash, and the `Retry-After` are broken one at a time, and a test must
-    fail for each.
+    fail for each; review round 1 adds a shorter window, failing open,
+    `X-Forwarded-For` as the key, and Simulator requests skipping the
+    count.
 1.  **The live check.** After the review, the reviewed head is deployed
     with `wrangler deploy`, once the live version is still #96's
     `e3ebe6b9`, and a script that prints only statuses, `Retry-After`, and
@@ -352,7 +358,8 @@ gate and was committed.
 1.  Run `graphify update .` and commit `graphify-out/` as
     `chore(graphify): refresh the graph after the address limit`.
 1.  Post the decision on #98, re-read #98, push the branch, and open the
-    pull request with the `/pr` template and "Closes #98".
+    pull request with the `/pr` template and "Part of #98", since #98
+    closes by hand once the live check's evidence is on it.
 1.  Run one `/code-review` round against `main`, with the issue and this
     plan as the spec, and a fact-check and bug-hunt agent; post it as a PR
     comment, fix what it confirms in one commit per fix or group of related
