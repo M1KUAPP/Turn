@@ -144,8 +144,8 @@ test("pads every table as Prettier does, so the report passes the repo's lint", 
 })
 
 test("wraps its prose at 80 columns, as the repo's Markdown style asks", () => {
-  const prose = report.split('\n').filter((line) => !line.startsWith('|') && !line.includes('](#'))
-  for (const line of prose) expect(line.length, line).toBeLessThanOrEqual(80)
+  const lines = report.split('\n').filter((line) => !line.startsWith('|') && !line.includes('](#'))
+  for (const line of lines) expect(line.length, line).toBeLessThanOrEqual(80)
 })
 
 test('stops before scoring a line whose labels name a phrase the bank lacks', () => {
