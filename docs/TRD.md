@@ -278,7 +278,12 @@ CREATE TABLE entitlement (
   If Jev fails, the object deletes the row, so only answered lines count
   (PAY-1).
 - **The entitlement row** caches RevenueCat's answer: a yes for 24 hours,
-  since `listen` is a one-time purchase, and a no for 1 minute.
+  since `listen` is a one-time purchase, and a no for 1 minute. It records
+  when a line with `refresh` last skipped a cached no, but only once
+  RevenueCat answered that line's check, so a check that fails caches
+  nothing and doesn't use up the purchase's refresh.
+- **The free lines left** are `FREE_LINES` less the rows, never below 0,
+  or null once the row holds a yes.
 - **The name.** The Worker reaches the object with `getByName()` on the
   SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
   so a stored record can't be traced back to an ID without the salt.
