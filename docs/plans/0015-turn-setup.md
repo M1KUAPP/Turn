@@ -351,8 +351,8 @@ prior consent to use TypeSafe's name, so we're asking:
 2. Our repository's design docs and research notes name Jev and TypeSafe
    and quote your public docs. May we make the repository public before
    the September 30, 2026 deadline?
-3. Our relay depends on your SDK, @typesafe-ai/sdk, from npm. Is that fine
-   in a public repository?
+3. Our relay will use your SDK, @typesafe-ai/sdk, from npm. Is that fine in
+   a public repository?
 
 Until we hear from you, the entry calls Jev "a hosted decision model" and
 TypeSafe "a third-party AI service in the United States".
