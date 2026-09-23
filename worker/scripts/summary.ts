@@ -72,7 +72,7 @@ export function summarize(lines: readonly LogLine[]): Summary {
 }
 
 /** A count and its noun, in the singular for one. */
-const counted = (count: number, noun: string) => `${count} ${noun}${count === 1 ? '' : 's'}`
+export const counted = (count: number, noun: string) => `${count} ${noun}${count === 1 ? '' : 's'}`
 
 /** Some outcomes' counts, by name, as "name count, name count". */
 const listed = (outcomes: Map<string, number>, keep: (outcome: string) => boolean) =>
