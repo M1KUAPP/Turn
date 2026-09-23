@@ -1,5 +1,6 @@
 import { isYesNo } from '@turn/shared/shortlist'
 import type { AtCutOff, Ranker } from './rankers'
+import { runModel, type Env } from './workers-ai'
 
 /** Workers AI's embedding model, which the report names (EVAL-6). */
 export const embeddingModel = '@cf/baai/bge-base-en-v1.5'
@@ -10,49 +11,42 @@ export type Embed = (texts: readonly string[]) => Promise<number[][]>
 /** The most texts the model's schema takes in one request. */
 const batchSize = 100
 
-/** What Workers AI's REST API answers, as far as the ranker reads it. */
-type Answer = {
-  success?: boolean
-  errors?: { code: number; message: string }[]
-  result?: { shape?: number[]; data?: number[][]; pooling?: string }
-}
+/** The vectors in a Workers AI answer, as far as the ranker reads them. */
+type Vectors = { shape?: number[]; data?: number[][]; pooling?: string }
 
-/**
- * Workers AI's REST API, with the account and a token that may run Workers AI from the environment. Each request
- * holds at most 100 texts and asks for `cls` pooling, since vectors pooled by the default `mean` don't compare with
- * them; an answer that isn't a success, isn't pooled by `cls`, or holds anything but one 768-number vector for each
- * text throws, with Cloudflare's error codes but never the token.
- */
-export function workersAi(env: Readonly<Record<string, string | undefined>> = process.env): Embed {
-  const { CLOUDFLARE_ACCOUNT_ID: account, CLOUDFLARE_API_TOKEN: token } = env
-  if (!account || !token) {
-    throw new Error('The embeddings ranker needs CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in the environment')
-  }
-  const url = `https://api.cloudflare.com/client/v4/accounts/${account}/ai/run/${embeddingModel}`
-  return async (texts) => {
+/** An answer's vectors if they're one of `dimension` numbers for each of `count` texts, as its shape says too. */
+const vectorsIn = (count: number, dimension: number, { shape, data }: Vectors): number[][] | null =>
+  shape?.[0] === count && shape[1] === dimension && data?.length === count && data.every((v) => v.length === dimension)
+    ? data
+    : null
+
+/** Embeds texts in batches of at most `size`, one request each, keeping the texts' order. */
+const batched =
+  (size: number, request: (batch: readonly string[]) => Promise<number[][]>): Embed =>
+  async (texts) => {
     const vectors: number[][] = []
-    for (let start = 0; start < texts.length; start += batchSize) {
-      const batch = texts.slice(start, start + batchSize)
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: batch, pooling: 'cls' })
-      })
-      // Every field is optional and checked below, and a page that isn't JSON reads as nothing.
-      const answer = (await response.json().catch(() => null)) as Answer | null
-      if (answer?.success !== true) {
-        const codes = answer?.errors?.map(({ code, message }) => `${code} ${message}`).join('; ') || 'no error codes'
-        throw new Error(`Workers AI answered ${response.status}: ${codes}`)
-      }
-      const { shape, data, pooling } = answer.result ?? {}
-      const fits = data?.length === batch.length && data.every((vector) => vector.length === 768)
-      if (pooling !== 'cls' || shape?.[0] !== batch.length || shape[1] !== 768 || !data || !fits) {
-        throw new Error(`Workers AI's answer holds no 768-number cls vector for each of ${batch.length} texts`)
-      }
-      vectors.push(...data)
+    for (let start = 0; start < texts.length; start += size) {
+      vectors.push(...(await request(texts.slice(start, start + size))))
     }
     return vectors
   }
+
+/**
+ * Workers AI's REST API for `bge-base-en-v1.5`. Each request holds at most 100 texts and asks for `cls` pooling, since
+ * vectors pooled by the default `mean` don't compare with them; an answer that isn't pooled by `cls`, or holds
+ * anything but one 768-number vector for each text, throws.
+ */
+export function workersAi(env: Env = process.env): Embed {
+  const run = runModel(embeddingModel, env)
+  return batched(batchSize, async (batch) => {
+    // Every field is optional and checked here.
+    const answer = (await run({ text: batch, pooling: 'cls' })) as Vectors
+    const vectors = answer.pooling === 'cls' ? vectorsIn(batch.length, 768, answer) : null
+    if (!vectors) {
+      throw new Error(`Workers AI's answer holds no 768-number cls vector for each of ${batch.length} texts`)
+    }
+    return vectors
+  })
 }
 
 /** The cosine of the angle between two vectors: their dot product over both lengths. */
