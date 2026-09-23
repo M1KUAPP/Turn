@@ -14,6 +14,19 @@ export const headers: Record<string, string> = {
   'X-Turn-Build': 'device'
 }
 
+/** The headers of another app user, a fresh one unless an ID is given, with any headers added. */
+export const headersFor = (id: string = crypto.randomUUID(), added: Record<string, string> = {}) => ({
+  ...headers,
+  'X-Turn-User': id,
+  ...added
+})
+
+/** The headers of the test's user in the Simulator build (PAY-9). */
+export const simulator: Record<string, string> = { ...headers, 'X-Turn-Build': 'simulator' }
+
+/** A log line's time, as the relay writes it. */
+export const loggedAt = expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/)
+
 /** The hex SHA-256 of a text, worked out apart from the relay's own code. */
 export async function sha256(text: string) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
@@ -66,12 +79,21 @@ export const lineFor = (
 /** Posts a line to the Worker's handler as the app would, with some vars changed. */
 export const postLine = (body: unknown, changes: Parameters<typeof send>[1] = {}) => send(lineFor(body), changes)
 
-/** Checks that a request gets 400 invalid_request before it reaches the user's object or Jev (SEC-2). */
-export async function expectRefused(request: Request) {
+/** Posts a new line as the app would, from these headers, with some vars changed. */
+export const postLineFrom = (sent: Record<string, string>, changes: Parameters<typeof send>[1] = {}) =>
+  send(lineFor(lineRequest(), { ...sent, 'Content-Type': 'application/json' }), changes)
+
+/**
+ * Checks that a request gets this error, `400 invalid_request` unless another is given, before it reaches the user's
+ * object or Jev (SEC-2, SEC-3), and returns the response.
+ */
+export async function expectRefused(request: Request, status = 400, code = 'invalid_request') {
   const getByName = vi.fn()
-  await expectError(await send(request, { DEVICE: { getByName } }), 400, 'invalid_request')
+  const response = await send(request, { DEVICE: { getByName } })
+  await expectError(response, status, code)
   expect(getByName).not.toHaveBeenCalled()
   expect(vi.mocked(globalThis.fetch)).not.toHaveBeenCalled()
+  return response
 }
 
 /** Jev's answer: an open question, about feelings unless the topic says otherwise, scoring the candidates in order. */
