@@ -18,7 +18,7 @@ describe('GET /v1/config', () => {
     })
   })
 
-  test('follows the naming setting and the switch at the next request, with no app build (CONSENT-7, STATE-3)', async () => {
+  test('follows the naming setting and the switch at the next request (CONSENT-7, STATE-3)', async () => {
     expect(await (await getConfig({ TYPESAFE_NAMED: 'true' })).json()).toMatchObject({
       typesafeNamed: true,
       jevOn: true
