@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 127 files · ~538,877 words
+- 141 files · ~544,031 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
+- Unclassified: 9 file(s) not represented in the graph (top: (none) 6, .lock 1, .example 1)
 
 ## Summary
 
-- 2672 nodes · 2549 edges · 195 communities (188 shown, 4 thin omitted)
+- 2779 nodes · 2643 edges · 208 communities (197 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `54877e06`
+- Built from commit: `0eb253dc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -212,6 +212,15 @@
 - Eligibility rules
 - Tasks
 - SF Symbols for Turn
+- Tasks
+- worker/package.json
+- shared/package.json
+- Turn's workspace research notes
+- eval/package.json
+- compilerOptions
+- worker/tsconfig.json
+- eval/tsconfig.json
+- shared/tsconfig.json
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -234,7 +243,7 @@
 
 - None detected.
 
-## Communities (195 total, 4 thin omitted)
+## Communities (208 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -243,8 +252,8 @@ Nodes (39): Add spacing to headings, ATX-style headings, Avoid relative paths un
 
 ### Community 1 - "package.json"
 
-Cohesion: 0.11
-Nodes (17): devDependencies, @commitlint/cli, @commitlint/config-conventional, husky, lint-staged, prettier, lint-staged, scripts (+9 more)
+Cohesion: 0.09
+Nodes (21): devDependencies, @commitlint/cli, @commitlint/config-conventional, husky, lint-staged, prettier, lint-staged, private (+13 more)
 
 ### Community 2 - "Prizes"
 
@@ -1176,27 +1185,72 @@ Nodes (14): Appendix: check scripts, Design, Global constraints, Shipaton 2026 b
 Cohesion: 0.67
 Nodes (3): SF Symbols for Turn, Symbols for speaking, listening, and answering, The SF Symbols release for iOS 27
 
+### Community 195 - "Tasks"
+
+Cohesion: 0.11
+Nodes (17): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 1: Research note, Task 2: This plan (+9 more)
+
+### Community 196 - "worker/package.json"
+
+Cohesion: 0.12
+Nodes (15): @cloudflare/vitest-plugin, wrangler, devDependencies, @cloudflare/vitest-plugin, typescript, vitest, wrangler, typescript (+7 more)
+
+### Community 197 - "shared/package.json"
+
+Cohesion: 0.15
+Nodes (12): devDependencies, typescript, vitest, exports, typescript, vitest, name, private (+4 more)
+
+### Community 198 - "Turn's workspace research notes"
+
+Cohesion: 0.17
+Nodes (11): Bun workspaces, Gaps, Hands-on check, One TypeScript source package for every consumer, Prettier and the Git hooks, Recommended layout and scripts, See also, The Workers Vitest plugin (+3 more)
+
+### Community 199 - "eval/package.json"
+
+Cohesion: 0.17
+Nodes (11): devDependencies, typescript, vitest, typescript, vitest, name, private, scripts (+3 more)
+
+### Community 200 - "compilerOptions"
+
+Cohesion: 0.17
+Nodes (11): compilerOptions, isolatedModules, lib, module, moduleResolution, noEmit, skipLibCheck, strict (+3 more)
+
+### Community 201 - "worker/tsconfig.json"
+
+Cohesion: 0.33
+Nodes (5): compilerOptions, types, extends, include, ../tsconfig.base.json
+
+### Community 202 - "eval/tsconfig.json"
+
+Cohesion: 0.50
+Nodes (3): extends, include, ../tsconfig.base.json
+
+### Community 203 - "shared/tsconfig.json"
+
+Cohesion: 0.50
+Nodes (3): extends, include, ../tsconfig.base.json
+
 ## Knowledge Gaps
 
-- **2119 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2114 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2239 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2198 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2193 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2327 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
+- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Google Play review`, `Store listing and discoverability`, `Apple App Store review`, `Retention and push notifications`, `Demo video and write-up`, `Samsung Galaxy Store review`, `Monetization and paywall benchmarks`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Turn technical requirements` connect `Turn technical requirements` to `Decision pipeline`, `The iPhone app`, `Evaluation`, `Listening and speaking on the phone`, `Security and privacy`, `Data model`, `Reliability and observability`, `Purchases and entitlements`, `Stack and repository`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2119 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2198 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
-- **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
-  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
