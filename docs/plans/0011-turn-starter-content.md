@@ -144,7 +144,13 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     consent; and 9 or 10 meant to have no stored reply. That's a quarter
     rather than a fifth, since labeling may find replies for some, and
     EVAL-1 needs 16. Over 80 lines, about 46 yes-or-no questions are seven in
-    ten of about 66 questions, against quotas of 24, 8, and 4.
+    ten of about 66 questions, against quotas of 24, 8, and 4. A yes-or-no
+    line may take the fixed buttons as its acceptable replies (TRD), so the
+    16 must come from the lines that aren't yes-or-no. Asked afterwards,
+    the writers named 19 lines they meant to have no stored reply, and none
+    is yes-or-no: 10 open, 8 not a question, and 1 either-or, out of the 35
+    lines that aren't yes-or-no. Their ids stay out of the repository, so
+    #21's labelers judge each line fresh.
 1.  **The lines' format.** `eval/lines.jsonl` holds one object per line:
     `id` (`line-01` to `line-80`), `author`, `text` (1 to 300 characters,
     the relay's limit for a line), `kind` (Jev's own keys: `yes_no`,
