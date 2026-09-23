@@ -1,5 +1,14 @@
 import { expect, test } from 'vitest'
-import { brier, consistencyBand, fitAt, pav, topPhrase, type Forecast } from '../src/calibration'
+import {
+  brier,
+  consistencyBand,
+  fitAt,
+  pav,
+  reliability,
+  reliabilityPlot,
+  topPhrase,
+  type Forecast
+} from '../src/calibration'
 import type { Ranker } from '../src/rankers'
 import { scoreLines } from '../src/score'
 import { below, seeded } from '../src/stats'
@@ -151,6 +160,37 @@ test('bands each distinct score by where the fit falls when each outcome is draw
   }
   // The same on every run, from the committed seed.
   expect(consistencyBand(worked)).toEqual(band)
+})
+
+test('draws the diagram as an SVG: the diagonal, the band, the fit through each score, the rules, and the bars', () => {
+  const plotted = reliabilityPlot(reliability(worked), 'Jev')
+  expect(plotted).toMatch(/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 640 560"/)
+  expect(plotted).toContain("<title>Reliability of Jev's top phrase</title>")
+  expect(plotted).toMatch(/<desc>Jev's top score against the share of lines whose top phrase is acceptable, .*<\/desc>/)
+  // The plot is 400 pixels square, from 64 across and 24 down.
+  expect(plotted).toContain('<line x1="64.0" y1="424.0" x2="464.0" y2="24.0"')
+  // The fit: 0.4 from 0.2 to 0.7, rising to 1 at 0.9, with a dot at each distinct score.
+  expect(plotted).toContain('<polyline points="144.0,264.0 264.0,264.0 344.0,264.0 424.0,24.0"')
+  expect(plotted.match(/<circle /g)).toHaveLength(4)
+  // The floor and the big button's bar, dotted apart from the grid.
+  const rule = 'stroke="#6b7280" stroke-dasharray="2 3"/>'
+  expect(plotted).toContain(`<line x1="304.0" y1="424.0" x2="304.0" y2="24.0" ${rule}`)
+  expect(plotted).toContain(`<line x1="404.0" y1="424.0" x2="404.0" y2="24.0" ${rule}`)
+  expect(plotted).toContain('>floor 0.6</text>')
+  expect(plotted).toContain('>big button 0.85</text>')
+  // Two lines at 0.2 and 0.7 make the tallest bars, 60 pixels, and one at 0.5 and 0.9 half that.
+  expect(plotted).toContain('<line x1="144.0" y1="500.0" x2="144.0" y2="440.0"')
+  expect(plotted).toContain('<line x1="264.0" y1="500.0" x2="264.0" y2="470.0"')
+  expect(reliabilityPlot(reliability(worked), 'A & <b>')).toContain("<title>Reliability of A &amp; &lt;b&gt;'s")
+})
+
+test('shades the band along its upper bounds, low to high, and back along its lower bounds', () => {
+  const band = [
+    { score: 0.2, low: 0.1, high: 0.5 },
+    { score: 0.9, low: 0.6, high: 1 }
+  ]
+  const plotted = reliabilityPlot({ forecasts: worked, blocks: pav(worked), band }, 'Jev')
+  expect(plotted).toContain('<polygon points="144.0,224.0 424.0,24.0 424.0,184.0 144.0,384.0" fill="#d1d5db"/>')
 })
 
 test('holds 90% of the resampled fits: at one score, the 5th and 95th percentiles of a binomial share', () => {
