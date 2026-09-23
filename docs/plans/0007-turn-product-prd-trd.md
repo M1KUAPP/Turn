@@ -543,7 +543,7 @@ Each task also has its own assertions, run first as a failing test:
 check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" 2>/dev/null || echo "MISSING: $p"; done; }
 ```
 
-[idea-appendix]: /docs/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
+[idea-appendix]: /docs/plans/0003-shipaton-2026-idea.md#appendix-check-scripts
 
 ## Tasks
 
@@ -591,7 +591,7 @@ git commit -m "docs(research): add notes on evaluating reply ranking"
 - [ ] **Step 1: Run the gate, then commit**
 
 ```shell
-git add docs/plans/2026-09-22-turn-product-prd-trd.md
+git add docs/plans/0007-turn-product-prd-trd.md
 git commit -m "docs(plan): add the Turn product, PRD, and TRD plan"
 ```
 
@@ -705,4 +705,4 @@ and the TRD`.
 1.  Rebase-merge the pull request and delete the branch, locally and on the
     remote.
 
-[ids-script]: /docs/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
+[ids-script]: /docs/plans/0004-guessling-product-prd-trd.md#appendix-check-scripts
