@@ -1,8 +1,7 @@
 import { fixedButtons } from '@turn/shared/row'
 import { expect, test } from 'vitest'
-import { bank } from '../src/data'
+import { bank, phrases } from '../src/data'
 
-const phrases = bank.categories.flatMap((category) => category.phrases)
 const categoryById = (id: string) => bank.categories.find((category) => category.id === id)
 const phraseTexts = (categoryId: string) => categoryById(categoryId)?.phrases.map((phrase) => phrase.text)
 const phraseByText = (text: string) => phrases.find((phrase) => phrase.text === text)
