@@ -186,16 +186,24 @@ xcrun devicectl device info details --device "<name>" \
   file." `--all` acts "as if all the refs in refs/, along with HEAD, are
   listed on the command line", and `--reflog` adds "all objects mentioned by
   reflogs" ([git log][git-log]).
-- Synthesis: after `git fetch --all`, an empty result from the command
-  below shows no commit on any ref or reflog ever added or removed the key.
-  Read the key into a variable at a silent prompt so it stays out of shell
-  history.
+- **Every object.** `--batch-all-objects` makes `git cat-file` "perform the
+  requested batch operation on all objects in the repository and any
+  alternate object stores (not just reachable objects)"
+  ([git cat-file][git-cat-file]).
+- Synthesis: an empty pickaxe result shows no commit on any ref or reflog
+  ever added or removed the key, but `-S` takes the key as an argument,
+  where `ps` can see it while git runs. Matching every object instead, with
+  the key read from a pipe by `grep -F -f`, covers dangling objects too and
+  keeps the key off every command line. `grep -c` counts matching lines, so
+  0 means no object holds the key.
 
 ```shell
-read -rs KEY && git log --all --reflog -S"$KEY" --oneline; unset KEY
+git cat-file --batch-all-objects --batch |
+  grep -a -F -c -f <(printf '%s\n' "${TYPESAFE_API_KEY:?}")
 ```
 
 [git-log]: https://git-scm.com/docs/git-log
+[git-cat-file]: https://git-scm.com/docs/git-cat-file
 
 ## Hands-on check
 
@@ -221,9 +229,12 @@ an argument: curl read its header from standard input.
   Accounts is empty, `security find-identity -v -p codesigning` finds "0
   valid identities", and `xcrun devicectl list devices` prints "No devices
   found."
-- **No key in Git.** None of the 3,783 objects in the repository's store,
-  reachable or not, read with `git cat-file --batch-all-objects --batch`,
-  holds the key, and neither do the diffs of every ref's history.
+- **No key in Git.** After fetching every branch and, by hash, the heads of
+  all 18 pull requests, no line of the 4,559 objects in the repository's
+  store, reachable or not (262 MB from
+  `git cat-file --batch-all-objects --batch`), holds the key, and no line of
+  `git log --all --reflog -p` does either. Both scans read the key from a
+  pipe with `grep -F -f`.
 - Synthesis: the key, the credits, the login, the subdomain, and the Worker
   are ready, so #14's secret and #16's Cloudflare checks can run now. The
   Apple Account, the iPhone, and TypeSafe's auto-refill switch need a
