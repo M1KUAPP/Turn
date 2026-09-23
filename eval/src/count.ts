@@ -56,8 +56,8 @@ export function main(args: readonly string[]): number {
         `${rounded(noneOrSome.positive)}, and negative agreement ${rounded(noneOrSome.negative)}.`,
       `- Each line and candidate phrase, on ${pairs.a + pairs.b + pairs.c + pairs.d} pairs: both on ${pairs.a}, ` +
         `only the first on ${pairs.b}, only the second on ${pairs.c}, and neither on ${pairs.d}; positive agreement ` +
-        `${rounded(pairs.positive)}, and negative agreement ${rounded(pairs.negative)} and Cohen's kappa ${rounded(pairs.kappa)}, ` +
-        "which move with the pairs' count.",
+        `${rounded(pairs.positive)}, and negative agreement ${rounded(pairs.negative)} and Cohen's kappa ` +
+        `${rounded(pairs.kappa)}, which move with the pairs' count.`,
       `- Krippendorff's alpha with the MASI distance over each line's replies: ${rounded(alpha)}.`
     ].join('\n')
   )

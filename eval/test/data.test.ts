@@ -31,7 +31,7 @@ test("gives the bank's phrases in the grid's order, marking the fixed buttons an
   expect(phrases.find(({ id }) => id === 'water-please')?.places).toEqual(['home'])
 })
 
-test('accepts labels that name phrases in the bank, and names the first line whose labels are missing or unknown', () => {
+test('accepts labels from the bank, and names the first line whose labels are missing or unknown', () => {
   expect(() => checkLabels(readRows(fixture('lines.jsonl')))).not.toThrow()
   expect(() => checkLabels([{ id: 'line-01', acceptable: ['yes'] }, { id: 'line-02' }])).toThrow(
     'line-02 lists no acceptable replies'
@@ -41,7 +41,7 @@ test('accepts labels that name phrases in the bank, and names the first line who
   )
 })
 
-test("reads a command's lines from the file it names, or else the 80, naming the file from the repository's root", () => {
+test("reads a command's lines from the file it names, or else the 80, naming the file from the root", () => {
   expect(linesFrom(fixture('lines.jsonl').pathname)).toMatchObject({ file: 'eval/test/fixture/lines.jsonl' })
   expect(linesFrom(fixture('lines.jsonl').pathname).lines).toHaveLength(8)
   expect(linesFrom(undefined)).toMatchObject({ file: 'eval/lines.jsonl' })
