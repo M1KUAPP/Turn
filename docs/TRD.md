@@ -1185,11 +1185,6 @@ ran under Wrangler 4.136.2:
   },
   "ratelimits": [
     {
-      "name": "USER_LIMITER",
-      "namespace_id": "1001",
-      "simple": { "limit": 30, "period": 60 }
-    },
-    {
       "name": "ADDRESS_LIMITER",
       "namespace_id": "1002",
       "simple": { "limit": 120, "period": 60 }
