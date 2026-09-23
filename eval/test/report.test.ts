@@ -241,7 +241,7 @@ test("names Jev's pin, what Jev answered as, Workers AI's models, and Apple's em
         "32 calls; Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling, `@cf/baai/bge-reranker-base`, and " +
         '`@cf/qwen/qwen3-embedding-0.6b`, with the instruction "Given what a conversation partner just said, ' +
         'retrieve the reply that answers it"; and Apple\'s English sentence embedding at revision 1, of 512 numbers, ' +
-        'on macOS Version 27.0 (Build 26A428).'
+        'on macOS 27.0 (Build 26A428).'
     )
   )
 })
@@ -346,7 +346,11 @@ test("names Jev nowhere with --unnamed, calling it the hosted decision model wit
   const calibrated = readFileSync(join(dir, 'results-reliability.svg'), 'utf8')
   for (const text of [unnamed, plotted, calibrated]) expect(text).not.toMatch(/jev|typesafe/i)
   expect(unnamed).toContain("## The hosted decision model's calibration")
-  expect(calibrated).toContain("<title>Reliability of The hosted decision model's top phrase</title>")
+  // Named mid-sentence in lower case, and capitalized only where a sentence or a label starts.
+  expect(unnamed).toContain("![Reliability of the hosted decision model's top phrase](results-reliability.svg)")
+  expect(calibrated).toContain("<title>Reliability of the hosted decision model's top phrase</title>")
+  expect(calibrated).toContain("<desc>The hosted decision model's top score against")
+  expect(calibrated).toContain(">The hosted decision model's top score</text>")
   expect(unnamed).toMatch(prose('- **Models:** The hosted decision model, pinned to version 1.13.0 by'))
   expect(unnamed).toMatch(prose('which answered as version 1.13.0 on all 32 calls'))
   expect(unnamed).toMatch(prose('The hosted decision model minus embeddings in top 6:'))

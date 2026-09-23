@@ -29,7 +29,8 @@ guard let embedding = NLEmbedding.sentenceEmbedding(for: .english, revision: rev
 send([
   "revision": embedding.revision,
   "dimension": embedding.dimension,
-  "system": ProcessInfo.processInfo.operatingSystemVersionString,
+  // Such as "27.0 (Build 26A428)", without the "Version " that starts it.
+  "system": ProcessInfo.processInfo.operatingSystemVersionString.replacingOccurrences(of: "Version ", with: ""),
 ])
 while let line = readLine() {
   guard let texts = try? JSONSerialization.jsonObject(with: Data(line.utf8)) as? [String] else {

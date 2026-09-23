@@ -1,4 +1,5 @@
 import { startingPolicy } from '@turn/shared/row'
+import { capital } from './prose'
 import type { LineScore, ScoredLine } from './score'
 import { below, bootstrap, mean, percentile, resamples, seeded } from './stats'
 import { svg, tag } from './svg'
@@ -232,8 +233,9 @@ export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: 
       height: frame.height,
       title: `Reliability of ${name}'s top phrase`,
       description:
-        `${name}'s top score against the share of lines whose top phrase is acceptable, as the pool-adjacent-` +
-        'violators fit gives it, beside the diagonal a calibrated ranker would follow, with the 90% consistency band ' +
+        `${capital(name)}'s top score against the share of lines whose top phrase is acceptable, as the ` +
+        'pool-adjacent-violators fit gives it, beside the diagonal a calibrated ranker would follow, with the 90% ' +
+        'consistency band ' +
         `around it, the row's floor of ${startingPolicy.floor} and big button's bar of ${startingPolicy.bigAbove}, ` +
         "and under it a bar for each score's count of lines."
     },
@@ -260,7 +262,7 @@ export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: 
         })
       }),
       tag('text', { x: frame.left - 8, y: stripTop + frame.strip / 2, 'text-anchor': 'end' }, 'Lines'),
-      tag('text', { x: across(0.5), y: frame.height - 12, 'text-anchor': 'middle' }, `${name}'s top score`),
+      tag('text', { x: across(0.5), y: frame.height - 12, 'text-anchor': 'middle' }, `${capital(name)}'s top score`),
       tag(
         'text',
         { transform: `translate(16 ${up(0.5)}) rotate(-90)`, 'text-anchor': 'middle' },
