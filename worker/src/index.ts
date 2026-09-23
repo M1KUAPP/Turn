@@ -6,7 +6,17 @@ export { Device } from './device'
 
 /** How a request ended, in its log line (METRIC-1). */
 type Outcome =
-  'config' | 'answered' | 'paywall' | 'duplicate' | 'invalid' | 'not_found' | 'off' | 'failed' | 'credits' | 'internal'
+  | 'config'
+  | 'answered'
+  | 'paywall'
+  | 'duplicate'
+  | 'unverified'
+  | 'invalid'
+  | 'not_found'
+  | 'off'
+  | 'failed'
+  | 'credits'
+  | 'internal'
 
 /**
  * What a request's log line is made from, gathered as the request goes: each fact once it's known, and never any text
@@ -41,6 +51,7 @@ const statuses: Record<ErrorCode, number> = {
 const codes = {
   paywall: 'paywall',
   duplicate: 'duplicate',
+  unverified: 'jev_unavailable',
   invalid: 'invalid_request',
   not_found: 'not_found',
   off: 'jev_off',
@@ -66,13 +77,13 @@ async function hashUser(salt: string, user: string) {
 const deviceFor = (env: Env, hash: string) => env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' })
 
 /** Checks a line before anything else (SEC-2), then asks the user's object to count it and ask Jev. */
-async function answerLine(request: Request, env: Env, log: LogFacts, hash: string): Promise<Response> {
+async function answerLine(request: Request, env: Env, log: LogFacts, user: string, hash: string): Promise<Response> {
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
   const config = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
-  const reply = await deviceFor(env, hash).answer(line, { freeLines: config.freeLinesLeft })
+  const reply = await deviceFor(env, hash).answer(line, user, { freeLines: config.freeLinesLeft })
   if ('ms' in reply) log.jevMs = reply.ms
   if (reply.outcome !== 'answered') {
     if ('status' in reply && reply.status) log.jevStatus = reply.status
@@ -103,7 +114,7 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   if (!user) return refuse(log, 'invalid')
   const hash = await hashUser(env.ID_SALT, user)
   log.user = hash.slice(0, 8)
-  if (isLine) return answerLine(request, env, log, hash)
+  if (isLine) return answerLine(request, env, log, user, hash)
   const config = readConfig(env)
   const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft({ freeLines: config.freeLinesLeft })
   log.outcome = 'config'
