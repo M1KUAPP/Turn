@@ -4,7 +4,11 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "typecheck": "wrangler types && tsc"
+    "typecheck": "wrangler types --strict-vars=false && tsc"
+  },
+  "dependencies": {
+    "@turn/shared": "workspace:*",
+    "@typesafe-ai/sdk": "0.6.0"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "1.2.2",
