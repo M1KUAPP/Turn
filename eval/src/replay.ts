@@ -1,4 +1,4 @@
-import { limits, type Config, type LineAnswer, type LineRequest } from '@turn/shared/relay'
+import { limits, requestsPerMinute, type Config, type LineAnswer, type LineRequest } from '@turn/shared/relay'
 import { applyAnswer, emptyRow, phrasesInRow, type Answer, type Row } from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, rankOnPhone } from '@turn/shared/shortlist'
 import { randomUUID } from 'node:crypto'
@@ -36,10 +36,10 @@ const isAnswer = (body: unknown): body is LineAnswer => {
 }
 
 /**
- * The most requests the replay's one user sends in any 60 seconds: one fewer than the 30 the relay allows an ID
- * (SEC-3), in case two arrive closer together than they left.
+ * The most requests the replay's one user sends in any 60 seconds: one fewer than the relay allows an ID (SEC-3), in
+ * case two arrive closer together than they left.
  */
-const perMinute = 29
+const perMinute = requestsPerMinute - 1
 
 /** The headers the relay checks, for the replay's made-up user, who counts as a Simulator build. */
 const headers = (user: string) => ({
