@@ -15,6 +15,7 @@ import {
   type Reliability
 } from './calibration'
 import { plot, riskCoverage, type Curve, type Point } from './curves'
+import { foldCount } from './cut-off'
 import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, qwen, qwenInstruction, qwenModel, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
@@ -299,7 +300,7 @@ const curveSection = (count: number, curves: readonly Curve[], image: string) =>
  * reaches it, to three significant figures, since the reranker's scores are small.
  */
 const cutOffSection = (cutOffs: Readonly<Record<string, readonly number[]>>, fold: readonly number[]) => {
-  const counts = [0, 1, 2, 3, 4].map((held) => fold.filter((f) => f === held).length)
+  const counts = Array.from({ length: foldCount }, (_, held) => fold.filter((f) => f === held).length)
   const value = (cutOff: number, held: number) =>
     counts[held] === 0 ? 'no lines' : cutOff === Infinity ? 'hold all' : cutOff.toPrecision(3)
   return [

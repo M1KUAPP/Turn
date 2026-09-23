@@ -1,7 +1,7 @@
 import { below, seeded } from './stats'
 
 /** How many folds the cross-validation deals the lines into. */
-const foldCount = 5
+export const foldCount = 5
 
 /**
  * Deals the items into folds, stratified by their class: one seeded shuffle, so the file's order doesn't pick the
