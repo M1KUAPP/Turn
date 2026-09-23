@@ -1,7 +1,9 @@
 import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
+import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
+import { plot, riskCoverage, type Point } from './curves'
 import { linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
@@ -223,6 +225,37 @@ const kindSection = (scores: readonly LineScore<Line>[]) => {
   ]
 }
 
+/**
+ * Each ranker's risk-coverage curve: the plot, and as its text, each ranker's risk at the first point that covers at
+ * least each share of the lines.
+ */
+const curveSection = (count: number, curves: readonly (readonly [string, readonly Point[]])[], image: string) => {
+  const shares = [0.2, 0.4, 0.6, 0.8, 1]
+  // A little slack, since 4 of 5 lines is a hair under 0.8 in floating point.
+  const at = (points: readonly Point[], share: number) => points.find(({ coverage }) => coverage >= share - 1e-9)
+  return [
+    '## Risk and coverage',
+    `![Risk against coverage for each ranker](${image})`,
+    wrap(
+      `Each ranker's risk against its coverage on all ${count} lines, as its threshold falls through its top ` +
+        'scores: a line is covered when its top phrase reaches the threshold, and right when one of its first six ' +
+        "phrases at or above it is acceptable; the fixed buttons and the big button don't count. place and keyword " +
+        'score each phrase 1 or 0, so each makes one point. The table gives the risk at the first point that covers ' +
+        'at least each share of the lines, and at what coverage.'
+    ),
+    table(
+      ['Ranker', ...shares.map((share) => percent(share))],
+      curves.map(([name, points]) => [
+        name,
+        ...shares.map((share) => {
+          const point = at(points, share)
+          return point ? `${percent(point.risk)} at ${percent(point.coverage)}` : 'never'
+        })
+      ])
+    )
+  ]
+}
+
 /** Each fold's cut-off for the embeddings ranker, which holds a line when no phrase's cosine reaches it. */
 const cutOffSection = (cutOffs: readonly number[]) => {
   const values = cutOffs.map((cutOff) => (cutOff === Infinity ? 'none, holding every line' : cutOff.toFixed(3)))
@@ -248,8 +281,16 @@ const slug = (heading: string) =>
 const render = (
   labeled: readonly Line[],
   { lines: scores, timings, cutOffs }: Scores<Line>,
-  { run, file, pin, calls }: { run: string; file: string; pin: string; calls: readonly JevCall[] }
+  about: {
+    run: string
+    file: string
+    pin: string
+    calls: readonly JevCall[]
+    curves: readonly (readonly [string, readonly Point[]])[]
+    image: string
+  }
 ) => {
+  const { run, file, pin, calls, curves, image } = about
   const names = Object.keys(timings.rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
@@ -279,6 +320,7 @@ const render = (
     ...groups.map(({ name }) => name),
     'Big buttons on yes-or-no, pain, and consent lines',
     ...(names.includes('jev') ? ['The question kind'] : []),
+    'Risk and coverage',
     ...(cutOffs.embeddings ? ["The embeddings ranker's cut-offs"] : []),
     'Latency'
   ]
@@ -332,6 +374,7 @@ const render = (
       ),
       ...bigButtonSection(scores),
       ...(names.includes('jev') ? kindSection(scores) : []),
+      ...curveSection(scores.length, curves, image),
       ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings) : []),
       '## Latency',
       wrap(
@@ -369,10 +412,12 @@ export async function main(args: readonly string[]): Promise<void> {
   const scores = await scoreLines(labeled, phrases, rankers, { embeddings: atCutOff })
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
   const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
-  writeFileSync(
-    out,
-    render(labeled, scores, { run: `${date}, at commit ${commit()}`, file, pin, calls: jevRanker.calls })
-  )
+  const curves = Object.keys(rankers).map((name) => [name, riskCoverage(scores.lines, name)] as const)
+  // The plot sits beside the report, named after it, so the report's relative link finds it.
+  const image = `${basename(out, '.md')}-risk-coverage.svg`
+  writeFileSync(join(dirname(out), image), plot(curves))
+  const run = `${date}, at commit ${commit()}`
+  writeFileSync(out, render(labeled, scores, { run, file, pin, calls: jevRanker.calls, curves, image }))
   console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
 }
 
