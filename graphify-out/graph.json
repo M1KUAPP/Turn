@@ -4,7 +4,7 @@
   "graph": {},
   "nodes": [
     {
-      "id": "eval_test_starter_bank_test_category",
+      "id": "eval_src_data_category",
       "label": "Category",
       "_callable": true,
       "_callable_class": true,
@@ -13,11 +13,37 @@
       "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "category",
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L6"
+      "source_file": "eval/src/data.ts",
+      "source_location": "L22"
     },
     {
-      "id": "eval_test_starter_bank_test_phrase",
+      "id": "eval_src_data_labels",
+      "label": "Labels",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "labels",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "eval_src_data_line",
+      "label": "Line",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "line",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "eval_src_data_phrase",
       "label": "Phrase",
       "_callable": true,
       "_callable_class": true,
@@ -26,11 +52,11 @@
       "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "phrase",
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L5"
+      "source_file": "eval/src/data.ts",
+      "source_location": "L21"
     },
     {
-      "id": "eval_test_starter_bank_test_starterbank",
+      "id": "eval_src_data_starterbank",
       "label": "StarterBank",
       "_callable": true,
       "_callable_class": true,
@@ -39,8 +65,8 @@
       "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "starterbank",
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L7"
+      "source_file": "eval/src/data.ts",
+      "source_location": "L23"
     },
     {
       "id": "shared_src_row_answer",
@@ -147,19 +173,6 @@
       "source_location": "L26"
     },
     {
-      "id": "eval_test_lines_test_line",
-      "label": "Line",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 210,
-      "community_name": "lines.test.ts",
-      "file_type": "code",
-      "norm_label": "line",
-      "source_file": "eval/test/lines.test.ts",
-      "source_location": "L4"
-    },
-    {
       "id": "worker_src_index_fetch",
       "label": "fetch()",
       "_callable": true,
@@ -172,6 +185,78 @@
       "source_location": "L2"
     },
     {
+      "id": "eval_src_data_read",
+      "label": "read()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "read()",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "eval_src_data_readrows",
+      "label": "readRows()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "readrows()",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "eval_test_labels_test_count",
+      "label": "count()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "count()",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L30"
+    },
+    {
+      "id": "eval_test_labels_test_expectrepliesfollowrules",
+      "label": "expectRepliesFollowRules()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "expectrepliesfollowrules()",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "eval_test_labels_test_sharesaword",
+      "label": "sharesAWord()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "sharesaword()",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "eval_test_lines_test_count",
+      "label": "count()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "count()",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L4"
+    },
+    {
       "id": "eval_test_starter_bank_test_categorybyid",
       "label": "categoryById()",
       "_callable": true,
@@ -181,7 +266,7 @@
       "file_type": "code",
       "norm_label": "categorybyid()",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L13"
+      "source_location": "L6"
     },
     {
       "id": "eval_test_starter_bank_test_phrasebytext",
@@ -193,7 +278,7 @@
       "file_type": "code",
       "norm_label": "phrasebytext()",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L15"
+      "source_location": "L8"
     },
     {
       "id": "eval_test_starter_bank_test_phrasetexts",
@@ -205,7 +290,7 @@
       "file_type": "code",
       "norm_label": "phrasetexts()",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L14"
+      "source_location": "L7"
     },
     {
       "id": "shared_src_row_applyanswer",
@@ -458,18 +543,6 @@
       "norm_label": "water()",
       "source_file": "shared/test/shortlist.test.ts",
       "source_location": "L20"
-    },
-    {
-      "id": "eval_test_lines_test_count",
-      "label": "count()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 210,
-      "community_name": "lines.test.ts",
-      "file_type": "code",
-      "norm_label": "count()",
-      "source_file": "eval/test/lines.test.ts",
-      "source_location": "L19"
     },
     {
       "id": "docs_references_markdown_style",
@@ -3471,7 +3544,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1365"
+      "source_location": "L1387"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -3483,7 +3556,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1446"
+      "source_location": "L1468"
     },
     {
       "id": "docs_trd_overview",
@@ -3519,7 +3592,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1403"
+      "source_location": "L1425"
     },
     {
       "id": "docs_trd_see_also",
@@ -3531,7 +3604,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1488"
+      "source_location": "L1510"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -3555,7 +3628,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1329"
+      "source_location": "L1351"
     },
     {
       "id": "docs_trd_turn_technical_requirements",
@@ -11638,7 +11711,7 @@
       "node_kind": "heading",
       "norm_label": "metrics, intervals, and thresholds",
       "source_file": "docs/TRD.md",
-      "source_location": "L1274"
+      "source_location": "L1296"
     },
     {
       "id": "docs_trd_the_evaluation_data",
@@ -11662,7 +11735,7 @@
       "node_kind": "heading",
       "norm_label": "the rankers",
       "source_file": "docs/TRD.md",
-      "source_location": "L1252"
+      "source_location": "L1274"
     },
     {
       "id": "docs_trd_the_replay_script",
@@ -11674,7 +11747,7 @@
       "node_kind": "heading",
       "norm_label": "the replay script",
       "source_file": "docs/TRD.md",
-      "source_location": "L1316"
+      "source_location": "L1338"
     },
     {
       "id": "docs_trd_the_report",
@@ -11686,7 +11759,7 @@
       "node_kind": "heading",
       "norm_label": "the report",
       "source_file": "docs/TRD.md",
-      "source_location": "L1322"
+      "source_location": "L1344"
     },
     {
       "id": "docs_trd_listening_and_speaking_on_the_phone",
@@ -16804,6 +16877,116 @@
       "source_location": "L17"
     },
     {
+      "id": "eval_src_data",
+      "label": "data.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "data.ts",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_data_bank",
+      "label": "bank",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "bank",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L41"
+    },
+    {
+      "id": "eval_src_data_lines",
+      "label": "lines",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "lines",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "eval_src_data_secondlabeling",
+      "label": "secondLabeling",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "secondlabeling",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L38"
+    },
+    {
+      "id": "eval_test_labels_test",
+      "label": "labels.test.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "labels.test.ts",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_labels_test_phraseids",
+      "label": "phraseIds",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "phraseids",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "eval_test_labels_test_phrases",
+      "label": "phrases",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "phrases",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "eval_test_labels_test_stripids",
+      "label": "stripIds",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "stripids",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "eval_test_labels_test_textbyid",
+      "label": "textById",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "textbyid",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "eval_test_lines_test",
+      "label": "lines.test.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "lines.test.ts",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "eval_test_starter_bank_test",
       "label": "starter-bank.test.ts",
       "_origin": "ast",
@@ -16815,17 +16998,6 @@
       "source_location": "L1"
     },
     {
-      "id": "eval_test_starter_bank_test_bank",
-      "label": "bank",
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "shortlist.test.ts",
-      "file_type": "code",
-      "norm_label": "bank",
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L9"
-    },
-    {
       "id": "eval_test_starter_bank_test_phrases",
       "label": "phrases",
       "_origin": "ast",
@@ -16834,7 +17006,7 @@
       "file_type": "code",
       "norm_label": "phrases",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L12"
+      "source_location": "L5"
     },
     {
       "id": "shared_src_common_words",
@@ -17196,26 +17368,244 @@
       "source_location": "L231"
     },
     {
-      "id": "eval_test_lines_test",
-      "label": "lines.test.ts",
+      "id": "docs_plans_0013_turn_reply_labels",
+      "label": "0013-turn-reply-labels.md",
       "_origin": "ast",
       "community": 210,
-      "community_name": "lines.test.ts",
-      "file_type": "code",
-      "norm_label": "lines.test.ts",
-      "source_file": "eval/test/lines.test.ts",
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0013-turn-reply-labels.md",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
       "source_location": "L1"
     },
     {
-      "id": "eval_test_lines_test_lines",
-      "label": "lines",
+      "id": "docs_plans_0013_turn_reply_labels_appendix_the_labelers_brief",
+      "label": "Appendix: the labelers' brief",
       "_origin": "ast",
       "community": 210,
-      "community_name": "lines.test.ts",
-      "file_type": "code",
-      "norm_label": "lines",
-      "source_file": "eval/test/lines.test.ts",
-      "source_location": "L14"
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "appendix: the labelers' brief",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L394"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_decisions",
+      "label": "Decisions",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "decisions",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_design",
+      "label": "Design",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "design",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L75"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_global_constraints",
+      "label": "Global constraints",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "global constraints",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_out_of_scope",
+      "label": "Out of scope",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "out of scope",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L195"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_rejected_alternatives",
+      "label": "Rejected alternatives",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "rejected alternatives",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_skills",
+      "label": "Skills",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "skills",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L69"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_1_research_note",
+      "label": "Task 1: Research note",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 1: research note",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L235"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_2_this_plan",
+      "label": "Task 2: This plan",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 2: this plan",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L247"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_3_one_module_for_the_data",
+      "label": "Task 3: One module for the data",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 3: one module for the data",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L257"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_4_the_labelers",
+      "label": "Task 4: The labelers",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 4: the labelers",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L275"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_5_the_first_labeling",
+      "label": "Task 5: The first labeling",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 5: the first labeling",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L308"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_6_the_second_labeling",
+      "label": "Task 6: The second labeling",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 6: the second labeling",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L333"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_7_the_trd",
+      "label": "Task 7: The TRD",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 7: the trd",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L352"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_8_the_graph",
+      "label": "Task 8: The graph",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 8: the graph",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L368"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_task_9_review_and_merge",
+      "label": "Task 9: Review and merge",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 9: review and merge",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L378"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_tasks",
+      "label": "Tasks",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "tasks",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L227"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "label": "Turn's reply labels implementation plan",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's reply labels implementation plan",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0013_turn_reply_labels_verification_gate",
+      "label": "Verification gate",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verification gate",
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L205"
     },
     {
       "id": "docs_plans_0012_turn_shortlist_and_row",
@@ -17588,6 +17978,114 @@
       "norm_label": "yes-or-no question openers",
       "source_file": "docs/research/0033-turn-shortlist-and-row.md",
       "source_location": "L153"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels",
+      "label": "0034-turn-reply-labels.md",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0034-turn-reply-labels.md",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_agreement_on_set_valued_labels",
+      "label": "Agreement on set-valued labels",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "agreement on set-valued labels",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_gaps",
+      "label": "Gaps",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "gaps",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L268"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_guidelines_and_independent_labeling",
+      "label": "Guidelines and independent labeling",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "guidelines and independent labeling",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L245"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_language_models_as_labelers",
+      "label": "Language models as labelers",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "language models as labelers",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L199"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_replies_that_fit_almost_any_line",
+      "label": "Replies that fit almost any line",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "replies that fit almost any line",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L167"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_see_also",
+      "label": "See also",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "see also",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L292"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "label": "Turn's reply-labeling research notes",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's reply-labeling research notes",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0034_turn_reply_labels_which_candidates_count_as_acceptable",
+      "label": "Which candidates count as acceptable",
+      "_origin": "ast",
+      "community": 213,
+      "community_name": "Turn's reply-labeling research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "which candidates count as acceptable",
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L94"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_shipaton_2025",
@@ -35030,6 +35528,30 @@
   ],
   "links": [
     {
+      "source": "eval_src_data_readrows",
+      "target": "eval_src_data_read",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test_sharesaword",
+      "target": "shared_src_shortlist_phraseindex",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
       "source": "eval_test_starter_bank_test_phrasetexts",
       "target": "eval_test_starter_bank_test_categorybyid",
       "relation": "calls",
@@ -35038,7 +35560,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L14",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -35306,6 +35828,102 @@
       "weight": 1.0
     },
     {
+      "source": "eval_test_labels_test",
+      "target": "shared_src_row_fixedbuttons",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "shared_src_shortlist_phraseindex",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_src_data_bank",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_src_data_line",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_src_data_lines",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_src_data_secondlabeling",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_lines_test",
+      "target": "eval_src_data_line",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_lines_test",
+      "target": "eval_src_data_lines",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "eval_test_starter_bank_test",
       "target": "shared_src_row_fixedbuttons",
       "relation": "imports",
@@ -35315,6 +35933,18 @@
       "context": "import",
       "source_file": "eval/test/starter-bank.test.ts",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_src_data_bank",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -35726,6 +36356,54 @@
       "weight": 1.0
     },
     {
+      "source": "eval_test_labels_test",
+      "target": "shared_src_row",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "shared_src_shortlist",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_src_data",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_lines_test",
+      "target": "eval_src_data",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "eval_test_starter_bank_test",
       "target": "shared_src_row",
       "relation": "imports_from",
@@ -35735,6 +36413,18 @@
       "context": "import",
       "source_file": "eval/test/starter-bank.test.ts",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_src_data",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -42256,6 +42946,215 @@
       "confidence_score": 1.0,
       "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
       "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels",
+      "target": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_design",
+      "target": "docs_plans_0013_turn_reply_labels_rejected_alternatives",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_design",
+      "target": "docs_plans_0013_turn_reply_labels_out_of_scope",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_design",
+      "target": "docs_plans_0013_turn_reply_labels_decisions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_1_research_note",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_2_this_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L247",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_3_one_module_for_the_data",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_4_the_labelers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L275",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_5_the_first_labeling",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_6_the_second_labeling",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L333",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_7_the_trd",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L352",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_8_the_graph",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L368",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_tasks",
+      "target": "docs_plans_0013_turn_reply_labels_task_9_review_and_merge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "target": "docs_plans_0013_turn_reply_labels_verification_gate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "target": "docs_plans_0013_turn_reply_labels_tasks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L227",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "target": "docs_plans_0013_turn_reply_labels_appendix_the_labelers_brief",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L394",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "target": "docs_plans_0013_turn_reply_labels_global_constraints",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "target": "docs_plans_0013_turn_reply_labels_skills",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0013_turn_reply_labels_turn_s_reply_labels_implementation_plan",
+      "target": "docs_plans_0013_turn_reply_labels_design",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0013-turn-reply-labels.md",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -55734,6 +56633,94 @@
       "weight": 1.0
     },
     {
+      "source": "docs_research_0034_turn_reply_labels",
+      "target": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_replies_that_fit_almost_any_line",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_agreement_on_set_valued_labels",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_language_models_as_labelers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_guidelines_and_independent_labeling",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_gaps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_see_also",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L292",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0034_turn_reply_labels_turn_s_reply_labeling_research_notes",
+      "target": "docs_research_0034_turn_reply_labels_which_candidates_count_as_acceptable",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0034-turn-reply-labels.md",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
       "source": "docs_sources_devpost_com_revenuecat_shipaton_2026",
       "target": "docs_sources_devpost_com_revenuecat_shipaton_2026_revenuecat_shipaton_2026",
       "relation": "contains",
@@ -64101,7 +65088,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1252",
+      "source_location": "L1274",
       "weight": 1.0
     },
     {
@@ -64112,7 +65099,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1274",
+      "source_location": "L1296",
       "weight": 1.0
     },
     {
@@ -64123,7 +65110,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1316",
+      "source_location": "L1338",
       "weight": 1.0
     },
     {
@@ -64134,7 +65121,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1322",
+      "source_location": "L1344",
       "weight": 1.0
     },
     {
@@ -64420,7 +65407,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1329",
+      "source_location": "L1351",
       "weight": 1.0
     },
     {
@@ -64431,7 +65418,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1365",
+      "source_location": "L1387",
       "weight": 1.0
     },
     {
@@ -64442,7 +65429,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1403",
+      "source_location": "L1425",
       "weight": 1.0
     },
     {
@@ -64453,7 +65440,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1446",
+      "source_location": "L1468",
       "weight": 1.0
     },
     {
@@ -64464,7 +65451,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1488",
+      "source_location": "L1510",
       "weight": 1.0
     },
     {
@@ -64688,30 +65675,195 @@
       "weight": 1.0
     },
     {
-      "source": "eval_test_lines_test",
-      "target": "eval_test_lines_test_lines",
+      "source": "eval_src_data",
+      "target": "eval_src_data_labels",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "eval/test/lines.test.ts",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_phrase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_category",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_starterbank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_read",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_readrows",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_secondlabeling",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_line",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_src_data",
+      "target": "eval_src_data_bank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/src/data.ts",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_expectrepliesfollowrules",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
       "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_sharesaword",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_count",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_phrases",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_phraseids",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_textbyid",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test",
+      "target": "eval_test_labels_test_stripids",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
       "source": "eval_test_lines_test",
       "target": "eval_test_lines_test_count",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "eval/test/lines.test.ts",
-      "source_location": "L19",
-      "weight": 1.0
-    },
-    {
-      "source": "eval_test_lines_test",
-      "target": "eval_test_lines_test_line",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -64728,7 +65880,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L12",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -64739,7 +65891,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L13",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -64750,7 +65902,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L14",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -64761,51 +65913,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "eval_test_starter_bank_test",
-      "target": "eval_test_starter_bank_test_phrase",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "eval_test_starter_bank_test",
-      "target": "eval_test_starter_bank_test_category",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "eval_test_starter_bank_test",
-      "target": "eval_test_starter_bank_test_starterbank",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L7",
-      "weight": 1.0
-    },
-    {
-      "source": "eval_test_starter_bank_test",
-      "target": "eval_test_starter_bank_test_bank",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L9",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -65997,6 +67105,30 @@
       "weight": 1.0
     },
     {
+      "source": "eval_test_labels_test_sharesaword",
+      "target": "shared_src_shortlist_phraseindex_update",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "context": "call",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_labels_test_sharesaword",
+      "target": "shared_src_shortlist_phraseindex_match",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "context": "call",
+      "source_file": "eval/test/labels.test.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
       "source": "shared_src_shortlist_phraseindex_update",
       "target": "shared_src_shortlist_rankable",
       "relation": "indirect_call",
@@ -66022,5 +67154,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a8c54c369a768705fa98bf2ac2841b131ada79b0"
+  "built_at_commit": "60849baa48b6b7f629e8f39363cca4036b3ee472"
 }
