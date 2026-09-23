@@ -11,6 +11,12 @@ import { fakeServices } from './services'
 
 // Git's answers, as a working tree with changes its commit lacks would give them.
 const git = vi.hoisted(() => ({ dirty: false }))
+// Apple's sentence embedding runs in a Swift helper that only a Mac has, so every run here stands in for it.
+vi.mock('../src/apple', async (original) => ({
+  ...(await original<typeof import('../src/apple')>()),
+  sentenceEmbedding: (await import('./services')).fakeSentenceEmbedding
+}))
+
 vi.mock('node:child_process', async (original) => {
   const real = await original<typeof import('node:child_process')>()
   const execFileSync = ((file: string, args: readonly string[], options: object) => {
