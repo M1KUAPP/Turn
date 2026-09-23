@@ -245,11 +245,12 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     runtime that runs the tests doesn't implement `node:util`'s
     `parseArgs`.
 1.  **What it prints (METRIC-2).** For a UTC day, `--day`, yesterday unless
-    given: the lines read beside the query's own count; lines answered;
-    paywall responses; failures, which are `failed`, `credits`,
-    `unverified`, and `internal`; each other outcome by name; the median
-    and 95th percentile, by nearest rank, of `ms.total` and `ms.jev` over
-    answered lines; and the day's input tokens.
+    given: the lines read beside a `count` calculation's total, since the first
+    live query showed that a page's own count is only its size; lines answered;
+    paywall responses; failures, which are `failed`, `credits`, `unverified`,
+    and `internal`; each other outcome by name; the median and 95th percentile,
+    by nearest rank, of `ms.total` and `ms.jev` over answered lines; and the
+    day's input tokens.
 1.  **The logs check (METRIC-2).** After the live checks, run
     `bun run logs` on September 23, 2026, and match its counts against the
     same day's raw events, read apart from the script, and against the
