@@ -4,7 +4,8 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { beforeAll, expect, test, vi } from 'vitest'
 import { sentenceEmbedding } from '../src/apple'
-import { main, rate } from '../src/report'
+import { brier } from '../src/calibration'
+import { calibrationTable, main, rate } from '../src/report'
 import { fakeSentenceEmbedding, fakeServices } from './services'
 
 // Apple's sentence embedding runs in a Swift helper that only a Mac has, so every run here stands in for it.
@@ -224,7 +225,12 @@ test("says how the app picks each shortlist, and what that leaves of the line in
 
 test('scores all seven rankers on the same lines, in every group and step (EVAL-3, EVAL-8)', () => {
   const rankers = ['place', 'keyword', 'embeddings', 'jev', 'reranker', 'qwen3', 'apple']
-  for (const group of ['all lines', 'yes-or-no lines', 'pain and consent lines']) {
+  for (const group of [
+    'all lines',
+    'yes-or-no lines',
+    'pain and consent lines',
+    'lines that share no word with a reply'
+  ]) {
     for (const ranker of rankers) {
       expect(cells(section(`### Ranking on ${group}`), ranker), `${group} ${ranker}`).toHaveLength(3)
       expect(cells(section(`### The row on ${group}`), ranker), `${group} ${ranker}`).toHaveLength(8)
@@ -406,6 +412,11 @@ test("draws Jev's reliability diagram beside the report, its blocks as its text,
   expect(calibration).toMatch(prose('Of the 8, 4 have no acceptable phrase among their 40, so their top phrase is'))
   // (3 × 0.1² + 5 × 0.9²) / 8; always 3/8 scores 3/8 × 5/8, and so does the fit, which is 3/8 on every line.
   expect(calibration).toMatch(prose('is 0.510, with a 95% bootstrap interval of'))
+  // The interval of those forecasts, in the file's order, which the resamples draw from.
+  const { low, high } = brier(
+    [true, false, true, false, false, true, false, false].map((right) => ({ score: 0.9, right }))
+  )
+  expect(calibration).toMatch(prose(`interval of ${low.toFixed(3)} to ${high.toFixed(3)}; lower is better.`))
   expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234, so the'))
   // 1 − 0.510 / 0.234375.
   expect(calibration).toMatch(prose('skill score, 1 minus the Brier score over that, is -1.176: above 0 beats'))
@@ -427,6 +438,24 @@ test("sends each line to qwen3 as a query under the TRD's instruction, and the p
   const documents = qwenBodies.filter((body) => body.documents)
   expect(documents.length).toBeGreaterThan(0)
   for (const body of documents) expect(body.instruction).toBeUndefined()
+})
+
+test('gives each block of the fit its scores, lines, acceptable lines, share, and scores outside the band', () => {
+  const forecasts = [0.2, 0.2, 0.5, 0.7, 0.7, 0.9].map((score, i) => ({ score, right: [0, 2, 5].includes(i) }))
+  const band = [
+    { score: 0.2, low: 0.1, high: 0.3 },
+    { score: 0.5, low: 0.35, high: 0.6 },
+    { score: 0.7, low: 0.5, high: 0.9 },
+    { score: 0.9, low: 0.8, high: 1 }
+  ]
+  // PAV pools 0.2 to 0.7 into one block of 2 in 5, which lies above the band at 0.2 and below it at 0.7.
+  const blocks = [
+    { low: 0.2, high: 0.7, lines: 5, right: 2, value: 0.4 },
+    { low: 0.9, high: 0.9, lines: 1, right: 1, value: 1 }
+  ]
+  const rows = calibrationTable({ forecasts, blocks, band }).split('\n').slice(2)
+  expect(cells(rows.join('\n'), '0.2 to 0.7')).toEqual(['5', '2', '0.40', '2 of 3 scores'])
+  expect(cells(rows.join('\n'), '0.9')).toEqual(['1', '1', '1.00', '0 of 1 score'])
 })
 
 test("closes Apple's helper even when a ranker fails", async () => {
