@@ -82,12 +82,14 @@ any command that changes state.
   `wrangler whoami`. Accounts "come with a `workers.dev` subdomain that is
   configurable in the Cloudflare dashboard", and each Worker gets
   `<YOUR_WORKER_NAME>.<YOUR_SUBDOMAIN>.workers.dev` ([workers.dev][cf-wdev]).
-- **First deploy with no subdomain.** Only when the Worker doesn't exist
-  yet (lines 175064 and 175065), Wrangler reads that endpoint; on error
-  10007 it warns "You need to register a workers.dev subdomain before
-  publishing to workers.dev" and asks "Would you like to register a
-  workers.dev subdomain now?" with `fallbackValue: false` (lines 159474 to
-  159488). A yes prompts for a name matching
+- **Deploying with no subdomain.** Before uploading, Wrangler reads that
+  endpoint only when the Worker doesn't exist yet (lines 175064 and 175065);
+  after uploading, `subdomainDeploy` reads it for any Worker with no
+  workers.dev URL yet (line 160176). On error 10007 it warns "You need to
+  register a workers.dev subdomain before publishing to workers.dev" and
+  asks "Would you like to register a workers.dev subdomain now?" with
+  `fallbackValue: false` (lines 159474 to 159488). A yes prompts for a name
+  matching
   `^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$`; a no, or a non-interactive run,
   fails with a link to
   `https://dash.cloudflare.com/<account>/workers/onboarding`.
