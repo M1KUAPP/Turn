@@ -17,7 +17,10 @@ export const outcomes = [
 ] as const
 export type Outcome = (typeof outcomes)[number]
 
-/** One line, scored: its shortlist's ids and, per ranker, its order over them and what the user would see. */
+/**
+ * One line, scored: its shortlist's ids and, per ranker, its order over the phrases it scored above 0 and what the
+ * user would see.
+ */
 export type LineScore<Line extends ScoredLine> = {
   line: Line
   shortlist: string[]
@@ -71,8 +74,12 @@ export function scoreLines<Line extends ScoredLine>(
           const ranking = rankers[name](line.text, shortlist, index, context)
           return { ranking, row: applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy }) }
         })
-        // A stable sort, so the ranking's own order breaks ties.
-        const order = [...ranking.scores].sort(([, a], [, b]) => b - a).map(([id]) => id)
+        // A phrase scored 0 isn't ranked, so a ranking that holds orders nothing, and a stable sort keeps the
+        // ranking's own order among ties.
+        const order = [...ranking.scores]
+          .filter(([, score]) => score > 0)
+          .sort(([, a], [, b]) => b - a)
+          .map(([id]) => id)
         return [name, { order, outcome: outcomeOf(row, acceptable) }] as const
       })
       return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
