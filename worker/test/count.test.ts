@@ -5,6 +5,7 @@ import {
   headers,
   jevAnswers,
   jevError,
+  lineFor,
   lineRequest,
   mockJev,
   mockRevenueCat,
@@ -69,5 +70,33 @@ describe('the free lines (PAY-1)', () => {
     for (let i = 0; i < 3; i++) await postLine(lineRequest())
     const response = await send(new Request('https://relay.test/v1/config', { headers }), { FREE_LINES: '2' })
     expect(await response.json()).toMatchObject({ freeLinesLeft: 0 })
+  })
+})
+
+describe('the Simulator switch (PAY-9)', () => {
+  const simulator = { ...headers, 'X-Turn-Build': 'simulator' }
+  const fromSimulator = (changes: Parameters<typeof send>[1]) =>
+    send(lineFor(lineRequest(), { ...simulator, 'Content-Type': 'application/json' }), changes)
+
+  test("lets a simulator request skip the count while it's on, with no count shown", async () => {
+    mockJev(...jevAnswers(25))
+    for (let i = 0; i < 25; i++) {
+      const response = await fromSimulator({ SIMULATOR_UNLIMITED: 'true' })
+      expect(response.status).toBe(200)
+      expect(await leftAfter(response)).toBeNull()
+    }
+    expect(await freeLinesLeft(simulator, { SIMULATOR_UNLIMITED: 'true' })).toBeNull()
+    expect(await freeLinesLeft(headers, { SIMULATOR_UNLIMITED: 'true' })).toBe(20)
+  })
+
+  test("counts a device request while it's on", async () => {
+    mockJev(...jevAnswers(1))
+    expect(await leftAfter(await postLine(lineRequest(), { SIMULATOR_UNLIMITED: 'true' }))).toBe(19)
+  })
+
+  test.each(['false', 'yes', undefined])('counts a simulator request while it is %j', async (value) => {
+    mockJev(...jevAnswers(1))
+    expect(await leftAfter(await fromSimulator({ SIMULATOR_UNLIMITED: value }))).toBe(19)
+    expect(await freeLinesLeft(simulator, { SIMULATOR_UNLIMITED: value })).toBe(19)
   })
 })

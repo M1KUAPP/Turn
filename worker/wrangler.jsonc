@@ -14,9 +14,11 @@
   "secrets": { "required": ["TYPESAFE_API_KEY", "RC_SECRET_KEY", "ID_SALT"] },
   "vars": {
     "JEV_MODEL": "jev-1.13.0",
-    // Each switch is on only as "true": Jev (STATE-3) and naming TypeSafe (CONSENT-7).
+    // Each switch is on only as "true": Jev (STATE-3), naming TypeSafe (CONSENT-7), and letting requests from the
+    // Simulator build skip the count until judging ends (PAY-9).
     "JEV_ON": "true",
     "TYPESAFE_NAMED": "false",
+    "SIMULATOR_UNLIMITED": "false",
     "FREE_LINES": "20",
     // RevenueCat's project and the object ID of its `listen` entitlement, for the check past the free lines (PAY-7).
     "RC_PROJECT_ID": "proj9f033172",

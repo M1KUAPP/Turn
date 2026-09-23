@@ -130,9 +130,9 @@ export const unknownCustomer = () =>
 /** Jev's answer, for each of `count` calls. */
 export const jevAnswers = (count: number) => Array.from({ length: count }, () => () => Response.json(jevAnswer()))
 
-/** The free lines the configuration shows, to the test's user unless the headers name another. */
-export async function freeLinesLeft(sent: Record<string, string> = headers) {
-  const response = await send(new Request('https://relay.test/v1/config', { headers: sent }))
+/** The free lines the configuration shows the test's user, or the one the headers name, with some vars changed. */
+export async function freeLinesLeft(sent: Record<string, string> = headers, changes: Parameters<typeof send>[1] = {}) {
+  const response = await send(new Request('https://relay.test/v1/config', { headers: sent }), changes)
   return ((await response.json()) as { freeLinesLeft: number | null }).freeLinesLeft
 }
 
