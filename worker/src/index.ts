@@ -1,4 +1,4 @@
-import type { Config, ErrorCode, LineAnswer, Outcome } from '@turn/shared/relay'
+import type { Config, ErrorCode, LineAnswer, LineRequest, Outcome } from '@turn/shared/relay'
 import { isOn, readConfig } from './config'
 import type { Terms } from './device'
 import { readLine, readUser, type User } from './request'
@@ -81,11 +81,8 @@ const termsFor = (env: Env, freeLines: number, dailyCalls: number, { build }: Us
   dailyCalls
 })
 
-/** Checks a line before any count or call (SEC-2), then asks the user's object to count it and ask Jev. */
-async function answerLine(request: Request, env: Env, log: LogFacts, user: User, hash: string): Promise<Response> {
-  const line = await readLine(request)
-  if (!line) return refuse(log, 'invalid')
-  log.seq = line.seq
+/** Asks the user's object to count a line that passed its checks and the limits, and to ask Jev. */
+async function answerLine(line: LineRequest, env: Env, log: LogFacts, user: User, hash: string): Promise<Response> {
   const { freeLines, dailyCalls, ...config } = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
   const reply = await deviceFor(env, hash).answer(line, user.id, termsFor(env, freeLines, dailyCalls, user))
@@ -110,19 +107,20 @@ async function answerLine(request: Request, env: Env, log: LogFacts, user: User,
 }
 
 /**
- * Whether a request is within its ID's 30 a minute, and then its address's 120, a backstop for IDs minted on one
- * address (SEC-3). A request its ID's own limit refuses doesn't count against the address, which a mobile network may
- * share. Cloudflare sets `CF-Connecting-IP` on requests from clients; any request without one shares one count.
+ * Whether a request is within its ID's 30 a minute, which the user's object counts exactly, and then its address's 120,
+ * through the rate limiting binding, a looser backstop for IDs minted on one address (SEC-3). A request its ID's own
+ * limit refuses doesn't count against the address, which a mobile network may share. Cloudflare sets
+ * `CF-Connecting-IP` on requests from clients; any request without one shares one count.
  */
 async function withinLimits(request: Request, env: Env, hash: string) {
-  if (!(await env.USER_LIMITER.limit({ key: hash })).success) return false
+  if (!(await deviceFor(env, hash).admit())) return false
   const address = request.headers.get('CF-Connecting-IP') ?? ''
   return (await env.ADDRESS_LIMITER.limit({ key: address })).success
 }
 
 /**
- * Finds the route, then checks the headers every request carries and the rate limits, before a line's body or the
- * configuration.
+ * Finds the route, then checks the headers every request carries and a line's body before any count or call (SEC-2),
+ * then the rate limits, before the line or the configuration.
  */
 async function route(request: Request, env: Env, log: LogFacts): Promise<Response> {
   const { pathname } = new URL(request.url)
@@ -133,8 +131,11 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   if (!user) return refuse(log, 'invalid')
   const hash = await hashUser(env.ID_SALT, user.id)
   log.user = hash.slice(0, 8)
+  const line = isLine ? await readLine(request) : undefined
+  if (line === null) return refuse(log, 'invalid')
+  if (line) log.seq = line.seq
   if (!(await withinLimits(request, env, hash))) return refuse(log, 'limited')
-  if (isLine) return answerLine(request, env, log, user, hash)
+  if (line) return answerLine(line, env, log, user, hash)
   const { freeLines, dailyCalls, ...config } = readConfig(env)
   const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, freeLines, dailyCalls, user))
   log.outcome = 'config'
