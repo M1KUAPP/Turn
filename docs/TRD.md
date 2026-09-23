@@ -1831,9 +1831,6 @@ product and legal ones.
   boot, and nobody has checked it against the Swift module's timestamps.
   Safe default: `turn-listen` stamps each line's end, and the app logs every
   later stage on the same clock after checking the two agree on a device.
-- **The rate limiting binding on the Free plan.** Cloudflare states no price
-  or Free plan status for it. Safe default: if it isn't available, the
-  user's Durable Object counts requests per minute itself.
 
 [prd-open]: /docs/PRD.md#open-questions
 
