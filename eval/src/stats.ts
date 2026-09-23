@@ -21,3 +21,24 @@ export function percentile(values: readonly number[], q: number): number {
   const j = Math.floor(h)
   return j + 1 < sorted.length ? sorted[j] + (h - j) * (sorted[j + 1] - sorted[j]) : sorted[j]
 }
+
+/** The chance that a random order of n phrases, g of them acceptable, puts one in the first k: 1 − C(n − g, k)/C(n, k). */
+export function chanceHit(n: number, g: number, k: number): number {
+  let miss = 1
+  for (let i = 0; i < Math.min(k, n); i++) miss *= (n - g - i) / (n - i)
+  return 1 - miss
+}
+
+/**
+ * The expected reciprocal rank of the first acceptable phrase in a random order of n phrases, g of them acceptable:
+ * the sum over r of P(R = r)/r, where P(R = 1) = g/n and each next rank's share follows from the last.
+ */
+export function chanceReciprocalRank(n: number, g: number): number {
+  let mean = 0
+  let atRank = g / n
+  for (let r = 1; r <= n - g + 1 && atRank > 0; r++) {
+    mean += atRank / r
+    atRank *= (n - r - g + 1) / (n - r)
+  }
+  return mean
+}
