@@ -46,9 +46,11 @@ export function fakeJevAnswer({ model, state, questions }: JevRequest) {
 
 /**
  * Stands in for Workers AI and Jev behind the `fetch` spy that `test/setup.ts` makes: Workers AI embeds each text with
- * `fakeVector`, pooled as asked, and Jev answers with `fakeJevAnswer`. Returns the spy, whose calls a test can read.
+ * `fakeVector`, pooled as asked, and Jev answers with `fakeJevAnswer`, as the model `modelFor` names for the call, if
+ * it names one. Returns the spy, whose calls a test can read.
  */
-export function fakeServices() {
+export function fakeServices(modelFor: (call: number) => string | undefined = () => undefined) {
+  let jevCalls = 0
   const spy = vi.mocked(globalThis.fetch)
   spy.mockImplementation(async (input, init) => {
     const url = String(input)
@@ -57,7 +59,10 @@ export function fakeServices() {
       const result = { shape: [body.text.length, 768], data: body.text.map(fakeVector), pooling: body.pooling }
       return Response.json({ success: true, errors: [], messages: [], result })
     }
-    if (url === 'https://api.typesafe.ai/v1/systemone') return Response.json(fakeJevAnswer(body))
+    if (url === 'https://api.typesafe.ai/v1/systemone') {
+      const answer = fakeJevAnswer(body)
+      return Response.json({ ...answer, model: modelFor(jevCalls++) ?? answer.model })
+    }
     throw new Error(`No stand-in for ${url}`)
   })
   return spy

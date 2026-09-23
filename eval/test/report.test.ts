@@ -318,3 +318,13 @@ test("names Jev nowhere with --unnamed, calling it the hosted decision model wit
   expect(cells(unnamed, 'hosted decision model')).toHaveLength(3)
   expect(plotted).toContain('>hosted decision model</text>')
 })
+
+test('names no model even when Jev reports one in other words, and counts a single call as one', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
+  // Jev's first call answers as a model whose name has capitals and another word in it.
+  fakeServices((call) => (call === 0 ? 'TypeSafe Jev-1.14.0' : undefined))
+  await main(['--lines', fixture, '--out', join(dir, 'results.md'), '--unnamed'])
+  const unnamed = readFileSync(join(dir, 'results.md'), 'utf8')
+  expect(unnamed).not.toMatch(/jev|typesafe/i)
+  expect(unnamed).toMatch(prose('which answered as version 1.14.0 on 1 call and version 1.13.0 on 31 calls'))
+})
