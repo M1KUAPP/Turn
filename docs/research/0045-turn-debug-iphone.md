@@ -163,8 +163,11 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   27). This runs before the "SKIP_BUNDLING enabled; skipping." exit (30-33).
 - **No embedded bundle.** The SDK 57 template's "Bundle React Native code
   and images" phase exports `SKIP_BUNDLING=1` for Debug
-  ([template project][template-pbxproj]). Prebuild downloads the template
-  from npm (`prebuild/resolveTemplate.js:111`), so it isn't installed yet.
+  ([template project][template-pbxproj]). Prebuild uses the installed
+  `expo` package's `template.tgz` ("The default is to use
+  `expo/template.tgz` which exists in all published versions of it",
+  `prebuild/resolveLocalTemplate.js:63-64`), and downloads one from npm only
+  if that fails (`prebuild/resolveTemplate.js:102-107`).
 - **`bundleURL`.** The template's `AppDelegate.swift` returns this in
   Debug, and `main.jsbundle` in Release
   ([template AppDelegate][template-appdelegate], lines 60-66):
