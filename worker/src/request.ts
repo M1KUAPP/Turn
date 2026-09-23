@@ -28,7 +28,8 @@ const json = /^application\/json\s*(;|$)/i
 
 /**
  * Whether a value is a text of `min` to `max` characters, counted as Unicode code points, as SQLite's `length()` counts
- * them in the phone's checks, so the relay never refuses a text the phone stored.
+ * the phone's text, which holds no NUL, so a text within the phone's limits is within these. The body's 16 KB can
+ * still refuse a request of long texts in other scripts, so the app trims its shortlist to fit.
  */
 const isText = (value: unknown, min: number, max: number) =>
   typeof value === 'string' && value.length >= min && [...value].length <= max
@@ -57,7 +58,7 @@ function isLineRequest(body: unknown): body is LineRequest {
   )
 }
 
-/** The body as text, or null past 16 KB, read no further than that whatever `Content-Length` says (SEC-2). */
+/** The body as text, or null once it passes 16 KB, where reading stops, whatever `Content-Length` says (SEC-2). */
 async function readText(request: Request): Promise<string | null> {
   if (Number(request.headers.get('Content-Length')) > limits.bytes) return null
   if (!request.body) return ''
