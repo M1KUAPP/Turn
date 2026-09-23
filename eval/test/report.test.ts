@@ -352,3 +352,9 @@ test('wraps the Lines line, so only a path too long for any line runs past 80 co
     .filter((line) => line.length > 80 && !line.startsWith('|') && !line.includes('](#'))
   expect(long).toEqual([`  \`${join(dir, 'lines.jsonl')}\`.`])
 })
+
+test('lists every section in its contents, in order, and nothing else', () => {
+  const contents = [...report.matchAll(/^1\.  \[(.+)\]\(#.+\)$/gm)].map(([, heading]) => heading)
+  expect(contents).toEqual([...report.matchAll(/^## (.+)$/gm)].map(([, heading]) => heading))
+  expect(contents).toHaveLength(10)
+})
