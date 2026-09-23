@@ -1,5 +1,6 @@
 import type { Ranking } from '@turn/shared/row'
 import type { LineScore, ScoredLine } from './score'
+import { svg, tag } from './svg'
 
 /** One point of a ranker's risk-coverage curve: at a threshold, the share of lines covered, and of those, wrong. */
 export type Point = { threshold: number; coverage: number; risk: number }
@@ -46,15 +47,6 @@ const dashes = ['none', '8 4', '2 3', '12 4 2 4']
 const x = (coverage: number) => (size.left + coverage * plotWidth).toFixed(1)
 const y = (risk: number) => (size.top + (1 - risk) * plotHeight).toFixed(1)
 
-/** Text safe inside SVG. */
-const escaped = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
-
-/** An SVG element with its attributes, empty unless it holds text. */
-const tag = (name: string, attributes: Record<string, string | number>, text?: string) => {
-  const pairs = Object.entries(attributes).map(([key, value]) => ` ${key}="${value}"`)
-  return text === undefined ? `<${name}${pairs.join('')}/>` : `<${name}${pairs.join('')}>${escaped(text)}</${name}>`
-}
-
 /**
  * Every ranker's risk-coverage curve as an SVG: coverage across, risk up, each from 0% to 100%, a line with its own
  * color and dashes and its points for each ranker, and a legend. A curve of one point shows as that point, and each
@@ -88,31 +80,27 @@ export function plot(curves: readonly Curve[]): string {
     ]
   })
   const names = curves.map(([name]) => name).join(', ')
-  return [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size.width} ${size.height}" font-family="sans-serif">`,
-    tag('title', {}, 'Risk against coverage for each ranker'),
-    tag(
-      'desc',
-      {},
-      'For each ranker, the share of rows that are wrong against the share of lines where the row changes, as its ' +
+  return svg(
+    {
+      ...size,
+      title: 'Risk against coverage for each ranker',
+      description:
+        'For each ranker, the share of rows that are wrong against the share of lines where the row changes, as its ' +
         `threshold falls: ${names}.`
-    ),
-    tag('rect', { width: size.width, height: size.height, fill: '#ffffff' }),
-    `<g font-size="12" fill="#111827">`,
-    ...grid,
-    tag(
-      'text',
-      { x: x(0.5), y: size.height - 12, 'text-anchor': 'middle' },
-      'Coverage: the share of lines where the row changes'
-    ),
-    tag(
-      'text',
-      { transform: `translate(16 ${y(0.5)}) rotate(-90)`, 'text-anchor': 'middle' },
-      'Risk: the share of those rows that are wrong'
-    ),
-    ...drawn,
-    '</g>',
-    '</svg>',
-    ''
-  ].join('\n')
+    },
+    [
+      ...grid,
+      tag(
+        'text',
+        { x: x(0.5), y: size.height - 12, 'text-anchor': 'middle' },
+        'Coverage: the share of lines where the row changes'
+      ),
+      tag(
+        'text',
+        { transform: `translate(16 ${y(0.5)}) rotate(-90)`, 'text-anchor': 'middle' },
+        'Risk: the share of those rows that are wrong'
+      ),
+      ...drawn
+    ]
+  )
 }
