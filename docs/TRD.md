@@ -1281,12 +1281,15 @@ line to the phone's own ranking, and speaking never depends on the relay.
 
 | Ranker       | What it does                                                                                                                                        |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `place`      | the shortlist's phrases at the line's place, then the rest, each in the bank's order, with no use of the line; it never holds                       |
+| `place`      | the shortlist's phrases at the line's place, in the bank's order, with no use of the line; it never holds                                           |
 | `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                           |
 | `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off                  |
 | `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                                               |
 | `jev-rerank` | Jev over the 40 phrases nearest by Apple's sentence embedding, computed on a Mac as the phone would, run only when Jev trails `embeddings` (EVAL-4) |
 
+- **Over the same 40.** The place's first eight phrases are always among
+  the 40, so `place`'s top 1 and top 6 never depend on the line, though
+  which of its later phrases make the 40 can.
 - **Extras (EVAL-8).** `bge-reranker-base` over the keyword shortlist, an
   off-the-shelf cross-encoder; `qwen3-embedding-0.6b` with the instruction
   "Given what a conversation partner just said, retrieve the reply that
@@ -1313,9 +1316,11 @@ see ([evaluation notes][eval-scoring]):
 - **Ranking,** on lines with an acceptable phrase besides the fixed buttons,
   which no ranker orders: hit at 1, hit at 6, and reciprocal rank, end to
   end and with every ranker over the same 40 phrases, beside chance rates:
-  with one acceptable phrase among 40, 2.5% at 1 and 15% at 6. Chance is
-  each line's own, for a random order of its shortlist, averaged over the
-  lines ([harness notes][harness-chance]). It's an expectation and the mean
+  with one acceptable phrase among 40, 2.5% at 1 and 15% at 6. A ranker's
+  order holds only the phrases it scores above 0, so `keyword` ranks none on
+  a line that shares no word. Chance is each line's own, for a random order
+  of its shortlist, averaged over the lines
+  ([harness notes][harness-chance]). It's an expectation and the mean
   reciprocal rank a mean of ranks, so neither carries an interval.
 - **The row:** the six outcomes above, coverage (the share of lines where
   the row changes), risk (the share of those rows that are wrong), and an
@@ -1361,11 +1366,14 @@ microphone, and counts slot changes per line (ROW-5).
 
 `bun run eval` scores the rankers on the lines in `eval/lines.jsonl`, or the
 file `--lines` names, and writes `eval/results.md`, or the file `--out`
-names: the date, the model pin, and the commit; who wrote and labeled the
-lines and who wrote the bank; for all lines and each subset, the ranking
-and the row, one row per ranker with each metric and its interval; and each
-step's latency. The README copies the table (EVAL-6). The script also lists
-every big button on a yes-or-no, pain, or consent line (EVAL-5).
+names: the date and the commit; who wrote and labeled the lines and who
+wrote the bank; for all lines and each subset, one row per ranker for the
+ranking, each rate with its interval, and one for the row, with the six
+outcomes as counts and coverage and risk with their intervals; and each
+step's latency. The README copies the table (EVAL-6). Once a ranker calls a
+model, the report also names the model pin (EVAL-6) and lists every big
+button on a yes-or-no, pain, or consent line (EVAL-5); `place` and
+`keyword` call no model and show no big button.
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when
 one falls short, then the labelers' agreement
