@@ -32,7 +32,9 @@ async function answerLine(request: Request, env: Env, started: number): Promise<
   const config = readConfig(env)
   if (!config.jevOn) return failure('jev_off')
   const device = env.DEVICE.getByName(await objectName(env.ID_SALT, user), { locationHint: 'wnam' })
-  const { kind, topic, scores, ms } = await device.answer(line)
+  const reply = await device.answer(line)
+  if (reply.outcome !== 'answered') return failure('jev_unavailable')
+  const { kind, topic, scores, ms } = reply
   const answer: LineAnswer = {
     seq: line.seq,
     kind,
