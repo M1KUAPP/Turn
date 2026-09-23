@@ -93,6 +93,10 @@ export function bootstrap(n: number, statistic: (sample: readonly number[]) => n
   return { low: percentile(values, 2.5), high: percentile(values, 97.5) }
 }
 
+/** The percentile bootstrap's 95% interval for the mean of the values, each resample's sum taken in the order drawn. */
+export const bootstrapMean = (values: readonly number[]): { low: number; high: number } =>
+  bootstrap(values.length, (sample) => sample.reduce((sum, i) => sum + values[i], 0) / values.length)
+
 /**
  * The paired bootstrap's 95% interval for the mean of a − b over the same items, each resample the same for both.
  * When no item splits a and b, every resample gives the same mean, and so does the interval. Null for no items.
@@ -105,6 +109,5 @@ export function pairedBootstrap(
   if (n === 0) return null
   const gaps = a.map((value, i) => value - b[i])
   // Summed in the order drawn, so the means are the ones a running sum over the draws gave.
-  const interval = bootstrap(n, (sample) => sample.reduce((sum, i) => sum + gaps[i], 0) / n)
-  return { difference: mean(gaps), ...interval }
+  return { difference: mean(gaps), ...bootstrapMean(gaps) }
 }

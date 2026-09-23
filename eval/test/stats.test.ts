@@ -2,6 +2,7 @@ import { expect, test } from 'vitest'
 import {
   below,
   bootstrap,
+  bootstrapMean,
   chanceHit,
   chanceReciprocalRank,
   pairedBootstrap,
@@ -123,6 +124,7 @@ test("gives a statistic's percentile interval over 9,999 resamples of the items'
     low: 0.0125,
     high: 0.2375
   })
+  expect(bootstrapMean(gaps)).toEqual({ low: 0.0125, high: 0.2375 })
 })
 
 test('gives an interval of one value when no item splits the two, and none for no items', () => {

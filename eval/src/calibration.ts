@@ -1,7 +1,7 @@
 import { startingPolicy } from '@turn/shared/row'
 import { capital } from './prose'
 import type { LineScore, ScoredLine } from './score'
-import { below, bootstrap, mean, percentile, resamples, seeded } from './stats'
+import { below, bootstrapMean, mean, percentile, resamples, seeded } from './stats'
 import { svg, tag } from './svg'
 
 /** One line's forecast: its top phrase's score, and whether that phrase is acceptable. */
@@ -124,10 +124,7 @@ export function brier(forecasts: readonly Forecast[]): Brier {
   const fitted = mean(forecasts.map(({ score }, i) => (fitAt(blocks, score) - outcomes[i]) ** 2))
   const share = mean(outcomes)
   const uncertainty = mean(outcomes.map((outcome) => (share - outcome) ** 2))
-  const { low, high } = bootstrap(
-    forecasts.length,
-    (sample) => sample.reduce((sum, i) => sum + errors[i], 0) / sample.length
-  )
+  const { low, high } = bootstrapMean(errors)
   const skill = uncertainty === 0 ? NaN : 1 - score / uncertainty
   return { score, low, high, uncertainty, miscalibration: score - fitted, discrimination: uncertainty - fitted, skill }
 }
