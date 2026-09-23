@@ -15,6 +15,7 @@ Contents:
 1.  [qwen3-embedding-0.6b on Workers AI](#qwen3-embedding-06b-on-workers-ai)
 1.  [NLEmbedding's revision API on a Mac](#nlembeddings-revision-api-on-a-mac)
 1.  [A Swift helper started from Bun](#a-swift-helper-started-from-bun)
+1.  [A live probe of both models and Apple's embedding](#a-live-probe-of-both-models-and-apples-embedding)
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
@@ -27,24 +28,29 @@ Contents:
   `contexts` an array of `{ "text": ... }`, and `top_k` an optional integer of
   at least 1. The answer is `response`, a list of `{ id, score }`, where `id`
   is the context's index in the request.
-- **Treat the reranker's score as unbounded.** BAAI says the base reranker's
-  score "is not bounded to a specific range", and FlagEmbedding applies a
-  sigmoid only when asked. Cloudflare says the score "can be mapped" to
-  [0, 1], not that it is. Log the first response's range.
+- **The reranker's score came between 0 and 1.** BAAI says the base
+  reranker's score "is not bounded to a specific range", and FlagEmbedding
+  applies a sigmoid only when asked. Cloudflare says the score "can be
+  mapped" to [0, 1], not that it is, but the [live probe] got scores between
+  0 and 1, best first, as a sigmoid gives. Only their order matters.
 - **Qwen: `queries` for lines, `documents` for phrases.** Each takes a string
-  or up to 32 strings, so 40 phrases take two requests. `instruction` is a
-  separate string whose default is a web-search one; set Turn's instruction
-  there, in English.
+  or up to 32 strings, so 40 phrases take two requests, and the probe found
+  that one request can't hold both. `instruction` is a separate string whose
+  default is a web-search one; set Turn's instruction there, in English, and
+  Workers AI formats it as Qwen's card does.
 - **Qwen's vectors: check, then divide by both norms.** Cloudflare's output is
   only `data` and `shape`; Qwen's card gives 1,024 dimensions and L2
-  normalization after last-token pooling. Assert `shape` is `[n, 1024]`.
+  normalization after last-token pooling, which the probe found. Assert
+  `shape` is `[n, 1024]`.
 - **Apple on this Mac: revision 1, 512 dimensions.** A probe on macOS 27.0
   found `revision` 1, `dimension` 512, current revision 1, and supported
   revisions `[1]`. `vector(for: "")` returned nil.
 - **Compile the helper once and pipe JSON.** A `swiftc -O` binary started in
   0.01 seconds here, against 0.28 seconds for `swift file.swift`. Node's
   `execFile` caps output at 1 MiB by default, so return ranks or distances,
-  not vectors.
+  not vectors, or keep one helper open and stream them, as the probe did.
+
+[live probe]: #a-live-probe-of-both-models-and-apples-embedding
 
 ## bge-reranker-base on Workers AI
 
@@ -95,7 +101,6 @@ Contents:
   n - 1 appears once.
 
 [cf-rr]: https://developers.cloudflare.com/workers-ai/models/bge-reranker-base/
-[cf-rr-json]: https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/workers-ai-models/bge-reranker-base.json
 [hf-rr]: https://huggingface.co/BAAI/bge-reranker-base
 [fe-abs]: https://github.com/FlagOpen/FlagEmbedding/blob/master/FlagEmbedding/abc/inference/AbsReranker.py
 [fe-base]: https://github.com/FlagOpen/FlagEmbedding/blob/master/FlagEmbedding/inference/reranker/encoder_only/base.py
@@ -146,7 +151,6 @@ Contents:
   under $0.001.
 
 [cf-qwen]: https://developers.cloudflare.com/workers-ai/models/qwen3-embedding-0.6b/
-[cf-qwen-json]: https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/workers-ai-models/qwen3-embedding-0.6b.json
 [hf-qwen]: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B
 
 ## NLEmbedding's revision API on a Mac
@@ -224,6 +228,50 @@ warning, and Apple's silence on whether the model ships with the OS. New here:
 
 [node-cp]: https://nodejs.org/api/child_process.html
 
+## A live probe of both models and Apple's embedding
+
+On September 23, 2026 (UTC), a probe called both models through Workers AI's
+REST API with the Wrangler login's token, fetched their schemas from
+`GET /accounts/{ACCOUNT_ID}/ai/models/schema?model=...`, which matched
+[cf-rr-json] and [cf-qwen-json], and ran Apple's sentence embedding on this
+Mac, all on made-up sentences, never the evaluation's lines:
+
+- **The reranker's scores.** For the query "Do you want some tea?" and the
+  contexts "Yes, please.", "No, thank you.", "The bus is late.", and "My
+  back hurts.", with no `top_k`, `response` came best first: ids 0, 3, 2,
+  and 1, scoring 0.000834, 0.0000374, 0.0000374, and 0.0000373. Scores that
+  small, all between 0 and 1, fit a sigmoid of the logit, not the logit
+  itself. The call counted 60 prompt tokens.
+- **Qwen takes queries or documents, not both.** A request with both
+  answered `success: false`, code 3030, "invalid input".
+- **Workers AI formats Qwen's instruction.** A line sent as `queries` with
+  Turn's instruction got the same vector (cosine 1.0000000) as the text
+  `Instruct: <instruction>\nQuery:<line>` sent as a document, and 0.9994
+  with a space after `Query:`. The instruction left documents' vectors as
+  they were (cosines 0.9999999 and 1.0000000), and the default instruction
+  moved the line's vector to a cosine of 0.83 from Turn's.
+- **Qwen's vectors are unit length,** each of length 1, with `shape`
+  `[n, 1024]`. Against the tea line, "Yes, please." scored 0.546 and "The
+  bus is late." 0.288.
+- **Apple's distance isn't 1 minus the cosine.** For the tea line and "Yes,
+  please.", `distance(between:and:distanceType: .cosine)` returned 1.0435,
+  while 1 minus the cosine of the two `vector(for:)` vectors is 0.5445. On
+  three pairs, the distance was the square root of 2 minus twice the cosine,
+  the distance between the vectors scaled to unit length, which orders
+  phrases as the cosine does. Apple's page says a cosine distance ranges
+  over `[0.0, 2.0]`, "derived from the expression `1 -` cosine similarity"
+  ([nl-cosine]).
+- **Apple's cosines stayed above 0,** from 0.06 to 0.65 over four lines and
+  ten phrases, and its vectors aren't unit length: "Yes, please." had a
+  length of 8.26.
+- **A helper that stays open.** A prototype started `swift` on a helper once
+  and piped it one JSON array of texts per line. Its first answer, the
+  revision and dimension, came after 211 to 253 ms, then three texts took
+  7.4 to 7.6 ms and one text 2.0 to 2.3 ms, under Bun 1.4.2 and Node 26.9.0,
+  one run each. Its vectors came down a stream, so no output cap applied.
+
+[nl-cosine]: https://developer.apple.com/documentation/naturallanguage/nldistancetype/cosine
+
 ## Gaps
 
 - `@cloudflare/workers-types` wasn't found under `node_modules/@cloudflare`,
@@ -232,16 +280,19 @@ warning, and Apple's silence on whether the model ships with the OS. New here:
   published version.
 - No source says whether Workers AI returns the reranker's raw logit or its
   sigmoid, how it orders `response` without `top_k`, how many contexts it
-  accepts, or whether it cuts long pairs.
+  accepts, or whether it cuts long pairs; the probe saw scores between 0 and
+  1, best first, for four contexts.
 - No source says how Workers AI applies Qwen's `instruction`, whether its
-  vectors are unit length, or whether it truncates past 8,192 tokens. Qwen's
-  GitHub repository wasn't read in time.
-- Nothing was run against Workers AI; every shape above is from schemas.
+  vectors are unit length, or whether it truncates past 8,192 tokens; the
+  probe settled the first two only for the texts it sent. Qwen's GitHub
+  repository wasn't read in time.
 - Node's docs were read from `doc/api/child_process.md` on the `main` branch.
-  Bun's own `node:child_process` compatibility and `Bun.spawn` weren't checked.
+  Bun's own `node:child_process` wasn't read, though the prototype's `spawn`
+  and `readline` ran under Bun.
 - No swift.org or Apple page on `swift file.swift` against `swiftc` was read;
   the timing is one run on this Mac. Whether the phone reports the same
-  revision is untested.
+  revision is untested, and no Apple page says its distance is the one the
+  probe measured.
 
 ## See also
 
@@ -254,3 +305,5 @@ warning, and Apple's silence on whether the model ships with the OS. New here:
 [run notes]: /docs/research/0047-turn-eval-run.md#apples-sentence-embedding-on-a-mac
 [workerd-ai]: https://github.com/cloudflare/workerd/blob/main/types/defines/ai.d.ts
 [cf-limits]: https://developers.cloudflare.com/workers-ai/platform/limits/
+[cf-rr-json]: https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/workers-ai-models/bge-reranker-base.json
+[cf-qwen-json]: https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/workers-ai-models/qwen3-embedding-0.6b.json
