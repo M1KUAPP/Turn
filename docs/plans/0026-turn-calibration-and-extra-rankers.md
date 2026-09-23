@@ -617,8 +617,8 @@ September 23, 2026. The run followed decision 13:
 - **The extra rankers,** on the 64 lines with an acceptable phrase besides
   the fixed buttons: in top 6, qwen3 had 42%, the reranker 34%, and apple
   23%, against Jev's 75% and embeddings' 45%; in top 1, 19%, 16%, and 4.7%,
-  against Jev's 67%. Of the rows each changed, qwen3's were wrong 61% of the
-  time, the reranker's 67%, and apple's 71%, against Jev's 22%.
+  against Jev's 67%. On all 80 lines, qwen3's changed rows were wrong 61%
+  of the time, the reranker's 67%, and apple's 71%, against Jev's 22%.
 - **The first four rankers** match the first run in every ranking table,
   the question kind, and each subset. Jev showed a big button on one more
   line and a row on one fewer, its curve's points shifted, and the latency
