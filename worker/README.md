@@ -88,11 +88,13 @@ demand from the Actions tab or `gh workflow run`.
 - **Who receives it:** the workflow opens "Jev's credits need attention",
   labeled `credit-alert`, and assigns kymil4, WhiteAvocad0, and
   AlaskanTuna, the repository's collaborators, whom GitHub notifies by
-  their own settings. While that issue is open it opens no other, so close
-  it once the credits are topped up.
+  their own settings; if one can't be assigned, it opens the issue without
+  assignees. While that issue is open it opens no other, so close it once
+  the credits are topped up.
 - **What it can't see:** with no balance to read, a slow drain shows only
   when a line runs out. A run that fails, such as with an expired token,
-  emails only whoever last edited the schedule.
+  notifies only the workflow's creator, or whoever last changed its
+  schedule or re-enabled it, on the web or by email as their settings say.
 - **Secrets:** `TURN_CF_LOGS_TOKEN` and `TURN_CF_ACCOUNT_ID`, the same
   values as for `bun run logs`, in the repository's Actions secrets.
 
