@@ -407,7 +407,10 @@ it was kept.
   the Swift script above. The same check fails the error screen at 12:55:43,
   where 876,060 of those pixels differ from `#000000`.
 - **No error.** After the launch, Metro's log held only the bundle line, and
-  Turn was still running after the last screenshot.
+  Turn was still running after the last screenshot. The launch screen is
+  the board color too, by design, so the screenshots can't tell it from the
+  empty home; Metro's bundle line, with no error screen or log after it,
+  shows the JavaScript ran.
 - **A locked phone.** A screenshot at 12:46, before the person unlocked the
   phone, was entirely `#000000` with no status bar.
 - Synthesis: Turn's Debug build installs and runs on the video iPhone under
