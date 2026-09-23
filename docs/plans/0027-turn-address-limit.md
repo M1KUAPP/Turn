@@ -128,7 +128,11 @@ with `/tdd`, runs the full suite at the end, and closes with
     minute, retries included, and the 10,000 last over 40 minutes against
     it. The count holds nothing against a sender with many addresses, such
     as one IPv6 client moving through its /64; the daily budget stays what
-    caps them.
+    caps them. Nor does it keep one address from the Free plan's rows: at
+    120 requests a minute, each from a new ID, it writes 8 rows a request,
+    or 11 for lines, and spends the day's 100,000 in about 75 to 105
+    minutes, where the binding's live pace, had it held nothing back, took
+    about 11 to 15; then every call to an object fails until midnight UTC.
 1.  **The cost fits the Free plan.** A counted request reads 2 rows and
     writes 1 in its address's object, a refused one reads 1 and writes
     none, and an object's first request writes 2 more for its table
@@ -169,7 +173,10 @@ with `/tdd`, runs the full suite at the end, and closes with
     120 gets `429 rate_limited` with `Retry-After: 60`, and reaches no
     user's object, so it spends none of the ID's 30, no free line, and no
     call. Invalid headers or lines get `400` first and count against
-    nothing.
+    nothing. The price: one sender behind a carrier's NAT can spend the
+    address's 120 in a minute alone, its requests past 30 refused by its
+    own count, while its neighbours wait for the next minute. Counting the
+    ID first would let every flood into users' objects, as #96 found.
 1.  **The binding goes.** `ADDRESS_LIMITER` and its `ratelimits` entry
     leave `worker/wrangler.jsonc`. In front of the exact count, it would
     spare object calls only for a flood that outlasts its lag, which live
