@@ -4,7 +4,7 @@ import { chooseCutOff, crossValidate, folds } from '../src/cut-off'
 import { atCutOff } from '../src/embeddings'
 import type { Ranker } from '../src/rankers'
 import { scoreLines } from '../src/score'
-import { smallBank } from './small-bank'
+import { noKind, smallBank } from './small-bank'
 
 // 80 lines as the evaluation has them: 72 with an acceptable reply, then 8 with none.
 const labeled = Array.from({ length: 80 }, (_, i) => ({ id: i, none: i >= 72 }))
@@ -62,7 +62,7 @@ test("chooses each fold's cut-off on the other folds alone", () => {
 
 test('gives the phrases whose cosine reaches the cut-off 1 and the rest 0, best first, ties in their own order', () => {
   const ranking = {
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map([
       ['a', 0.5],
@@ -93,7 +93,7 @@ test("scores a ranker with a cut-off at its line's fold's cut-off, chosen on the
   const byValue: Ranker = (text, shortlist) => {
     const { value } = lines.find((line) => line.text === text) ?? { value: 0 }
     return {
-      kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+      kind: noKind,
       topic: {},
       scores: new Map(shortlist.map((phrase) => [phrase.id, phrase.id === 'water-please' ? value : value / 2])),
       onPhone: true
@@ -128,7 +128,7 @@ test('counts a right hold as right, so holding every line can win', async () => 
     acceptable: value < 0.9 ? ['water-please'] : []
   }))
   const byValue: Ranker = (text, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map(shortlist.map((phrase) => [phrase.id, Number(text.slice(5)) < 6 ? 0.9 : 0.6])),
     onPhone: true
@@ -151,7 +151,7 @@ test("scores each line at a cut-off chosen from the other folds' lines' six high
   }))
   const scored: Record<string, number> = { 'good-night': 0.95, 'water-please': 0.9 }
   const secondRight: Ranker = (text, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map(
       shortlist.map((phrase) => [
