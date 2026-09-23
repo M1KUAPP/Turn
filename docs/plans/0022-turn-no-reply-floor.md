@@ -62,10 +62,10 @@ Contents:
   yes-or-no questions, at least 8 are about pain or health, at least 4 ask
   for consent, and at least 10 share no content word with any acceptable
   reply."
-- **Plan 0013's rules,** the labelers' brief in
-  [its appendix][labels-brief], and its decision 11: "Neither the lines nor
-  the labels change to reach 16 lines with none or 10 with no shared word."
-  That held for #21; #77 is where the team meets the floor.
+- **Plan 0013's rules,** [its labelers' brief][labels-brief], and its
+  decision 11: "Neither the lines nor the labels change to reach 16 lines
+  with none or 10 with no shared word." That held for #21; #77 is where the
+  team meets the floor.
 - **The repository's rules:** Conventional Commits with no attribution
   lines; never stage `skills-lock.json`, `.agents/`, or `.claude/`; run
   `graphify query "<question>"` before reading repo files; send no personal
@@ -87,7 +87,7 @@ Contents:
     2026, and the directive asks this session to close #77 without pausing,
     so the session chooses. It chooses knowing the 8 and 7 lines with none
     and the replies that kept the rest from none, which
-    [the research][notes-changes] says to record.
+    [the research on changed plans][notes-changes] says to record.
     - **New lines** keep EVAL-1's floor, plan 0013's rules, and
       `claude-c`'s labels on every line that stays, and a rule fixed before
       any new label is read picks the lines they replace, the "blind to
@@ -99,9 +99,9 @@ Contents:
       it needs a fresh labeling of all 80 lines in place of `claude-c`'s.
     - **A lower floor:** on 8 lines, a right-hold rate can't rule out 68%
       even when every hold is right, against 81% on 16
-      ([the numbers][notes-numbers]). Six of the 8 lines with none are at
-      the shop, and none is about pain, health, or consent, so new lines at
-      every place widen what the holds test.
+      ([the note's intervals][notes-numbers]). Six of the 8 lines with none
+      are at the shop, and none is about pain, health, or consent, so new
+      lines at every place widen what the holds test.
 1.  **Agents write and label, at the user's direction, and the record says
     so.** #77 is `ready-for-human`. As with #18, #19, and #21, Claude
     subagents do the work, each in its own context: `claude-f` writes, and
@@ -110,9 +110,9 @@ Contents:
     abandoned attempt at #76 used. The TRD and the report say who wrote and
     labeled the new lines.
 1.  **A writer blind to the bank.** `claude-f` gets one self-contained
-    brief ([appendix](#appendix-the-writers-brief)) and reads nothing else,
-    so of the 80 lines it sees only those decision 4 quotes back. It's plan
-    0011's writers' brief, changed where #77 needs it:
+    brief ([the writer's brief](#appendix-the-writers-brief)) and reads
+    nothing else, so of the 80 lines it sees only those decision 4 quotes
+    back. It's plan 0011's writers' brief, changed where #77 needs it:
     - 20 lines, all meant to have no stored reply, five at each place in a
       fixed rotation, so any first few are spread over the places;
     - no yes-or-no lines, since Yes and No answer them;
@@ -122,7 +122,7 @@ Contents:
       Turn is" already names;
     - the labelers' rules 1 to 5, word for word, so the writer aims at the
       test the labelers apply, as SQuAD 2.0's writers were told theirs
-      ([the research][notes-written]).
+      ([the research on no-answer items][notes-written]).
 
     The session, which has read the bank and the labels, wrote the brief's
     lists of lines that work and lines that don't from what the first
@@ -141,11 +141,12 @@ Contents:
     the bank or the labels.
 1.  **The labelers see the new lines among the 80.** Judges who first saw
     only non-relevant documents then scored relevance higher in Scholer et
-    al. ([the research][notes-threshold]), so a batch made only of lines
-    meant to have no reply could make a labeler more lenient. Each labeler
-    gets plan 0013's brief, word for word but for the number of lines
-    ([appendix](#appendix-the-labelers-brief)), with all 100 lines in one
-    fixed order, by the SHA-256 of `issue-77-labels:` and each id.
+    al. ([the research on thresholds][notes-threshold]), so a batch made
+    only of lines meant to have no reply could make a labeler more lenient.
+    Each labeler gets plan 0013's brief, word for word but for the number of
+    lines ([the labelers' brief](#appendix-the-labelers-brief)), with all
+    100 lines in one fixed order, by the SHA-256 of `issue-77-labels:` and
+    each id.
     - Only the new lines' labels enter the data: `claude-g`'s as the
       scored labeling, and `claude-h`'s in the second labeling.
     - Their labels on the 80 are a check, given under Task 4: how far
@@ -153,7 +154,7 @@ Contents:
       how many of the 80 each leaves with none.
 1.  **Which lines leave, fixed before any label is read.** Taken in id
     order, each new line replaces a line at its own place, so each place
-    keeps 20 lines ([the script](#appendix-the-scripts)).
+    keeps 20 lines ([`apply.py`](#appendix-the-scripts)).
     - The candidates are the lines with a reply in `claude-c`'s labeling,
       since a line with none leaving would undo the gain.
     - Each place's candidates go in the order of the SHA-256 of `issue-77:`
@@ -270,9 +271,8 @@ linked. It is committed as
 ### Task 3: The writer
 
 - [ ] **Step 1: Start `claude-f`,** a background `general-purpose` agent
-      whose whole prompt is the brief in
-      [the appendix](#appendix-the-writers-brief), writing in its own
-      scratch folder.
+      whose whole prompt is [the writer's brief](#appendix-the-writers-brief),
+      writing in its own scratch folder.
 - [ ] **Step 2: Check the file** with `check_new_lines.py`; a file that
       breaks a rule goes back to the writer with the rows and the rule.
 - [ ] **Step 3: Send back near-duplicates and wrong kinds** (decision 4),
@@ -299,7 +299,8 @@ alternatives had meant to keep them from it, and `line-87`, `line-91`, and
 ### Task 4: The labelers
 
 - [ ] **Step 1: Build both briefs** with `make_brief.py`, from the rules in
-      [the appendix](#appendix-the-labelers-brief) and the writer's file.
+      [the labelers' brief](#appendix-the-labelers-brief) and the writer's
+      file.
 - [ ] **Step 2: Start both labelers at once,** each a background
       `general-purpose` agent whose whole prompt is its brief: `claude-g`
       and `claude-h` each write their own JSON Lines file in their own
