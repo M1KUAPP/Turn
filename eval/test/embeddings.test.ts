@@ -1,8 +1,8 @@
 import { applyAnswer, emptyRow, startingPolicy } from '@turn/shared/row'
 import { PhraseIndex, rankable } from '@turn/shared/shortlist'
 import { expect, test, vi } from 'vitest'
-import { cosine, embeddings, workersAi, type Embed } from '../src/embeddings'
-import { fakeServices, fakeVector } from './services'
+import { cosine, embeddings, qwen, workersAi, type Embed } from '../src/embeddings'
+import { fakeQwenVector, fakeServices, fakeVector } from './services'
 import { smallBank } from './small-bank'
 
 const home = { bank: smallBank, row: [], place: 'home', taps: new Map<string, number>() }
@@ -76,6 +76,52 @@ test("scores each phrase's cosine with the line in the shortlist's order, and ta
     ['Do you want some water?', ...shortlist.map((phrase) => phrase.text)],
     ['Nice weather today.']
   ])
+})
+
+test("asks qwen3 for lines as queries under the TRD's instruction, and phrases as documents under none", async () => {
+  const services = fakeServices()
+  const { queries, documents } = qwen()
+  const texts = Array.from({ length: 40 }, (_, i) => `Phrase number ${i}`)
+  expect(await queries(['Do you want some water?'])).toEqual([fakeQwenVector('Do you want some water?')])
+  expect(await documents(texts)).toEqual(texts.map(fakeQwenVector))
+  const bodies = services.mock.calls.map(([, init]) => JSON.parse(String(init?.body)))
+  expect(bodies).toEqual([
+    {
+      queries: ['Do you want some water?'],
+      instruction: 'Given what a conversation partner just said, retrieve the reply that answers it'
+    },
+    { documents: texts.slice(0, 32) },
+    { documents: texts.slice(32) }
+  ])
+  for (const [url] of services.mock.calls) {
+    expect(String(url)).toBe(
+      'https://api.cloudflare.com/client/v4/accounts/test-account/ai/run/@cf/qwen/qwen3-embedding-0.6b'
+    )
+  }
+})
+
+test('refuses a qwen3 answer short of one 1,024-number vector for each text', async () => {
+  const answer = (result: object) => async () => Response.json({ success: true, errors: [], messages: [], result })
+  vi.mocked(fetch)
+    .mockImplementationOnce(answer({ shape: [1, 768], data: [fakeVector('Hi')] }))
+    .mockImplementationOnce(answer({ shape: [2, 1024], data: [fakeQwenVector('Hi')] }))
+    .mockImplementationOnce(answer({ shape: [1, 1024], data: [fakeVector('Hi')] }))
+  for (let i = 0; i < 3; i++) {
+    await expect(qwen().documents(['Hi'])).rejects.toThrow("Workers AI's answer holds no 1024-number vector")
+  }
+})
+
+test('embeds the line alone and its unseen phrases apart when the model takes the line as a query', async () => {
+  const query = vi.fn<Embed>(async (texts) => texts.map((text) => fakeVector(`query ${text}`)))
+  const embed = vi.fn<Embed>(async (texts) => texts.map((text) => fakeVector(text)))
+  const rank = embeddings(embed, query)
+  const ranking = await rank('Do you want some water?', shortlist, new PhraseIndex(), home)
+  const water = cosine(fakeVector('query Do you want some water?'), fakeVector('Water, please'))
+  expect(water).not.toBeCloseTo(cosine(fakeVector('Do you want some water?'), fakeVector('Water, please')), 12)
+  expect(ranking.scores.get('water-please')).toBeCloseTo(water, 12)
+  await rank('Nice weather today.', shortlist, new PhraseIndex(), home)
+  expect(query.mock.calls.map(([texts]) => texts)).toEqual([['Do you want some water?'], ['Nice weather today.']])
+  expect(embed.mock.calls.map(([texts]) => texts)).toEqual([shortlist.map((phrase) => phrase.text)])
 })
 
 test("never brings a big button, even at a cosine of 1, since a cosine isn't a probability", async () => {
