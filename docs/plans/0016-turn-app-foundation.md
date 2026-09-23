@@ -50,7 +50,10 @@ the [TRD](/docs/TRD.md#build-configuration), and the
 
 ### Task 4: Native check and handoff
 
-- [ ] Run on an iOS 26 or 27 Simulator when Xcode is available.
-- [x] Record the iPhone build check as pending #80. Xcode is not installed in
-      this environment, so the native run remains for the iPhone owner.
+- [x] Build and run on an iPhone 16 Simulator with Xcode 27 and iOS 27.0;
+      verify the empty home in light and dark appearance.
+- [ ] Run on an iOS 26 runtime or device; only iOS 27.0 is installed here.
+- [x] Record the Turn debug build on the video iPhone as pending. #80 verified
+      the free Personal Team with a throwaway app on a teammate's Mac; no
+      physical iPhone is paired with this Mac.
 - [x] Update #22 with the verified code result and remaining device checks.
