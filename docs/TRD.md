@@ -1142,6 +1142,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | `JEV_ON`                             | var    | the relay        | the switch that turns Jev off (STATE-3)     |
 | `TYPESAFE_NAMED`                     | var    | the relay        | whether the texts name TypeSafe (CONSENT-7) |
 | `FREE_LINES`                         | var    | the relay        | 20 (PAY-1)                                  |
+| `JEV_DAILY_CALLS`                    | var    | the relay        | the day's calls to Jev: 10,000 (SEC-5)      |
 | `POLICY`                             | var    | the relay        | the policy's changed values (ROW-8)         |
 | `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
 | `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
@@ -1194,6 +1195,7 @@ ran under Wrangler 4.136.2:
     "TYPESAFE_NAMED": "false",
     "SIMULATOR_UNLIMITED": "false",
     "FREE_LINES": "20",
+    "JEV_DAILY_CALLS": "10000",
     "RC_PROJECT_ID": "proj9f033172",
     "RC_ENTITLEMENT_ID": "entl6b65cc982a",
     "POLICY": {}
@@ -1206,9 +1208,7 @@ ran under Wrangler 4.136.2:
   which Git ignores, and a committed `.dev.vars.example` names them for anyone
   who runs the relay with their own keys (SEC-1)
   ([services notes][svc-secrets]).
-- **The committed file,** `worker/wrangler.jsonc`, holds all of this but
-  `BUDGET` and `ratelimits`, which come with the rate limits and the daily
-  budget (#35).
+- **The committed file,** `worker/wrangler.jsonc`, holds all of this.
 - **Vars** are read at every request, so a change reaches the next answer
   or configuration with no app build (ROW-8, CONSENT-7):
   - `JEV_ON`, `TYPESAFE_NAMED`, and `SIMULATOR_UNLIMITED` are on only as
@@ -1219,9 +1219,9 @@ ran under Wrangler 4.136.2:
     `wrangler deploy --var` or the dashboard. With no `POLICY` at all, the
     starting policy holds.
   - An unknown key, a value of the wrong type, or a number outside 0 to 1
-    in `POLICY`, a `FREE_LINES` that isn't a whole number, or no
-    `JEV_MODEL`, with which the SDK would pick a model of its own, answers
-    `500 internal`, so a mistake shows at the next request.
+    in `POLICY`, a `FREE_LINES` or `JEV_DAILY_CALLS` that isn't a whole
+    number, or no `JEV_MODEL`, with which the SDK would pick a model of its
+    own, answers `500 internal`, so a mistake shows at the next request.
   - A var changed in the dashboard lasts until the next `wrangler deploy`,
     which puts back `wrangler.jsonc`'s values.
 - **The Test Store key** is the only RevenueCat key the app carries, and it
