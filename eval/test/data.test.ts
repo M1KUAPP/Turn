@@ -2,7 +2,7 @@ import { copyFileSync, mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from 'vitest'
-import { bank, checkLabels, linesFrom, phrasesOf, readRows, type Line } from '../src/data'
+import { checkLabels, linesFrom, phrases, readRows, type Line } from '../src/data'
 
 const fixture = (name: string) => new URL(`fixture/${name}`, import.meta.url)
 
@@ -14,7 +14,6 @@ test('reads a JSON Lines file from a URL or a path', () => {
 })
 
 test("gives the bank's phrases in the grid's order, marking the fixed buttons and the strip's five", () => {
-  const phrases = phrasesOf(bank)
   expect(phrases).toHaveLength(159)
   expect(phrases.slice(0, 4).map(({ id, fixed }) => [id, fixed])).toEqual([
     ['yes', true],
@@ -33,11 +32,11 @@ test("gives the bank's phrases in the grid's order, marking the fixed buttons an
 })
 
 test('accepts labels that name phrases in the bank, and names the first line whose labels are missing or unknown', () => {
-  expect(() => checkLabels(readRows(fixture('lines.jsonl')), bank)).not.toThrow()
-  expect(() => checkLabels([{ id: 'line-01', acceptable: ['yes'] }, { id: 'line-02' }], bank)).toThrow(
+  expect(() => checkLabels(readRows(fixture('lines.jsonl')))).not.toThrow()
+  expect(() => checkLabels([{ id: 'line-01', acceptable: ['yes'] }, { id: 'line-02' }])).toThrow(
     'line-02 lists no acceptable replies'
   )
-  expect(() => checkLabels([{ id: 'line-03', acceptable: ['yes', 'water-plz'] }], bank)).toThrow(
+  expect(() => checkLabels([{ id: 'line-03', acceptable: ['yes', 'water-plz'] }])).toThrow(
     "line-03 lists water-plz, which the starter bank doesn't hold"
   )
 })

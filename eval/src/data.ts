@@ -45,18 +45,14 @@ export const secondLabeling: Labels[] = readRows(here('../second-labeling.jsonl'
 /** The starter bank, from the app's own file. */
 export const bank: StarterBank = JSON.parse(readFileSync(here('../../app/src/content/starter-bank.json'), 'utf8'))
 
-/** Every phrase in the bank, in the bank's order. */
-export const phrases = bank.categories.flatMap((category) => category.phrases)
-
-/** The bank's phrases in the grid's order, as the shortlist and the row's rules see them, with the strip's marked. */
-export const phrasesOf = (starter: StarterBank): ShortlistPhrase[] =>
-  starter.categories.flatMap((category) =>
-    category.phrases.map(({ id, text, fixed, places }) => ({ id, text, places, fixed, strip: category.id === 'strip' }))
-  )
+/** Every phrase in the bank, in the bank's order, as the shortlist and the row's rules see them, the strip's marked. */
+export const phrases: ShortlistPhrase[] = bank.categories.flatMap((category) =>
+  category.phrases.map(({ id, text, fixed, places }) => ({ id, text, places, fixed, strip: category.id === 'strip' }))
+)
 
 /** Stops at the first line whose labels are missing or name a phrase the bank doesn't hold, naming it. */
-export function checkLabels(labeled: readonly { id: string; acceptable?: readonly string[] }[], starter: StarterBank) {
-  const ids = new Set(phrasesOf(starter).map(({ id }) => id))
+export function checkLabels(labeled: readonly { id: string; acceptable?: readonly string[] }[]) {
+  const ids = new Set(phrases.map(({ id }) => id))
   for (const { id, acceptable } of labeled) {
     if (!Array.isArray(acceptable)) throw new Error(`${id} lists no acceptable replies, not even [] for none`)
     const unknown = acceptable.find((reply) => !ids.has(reply))
@@ -70,7 +66,7 @@ export function checkLabels(labeled: readonly { id: string; acceptable?: readonl
  */
 export function linesFrom(path: string | undefined): { lines: Line[]; file: string } {
   const found: Line[] = path === undefined ? lines : readRows(path)
-  checkLabels(found, bank)
+  checkLabels(found)
   if (path === undefined) return { lines: found, file: 'eval/lines.jsonl' }
   const inRepository = relative(root, resolve(path))
   return { lines: found, file: inRepository.startsWith('..') ? resolve(path) : inRepository }
