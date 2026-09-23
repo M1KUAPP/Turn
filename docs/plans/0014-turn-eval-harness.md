@@ -5,15 +5,16 @@
 report, and a script that checks EVAL-1's quotas and prints the labelers'
 agreement.
 
-**Architecture:** Seven files in `eval/src/`, the `@turn/eval` package.
+**Architecture:** Eight files in `eval/src/`, the `@turn/eval` package.
 `stats.ts` holds the arithmetic: Wilson intervals, percentiles, and chance
 rates. `rankers.ts` holds the two rankers, each returning the `Ranking` the
 row's rules take. `score.ts` picks each line's shortlist with the app's
 code, runs the rankers and the row's rules, times them, and sums up any
 group of lines. `agreement.ts` compares two labelings. `data.ts` reads the
-lines, a second labeling, and the app's starter bank. `report.ts` renders
-the report for `bun run eval`, and `count.ts` prints the quotas and the
-agreement for `bun run eval:count`.
+lines, a second labeling, and the app's starter bank. `prose.ts` fills and
+joins the commands' prose. `report.ts` renders the report for
+`bun run eval`, and `count.ts` prints the quotas and the agreement for
+`bun run eval:count`.
 
 **Tech Stack:** TypeScript 6.0.3 and Vitest 4.1.11 in a Bun 1.4.2
 workspace; `@turn/shared`'s shortlist and row rules; graphify; the `gh`
@@ -55,8 +56,9 @@ Contents:
     prints 59% to 79%"
   - "The report names the date and the commit, and gives each ranker's
     latency"
-  - "The report says who wrote the 80 lines and the starter bank, as the
-    TRD's [evaluation data][trd-data] records"
+  - "The report says who wrote the 80 lines and the starter bank and who
+    labeled the replies, as the TRD's [evaluation data][trd-data] records",
+    as #78 edited it on September 23, 2026
 - **#29's comments** add that the `keyword` ranker is `pickShortlist`, then
   `rankOnPhone` with the same context, then `applyAnswer` from `emptyRow`,
   and that a hold shows as `row.answers` below the answer's sequence number.
@@ -107,12 +109,14 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 - **`/code-review`:** one round, on its Standards and Spec axes, with issue
   #29 and this plan as the spec, plus an agent that checks the facts.
 
-The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
-`chanceReciprocalRank` in `stats.ts`, beside the `mean` two modules share;
-`place` and `keyword` in `rankers.ts`; `scoreLines`, `summarize`, and
-`sharesNoWord` in `score.ts`; `compareLabelings` and `masiDistance` in
-`agreement.ts`; `readRows`, `phrasesOf`, `checkLabels`, and `linesFrom` in
-`data.ts`; and `main` in `report.ts` and `count.ts`, the two commands.
+The seams are each file's exports: `wilson`, `percentile`, `chanceHit`,
+`chanceReciprocalRank`, and `mean` in `stats.ts`; `place` and `keyword` in
+`rankers.ts`; `scoreLines`, `summarize`, `sharesNoWord`, and the six
+`outcomes` in `score.ts`; `compareLabelings` and `masiDistance` in
+`agreement.ts`; `readRows`, `phrases`, `checkLabels`, `linesFrom`,
+`labelingFrom`, and `root` in `data.ts`; `wrap` and `listOf` in `prose.ts`;
+`rate` in `report.ts`; and `main` in `report.ts` and `count.ts`, the two
+commands.
 
 [note]: /docs/research/0035-turn-eval-harness.md
 
@@ -142,7 +146,9 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
     first eight phrases in the bank's order; the report says so, as the
     TRD asks. Both rankers order the same 40, which for `keyword` is also
     the phone's whole path; ranking over the whole bank matters only for
-    #36's rankers.
+    #36's rankers. The place's first eight phrases are always among the 40,
+    so `place`'s top 1 and top 6 never depend on the line, though which of
+    its later phrases make the 40 can; the report and the TRD say so.
 1.  **Rankers return a `Ranking`, and the row's rules make the row.** A
     ranker takes a line, its shortlist, the index, and the context, as
     `rankOnPhone` does, and the harness applies `applyAnswer` to
@@ -157,7 +163,9 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
 1.  **Ranking metrics.** They count the lines with an acceptable phrase
     besides Yes, No, and Not sure, since the rankers never order the fixed
     buttons, which come from the question-kind call. A ranker's order is
-    its scores, highest first, with ties in the order its ranking gives.
+    the phrases it scores above 0, highest first, with ties in the order
+    its ranking gives, so `keyword` ranks none on a line that shares no
+    word and never takes the place's fallback order as its own hits.
     Top 1 and top 6 are hits when an acceptable phrase is among the first
     one or six, and the reciprocal rank is 1 over the first one's rank, or
     0 when none is in the 40.
@@ -178,7 +186,8 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
     a row is right when any slot, the fixed buttons' among them, holds an
     acceptable id. Coverage is the changed rows over all lines, and risk
     the wrong ones over the changed rows. The always-hold baseline is right
-    on every line with no acceptable reply and misses the rest.
+    on every line with no acceptable reply and misses the rest. The six
+    outcomes print as counts, and coverage and risk as rates.
 1.  **Every rate carries a Wilson interval,** NIST's formula with
     z = 1.959963984540054, clamped to [0, 1] ([Wilson notes][notes-wilson]).
     A cell reads "56 of 80, 70% (59% to 79%)", in whole percents at or
@@ -208,9 +217,11 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
     header names the date in long form, the commit's short hash, with
     "with uncommitted changes" when `git diff --quiet HEAD` fails, and the
     files it read. "Who wrote the data" counts the lines' authors and
-    labelers from the file, then quotes the TRD's record of who wrote the
-    80 lines and the starter bank. The tables are padded as Prettier pads
-    them, so the file passes `bun run lint` when #40 commits it.
+    labelers from the file, then gives the TRD's whole record of who wrote
+    the 80 lines and the starter bank and who labeled the replies. A group
+    with no lines says so in a sentence. The prose fills 80 columns and the
+    tables are padded as Prettier pads them, so the file passes
+    `bun run lint` when #40 commits it.
 1.  **The count script** prints each EVAL-1 quota with its count: exactly
     80 lines, and at least 16 with no acceptable reply, 24 yes-or-no, 8
     about pain or health, 4 asking for consent, and 10 that share no word
@@ -228,14 +239,18 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
       thirds, none against none at 0, and none against any set at 1.
 
     No source the notes read gives an interval for these, so none is
-    printed.
+    printed. Each prints to three decimals, since two printed the 80 lines'
+    negative agreement over the pairs, 0.996, as a perfect 1.00.
 
 1.  **`data.ts` builds on #21's.** #21's pull request, #78, added
     `eval/src/data.ts` for the package's checks. This branch was built on
     it and rebased onto `main` when it merged. It extends the module with
-    what the commands need, exports the second labeling's `Labels` type
-    again for the count script, and points #21's check of EVAL-1's quota at
-    `sharesNoWord`, so the rule has one home.
+    what the commands need, one list of the bank's phrases with the
+    shortlist's flags among them, and `labelingFrom` for the second
+    labeling, and it points #21's check of EVAL-1's quota at
+    `sharesNoWord`, so the rule has one home. The shortlist exports its own
+    rule for which phrases can be ranked, `rankable`, for the pairs'
+    candidates.
 1.  **Commands.** Each command's file exports `main`, which its test calls,
     and runs it when `import.meta.main` is true, as Node 26 and Bun both
     set it. The root's `package.json` gains `eval` and `eval:count`, which
@@ -263,6 +278,14 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
   acceptable", the prevalence problem the notes quote.
 - **Bootstrap intervals for the agreement:** no source read gives a method,
   and the ticket asks for the agreement, not its uncertainty.
+- **Ranking the phrases a ranker scores 0:** the keyword ranker would take
+  the place's fallback order as its own hits on a line that shares no word.
+- **Ranking `place` over the whole bank, so the line never reaches it:** the
+  ticket runs each ranker on the shortlists the app would pick, and top 1
+  and top 6 come out the same either way.
+- **The six outcomes as rates with intervals:** the row's table would run
+  to about 250 columns; the counts sit beside coverage and risk, which
+  carry intervals.
 
 ### Out of scope
 
@@ -323,8 +346,9 @@ fact-scan misses only for its own arithmetic. It was committed as
 **Files:** create `eval/src/stats.ts` and `eval/test/stats.test.ts`.
 
 - [ ] **Step 1: Test** that `wilson(56, 80)` spans 0.592318 to 0.789354,
-      that 0 of 80 starts at exactly 0 and 80 of 80 ends at exactly 1, and
-      that 0 of 0 has none.
+      that 0 of 80 starts at 0 and 80 of 80 ends at 1 within rounding,
+      that 0 of 21 and 40 of 40, which floating point puts just outside,
+      stay within [0, 1], and that 0 of 0 has none.
 - [ ] **Step 2: Implement, run the gate, and commit** as
       `feat(eval): add the Wilson interval for a rate`.
 
@@ -411,8 +435,8 @@ fact-scan misses only for its own arithmetic. It was committed as
 
 ### Task 12: The data
 
-**Files:** create `eval/src/data.ts`, `eval/test/data.test.ts`,
-`eval/test/fixture/lines.jsonl`, and
+**Files:** modify `eval/src/data.ts`, which #78 added; create
+`eval/test/data.test.ts`, `eval/test/fixture/lines.jsonl`, and
 `eval/test/fixture/second-labeling.jsonl`.
 
 - [ ] **Step 1: Test** that the fixture's lines and second labeling read
