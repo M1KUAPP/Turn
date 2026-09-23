@@ -245,6 +245,15 @@ test("gives Jev minus embeddings in top 6 with its paired interval, matching the
   expect(verdict.replace(/\s+/g, ' ')).toBe(expected)
 })
 
+test("gives EVAL-4's verdict on all lines alone, and each subset's interval without one", () => {
+  expect(section('### Ranking on all lines')).toMatch(prose(', so there'))
+  for (const group of ['yes-or-no lines', 'pain and consent lines']) {
+    const ranking = section(`### Ranking on ${group}`)
+    expect(ranking, group).toMatch(prose('Jev minus embeddings in top 6:'))
+    expect(ranking, group).not.toMatch(/, so\s/)
+  }
+})
+
 test("lists the embeddings ranker's five cut-offs, each chosen on the other folds", () => {
   const cutOffs = section("## The embeddings ranker's cut-offs")
   expect(cutOffs).toMatch(prose('Folds 1 to 5:'))

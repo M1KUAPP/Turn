@@ -1493,7 +1493,9 @@ see ([evaluation notes][eval-scoring]):
   them drawn by xoshiro128\*\* from a committed seed, and the 2.5th and 97.5th
   percentiles. Jev trails when the whole interval lies below zero and leads
   when it lies above; otherwise there's no clear difference
-  ([statistics notes][eval-stats]).
+  ([statistics notes][eval-stats]). Only the interval on all lines gives that
+  verdict: the subsets show theirs without one, since more intervals would
+  make a false "trails" likelier.
 - **Frozen settings.** Jev's 0.6 and 0.85 come from TypeSafe's routing
   example, and 80 lines are too few to refit them, so they, the margin, and
   the question wording are committed before the first run (EVAL-2). Cosine
