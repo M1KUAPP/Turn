@@ -4,7 +4,8 @@ What issue #40's single run needs from primary sources: what preregistration
 says to fix before results are seen and how to report a change, how to read
 the relay's deployed vars without changing them, and what Apple documents
 about the sentence embedding behind `jev-rerank`. It adds to the [iOS notes]
-and the [TRD's rankers]; judgment starts with "Synthesis:".
+and the [TRD's rankers]; every source was read on September 23, 2026, and
+judgment starts with "Synthesis:".
 
 Contents:
 
@@ -13,7 +14,7 @@ Contents:
 1.  [Reporting a deviation or an unwelcome result](#reporting-a-deviation-or-an-unwelcome-result)
 1.  [Reading the relay's deployed vars](#reading-the-relays-deployed-vars)
 1.  [Apple's sentence embedding on a Mac](#apples-sentence-embedding-on-a-mac)
-1.  [Checked on September 23, 2026](#checked-on-september-23-2026)
+1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
 ## Findings for the plan
@@ -210,7 +211,7 @@ here:
 [nl-cosine]: https://developer.apple.com/documentation/naturallanguage/nldistancetype/cosine
 [nl-contextual]: https://developer.apple.com/documentation/naturallanguage/nlcontextualembedding
 
-## Checked on September 23, 2026
+## Gaps
 
 - Apple's documentation pages render nothing without JavaScript; they were
   read through the JSON each page loads, under
