@@ -120,8 +120,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     [evaluation data][trd-eval-data] says how the lines and the bank were
     written, and the closing comments on both issues state the deviation.
     Lines a language model wrote may suit a ranker built on one better than
-    people's lines would; EVAL-2's 20 new lines from a teammate remain the
-    check on that, and the README must say who wrote the 80.
+    people's lines would, and nothing measures that: EVAL-2 asks for 20 new
+    lines from a teammate only "If anything of Jev's changes after the team
+    sees results". So the report and the README say who wrote the lines and
+    the bank, and #29 and #64 carry that as a criterion.
 1.  **Isolation both ways.** The line writers get a self-contained brief and
     read nothing: not the repository, not the web. The bank's writer reads
     the PRD, the TRD, the research notes, and its own check, but not
