@@ -532,7 +532,7 @@ and 42 seconds:
 
 - **Models:** all 32 of Jev's calls answered as `jev-1.13.0`, and the
   models line named Workers AI's three, qwen3's instruction, and Apple's
-  embedding at revision 1, of 512 numbers, on macOS 27.0 (build 26A428).
+  embedding at revision 1, of 512 numbers, on macOS 27.0 (Build 26A428).
 - **Ranking:** every ranker had 4 of 6 lines' replies in its top 6 but
   place, with 1, and apple, with 3; in top 1, embeddings and qwen3 had 4,
   keyword and the reranker 3, Jev 2, and apple none.
@@ -544,7 +544,7 @@ and 42 seconds:
 - **Cut-offs:** 0.807 for embeddings, 0.924 for the reranker, and 0.758 for
   qwen3 in four folds, and holding every line in the fifth; apple held
   every line in every fold.
-- **Latency,** at the median: embeddings 149 ms, Jev 373 ms, the reranker
+- **Latency:** at the median, embeddings 149 ms, Jev 373 ms, the reranker
   394 ms, qwen3 1,076 ms (4,019 ms at the 95th percentile), and apple 9 ms.
 - **Naming off:** with `--unnamed`, neither the report nor either plot held
   "jev" or "TypeSafe".
@@ -603,27 +603,27 @@ without it.
 The first pull request merged as `1b3ff03` at 18:11:26 UTC on
 September 23, 2026. The run followed decision 13:
 
-- **How it ran.** Once, with the appendix's script, whose text hadn't
+- **How it ran:** once, with the appendix's script, whose text hadn't
   changed since this plan was written, in a detached worktree at `1b3ff03`
   from a clean tree. It ran from 18:12:08 to 18:34:16 UTC and exited 0, and
   it wrote its report on the first try. The report gives the Mac's local
   date, September 24, 2026.
-- **As generated.** The three outputs were committed before anyone read
+- **As generated:** the three outputs were committed before anyone read
   them, and each file's SHA-256 sum is the same in the run's worktree, in
   the branch, and in the commit: `results-extras.md` begins `e6a000c0`, the
   risk-coverage plot `14eda5ec`, and the reliability diagram `9332afa4`.
-- **Models.** All 320 of Jev's calls answered as version 1.13.0, and
+- **Models:** all 320 of Jev's calls answered as version 1.13.0, and
   Apple's embedding was revision 1, of 512 numbers, on macOS 27.0 (Build
   26A428).
-- **The extra rankers,** on the 64 lines with an acceptable phrase besides
-  the fixed buttons: in top 6, qwen3 had 42%, the reranker 34%, and apple
+- **The extra rankers:** on the 64 lines with an acceptable phrase besides
+  the fixed buttons, in top 6, qwen3 had 42%, the reranker 34%, and apple
   23%, against Jev's 75% and embeddings' 45%; in top 1, 19%, 16%, and 4.7%,
   against Jev's 67%. On all 80 lines, qwen3's changed rows were wrong 61%
   of the time, the reranker's 67%, and apple's 71%, against Jev's 22%.
-- **The first four rankers** match the first run in every ranking table,
-  the question kind, and each subset. Jev showed a big button on one more
-  line and a row on one fewer, its curve's points shifted, and the latency
-  differs.
+- **The first four rankers:** they match the first run in every ranking
+  table, the question kind, and each subset. Jev showed a big button on
+  one more line and a row on one fewer, its curve's points shifted, and the
+  latency differs.
 - **EVAL-4, a second look:** Jev minus embeddings in top 6 is +29.7 points,
   with an interval of 17.2 to 42.2, as in the first run, whose verdict
   stands: Jev leads.
@@ -648,14 +648,14 @@ September 23, 2026. The run followed decision 13:
 - **Cut-offs:** embeddings 0.469 in four folds and 0.502 in one; the
   reranker 0.0449 in three, 0.0457, and 0.0233; qwen3 0.375 in four and
   0.410; apple 0.554 in four and 0.563.
-- **Latency** at the median: embeddings 172 ms, Jev 1,123 ms, the reranker
+- **Latency:** at the median, embeddings 172 ms, Jev 1,123 ms, the reranker
   414 ms, qwen3 1,278 ms (6,496 ms at the 95th percentile), and apple 6.5 ms
   on this Mac.
-- **The plot's legend,** in its top right corner, covers parts of the seven
-  curves, where it cleared the first run's four. The file stays as the run
-  wrote it. The table under the plot gives each curve's risk at 80% and 100%
-  coverage, where the legend sits, and [issue #101][legend-issue] moves the
-  legend.
+- **The plot's legend:** in its top right corner, it covers parts of the
+  seven curves, where it cleared the first run's four. The file stays as
+  the run wrote it. The table under the plot gives each curve's risk at 80%
+  and 100% coverage, where the legend sits, and [issue #101][legend-issue]
+  moves the legend.
 
 `eval/results.md` stays the first run's, at `8ea25eb`, and is the table the
 README will copy. `eval/results-extras.md` is the second run's, at
