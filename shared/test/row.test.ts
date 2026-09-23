@@ -78,9 +78,10 @@ describe('applyAnswer', () => {
     expect(row.slots).toEqual(['yes', 'no', 'not-sure', 'water', 'tea', null])
   })
 
-  test('shows only the fixed buttons for a topic that gets nothing else (EVAL-5)', () => {
+  test('shows only the fixed buttons for a topic that gets nothing else, even after a full row (EVAL-5)', () => {
     const policy = { ...startingPolicy, fixedOnlyTopics: ['body-pain'] }
-    const row = replay(answer(1, { water: 0.95 }, { topic: { 'body-pain': 0.9, food: 0.1 }, policy }))
+    const full = answer(1, { a: 0.7, b: 0.7, c: 0.7, d: 0.7, e: 0.7, f: 0.7 })
+    const row = replay(full, answer(2, { water: 0.95, d: 0.7 }, { topic: { 'body-pain': 0.9, food: 0.1 }, policy }))
     expect(row.big).toBeNull()
     expect(row.slots).toEqual(['yes', 'no', 'not-sure', null, null, null])
   })
@@ -129,6 +130,16 @@ describe('applyAnswer', () => {
       expect(kept.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
       const row = replay(six, answer(2, stale), answer(3, { ...stale, g: 0.61 }))
       expect(row.slots).toEqual(['a', 'b', 'c', 'g', 'e', 'f'])
+    })
+
+    test("leaves the big button's phrase in the slot it already holds", () => {
+      const row = replay(answer(1, { a: 0.7, b: 0.7 }), answer(2, { a: 0.9 }), answer(3, { a: 0.7, b: 0.7, c: 0.65 }))
+      expect(row.slots).toEqual(['a', 'b', 'c', null, null, null])
+    })
+
+    test("brings the big button's phrase back beside the fixed buttons, ahead of higher phrases", () => {
+      const row = replay(answer(1, { w: 0.9 }), answer(2, { x: 0.8, w: 0.7 }, { kind: yesNo }))
+      expect(row.slots).toEqual(['yes', 'no', 'not-sure', 'w', 'x', null])
     })
 
     test("brings the big button's phrase back into a free slot first, over the slots it covered", () => {
