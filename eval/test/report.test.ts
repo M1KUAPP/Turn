@@ -151,3 +151,17 @@ test('stops before scoring a line whose labels name a phrase the bank lacks', ()
   writeFileSync(bad, first.replace('water-please', 'water-plz'))
   expect(() => main(['--lines', bad, '--out', join(dir, 'results.md')])).toThrow('fixture-1 lists water-plz')
 })
+
+test('says so in a whole sentence when a group has no lines', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
+  const [water] = readFileSync(fixture, 'utf8').split('\n')
+  writeFileSync(join(dir, 'lines.jsonl'), water)
+  main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
+  const one = readFileSync(join(dir, 'results.md'), 'utf8')
+  expect(one).toMatch(prose('There are no lines about pain or asking for consent, which EVAL-5 names.'))
+  expect(one).toMatch(
+    prose('There are no lines that share no word with an acceptable reply, as the phone matches words.')
+  )
+  const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
+  for (const line of empty.split('\n')) expect(line.length, line).toBeLessThanOrEqual(80)
+})
