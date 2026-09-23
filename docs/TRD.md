@@ -1226,7 +1226,9 @@ line to the phone's own ranking, and speaking never depends on the relay.
   consent, its `labeler`, and in `acceptable` the ids of every acceptable
   reply in the starter bank, or none (EVAL-1). For yes-or-no lines,
   acceptable replies may include the fixed buttons. No line lists a strip
-  phrase, since the row never ranks them.
+  phrase, since the row never ranks them, so a line that only a strip
+  phrase such as "Wait, I'm typing" answers has none, which can only add
+  lines with none.
 - **`eval/second-labeling.jsonl`:** a second labeler's `acceptable` ids for
   every line, in the same order, which only the agreement reads.
 - **No shared word.** A line shares no content word with its replies when
