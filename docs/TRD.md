@@ -558,7 +558,7 @@ on answer(a)
   fresh = candidates scoring P.floor or more, highest first,
           ties in the shortlist's order
   if not showFixed and fresh is empty:
-    keep the row as it is                                          # ROW-3
+    keep the row as it is, answering its earlier line              # ROW-3
   else if not showFixed and fresh[0] > P.bigAbove
           and topic is not in P.noBigTopics
           and the phone didn't rank the line:                      # STATE-1
@@ -585,6 +585,8 @@ on answer(a)
 - **Stale phrases stay visible** until a new phrase needs their slot, so a
   line with little to say doesn't blank the row. A shown phrase the answer
   doesn't score counts as 0.
+- **A hold** leaves the row answering its earlier line, and the row records
+  which, so the caption can say which line the replies still answer.
 - **The big button** fills the row's fixed area; the six slots underneath
   keep their phrases for the next answer (ROW-1). Its phrase goes back in
   after the fixed buttons take their slots, so Yes can't cover it.
