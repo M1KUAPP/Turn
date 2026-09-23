@@ -4,7 +4,7 @@ import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { plot, riskCoverage, type Point } from './curves'
-import { linesFrom, phrases, root, type Line } from './data'
+import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
 import { cell, listOf, table, wrap } from './prose'
@@ -428,8 +428,9 @@ const commit = () => {
  * `bun run eval`: scores the four rankers on the labeled lines in `eval/lines.jsonl`, or the file `--lines` names, and
  * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3), with its plot beside it. The embeddings
  * ranker needs `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev `TYPESAFE_API_KEY`, in the environment.
- * `--unnamed` names Jev as the hosted decision model, for the README while naming is off. It scores the 80 lines only
- * from a clean working tree, so the history shows Jev's settings committed before any result (EVAL-2).
+ * `--unnamed` names Jev as the hosted decision model, for the README while naming is off. It scores any of the 80
+ * lines, whatever file holds them, only from a clean working tree, so the history shows Jev's settings committed
+ * before any result (EVAL-2).
  */
 export async function main(args: readonly string[]): Promise<void> {
   const { values } = parseArgs({
@@ -439,10 +440,10 @@ export async function main(args: readonly string[]): Promise<void> {
   const naming = values.unnamed ? unnamed : named
   const { lines: labeled, file } = linesFrom(values.lines)
   const { hash, clean } = commit()
-  if (file === 'eval/lines.jsonl' && !clean) {
+  if (amongTheEighty(labeled) && !clean) {
     throw new Error(
-      "Commit every change before scoring eval/lines.jsonl, so the history shows Jev's settings before any result " +
-        '(EVAL-2)'
+      "Commit every change before scoring the 80 lines of eval/lines.jsonl, so the history shows Jev's settings " +
+        'before any result (EVAL-2)'
     )
   }
   const pin = relayModel()

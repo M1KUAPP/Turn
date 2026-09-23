@@ -1575,9 +1575,9 @@ risk-coverage curve.
 - **Naming off.** `--unnamed` calls Jev the hosted decision model and gives
   its pin's version without the name, so the README can copy the table
   while naming is off (CONSENT-7).
-- **The 80 lines once.** The command scores `eval/lines.jsonl` only from a
-  clean working tree, so the history shows Jev's settings committed before
-  any result (EVAL-2).
+- **The 80 lines once.** The command scores any of the 80 lines, whatever
+  file holds them, only from a clean working tree, so the history shows
+  Jev's settings committed before any result (EVAL-2).
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when
 one falls short, then the labelers' agreement
