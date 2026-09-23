@@ -175,7 +175,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     is `yes_no` 1 for a yes-or-no line and 0 otherwise, with no topic. It
     returns a `Ranking`, and the caller adds the line's `seq` and the
     cached `policy` for the row's rules, whose six slots make it "up to
-    six".
+    six". It takes the context the shortlist was picked with and brings the
+    index in line with its bank first, since an index that missed the bank
+    would score every phrase 0 and hold the row without a sign; the first
+    review round found that.
 1.  **An answer's scores are a `Map` in the shortlist's order,** which
     breaks ties, so the row's phrases come first among equals. The relay's
     JSON object can't carry that order: an id such as `911` would sort
@@ -483,12 +486,7 @@ One commit per rule, each red first, then green, then the gate:
       check and:
 
   ```ts
-  export function rankOnPhone(
-    line: string,
-    shortlist: readonly Phrase[],
-    index: PhraseIndex,
-    context: Pick<Context, 'place' | 'taps'>
-  ): Ranking
+  export function rankOnPhone(line: string, shortlist: readonly Phrase[], index: PhraseIndex, context: Context): Ranking
   ```
 
 - [ ] **Step 3: Run the gate,** then commit as
