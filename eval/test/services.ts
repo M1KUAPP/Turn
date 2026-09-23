@@ -72,7 +72,7 @@ export function fakeRerank({ query, contexts }: { query: string; contexts: { tex
 }
 
 /** Workers AI's endpoint for a model, as the tests' made-up account reaches it. */
-const workersAi = (model: string) => `https://api.cloudflare.com/client/v4/accounts/test-account/ai/run/${model}`
+const endpoint = (model: string) => `https://api.cloudflare.com/client/v4/accounts/test-account/ai/run/${model}`
 
 /**
  * Stands in for Workers AI and Jev behind the `fetch` spy that `test/setup.ts` makes: Workers AI embeds each text with
@@ -87,11 +87,11 @@ export function fakeServices(modelFor: (call: number) => string | undefined = ()
     const url = String(input)
     const body = JSON.parse(String(init?.body))
     const success = (result: object) => Response.json({ success: true, errors: [], messages: [], result })
-    if (url === workersAi('@cf/baai/bge-base-en-v1.5')) {
+    if (url === endpoint('@cf/baai/bge-base-en-v1.5')) {
       return success({ shape: [body.text.length, 768], data: body.text.map(fakeVector), pooling: body.pooling })
     }
-    if (url === workersAi('@cf/baai/bge-reranker-base')) return success({ response: fakeRerank(body) })
-    if (url === workersAi('@cf/qwen/qwen3-embedding-0.6b')) {
+    if (url === endpoint('@cf/baai/bge-reranker-base')) return success({ response: fakeRerank(body) })
+    if (url === endpoint('@cf/qwen/qwen3-embedding-0.6b')) {
       const texts: string[] = body.queries ?? body.documents
       return success({ shape: [texts.length, 1024], data: texts.map(fakeQwenVector) })
     }

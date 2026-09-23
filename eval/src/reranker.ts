@@ -22,8 +22,8 @@ export function reranker(env: Env = process.env): Ranker {
     const scored = Array.isArray(response) ? (response as Scored[]) : []
     const byIndex = new Map(scored.map(({ id, score }) => [id, score]))
     const inRange = (score: unknown) => typeof score === 'number' && score >= 0 && score <= 1
-    const each = scored.length === shortlist.length && shortlist.every((_, i) => inRange(byIndex.get(i)))
-    if (!each) {
+    const scoresEachOnce = scored.length === shortlist.length && shortlist.every((_, i) => inRange(byIndex.get(i)))
+    if (!scoresEachOnce) {
       throw new Error(`Workers AI's answer doesn't score each of the ${shortlist.length} phrases once, from 0 to 1`)
     }
     return {
