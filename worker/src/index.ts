@@ -41,17 +41,22 @@ const codes = {
   unverified: 'jev_unavailable',
   invalid: 'invalid_request',
   not_found: 'not_found',
+  limited: 'rate_limited',
   off: 'jev_off',
   failed: 'jev_unavailable',
   credits: 'jev_unavailable',
   internal: 'internal'
 } satisfies Partial<Record<Outcome, ErrorCode>>
 
-/** Records how a request ended, and answers with that error's code and nothing else (SEC-4). */
+/**
+ * Records how a request ended, and answers with that error's code and nothing else (SEC-4). A request over a rate limit
+ * is told to wait the binding's whole 60 seconds, since the binding doesn't say when its window ends (SEC-3).
+ */
 function refuse(log: LogFacts, outcome: keyof typeof codes) {
   log.outcome = outcome
   const code = codes[outcome]
-  return Response.json({ error: code }, { status: statuses[code] })
+  const headers = outcome === 'limited' ? { 'Retry-After': '60' } : undefined
+  return Response.json({ error: code }, { status: statuses[code], headers })
 }
 
 /** The hex SHA-256 of the salt and the user's ID, which can't be traced back to the ID without the salt. */
@@ -72,7 +77,7 @@ const termsFor = (env: Env, freeLines: number, { build }: User): Terms => ({
   unlimited: build === 'simulator' && isOn(env.SIMULATOR_UNLIMITED)
 })
 
-/** Checks a line before anything else (SEC-2), then asks the user's object to count it and ask Jev. */
+/** Checks a line before any count or call (SEC-2), then asks the user's object to count it and ask Jev. */
 async function answerLine(request: Request, env: Env, log: LogFacts, user: User, hash: string): Promise<Response> {
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
@@ -100,7 +105,21 @@ async function answerLine(request: Request, env: Env, log: LogFacts, user: User,
   return Response.json(answer)
 }
 
-/** Finds the route, then checks the headers every request carries, before a line's body or the configuration. */
+/**
+ * Whether a request is within its ID's 30 a minute, and then its address's 120, a backstop for IDs minted on one
+ * address (SEC-3). A request its ID's own limit refuses doesn't count against the address, which a mobile network may
+ * share. Cloudflare sets `CF-Connecting-IP` on requests from clients; any request without one shares one count.
+ */
+async function withinLimits(request: Request, env: Env, hash: string) {
+  if (!(await env.USER_LIMITER.limit({ key: hash })).success) return false
+  const address = request.headers.get('CF-Connecting-IP') ?? ''
+  return (await env.ADDRESS_LIMITER.limit({ key: address })).success
+}
+
+/**
+ * Finds the route, then checks the headers every request carries and the rate limits, before a line's body or the
+ * configuration.
+ */
 async function route(request: Request, env: Env, log: LogFacts): Promise<Response> {
   const { pathname } = new URL(request.url)
   const isLine = request.method === 'POST' && pathname === '/v1/lines'
@@ -110,6 +129,7 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   if (!user) return refuse(log, 'invalid')
   const hash = await hashUser(env.ID_SALT, user.id)
   log.user = hash.slice(0, 8)
+  if (!(await withinLimits(request, env, hash))) return refuse(log, 'limited')
   if (isLine) return answerLine(request, env, log, user, hash)
   const { freeLines, ...config } = readConfig(env)
   const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, freeLines, user))

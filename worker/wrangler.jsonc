@@ -8,6 +8,11 @@
   // One object per app user, reached by the salted hash of their ID, which calls Jev for their lines.
   "durable_objects": { "bindings": [{ "name": "DEVICE", "class_name": "Device" }] },
   "exports": { "Device": { "type": "durable-object", "storage": "sqlite" } },
+  // 30 requests a minute from each ID's hash, then 120 from each address, a backstop for IDs minted on one (SEC-3).
+  "ratelimits": [
+    { "name": "USER_LIMITER", "namespace_id": "1001", "simple": { "limit": 30, "period": 60 } },
+    { "name": "ADDRESS_LIMITER", "namespace_id": "1002", "simple": { "limit": 120, "period": 60 } }
+  ],
   // Only the relay's own log line: invocation logs hold each request's details, and traces the IDs in URLs.
   "observability": { "enabled": true, "logs": { "invocation_logs": false }, "traces": { "enabled": false } },
   // A deploy fails while any of these is unset (SEC-1).
