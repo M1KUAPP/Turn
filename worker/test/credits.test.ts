@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { alertWindow, assess, formatAlert } from '../scripts/alert'
+import { alertWindow, assess, fires, formatAlert } from '../scripts/alert'
 import { summarize, type LogLine } from '../scripts/summary'
 
 /** An answered line that used this many of Jev's input tokens. */
@@ -15,22 +15,25 @@ describe('the credit alert (AVAIL-2)', () => {
       inputTokens: 1_000_500,
       spent: 42_021_000,
       level: 1_000_000_000,
-      fires: false
+      ranOut: false,
+      overLevel: false
     })
   })
 
   test('fires once the spend passes the level, and not at it', () => {
-    expect(assess(summarize([answered(1_000_000)]), 0.042).fires).toBe(false)
-    expect(assess(summarize([answered(1_000_000), answered(1)]), 0.042).fires).toBe(true)
+    expect(fires(assess(summarize([answered(1_000_000)]), 0.042))).toBe(false)
+    expect(fires(assess(summarize([answered(1_000_000), answered(1)]), 0.042))).toBe(true)
   })
 
   test('fires on any line out of credits, whatever the level', () => {
-    expect(assess(summarize([outOfCredits]), 100)).toMatchObject({ outOfCredits: 1, fires: true })
+    const finding = assess(summarize([outOfCredits]), 100)
+    expect(finding).toMatchObject({ outOfCredits: 1, ranOut: true, overLevel: false })
+    expect(fires(finding)).toBe(true)
   })
 
   test('fires at level 0 on any spend, and stays quiet with none', () => {
-    expect(assess(summarize([answered(1)]), 0).fires).toBe(true)
-    expect(assess(summarize([{ outcome: 'config', ms: { total: 3 } }]), 0).fires).toBe(false)
+    expect(fires(assess(summarize([answered(1)]), 0))).toBe(true)
+    expect(fires(assess(summarize([{ outcome: 'config', ms: { total: 3 } }]), 0))).toBe(false)
   })
 })
 
@@ -68,7 +71,8 @@ describe("the alert's issue", () => {
         "- 25000000 input tokens, about $1.05 at jev-1.13.0's $0.042 a million, past the level of $0.50.",
         '',
         "TypeSafe has no balance check to read, so look at the balance in TypeSafe's console and add credits if " +
-          'needed. Close this issue once that is done: the alert then counts only lines after the close.'
+          "needed. Without a balance, the alert can't see a slow drain until a line runs out. Close this issue once " +
+          'that is done: the alert then counts only lines after the close.'
       ].join('\n')
     )
   })
