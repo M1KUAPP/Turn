@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 157 files · ~574,303 words
+- 157 files · ~574,371 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 6, .jsonl 2, .lock 1)
 
 ## Summary
 
-- 2951 nodes · 2867 edges · 214 communities (204 shown, 4 thin omitted)
+- 2949 nodes · 2869 edges · 217 communities (207 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.82)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `60849baa`
+- Built from commit: `1f3fceda`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -223,11 +223,14 @@
 - shared/tsconfig.json
 - Tasks
 - Turn's starter content research notes
-- shortlist.test.ts
+- data.ts
 - Tasks
 - Tasks
 - Turn's shortlist and row research notes
 - Turn's reply-labeling research notes
+- shortlist.test.ts
+- shortlist.ts
+- row.ts
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -257,7 +260,7 @@
 
 - None detected.
 
-## Communities (214 total, 4 thin omitted)
+## Communities (217 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1254,10 +1257,10 @@ Nodes (21): Appendix: the bank's briefs, Appendix: the line writers' brief, Deci
 Cohesion: 0.22
 Nodes (8): Consent and refusal for people who can't speak, Default content in text AAC apps, Gaps, How validated pain tools ask about pain, Plain-language rules for short phrases, See also, Turn's starter content research notes, What published patient boards hold
 
-### Community 209 - "shortlist.test.ts"
+### Community 209 - "data.ts"
 
-Cohesion: 0.05
-Nodes (52): bank, Category, Labels, Line, lines, Phrase, read(), readRows() (+44 more)
+Cohesion: 0.12
+Nodes (18): bank, Category, Labels, Line, lines, Phrase, phrases, read() (+10 more)
 
 ### Community 210 - "Tasks"
 
@@ -1279,10 +1282,25 @@ Nodes (9): Common-word lists, Curly apostrophes, Gaps, Hands-on check, MiniSearc
 Cohesion: 0.22
 Nodes (8): Agreement on set-valued labels, Gaps, Guidelines and independent labeling, Language models as labelers, Replies that fit almost any line, See also, Turn's reply-labeling research notes, Which candidates count as acceptable
 
+### Community 214 - "shortlist.test.ts"
+
+Cohesion: 0.22
+Nodes (12): sharesAWord(), isYesNo(), PhraseIndex, pickShortlist(), rankable(), rankOnPhone(), ids(), phrase() (+4 more)
+
+### Community 215 - "shortlist.ts"
+
+Cohesion: 0.19
+Nodes (10): commonWords, Ranking, Context, Phrase, yesNoOpeners, bank, lines, taps (+2 more)
+
+### Community 216 - "row.ts"
+
+Cohesion: 0.24
+Nodes (11): Answer, applyAnswer(), clearRow(), emptyRow, mostLikely(), phrasesInRow(), Policy, Row (+3 more)
+
 ## Knowledge Gaps
 
-- **2292 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2287 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2434 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2289 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2284 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2430 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -1291,10 +1309,8 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `iOS design research notes` connect `iOS design research notes` to `Typography`, `Motion and haptics`, `Color`, `Liquid Glass`, `App icon and launch screen`, `SF Symbols`, `Store and pitch assets`, `RevenueCat Paywalls styling`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Turn technical requirements` connect `Turn technical requirements` to `Decision pipeline`, `The iPhone app`, `Evaluation`, `Listening and speaking on the phone`, `Security and privacy`, `Data model`, `Reliability and observability`, `Purchases and entitlements`, `Stack and repository`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2292 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2289 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
@@ -1303,3 +1319,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
 - **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
   _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
+- **Should `Shipaton 2025 recordings` be split into smaller, more focused modules?**
+  _Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected._
