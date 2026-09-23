@@ -2,6 +2,7 @@ import { buildJevRequest, readJevAnswer, type JevLine } from '@turn/shared/jev'
 import type { LineAnswer, LineRequest } from '@turn/shared/relay'
 import { APIError, TypeSafeClient } from '@typesafe-ai/sdk'
 import { DurableObject } from 'cloudflare:workers'
+import { checkEntitlement, type Entitlement } from './entitlement'
 
 /** How a call to Jev ended: its answer, with the model and tokens it reports, or how it failed, with its status. */
 type JevReply =
@@ -20,10 +21,16 @@ type JevReply =
 export type LineReply =
   | (Extract<JevReply, { outcome: 'answered' }> & Pick<LineAnswer, 'freeLinesLeft'>)
   | Exclude<JevReply, { outcome: 'answered' }>
-  | { outcome: 'duplicate' | 'paywall' }
+  | { outcome: 'duplicate' | 'paywall' | 'unverified' }
 
 /** What the Worker tells the object from its vars: how many free lines each user gets. */
 export type Terms = { freeLines: number }
+
+/** RevenueCat's last answer about `listen`, which the object keeps a day if yes and a minute if no (PAY-7). */
+type Cached = { active: number; checked_at: number; refreshed_at: number | null }
+
+const minute = 60_000
+const day = 24 * 60 * minute
 
 /** One app user's object, which counts their free lines and calls Jev for their lines. */
 export class Device extends DurableObject<Env> {
@@ -45,6 +52,11 @@ export class Device extends DurableObject<Env> {
     super(ctx, env)
     // The ID of each free line claimed, which is deleted if Jev fails, so only answered lines count (PAY-1).
     ctx.storage.sql.exec('CREATE TABLE IF NOT EXISTS free_lines (line_id TEXT PRIMARY KEY, at INTEGER NOT NULL)')
+    // RevenueCat's last answer, and when a line with `refresh` last skipped a cached no (PAY-4, PAY-7).
+    ctx.storage.sql.exec(
+      'CREATE TABLE IF NOT EXISTS entitlement (id INTEGER PRIMARY KEY CHECK (id = 1), active INTEGER NOT NULL, ' +
+        'checked_at INTEGER NOT NULL, refreshed_at INTEGER)'
+    )
   }
 
   /** How many free lines are claimed, counting any whose call to Jev is still under way. */
@@ -66,16 +78,54 @@ export class Device extends DurableObject<Env> {
     })
   }
 
-  /** The free lines this user has left, which the configuration and each answer carry (PAY-1). */
-  freeLinesLeft({ freeLines }: Terms): number {
+  /** RevenueCat's last answer, if the object has asked. */
+  private cached(): Cached | undefined {
+    return this.ctx.storage.sql.exec<Cached>('SELECT active, checked_at, refreshed_at FROM entitlement').toArray()[0]
+  }
+
+  /**
+   * Whether the user may have lines past the free ones (PAY-7). A cached yes under a day old answers at once, and so
+   * does a cached no under a minute old, unless the line carries `refresh` and no refresh skipped one in the last
+   * minute (PAY-4). Otherwise the object asks RevenueCat and caches its answer, recording a refresh only once its check
+   * answered. If RevenueCat can't answer, a cached yes of any age still counts, and nothing else is a no.
+   */
+  private async entitled(user: string, refresh: boolean): Promise<Entitlement> {
+    const now = Date.now()
+    const cached = this.cached()
+    if (cached?.active && now - cached.checked_at < day) return 'yes'
+    const freshNo = cached?.active === 0 && now - cached.checked_at < minute
+    const refreshing = freshNo && refresh && (cached.refreshed_at === null || now - cached.refreshed_at >= minute)
+    if (freshNo && !refreshing) return 'no'
+    const answer = await checkEntitlement(this.env, user)
+    if (answer === 'unknown') return cached?.active ? 'yes' : 'unknown'
+    this.ctx.storage.sql.exec(
+      'INSERT OR REPLACE INTO entitlement (id, active, checked_at, refreshed_at) VALUES (1, ?, ?, ?)',
+      answer === 'yes' ? 1 : 0,
+      now,
+      refreshing ? now : (cached?.refreshed_at ?? null)
+    )
+    return answer
+  }
+
+  /** The free lines this user has left, which the configuration and each answer carry, or null once they're entitled. */
+  freeLinesLeft({ freeLines }: Terms): number | null {
+    if (this.cached()?.active) return null
     return Math.max(0, freeLines - this.claimed())
   }
 
-  /** Answers a line on a free line, releasing the claim if Jev doesn't answer, so only answered lines count (PAY-1). */
-  async answer(line: LineRequest, terms: Terms): Promise<LineReply> {
+  /**
+   * Answers a line on a free line, releasing the claim if Jev doesn't answer, so only answered lines count (PAY-1), or
+   * past the free lines only for a user RevenueCat says has `listen` (PAY-7). The app user ID is used only to ask
+   * RevenueCat, and never stored.
+   */
+  async answer(line: LineRequest, user: string, terms: Terms): Promise<LineReply> {
     const claim = this.claim(line.lineId, terms)
     if (claim === 'duplicate') return { outcome: 'duplicate' }
-    if (claim === 'paid') return { outcome: 'paywall' }
+    if (claim === 'paid') {
+      const entitled = await this.entitled(user, line.refresh === true)
+      if (entitled === 'no') return { outcome: 'paywall' }
+      if (entitled === 'unknown') return { outcome: 'unverified' }
+    }
     const reply = await this.ask(line)
     if (reply.outcome !== 'answered') {
       this.ctx.storage.sql.exec('DELETE FROM free_lines WHERE line_id = ?', line.lineId)
