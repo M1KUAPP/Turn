@@ -2,7 +2,7 @@ import { startingPolicy } from '@turn/shared/row'
 import { capital } from './prose'
 import type { LineScore, ScoredLine } from './score'
 import { below, bootstrapMean, mean, percentile, resamples, seeded } from './stats'
-import { svg, tag } from './svg'
+import { grid, svg, tag } from './svg'
 
 /** One line's forecast: its top phrase's score, and whether that phrase is acceptable. */
 export type Forecast = { score: number; right: boolean }
@@ -28,6 +28,10 @@ export function topPhrase<Line extends ScoredLine>(scores: readonly LineScore<Li
 export const beyondReach = <Line extends ScoredLine>(scores: readonly LineScore<Line>[]): number =>
   scores.filter(({ line, shortlist }) => !shortlist.some((id) => line.acceptable.includes(id))).length
 
+/** The forecasts grouped by their score, the lowest first. */
+const byScore = (forecasts: readonly Forecast[]) =>
+  [...Map.groupBy(forecasts, ({ score }) => score)].toSorted(([a], [b]) => a - b)
+
 /** Distinct scores from `low` to `high` that the fit gives one value, with their lines, right lines, and share. */
 export type Block = { low: number; high: number; lines: number; right: number; value: number }
 
@@ -38,9 +42,8 @@ export type Block = { low: number; high: number; lines: number; right: number; v
  * of one value pool too, as its runs of one value do.
  */
 export function pav(forecasts: readonly Forecast[]): Block[] {
-  const groups = [...Map.groupBy(forecasts, ({ score }) => score)].toSorted(([a], [b]) => a - b)
   const blocks: Omit<Block, 'value'>[] = []
-  for (const [score, group] of groups) {
+  for (const [score, group] of byScore(forecasts)) {
     let block = { low: score, high: score, lines: group.length, right: group.filter(({ right }) => right).length }
     // Pool with the block below while its share is as high or higher, comparing whole numbers, not shares.
     let last = blocks.at(-1)
@@ -82,7 +85,7 @@ const bandLevel = 0.9
  */
 export function consistencyBand(forecasts: readonly Forecast[]): Bounds[] {
   const n = forecasts.length
-  const scores = [...new Set(forecasts.map(({ score }) => score))].toSorted((a, b) => a - b)
+  const scores = byScore(forecasts).map(([score]) => score)
   const fits = scores.map((): number[] => [])
   const next = seeded()
   for (let r = 0; r < resamples; r++) {
@@ -172,16 +175,13 @@ const up = (share: number) => (frame.top + (1 - share) * frame.side).toFixed(1)
  */
 export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: string): string {
   const ticks = [0, 0.2, 0.4, 0.6, 0.8, 1]
-  const grid = ticks.flatMap((tick) => [
-    tag('line', { x1: across(tick), y1: up(0), x2: across(tick), y2: up(1), stroke: '#e5e7eb' }),
-    tag('line', { x1: across(0), y1: up(tick), x2: across(1), y2: up(tick), stroke: '#e5e7eb' }),
-    tag('text', { x: across(tick), y: stripBottom + 18, 'text-anchor': 'middle' }, tick.toFixed(1)),
-    tag(
-      'text',
-      { x: frame.left - 8, y: up(tick), 'text-anchor': 'end', 'dominant-baseline': 'middle' },
-      tick.toFixed(1)
-    )
-  ])
+  const lines = grid(ticks, {
+    x: across,
+    y: up,
+    bottom: stripBottom + 18,
+    left: frame.left - 8,
+    label: (tick) => tick.toFixed(1)
+  })
   const rules = [
     { at: startingPolicy.floor, label: 'floor' },
     { at: startingPolicy.bigAbove, label: 'big button' }
@@ -208,7 +208,7 @@ export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: 
           points: outline.map(([score, share]) => `${across(score)},${up(share)}`).join(' '),
           fill: '#d1d5db'
         })
-  const groups = [...Map.groupBy(forecasts, ({ score }) => score)].toSorted(([a], [b]) => a - b)
+  const groups = byScore(forecasts)
   const fit = groups.map(([score]) => [score, fitAt(blocks, score)])
   const most = Math.max(...groups.map(([, lines]) => lines.length))
   const legendX = frame.left + frame.side + 24
@@ -237,7 +237,7 @@ export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: 
         "and under it a bar for each score's count of lines."
     },
     [
-      ...grid,
+      ...lines,
       shade,
       tag('line', { x1: across(0), y1: up(0), x2: across(1), y2: up(1), stroke: '#6b7280', 'stroke-dasharray': '6 4' }),
       ...rules,
