@@ -74,14 +74,15 @@ const mostLikely = <K extends string>(odds: Readonly<Record<K, number>>): K | nu
 export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy }: Answer): Row {
   if (seq < row.seq) return row
   const topic = mostLikely(topics)
+  const tab = topic !== null && topics[topic] >= policy.floor ? topic : null
   const fixedTopic = topic !== null && policy.fixedOnlyTopics.includes(topic)
   const showFixed = kind.yes_no >= policy.floor || fixedTopic
   // A stable sort, so the shortlist's order breaks ties.
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
-  if (!showFixed && !top) return { ...row, seq }
+  if (!showFixed && !top) return { ...row, seq, tab }
   if (!showFixed && top && top[1] > policy.bigAbove && !(topic !== null && policy.noBigTopics.includes(topic))) {
-    return { ...row, seq, big: top[0] }
+    return { ...row, seq, big: top[0], tab }
   }
   const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
@@ -115,5 +116,5 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
     if (low === undefined || score - scoreAt(low) < policy.margin) break
     slots[low] = id
   }
-  return { ...row, seq, big: null, slots }
+  return { ...row, seq, big: null, slots, tab }
 }
