@@ -4,7 +4,6 @@ import { describe, expect, test, vi } from 'vitest'
 import {
   expectError,
   expectRefused,
-  freeLinesLeft,
   headers,
   jevAnswer,
   jevError,
@@ -70,9 +69,9 @@ describe('POST /v1/lines', () => {
       env.DEVICE.getByName(name, options)
     )
     await postLine(lineRequest(), { DEVICE: { getByName } })
-    // Once to count the request (SEC-3), then for the line.
-    const reached = [`user-${await userHash()}`, { locationHint: 'wnam' }]
-    expect(getByName.mock.calls).toEqual([reached, reached])
+    expect(getByName).toHaveBeenCalledExactlyOnceWith(`user-${await userHash()}`, {
+      locationHint: 'wnam'
+    })
   })
 
   test('follows a changed policy in the next answer, with no app build (ROW-8)', async () => {
@@ -83,10 +82,11 @@ describe('POST /v1/lines', () => {
     })
   })
 
-  test('answers 503 jev_off, with no line counted and no call to Jev, while the switch is off (STATE-3)', async () => {
-    await expectError(await postLine(lineRequest(), { JEV_ON: 'false' }), 503, 'jev_off')
+  test('answers 503 jev_off, reaching neither the object nor Jev, while the switch is off (STATE-3)', async () => {
+    const getByName = vi.fn()
+    await expectError(await postLine(lineRequest(), { JEV_ON: 'false', DEVICE: { getByName } }), 503, 'jev_off')
+    expect(getByName).not.toHaveBeenCalled()
     expect(vi.mocked(globalThis.fetch)).not.toHaveBeenCalled()
-    expect(await freeLinesLeft()).toBe(20)
   })
 
   test.each(['', undefined])('answers 500 internal with no call to Jev when JEV_MODEL is %j (SEC-2)', async (model) => {
