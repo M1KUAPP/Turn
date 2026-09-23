@@ -526,8 +526,9 @@ report on #64.
 
 ### The live check on the fixture
 
-On September 24, 2026, at `817f443`, `bun run eval` scored the fixture's 8
-lines with the real services and the Swift helper in 1 minute 42 seconds:
+On September 23, 2026 (UTC), at `817f443`, `bun run eval` scored the
+fixture's 8 lines with the real services and the Swift helper, in 1 minute
+and 42 seconds:
 
 - **Models:** all 32 of Jev's calls answered as `jev-1.13.0`, and the
   models line named Workers AI's three, qwen3's instruction, and Apple's
@@ -606,7 +607,7 @@ September 23, 2026. The run followed decision 13:
   changed since this plan was written, in a detached worktree at `1b3ff03`
   from a clean tree. It ran from 18:12:08 to 18:34:16 UTC and exited 0, and
   it wrote its report on the first try. The report gives the Mac's local
-  date, September 24.
+  date, September 24, 2026.
 - **As generated.** The three outputs were committed before anyone read
   them, and each file's SHA-256 sum is the same in the run's worktree, in
   the branch, and in the commit: `results-extras.md` begins `e6a000c0`, the
