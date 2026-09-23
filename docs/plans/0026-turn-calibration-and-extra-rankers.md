@@ -40,6 +40,7 @@ Contents:
 1.  [Tasks](#tasks)
 1.  [What changed while building](#what-changed-while-building)
 1.  [Review, round 1](#review-round-1)
+1.  [The second run](#the-second-run)
 1.  [Appendix: the run's script](#appendix-the-runs-script)
 
 [extras-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/45
@@ -595,6 +596,68 @@ without it.
     end, so an interrupted run leaves nothing half-written.
 
 [review-97]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/97#issuecomment-5799598837
+
+## The second run
+
+The first pull request merged as `1b3ff03` at 18:11:26 UTC on
+September 23, 2026. The run followed decision 12:
+
+- **How it ran.** Once, with the appendix's script, whose text hadn't
+  changed since this plan was written, in a detached worktree at `1b3ff03`
+  from a clean tree. It ran from 18:12:08 to 18:34:16 UTC and exited 0, and
+  it wrote its report on the first try. The report gives the Mac's local
+  date, September 24.
+- **As generated.** The three outputs were committed before anyone read
+  them, and each file's SHA-256 sum is the same in the run's worktree, in
+  the branch, and in the commit: `results-extras.md` begins `e6a000c0`, the
+  risk-coverage plot `14eda5ec`, and the reliability diagram `9332afa4`.
+- **Models.** All 320 of Jev's calls answered as version 1.13.0, and
+  Apple's embedding was revision 1, of 512 numbers, on macOS 27.0 (Build
+  26A428).
+- **The extra rankers,** on the 64 lines with an acceptable phrase besides
+  the fixed buttons: in top 6, qwen3 had 42%, the reranker 34%, and apple
+  23%, against Jev's 75% and embeddings' 45%; in top 1, 19%, 16%, and 4.7%,
+  against Jev's 67%. Of the rows each changed, qwen3's were wrong 61% of the
+  time, the reranker's 67%, and apple's 71%, against Jev's 22%.
+- **The first four rankers** match the first run in every ranking table,
+  the question kind, and each subset. Jev showed a big button on one more
+  line and a row on one fewer, its curve's points shifted, and the latency
+  differs.
+- **EVAL-4, a second look:** Jev minus embeddings in top 6 is +29.7 points,
+  with an interval of 17.2 to 42.2, as in the first run, whose verdict
+  stands: Jev leads.
+- **EVAL-5:** the one big button on a yes-or-no, pain, or consent line is
+  line-05's "Yes, go ahead", right, in 2 of 4 answers against the first
+  run's 1. None is wrong, so the rule asks for nothing.
+- **Calibration:** Jev's top phrase was acceptable on 43 of the 80 lines,
+  and 22 were beyond reach. The fit's blocks:
+  - 0.24 to 0.43: 4 lines, none right.
+  - 0.44 to 0.58: 14 lines, 3 right.
+  - 0.59 to 0.65: 16 lines, 4 right, outside the band at all 6 scores.
+  - 0.66: 2 lines, 1 right.
+  - 0.67 to 0.82: 23 lines, 14 right, outside at 6 of 13 scores.
+  - 0.83 to 0.95: 21 lines, all right.
+
+  The Brier score was 0.211, with an interval of 0.170 to 0.254, against
+  0.249 for always forecasting the share, for a skill of 0.151. The
+  miscalibration was 0.069 and the discrimination 0.107. From 0.83 up,
+  around the big button's bar of 0.85, every top phrase was right. Just
+  above the floor of 0.6, top phrases were right one time in four, well
+  under what their scores say.
+
+- **Cut-offs:** embeddings 0.469 in four folds and 0.502 in one; the
+  reranker 0.0449 in three, 0.0457, and 0.0233; qwen3 0.375 in four and
+  0.410; apple 0.554 in four and 0.563.
+- **Latency** at the median: embeddings 172 ms, Jev 1,123 ms, the reranker
+  414 ms, qwen3 1,278 ms (6,496 ms at the 95th percentile), and apple 6.5 ms
+  on this Mac.
+- **The plot's legend** covers some of seven curves, where it cleared four.
+  The file stays as the run wrote it, and the table under the plot gives
+  the same numbers; the fix goes to a follow-up.
+
+`eval/results.md` stays the first run's, at `8ea25eb`, and is the README's
+table. `eval/results-extras.md` is the second run's, at `1b3ff03`, and every
+number above comes from it.
 
 ## Appendix: the run's script
 
