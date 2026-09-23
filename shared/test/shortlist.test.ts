@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { isYesNo, pickShortlist, PhraseIndex, type Context, type Phrase } from '../src/shortlist'
+import { applyAnswer, emptyRow, startingPolicy, type Row } from '../src/row'
+import { isYesNo, pickShortlist, PhraseIndex, rankOnPhone, type Context, type Phrase } from '../src/shortlist'
 
 const phrase = (id: string, text: string, places: string[] = []): Phrase => ({ id, text, places })
 
@@ -158,4 +159,73 @@ describe('isYesNo', () => {
     'doesn\'t count "%s"',
     (line) => expect(isYesNo(line)).toBe(false)
   )
+})
+
+describe('rankOnPhone', () => {
+  const ranked = (line: string, shortlist: Phrase[], taps: [string, number][] = []) => {
+    const index = new PhraseIndex()
+    index.update(shortlist)
+    return rankOnPhone(line, shortlist, index, { place: 'home', taps: new Map(taps) })
+  }
+
+  test("scores 1 for each phrase that shares a word, the place's first, then by taps, then by keyword rank", () => {
+    const shortlist = [
+      phrase('water', 'Water'),
+      phrase('want-water', 'I want water now'),
+      phrase('please', 'Water, please', ['home']),
+      phrase('cold', 'Cold water'),
+      phrase('hard', 'It was hard', ['home']),
+      phrase('some', 'Some water', ['home'])
+    ]
+    const ranking = ranked('Do you want some water?', shortlist, [
+      ['cold', 5],
+      ['some', 2]
+    ])
+    expect([...ranking.scores]).toEqual([
+      ['some', 1],
+      ['please', 1],
+      ['cold', 1],
+      ['want-water', 1],
+      ['water', 1],
+      ['hard', 0]
+    ])
+    expect(ranking).toMatchObject({ kind: { yes_no: 1 }, topic: {}, onPhone: true })
+  })
+
+  describe("through the row's rules", () => {
+    const apply = (row: Row, seq: number, line: string, shortlist: Phrase[], taps: [string, number][] = []) =>
+      applyAnswer(row, { seq, policy: startingPolicy, ...ranked(line, shortlist, taps) })
+
+    test("fills six slots, the place's phrases first, and never shows a big button (STATE-1)", () => {
+      const home = ['Water, please', 'Hot water', 'Water bottle'].map((text, i) => phrase(`h${i}`, text, ['home']))
+      const others = ['Cold water', 'Water now', 'More water', 'Warm water', 'Iced water'].map((text, i) =>
+        phrase(`o${i}`, text)
+      )
+      const taps: [string, number][] = [
+        ['h0', 3],
+        ['h1', 2],
+        ['h2', 1],
+        ['o0', 9],
+        ['o1', 8],
+        ['o2', 7],
+        ['o3', 6],
+        ['o4', 5]
+      ]
+      const row = apply(emptyRow, 1, 'Water?', [...others, ...home], taps)
+      expect(row).toMatchObject({ big: null, slots: ['h0', 'h1', 'h2', 'o0', 'o1', 'o2'] })
+    })
+
+    test('leaves the row as it was when no phrase shares a word (STATE-1)', () => {
+      const shortlist = [phrase('water', 'Water, please'), phrase('tea', 'Tea, please')]
+      const before = apply(emptyRow, 1, 'Water?', shortlist)
+      expect(before.slots).toEqual(['water', null, null, null, null, null])
+      expect(apply(before, 2, 'How was your weekend?', shortlist).slots).toEqual(before.slots)
+    })
+
+    test('answers a yes-or-no line with the fixed buttons and the phrases that share its words', () => {
+      const shortlist = [phrase('tea', 'Tea, please'), phrase('nurse', 'The new nurse is kind')]
+      const row = apply(emptyRow, 1, 'Is the new nurse here?', shortlist)
+      expect(row.slots).toEqual(['yes', 'no', 'not-sure', 'nurse', null, null])
+    })
+  })
 })
