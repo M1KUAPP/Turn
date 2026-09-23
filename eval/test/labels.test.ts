@@ -1,12 +1,10 @@
 import { fixedButtons } from '@turn/shared/row'
 import { expect, test } from 'vitest'
-import { bank, lines, phrases, phrasesOf, secondLabeling, type Line } from '../src/data'
+import { lines, phrases, secondLabeling, type Line } from '../src/data'
 import { sharesNoWord } from '../src/score'
 
 const phraseIds = phrases.map((phrase) => phrase.id)
-const stripIds = bank.categories
-  .filter(({ id }) => id === 'strip')
-  .flatMap((strip) => strip.phrases.map(({ id }) => id))
+const stripIds = phrases.filter(({ strip }) => strip).map(({ id }) => id)
 
 /**
  * Holds one labeling's replies for a line to the rules: bank ids in the bank's order without repeats, no strip phrase,
@@ -33,7 +31,7 @@ test("lists each line's acceptable replies by bank id, labeled by someone other 
 test.todo('has at least 16 lines with no acceptable reply (EVAL-1)')
 
 test('has at least 10 lines that share no content word with any acceptable reply (EVAL-1)', () => {
-  expect(lines.filter((line) => sharesNoWord(line, phrasesOf(bank))).length).toBeGreaterThanOrEqual(10)
+  expect(lines.filter((line) => sharesNoWord(line, phrases)).length).toBeGreaterThanOrEqual(10)
 })
 
 test('commits a second labeling of every line beside the first, by another labeler', () => {
