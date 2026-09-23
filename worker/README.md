@@ -44,8 +44,8 @@ deploys with. What the counts mean:
   `internal`.
 - **Other outcomes** are the configuration (`config`), lines refused before
   any call (`invalid`, `duplicate`), requests over a rate limit (`limited`),
-  lines while Jev is off (`off`), lines past the day's calls to Jev
-  (`spent`), and anything else the relay logs.
+  lines while Jev is off (`off`), lines the day's budget of calls to Jev
+  stopped before any call (`spent`), and anything else the relay logs.
 - **Latency** is over answered lines only, in all and in Jev, taken by
   nearest rank: the smallest time with at least half, or 95%, of the lines
   at or below it.
