@@ -3,6 +3,7 @@ import { isOn, readConfig } from './config'
 import type { Terms } from './device'
 import { readLine, readUser, type User } from './request'
 
+export { Budget } from './budget'
 export { Device } from './device'
 
 /**
@@ -45,6 +46,7 @@ const codes = {
   off: 'jev_off',
   failed: 'jev_unavailable',
   credits: 'jev_unavailable',
+  spent: 'jev_unavailable',
   internal: 'internal'
 } satisfies Partial<Record<Outcome, ErrorCode>>
 
@@ -69,12 +71,13 @@ async function hashUser(salt: string, userId: string) {
 const deviceFor = (env: Env, hash: string) => env.DEVICE.getByName(`user-${hash}`, { locationHint: 'wnam' })
 
 /**
- * The count's terms: the free lines a new user gets, and whether this request skips the count, as one from the
- * Simulator build does while `SIMULATOR_UNLIMITED` is on (PAY-9).
+ * The count's terms: the free lines a new user gets, whether this request skips the count, as one from the Simulator
+ * build does while `SIMULATOR_UNLIMITED` is on (PAY-9), and the calls to Jev all users share in a UTC day (SEC-5).
  */
-const termsFor = (env: Env, freeLines: number, { build }: User): Terms => ({
+const termsFor = (env: Env, freeLines: number, dailyCalls: number, { build }: User): Terms => ({
   freeLines,
-  unlimited: build === 'simulator' && isOn(env.SIMULATOR_UNLIMITED)
+  unlimited: build === 'simulator' && isOn(env.SIMULATOR_UNLIMITED),
+  dailyCalls
 })
 
 /** Checks a line before any count or call (SEC-2), then asks the user's object to count it and ask Jev. */
@@ -82,9 +85,9 @@ async function answerLine(request: Request, env: Env, log: LogFacts, user: User,
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
-  const { freeLines, ...config } = readConfig(env)
+  const { freeLines, dailyCalls, ...config } = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
-  const reply = await deviceFor(env, hash).answer(line, user.id, termsFor(env, freeLines, user))
+  const reply = await deviceFor(env, hash).answer(line, user.id, termsFor(env, freeLines, dailyCalls, user))
   if ('ms' in reply) log.jevMs = reply.ms
   if (reply.outcome !== 'answered') {
     if ('status' in reply && reply.status) log.jevStatus = reply.status
@@ -131,8 +134,8 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   log.user = hash.slice(0, 8)
   if (!(await withinLimits(request, env, hash))) return refuse(log, 'limited')
   if (isLine) return answerLine(request, env, log, user, hash)
-  const { freeLines, ...config } = readConfig(env)
-  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, freeLines, user))
+  const { freeLines, dailyCalls, ...config } = readConfig(env)
+  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, freeLines, dailyCalls, user))
   log.outcome = 'config'
   return Response.json({ ...config, freeLinesLeft } satisfies Config)
 }

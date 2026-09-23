@@ -76,6 +76,7 @@ export type Outcome =
   | 'off'
   | 'failed'
   | 'credits'
+  | 'spent'
   | 'internal'
 
 /** The code in every error's body, `{ "error": code }`, which carries nothing else (SEC-4). */

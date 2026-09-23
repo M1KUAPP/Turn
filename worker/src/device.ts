@@ -1,6 +1,6 @@
 import { buildJevRequest, readJevAnswer, type JevLine } from '@turn/shared/jev'
 import type { LineAnswer, LineRequest } from '@turn/shared/relay'
-import { APIError, TypeSafeClient } from '@typesafe-ai/sdk'
+import { APIError, TypeSafeClient, type Fetch } from '@typesafe-ai/sdk'
 import { DurableObject } from 'cloudflare:workers'
 import { checkEntitlement, type Entitlement } from './entitlement'
 
@@ -12,7 +12,7 @@ type JevReply =
       inputTokens: number
       ms: number
     })
-  | { outcome: 'failed' | 'credits'; status?: number; ms: number }
+  | { outcome: 'failed' | 'credits' | 'spent'; status?: number; ms: number }
 
 /**
  * How the user's object ended a line: Jev's reply, with the free lines left once it answered, or why the line got no
@@ -23,8 +23,11 @@ export type LineReply =
   | Exclude<JevReply, { outcome: 'answered' }>
   | { outcome: 'duplicate' | 'paywall' | 'unverified' }
 
-/** From the Worker's vars: the free lines each user gets, and whether this request skips the count (PAY-1, PAY-9). */
-export type Terms = { freeLines: number; unlimited: boolean }
+/**
+ * From the Worker's vars: the free lines each user gets, whether this request skips the count, and the calls to Jev all
+ * users share in a UTC day (PAY-1, PAY-9, SEC-5).
+ */
+export type Terms = { freeLines: number; unlimited: boolean; dailyCalls: number }
 
 /** RevenueCat's last answer about `listen`, which the object keeps a day if yes and a minute if no (PAY-7). */
 type Cached = { active: number; checked_at: number; refreshed_at: number | null }
@@ -38,18 +41,21 @@ const day = 24 * 60 * minute
 /** One app user's object, which counts their free lines and calls Jev for their lines. */
 export class Device extends DurableObject<Env> {
   /**
-   * Two attempts of at most 1.5 seconds each, with no wait for a server's `Retry-After`, and no logs. The key, the
-   * address, the model, and the log level are all set here, since the SDK reads any of them the code leaves out from
-   * `process.env`, which holds the Worker's vars and secrets.
+   * A client for one line: two attempts of at most 1.5 seconds each, each made through `fetch`, with no wait for a
+   * server's `Retry-After`, and no logs. The key, the address, the model, and the log level are all set here, since the
+   * SDK reads any of them the code leaves out from `process.env`, which holds the Worker's vars and secrets.
    */
-  private readonly jev = new TypeSafeClient({
-    apiKey: this.env.TYPESAFE_API_KEY,
-    baseURL: 'https://api.typesafe.ai',
-    defaultModel: this.env.JEV_MODEL,
-    logLevel: 'off',
-    timeout: 1500,
-    retry: { maxRetries: 1, respectRetryAfter: false }
-  })
+  private jev(fetch: Fetch) {
+    return new TypeSafeClient({
+      apiKey: this.env.TYPESAFE_API_KEY,
+      baseURL: 'https://api.typesafe.ai',
+      defaultModel: this.env.JEV_MODEL,
+      logLevel: 'off',
+      timeout: 1500,
+      retry: { maxRetries: 1, respectRetryAfter: false },
+      fetch
+    })
+  }
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env)
@@ -136,7 +142,7 @@ export class Device extends DurableObject<Env> {
   async answer(line: LineRequest, userId: string, terms: Terms): Promise<LineReply> {
     const started = Date.now()
     if (terms.unlimited) {
-      const reply = await this.ask(line, budgetMs)
+      const reply = await this.ask(line, budgetMs, terms.dailyCalls)
       return reply.outcome === 'answered' ? { ...reply, freeLinesLeft: null } : reply
     }
     const claim = this.claim(line.lineId, terms)
@@ -147,7 +153,7 @@ export class Device extends DurableObject<Env> {
       if (entitled === 'unknown') return { outcome: 'unverified' }
     }
     const [reply] = await Promise.all([
-      this.ask(line, budgetMs - (Date.now() - started)),
+      this.ask(line, budgetMs - (Date.now() - started), terms.dailyCalls),
       // A purchase made before the free lines ran out shows once a line with `refresh` asks RevenueCat (PAY-4).
       claim === 'free' && line.refresh === true ? this.entitled(userId, true) : undefined
     ])
@@ -160,15 +166,23 @@ export class Device extends DurableObject<Env> {
   }
 
   /**
-   * Asks Jev about one line within the budget, the milliseconds left of the line's 2.5 seconds (STATE-2). Any failure,
-   * an answer out of shape included, is `failed`, except a 402, which is how running out of credits most likely shows
-   * (AVAIL-2).
+   * Asks Jev about one line within the budget, the milliseconds left of the line's 2.5 seconds (STATE-2). Each attempt,
+   * the SDK's retry included, first takes one of the day's calls (SEC-5); once none is left, the line is `spent`, and
+   * aborting the call stops the SDK from retrying. Any other failure, an answer out of shape included, is `failed`,
+   * except a 402, which is how running out of credits most likely shows (AVAIL-2).
    */
-  private async ask(line: JevLine, budget: number): Promise<JevReply> {
+  private async ask(line: JevLine, budget: number, dailyCalls: number): Promise<JevReply> {
     const started = Date.now()
+    const calls = this.env.BUDGET.getByName('jev-calls', { locationHint: 'wnam' })
+    const spent = new AbortController()
+    const jev = this.jev(async (input, init) => {
+      if (await calls.take(dailyCalls)) return fetch(input, init)
+      spent.abort()
+      throw new Error("The day's calls to Jev are spent")
+    })
     try {
-      const result = await this.jev.systemOne(buildJevRequest(line, this.env.JEV_MODEL), {
-        signal: AbortSignal.timeout(budget)
+      const result = await jev.systemOne(buildJevRequest(line, this.env.JEV_MODEL), {
+        signal: AbortSignal.any([AbortSignal.timeout(budget), spent.signal])
       })
       const { kind, topic, scores } = readJevAnswer(result.answers, line)
       return {
@@ -182,6 +196,7 @@ export class Device extends DurableObject<Env> {
       }
     } catch (error) {
       const ms = Date.now() - started
+      if (spent.signal.aborted) return { outcome: 'spent', ms }
       if (!(error instanceof APIError)) return { outcome: 'failed', ms }
       return { outcome: error.status === 402 ? 'credits' : 'failed', status: error.status, ms }
     }

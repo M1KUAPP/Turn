@@ -5,9 +5,18 @@
   "compatibility_date": "2026-09-22",
   // Next to Jev, which answers from us-west-2.
   "placement": { "region": "aws:us-west-2" },
-  // One object per app user, reached by the salted hash of their ID, which calls Jev for their lines.
-  "durable_objects": { "bindings": [{ "name": "DEVICE", "class_name": "Device" }] },
-  "exports": { "Device": { "type": "durable-object", "storage": "sqlite" } },
+  // One object per app user, reached by the salted hash of their ID, which calls Jev for their lines, and one for the
+  // relay, which counts the day's calls to Jev (SEC-5).
+  "durable_objects": {
+    "bindings": [
+      { "name": "DEVICE", "class_name": "Device" },
+      { "name": "BUDGET", "class_name": "Budget" }
+    ]
+  },
+  "exports": {
+    "Device": { "type": "durable-object", "storage": "sqlite" },
+    "Budget": { "type": "durable-object", "storage": "sqlite" }
+  },
   // 30 requests a minute from each ID's hash, then 120 from each address, a backstop for IDs minted on one (SEC-3).
   "ratelimits": [
     { "name": "USER_LIMITER", "namespace_id": "1001", "simple": { "limit": 30, "period": 60 } },
@@ -25,6 +34,8 @@
     "TYPESAFE_NAMED": "false",
     "SIMULATOR_UNLIMITED": "false",
     "FREE_LINES": "20",
+    // The calls to Jev all users share in a UTC day, retries included, past which lines get `jev_unavailable` (SEC-5).
+    "JEV_DAILY_CALLS": "10000",
     // RevenueCat's project and the object ID of its `listen` entitlement, for the check past the free lines (PAY-7).
     "RC_PROJECT_ID": "proj9f033172",
     "RC_ENTITLEMENT_ID": "entl6b65cc982a",
