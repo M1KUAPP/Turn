@@ -420,8 +420,11 @@ category names, and the place's name together (LISTEN-5):
 - **Tag, then cut.** A tag can make text longer, so the app tags first, then
   keeps the line's last 300 characters, cuts the place's and the categories'
   names to 40, and swaps any candidate over 200 characters for the next
-  phrase in the shortlist, so a request never breaks the relay's limits
-  (LISTEN-6, SEC-2).
+  phrase in the shortlist. Fields within those limits can still pass the
+  body's 16 KB when their scripts take two or more bytes a character, such
+  as 40 candidates of 200 Chinese characters, so the app then drops
+  candidates from the end of the shortlist until the request fits, and a
+  request never breaks the relay's limits (LISTEN-6, SEC-2).
 - The candidates' ids don't change, so Jev's answers map back to the user's
   own text, and the tag map stays on the phone.
 - The place's name is tagged like the rest, so no name the tagger finds
@@ -1178,11 +1181,12 @@ ran under Wrangler 4.136.2:
   with or without parameters such as the charset; anything else gets
   `400`.
 - **Lengths:** as in [Relay API](#relay-api), checked before any count or
-  call (SEC-2). The relay reads no more than 16 KB of a body, whatever its
-  `Content-Length` says. A line and each name and text need at least one
-  character, and a place may be empty. Characters are Unicode code points,
-  as SQLite's `length()` counts them in the phone's checks, so the relay
-  never refuses a text the phone stored.
+  call (SEC-2). The relay stops reading a body once it passes 16 KB,
+  whatever its `Content-Length` says. A line and each name and text need at
+  least one character, and a place may be empty. Characters are Unicode
+  code points, as SQLite's `length()` counts them in the phone's checks, so
+  a text within the phone's limits is within the relay's; the 16 KB in all
+  is the app's to keep, as [tag, then cut](#names-as-tags) says.
 - **Fields:** `lineId` is a lowercase version 4 UUID and `seq` a whole
   number from 0; category and candidate ids hold 1 to 64 characters and
   are unique in their list; and no category is `consent`, the topic option
