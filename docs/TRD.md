@@ -328,9 +328,11 @@ CREATE TABLE requests (
   refuses the attempt and writes nothing. A new day starts again from 0,
   so the budget comes back at midnight UTC (SEC-5).
 
-- **The Free plan's budget.** Each new free line writes 2 rows in the
-  device's object and 1 in the daily budget's, so the Free plan's 100,000
-  rows a day cover about 1,600 devices spending all 20 lines in one day.
+- **The Free plan's budget.** Each request writes 1 row in the user's
+  object for its count, and each new free line 2 more there and 1 in the
+  daily budget's, so the Free plan's 100,000 rows a day cover about 1,200
+  devices spending all 20 lines in one day, with a configuration request or
+  two each.
 
 [svc-count]: /docs/research/0024-turn-services.md#counting-free-partner-lines-per-device
 
