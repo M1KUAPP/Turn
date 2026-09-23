@@ -4,7 +4,8 @@ import { compareLabelings } from './agreement'
 import { bank, checkLabels, linesFrom, phrasesOf, readRows, secondLabeling, type Labels, type Line } from './data'
 import { sharesNoWord } from './score'
 
-const two = (value: number) => value.toFixed(2)
+/** Three decimals, so a negative agreement of 0.996 doesn't print as a perfect 1.00. */
+const three = (value: number) => value.toFixed(3)
 const names = (labelers: readonly string[]) => [...new Set(labelers)].join(' and ')
 
 /**
@@ -51,13 +52,13 @@ export function main(args: readonly string[]): number {
         `${names(second.map(({ labeler }) => labeler))}'s:`,
       `- Some replies or none, on ${lines.length} lines: both some on ${noneOrSome.a}, only the first on ` +
         `${noneOrSome.b}, only the second on ${noneOrSome.c}, and both none on ${noneOrSome.d}; agreement ` +
-        `${two(noneOrSome.percent)}, Cohen's kappa ${two(noneOrSome.kappa)}, positive agreement ` +
-        `${two(noneOrSome.positive)}, and negative agreement ${two(noneOrSome.negative)}.`,
+        `${three(noneOrSome.percent)}, Cohen's kappa ${three(noneOrSome.kappa)}, positive agreement ` +
+        `${three(noneOrSome.positive)}, and negative agreement ${three(noneOrSome.negative)}.`,
       `- Each line and candidate phrase, on ${pairs.a + pairs.b + pairs.c + pairs.d} pairs: both on ${pairs.a}, ` +
         `only the first on ${pairs.b}, only the second on ${pairs.c}, and neither on ${pairs.d}; positive agreement ` +
-        `${two(pairs.positive)}, and negative agreement ${two(pairs.negative)} and Cohen's kappa ${two(pairs.kappa)}, ` +
+        `${three(pairs.positive)}, and negative agreement ${three(pairs.negative)} and Cohen's kappa ${three(pairs.kappa)}, ` +
         "which move with the pairs' count.",
-      `- Krippendorff's alpha with the MASI distance over each line's replies: ${two(alpha)}.`
+      `- Krippendorff's alpha with the MASI distance over each line's replies: ${three(alpha)}.`
     ].join('\n')
   )
   return quotas.every(({ met }) => met) ? 0 : 1

@@ -45,15 +45,15 @@ test("prints the labelers' agreement on each line's call, on each line and phras
   expect(printed).toContain("The labelers' agreement, test-labeler-1's labels against test-labeler-2's:")
   expect(printed).toContain(
     '- Some replies or none, on 8 lines: both some on 6, only the first on 0, only the second on 1, and both none ' +
-      "on 1; agreement 0.88, Cohen's kappa 0.60, positive agreement 0.92, and negative agreement 0.67."
+      "on 1; agreement 0.875, Cohen's kappa 0.600, positive agreement 0.923, and negative agreement 0.667."
   )
   // 151 phrases the row can rank on each of the 8 lines, and Yes, No, and Not sure on the 3 yes-or-no lines.
   expect(printed).toContain(
     '- Each line and candidate phrase, on 1217 pairs: both on 13, only the first on 6, only the second on 2, and ' +
-      "neither on 1196; positive agreement 0.76, and negative agreement 1.00 and Cohen's kappa 0.76, which move " +
+      "neither on 1196; positive agreement 0.765, and negative agreement 0.997 and Cohen's kappa 0.761, which move " +
       "with the pairs' count."
   )
-  expect(printed).toContain("- Krippendorff's alpha with the MASI distance over each line's replies: 0.51.")
+  expect(printed).toContain("- Krippendorff's alpha with the MASI distance over each line's replies: 0.505.")
 })
 
 /** n lines that meet every other quota: 16 with no reply, and the rest answered by a phrase they share no word with. */
