@@ -140,7 +140,7 @@ export const unknownCustomer = () =>
 /** Jev's answer, for each of `count` calls. */
 export const jevAnswers = (count: number) => Array.from({ length: count }, () => () => Response.json(jevAnswer()))
 
-/** Asks for the configuration as the app does, with some vars changed, from the test's user or the one the headers name. */
+/** Asks for the configuration as the app does, with some vars changed, for the test's user or the headers' user. */
 export const getConfig = (changes: Parameters<typeof send>[1] = {}, sent: Record<string, string> = headers) =>
   send(new Request('https://relay.test/v1/config', { headers: sent }), changes)
 

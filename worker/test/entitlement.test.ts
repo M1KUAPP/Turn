@@ -238,7 +238,7 @@ describe('lines past the free lines (PAY-7)', () => {
     expect(callsTo('api.revenuecat.com')).toHaveLength(2)
   })
 
-  test('ask RevenueCat about a free line only when it carries refresh, and show null once it says yes (PAY-4)', async () => {
+  test('ask RevenueCat about a free line only with refresh, and show null once it says yes (PAY-4)', async () => {
     mockRevenueCat(activeEntitlements(listen))
     mockJev(...jevAnswers(2))
     expect(await (await postLine(lineRequest())).json()).toMatchObject({ freeLinesLeft: 19 })
