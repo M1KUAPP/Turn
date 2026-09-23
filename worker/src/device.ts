@@ -25,7 +25,7 @@ type JevReply =
 export type LineReply =
   | (Extract<JevReply, { outcome: 'answered' }> & Pick<LineAnswer, 'freeLinesLeft'>)
   | Exclude<JevReply, { outcome: 'answered' }>
-  | { outcome: 'duplicate' | 'paywall' | 'unverified' }
+  | { outcome: 'limited' | 'duplicate' | 'paywall' | 'unverified' }
 
 /**
  * From the Worker's vars: the free lines each user gets, whether this request skips the count, and the calls to Jev all
@@ -55,7 +55,7 @@ function unlessAborted<T>(promise: Promise<T>, signal: AbortSignal | null | unde
   return Promise.race([promise, aborted])
 }
 
-/** One app user's object, which counts their free lines and calls Jev for their lines. */
+/** One app user's object, which counts their requests and free lines and calls Jev for their lines. */
 export class Device extends DurableObject<Env> {
   /**
    * A client for one line: two attempts of at most 1.5 seconds each, each made through `fetch`, with no wait for a
@@ -94,17 +94,17 @@ export class Device extends DurableObject<Env> {
    * Counts one more of the user's requests in the current clock minute, or none once 30 are counted there: whether this
    * one may go on (SEC-3). It runs in one transaction, with no `await`, so simultaneous requests can't share the last.
    */
-  admit(): boolean {
+  private admit(): boolean {
     return this.ctx.storage.transactionSync(() => {
       const { sql } = this.ctx.storage
-      const now = Math.floor(Date.now() / minute)
+      const thisMinute = Math.floor(Date.now() / minute)
       const row = sql.exec<{ minute: number; count: number }>('SELECT minute, count FROM requests').toArray()[0]
-      const count = row?.minute === now ? row.count : 0
+      const count = row?.minute === thisMinute ? row.count : 0
       if (count >= requestsPerMinute) return false
       sql.exec(
         'INSERT INTO requests (id, minute, count) VALUES (1, ?, ?) ' +
           'ON CONFLICT (id) DO UPDATE SET minute = excluded.minute, count = excluded.count',
-        now,
+        thisMinute,
         count + 1
       )
       return true
@@ -172,18 +172,25 @@ export class Device extends DurableObject<Env> {
    * The free lines this user has left, which the configuration and each answer carry, or null once they're entitled or
    * while their requests skip the count.
    */
-  freeLinesLeft({ freeLines, unlimited }: Terms): number | null {
+  private freeLinesLeft({ freeLines, unlimited }: Terms): number | null {
     if (unlimited || this.cached()?.active) return null
     return Math.max(0, freeLines - this.claimed())
   }
 
+  /** The free lines left, for the configuration, once the request is within the user's 30 a minute (SEC-3). */
+  config(terms: Terms): { freeLinesLeft: number | null } | { outcome: 'limited' } {
+    return this.admit() ? { freeLinesLeft: this.freeLinesLeft(terms) } : { outcome: 'limited' }
+  }
+
   /**
-   * Answers a line on a free line, releasing the claim if Jev doesn't answer, so only answered lines count (PAY-1), or
-   * past the free lines only for a user RevenueCat says has `listen` (PAY-7). A line that skips the count goes straight
-   * to Jev (PAY-9). The app user ID is used only to ask RevenueCat, and never stored.
+   * Counts the line against the user's 30 a minute first (SEC-3), then answers it on a free line, releasing the claim
+   * if Jev doesn't answer, so only answered lines count (PAY-1), or past the free lines only for a user RevenueCat
+   * says has `listen` (PAY-7). A line that skips the free lines goes straight to Jev (PAY-9). The app user ID is used
+   * only to ask RevenueCat, and never stored.
    */
   async answer(line: LineRequest, userId: string, terms: Terms): Promise<LineReply> {
     const started = Date.now()
+    if (!this.admit()) return { outcome: 'limited' }
     if (terms.unlimited) {
       const reply = await this.ask(line, budgetMs, terms.dailyCalls)
       return reply.outcome === 'answered' ? { ...reply, freeLinesLeft: null } : reply
