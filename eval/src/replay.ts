@@ -142,7 +142,9 @@ export function render(file: string, relay: string, { replayed, stopped }: Await
       ? []
       : [
           wrap(
-            `The relay answered 402 at line ${stopped}: the app would open the paywall there, so the replay stopped.`
+            `The relay answered 402 at line ${stopped}: the app would open the paywall there, so the replay stopped. ` +
+              "A relay whose SIMULATOR_UNLIMITED switch is on doesn't count a Simulator build's lines, which the " +
+              'replay sends as (PAY-9).'
           )
         ]),
     wrap(summary)
