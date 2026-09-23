@@ -130,3 +130,54 @@ describe("a line's limits (SEC-2)", () => {
     expect(Object.keys(((await response.json()) as { scores: object }).scores)).toHaveLength(40)
   })
 })
+
+describe("Jev's failures", () => {
+  /** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
+  const jevError = (status: number) => () =>
+    Response.json({ detail: 'Traceback: bad key test-typesafe-key' }, { status })
+
+  test.each([
+    ['busy', 529],
+    ['rate-limited', 429],
+    ['failing', 500]
+  ])('answers 503 jev_unavailable, with the code alone, when Jev is %s after one retry (SEC-4)', async (_, status) => {
+    const jev = mockJev(jevError(status), jevError(status))
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test.each([
+    ['refuses the key', 401],
+    ['is out of credits', 402]
+  ])(
+    'answers 503 jev_unavailable, with the code alone, when Jev %s, without a retry (SEC-4, AVAIL-2)',
+    async (_, status) => {
+      const jev = mockJev(jevError(status))
+      await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+      expect(jev).toHaveBeenCalledOnce()
+    }
+  )
+
+  test('answers 503 jev_unavailable when an answer is missing a candidate', async () => {
+    const answer = jevAnswer()
+    delete (answer.answers as Record<string, unknown>).c01
+    mockJev(() => Response.json(answer))
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+  })
+
+  test('answers after one retry when Jev fails once', async () => {
+    const jev = mockJev(jevError(500), () => Response.json(jevAnswer()))
+    expect((await postLine(lineRequest())).status).toBe(200)
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test("gives up on a hung call within the phone's 3 seconds (STATE-2)", async () => {
+    vi.mocked(globalThis.fetch).mockImplementation(
+      (_, init) =>
+        new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal?.reason)))
+    )
+    const started = Date.now()
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+    expect(Date.now() - started).toBeLessThan(3000)
+  })
+})
