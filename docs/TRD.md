@@ -1163,7 +1163,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | ------------------------------------ | ------ | ---------------- | ------------------------------------------- |
 | `TYPESAFE_API_KEY`                   | secret | the relay        | calls Jev                                   |
 | `RC_SECRET_KEY`                      | secret | the relay        | the v2 entitlement check                    |
-| `ID_SALT`                            | secret | the relay        | hashes app user IDs                         |
+| `ID_SALT`                            | secret | the relay        | hashes app user IDs and addresses           |
 | `JEV_MODEL`                          | var    | the relay        | `jev-1.13.0`                                |
 | `JEV_ON`                             | var    | the relay        | the switch that turns Jev off (STATE-3)     |
 | `TYPESAFE_NAMED`                     | var    | the relay        | whether the texts name TypeSafe (CONSENT-7) |
@@ -1190,20 +1190,15 @@ ran under Wrangler 4.136.2:
   "durable_objects": {
     "bindings": [
       { "name": "DEVICE", "class_name": "Device" },
+      { "name": "ADDRESS", "class_name": "Address" },
       { "name": "BUDGET", "class_name": "Budget" }
     ]
   },
   "exports": {
     "Device": { "type": "durable-object", "storage": "sqlite" },
+    "Address": { "type": "durable-object", "storage": "sqlite" },
     "Budget": { "type": "durable-object", "storage": "sqlite" }
   },
-  "ratelimits": [
-    {
-      "name": "ADDRESS_LIMITER",
-      "namespace_id": "1002",
-      "simple": { "limit": 120, "period": 60 }
-    }
-  ],
   "observability": {
     "enabled": true,
     "logs": { "invocation_logs": false },
