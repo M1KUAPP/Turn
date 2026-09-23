@@ -23,7 +23,9 @@ test('holds 80 lines, each with every field (EVAL-1)', () => {
   expect(new Set(lines.map((line) => line.id)).size).toBe(80)
   for (const line of lines) {
     expect(line.author, line.id).toMatch(/\S/)
-    expect(line.text, line.id).toMatch(/^\S(.{0,298}\S)?$/)
+    expect(line.text, line.id).toMatch(/\S/)
+    expect(line.text, line.id).toBe(line.text.trim())
+    expect(line.text.length, line.id).toBeLessThanOrEqual(300)
     expect(['yes_no', 'either_or', 'open', 'not_a_question'], line.id).toContain(line.kind)
     expect(['home', 'clinic', 'shop', 'out'], line.id).toContain(line.place)
     expect(line.topic, line.id).toMatch(/^[a-z]+( [a-z]+)*$/)

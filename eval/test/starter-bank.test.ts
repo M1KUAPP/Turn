@@ -18,8 +18,15 @@ test('follows the starter-bank format', () => {
   const ids = [...bank.categories, ...phrases].map((item) => item.id)
   expect(new Set(ids).size).toBe(ids.length)
   for (const id of ids) expect(id).toMatch(slug)
-  for (const { name } of bank.categories) expect(name).toMatch(/^\S(.{0,38}\S)?$/)
-  for (const { text } of phrases) expect(text).toMatch(/^\S(.*\S)?$/)
+  for (const { id, name } of bank.categories) {
+    expect(name, id).toMatch(/\S/)
+    expect(name, id).toBe(name.trim())
+    expect(name.length, id).toBeLessThanOrEqual(40)
+  }
+  for (const { id, text } of phrases) {
+    expect(text, id).toMatch(/\S/)
+    expect(text, id).toBe(text.trim())
+  }
   const lowered = phrases.map(({ text }) => text.toLowerCase())
   expect(new Set(lowered).size).toBe(lowered.length)
   const placeIds = bank.places.map((place) => place.id)
