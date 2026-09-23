@@ -17,11 +17,11 @@ export type Line = {
 }
 
 /** One line's acceptable replies in the second labeling, which only the labelers' agreement reads. */
-export type Labels = Pick<Line, 'id' | 'labeler' | 'acceptable'>
+type Labels = Pick<Line, 'id' | 'labeler' | 'acceptable'>
 
-export type Phrase = { id: string; text: string; fixed: boolean; places: string[] }
-export type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
-export type StarterBank = { categories: Category[]; places: { id: string; name: string }[] }
+type Phrase = { id: string; text: string; fixed: boolean; places: string[] }
+type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
+type StarterBank = { categories: Category[]; places: { id: string; name: string }[] }
 
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), 'utf8')
 
