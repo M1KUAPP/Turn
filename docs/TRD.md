@@ -525,22 +525,27 @@ with the model pinned (SEC-2):
   safety rules follow ids a rename can't change (ROW-3). That is at most 13
   options, far below a Choice's limit of 255, and nothing documented caps 42
   questions: TypeSafe's own cookbooks send 54 and 62 in one request.
-- **The call.** `@typesafe-ai/sdk` 0.6.0 with every option in code:
-  `defaultModel: 'jev-1.13.0'`, `logLevel: 'off'`, `timeout: 1500` per
-  attempt, and `retry: { maxRetries: 1, respectRetryAfter: false }`, under
+- **The call.** `@typesafe-ai/sdk` 0.6.0 with every option in code, since
+  it reads any it lacks from `process.env`, which holds the Worker's vars
+  and secrets ([relay notes][relay-sdk]): `defaultModel: 'jev-1.13.0'`,
+  `logLevel: 'off'`, `timeout: 1500` per attempt, and
+  `retry: { maxRetries: 1, respectRetryAfter: false }`, under
   `AbortSignal.timeout(2500)`. The SDK's defaults would let one call run
   about 31.5 seconds.
-- **Errors.** A `429`, a `529`, a timeout, or a `5xx` becomes
-  `jev_unavailable`. Running out of credits has no documented status: the
-  SDK passes a `402` as its base `APIError`, which the object logs as
-  `credits` and answers as `jev_unavailable` (AVAIL-2).
+- **Errors.** Any failure becomes `jev_unavailable`: a `429`, a `529`, a
+  `5xx`, another status, a timeout, a lost connection, or an answer out of
+  shape, which the object checks itself, since the SDK returns Jev's body
+  unchecked. Running out of credits has no documented status: the SDK
+  passes a `402` as its base `APIError`, which the relay logs as `credits`
+  and answers as `jev_unavailable` (AVAIL-2).
 - **Size and cost.** About 1,700 to 1,900 input tokens a line, by the
   services notes' estimate, or up to about $0.00008 at $0.042 per
-  million; the object logs `usage.input_tokens` and the `model` field of
+  million; the relay logs `usage.input_tokens` and the `model` field of
   each answer, so a silent model change would show.
 
 [svc-request]: /docs/research/0024-turn-services.md#the-request-body-for-one-partner-line
 [jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
+[relay-sdk]: /docs/research/0037-turn-relay.md#the-sdks-client-and-call
 
 ### From probabilities to the row
 
