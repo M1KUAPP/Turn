@@ -1595,6 +1595,10 @@ bun run replay --lines eval/replay.jsonl --relay http://localhost:8787
   `SIMULATOR_UNLIMITED` switch is on, which lets a Simulator build's lines go
   uncounted (PAY-9); for a local relay, `wrangler dev` takes
   `--var SIMULATOR_UNLIMITED:true`.
+- **Within the rate limit.** The relay allows one ID 30 requests a minute
+  (SEC-3), so a request that would be the replay user's 30th in 60 seconds
+  waits until it isn't: the replay test's 50 lines wait out the rest of the
+  first minute after the first 28.
 - **What it prints:** a row for each line, with who ranked it, the big button
   or the six slots, the slot changes, whether the row held, and the times,
   then the totals.
