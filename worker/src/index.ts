@@ -1,6 +1,8 @@
-import type { ErrorCode } from '@turn/shared/relay'
+import type { ErrorCode, LineAnswer } from '@turn/shared/relay'
 import { readConfig } from './config'
-import { readUser } from './request'
+import { readLine, readUser } from './request'
+
+export { Device } from './device'
 
 const statuses: Record<ErrorCode, number> = {
   invalid_request: 400,
@@ -16,8 +18,36 @@ const statuses: Record<ErrorCode, number> = {
 /** An error's response, which carries its code and nothing else (SEC-4). */
 const failure = (code: ErrorCode) => Response.json({ error: code }, { status: statuses[code] })
 
-async function route(request: Request, env: Env): Promise<Response> {
+/** The name of a user's object: the hex SHA-256 of the salt and their ID, which can't be traced back without the salt. */
+async function objectName(salt: string, user: string) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + user))
+  return `user-${[...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')}`
+}
+
+/** Checks a line before anything else (SEC-2), then asks the user's object for Jev's answer. */
+async function answerLine(request: Request, env: Env, started: number): Promise<Response> {
+  const user = readUser(request.headers)
+  const line = user && (await readLine(request))
+  if (!user || !line) return failure('invalid_request')
+  const config = readConfig(env)
+  if (!config.jevOn) return failure('jev_off')
+  const device = env.DEVICE.getByName(await objectName(env.ID_SALT, user), { locationHint: 'wnam' })
+  const { kind, topic, scores, ms } = await device.answer(line)
+  const answer: LineAnswer = {
+    seq: line.seq,
+    kind,
+    topic,
+    scores,
+    policy: config.policy,
+    freeLinesLeft: config.freeLinesLeft,
+    ms: { jev: ms, total: Date.now() - started }
+  }
+  return Response.json(answer)
+}
+
+async function route(request: Request, env: Env, started: number): Promise<Response> {
   const { pathname } = new URL(request.url)
+  if (request.method === 'POST' && pathname === '/v1/lines') return answerLine(request, env, started)
   if (request.method === 'GET' && pathname === '/v1/config') {
     if (!readUser(request.headers)) return failure('invalid_request')
     return Response.json(readConfig(env))
@@ -27,8 +57,9 @@ async function route(request: Request, env: Env): Promise<Response> {
 
 export default {
   async fetch(request: Request, env: Env) {
+    const started = Date.now()
     try {
-      return await route(request, env)
+      return await route(request, env, started)
     } catch {
       return failure('internal')
     }
