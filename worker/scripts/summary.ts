@@ -71,6 +71,9 @@ export function summarize(lines: readonly LogLine[]): Summary {
   }
 }
 
+/** A count and its noun, in the singular for one. */
+const counted = (count: number, noun: string) => `${count} ${noun}${count === 1 ? '' : 's'}`
+
 /** Some outcomes' counts, by name, as "name count, name count". */
 const listed = (outcomes: Map<string, number>, keep: (outcome: string) => boolean) =>
   [...outcomes]
@@ -89,7 +92,8 @@ export function formatSummary(day: string, summary: Summary, matched: number): s
     (outcome) => outcome !== 'answered' && outcome !== 'paywall' && !isFailure(outcome)
   )
   return [
-    `The relay's logs for ${day}, in UTC: ${summary.lines} log lines, of ${matched} events the query matched`,
+    `The relay's logs for ${day}, in UTC: ${counted(summary.lines, 'log line')}, of ${counted(matched, 'event')} ` +
+      'the query matched',
     '',
     `Lines answered: ${summary.answered}`,
     `Paywall responses: ${summary.paywall}`,
