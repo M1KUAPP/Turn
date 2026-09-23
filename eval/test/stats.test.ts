@@ -1,5 +1,14 @@
 import { expect, test } from 'vitest'
-import { below, chanceHit, chanceReciprocalRank, pairedBootstrap, percentile, seeded, wilson } from '../src/stats'
+import {
+  below,
+  bootstrap,
+  chanceHit,
+  chanceReciprocalRank,
+  pairedBootstrap,
+  percentile,
+  seeded,
+  wilson
+} from '../src/stats'
 
 const oneTo = (n: number) => Array.from({ length: n }, (_, i) => i + 1)
 
@@ -96,6 +105,24 @@ test("gives the paired bootstrap's interval for a gap, the same on every run", (
   const few = [...Array(5).fill(1), 0, ...Array(17).fill(1)]
   const other = [...Array(5).fill(0), 1, ...Array(17).fill(1)]
   expect(pairedBootstrap(few, other)).toEqual({ difference: 4 / 23, low: 0, high: 9 / 23 })
+})
+
+test("gives a statistic's percentile interval over 9,999 resamples of the items' indices, as the gap's", () => {
+  let calls = 0
+  const constant = bootstrap(5, (sample) => {
+    calls += 1
+    expect(sample).toHaveLength(5)
+    for (const i of sample) expect([0, 1, 2, 3, 4]).toContain(i)
+    return 0.3
+  })
+  expect(calls).toBe(9999)
+  expect(constant).toEqual({ low: 0.3, high: 0.3 })
+  // The mean of the last test's gaps, in the same places, draws the same resamples and gives the same interval.
+  const gaps = [...Array(45).fill(0), ...Array(15).fill(1), ...Array(5).fill(-1), ...Array(15).fill(0)]
+  expect(bootstrap(80, (sample) => sample.reduce((sum, i) => sum + gaps[i], 0) / 80)).toEqual({
+    low: 0.0125,
+    high: 0.2375
+  })
 })
 
 test('gives an interval of one value when no item splits the two, and none for no items', () => {
