@@ -1,20 +1,20 @@
-# Graph Report - revenuecat-score-rankers (2026-09-23)
+# Graph Report - revenuecat-video-iphone (2026-09-23)
 
 ## Corpus Check
 
-- 177 files · ~595,258 words
+- 179 files · ~598,851 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 14 file(s) not represented in the graph (top: (none) 7, .jsonl 4, .lock 1)
 
 ## Summary
 
-- 3109 nodes · 3182 edges · 224 communities (214 shown, 4 thin omitted)
+- 3135 nodes · 3206 edges · 226 communities (216 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `641f0eca`
+- Built from commit: `9c65a723`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -238,6 +238,8 @@
 - row.ts
 - Turn's evaluation harness research notes
 - shortlist-speed.test.ts
+- Tasks
+- Turn's video iPhone notes
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -269,7 +271,7 @@
 
 - None detected.
 
-## Communities (224 total, 4 thin omitted)
+## Communities (226 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1341,10 +1343,20 @@ Nodes (13): A test oracle for agreement, Agreement between two labelers, Chance 
 Cohesion: 0.47
 Nodes (5): bank, lines, taps, vocabulary, words()
 
+### Community 224 - "Tasks"
+
+Cohesion: 0.12
+Nodes (16): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 1: Research note, Task 2: This plan (+8 more)
+
+### Community 225 - "Turn's video iPhone notes"
+
+Cohesion: 0.22
+Nodes (8): devicectl install and launch, Free and paid team App IDs, Gaps, Hands-on check, See also, The phone's model and iOS version, Turn's video iPhone notes, xcodebuild automatic signing
+
 ## Knowledge Gaps
 
-- **2364 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2359 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2516 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2384 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2379 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2538 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -1353,12 +1365,12 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
+- **Why does `Shipaton 2025 Winners` connect `Shipaton 2025 Winners` to `RevenueCat design award`, `#buildinpublic award`, `RevenueCat peace prize`, `Best vibes award`, `Buzziest launch award`, `HAMM award`, `OneSignal boost award`, `Kotlin multiplatform reach award`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2364 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2384 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
