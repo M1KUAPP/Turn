@@ -27,6 +27,14 @@ export type Replayed = {
   ms?: { trip: number; jev: number; total: number }
 }
 
+/** Whether a relay's answer holds what the row's rules and the printout read. */
+const isAnswer = (body: unknown): body is LineAnswer => {
+  if (typeof body !== 'object' || body === null) return false
+  const { seq, kind, topic, scores, policy, ms } = body as Record<string, unknown>
+  const parts = [kind, topic, scores, policy, ms]
+  return typeof seq === 'number' && parts.every((part) => typeof part === 'object' && part !== null)
+}
+
 /** The headers the relay checks, for the replay's made-up user, who counts as a Simulator build. */
 const headers = (user: string) => ({
   'Content-Type': 'application/json',
@@ -69,6 +77,7 @@ export async function replay(
     if (config.jevOn) {
       const request: LineRequest = { lineId: randomUUID(), seq, ...jevLine(line.text, line.place, shortlist) }
       const started = performance.now()
+      const timedOut = (error: unknown) => error instanceof Error && error.name === 'TimeoutError'
       try {
         const response = await fetch(`${relay}/v1/lines`, {
           method: 'POST',
@@ -77,17 +86,18 @@ export async function replay(
           signal: AbortSignal.timeout(wait)
         })
         if (response.status === 402) return { replayed, stopped: seq }
-        if (response.ok) {
-          const body = (await response.json()) as LineAnswer
+        // The body can come late too, and a relay can answer out of shape.
+        const body: unknown = await response.json().catch((error) => (timedOut(error) ? error : null))
+        if (timedOut(body)) failure = 'no answer in time'
+        else if (!response.ok) failure = (body as { error?: string } | null)?.error ?? `status ${response.status}`
+        else if (!isAnswer(body)) failure = 'an answer out of shape'
+        else {
           const scores = new Map(shortlist.map(({ id }) => [id, body.scores[id] ?? 0]))
           answer = { kind: body.kind, topic: body.topic, scores, onPhone: false, seq: body.seq, policy: body.policy }
           ms = { trip: performance.now() - started, jev: body.ms.jev, total: body.ms.total }
-        } else {
-          const error = (await response.json().catch(() => null)) as { error?: string } | null
-          failure = error?.error ?? `status ${response.status}`
         }
       } catch (error) {
-        failure = error instanceof Error && error.name === 'TimeoutError' ? 'no answer in time' : 'unreachable'
+        failure = timedOut(error) ? 'no answer in time' : 'unreachable'
       }
     }
     answer ??= { ...rankOnPhone(line.text, shortlist, index, context), seq, policy: config.policy }
