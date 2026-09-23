@@ -13,9 +13,11 @@ const fits = (given: unknown, start: Policy[keyof Policy]) => {
 
 /**
  * The starting policy with the values `POLICY` changes, as JSON in `wrangler.jsonc` or as a string from `--var` or the
- * dashboard. An unknown key or a value of the wrong type throws, so a mistake shows at the next request.
+ * dashboard, and as it is when `POLICY` is unset. An unknown key, a value of the wrong type, or a number outside 0 to 1
+ * throws, so a mistake shows at the next request.
  */
 function readPolicy(value: unknown): Policy {
+  if (value === undefined) return startingPolicy
   const changes: unknown = typeof value === 'string' ? JSON.parse(value) : value
   if (typeof changes !== 'object' || changes === null || Array.isArray(changes)) throw new Error('POLICY is no object')
   for (const [key, given] of Object.entries(changes)) {
