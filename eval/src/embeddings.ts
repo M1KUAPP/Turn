@@ -1,5 +1,4 @@
-import { isYesNo } from '@turn/shared/shortlist'
-import type { AtCutOff, Ranker } from './rankers'
+import { phoneKind, type AtCutOff, type Ranker } from './rankers'
 import { runModel, type Env } from './workers-ai'
 
 /** Workers AI's embedding model, which the report names (EVAL-6). */
@@ -81,7 +80,7 @@ export function embeddings(embed: Embed): Ranker {
       if (vector) scores.set(phrase.id, cosine(lineVector, vector))
     }
     return {
-      kind: { yes_no: isYesNo(line) ? 1 : 0, either_or: 0, open: 0, not_a_question: 0 },
+      kind: phoneKind(line),
       topic: {},
       scores,
       onPhone: true
