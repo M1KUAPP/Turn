@@ -114,8 +114,8 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
 }
 
 /** The report for the lines, in Markdown, scored with the app's own shortlist, rankers, and row rules. */
-const render = (labeled: readonly Line[], { run, file }: { run: string; file: string }) => {
-  const { lines: scores, timings } = scoreLines(labeled, phrases, rankers)
+const render = async (labeled: readonly Line[], { run, file }: { run: string; file: string }) => {
+  const { lines: scores, timings } = await scoreLines(labeled, phrases, rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
     {
@@ -181,7 +181,7 @@ const render = (labeled: readonly Line[], { run, file }: { run: string; file: st
       '## Latency',
       wrap(
         'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
-          "ranker's ranking and the row's rules."
+          "ranker's ranking, its network trip included."
       ),
       latency
     ].join('\n\n') + '\n'
@@ -204,13 +204,13 @@ const commit = () => {
  * `bun run eval`: scores the place and keyword rankers on the labeled lines in `eval/lines.jsonl`, or the file
  * `--lines` names, and writes the report to `eval/results.md`, or the file `--out` names (EVAL-3).
  */
-export function main(args: readonly string[]): void {
+export async function main(args: readonly string[]): Promise<void> {
   const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, out: { type: 'string' } } })
   const { lines: labeled, file } = linesFrom(values.lines)
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
   const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
-  writeFileSync(out, render(labeled, { run: `${date}, at commit ${commit()}`, file }))
+  writeFileSync(out, await render(labeled, { run: `${date}, at commit ${commit()}`, file }))
   console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
 }
 
-if (import.meta.main) main(process.argv.slice(2))
+if (import.meta.main) await main(process.argv.slice(2))

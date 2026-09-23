@@ -1,4 +1,4 @@
-import { applyAnswer, emptyRow, fixedButtons, startingPolicy, type Row } from '@turn/shared/row'
+import { applyAnswer, emptyRow, fixedButtons, startingPolicy, type Ranking, type Row } from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, type Phrase } from '@turn/shared/shortlist'
 import type { Ranker } from './rankers'
 import { chanceHit, chanceReciprocalRank, mean } from './stats'
@@ -18,13 +18,13 @@ export const outcomes = [
 export type Outcome = (typeof outcomes)[number]
 
 /**
- * One line, scored: its shortlist's ids and, per ranker, its order over the phrases it scored above 0 and what the
- * user would see.
+ * One line, scored: its shortlist's ids and, per ranker, its ranking, its order over the phrases it scored above 0,
+ * the row the rules made of it, and what the user would see.
  */
 export type LineScore<Line extends ScoredLine> = {
   line: Line
   shortlist: string[]
-  rankers: Record<string, { order: string[]; outcome: Outcome }>
+  rankers: Record<string, { ranking: Ranking; order: string[]; row: Row; outcome: Outcome }>
 }
 
 /** A count of k lines out of n, for a rate. */
@@ -64,58 +64,68 @@ const outcomeOf = (row: Row, acceptable: ReadonlySet<string>): Outcome => {
   return row.slots.some((id) => id !== null && acceptable.has(id)) ? 'right row' : 'wrong row'
 }
 
-/** Runs the work, adding how long it took, in milliseconds, to the samples. */
-const time = <T>(samples: number[], work: () => T): T => {
+/** Runs the work and waits for it, adding how long it took, in milliseconds, to the samples. */
+const time = async <T>(samples: number[], work: () => T | Promise<T>): Promise<T> => {
   const start = performance.now()
-  const result = work()
+  const result = await work()
   samples.push(performance.now() - start)
   return result
 }
 
+/** The row the rules make of one line's ranking, from an empty row, with their starting policy. */
+const rowFor = (ranking: Ranking): Row => applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy })
+
 /**
  * Scores each line alone, as the app would from an empty row, with the line's place and a fresh bank's lack of taps:
- * picks its shortlist, has each ranker rank it, and applies the row's rules with their starting policy. It times the
- * shortlist and each ranker's ranking and rules over three passes, one line at a time, after a warm-up pass it leaves
- * out, since Bun and Node compile hot code as it runs.
+ * picks its shortlist, has each ranker rank it, one ranking at a time, and applies the row's rules with their starting
+ * policy once every line is ranked. It times the shortlist and each ranking, a network trip included, over three
+ * passes, after a warm-up pass it leaves out, since Bun and Node compile hot code as it runs and a first call opens its
+ * connection; the lines are scored from the first of the three.
  */
-export function scoreLines<Line extends ScoredLine>(
+export async function scoreLines<Line extends ScoredLine>(
   lines: readonly Line[],
   bank: readonly Phrase[],
   rankers: Readonly<Record<string, Ranker>>
-): Scores<Line> {
+): Promise<Scores<Line>> {
   const index = new PhraseIndex()
   const names = Object.keys(rankers)
-  const pass = () => {
+  const pass = async () => {
     const timings = {
       shortlist: [] as number[],
       rankers: Object.fromEntries(names.map((name) => [name, [] as number[]]))
     }
-    const scored = lines.map((line): LineScore<Line> => {
+    const ranked: { line: Line; shortlist: Phrase[]; rankings: Record<string, Ranking> }[] = []
+    for (const line of lines) {
       const context = { bank, row: [], place: line.place, taps: new Map<string, number>() }
-      const shortlist = time(timings.shortlist, () => pickShortlist(line.text, index, context))
-      const acceptable = new Set(line.acceptable)
-      const byRanker = names.map((name) => {
-        const { ranking, row } = time(timings.rankers[name], () => {
-          const ranking = rankers[name](line.text, shortlist, index, context)
-          return { ranking, row: applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy }) }
-        })
-        // A phrase scored 0 isn't ranked, so a ranking that holds orders nothing, and a stable sort keeps the
-        // ranking's own order among ties.
-        const order = [...ranking.scores]
-          .filter(([, score]) => score > 0)
-          .sort(([, a], [, b]) => b - a)
-          .map(([id]) => id)
-        return [name, { order, outcome: outcomeOf(row, acceptable) }] as const
-      })
-      return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
-    })
-    return { lines: scored, timings }
+      const shortlist = await time(timings.shortlist, () => pickShortlist(line.text, index, context))
+      const rankings: Record<string, Ranking> = {}
+      for (const name of names) {
+        rankings[name] = await time(timings.rankers[name], () => rankers[name](line.text, shortlist, index, context))
+      }
+      ranked.push({ line, shortlist, rankings })
+    }
+    return { ranked, timings }
   }
   // The warm-up pass, whose timings are left out.
-  pass()
-  const passes = [pass(), pass(), pass()]
+  await pass()
+  const passes = [await pass(), await pass(), await pass()]
+  const scored = passes[0].ranked.map(({ line, shortlist, rankings }): LineScore<Line> => {
+    const acceptable = new Set(line.acceptable)
+    const byRanker = names.map((name) => {
+      const ranking = rankings[name]
+      // A phrase scored 0 isn't ranked, so a ranking that holds orders nothing, and a stable sort keeps the
+      // ranking's own order among ties.
+      const order = [...ranking.scores]
+        .filter(([, score]) => score > 0)
+        .sort(([, a], [, b]) => b - a)
+        .map(([id]) => id)
+      const row = rowFor(ranking)
+      return [name, { ranking, order, row, outcome: outcomeOf(row, acceptable) }] as const
+    })
+    return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
+  })
   return {
-    lines: passes[0].lines,
+    lines: scored,
     timings: {
       shortlist: passes.flatMap(({ timings }) => timings.shortlist),
       rankers: Object.fromEntries(names.map((name) => [name, passes.flatMap(({ timings }) => timings.rankers[name])]))
