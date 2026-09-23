@@ -76,28 +76,48 @@ const provenance = (labeled: readonly Line[]) => {
 /** A share in points, to one decimal. */
 const points = (share: number) => (share * 100).toFixed(1)
 
-/** What EVAL-4 reads from the paired interval, as a sentence's end. */
-const verdicts = {
-  trails: 'Jev trails embeddings (EVAL-4)',
-  leads: 'Jev leads embeddings',
-  'no clear difference': "there's no clear difference"
+/**
+ * How the report names Jev: by name, or, while naming is off, as the hosted decision model, with its pin's version but
+ * not its name, so the README can copy the table (CONSENT-7).
+ */
+type Naming = { Jev: string; jev: string; ranker: (name: string) => string; model: (model: string) => string }
+
+const named: Naming = { Jev: 'Jev', jev: 'Jev', ranker: (name) => name, model: (model) => `\`${model}\`` }
+
+const unnamed: Naming = {
+  Jev: 'The hosted decision model',
+  jev: 'the hosted decision model',
+  ranker: (name) => (name === 'jev' ? 'hosted decision model' : name),
+  model: (model) => `version ${model.replace(/^jev-/, '')}`
 }
 
 /** Jev's top 6 minus embeddings', with its paired interval and what it says, or nothing unless both ranked. */
-const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[]) => {
+const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[], naming: Naming) => {
   const gap = names.includes('jev') && names.includes('embeddings') ? topSixGap(scores, 'jev', 'embeddings') : null
   if (gap === null) return []
   const { difference, low, high, verdict } = gap
+  // What EVAL-4 reads from the interval.
+  const says = {
+    trails: `${naming.jev} trails embeddings (EVAL-4)`,
+    leads: `${naming.jev} leads embeddings`,
+    'no clear difference': "there's no clear difference"
+  }
   return [
     wrap(
-      `Jev minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, with a 95% paired ` +
-        `interval of ${points(low)} to ${points(high)}, so ${verdicts[verdict]}.`
+      `${naming.Jev} minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, with a 95% ` +
+        `paired interval of ${points(low)} to ${points(high)}, so ${says[verdict]}.`
     )
   ]
 }
 
 /** One group's ranking and row, with each rate's interval. */
-const groupSections = (name: string, about: string, scores: readonly LineScore<Line>[], names: readonly string[]) => {
+const groupSections = (
+  name: string,
+  about: string,
+  scores: readonly LineScore<Line>[],
+  names: readonly string[],
+  naming: Naming
+) => {
   const lower = name[0].toLowerCase() + name.slice(1)
   if (scores.length === 0) return [`## ${name}`, wrap(`There are no lines ${about}.`)]
   const summary = summarize(scores)
@@ -117,12 +137,12 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
               ],
               ...names.map((ranker) => {
                 const { top1, top6, meanReciprocalRank } = summary.rankers[ranker]
-                return [ranker, rate(top1), rate(top6), meanReciprocalRank.toFixed(2)]
+                return [naming.ranker(ranker), rate(top1), rate(top6), meanReciprocalRank.toFixed(2)]
               })
             ]
           ),
           wrap(`The shortlist's recall at 40: ${rate(summary.recall)}.`),
-          ...gapLine(scores, names)
+          ...gapLine(scores, names, naming)
         ]
   const capitalized = outcomes.map((outcome) => outcome[0].toUpperCase() + outcome.slice(1))
   const row = table(
@@ -136,7 +156,8 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
       ],
       ...names.map((ranker) => {
         const { outcomes: seen, coverage, risk } = summary.rankers[ranker]
-        return [ranker, ...outcomes.map((outcome) => String(seen[outcome])), rate(coverage), rate(risk)]
+        const counts = outcomes.map((outcome) => String(seen[outcome]))
+        return [naming.ranker(ranker), ...counts, rate(coverage), rate(risk)]
       })
     ]
   )
@@ -151,10 +172,12 @@ const groupSections = (name: string, about: string, scores: readonly LineScore<L
 }
 
 /** Jev's pin, where it's set, and what Jev reported answering as, then Workers AI's model (EVAL-6). */
-const models = (pin: string, calls: readonly JevCall[]) => {
+const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
   const byModel = [...Map.groupBy(calls, (call) => call.model)]
   const answered = listOf(
-    byModel.map(([model, made]) => `\`${model}\` on ${made.length === calls.length ? 'all ' : ''}${made.length} calls`)
+    byModel.map(
+      ([model, made]) => `${naming.model(model)} on ${made.length === calls.length ? 'all ' : ''}${made.length} calls`
+    )
   )
   const tokens = Math.round(
     percentile(
@@ -163,7 +186,8 @@ const models = (pin: string, calls: readonly JevCall[]) => {
     )
   ).toLocaleString('en-US')
   return (
-    `- **Models:** Jev, pinned to \`${pin}\` by \`worker/wrangler.jsonc\`, which answered as ${answered}, with a ` +
+    `- **Models:** ${naming.Jev}, pinned to ${naming.model(pin)} by \`worker/wrangler.jsonc\`, which answered as ` +
+    `${answered}, with a ` +
     `median of ${tokens} input tokens a call; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
   )
 }
@@ -176,7 +200,7 @@ const sensitive = (line: Line) =>
   line.kind === 'yes_no' || line.concerns.includes('pain') || line.concerns.includes('consent')
 
 /** Every big button any ranker showed on a line EVAL-5 names, with its phrase and whether it's right. */
-const bigButtonSection = (scores: readonly LineScore<Line>[]) => {
+const bigButtonSection = (scores: readonly LineScore<Line>[], naming: Naming) => {
   const shown = bigButtons(scores.filter(({ line }) => sensitive(line)))
   const text = (id: string) => phrases.find((phrase) => phrase.id === id)?.text ?? id
   const which = 'a line its writer marked yes-or-no, or on one about pain or consent'
@@ -190,7 +214,7 @@ const bigButtonSection = (scores: readonly LineScore<Line>[]) => {
     table(
       ['Ranker', 'Line', 'The partner said', 'Big button', 'Right or wrong'],
       shown.map(({ ranker, line, phrase, right }) => [
-        ranker,
+        naming.ranker(ranker),
         line.id,
         cell(line.text),
         cell(text(phrase)),
@@ -207,13 +231,14 @@ const kindNames = { yes_no: 'Yes or no', either_or: 'Either or', open: 'Open', n
  * Jev's most likely kind of question against its writer's, on every line: the accuracy with its interval, and the
  * confusion matrix, since a yes-or-no call brings up the fixed buttons.
  */
-const kindSection = (scores: readonly LineScore<Line>[]) => {
+const kindSection = (scores: readonly LineScore<Line>[], naming: Naming) => {
   const { counts, right } = kindMatrix(scores, 'jev')
   return [
     '## The question kind',
     wrap(
-      `Jev's most likely kind of question against its writer's, on all ${scores.length} lines: right on ` +
-        `${rate(right)}. Each row is the writer's kind, and each column Jev's, or a tie when two kinds share the top.`
+      `${naming.Jev}'s most likely kind of question against its writer's, on all ${scores.length} lines: right on ` +
+        `${rate(right)}. Each row is the writer's kind, and each column ${naming.jev}'s, or a tie when two kinds ` +
+        'share the top.'
     ),
     table(
       ["Writer's kind", ...kinds.map((kind) => kindNames[kind]), 'Tie'],
@@ -288,9 +313,10 @@ const render = (
     calls: readonly JevCall[]
     curves: readonly (readonly [string, readonly Point[]])[]
     image: string
+    naming: Naming
   }
 ) => {
-  const { run, file, pin, calls, curves, image } = about
+  const { run, file, pin, calls, curves, image, naming } = about
   const names = Object.keys(timings.rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true },
@@ -313,7 +339,10 @@ const render = (
   const steps: [string, number[]][] = [['shortlist', timings.shortlist], ...Object.entries(timings.rankers)]
   const latency = table(
     ['Step', 'Median', '95th percentile', 'Maximum'],
-    steps.map(([step, samples]) => [step, ...[50, 95, 100].map((q) => percentile(samples, q).toFixed(3))])
+    steps.map(([step, samples]) => [
+      naming.ranker(step),
+      ...[50, 95, 100].map((q) => percentile(samples, q).toFixed(3))
+    ])
   )
   const sections = [
     'Who wrote the data',
@@ -331,7 +360,7 @@ const render = (
         `- **Run:** ${run}.`,
         `- **Lines:** the ${labeled.length} in \`${file}\`.`,
         "- **Bank:** the app's own, `app/src/content/starter-bank.json`.",
-        wrap(models(pin, calls), '  ')
+        wrap(models(pin, calls, naming), '  ')
       ].join('\n'),
       wrap(
         'Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that ' +
@@ -344,20 +373,20 @@ const render = (
       [
         "- **Rankers:** place gives the place's phrases in the bank's order; keyword, the phone's own ranking by " +
           "shared words; embeddings, the cosine between the line and each phrase, with the phone's yes-or-no rule " +
-          'and no big button, holding a line below a cut-off that five-fold cross-validation sets; and jev, ' +
-          "Jev's answer to the relay's request, which the row's rules take with their starting policy: a floor of " +
-          '0.6, a big button above 0.85, and a margin of 0.15.',
+          'and no big button, holding a line below a cut-off that five-fold cross-validation sets; and ' +
+          `${naming.ranker('jev')}, the relay's request as ${naming.jev} answers it, which the row's rules take with ` +
+          'their starting policy: a floor of 0.6, a big button above 0.85, and a margin of 0.15.',
         '- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. ' +
           'A ranker ranks only the phrases it scores above 0, so keyword ranks none on a line that shares no word. ' +
           'Chance is a random order of the same phrases. The mean reciprocal rank is a mean of ranks, not a rate, ' +
           'so it has no interval.',
         '- **The row:** coverage is the share of lines where the row changes, and risk the share of those rows ' +
           'that are wrong. Always holding is right on every line with no acceptable reply.',
-        '- **Intervals:** every rate carries its 95% Wilson interval. Jev minus embeddings in top 6 carries a 95% ' +
-          'paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed seed, and Jev ' +
-          'trails only when the whole interval lies below zero.',
-        "- **Jev's answers** vary a little from call to call, so each line is scored from the first of the three " +
-          'timed passes.'
+        `- **Intervals:** every rate carries its 95% Wilson interval. ${naming.Jev} minus embeddings in top 6 ` +
+          'carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed ' +
+          `seed, and ${naming.jev} trails only when the whole interval lies below zero.`,
+        `- **${naming.Jev}'s answers** vary a little from call to call, so each line is scored from the first of ` +
+          'the three timed passes.'
       ]
         .map((item) => wrap(item, '  '))
         .join('\n'),
@@ -369,11 +398,12 @@ const render = (
           name,
           about,
           scores.filter(({ line }) => keep(line)),
-          names
+          names,
+          naming
         )
       ),
-      ...bigButtonSection(scores),
-      ...(names.includes('jev') ? kindSection(scores) : []),
+      ...bigButtonSection(scores, naming),
+      ...(names.includes('jev') ? kindSection(scores, naming) : []),
       ...curveSection(scores.length, curves, image),
       ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings) : []),
       '## Latency',
@@ -400,11 +430,16 @@ const commit = () => {
 
 /**
  * `bun run eval`: scores the four rankers on the labeled lines in `eval/lines.jsonl`, or the file `--lines` names, and
- * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3). The embeddings ranker needs
- * `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev `TYPESAFE_API_KEY`, in the environment.
+ * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3), with its plot beside it. The embeddings
+ * ranker needs `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev `TYPESAFE_API_KEY`, in the environment.
+ * `--unnamed` names Jev as the hosted decision model, for the README while naming is off.
  */
 export async function main(args: readonly string[]): Promise<void> {
-  const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, out: { type: 'string' } } })
+  const { values } = parseArgs({
+    args: [...args],
+    options: { lines: { type: 'string' }, out: { type: 'string' }, unnamed: { type: 'boolean' } }
+  })
+  const naming = values.unnamed ? unnamed : named
   const { lines: labeled, file } = linesFrom(values.lines)
   const pin = relayModel()
   const jevRanker = jev(pin)
@@ -412,12 +447,12 @@ export async function main(args: readonly string[]): Promise<void> {
   const scores = await scoreLines(labeled, phrases, rankers, { embeddings: atCutOff })
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
   const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
-  const curves = Object.keys(rankers).map((name) => [name, riskCoverage(scores.lines, name)] as const)
+  const curves = Object.keys(rankers).map((name) => [naming.ranker(name), riskCoverage(scores.lines, name)] as const)
   // The plot sits beside the report, named after it, so the report's relative link finds it.
   const image = `${basename(out, '.md')}-risk-coverage.svg`
   writeFileSync(join(dirname(out), image), plot(curves))
   const run = `${date}, at commit ${commit()}`
-  writeFileSync(out, render(labeled, scores, { run, file, pin, calls: jevRanker.calls, curves, image }))
+  writeFileSync(out, render(labeled, scores, { run, file, pin, calls: jevRanker.calls, curves, image, naming }))
   console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
 }
 

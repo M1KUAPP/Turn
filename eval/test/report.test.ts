@@ -285,3 +285,18 @@ test("plots every ranker's risk against its coverage beside the report, with a t
   expect(cells(curves, 'place')).toEqual(Array(5).fill('88% at 100%'))
   for (const ranker of ['keyword', 'embeddings', 'jev']) expect(cells(curves, ranker), ranker).toHaveLength(5)
 })
+
+test("names Jev nowhere with --unnamed, calling it the hosted decision model with its pin's version", async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
+  fakeServices()
+  await main(['--lines', fixture, '--out', join(dir, 'results.md'), '--unnamed'])
+  const unnamed = readFileSync(join(dir, 'results.md'), 'utf8')
+  const plotted = readFileSync(join(dir, 'results-risk-coverage.svg'), 'utf8')
+  for (const text of [unnamed, plotted]) expect(text).not.toMatch(/jev|typesafe/i)
+  expect(unnamed).toMatch(prose('- **Models:** The hosted decision model, pinned to version 1.13.0 by'))
+  expect(unnamed).toMatch(prose('which answered as version 1.13.0 on all 32 calls'))
+  expect(unnamed).toMatch(prose('The hosted decision model minus embeddings in top 6:'))
+  // Its first row, in the ranking on all lines.
+  expect(cells(unnamed, 'hosted decision model')).toHaveLength(3)
+  expect(plotted).toContain('>hosted decision model</text>')
+})
