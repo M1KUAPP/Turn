@@ -384,7 +384,8 @@ and was committed as
   ```
 
 - [ ] **Step 3: Run the gate,** then commit as
-      `feat(shared): pick the 40-phrase shortlist in the trd's order`.
+      `feat(shared): pick the 40-phrase shortlist in the TRD's order`, with
+      the acronym in capitals, as earlier subjects write it.
 
 ### Task 5: Yes-or-no lines
 
