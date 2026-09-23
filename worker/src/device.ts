@@ -38,6 +38,16 @@ const budgetMs = 2500
 const minute = 60_000
 const day = 24 * 60 * minute
 
+/** A promise's result, or its signal's reason if that aborts first, so no wait outlasts the call it's part of. */
+function unlessAborted<T>(promise: Promise<T>, signal: AbortSignal | null | undefined): Promise<T> {
+  if (!signal) return promise
+  if (signal.aborted) return Promise.reject(signal.reason)
+  const aborted = new Promise<never>((_, reject) =>
+    signal.addEventListener('abort', () => reject(signal.reason), { once: true })
+  )
+  return Promise.race([promise, aborted])
+}
+
 /** One app user's object, which counts their free lines and calls Jev for their lines. */
 export class Device extends DurableObject<Env> {
   /**
@@ -176,7 +186,8 @@ export class Device extends DurableObject<Env> {
     const calls = this.env.BUDGET.getByName('jev-calls', { locationHint: 'wnam' })
     const spent = new AbortController()
     const jev = this.jev(async (input, init) => {
-      if (await calls.take(dailyCalls)) return fetch(input, init)
+      // The attempt's own time bounds its wait for the budget too, so a slow answer can't hold the line (STATE-2).
+      if (await unlessAborted(calls.take(dailyCalls), init?.signal)) return fetch(input, init)
       spent.abort()
       throw new Error("The day's calls to Jev are spent")
     })

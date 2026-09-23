@@ -1,6 +1,7 @@
 import { runInDurableObject } from 'cloudflare:test'
 import { env } from 'cloudflare:workers'
 import { afterEach, describe, expect, test, vi } from 'vitest'
+import { Budget } from '../src/budget'
 import {
   callsTo,
   expectError,
@@ -90,6 +91,20 @@ describe("the day's calls to Jev (SEC-5)", () => {
     await expectError(await send(lineFor(lineRequest(), simulator), vars), 503, 'jev_unavailable')
     expect(jevCalls()).toHaveLength(1)
   })
+
+  test("end a line within its 2.5 seconds while the budget's object is slow (STATE-2)", async () => {
+    // The object answers after 3 seconds, as a slow one might; its callers await it either way.
+    vi.spyOn(Budget.prototype, 'take').mockImplementation(
+      () => scheduler.wait(3000).then(() => true) as unknown as boolean
+    )
+    mockJev(...jevAnswers(2))
+    const started = Date.now()
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+    expect(Date.now() - started).toBeLessThan(2900)
+    expect(jevCalls()).toHaveLength(0)
+    // The object's slow answers finish before the next test resets it.
+    await scheduler.wait(1000)
+  }, 10_000)
 
   test("keep the day's count in one row of the relay's one budget object", async () => {
     mockJev(...jevAnswers(2))
