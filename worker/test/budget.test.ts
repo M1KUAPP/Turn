@@ -53,10 +53,23 @@ describe("the day's calls to Jev (SEC-5)", () => {
     expect(jevCalls()).toHaveLength(3)
   })
 
-  test('end a line whose retry the budget refuses, with no second call', async () => {
+  test("leave a line failed, with Jev's status and time, when the budget refuses its retry", async () => {
     mockJev(jevError(529))
+    const log = vi.spyOn(console, 'log')
     await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
     expect(jevCalls()).toHaveLength(1)
+    expect(log.mock.calls).toStrictEqual([
+      [
+        {
+          at: expect.any(String),
+          user: (await userHash()).slice(0, 8),
+          seq: 7,
+          outcome: 'failed',
+          ms: { total: expect.any(Number), jev: expect.any(Number) },
+          jevStatus: 529
+        }
+      ]
+    ])
   })
 
   test('share one budget among all users, counting exactly 3 of 5 simultaneous lines', async () => {
@@ -115,13 +128,16 @@ describe("the day's calls to Jev (SEC-5)", () => {
     expect(rows).toEqual([{ id: 1, day: new Date().toISOString().slice(0, 10), count: 2 }])
   })
 
-  test('log a refused line as spent, with no text', async () => {
+  test('refuse a line at once when the budget is spent, and log it spent with no time in Jev or text', async () => {
     mockJev(...jevAnswers(1))
     await postLine(lineRequest(), budget(1))
+    const take = vi.spyOn(Budget.prototype, 'take')
     const log = vi.spyOn(console, 'log')
     log.mockClear()
     const line = lineRequest()
     await postLine(line, budget(1))
+    // Asked once: the refusal stops the SDK from asking again after its backoff.
+    expect(take).toHaveBeenCalledOnce()
     expect(log.mock.calls).toStrictEqual([
       [
         {
@@ -129,7 +145,7 @@ describe("the day's calls to Jev (SEC-5)", () => {
           user: (await userHash()).slice(0, 8),
           seq: 7,
           outcome: 'spent',
-          ms: { total: expect.any(Number), jev: expect.any(Number) }
+          ms: { total: expect.any(Number) }
         }
       ]
     ])

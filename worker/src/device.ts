@@ -4,7 +4,10 @@ import { APIError, TypeSafeClient, type Fetch } from '@typesafe-ai/sdk'
 import { DurableObject } from 'cloudflare:workers'
 import { checkEntitlement, type Entitlement } from './entitlement'
 
-/** How a call to Jev ended: its answer, with the model and tokens it reports, or how it failed, with its status. */
+/**
+ * How a call to Jev ended: its answer, with the model and tokens it reports, how it failed, with its status, or that
+ * the day's calls were spent before it could start.
+ */
 type JevReply =
   | (Pick<LineAnswer, 'kind' | 'topic' | 'scores'> & {
       outcome: 'answered'
@@ -12,7 +15,8 @@ type JevReply =
       inputTokens: number
       ms: number
     })
-  | { outcome: 'failed' | 'credits' | 'spent'; status?: number; ms: number }
+  | { outcome: 'failed' | 'credits'; status?: number; ms: number }
+  | { outcome: 'spent' }
 
 /**
  * How the user's object ended a line: Jev's reply, with the free lines left once it answered, or why the line got no
@@ -177,19 +181,28 @@ export class Device extends DurableObject<Env> {
 
   /**
    * Asks Jev about one line within `msLeft`, the milliseconds left of the line's 2.5 seconds (STATE-2). Each attempt,
-   * the SDK's retry included, first takes one of the day's calls (SEC-5); once none is left, the line is `spent`, and
-   * aborting the call stops the SDK from retrying. Any other failure, an answer out of shape included, is `failed`,
-   * except a 402, which is how running out of credits most likely shows (AVAIL-2).
+   * the SDK's retry included, first takes one of the day's calls (SEC-5), and a refusal aborts the call, so the SDK
+   * doesn't try again: the line is `spent` if no attempt reached Jev, and otherwise ends as its last attempt did. Any
+   * failure, an answer out of shape included, is `failed`, except a 402, which is how running out of credits most
+   * likely shows (AVAIL-2).
    */
   private async ask(line: JevLine, msLeft: number, dailyCalls: number): Promise<JevReply> {
     const started = Date.now()
     const calls = this.env.BUDGET.getByName('jev-calls', { locationHint: 'wnam' })
     const spent = new AbortController()
+    // Whether an attempt reached Jev, and the status Jev failed the last one with, which a refused retry keeps.
+    let attempted = false
+    let status: number | undefined
     const jev = this.jev(async (input, init) => {
       // The attempt's own time bounds its wait for the budget too, so a slow answer can't hold the line (STATE-2).
-      if (await unlessAborted(calls.take(dailyCalls), init?.signal)) return fetch(input, init)
-      spent.abort()
-      throw new Error("The day's calls to Jev are spent")
+      if (!(await unlessAborted(calls.take(dailyCalls), init?.signal))) {
+        spent.abort()
+        throw new Error("The day's calls to Jev are spent")
+      }
+      attempted = true
+      const response = await fetch(input, init)
+      status = response.ok ? undefined : response.status
+      return response
     })
     try {
       const result = await jev.systemOne(buildJevRequest(line, this.env.JEV_MODEL), {
@@ -207,7 +220,7 @@ export class Device extends DurableObject<Env> {
       }
     } catch (error) {
       const ms = Date.now() - started
-      if (spent.signal.aborted) return { outcome: 'spent', ms }
+      if (spent.signal.aborted) return attempted ? { outcome: 'failed', status, ms } : { outcome: 'spent' }
       if (!(error instanceof APIError)) return { outcome: 'failed', ms }
       return { outcome: error.status === 402 ? 'credits' : 'failed', status: error.status, ms }
     }
