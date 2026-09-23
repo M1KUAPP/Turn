@@ -663,6 +663,26 @@ README will copy. `eval/results-extras.md` is the second run's, at
 
 [legend-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/101
 
+### The second pull request's review
+
+One round on #100, [posted there][review-100], had the same three
+reviewers. They found no departure from the run's procedure and no wrong
+number; the fact-check recomputed all 215 rates and the Brier score's
+parts. Their 19 findings, some shared, were fixed in one commit each:
+
+- **In this plan:** the decision the run followed, each block's count
+  outside the band, the extra rankers' risk on all 80 lines, the README
+  that doesn't exist yet, the legend's wording, the dates, EVAL-5's
+  wording, a loose list, and the lead-ins.
+- **Elsewhere:** the TRD's EVAL-5 sentence, the body's numbers, issue #101
+  for the legend, and a refreshed graph.
+- **Kept:** commit `3d27874`'s message says decision 12, since a reword
+  would force-push over reviewed commits.
+- **After the merge:** #45's box, its closing comment, and the note on #64,
+  as decision 13 and Task 15 ask.
+
+[review-100]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/100#issuecomment-5801021832
+
 ## Appendix: the run's script
 
 `run.zsh`, run as `zsh -ic 'zsh run.zsh <worktree> <commit>'` so that
