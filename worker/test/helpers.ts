@@ -86,17 +86,12 @@ export const postLine = (body: unknown, changes: Parameters<typeof send>[1] = {}
 export const postLineFrom = (sent: Record<string, string>, changes: Parameters<typeof send>[1] = {}) =>
   send(lineFor(lineRequest(), { ...sent, 'Content-Type': 'application/json' }), changes)
 
-/**
- * Checks that a request gets this error, `400 invalid_request` unless another is given, before it reaches the user's
- * object or Jev (SEC-2, SEC-3), and returns the response.
- */
-export async function expectRefused(request: Request, status = 400, code = 'invalid_request') {
+/** Checks that a request gets 400 invalid_request before it reaches the user's object or Jev (SEC-2). */
+export async function expectRefused(request: Request) {
   const getByName = vi.fn()
-  const response = await send(request, { DEVICE: { getByName } })
-  await expectError(response, status, code)
+  await expectError(await send(request, { DEVICE: { getByName } }), 400, 'invalid_request')
   expect(getByName).not.toHaveBeenCalled()
   expect(vi.mocked(globalThis.fetch)).not.toHaveBeenCalled()
-  return response
 }
 
 /** Jev's answer: an open question, about feelings unless the topic says otherwise, scoring the candidates in order. */
