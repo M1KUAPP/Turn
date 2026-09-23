@@ -13,6 +13,7 @@
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
     "prepare": "husky",
+    "replay": "bun eval/src/replay.ts",
     "test": "bun run --filter '*' test",
     "typecheck": "bun run --filter '*' typecheck"
   },
