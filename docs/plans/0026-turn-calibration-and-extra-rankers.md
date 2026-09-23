@@ -656,9 +656,9 @@ September 23, 2026. The run followed decision 13:
   The file stays as the run wrote it, and the table under the plot gives
   the same numbers; the fix goes to a follow-up.
 
-`eval/results.md` stays the first run's, at `8ea25eb`, and is the README's
-table. `eval/results-extras.md` is the second run's, at `1b3ff03`, and every
-number above comes from it.
+`eval/results.md` stays the first run's, at `8ea25eb`, and is the table the
+README will copy. `eval/results-extras.md` is the second run's, at
+`1b3ff03`, and every result above comes from it.
 
 ## Appendix: the run's script
 
