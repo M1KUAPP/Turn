@@ -1,7 +1,7 @@
 import { fixedButtons } from '@turn/shared/row'
 import { PhraseIndex } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
-import { bank, lines, type Line } from '../src/data'
+import { bank, lines, secondLabeling, type Line } from '../src/data'
 
 const phrases = bank.categories.flatMap((category) => category.phrases)
 const phraseIds = phrases.map((phrase) => phrase.id)
@@ -44,4 +44,14 @@ test.todo('has at least 16 lines with no acceptable reply (EVAL-1)')
 test('has at least 10 lines that share no content word with any acceptable reply (EVAL-1)', () => {
   const answeredByRanking = (line: Line) => line.acceptable.some((id) => !fixedButtons.includes(id))
   expect(count((line) => answeredByRanking(line) && !sharesAWord(line))).toBeGreaterThanOrEqual(10)
+})
+
+test('commits a second labeling of every line beside the first, by another labeler', () => {
+  expect(secondLabeling.map((labels) => labels.id)).toEqual(lines.map((line) => line.id))
+  for (const [i, line] of lines.entries()) {
+    const labels = secondLabeling[i]
+    expect(labels?.labeler, line.id).toMatch(/\S/)
+    expect(labels?.labeler, line.id).not.toBe(line.labeler)
+    expectRepliesFollowRules(line, labels?.acceptable ?? [])
+  }
 })
