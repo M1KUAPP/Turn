@@ -84,11 +84,14 @@ const unnamed: Naming = {
   model: (model) => `version ${model.replace(/^jev-/, '')}`
 }
 
-/** Jev's top 6 minus embeddings', with its paired interval and what it says, or nothing unless both ranked. */
-const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[], naming: Naming) => {
+/**
+ * Jev's top 6 minus embeddings', with its paired interval, or nothing unless both ranked. Only all lines give EVAL-4's
+ * verdict: it names one comparison, and more intervals would make a false "trails" likelier.
+ */
+const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[], naming: Naming, verdict: boolean) => {
   const gap = names.includes('jev') && names.includes('embeddings') ? topSixGap(scores, 'jev', 'embeddings') : null
   if (gap === null) return []
-  const { difference, low, high, verdict } = gap
+  const { difference, low, high } = gap
   // What EVAL-4 reads from the interval.
   const says = {
     trails: `${naming.jev} trails embeddings (EVAL-4)`,
@@ -98,15 +101,14 @@ const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[], n
   return [
     wrap(
       `${naming.Jev} minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, with a 95% ` +
-        `paired interval of ${points(low)} to ${points(high)}, so ${says[verdict]}.`
+        `paired interval of ${points(low)} to ${points(high)}${verdict ? `, so ${says[gap.verdict]}` : ''}.`
     )
   ]
 }
 
-/** One group's ranking and row, with each rate's interval. */
+/** One group's ranking and row, with each rate's interval, and EVAL-4's verdict if it's the group of all lines. */
 const groupSections = (
-  name: string,
-  about: string,
+  { name, about, verdict }: { name: string; about: string; verdict: boolean },
   scores: readonly LineScore<Line>[],
   names: readonly string[],
   naming: Naming
@@ -135,7 +137,7 @@ const groupSections = (
             ]
           ),
           wrap(`The shortlist's recall at 40: ${rate(summary.recall)}.`),
-          ...gapLine(scores, names, naming)
+          ...gapLine(scores, names, naming, verdict)
         ]
   const capitalized = outcomes.map((outcome) => outcome[0].toUpperCase() + outcome.slice(1))
   const row = table(
@@ -311,21 +313,24 @@ const render = (
   const { run, file, pin, calls, curves, image, naming } = about
   const names = Object.keys(timings.rankers)
   const groups = [
-    { name: 'All lines', about: 'in the file', keep: () => true },
+    { name: 'All lines', about: 'in the file', keep: () => true, verdict: true },
     {
       name: 'Yes-or-no lines',
       about: 'that their writer marked yes-or-no',
-      keep: (line: Line) => line.kind === 'yes_no'
+      keep: (line: Line) => line.kind === 'yes_no',
+      verdict: false
     },
     {
       name: 'Pain and consent lines',
       about: 'about pain or asking for consent, which EVAL-5 names',
-      keep: (line: Line) => line.concerns.includes('pain') || line.concerns.includes('consent')
+      keep: (line: Line) => line.concerns.includes('pain') || line.concerns.includes('consent'),
+      verdict: false
     },
     {
       name: 'Lines that share no word with a reply',
       about: 'that share no word with an acceptable reply, as the phone matches words',
-      keep: (line: Line) => sharesNoWord(line, phrases)
+      keep: (line: Line) => sharesNoWord(line, phrases),
+      verdict: false
     }
   ]
   const steps: [string, number[]][] = [['shortlist', timings.shortlist], ...Object.entries(timings.rankers)]
@@ -376,7 +381,8 @@ const render = (
           'that are wrong. Always holding is right on every line with no acceptable reply.',
         `- **Intervals:** every rate carries its 95% Wilson interval. ${naming.Jev} minus embeddings in top 6 ` +
           'carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed ' +
-          `seed, and ${naming.jev} trails only when the whole interval lies below zero.`,
+          `seed, and ${naming.jev} trails only when the whole interval on all lines lies below zero; the subsets' ` +
+          'intervals carry no verdict, since more intervals would make a false one likelier.',
         `- **${naming.Jev}'s answers** vary a little from call to call, so each line is scored from the first of ` +
           'the three timed passes, and the big buttons come from all four answers, the warm-up included.'
       ]
@@ -385,11 +391,10 @@ const render = (
       'Contents:',
       sections.map((heading) => `1.  [${heading}](#${slug(heading)})`).join('\n'),
       ...provenance(labeled),
-      ...groups.flatMap(({ name, about, keep }) =>
+      ...groups.flatMap((group) =>
         groupSections(
-          name,
-          about,
-          scores.filter(({ line }) => keep(line)),
+          group,
+          scores.filter(({ line }) => group.keep(line)),
           names,
           naming
         )
