@@ -440,7 +440,7 @@ export default defineConfig({
   "compilerOptions": {
     "types": ["./worker-configuration.d.ts", "@cloudflare/vitest-plugin/types"]
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "vitest.config.ts"]
 }
 ```
 
