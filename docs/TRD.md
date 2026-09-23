@@ -1515,7 +1515,8 @@ version.
 - **Relay tests,** in the Workers runtime: validation and limits (SEC-2,
   SEC-3), the free-line count under concurrent requests (PAY-1), the
   entitlement cache and refresh (PAY-7), and every error code, with Jev and
-  RevenueCat mocked.
+  RevenueCat mocked; and the log summary and the credit alert's rule
+  (METRIC-2, AVAIL-2), with Cloudflare's API mocked.
 - **A contract test** keeps a snapshot of the Jev request, and a manual
   smoke test sends one line to Jev with the team's key.
 - **Device checks,** on the video's iPhone: transcription and line ends
