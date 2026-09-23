@@ -160,9 +160,10 @@ Contents:
 
 ## Hands-on check
 
-The session ran these on this Mac on September 23, 2026, before any phone
-was attached. The app was a SwiftUI project shaped like Xcode's iOS App
-template, with bundle ID `com.m1ku.turn`.
+The session ran these on this Mac on September 23, 2026, with times in UTC.
+The app was a SwiftUI project shaped like Xcode's iOS App template, with
+bundle ID `com.m1ku.turn`. The first three checks ran before any phone was
+attached.
 
 - **No phone, no signing.** With the Personal Team signed in and no phone
   attached, `xcodebuild` with `-allowProvisioningUpdates` and
@@ -184,20 +185,50 @@ template, with bundle ID `com.m1ku.turn`.
   `properties.connection.pairingState`. The deprecated `hardwareProperties`
   and `deviceProperties` held the same values, and no field named Developer
   Mode.
-- Synthesis: the build waits for the phone. Pick the phone out of the list
-  by `properties.hardware.reality`, and read its fields from `properties`.
+- **The phone.** At 10:05 an iPhone was attached by cable and trusted.
+  `device info details` read "iPhone 15 Pro Max" as its `marketingName`,
+  `iPhone16,2` as its `productType`, `physical` as its `reality`, iOS 27.0
+  (24A435), and `paired`. In the first `list devices` JSON, taken before
+  the phone's tunnel connected, `reality` and `marketingName` were empty.
+- **Developer Mode.** The deprecated `deviceProperties.developerModeStatus`
+  first read `disabled`. After the person turned the setting on and the
+  phone restarted, it read `enabled`, and
+  `properties.state.developerModeStatus` read `{"enabled":{"mode":1}}`.
+- **Signing with the phone.** A signed build that overlapped the phone's
+  restart for Developer Mode failed with "Timed out waiting for all
+  destinations matching the provided destination specifier to become
+  available". The next, from
+  10:08:08 to 10:08:43 with `-destination id=<UDID>` and both provisioning
+  flags, printed `** BUILD SUCCEEDED **`. It signed with a new Apple
+  Development identity and the profile "iOS Team Provisioning Profile:
+  com.m1ku.turn", created at 10:08:39 and expiring at 10:08:39 on September
+  30, with 1 device and an application identifier of the team ID followed
+  by `.com.m1ku.turn`. The Mac then held "1 valid identities found".
+- **Install and trust.** `devicectl device install app` succeeded at
+  10:08:56. A launch at 10:09:06 failed with CoreDeviceError 10002: "Unable
+  to launch com.m1ku.turn because it has an invalid code signature,
+  inadequate entitlements or its profile has not been explicitly trusted by
+  the user". After the person trusted the developer under Settings >
+  General > VPN & Device Management, the same launch succeeded at 10:10:20,
+  and the app kept running.
+- Synthesis: Apple registered `com.m1ku.turn` for the Personal Team at the
+  first build with a phone, and the profile lasts past the September 28
+  shoot. The phone is an iPhone 15 Pro Max, one of the "iPhone 15 Pro
+  models" that the iOS 27 guide lists for Personal Voice
+  ([Personal Voice devices][pv-devices]). Pick a phone out of the list only
+  after its tunnel connects.
+
+[pv-devices]: /docs/research/0023-turn-ios.md#personal-voice-devices-and-the-simulator
 
 ## Gaps
 
-- **Developer Mode's path.** The Simulator device had no Developer Mode
-  field, so its category is unseen; the phone's JSON will show it.
-- **Signing with a phone.** What Xcode makes once a phone is attached, and
-  the error for a bundle ID another team holds, weren't found.
-- **Trust error.** The launch error before the developer is trusted in
-  Settings > General > VPN & Device Management wasn't found in a primary
-  source.
-- **A paid team inside 7 days.** No Apple page says whether a live free
-  App ID blocks a paid team from registering `com.m1ku.turn`.
+- **Another team's registration.** `com.m1ku.turn` was free, so the error
+  for a bundle ID another team holds wasn't seen. No Apple page says
+  whether a live free App ID blocks another team, free or paid, from
+  registering it; a teammate who builds under their own Personal Team may
+  meet that.
+- **The trust error's source.** No Apple page gives the launch error before
+  the developer is trusted; the hands-on check quotes iOS's own message.
 - **Table oddities.** The table's `iPhone19,4` reads only "iPhone", and
   `iPhone19,7` repeats "iPhone 18 Pro Max". Its build, 27A200c, differs from
   the installed 27A266a.
