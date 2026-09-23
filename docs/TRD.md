@@ -1282,9 +1282,13 @@ ran under Wrangler 4.136.2:
   - **Each attempt counts.** The number is `JEV_DAILY_CALLS`. The user's
     object gives the SDK a `fetch` that takes a call from `jev-calls` before
     every attempt, the retry included ([relay limits notes][limits-sdk]).
-  - **A spent budget.** Once no call is left, the `fetch` aborts the call,
-    so the SDK doesn't retry, and the line ends as `spent`: it answers as a
-    failed call does, with no `Retry-After`, and keeps its free line.
+    Its wait for the budget ends with the attempt's own time, so a slow
+    answer can't hold a line past its 2.5 seconds (STATE-2).
+  - **A spent budget.** A refusal aborts the call, so the SDK doesn't try
+    again. A line refused before any call ends as `spent`, with no time in
+    Jev; one whose retry is refused ends as its first attempt did, `failed`
+    with Jev's status. Either answers as a failed call does, with no
+    `Retry-After`, and keeps its free line.
 - **The switch:** `JEV_ON` set to false stops every call to Jev at once
   (STATE-3).
 - **Errors** carry only the codes above (SEC-4).
