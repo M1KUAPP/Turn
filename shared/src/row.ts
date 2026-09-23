@@ -118,3 +118,13 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   }
   return { ...row, seq, big: null, slots, tab }
 }
+
+/** Empties the row, forgets the big button's phrase, and unmarks the tab, keeping the newest line's number (ROW-10). */
+export function clearRow(row: Row): Row {
+  return { ...emptyRow, seq: row.seq }
+}
+
+/** The phrases in the row, for the shortlist's first step: the big button's, then the slots', never a fixed button. */
+export function phrasesInRow({ big, slots }: Row): string[] {
+  return [big, ...slots].filter((id): id is string => id !== null && !fixedButtons.includes(id))
+}
