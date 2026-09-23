@@ -27,7 +27,7 @@ const bodies = () => vi.mocked(globalThis.fetch).mock.calls.map(([, init]) => JS
 describe("reading the relay's logs", () => {
   test("asks for the relay's events in the range, 2,000 at a time, without saving the query", async () => {
     mockCloudflare(page([event('e1')]))
-    const { lines, matched } = await readLogs(access, 1790035200000, 1790121600000)
+    const { lines, matched } = await readLogs(access, { from: 1790035200000, to: 1790121600000 })
     const [[input, init]] = vi.mocked(globalThis.fetch).mock.calls
     expect(String(input)).toBe(
       'https://api.cloudflare.com/client/v4/accounts/account-test/workers/observability/telemetry/query'
@@ -54,7 +54,7 @@ describe("reading the relay's logs", () => {
   test("pages on from the last event's ID until a page comes back short", async () => {
     const full = Array.from({ length: pageSize }, (_, i) => event(`a${i}`))
     mockCloudflare(page(full, pageSize + 3), page([event('b0'), event('b1'), event('b2')], pageSize + 3))
-    const { lines, matched } = await readLogs(access, 0, 1)
+    const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
     expect(lines).toHaveLength(pageSize + 3)
     expect(matched).toBe(pageSize + 3)
     const [first, second] = bodies()
@@ -66,7 +66,7 @@ describe("reading the relay's logs", () => {
     mockCloudflare(
       page([event('e1'), event('e2', 'Worker started'), event('e3', { message: 'no outcome' }), event('e1')], 4)
     )
-    const { lines, matched } = await readLogs(access, 0, 1)
+    const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
     expect(lines).toHaveLength(1)
     expect(matched).toBe(4)
   })
@@ -74,7 +74,7 @@ describe("reading the relay's logs", () => {
   test('throws, without asking again, when a full page brings no event it has not seen', async () => {
     const full = page(Array.from({ length: pageSize }, (_, i) => event(`a${i}`)))
     mockCloudflare(full, full, full)
-    await expect(readLogs(access, 0, 1)).rejects.toThrow('The telemetry query repeated a page')
+    await expect(readLogs(access, { from: 0, to: 1 })).rejects.toThrow('The telemetry query repeated a page')
     expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledTimes(2)
   })
 
@@ -94,7 +94,7 @@ describe("reading the relay's logs", () => {
     ]
   ])('throws, without the token, when the API %s', async (_, reply) => {
     mockCloudflare(reply)
-    const error = await readLogs(access, 0, 1).catch((error: unknown) => error)
+    const error = await readLogs(access, { from: 0, to: 1 }).catch((error: unknown) => error)
     expect(error).toBeInstanceOf(Error)
     expect(String(error)).toMatch(/telemetry query/)
     expect(String(error)).not.toContain('test-logs-token')
@@ -104,7 +104,9 @@ describe("reading the relay's logs", () => {
     mockCloudflare(() =>
       Response.json({ success: false, errors: [{ code: 10000, message: 'Authentication error' }] }, { status: 403 })
     )
-    await expect(readLogs(access, 0, 1)).rejects.toThrow('The telemetry query answered 403: Authentication error')
+    await expect(readLogs(access, { from: 0, to: 1 })).rejects.toThrow(
+      'The telemetry query answered 403: Authentication error'
+    )
   })
 })
 
