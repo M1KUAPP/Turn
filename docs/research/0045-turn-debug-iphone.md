@@ -184,7 +184,8 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   URL provided. Make sure the packager is running or you have embedded a JS
   bundle in your application bundle." (112), or "Could not connect to
   development server." with "WiFi is enabled and connected to the same
-  network as the Node Server" (247-251).
+  network as the Node Server" (247-251). The error screen's background is
+  black (`React/CoreModules/RCTRedBoxController.mm:78`).
 - **Local network privacy.** TN3179: "Outgoing traffic to a local network
   address requires local network access", and "If the system presents a
   local network alert in response to one of your local network operations,
@@ -385,13 +386,14 @@ it was kept.
   The `.app` holds `ip.txt` with the Mac's Wi-Fi address and no
   `main.jsbundle`.
 - **Local Network.** That screenshot showed iOS's alert, "Allow “Turn” to
-  find devices on local networks?", over React Native's red "No script URL
-  provided" screen. The alert closed at 12:54:53, and a `devicectl`
-  relaunch at 12:55:12 still showed the red screen. The person was then
-  asked to switch Turn on under Settings > Privacy & Security > Local
-  Network, check that the phone was on the Mac's Wi-Fi, and tap Reload JS.
-  By 12:57:16 Metro had logged "iOS Bundled 4645ms app/index.ts (709
-  modules)".
+  find devices on local networks?", over React Native's error screen: black,
+  with a red band reading "No script URL provided". The alert closed at
+  12:54:53, and a `devicectl` relaunch at 12:55:12, as process 1235, still
+  showed the error screen. The person was then asked to switch Turn on
+  under Settings > Privacy & Security > Local Network, check that the phone
+  was on the Mac's Wi-Fi, and tap Reload JS. Turn next ran as process 1242,
+  which the session hadn't launched, and by 12:57:16 Metro had logged "iOS
+  Bundled 4645ms app/index.ts (709 modules)".
 - **Light and dark.** `devicectl` set light, dark, and light again, and
   `device info appearance` read each back before the screenshots at
   12:57:53, 12:57:57, and 12:58:02. Each was 1290 by 2796 pixels in sRGB
@@ -404,9 +406,10 @@ it was kept.
   phone, was entirely `#000000` with no status bar.
 - Synthesis: Turn's Debug build installs and runs on the video iPhone under
   the free Personal Team, and #80's profile covers it through September 30.
-  A phone's first launch meets the Local Network alert and the red screen;
-  with access on and the phone on the Mac's Wi-Fi, Reload JS loads the
-  bundle. Take screenshots only while the phone is unlocked and awake.
+  A phone's first launch meets the Local Network alert over the error
+  screen; once Turn has access and the phone is on the Mac's Wi-Fi, a new
+  launch loads the bundle. Take screenshots only while the phone is
+  unlocked and awake.
 
 ## Gaps
 
