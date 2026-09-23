@@ -41,14 +41,17 @@ Contents:
   ([Certificates overview][certs])
 - **Destinations.** `man xcodebuild` shows both
   `-destination generic/platform=iOS` and
-  `-destination 'platform=iOS,name=My iPad'`.
-- Synthesis: name the phone as the destination, since device registration
+  `-destination 'platform=iOS,name=My iPad'`. For an iOS device, "A valid
+  destination specifier must provide either id or name, but not both",
+  where `id` is "The identifier of the device to use".
+- Synthesis: pick the phone as the destination, since device registration
   acts on "your destination device"; a generic destination names no phone.
-  Run this only by hand, since it talks to Apple with the account.
+  Pick it by its UDID, which keeps the phone's name out of commands and
+  logs. Run this only by hand, since it talks to Apple with the account.
 
   ```shell
   xcodebuild -workspace ios/Turn.xcworkspace -scheme Turn \
-    -configuration Debug -destination 'platform=iOS,name=<phone-name>' \
+    -configuration Debug -destination 'id=<udid>' \
     -allowProvisioningUpdates -allowProvisioningDeviceRegistration \
     CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM=<team-id> build
   ```
@@ -75,9 +78,9 @@ Contents:
 - Synthesis: install, then launch, and keep both JSON files as proof.
 
   ```shell
-  xcrun devicectl device install app --device <phone-name> \
+  xcrun devicectl device install app --device <udid> \
     --json-output install.json <path/to/Turn.app>
-  xcrun devicectl device process launch --device <phone-name> \
+  xcrun devicectl device process launch --device <udid> \
     --json-output launch.json com.m1ku.turn
   ```
 
