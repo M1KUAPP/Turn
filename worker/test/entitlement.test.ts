@@ -187,6 +187,33 @@ describe('lines past the free lines (PAY-7)', () => {
     expect((await postLine(lineRequest({ refresh: true }), paid)).status).toBe(200)
   })
 
+  test('let the line after a failed refresh ask again, not meet the no the refresh skipped (PAY-4)', async () => {
+    mockRevenueCat(activeEntitlements(), rcError(503, 'server_error'), activeEntitlements(listen))
+    mockJev(...jevAnswers(1))
+    await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
+    await expectError(await postLine(lineRequest({ refresh: true }), paid), 503, 'jev_unavailable')
+    expect((await postLine(lineRequest(), paid)).status).toBe(200)
+  })
+
+  test("keep a yes that arrived while a failed refresh's check ran", async () => {
+    mockRevenueCat(
+      activeEntitlements(),
+      async () => {
+        await scheduler.wait(300)
+        return rcError(503, 'server_error')()
+      },
+      activeEntitlements(listen)
+    )
+    mockJev(...jevAnswers(2))
+    await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
+    const failing = postLine(lineRequest({ refresh: true }), paid)
+    await scheduler.wait(50)
+    expect((await postLine(lineRequest({ refresh: true }), paid)).status).toBe(200)
+    await expectError(await failing, 503, 'jev_unavailable')
+    expect((await postLine(lineRequest(), paid)).status).toBe(200)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(3)
+  })
+
   test('answer from a yes older than a day when RevenueCat fails', async () => {
     mockRevenueCat(activeEntitlements(listen), rcError(500, 'server_error'))
     mockJev(...jevAnswers(2))

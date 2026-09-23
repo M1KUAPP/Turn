@@ -87,7 +87,8 @@ export class Device extends DurableObject<Env> {
    * Whether the user may have lines past the free ones (PAY-7). A cached yes under a day old answers at once, and so
    * does a cached no under a minute old, unless the line carries `refresh` and no refresh skipped one in the last
    * minute (PAY-4). Otherwise the object asks RevenueCat and caches its answer, recording a refresh only once its check
-   * answered. If RevenueCat can't answer, a cached yes of any age still counts, and nothing else is a no.
+   * answered. If RevenueCat can't answer, a cached yes of any age still counts, and nothing else is a no; a refresh it
+   * couldn't answer leaves the cached no stale.
    */
   private async entitled(user: string, refresh: boolean): Promise<Entitlement> {
     const now = Date.now()
@@ -97,7 +98,12 @@ export class Device extends DurableObject<Env> {
     const refreshing = freshNo && refresh && (cached.refreshed_at === null || now - cached.refreshed_at >= minute)
     if (freshNo && !refreshing) return 'no'
     const answer = await checkEntitlement(this.env, user)
-    if (answer === 'unknown') return cached?.active ? 'yes' : 'unknown'
+    if (answer === 'unknown') {
+      // A refresh RevenueCat couldn't answer leaves the no it skipped stale, so the next line asks again rather than
+      // meeting it after a purchase (PAY-4).
+      if (refreshing) this.ctx.storage.sql.exec('UPDATE entitlement SET checked_at = 0 WHERE active = 0')
+      return cached?.active ? 'yes' : 'unknown'
+    }
     // The newest check's answer stays, not the last to finish: an older no mustn't cover a newer yes.
     this.ctx.storage.sql.exec(
       'INSERT INTO entitlement (id, active, checked_at, refreshed_at) VALUES (1, ?, ?, ?) ' +
