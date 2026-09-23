@@ -1371,6 +1371,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
 | The daily Jev budget spent                  | `503 jev_unavailable`                                     | the same, until midnight UTC                                     |
 | Over the Free plan's 100,000 requests a day | Cloudflare's Error 1027                                   | the same; the team moves to Workers Paid, $5 a month             |
 | Over the Free plan's object limits a day    | a call to an object fails: `500 internal`                 | the same, until midnight UTC; the team moves to Workers Paid     |
+| Over the Free plan's 5 GB of stored data    | a write to an object fails: `500 internal`                | the same, until the team removes data or moves to Workers Paid   |
 | Jev turned off                              | `503 jev_off`                                             | the same, with the degraded notice (STATE-3)                     |
 | RevenueCat down, past free lines            | the check fails; `unverified` with no yes cached          | a cached yes still answers; otherwise `503`, never a false `402` |
 | Transcription unavailable                   | `turn-listen` reports it                                  | the message, the typed field, the fallback recognizer (LISTEN-9) |
