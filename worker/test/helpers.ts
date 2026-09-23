@@ -120,6 +120,22 @@ export const mockJev = (...replies: Reply[]) => queue('api.typesafe.ai', replies
 /** Stands in for RevenueCat's API with these responses in turn, and returns the spy. */
 export const mockRevenueCat = (...replies: Reply[]) => queue('api.revenuecat.com', replies)
 
+/** RevenueCat's answer for an app user ID it has never seen. */
+export const unknownCustomer = () =>
+  Response.json(
+    { object: 'error', type: 'resource_missing', message: 'Resource not found', retryable: false },
+    { status: 404 }
+  )
+
+/** Jev's answer, for each of `count` calls. */
+export const jevAnswers = (count: number) => Array.from({ length: count }, () => () => Response.json(jevAnswer()))
+
+/** The free lines the configuration shows, to the test's user unless the headers name another. */
+export async function freeLinesLeft(sent: Record<string, string> = headers) {
+  const response = await send(new Request('https://relay.test/v1/config', { headers: sent }))
+  return ((await response.json()) as { freeLinesLeft: number | null }).freeLinesLeft
+}
+
 /** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
 export const jevError = (status: number) => () =>
   Response.json({ detail: 'Traceback: bad key test-typesafe-key' }, { status })
