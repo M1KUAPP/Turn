@@ -421,7 +421,7 @@ Errors return `{ "error": "<code>" }`:
 | 500    | `internal`        | anything else                                  | ranks on the phone                  |
 
 The body may hold at most 16 KB, and a request that breaks any limit above
-gets `400` before the free-line count or any call (SEC-2).
+gets `400` before any count or call (SEC-2).
 
 ## Decision pipeline
 
