@@ -214,6 +214,52 @@ test("counts the scores where each block's fit lies outside the band, not the sp
   expect(againstBand(reliability(halves))).toMatchObject([{ low: 0.1, high: 0.9, value: 0.5, scores: 2, outside: 2 }])
 })
 
+/**
+ * The band's exact 5th and 95th percentiles at each distinct score: every draw of the lines' indices and every set of
+ * outcomes, each weighted by its chance, and the smallest fit whose share of the weight reaches each percentile; the
+ * 9,999 resamples estimate these.
+ */
+const exactBand = (made: readonly Forecast[]) => {
+  const n = made.length
+  const scores = [...new Set(made.map(({ score }) => score))].toSorted((a, b) => a - b)
+  const fits = scores.map((): [fit: number, chance: number][] => [])
+  const draws = (k: number): number[][] =>
+    k === 0 ? [[]] : draws(k - 1).flatMap((rest) => made.map((_, i) => [...rest, i]))
+  for (const drawn of draws(n)) {
+    for (let outcomes = 0; outcomes < 2 ** n; outcomes++) {
+      const resample = drawn.map((i, j) => ({ score: made[i].score, right: ((outcomes >> j) & 1) === 1 }))
+      const chance = resample.reduce((p, { score, right }) => p * (right ? score : 1 - score), 1 / n ** n)
+      const blocks = pav(resample)
+      scores.forEach((score, s) => {
+        const fit = fitAt(blocks, score)
+        if (chance > 0 && !Number.isNaN(fit)) fits[s].push([fit, chance])
+      })
+    }
+  }
+  const percentileOf = (weighted: [number, number][], share: number) => {
+    const total = weighted.reduce((sum, [, chance]) => sum + chance, 0)
+    let reached = 0
+    return weighted
+      .toSorted(([a], [b]) => a - b)
+      .find(([, chance]) => (reached += chance) >= share * total - 1e-12)?.[0]
+  }
+  return scores.map((score, s) => ({ score, low: percentileOf(fits[s], 0.05), high: percentileOf(fits[s], 0.95) }))
+}
+
+test('resamples the lines and reads the fit between their scores, as an exact count of every draw gives', () => {
+  const made = forecasts([0, false], [0, false], [0.1, false], [0.75, false], [1, true])
+  const exact = exactBand(made)
+  // Keeping each line and redrawing only its outcome would give 0 to 1 at 0.1; dropping a resample that holds no line
+  // at 0.1, rather than reading its fit on the line between 0 and 0.75, would give 0 to 2/3.
+  expect(exact.map(({ score, low, high }) => [score, low, high])).toEqual([
+    [0, 0, 0],
+    [0.1, 0, 0.5],
+    [0.75, 0, 1],
+    [1, 1, 1]
+  ])
+  expect(consistencyBand(made)).toEqual(exact)
+})
+
 test('holds 90% of the resampled fits: at one score, the 5th and 95th percentiles of a binomial share', () => {
   // 100 lines at 0.5 pool into one block, whose fit is the share of 100 draws that are right: its 5th and 95th
   // percentiles are 0.5 ∓ 1.645 × 0.05, where a 95% band would reach 0.40 and 0.60.
