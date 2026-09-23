@@ -179,8 +179,8 @@ pass to `/wizard`. The directive's steps map to skills:
   and the tickets carry the texts and commands.
 - **Deploying a Durable Object** to prove the account allows one: SQLite
   Durable Objects are on the Free plan ([Cloudflare notes][note-cf]), the
-  account's namespace list answers, and #24 deploys the relay's two classes
-  anyway.
+  account's namespace list answers, and #24 and #35 deploy the relay's two
+  classes anyway.
 - **Other bundle IDs.** `io.github.revenuecat-m1ku.turn`, from the
   organization's GitHub Pages domain, puts the sponsor's name in the app's
   ID; `dev.workers.<subdomain>.turn`, from the relay's subdomain, ties the
