@@ -35,6 +35,7 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+1.  [Appendix: the line writers' brief](#appendix-the-line-writers-brief)
 
 [bank-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/18
 [lines-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/19
@@ -132,7 +133,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     #21's labelers differ from each line's writer. Each writes 10 lines per
     place, for a different user: `claude-a` for an adult in their sixties
     with ALS, and `claude-b` for an adult in their forties, a year after a
-    stroke.
+    stroke. Two instances of one model share habits, so `claude-b` then
+    replaced its lines that matched `claude-a`'s (Task 4). The writers
+    needn't be blind to each other, only to the bank.
 1.  **The lines' mix.** Each writer's 40 lines hold 22 to 24 yes-or-no, at
     least half of them declarative or tagged; 3 or 4 either-or; 6 to 8 open;
     6 to 8 not a question; at least 6 on pain or health and 3 asking
@@ -173,13 +176,16 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     package's smoke test goes, since the new tests show that Vitest runs
     TypeScript there.
 1.  **The path comes before the app.** The bank sits at the TRD's
-    `app/src/content/starter-bank.json` before the Expo project exists, so
-    #22 scaffolds around it, and a comment there says so.
+    `app/src/content/starter-bank.json` before the Expo project exists.
+    `create-expo-app` 5.0.0 refuses a folder that holds `src/` ("The
+    directory app has files that might be overwritten"), so #22 scaffolds
+    beside it and moves the project in, and a comment there says so.
 1.  **The read-through.** A fourth agent, which wrote nothing, reads every
     phrase for plain US English, clarity, tone, place ties, names, and the
-    safety phrases CONTENT-1 lists, and signs off on the final file after
-    its fixes. Its sign-off goes on #18 as an agent's read, not a
-    teammate's.
+    safety phrases CONTENT-1 lists, and doesn't see the lines either. The
+    bank's writer, not this session, applies its fixes, since this session
+    has read the lines; the reader then confirms the final file. Its
+    sign-off goes on #18 as an agent's read, not a teammate's.
 
 [eval-writing]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 
@@ -282,6 +288,12 @@ delete `eval/test/smoke.test.ts`.
       40 lines each into their own scratch folders, and the bank's writer
       writes `app/src/content/starter-bank.json` until its check passes.
 - [ ] **Step 2: Check the reports,** then read each file whole.
+- [ ] **Step 3: Remove near-duplicates.** Writing alone, the two line
+      writers matched on seven situations, such as falls, blood pressure, a
+      dose change, and the weather. Show `claude-b` only `claude-a`'s seven
+      lines and ask it to replace its own seven with new situations,
+      keeping each one's id, place, kind, and concerns, so the mix holds and
+      the set doesn't test one thing twice.
 
 ### Task 5: The lines
 
@@ -311,8 +323,9 @@ delete `eval/test/smoke.test.ts`.
 - [ ] **Step 1: Start the reader,** a `general-purpose` agent that reads
       every phrase and returns each issue with the phrase's id and a fix,
       without editing the file.
-- [ ] **Step 2: Apply the fixes it and the plan agree on,** run the gate,
-      and ask the reader to confirm the final file.
+- [ ] **Step 2: Pass its report, unchanged, to the bank's writer,** which
+      applies the fixes and reruns its check; then run the gate, and ask
+      the reader to confirm the final file.
 - [ ] **Step 3: Commit,** if anything changed:
 
   ```shell
@@ -356,5 +369,101 @@ delete `eval/test/smoke.test.ts`.
       criteria with a closing comment, post the read-through's sign-off on
       #18, and note the file's place on #22, the bank on #27, and the lines'
       fields on #21 and #29.
+
+## Appendix: the line writers' brief
+
+Each line writer got this brief, word for word, as its whole prompt, with
+`{FOLDER}` set to its own scratch folder, `{AUTHOR}` to `claude-a` or
+`claude-b`, `{FIRST}` and `{LAST}` to `line-01` and `line-40` or `line-41`
+and `line-80`, and `{USER}` to one of these:
+
+- **`claude-a`:** "An adult in their sixties with ALS. They still walk short
+  distances with a cane, live with their spouse, and see a neurologist, a
+  speech therapist, and a physical therapist at the clinic every few weeks."
+- **`claude-b`:** "An adult in their forties who had a stroke a year ago.
+  They understand everything, but their speech is hard to understand and
+  their right hand is weak. They live alone, with family and friends
+  dropping by, and go to a clinic for speech and physical therapy."
+
+The bank's writer and the reader weren't given it.
+
+````text
+You are one of two writers of an evaluation set for Turn, an iPhone app. Write alone, from your own imagination.
+
+## Rules
+
+- Read nothing: not the repository, not the web, not any other file or folder. Never look for the other writer's work or for any list of the app's phrases; you must not see them. Everything you need is here. (A repo hook would require `graphify query "<question>"` before reading repo files; you have no reason to read any.)
+- Write only inside {FOLDER}. No git, no GitHub. Never send any personal identifier to any service.
+
+## What Turn is
+
+Turn is an iPhone app for adults who can't speak, for example people with ALS, after a stroke, or after a laryngectomy. The user speaks by tapping saved phrases, or by typing. In Listen mode, the phone transcribes what the conversation partner says, one "partner line" at a time, and suggests which of the user's saved phrases answer it, or suggests nothing when none fits. Your lines test that step: whether the app offers a fitting reply, and whether it holds back when nothing fits.
+
+## The user in your lines
+
+{USER}
+
+Partners don't mention the condition in every line; they talk about ordinary life too.
+
+## Who speaks
+
+The partner: family, friends, carers, nurses, doctors, therapists, shop staff, neighbors, or strangers, talking face to face with the user. Each line is one turn by the partner, as a live transcript would show it.
+
+## The four places
+
+Each line happens at one of the user's places: `home`, `clinic`, `shop`, or `out` (anywhere else: a park, a cafe, a bus stop, a friend's house, a family party). The app knows only the place's name, not what came before, so each line must make sense on its own, with the place as its only context.
+
+## What to write: 40 lines
+
+- Exactly 10 lines at each place.
+- Natural spoken US English, the way people really talk to a friend, a patient, or a customer: contractions, short fragments, the odd "so" or "okay". No stage directions, and no quotation marks around the line. Most lines under 80 characters; none over 300.
+- Put a "?" at the end when the partner is asking, even when the words are a statement.
+- No personal names (say "your sister", "the nurse", "your neighbor"), no real people, no brands, no profanity.
+- Vary partners, topics, and wording; don't use one sentence pattern more than twice. Don't reuse any example sentence from this brief, and don't copy lines from any dataset, book, or website.
+
+### Kind
+
+Judge each line by the reply it invites. These are the app's own definitions:
+
+- `yes_no`, "Can be answered with yes or no": write 22 to 24. At least half of them declarative, a statement said as a question ("You're cold?"), or with a tag ("That was quick, wasn't it?"); the rest ordinary questions ("Do you want the window open?"). An offer counts here when yes or no would be a complete reply.
+- `either_or`, "Asks the listener to pick one of the options it names" ("Tea or coffee?"): write 3 or 4.
+- `open`, "Needs an answer in the listener's own words" ("How did you sleep?"): write 6 to 8.
+- `not_a_question`, "A statement, greeting, or comment, not a question" ("Morning! I brought the paper."): write 6 to 8.
+
+### Concerns
+
+List in `concerns` every one of these that applies, or none:
+
+- `pain`: pain, discomfort, or where it hurts.
+- `health`: symptoms, medicines, treatment, therapy, tests, sleep or eating as health, or how the condition is going.
+- `consent`: the partner asks permission for care, touch, a procedure, or something done on the user's behalf, or checks that the user agrees.
+
+Write at least 6 lines that concern pain or health, and at least 3 that ask for consent, spread over the places rather than all at the clinic.
+
+### Lines with no stored reply
+
+About a quarter of your lines, 9 or 10, should be ones that a typical set of short saved phrases couldn't answer well: questions that need a specific fact only the user has (a date, an amount, which one, a detail of their day), remarks not really addressed to the user, and chat that needs no reply. Keep them natural, not trick questions.
+
+### Wording
+
+Write the way people talk, not the way a phrase list is written. Most lines should share no content word with a natural reply: "How was the drive over?" might be answered "Long, but fine".
+
+### Topic
+
+Give each line a `topic`: 1 to 3 lowercase words, letters and single spaces only, naming what it's about, such as "sleep", "blood pressure", or "weekend plans".
+
+## Output
+
+1. `{FOLDER}/lines.jsonl`: exactly 40 lines, one JSON object per line, keys in this order, with ASCII apostrophes ('):
+
+   ```json
+   {"id":"{FIRST}","author":"{AUTHOR}","text":"...","kind":"yes_no","place":"home","topic":"...","concerns":["health"]}
+   ```
+
+   Ids run from "{FIRST}" to "{LAST}" in order, and `author` is always "{AUTHOR}".
+2. Before you finish, check the file with a short script in {FOLDER} (python3 is available): 40 valid JSON objects; the ids above; 10 lines per place; every kind and concern from the lists above; texts of 1 to 300 characters with no leading or trailing space; the kind and concern counts above; topics matching `^[a-z]+( [a-z]+)*$`; no two texts alike. Fix anything off.
+
+Report back in under 100 words: the file's path, the counts by kind, place, and concern, and how many lines you meant to have no stored reply. Don't paste the lines.
+````
 
 [trd-eval-data]: /docs/TRD.md#the-evaluation-data
