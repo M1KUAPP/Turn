@@ -363,6 +363,7 @@ Errors return `{ "error": "<code>" }`:
 | Status | Code              | When                                           | The app                             |
 | ------ | ----------------- | ---------------------------------------------- | ----------------------------------- |
 | 400    | `invalid_request` | a header, field, or length outside the limits  | ranks on the phone; logs the bug    |
+| 404    | `not_found`       | a path or method the relay doesn't serve       | ranks on the phone; logs the bug    |
 | 409    | `duplicate`       | a line ID this user's free lines already hold  | ranks on the phone; logs the bug    |
 | 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
 | 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
