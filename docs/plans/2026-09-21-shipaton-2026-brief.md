@@ -1,9 +1,8 @@
 # Shipaton 2026 brief implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use
-> superpowers:subagent-driven-development (recommended) or
-> superpowers:executing-plans to implement this plan task-by-task. Steps use
-> checkbox (`- [ ]`) syntax for tracking.
+> Written for obra/superpowers' `subagent-driven-development` and
+> `executing-plans` skills, which the repo replaced with mattpocock/skills
+> on September 22, 2026. The tasks below are done.
 
 **Goal:** Add `docs/BRIEF.md`, a concise, source-backed brief of RevenueCat
 Shipaton 2026 for the team and the agents working in this repo.
