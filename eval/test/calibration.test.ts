@@ -185,6 +185,14 @@ test('draws the diagram as an SVG: the diagonal, the band, the fit through each 
   expect(reliabilityPlot(reliability(worked), 'A & <b>')).toContain("<title>Reliability of A &amp; &lt;b&gt;'s")
 })
 
+test('draws the band at a single score as a bar, since an outline of one score encloses nothing', () => {
+  // Eight lines at 0.9, three right, as the fixture's stand-in gives them: the band there runs from 6 to 8 of 8.
+  const single = forecasts(...Array.from({ length: 8 }, (_, i): [number, boolean] => [0.9, i < 3]))
+  const plotted = reliabilityPlot(reliability(single), 'Jev')
+  expect(plotted).not.toContain('<polygon')
+  expect(plotted).toContain('<line x1="424.0" y1="124.0" x2="424.0" y2="24.0" stroke="#d1d5db" stroke-width="10"/>')
+})
+
 test('shades the band along its upper bounds, low to high, and back along its lower bounds', () => {
   const band = [
     { score: 0.2, low: 0.1, high: 0.5 },
