@@ -1,4 +1,5 @@
 import { fixedButtons } from '@turn/shared/row'
+import { rankable } from '@turn/shared/shortlist'
 import { parseArgs } from 'node:util'
 import { compareLabelings } from './agreement'
 import { checkLabels, linesFrom, phrases, readRows, secondLabeling, type Labels, type Line } from './data'
@@ -32,13 +33,13 @@ export function main(args: readonly string[]): number {
     atLeast('sharing no word with a reply', 10, (line) => sharesNoWord(line, phrases))
   ]
   // The pairs are each line and every phrase the row can rank, with the fixed buttons on a yes-or-no line.
-  const rankable = phrases.filter(({ fixed, strip }) => !fixed && !strip).map(({ id }) => id)
+  const rankableIds = phrases.filter(rankable).map(({ id }) => id)
   const secondById = new Map(second.map((labels) => [labels.id, labels]))
   const { noneOrSome, pairs, alpha } = compareLabelings(
     lines.map((line) => {
       const labels = secondById.get(line.id)
       if (labels === undefined) throw new Error(`${line.id} has no second labeling`)
-      const candidates = line.kind === 'yes_no' ? [...fixedButtons, ...rankable] : rankable
+      const candidates = line.kind === 'yes_no' ? [...fixedButtons, ...rankableIds] : rankableIds
       return { first: line.acceptable, second: labels.acceptable, candidates }
     })
   )
