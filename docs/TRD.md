@@ -1282,12 +1282,15 @@ ran under Wrangler 4.136.2:
     address keeps the binding, which let 250 requests from one address
     through in 18 seconds, so against a burst the daily budget is what
     caps Jev's calls.
-  - **Where:** once a request's headers and a line's lengths pass. The ID's
-    count comes first, then the address's, so a request the ID's own count
-    refuses doesn't count against its address. The address is
-    `CF-Connecting-IP`, which Cloudflare's edge won't take from a client.
-  - **The answer:** `429 rate_limited` with `Retry-After: 60`, a whole
-    minute, since the binding reports only whether a call passed.
+  - **Where:** once a request's headers and a line's lengths pass. The
+    address's limit comes first, before any object, so once it holds, a
+    flood from IDs minted on one address reaches none of their objects;
+    then the user's object counts the request as the first step of serving
+    it. The address is `CF-Connecting-IP`, which Cloudflare's edge won't
+    take from a client.
+  - **The answer:** `429 rate_limited` with `Retry-After: 60`: a whole clock
+    minute for the ID's count, and the longest period the address's binding
+    can have, since it reports only whether a call passed.
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
   lines nor `listen` guards Jev's credits. One more Durable Object counts Jev
@@ -1297,7 +1300,8 @@ ran under Wrangler 4.136.2:
     object gives the SDK a `fetch` that takes a call from `jev-calls` before
     every attempt, the retry included ([relay limits notes][limits-sdk]).
     Its wait for the budget ends with the attempt's own time, so a slow
-    answer can't hold a line past its 2.5 seconds (STATE-2).
+    answer can't hold a line past its 2.5 seconds (STATE-2); a call the
+    budget counts after its attempt gave up is never sent.
   - **A spent budget.** A refusal aborts the call, so the SDK doesn't try
     again. A line refused before any call ends as `spent`, with no time in
     Jev; one whose retry is refused ends as its first attempt did, `failed`
