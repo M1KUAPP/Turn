@@ -161,7 +161,7 @@ pass to `/wizard`. The directive's steps map to skills:
 ### Out of scope
 
 - Turn's app and `npx expo run:ios --device` (#22).
-- The teammates' iPhones and the transcription check on each (#49).
+- The transcription check on the video iPhone (#49).
 - The video's build, its install date, and the shoot (#65 and #67).
 
 ## Verification gate
