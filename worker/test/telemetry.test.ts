@@ -71,6 +71,13 @@ describe("reading the relay's logs", () => {
     expect(matched).toBe(4)
   })
 
+  test('throws, without asking again, when a full page brings no event it has not seen', async () => {
+    const full = page(Array.from({ length: pageSize }, (_, i) => event(`a${i}`)))
+    mockCloudflare(full, full, full)
+    await expect(readLogs(access, 0, 1)).rejects.toThrow('The telemetry query repeated a page')
+    expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledTimes(2)
+  })
+
   test.each([
     [
       'refuses the token',

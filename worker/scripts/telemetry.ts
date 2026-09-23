@@ -62,12 +62,15 @@ export async function readLogs({ account, token }: Access, from: number, to: num
     const matched = answer?.result?.events?.count
     if (!Array.isArray(events) || typeof matched !== 'number')
       throw new Error('The telemetry query answered out of shape')
+    const known = seen.size
     for (const { $metadata, source } of events) {
       if ($metadata?.id !== undefined && seen.has($metadata.id)) continue
       seen.add($metadata?.id)
       if (isLogLine(source)) lines.push(source)
     }
     if (events.length < pageSize) return { lines, matched }
+    // A full page of events already read means the cursor didn't move, and asking again would loop.
+    if (seen.size === known) throw new Error('The telemetry query repeated a page')
     const last = events.at(-1)?.$metadata?.id
     if (typeof last !== 'string') throw new Error('The telemetry query answered out of shape')
     offset = last
