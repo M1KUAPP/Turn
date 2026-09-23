@@ -89,8 +89,12 @@ links to. None of it picks one of the three options.
   vote" (sections 4.1 and 4.2, [SQuAD 2.0][squad2]).
 - **SQuAD 2.0, share.** Table 2 as read: 43,498 unanswerable of 130,319 in
   train, 5,945 of 11,873 in dev, and 4,332 of 8,862 in test
-  ([SQuAD 2.0][squad2]). Synthesis: that's 33.4%, 50.1%, and 48.9%. How the
-  near-half share in dev and test was reached is Not found in what was read.
+  ([SQuAD 2.0][squad2]). Synthesis: that's 33.4%, 50.1%, and 48.9%.
+- **SQuAD 2.0, how dev and test reached half.** "For the SQuAD 2.0
+  development and test sets, we removed articles for which we did not
+  collect unanswerable questions. This resulted in a roughly one-to-one
+  ratio of answerable to unanswerable questions in these splits" (section
+  4.1, [SQuAD 2.0][squad2]).
 - Synthesis, did the writers know the criterion: in SQuAD 2.0, yes. They saw
   the paragraph, the thing that decides answerability, and were told the
   criterion. In DSTC7 there were no writers. Turn's writers were blind to the
@@ -234,8 +238,7 @@ links to. None of it picks one of the three options.
 
 ## Gaps
 
-- SQuAD 2.0 was read through ar5iv; how dev and test reached about half
-  unanswerable is Not found.
+- SQuAD 2.0 was read through ar5iv's rendering.
 - Only Scholer et al.'s abstract was read, not the effect sizes, and whether
   the effect holds for Claude labelers is Not found.
 - Willroth and Atherton's article and OSF's help page couldn't be fetched;
