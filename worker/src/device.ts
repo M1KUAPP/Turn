@@ -142,7 +142,11 @@ export class Device extends DurableObject<Env> {
       if (entitled === 'no') return { outcome: 'paywall' }
       if (entitled === 'unknown') return { outcome: 'unverified' }
     }
-    const reply = await this.ask(line)
+    const [reply] = await Promise.all([
+      this.ask(line),
+      // A purchase made before the free lines ran out shows once a line with `refresh` asks RevenueCat (PAY-4).
+      claim === 'free' && line.refresh === true ? this.entitled(user, true) : undefined
+    ])
     if (reply.outcome !== 'answered') {
       // Only a free line's own claim: a paid copy of the same line ID may be failing while another copy holds one.
       if (claim === 'free') this.ctx.storage.sql.exec('DELETE FROM free_lines WHERE line_id = ?', line.lineId)
