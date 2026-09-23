@@ -70,7 +70,7 @@ test('marks Quick, the strip, and body-pain fixed, as the data model does (BANK-
   expect(phrases.filter(({ fixed }) => fixed).map(({ text }) => text)).toEqual(['Yes', 'No', 'Not sure'])
 })
 
-test('holds the phrases other checks name', () => {
+test("holds the phrases other tickets' checks name", () => {
   expect(phraseByText('It was hard')?.places).toContain('clinic')
   expect(phraseByText('Water, please')?.places).toContain('home')
   expect(categoryById('food')).toBeDefined()
