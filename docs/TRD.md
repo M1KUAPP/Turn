@@ -1509,8 +1509,9 @@ see ([evaluation notes][eval-scoring]):
   folds' lines, or one above them all, that makes the most of those lines
   right, a tie going to the higher; a cut-off between two of a line's six
   changes which of its phrases show, and one elsewhere changes nothing.
-  At a cut-off, the phrases that reach it score 1 and the rest 0, so the row
-  holds a line whose top phrase falls short.
+  At a cut-off, the phrases that reach it score 1 and the rest 0, so a line
+  whose top phrase falls short shows no phrase: the row holds, unless the
+  phone's yes-or-no rule brings the fixed buttons.
 - **The curves.** At each distinct top score, a line is covered when its top
   phrase reaches it, and right when one of its first six phrases at or above
   it is acceptable; the fixed buttons and the big button don't count. The

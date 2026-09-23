@@ -286,8 +286,9 @@ const cutOffSection = (cutOffs: readonly number[], fold: readonly number[]) => {
     wrap(
       'The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable ' +
         "reply. Each fold's lines were scored at the cut-off, of the six highest cosines of each of the other four " +
-        "folds' lines, that made the most of those lines right, a tie going to the higher, and a line holds when no " +
-        'phrase reaches its cut-off. Folds 1 to 5: ' +
+        "folds' lines, that made the most of those lines right, a tie going to the higher. A line whose top phrase " +
+        "falls short of its cut-off shows no phrase: the row holds, unless the phone's yes-or-no rule brings the " +
+        'fixed buttons. Folds 1 to 5: ' +
         `${listOf(values)}.`
     )
   ]
@@ -374,7 +375,7 @@ const render = (
       [
         "- **Rankers:** place gives the place's phrases in the bank's order; keyword, the phone's own ranking by " +
           "shared words; embeddings, the cosine between the line and each phrase, with the phone's yes-or-no rule " +
-          'and no big button, holding a line below a cut-off that five-fold cross-validation sets; and ' +
+          'and no big button, showing no phrase below a cut-off that five-fold cross-validation sets; and ' +
           `${naming.ranker('jev')}, the relay's request as ${naming.jev} answers it, which the row's rules take with ` +
           'their starting policy: a floor of 0.6, a big button above 0.85, and a margin of 0.15.',
         '- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. ' +
