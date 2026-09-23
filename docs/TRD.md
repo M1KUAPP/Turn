@@ -266,7 +266,7 @@ CREATE TABLE setting (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 
 ### The relay's storage
 
-Each user's Durable Object, backed by SQLite, keeps two small tables and
+Each user's Durable Object, backed by SQLite, keeps three small tables and
 nothing else:
 
 ```sql
@@ -277,8 +277,18 @@ CREATE TABLE entitlement (
   checked_at INTEGER NOT NULL,
   refreshed_at INTEGER                      -- the last purchase that skipped a cached no
 );
+CREATE TABLE requests (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  minute INTEGER NOT NULL,                  -- the clock minute, as minutes since 1970
+  count INTEGER NOT NULL                    -- the user's requests in it
+);
 ```
 
+- **Counting requests.** Every request that passes its checks takes one of
+  the user's 30 a minute, inside `transactionSync()`: below 30 in the
+  current clock minute, the object writes the count plus one, and
+  otherwise the request gets `429`, and nothing is written. A new minute
+  starts again from 0 (SEC-3).
 - **Claiming a free line.** Inside `transactionSync()`, a line ID already in
   `free_lines` is a duplicate, which gets `409` and no call to Jev (SEC-6), so
   an ID can't be reused for a new line; a new ID below 20 rows is inserted as a
