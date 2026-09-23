@@ -9,9 +9,9 @@ const bank: StarterBank = JSON.parse(
   readFileSync(new URL('../../app/src/content/starter-bank.json', import.meta.url), 'utf8')
 )
 const phrases = bank.categories.flatMap((category) => category.phrases)
-const category = (id: string) => bank.categories.find((category) => category.id === id)
-const texts = (id: string) => category(id)?.phrases.map((phrase) => phrase.text)
-const phrase = (text: string) => phrases.find((phrase) => phrase.text === text)
+const categoryById = (id: string) => bank.categories.find((category) => category.id === id)
+const phraseTexts = (categoryId: string) => categoryById(categoryId)?.phrases.map((phrase) => phrase.text)
+const phraseByText = (text: string) => phrases.find((phrase) => phrase.text === text)
 const slug = /^[a-z0-9]+(-[a-z0-9]+)*$/
 
 test('follows the starter-bank format', () => {
@@ -51,8 +51,8 @@ test('starts with Home, Clinic, Shop, and Out, each with at least ten phrases (C
 
 test('marks Quick, the strip, and body-pain fixed, as the data model does (BANK-5, SPEAK-7)', () => {
   expect(bank.categories[0]?.id).toBe('quick')
-  expect(texts('quick')).toEqual(['Yes', 'No', 'Not sure', "I don't know", 'I have something to say'])
-  expect(texts('strip')).toEqual([
+  expect(phraseTexts('quick')).toEqual(['Yes', 'No', 'Not sure', "I don't know", 'I have something to say'])
+  expect(phraseTexts('strip')).toEqual([
     "Wait, I'm typing",
     'Sorry, say that again',
     'And you?',
@@ -67,8 +67,8 @@ test('marks Quick, the strip, and body-pain fixed, as the data model does (BANK-
 })
 
 test('holds the phrases other checks name', () => {
-  expect(phrase('It was hard')?.places).toContain('clinic')
-  expect(phrase('Water, please')?.places).toContain('home')
-  expect(category('food')).toBeDefined()
+  expect(phraseByText('It was hard')?.places).toContain('clinic')
+  expect(phraseByText('Water, please')?.places).toContain('home')
+  expect(categoryById('food')).toBeDefined()
   expect(phrases.some(({ text }) => /\btired\b/i.test(text))).toBe(true)
 })
