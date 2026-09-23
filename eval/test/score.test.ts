@@ -2,7 +2,7 @@ import type { Phrase } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
 import { keyword, place, type Ranker } from '../src/rankers'
 import { bigButtons, kindMatrix, scoreLines, sharesNoWord, summarize, topSixGap } from '../src/score'
-import { smallBank, waitImTyping } from './small-bank'
+import { noKind, smallBank, waitImTyping } from './small-bank'
 
 const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
   id: `filler-${i + 1}`,
@@ -65,7 +65,7 @@ test('scores each ranker by what the user would see', async () => {
 const scoring =
   (scores: (shortlist: readonly Phrase[]) => [string, number][]): Ranker =>
   (_line, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map(scores(shortlist)),
     onPhone: false
@@ -226,7 +226,7 @@ test("gives the paired interval of one ranker's top 6 minus another's, trailing 
   const firstPhrase =
     (acceptable: string): Ranker =>
     (_line, shortlist) => ({
-      kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+      kind: noKind,
       topic: {},
       scores: new Map(shortlist.map((phrase) => [phrase.id, phrase.id === acceptable ? 0.9 : 0.1])),
       onPhone: false
@@ -234,7 +234,7 @@ test("gives the paired interval of one ranker's top 6 minus another's, trailing 
   // Twenty lines whose one acceptable phrase only `right` puts first; `wrong` puts another phrase first and it last.
   const many = Array.from({ length: 20 }, (_, i) => ({ text: `Line ${i}`, place: 'home', acceptable: ['good-night'] }))
   const last: Ranker = (_line, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map(shortlist.map((phrase, i) => [phrase.id, phrase.id === 'good-night' ? 0.01 : 1 - i / 100])),
     onPhone: false
@@ -243,7 +243,7 @@ test("gives the paired interval of one ranker's top 6 minus another's, trailing 
   const seventh: Ranker = (_line, shortlist) => {
     const others = shortlist.filter((phrase) => phrase.id !== 'good-night')
     return {
-      kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+      kind: noKind,
       topic: {},
       scores: new Map([...others.map((phrase, i) => [phrase.id, 0.9 - i / 100] as const), ['good-night', 0.845]]),
       onPhone: false
@@ -284,7 +284,7 @@ test('lists a big button any answer showed, even when the scored answer showed n
   // A ranker whose second answer, the first timed pass's, brings no big button; its other three do.
   let calls = 0
   const wavering: Ranker = (_line, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map([[shortlist[0].id, calls++ === 1 ? 0.7 : 0.9]]),
     onPhone: false

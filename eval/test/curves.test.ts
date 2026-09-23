@@ -2,7 +2,7 @@ import { expect, test } from 'vitest'
 import { plot, riskCoverage } from '../src/curves'
 import type { Ranker } from '../src/rankers'
 import { scoreLines } from '../src/score'
-import { smallBank } from './small-bank'
+import { noKind, smallBank } from './small-bank'
 
 // Each line's scores by phrase; any other phrase scores 0.
 const scored: Record<string, Record<string, number>> = {
@@ -13,7 +13,7 @@ const scored: Record<string, Record<string, number>> = {
   blank: {}
 }
 const byLine: Ranker = (line, shortlist) => ({
-  kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+  kind: noKind,
   topic: {},
   scores: new Map(shortlist.map((phrase) => [phrase.id, scored[line][phrase.id] ?? 0])),
   onPhone: false
@@ -68,7 +68,7 @@ test('draws each curve as a line through its points in an SVG, with a title, a d
 test('counts a line right only when an acceptable phrase is among its first six', async () => {
   // On "crowded", six phrases score above "Water, please", which comes seventh; "low" adds a threshold of 0.5.
   const crowded: Ranker = (line, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map(
       shortlist.map((phrase, i) => {
