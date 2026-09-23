@@ -140,8 +140,9 @@ links to. None of it picks one of the three options.
   ordinary ones, early in the batch, is what their advice describes. Two
   limits: their judges were people, not Claude labelers, and only the
   abstract was read. A search surfaced an LLM study,
-  "Mitigating the Threshold Priming Effect in Large Language Model–Based
-  Relevance Judgments" ([arXiv 2512.00390][llm-priming]), but it wasn't read.
+  "Mitigating the Threshold Priming Effect in Large Language Model-Based
+  Relevance Judgments via Personality Infusing"
+  ([arXiv 2512.00390][llm-priming]), but it wasn't read.
 
 [scholer]: https://dl.acm.org/doi/10.1145/2484028.2484090
 [scholer-s2]: https://api.semanticscholar.org/graph/v1/paper/DOI:10.1145/2484028.2484090?fields=title,abstract,year,authors
