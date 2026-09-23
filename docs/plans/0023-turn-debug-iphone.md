@@ -330,9 +330,10 @@ note passed the docs gate and `idscan.py`. It was committed as
     drafts too. Post it as a PR comment, fix what it confirms in one commit
     per fix, and post a resolution comment.
 1.  List `docs/plans` and `docs/research` on `origin/main`, in open pull
-    requests, and on peer branches; if another change took 0022 or 0045,
+    requests, and on peer branches; if another change took 0023 or 0045,
     renumber in one commit and fix every link. This plan was first 0020,
-    until the review found `eval/no-reply-floor` had taken that number.
+    until the review found `eval/no-reply-floor` had taken that number, and
+    then 0022, until that branch moved to 0022 as well and #91 took 0020.
 1.  Rebase-merge the pull request. Right after, comment on #88 with the
     evidence and tick its boxes, then tick #22's last box and comment, as
     [Decisions](#decisions) says, leaving #22 open for its assignee.
