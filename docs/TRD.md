@@ -1109,6 +1109,9 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | `POLICY`                             | var    | the relay        | the policy's changed values (ROW-8)         |
 | `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
 | `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
+| `TURN_CF_LOGS_TOKEN`                 | secret | shells, Actions  | reads Workers Logs (METRIC-2, AVAIL-2)      |
+| `TURN_CF_ACCOUNT_ID`                 | secret | shells, Actions  | the account whose logs it reads             |
+| `JEV_ALERT_DOLLARS`                  | var    | Actions          | the credit alert's level (AVAIL-2)          |
 | Test Store public key                | public | the app's config | RevenueCat's SDK in debug builds            |
 | Relay URL                            | public | the app's config | the relay's address                         |
 
@@ -1153,7 +1156,10 @@ ran under Wrangler 4.136.2:
     "JEV_MODEL": "jev-1.13.0",
     "JEV_ON": "true",
     "TYPESAFE_NAMED": "false",
+    "SIMULATOR_UNLIMITED": "false",
     "FREE_LINES": "20",
+    "RC_PROJECT_ID": "proj9f033172",
+    "RC_ENTITLEMENT_ID": "entl6b65cc982a",
     "POLICY": {}
   }
 }
@@ -1169,9 +1175,9 @@ ran under Wrangler 4.136.2:
   budget (#35).
 - **Vars** are read at every request, so a change reaches the next answer
   or configuration with no app build (ROW-8, CONSENT-7):
-  - `JEV_ON` and `TYPESAFE_NAMED` are on only as `"true"`, so a typo turns
-    Jev off and leaves TypeSafe unnamed, and `TYPESAFE_NAMED` starts
-    `"false"`.
+  - `JEV_ON`, `TYPESAFE_NAMED`, and `SIMULATOR_UNLIMITED` are on only as
+    `"true"`, so a typo turns Jev off, leaves TypeSafe unnamed, and counts
+    the Simulator's lines. The last two start `"false"`.
   - `POLICY` holds only the values that differ from `startingPolicy` in
     `@turn/shared/row`: JSON in `wrangler.jsonc`, or a string from
     `wrangler deploy --var` or the dashboard. With no `POLICY` at all, the
@@ -1188,10 +1194,17 @@ ran under Wrangler 4.136.2:
   rotating them, while its docs say nothing; every build a judge runs
   carries the key anyway, so the team commits it for judging and rotates it
   after the winners are announced (SEC-1).
+- **The logs token** is the team's, not the relay's: an API token that can
+  query Workers Logs, which Wrangler's login can't. `bun run logs` reads it
+  and the account's ID from the shell, and the credit alert from the
+  repository's Actions secrets, where `JEV_ALERT_DOLLARS` is a variable.
+  Neither name is Wrangler's, so neither changes what it deploys with
+  ([relay logs notes][logs-notes]).
 - **No secret key** is in the repository or its history, which a secret
   scan checks before it goes public (SUBMIT-1).
 
 [svc-secrets]: /docs/research/0024-turn-services.md#secrets-and-wranglerjsonc-for-the-relay
+[logs-notes]: /docs/research/0040-turn-relay-logs.md#the-api-tokens-permission
 
 ### Validation and abuse limits
 
