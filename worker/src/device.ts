@@ -4,8 +4,8 @@ import { APIError, TypeSafeClient } from '@typesafe-ai/sdk'
 import { DurableObject } from 'cloudflare:workers'
 
 /**
- * What the user's object returns for a line: Jev's answer, with the model and tokens it reports, or how the call failed,
- * with Jev's status if it sent one. Never an error, whose message could carry text across to the Worker.
+ * What the user's object returns for a line: Jev's answer, with the model and tokens it reports, or how the call
+ * failed, with Jev's status if it sent one. Never an error, whose message could carry text across to the Worker.
  */
 export type JevReply =
   | (Pick<LineAnswer, 'kind' | 'topic' | 'scores'> & {
