@@ -1,20 +1,20 @@
-# Graph Report - revenuecat-score-rankers (2026-09-23)
+# Graph Report - RevenueCat (2026-09-23)
 
 ## Corpus Check
 
-- 177 files · ~595,258 words
+- 195 files · ~609,303 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 14 file(s) not represented in the graph (top: (none) 7, .jsonl 4, .lock 1)
+- Unclassified: 17 file(s) not represented in the graph (top: (none) 6, .jsonl 4, .log 3)
 
 ## Summary
 
-- 3109 nodes · 3182 edges · 224 communities (214 shown, 4 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.84)
+- 3210 nodes · 3304 edges · 238 communities (226 shown, 6 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `641f0eca`
+- Built from commit: `bc48498e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -238,6 +238,20 @@
 - row.ts
 - Turn's evaluation harness research notes
 - shortlist-speed.test.ts
+- theme.test.ts
+- app/package.json
+- native.ts
+- App.tsx
+- Tasks
+- app/tsconfig.json
+- dependencies
+- devDependencies
+- scripts
+- Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.
+- createAccessibilityStore
+- config.test.ts
+- AGENTS.md
+- withBoardSplash.ts
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -269,7 +283,7 @@
 
 - None detected.
 
-## Communities (224 total, 4 thin omitted)
+## Communities (238 total, 6 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1234,7 +1248,7 @@ Nodes (11): Bun workspaces, Gaps, Hands-on check, One TypeScript source package 
 ### Community 199 - "eval/package.json"
 
 Cohesion: 0.12
-Nodes (16): dependencies, @turn/shared, devDependencies, @types/node, typescript, vitest, typescript, vitest (+8 more)
+Nodes (16): dependencies, @turn/shared, devDependencies, @types/node, typescript, vitest, @types/node, typescript (+8 more)
 
 ### Community 200 - "compilerOptions"
 
@@ -1341,24 +1355,84 @@ Nodes (13): A test oracle for agreement, Agreement between two labelers, Chance 
 Cohesion: 0.47
 Nodes (5): bank, lines, taps, vocabulary, words()
 
+### Community 224 - "theme.test.ts"
+
+Cohesion: 0.18
+Nodes (13): ColorName, colors, colorValues, textStyle(), typography, appearances, contrast(), design (+5 more)
+
+### Community 225 - "app/package.json"
+
+Cohesion: 0.14
+Nodes (13): nativeModulesDir, expo, autolinking, @types/node, typescript, vitest, main, name (+5 more)
+
+### Community 226 - "native.ts"
+
+Cohesion: 0.22
+Nodes (8): nativeAccessibilitySource, AccessibilityPreferences, AccessibilitySource, defaults, keys, awaitedPreferences, initial, react-native
+
+### Community 227 - "App.tsx"
+
+Cohesion: 0.32
+Nodes (5): accessibilityStore, App(), HomeScreen(), expo, react
+
+### Community 228 - "Tasks"
+
+Cohesion: 0.25
+Nodes (7): Global constraints, Task 1: Expo package and configuration, Task 2: Theme, Task 3: Accessibility preferences, Task 4: Native check and handoff, Tasks, Turn app foundation implementation plan
+
+### Community 229 - "app/tsconfig.json"
+
+Cohesion: 0.29
+Nodes (6): compilerOptions, strict, types, extends, include, expo/tsconfig.base
+
+### Community 230 - "dependencies"
+
+Cohesion: 0.33
+Nodes (6): dependencies, expo, expo-build-properties, expo-splash-screen, react, react-native
+
+### Community 231 - "devDependencies"
+
+Cohesion: 0.33
+Nodes (6): devDependencies, @types/node, @types/react, typescript, vitest, yaml
+
+### Community 232 - "scripts"
+
+Cohesion: 0.40
+Nodes (5): scripts, ios, start, test, typecheck
+
+### Community 233 - "Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do."
+
+Cohesion: 0.40
+Nodes (4): Answer, Outcome, Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do., Source Nodes
+
+### Community 234 - "createAccessibilityStore"
+
+Cohesion: 1.17
+Nodes (4): createAccessibilityStore(), apply(), publish(), subscribe()
+
+### Community 237 - "withBoardSplash.ts"
+
+Cohesion: 0.60
+Nodes (3): setBoardSplash(), Storyboard, withBoardSplash()
+
 ## Knowledge Gaps
 
-- **2364 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2359 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2516 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2416 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2411 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2573 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2364 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2416 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
