@@ -1470,7 +1470,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   `check_contrast.py`, from the [design plan's appendix][plan-checks], and
   still passes.
 
-[plan-checks]: /docs/plans/2026-09-22-guessling-design.md#appendix-check-scripts
+[plan-checks]: /docs/plans/0005-guessling-design.md#appendix-check-scripts
 
 ### If the day runs short
 

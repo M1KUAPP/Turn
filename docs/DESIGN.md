@@ -1658,7 +1658,7 @@ listing, since each label has published criteria
 - **Colors.** After any color change, `check_contrast.py`, from the
   [design plan's appendix][plan-checks], still prints `OK`.
 
-[plan-checks]: /docs/plans/2026-09-23-turn-design.md#appendix-check-scripts
+[plan-checks]: /docs/plans/0008-turn-design.md#appendix-check-scripts
 
 ## Open questions
 
