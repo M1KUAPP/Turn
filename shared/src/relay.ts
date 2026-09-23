@@ -1,4 +1,4 @@
-import type { Kind, Policy } from './row'
+import type { Policy, Ranking } from './row'
 
 /** The most a request may hold, which the relay checks and the app cuts to (SEC-2). Lengths count characters. */
 export const limits = {
@@ -44,22 +44,18 @@ export type LineRequest = {
   /** The current place's name, tagged like the line (PLACE-3). */
   place: string
   /** The grid's categories, which the line's topic is chosen from, with `consent`. */
-  categories: Category[]
+  categories: readonly Category[]
   /** The shortlist, in its order (ROW-2). */
-  candidates: Candidate[]
+  candidates: readonly Candidate[]
   /** The first line after a purchase, which skips a cached no (PAY-4). */
   refresh?: boolean
 }
 
 /** Jev's answer to one line, with the policy the row's rules follow. */
-export type LineAnswer = {
+export type LineAnswer = Pick<Ranking, 'kind' | 'topic'> & {
   seq: number
-  /** How likely the line is each kind of question. */
-  kind: Record<Kind, number>
-  /** How likely the line is about each category, by id, and `consent`. */
-  topic: Record<string, number>
   /** Each candidate's score, from 0 to 1, by id. The app puts them back in the shortlist's order, which breaks ties. */
-  scores: Record<string, number>
+  scores: Readonly<Record<string, number>>
   policy: Policy
   /** Null once the user is entitled. */
   freeLinesLeft: number | null
