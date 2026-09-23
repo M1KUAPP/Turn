@@ -83,7 +83,8 @@ links to. None of it picks one of the three options.
   questions to look similar to answerable ones" ([SQuAD 2.0][squad2]).
 - **SQuAD 2.0, validation.** "We removed questions from workers who wrote 25
   or fewer questions on that article; this filter helped remove noise from
-  workers who had trouble understanding the task." For human accuracy, "we
+  workers who had trouble understanding the task, and therefore quit before
+  completing the whole article." For human accuracy, "we
   hired additional crowdworkers to answer all questions in the SQuAD 2.0
   development and test sets" and "selected the final answer by majority
   vote" (sections 4.1 and 4.2, [SQuAD 2.0][squad2]).
