@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 141 files · ~544,189 words
+- 145 files · ~552,322 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 9 file(s) not represented in the graph (top: (none) 6, .lock 1, .example 1)
+- Unclassified: 10 file(s) not represented in the graph (top: (none) 6, .lock 1, .jsonl 1)
 
 ## Summary
 
-- 2779 nodes · 2643 edges · 208 communities (197 shown, 4 thin omitted)
+- 2823 nodes · 2684 edges · 211 communities (200 shown, 5 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `04c6b7ff`
+- Built from commit: `dd24eccd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -221,6 +221,10 @@
 - worker/tsconfig.json
 - eval/tsconfig.json
 - shared/tsconfig.json
+- Tasks
+- Turn's starter content research notes
+- starter-bank.test.ts
+- lines.test.ts
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -243,7 +247,7 @@
 
 - None detected.
 
-## Communities (208 total, 4 thin omitted)
+## Communities (211 total, 5 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1207,8 +1211,8 @@ Nodes (11): Bun workspaces, Gaps, Hands-on check, One TypeScript source package 
 
 ### Community 199 - "eval/package.json"
 
-Cohesion: 0.17
-Nodes (11): devDependencies, typescript, vitest, typescript, vitest, name, private, scripts (+3 more)
+Cohesion: 0.14
+Nodes (13): devDependencies, @types/node, typescript, vitest, typescript, vitest, name, private (+5 more)
 
 ### Community 200 - "compilerOptions"
 
@@ -1222,32 +1226,47 @@ Nodes (5): compilerOptions, types, extends, include, ../tsconfig.base.json
 
 ### Community 202 - "eval/tsconfig.json"
 
-Cohesion: 0.50
-Nodes (3): extends, include, ../tsconfig.base.json
+Cohesion: 0.33
+Nodes (5): compilerOptions, types, extends, include, ../tsconfig.base.json
 
 ### Community 203 - "shared/tsconfig.json"
 
 Cohesion: 0.50
 Nodes (3): extends, include, ../tsconfig.base.json
 
+### Community 205 - "Tasks"
+
+Cohesion: 0.10
+Nodes (20): Appendix: the line writers' brief, Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: Review and merge (+12 more)
+
+### Community 208 - "Turn's starter content research notes"
+
+Cohesion: 0.22
+Nodes (8): Consent and refusal for people who can't speak, Default content in text AAC apps, Gaps, How validated pain tools ask about pain, Plain-language rules for short phrases, See also, Turn's starter content research notes, What published patient boards hold
+
+### Community 209 - "starter-bank.test.ts"
+
+Cohesion: 0.29
+Nodes (5): bank, Category, Phrase, phrases, StarterBank
+
 ## Knowledge Gaps
 
-- **2198 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2193 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2327 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2232 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2227 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2364 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Google Play review`, `Store listing and discoverability`, `Apple App Store review`, `Retention and push notifications`, `Demo video and write-up`, `Samsung Galaxy Store review`, `Monetization and paywall benchmarks`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Turn technical requirements` connect `Turn technical requirements` to `Decision pipeline`, `The iPhone app`, `Evaluation`, `Listening and speaking on the phone`, `Security and privacy`, `Data model`, `Reliability and observability`, `Purchases and entitlements`, `Stack and repository`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Google Play review`, `Store listing and discoverability`, `Apple App Store review`, `Retention and push notifications`, `Demo video and write-up`, `Samsung Galaxy Store review`, `Monetization and paywall benchmarks`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2198 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2232 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
