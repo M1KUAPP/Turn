@@ -67,11 +67,11 @@ export async function sentenceEmbedding(
   const embed: Embed = async (texts) => {
     child.stdin.write(`${JSON.stringify(texts)}\n`)
     const vectors = await read()
-    const each =
+    const oneVectorEach =
       Array.isArray(vectors) &&
       vectors.length === texts.length &&
       vectors.every((vector) => Array.isArray(vector) && vector.length === dimension)
-    if (!each) {
+    if (!oneVectorEach) {
       throw new Error(
         `Apple's sentence embedding answered with no ${dimension}-number vector for each of ${texts.length} texts`
       )
