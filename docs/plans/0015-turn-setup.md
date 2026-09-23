@@ -353,8 +353,6 @@ prior consent to use TypeSafe's name, so we're asking:
    the September 30, 2026 deadline?
 3. Our relay depends on your SDK, @typesafe-ai/sdk, from npm. Is that fine
    in a public repository?
-4. One technical question: what status and body does the API return when
-   an account's credits run out?
 
 Until we hear from you, the entry calls Jev "a hosted decision model" and
 TypeSafe "a third-party AI service in the United States".
