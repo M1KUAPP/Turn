@@ -351,6 +351,12 @@ commit, and record here what each rule found.
 - **EVAL-5:** the report lists one big button on a yes-or-no, pain, or
   consent line: "Yes, go ahead" on `line-05`, in 1 of Jev's 4 answers, and
   it's right. None is wrong, so `POLICY` stays `{}`, with no commit.
+- **What `line-05` shows:** its writer marked it yes-or-no, about health
+  and consent, yet in one answer the guards, which read that answer's own
+  kind and topic, let a big button through. The phrase was acceptable, so
+  the rule didn't fire, but a wrong one would have, and the policy above
+  wouldn't have stopped it, since it reads the same kind and topic. #40's
+  closing comment says so.
 - **EVAL-4:** on all lines, Jev minus embeddings in top 6 is +29.7 points,
   with a paired interval of 17.2 to 42.2, so Jev leads embeddings, and
   `jev-rerank` isn't built.
