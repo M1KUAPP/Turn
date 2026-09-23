@@ -145,7 +145,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     relay stores and logs nowhere. A request without it shares the key `""`.
 1.  **`Retry-After: 60`.** The binding answers only `success`, so the relay
     can't know when a window ends; the whole period is enough however the
-    windows are aligned ([relay limits notes][note-retry]). The body stays
+    windows are aligned ([relay limits notes][note-retry]), and 60 seconds,
+    the longest period a binding can have, stays enough if the period
+    changes to 10. The body stays
     `{ "error": "rate_limited" }` (SEC-4). The log's outcome is `limited`,
     with the user's prefix and no `seq`, since the body is never read.
 1.  **One object keeps the day's count.** `Budget`, a SQLite Durable
@@ -156,8 +158,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     CREATE TABLE IF NOT EXISTS calls (id INTEGER PRIMARY KEY CHECK (id = 1), day TEXT NOT NULL, count INTEGER NOT NULL);
     ```
 
-    Its `take(limit)` reads the row with no `await`: below the limit on the
-    current UTC day, it writes the count plus one and answers true;
+    Its `take(limit)` runs in one `transactionSync()`, as `Device.claim`
+    does, with no `await`: below the limit on the current UTC day, it
+    writes the count plus one and answers true;
     otherwise it answers false and writes nothing. A new UTC day starts
     again from 0, so the budget comes back at midnight UTC with no alarm.
     One object for the relay is the global counter Cloudflare warns about,
@@ -168,14 +171,19 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     attempt, the SDK's retry included, and then calls `globalThis.fetch`
     ([relay limits notes][note-sdk]). Refused, the `fetch` aborts a signal
     the call also listens to and throws, so the SDK throws
-    `APIUserAbortError` at once instead of retrying, and the line ends as
-    `spent`. With the budget at 3, three answered lines use it up, and the
-    4th is refused before any call (SEC-5).
+    `APIUserAbortError` at once instead of retrying. A line refused before
+    any attempt reached Jev ends as `spent`; one whose retry is refused ends
+    as its first attempt did, `failed` with Jev's status. The wait for the
+    budget ends with the attempt's own signal, so a slow answer can't hold
+    a line past its 2.5 seconds (STATE-2). With the budget at 3, three
+    answered lines use it up, and the 4th is refused before any call
+    (SEC-5).
 1.  **A spent budget answers as a busy Jev does.** `spent` answers
     `503 jev_unavailable`, with no `Retry-After`, exactly as a failed call
     does (SEC-4, SEC-5). Like `failed`, it releases a free line's claim, so
     a refused line doesn't use a free line (PAY-1). Its own outcome lets
-    the logs tell a spent budget from Jev failing.
+    the logs tell a spent budget from Jev failing, and it logs no time in
+    Jev, since no call was made.
 1.  **The day's size is a var.** `JEV_DAILY_CALLS`, committed as
     `"10000"`, is read at every request like `FREE_LINES`, through one
     check shared by both: anything but a whole number throws, which answers
@@ -185,7 +193,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 1.  **Every line meets both.** A Simulator request that skips the
     free-line count still meets the rate limits and takes its calls from
     the budget, so both bound `SIMULATOR_UNLIMITED`, and the TRD's "will
-    bound that" becomes present tense.
+    bound that" becomes present tense. The replay script sends every line
+    as one Simulator user, so a request that would be its 30th in 60
+    seconds waits until it isn't.
 1.  **The tests.** The limits' tests use the configured bindings with a
     fresh ID per test and an address of their own, and wait for the next
     minute when fewer than 5 seconds of this one are left, since every
@@ -195,7 +205,11 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     ([relay limits notes][note-sim]). The budget's tests lower
     `JEV_DAILY_CALLS` through `send`, and one moves `Date` past midnight
     UTC with `vi.setSystemTime`, which reaches the objects, while the
-    limiter keeps real time.
+    limiter keeps real time. A spy on `Budget.prototype.take`, which the
+    objects share with the tests, stands in for a slow budget and counts
+    the budget's calls. The helpers hold another user's headers, the
+    Simulator's, the log's time, and a line posted from given headers, and
+    `expectRefused` takes the error a refusal expects.
 1.  **Every guard is mutated once.** Before the pull request, each limit,
     the order of the two, the `Retry-After`, the budget's comparison and
     day, the abort, and the release of a claim are broken one at a time,
@@ -214,22 +228,41 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
       replaces a client's header and the address limit holds;
     - one line from a fresh ID, which Jev answers.
 
-    Whether the deploy accepts `ratelimits` on the Free plan, and whether
-    the 31st request gets `429`, is recorded on #35 and in the note's
-    hands-on check. If the binding isn't available on Free, the user's
-    object counts requests itself, as the ticket says, in new commits
-    before the merge.
+    Each part starts in a new minute, so an address that part 2 uses up
+    can't refuse part 3's line. Whether the deploy accepts `ratelimits` on
+    the Free plan, and whether the 31st request gets `429`, is recorded on
+    #35 and in the note's hands-on check. If the binding isn't available on
+    Free, the user's object counts requests itself, as the ticket says, in
+    new commits before the merge.
 
 1.  **The TRD.** The architecture's order, the storage's `Budget` table,
     the Relay API's `429` and `503` rows, the configuration table and
     `wrangler.jsonc`, the committed file's bullet, the limits' rate and
     budget bullets, the log's outcomes, the Simulator sentence, and the
-    relay's tests (SEC-5), each section in its own commit.
+    relay's tests (SEC-5), and the replay's pace, each section in its own
+    commit.
 
 [note-sim]: /docs/research/0046-turn-relay-limits.md#the-local-simulation
 [note-retry]: /docs/research/0046-turn-relay-limits.md#retry-after-for-a-429
 [note-sdk]: /docs/research/0046-turn-relay-limits.md#the-sdks-attempts
 [svc-abuse]: /docs/research/0024-turn-services.md#limiting-abuse-of-the-free-lines
+
+### Review round 1
+
+One `/code-review` round found 8 Standards, 5 Spec, and 7 fact-check
+problems; the decisions above now hold its fixes. It proved that a slow
+budget object held a line past its 2.5 seconds, that a refused retry hid
+Jev's failure behind `spent`, that the replay script would meet the new
+limit, and that one test passed without the budget. Kept, with reasons:
+
+- **The numbers,** which #95 also took: its session moved to 0025 and
+  0047, and #95 merged with them.
+- **`freeLines` and `dailyCalls` side by side:** they travel together only
+  from `readConfig` to `termsFor`, as the design chose.
+- **Fresh IDs for the count tests:** they stay a few requests below the
+  shared ID's 30, and its comment now says to stay under it.
+- **The Free plan's answer:** the live check gives it, after the review, on
+  #35, in the note, and in the TRD.
 
 ### Rejected alternatives
 
