@@ -181,10 +181,25 @@ export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: 
     tag('line', { x1: across(at), y1: up(0), x2: across(at), y2: up(1), stroke: '#6b7280', 'stroke-dasharray': '2 3' }),
     tag('text', { x: across(at), y: frame.top - 8, 'text-anchor': 'middle' }, `${label} ${at}`)
   ])
-  const shade = [
+  const outline = [
     ...band.map(({ score, high }) => [score, high]),
     ...band.toReversed().map(({ score, low }) => [score, low])
   ]
+  // An outline of a single score encloses nothing, so the band there is a bar as wide as the legend's.
+  const shade =
+    band.length === 1
+      ? tag('line', {
+          x1: across(band[0].score),
+          y1: up(band[0].low),
+          x2: across(band[0].score),
+          y2: up(band[0].high),
+          stroke: '#d1d5db',
+          'stroke-width': 10
+        })
+      : tag('polygon', {
+          points: outline.map(([score, share]) => `${across(score)},${up(share)}`).join(' '),
+          fill: '#d1d5db'
+        })
   const groups = [...Map.groupBy(forecasts, ({ score }) => score)].toSorted(([a], [b]) => a - b)
   const fit = groups.map(([score]) => [score, fitAt(blocks, score)])
   const most = Math.max(...groups.map(([, lines]) => lines.length))
@@ -214,10 +229,7 @@ export function reliabilityPlot({ forecasts, blocks, band }: Reliability, name: 
     },
     [
       ...grid,
-      tag('polygon', {
-        points: shade.map(([score, share]) => `${across(score)},${up(share)}`).join(' '),
-        fill: '#d1d5db'
-      }),
+      shade,
       tag('line', { x1: across(0), y1: up(0), x2: across(1), y2: up(1), stroke: '#6b7280', 'stroke-dasharray': '6 4' }),
       ...rules,
       tag('polyline', {
