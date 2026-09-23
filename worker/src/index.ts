@@ -4,11 +4,16 @@ import { readLine, readUser } from './request'
 
 export { Device } from './device'
 
-/** How a request ended, in its log line; #30 and #35 add `paywall` and `limited` (METRIC-1). */
+/** How a request ended, in its log line (METRIC-1). */
 type Outcome = 'config' | 'answered' | 'invalid' | 'not_found' | 'off' | 'failed' | 'credits' | 'internal'
 
-/** A request's log line, filled in as the request goes: each field once it's known, and never any text (PRIV-2). */
-type Log = {
+/**
+ * What a request's log line is made from, gathered as the request goes: each fact once it's known, and never any text
+ * (PRIV-2). `fetch` writes the line from them, with the time and the total from `started`.
+ */
+type LogFacts = {
+  /** When the request arrived, in milliseconds since 1970. */
+  started: number
   /** The first 8 characters of the hash of the user's ID. */
   user?: string
   seq?: number
@@ -42,7 +47,7 @@ const codes = {
 } satisfies Partial<Record<Outcome, ErrorCode>>
 
 /** Records how a request ended, and answers with that error's code and nothing else (SEC-4). */
-function refuse(log: Log, outcome: keyof typeof codes) {
+function refuse(log: LogFacts, outcome: keyof typeof codes) {
   log.outcome = outcome
   const code = codes[outcome]
   return Response.json({ error: code }, { status: statuses[code] })
@@ -55,7 +60,7 @@ async function hashUser(salt: string, user: string) {
 }
 
 /** Checks a line before anything else (SEC-2), then asks the user's object, named by the hash, for Jev's answer. */
-async function answerLine(request: Request, env: Env, log: Log, started: number, hash: string): Promise<Response> {
+async function answerLine(request: Request, env: Env, log: LogFacts, hash: string): Promise<Response> {
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
@@ -77,13 +82,13 @@ async function answerLine(request: Request, env: Env, log: Log, started: number,
     scores: reply.scores,
     policy: config.policy,
     freeLinesLeft: config.freeLinesLeft,
-    ms: { jev: reply.ms, total: Date.now() - started }
+    ms: { jev: reply.ms, total: Date.now() - log.started }
   }
   return Response.json(answer)
 }
 
 /** Finds the route, then checks the headers every request carries, before a line's body or the configuration. */
-async function route(request: Request, env: Env, log: Log, started: number): Promise<Response> {
+async function route(request: Request, env: Env, log: LogFacts): Promise<Response> {
   const { pathname } = new URL(request.url)
   const isLine = request.method === 'POST' && pathname === '/v1/lines'
   const isConfig = request.method === 'GET' && pathname === '/v1/config'
@@ -92,7 +97,7 @@ async function route(request: Request, env: Env, log: Log, started: number): Pro
   if (!user) return refuse(log, 'invalid')
   const hash = await hashUser(env.ID_SALT, user)
   log.user = hash.slice(0, 8)
-  if (isLine) return answerLine(request, env, log, started, hash)
+  if (isLine) return answerLine(request, env, log, hash)
   const config = readConfig(env)
   log.outcome = 'config'
   return Response.json(config)
@@ -101,15 +106,14 @@ async function route(request: Request, env: Env, log: Log, started: number): Pro
 export default {
   /** Answers a request, then writes its one log line as an object, whose keys Workers Logs indexes (METRIC-1). */
   async fetch(request: Request, env: Env) {
-    const started = Date.now()
-    const log: Log = {}
+    const log: LogFacts = { started: Date.now() }
     let response: Response
     try {
-      response = await route(request, env, log, started)
+      response = await route(request, env, log)
     } catch {
       response = refuse(log, 'internal')
     }
-    const { jevMs, ...facts } = log
+    const { started, jevMs, ...facts } = log
     const total = Date.now() - started
     console.log({
       at: new Date(started).toISOString(),
