@@ -42,6 +42,9 @@ const budgetMs = 2500
 const minute = 60_000
 const day = 24 * 60 * minute
 
+/** The requests one app user may send in a clock minute (SEC-3). */
+const requestsPerMinute = 30
+
 /** A promise's result, or its signal's reason if that aborts first, so no wait outlasts the call it's part of. */
 function unlessAborted<T>(promise: Promise<T>, signal: AbortSignal | null | undefined): Promise<T> {
   if (!signal) return promise
@@ -73,6 +76,11 @@ export class Device extends DurableObject<Env> {
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env)
+    // The user's requests in the current clock minute, which a new minute starts again from 0 (SEC-3).
+    ctx.storage.sql.exec(
+      'CREATE TABLE IF NOT EXISTS requests (id INTEGER PRIMARY KEY CHECK (id = 1), minute INTEGER NOT NULL, ' +
+        'count INTEGER NOT NULL)'
+    )
     // The ID of each free line claimed, which is deleted if Jev fails, so only answered lines count (PAY-1).
     ctx.storage.sql.exec('CREATE TABLE IF NOT EXISTS free_lines (line_id TEXT PRIMARY KEY, at INTEGER NOT NULL)')
     // RevenueCat's last answer, and when a line with `refresh` last skipped a cached no (PAY-4, PAY-7).
@@ -80,6 +88,27 @@ export class Device extends DurableObject<Env> {
       'CREATE TABLE IF NOT EXISTS entitlement (id INTEGER PRIMARY KEY CHECK (id = 1), active INTEGER NOT NULL, ' +
         'checked_at INTEGER NOT NULL, refreshed_at INTEGER)'
     )
+  }
+
+  /**
+   * Counts one more of the user's requests in the current clock minute, or none once 30 are counted there: whether this
+   * one may go on (SEC-3). It runs in one transaction, with no `await`, so simultaneous requests can't share the last.
+   */
+  admit(): boolean {
+    return this.ctx.storage.transactionSync(() => {
+      const { sql } = this.ctx.storage
+      const now = Math.floor(Date.now() / minute)
+      const row = sql.exec<{ minute: number; count: number }>('SELECT minute, count FROM requests').toArray()[0]
+      const count = row?.minute === now ? row.count : 0
+      if (count >= requestsPerMinute) return false
+      sql.exec(
+        'INSERT INTO requests (id, minute, count) VALUES (1, ?, ?) ' +
+          'ON CONFLICT (id) DO UPDATE SET minute = excluded.minute, count = excluded.count',
+        now,
+        count + 1
+      )
+      return true
+    })
   }
 
   /** How many free lines are claimed, counting any whose call to Jev is still under way. */
