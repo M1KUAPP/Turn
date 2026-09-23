@@ -156,9 +156,10 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     already in `free_lines` is a duplicate; below `FREE_LINES` rows, the ID
     is inserted and the line is free; otherwise the line is paid.
 1.  **Only answered lines count.** After `failed` or `credits`, the object
-    deletes the line's row, so a failed call doesn't use a free line
-    (PAY-1). A duplicate gets `409 duplicate` and no call to Jev (SEC-6).
-    Only free lines keep their IDs, as the TRD's table does.
+    deletes the line's own row, only for a free line, so a failed call doesn't
+    use a free line (PAY-1) and a failing paid copy of a line ID can't delete a
+    free copy's claim. A duplicate gets `409 duplicate` and no call to Jev
+    (SEC-6). Only free lines keep their IDs, as the TRD's table does.
 1.  **A paid line needs `listen`.** `worker/src/entitlement.ts` asks
     `GET /v2/projects/{project_id}/customers/{customer_id}/active_entitlements`
     with `RC_PROJECT_ID`, the app user ID through `encodeURIComponent`, and
@@ -166,7 +167,8 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     `entitlement_id` is `RC_ENTITLEMENT_ID` and whose `expires_at` is null
     or ahead. A no is a `200` without one, or a `404` whose `type` is
     `resource_missing` ([free lines notes][note-endpoint]). Anything else
-    is unknown: another status, a body out of the spec's shape, a timeout,
+    is unknown: another status, a body out of the spec's shape (a `200`
+    whose `object` isn't `list` included), a timeout,
     a network error, or an unset var, since an empty project ID would make
     a path RevenueCat could answer with a `404`. The one page of 20 items
     is enough, since `listen` is the project's only entitlement.
@@ -174,17 +176,21 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     yes for 24 hours and a no for 1 minute. A line with `refresh` skips a
     no under a minute old unless a refresh already did within the last
     minute. The object records a refresh's time only when its check
-    answered, so a check that fails doesn't use up the purchase's refresh.
+    answered, so a check that fails doesn't use up the purchase's refresh,
+    and such a refresh leaves the no it skipped stale, so the next line
+    asks again. Of two checks that finish out of order, the one that
+    started later stays. A free line with `refresh` asks RevenueCat
+    alongside Jev, so a purchase made with free lines left shows as null.
 1.  **Unknown is never a 402.** With an unknown answer, a cached yes of
     any age still answers; otherwise the line gets `503 jev_unavailable`,
     logged as `unverified`, and nothing is cached. The app ranks such a
     line on the phone, as it does when Jev fails, so no new error code is
     needed.
 1.  **Half a second for RevenueCat.** The check runs once a day for an
-    entitled user and at most once a minute for one who isn't. With 500 ms
-    for it and Jev's 2.5 seconds, a line stays within the phone's 3
-    seconds; a slower RevenueCat costs that line a `503`, which the phone
-    ranks at once instead of waiting.
+    entitled user and at most once a minute for one who isn't. Its 500 ms
+    come out of the line's 2.5 seconds, and Jev gets what's left, so every
+    line stays within the phone's 3 seconds; a slower RevenueCat costs that
+    line a `503`, which the phone ranks at once instead of waiting.
 1.  **The Worker passes what the object can't know.** `readUser` returns
     the build with the ID. `answer(line, user, terms)` takes the app user
     ID, for RevenueCat's path only and never stored, and the terms:
@@ -214,28 +220,41 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     object, since the count would otherwise carry across tests, and
     `lineRequest()` makes a new line ID each time. A test ages the cache by
     editing its row with `runInDurableObject`, which leaves the SDK's
-    timeouts alone, as a fake clock wouldn't.
+    timeouts alone, as a fake clock wouldn't. A mocked reply receives the
+    call's options, so one can hang until its signal aborts it.
 1.  **The live check (PAY-7, SEC-6).** After the review, the reviewed head
     is deployed. For a fresh ID: 20 lines are answered and the 21st gets
-    `402`; `rc customers simulate-purchase` from `@revenuecat/cli` 0.1.3,
-    logged in by the user, buys `turn_listen` for that ID
-    ([free lines notes][note-cli]); a line with `refresh` gets Jev's
-    answer; and a used line ID sent again with new text gets `409`. That's
-    about 22 billed Jev calls.
-1.  **Three files for the logs.** `worker/scripts/telemetry.ts` reads the
+    `402`. Within the minute that no stays cached,
+    `rc customers simulate-purchase` from `@revenuecat/cli` 0.1.3, logged
+    in by the user, buys `turn_listen` for that ID
+    ([free lines notes][note-cli]), a plain line still gets `402`, and a
+    line with `refresh` gets Jev's answer, which shows `refresh` doing the
+    work. One of the first 20 line IDs, sent again with new text, gets
+    `409`, since only free lines keep their IDs. That's about 22 billed Jev
+    calls.
+1.  **Four files for the logs.** `worker/scripts/telemetry.ts` reads the
     relay's lines for a time range through
     `POST /accounts/{account_id}/workers/observability/telemetry/query`, in
     the `events` view, 2,000 at a time, with `dry: true`, passing the last
     event's `$metadata.id` as `offset` until a page comes back short
-    ([relay logs notes][note-query]). It keeps each event whose `source`
+    ([relay logs notes][note-query]), and stops with an error when a full
+    page brings no event it hasn't read. It keeps each event whose `source`
     is an object with a string `outcome`. `worker/scripts/summary.ts`
-    counts; `worker/scripts/logs.ts` is the command, `bun run logs`.
+    counts; `worker/scripts/logs.ts` is the command, `bun run logs`; and
+    `worker/scripts/flags.ts` reads both commands' flags, since the Workers
+    runtime that runs the tests doesn't implement `node:util`'s
+    `parseArgs`.
 1.  **What it prints (METRIC-2).** For a UTC day, `--day`, yesterday unless
     given: the lines read beside the query's own count; lines answered;
     paywall responses; failures, which are `failed`, `credits`,
     `unverified`, and `internal`; each other outcome by name; the median
     and 95th percentile, by nearest rank, of `ms.total` and `ms.jev` over
     answered lines; and the day's input tokens.
+1.  **The logs check (METRIC-2).** After the live checks, run
+    `bun run logs` on September 23, 2026, and match its counts against the
+    same day's raw events, read apart from the script, and against the
+    live check's known lines. Check too, as #31's comment asks, that each
+    request made one line and that no line holds text.
 1.  **The token.** `TURN_CF_LOGS_TOKEN` is an API token with the account
     permission Workers Observability at Edit, which the API calls "Workers
     Observability Write" ([relay logs notes][note-token]), and
@@ -244,11 +263,13 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     doesn't change the account or the token Wrangler deploys with.
 1.  **Usage beside the relay.** A new `worker/README.md` documents the
     command, its token, and the alert.
-1.  **Types.** The two commands use `process` and `node:util`, so
+1.  **Types.** The two commands use `process` and `node:fs`, so
     `worker/scripts/tsconfig.json` checks `worker/scripts/` with Node's
     types, from `@types/node` 26.6.1, the version `@turn/eval` pins, and the
-    relay's `typecheck` runs it too. `summary.ts`, `telemetry.ts`, and the
-    alert's rule use only web APIs, so their tests run in the Workers pool.
+    relay's `typecheck` runs it too. Every module, both commands' `main`
+    included, runs in the Workers pool's tests; only `--out`'s file write
+    doesn't. The scripts import `@turn/shared` for types alone, so they run
+    without installing packages.
 1.  **The alert reads the logs.** TypeSafe publishes no balance endpoint,
     no balance in its answers, and no low-balance alert, and its console's
     public page names none ([credit alert notes][note-typesafe]). So the
@@ -257,7 +278,7 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     million input tokens.
 1.  **When it fires.** When any line in the window ran out of credits, or
     the window's estimated spend passes the level, `JEV_ALERT_DOLLARS`, a
-    repository variable that is $0.50 unless set: about 12 million input
+    repository variable, or the script's own $0.50: about 12 million input
     tokens, far above a day of judging, and reached only by heavy use or
     abuse. The window runs from 24 hours ago, or from when the last alert
     issue was closed if that's later, so a handled alert doesn't fire again
@@ -273,12 +294,15 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     `permissions: { contents: read, issues: write }`, since the
     repository's default is read. Eight short runs a day use about 240 of
     the organization's 2,000 free minutes a month while the repository is
-    private. `actions/checkout` v7.0.1 and `oven-sh/setup-bun` v2.2.0 are
-    pinned by commit.
+    private. It runs on `ubuntu-24.04`, with `actions/checkout` v7.0.1 and
+    `oven-sh/setup-bun` v2.2.0 pinned by commit. A failing `gh` fails the
+    run, and if an assignee can't be assigned, the issue opens without
+    assignees.
 1.  **The alert's test (AVAIL-2).** After the merge, since a workflow must
-    be on `main` to run on demand, run it with `level` 0: the live checks
-    spent more than $0 that day, so it opens the issue. Then close it, and
-    record the receivers on #32.
+    be on `main` to run on demand, run it with `level` 0 within a day of the
+    live checks, which spent more than $0, so it opens the issue. Then
+    close it, and record on #32 the receivers and who confirmed getting
+    it.
 1.  **Secrets for the workflow.** `TURN_CF_LOGS_TOKEN` and
     `TURN_CF_ACCOUNT_ID` go to the repository's Actions secrets through
     `gh secret set`'s standard input, from the user's shell.
@@ -295,6 +319,28 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 [note-token]: /docs/research/0040-turn-relay-logs.md#the-api-tokens-permission
 [note-typesafe]: /docs/research/0041-turn-credit-alert.md#typesafes-balance-alerts-and-billing
 [note-github]: /docs/research/0041-turn-credit-alert.md#channels-that-could-carry-the-alert
+
+### Review round 1
+
+One `/code-review` round found 15 Standards, 8 Spec, and 15 fact-check
+problems; the decisions above now hold its fixes. It proved two races in
+the object, a failing paid copy deleting a free copy's claim and an older
+no covering a newer yes, and found that a failed refresh left a false
+`402`, that a line past the free lines could take the phone's whole 3
+seconds, and that a failing `gh` ended the alert's run green. Kept, with
+reasons:
+
+- **Building the terms in each route:** the configuration is read only
+  after a line's own checks (SEC-2), so the two routes can't share one.
+- **A copy of `isRecord` in the scripts:** they import no package at run
+  time, so the workflow needn't install.
+- **A mistyped `RC_PROJECT_ID`:** RevenueCat's `404` for a missing project
+  isn't told apart from one for a missing customer, so the live check
+  proves the committed ID instead.
+- **RevenueCat lagging a purchase:** the once-a-minute refresh stays, as
+  the TRD has it; a note for #48 says so.
+- **Latency over answered lines only:** it's the latency of an answer, and
+  Jev's timeouts show among the failures.
 
 ### Rejected alternatives
 
@@ -447,8 +493,8 @@ moved, and were committed one at a time.
 
 ### Task 9: The credit alert
 
-**Files:** create `worker/scripts/credits.ts`,
-`worker/test/credits.test.ts`, and `.github/workflows/credit-alert.yml`;
+**Files:** create `worker/scripts/alert.ts`, `worker/scripts/credits.ts`,
+`worker/test/alert.test.ts`, and `.github/workflows/credit-alert.yml`;
 modify `worker/README.md`.
 
 - [ ] **Step 1: Write the failing tests** for the rule: quiet under the
