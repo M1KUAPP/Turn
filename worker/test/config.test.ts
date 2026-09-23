@@ -38,6 +38,11 @@ describe('GET /v1/config', () => {
     })
   })
 
+  test('reads an unset POLICY, such as one deleted in the dashboard, as the starting policy', async () => {
+    const response = await getConfig({ POLICY: undefined })
+    expect(((await response.json()) as { policy: unknown }).policy).toEqual(startingPolicy)
+  })
+
   test.each([
     ['an unknown key', { flor: 0.7 }],
     ['a name every object inherits', { constructor: ['consent'] }],
