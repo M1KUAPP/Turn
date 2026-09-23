@@ -215,13 +215,17 @@ the research note also runs `check_links.py`. `idscan.py` must print
 
 The device checks run from the scratchpad's `dev/` folder. `UDID` holds the
 phone's UDID from `ids.json` and is never printed, `BUILD` is the clean
-checkout, and `R` is `python3 -u redact.py`:
+checkout, and `REDACT` is `python3 -u redact.py`. The `stamp` file marks
+the run's start, so `find` picks this build's `Turn.app`:
 
 ```shell
+touch stamp
 (cd "$BUILD/app" && EXPO_PUBLIC_BUILD_KIND=device \
-  bunx expo run:ios --device "${UDID:?}") 2>&1 | $R > run.log
-APP=$(find ~/Library/Developer/Xcode/DerivedData -path '*/Debug-iphoneos/Turn.app' -newer stamp -maxdepth 6)
-codesign -dvv "$APP" 2>&1 | grep -E '^(Identifier|Authority|TeamIdentifier)=' | $R
+  bunx expo run:ios --device "${UDID:?}") 2>&1 | $REDACT > run.log
+APP=$(find ~/Library/Developer/Xcode/DerivedData -maxdepth 6 \
+  -path '*/Debug-iphoneos/Turn.app' -newer stamp)
+codesign -dvv "$APP" 2>&1 \
+  | grep -E '^(Identifier|Authority|TeamIdentifier)=' | $REDACT
 security cms -D -i "$APP/embedded.mobileprovision" > profile.plist
 for key in CreationDate ExpirationDate; do plutil -extract "$key" raw profile.plist; done
 plutil -extract ProvisionedDevices raw profile.plist
