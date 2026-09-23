@@ -30,9 +30,9 @@ export async function expectError(response: Response, status: number, code: stri
   expect(await response.text()).toBe(JSON.stringify({ error: code }))
 }
 
-/** A partner line as the app sends it, with three candidates. */
+/** A partner line as the app sends it, with three candidates and a new line ID each time. */
 export const lineRequest = (changes: Partial<LineRequest> = {}): LineRequest => ({
-  lineId: '0b9e4d52-6f1a-4c3e-8d7b-9a2f5e1c4b6d',
+  lineId: crypto.randomUUID(),
   seq: 7,
   line: 'How was physio today, [PERSON 1]?',
   place: 'Clinic',
@@ -89,15 +89,36 @@ export const jevAnswer = (
   usage: { input_tokens: 512, output_tokens: 20 }
 })
 
+/** A response an API gives, built at its call, since the runtime won't share one across Durable Objects. */
+type Reply = () => Response | Promise<Response>
+
+/** The responses each API has left to give, by host. */
+const queues = new Map<string, Reply[]>()
+
 /**
- * Stands in for Jev with these responses in turn, each built at its call since the runtime won't share one across
- * Durable Objects, and returns the spy. Past them, a call fails as `test/setup.ts` makes it.
+ * Stands in for every API: a call takes the next response queued for its host, and fails once there are none, so a
+ * test that forgets one can't reach the real API.
  */
-export function mockJev(...responses: (() => Response)[]) {
-  const spy = vi.mocked(globalThis.fetch)
-  for (const response of responses) spy.mockImplementationOnce(async () => response())
-  return spy
+export function routeFetch() {
+  queues.clear()
+  vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+    const reply = queues.get(new URL(input instanceof Request ? input.url : String(input)).host)?.shift()
+    if (!reply) throw new Error('This test called fetch without mocking it')
+    return reply()
+  })
 }
+
+/** Queues these responses for a host's calls, in turn, and returns the spy. */
+function queue(host: string, replies: Reply[]) {
+  queues.set(host, [...(queues.get(host) ?? []), ...replies])
+  return vi.mocked(globalThis.fetch)
+}
+
+/** Stands in for Jev with these responses in turn, and returns the spy. */
+export const mockJev = (...replies: Reply[]) => queue('api.typesafe.ai', replies)
+
+/** Stands in for RevenueCat's API with these responses in turn, and returns the spy. */
+export const mockRevenueCat = (...replies: Reply[]) => queue('api.revenuecat.com', replies)
 
 /** Jev's error, whose body holds what no answer from the relay may carry: the key and an internal error. */
 export const jevError = (status: number) => () =>
