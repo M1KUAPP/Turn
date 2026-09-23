@@ -17,6 +17,7 @@ Contents:
 1.  [Install and launch on iOS 17 and later](#install-and-launch-on-ios-17-and-later)
 1.  [The build kind variable](#the-build-kind-variable)
 1.  [Turn's entitlements](#turns-entitlements)
+1.  [Hands-on check](#hands-on-check)
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
@@ -295,10 +296,10 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
 - **An untrusted developer.** The CLI has no message of its own for it; the
   launch error is iOS's, as quoted in the [video iPhone
   notes][hands-on-0037].
-- Synthesis: the usbmux path may fail at the disk image step on iOS 27. If
-  the build succeeds and the install fails, install and launch the built
-  `.app` with devicectl as #80 did, and keep Metro running with
-  `bunx expo start`.
+- Synthesis: the usbmux path may fail at the disk image step on iOS 27,
+  though it didn't in the [hands-on check](#hands-on-check). If the build
+  succeeds and the install fails, install and launch the built `.app` with
+  devicectl as #80 did, and keep Metro running with `bunx expo start`.
 
 [hands-on-0037]: /docs/research/0037-turn-video-iphone.md#hands-on-check
 
@@ -345,17 +346,68 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
 - Synthesis: nothing in Turn's config needs a paid team today. Adding push,
   iCloud, or App Groups later would.
 
+## Hands-on check
+
+The session ran Turn's build on this Mac on September 23, 2026, with times
+in UTC, from a detached worktree at `main`'s head, `0113583`, after
+`bun install --frozen-lockfile`. Every log passed a redaction filter before
+it was kept.
+
+- **CocoaPods.** Before the run, `brew install cocoapods` installed
+  CocoaPods 1.17.0 and its dependency, Ruby 4.0.7, so Expo's own install
+  step didn't run.
+- **The build.** From `app/`, the ticket's command, with the phone's UDID
+  after `--device`, started at 12:51:45. It printed "Finished prebuild" and
+  "Installed CocoaPods", then "› Using --device" with the UDID and
+  "› Signing and building iOS app with:" with the certificate's name. It
+  ended with "› Build Succeeded" and "› 0 error(s), and 1 warning(s)", and
+  no prompt appeared. `codesign` dates the signature 12:53:36.
+- **Signing.** The app's signature has the identifier `com.m1ku.turn` and
+  an Apple Development certificate as its first authority, and
+  `codesign --verify --strict` passes. Its embedded profile is the one from
+  #80, "iOS Team Provisioning Profile: com.m1ku.turn", created at 10:08:39
+  and expiring at 10:08:39 on September 30, with 1 device. The app's
+  entitlements are `application-identifier`,
+  `com.apple.developer.team-identifier`, and `get-task-allow`. Expo wrote
+  the team ID into two `DEVELOPMENT_TEAM` lines in the ignored `app/ios/`,
+  and the checkout's `git status --short` stayed empty.
+- **Install and launch.** Expo's own usbmux install on iOS 27.0 printed
+  "✔ Complete 100%" and "› Logs for your project will appear below.", and
+  Turn was running by a screenshot at 12:54:15, so the `devicectl` fallback
+  wasn't needed. The `.app` holds `ip.txt` with the Mac's Wi-Fi address and
+  no `main.jsbundle`.
+- **Local Network.** That screenshot showed iOS's alert, "Allow “Turn” to
+  find devices on local networks?", over React Native's red "No script URL
+  provided" screen. The alert closed at 12:54:53, and a `devicectl`
+  relaunch at 12:55:12 still showed the red screen. The person was then
+  asked to switch Turn on under Settings > Privacy & Security > Local
+  Network, check that the phone was on the Mac's Wi-Fi, and tap Reload JS.
+  By 12:57:16 Metro had logged "iOS Bundled 4645ms app/index.ts (709
+  modules)".
+- **Light and dark.** `devicectl` set light, dark, and light again, and
+  `device info appearance` read each back before the screenshots at
+  12:57:53, 12:57:57, and 12:58:02. Each was 1290 by 2796 pixels in sRGB
+  IEC61966-2.1. In the middle 80% of the height, 100% of the sampled pixels
+  were within 2 of `#F2F2F7`, `#000000`, and `#F2F2F7` in turn, and the
+  status bar was drawn. The phone's own dark style was set back afterward.
+- **No error.** After the launch, Metro's log held only the bundle line, and
+  Turn was still running after the last screenshot.
+- **A locked phone.** A screenshot at 12:47, before the person unlocked the
+  phone, was entirely `#000000` with no status bar, and
+  `device info lockState` read `"passcodeRequired": true` at 12:51.
+- Synthesis: Turn's Debug build installs and runs on the video iPhone under
+  the free Personal Team, and #80's profile covers it through September 30.
+  A phone's first launch meets the Local Network alert and the red screen;
+  with access on and the phone on the Mac's Wi-Fi, Reload JS loads the
+  bundle. Take screenshots only while the phone is unlocked and awake.
+
 ## Gaps
 
-- **The disk image step on iOS 27.** No source says whether Expo's usbmux
-  path finds a mounted image on iOS 17 and later, or whether its
-  `debugserver` launch works there. Only a run will show it.
 - **Metro over the cable.** No source says whether a USB-only phone can
   reach Metro.
-- **The Local Network alert.** No source gives the alert's text without
-  `NSLocalNetworkUsageDescription`, or the Settings path to allow it later.
-- **Screenshots of a locked phone.** No help text says whether a capture
-  needs the phone unlocked.
+- **The Local Network setting.** The hands-on check saw the alert's title,
+  but not which of the person's steps turned access on, so the Settings
+  path above is unverified.
 - **xcodebuild's own log.** Whether the formatted build log prints the
   signing identity or profile name wasn't read.
 - **Web quotes.** The TN3179, Expo docs, and template quotes came through a
