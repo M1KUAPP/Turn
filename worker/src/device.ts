@@ -29,6 +29,9 @@ export type Terms = { freeLines: number; unlimited: boolean }
 /** RevenueCat's last answer about `listen`, which the object keeps a day if yes and a minute if no (PAY-7). */
 type Cached = { active: number; checked_at: number; refreshed_at: number | null }
 
+/** The most a line may take in the relay, RevenueCat's check included, since a later answer is stale (STATE-2). */
+const budgetMs = 2500
+
 const minute = 60_000
 const day = 24 * 60 * minute
 
@@ -131,8 +134,9 @@ export class Device extends DurableObject<Env> {
    * to Jev (PAY-9). The app user ID is used only to ask RevenueCat, and never stored.
    */
   async answer(line: LineRequest, user: string, terms: Terms): Promise<LineReply> {
+    const started = Date.now()
     if (terms.unlimited) {
-      const reply = await this.ask(line)
+      const reply = await this.ask(line, budgetMs)
       return reply.outcome === 'answered' ? { ...reply, freeLinesLeft: null } : reply
     }
     const claim = this.claim(line.lineId, terms)
@@ -143,7 +147,7 @@ export class Device extends DurableObject<Env> {
       if (entitled === 'unknown') return { outcome: 'unverified' }
     }
     const [reply] = await Promise.all([
-      this.ask(line),
+      this.ask(line, budgetMs - (Date.now() - started)),
       // A purchase made before the free lines ran out shows once a line with `refresh` asks RevenueCat (PAY-4).
       claim === 'free' && line.refresh === true ? this.entitled(user, true) : undefined
     ])
@@ -156,14 +160,15 @@ export class Device extends DurableObject<Env> {
   }
 
   /**
-   * Asks Jev about one line, within 2.5 seconds in all, since a late answer is stale (STATE-2). Any failure, an answer
-   * out of shape included, is `failed`, except a 402, which is how running out of credits most likely shows (AVAIL-2).
+   * Asks Jev about one line within the budget, the milliseconds left of the line's 2.5 seconds (STATE-2). Any failure,
+   * an answer out of shape included, is `failed`, except a 402, which is how running out of credits most likely shows
+   * (AVAIL-2).
    */
-  private async ask(line: JevLine): Promise<JevReply> {
+  private async ask(line: JevLine, budget: number): Promise<JevReply> {
     const started = Date.now()
     try {
       const result = await this.jev.systemOne(buildJevRequest(line, this.env.JEV_MODEL), {
-        signal: AbortSignal.timeout(2500)
+        signal: AbortSignal.timeout(budget)
       })
       const { kind, topic, scores } = readJevAnswer(result.answers, line)
       return {
