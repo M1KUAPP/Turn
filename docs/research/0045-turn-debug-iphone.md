@@ -194,7 +194,9 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   local network alert in response to one of your local network operations,
   it may deny the operation immediately, before the user has responded to
   the alert." It also says "If your app accesses the local network, add the
-  NSLocalNetworkUsageDescription property" ([TN3179][tn3179]).
+  NSLocalNetworkUsageDescription property", and "Users configure local
+  network privacy in Settings > Privacy & Security > Local Network"
+  ([TN3179][tn3179]).
 - **Info.plist.** Neither `NSLocalNetworkUsageDescription` nor
   `NSBonjourServices` is in the template's `Info.plist`, in
   `@expo/config-plugins` 57.0.9, in `@expo/prebuild-config` 57.0.16, or in
@@ -432,13 +434,10 @@ it was kept.
 
 - **Metro over the cable.** No source says whether a USB-only phone can
   reach Metro.
-- **The Local Network setting.** The hands-on check saw the alert's title,
-  but not which of the person's steps turned access on, so the Settings
-  path above is unverified.
+- **The person's step.** The hands-on check saw the alert's title, but not
+  which of the person's steps turned access on.
 - **xcodebuild's own log.** Whether the formatted build log prints the
   signing identity or profile name wasn't read.
-- **Web quotes.** The TN3179, Expo docs, and template quotes came through a
-  fetch summary, so check their wording before reusing them.
 
 ## See also
 
