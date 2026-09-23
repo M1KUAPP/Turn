@@ -3,10 +3,10 @@ type SpeechPort = {
   stop(): Promise<void>
 }
 
-type SpeechState = { speaking: boolean; lastText: string | null }
+type SpeechState = { speaking: boolean; lastText: string | null; activePhraseId: string | null }
 
 export function createSpeechController(port: SpeechPort, recordTap: (id: string) => void) {
-  let state: SpeechState = { speaking: false, lastText: null }
+  let state: SpeechState = { speaking: false, lastText: null, activePhraseId: null }
   let last: { text: string; id: string } | null = null
   let generation = 0
   let stopping: Promise<void> | null = null
@@ -29,7 +29,7 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
     if (state.speaking || stopping) await stopNative()
     if (ticket !== generation) return
     last = { text, id }
-    setState({ speaking: true, lastText: text })
+    setState({ speaking: true, lastText: text, activePhraseId: id })
     let counted = false
     try {
       port.speak(text, {
@@ -40,14 +40,14 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
           }
         },
         onDone: () => {
-          if (ticket === generation) setState({ ...state, speaking: false })
+          if (ticket === generation) setState({ ...state, speaking: false, activePhraseId: null })
         },
         onStopped: () => {
-          if (ticket === generation) setState({ ...state, speaking: false })
+          if (ticket === generation) setState({ ...state, speaking: false, activePhraseId: null })
         }
       })
     } catch (error) {
-      if (ticket === generation) setState({ ...state, speaking: false })
+      if (ticket === generation) setState({ ...state, speaking: false, activePhraseId: null })
       throw error
     }
   }
@@ -64,7 +64,7 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
     async stop() {
       ++generation
       if (state.speaking) {
-        setState({ ...state, speaking: false })
+        setState({ ...state, speaking: false, activePhraseId: null })
         await stopNative()
       }
     },

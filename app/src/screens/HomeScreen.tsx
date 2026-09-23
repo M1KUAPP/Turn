@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { SymbolView } from 'expo-symbols'
 import { FlatList, Pressable, ScrollView, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, createBankStore } from '../bank/store'
@@ -70,7 +71,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
           style={({ pressed }) => ({
             flex: 1,
             minHeight,
-            borderWidth: 1.5,
+            borderWidth: tone ? 3 : 2,
             borderColor: edge,
             borderRadius: 12,
             padding: 12,
@@ -78,9 +79,21 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
             justifyContent: 'center'
           })}
         >
-          <Text allowFontScaling={false} style={{ ...type('title3-emphasized'), color: colors.ink, textAlign: 'left' }}>
+          <Text
+            allowFontScaling={false}
+            style={{ ...type('title3-emphasized'), color: colors.ink, textAlign: 'left', paddingRight: 24 }}
+          >
             {item.text}
           </Text>
+          {speaking.activePhraseId === item.id && (
+            <SymbolView
+              name="speaker.wave.2"
+              size={18}
+              tintColor={colors.ink}
+              accessible={false}
+              style={{ position: 'absolute', top: 12, right: 12 }}
+            />
+          )}
         </Pressable>
       </View>
     )
@@ -118,7 +131,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
                   justifyContent: 'center',
                   paddingHorizontal: 16,
                   borderRadius: 22,
-                  borderWidth: 1,
+                  borderWidth: selected ? 0 : 2,
                   borderColor: colors.edge,
                   backgroundColor: selected ? colors.ink : colors.surface
                 }}
@@ -144,7 +157,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
             paddingHorizontal: 16,
             marginRight: 16,
             borderRadius: 22,
-            borderWidth: 1,
+            borderWidth: categoryId === 'all' ? 0 : 2,
             borderColor: colors.edge,
             backgroundColor: categoryId === 'all' ? colors.ink : colors.surface
           }}
@@ -213,6 +226,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
           <Pressable
             key={label}
             accessibilityRole="button"
+            accessibilityLabel={label}
             accessibilityState={{ disabled }}
             disabled={disabled}
             onPress={action}
@@ -222,7 +236,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
               minHeight: controlHeight,
               minWidth: 44,
               borderRadius: 22,
-              borderWidth: 1,
+              borderWidth: 2,
               borderColor: colors.edge,
               backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
               alignItems: 'center',
@@ -230,9 +244,25 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
               opacity: disabled ? 0.45 : 1
             })}
           >
-            <Text allowFontScaling={false} style={{ ...type('headline'), color: colors.ink }}>
-              {label}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <SymbolView
+                name={
+                  label === 'Up'
+                    ? 'chevron.up'
+                    : label === 'Down'
+                      ? 'chevron.down'
+                      : label === 'Stop'
+                        ? 'stop.fill'
+                        : 'arrow.counterclockwise'
+                }
+                size={18}
+                tintColor={colors.ink}
+                accessible={false}
+              />
+              <Text allowFontScaling={false} style={{ ...type('headline'), color: colors.ink }}>
+                {label}
+              </Text>
+            </View>
           </Pressable>
         ))}
       </View>
