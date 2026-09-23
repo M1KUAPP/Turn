@@ -1,11 +1,14 @@
 import { below, seeded } from './stats'
 
+/** How many folds the cross-validation deals the lines into. */
+const foldCount = 5
+
 /**
  * Deals the items into folds, stratified by their class: one seeded shuffle, so the file's order doesn't pick the
  * folds, then each class's items in turn, round-robin, so every fold holds each class's share and the folds' sizes
  * differ by at most one. Returns each item's fold.
  */
-export function folds<T>(items: readonly T[], classOf: (item: T) => unknown, count = 5): number[] {
+export function folds<T>(items: readonly T[], classOf: (item: T) => unknown): number[] {
   const next = seeded()
   const order = items.map((_, i) => i)
   // Fisher and Yates's shuffle.
@@ -16,7 +19,7 @@ export function folds<T>(items: readonly T[], classOf: (item: T) => unknown, cou
   const fold: number[] = Array(items.length)
   let dealt = 0
   for (const members of Map.groupBy(order, (i) => classOf(items[i])).values()) {
-    for (const i of members) fold[i] = dealt++ % count
+    for (const i of members) fold[i] = dealt++ % foldCount
   }
   return fold
 }
@@ -48,10 +51,9 @@ export function crossValidate<T>(
   items: readonly T[],
   fold: readonly number[],
   values: (item: T) => readonly number[],
-  right: (item: T, cutOff: number) => boolean,
-  count = 5
+  right: (item: T, cutOff: number) => boolean
 ): number[] {
-  return Array.from({ length: count }, (_, held) =>
+  return Array.from({ length: foldCount }, (_, held) =>
     chooseCutOff(
       items.filter((_, i) => fold[i] !== held),
       values,

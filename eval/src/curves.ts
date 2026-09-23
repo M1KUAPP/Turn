@@ -4,6 +4,9 @@ import type { LineScore, ScoredLine } from './score'
 /** One point of a ranker's risk-coverage curve: at a threshold, the share of lines covered, and of those, wrong. */
 export type Point = { threshold: number; coverage: number; risk: number }
 
+/** A ranker's name and its curve's points. */
+export type Curve = readonly [name: string, points: readonly Point[]]
+
 /** A ranking's top score, or 0 for none. */
 const top = (ranking: Ranking) => Math.max(0, ...ranking.scores.values())
 
@@ -57,7 +60,7 @@ const tag = (name: string, attributes: Record<string, string | number>, text?: s
  * color and dashes and its points for each ranker, and a legend. A curve of one point shows as that point, and each
  * curve's points are rings a little smaller than the curve's before, so a point two curves share shows both.
  */
-export function plot(curves: readonly (readonly [string, readonly Point[]])[]): string {
+export function plot(curves: readonly Curve[]): string {
   const ticks = [0, 0.2, 0.4, 0.6, 0.8, 1]
   const grid = ticks.flatMap((tick) => [
     tag('line', { x1: x(tick), y1: y(0), x2: x(tick), y2: y(1), stroke: '#e5e7eb' }),
