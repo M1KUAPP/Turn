@@ -4,7 +4,7 @@ What an exact count per address in a Durable Object would cost on Workers
 Free, against the rate limiting binding, from Cloudflare's Workers, Durable
 Objects, D1, WAF, and headers docs pages, workerd's SQLite source and row
 count patch, a search of the cloudflare-docs repo, and a local measurement,
-read for issue #98 on September 24, 2026. Judgment starts with
+read for issue #98 on September 23, 2026, UTC. Judgment starts with
 "Synthesis:".
 
 Contents:
@@ -263,7 +263,7 @@ Contents:
 
 ## Local measurement
 
-Run on September 24, 2026, in the relay's Vitest pool
+Run on September 23, 2026, UTC, in the relay's Vitest pool
 (`@cloudflare/vitest-plugin` 1.2.2, Wrangler 4.136.2), inside a relay
 object reached through `runInDurableObject`, reading each statement's
 `rowsRead` and `rowsWritten` after `toArray()`. Each table had the
