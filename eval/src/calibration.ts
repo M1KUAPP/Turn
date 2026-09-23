@@ -100,6 +100,8 @@ export type Brier = {
   miscalibration: number
   /** DSC: UNC minus the PAV fit's Brier score; 0 when the fit is one value. */
   discrimination: number
+  /** The skill score, 1 − score / UNC: above 0 beats always forecasting the share, and NaN when UNC is 0. */
+  skill: number
 }
 
 /**
@@ -118,7 +120,8 @@ export function brier(forecasts: readonly Forecast[]): Brier {
     forecasts.length,
     (sample) => sample.reduce((sum, i) => sum + errors[i], 0) / sample.length
   )
-  return { score, low, high, uncertainty, miscalibration: score - fitted, discrimination: uncertainty - fitted }
+  const skill = uncertainty === 0 ? NaN : 1 - score / uncertainty
+  return { score, low, high, uncertainty, miscalibration: score - fitted, discrimination: uncertainty - fitted, skill }
 }
 
 /** A reliability diagram's makings: the forecasts, their PAV fit, and the consistency band. */

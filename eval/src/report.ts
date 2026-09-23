@@ -358,7 +358,12 @@ const calibrationSection = (fit: Reliability, score: Brier, image: string, namin
       `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
         `one that isn't, is ${three(score.score)}, with a 95% bootstrap interval of ${three(score.low)} to ` +
         `${three(score.high)}; lower is better. Always forecasting the share acceptable, ${right} of ` +
-        `${forecasts.length}, would score ${three(score.uncertainty)}. CORP's decomposition gives a miscalibration ` +
+        `${forecasts.length}, would score ${three(score.uncertainty)}` +
+        (Number.isNaN(score.skill)
+          ? ', which leaves no skill score, since every line is right or none is. '
+          : `, so the skill score, 1 minus the Brier score over that, is ${three(score.skill)}: above 0 beats ` +
+            'that constant forecast, and below 0 does worse. ') +
+        `CORP's decomposition gives a miscalibration ` +
         `of ${three(score.miscalibration)} and a discrimination of ${three(score.discrimination)}: the Brier score ` +
         'is the miscalibration, minus the discrimination, plus that score of always forecasting the share.'
     )
