@@ -9,6 +9,8 @@ import { listOf, wrap } from './prose'
 import { keyword, place } from './rankers'
 import {
   bigButtons,
+  kindMatrix,
+  kinds,
   outcomes,
   scoreLines,
   sharesNoWord,
@@ -196,6 +198,31 @@ const bigButtonSection = (scores: readonly LineScore<Line>[]) => {
   ]
 }
 
+/** Each kind of question as the report names it. */
+const kindNames = { yes_no: 'Yes or no', either_or: 'Either or', open: 'Open', not_a_question: 'Not a question' }
+
+/**
+ * Jev's most likely kind of question against its writer's, on every line: the accuracy with its interval, and the
+ * confusion matrix, since a yes-or-no call brings up the fixed buttons.
+ */
+const kindSection = (scores: readonly LineScore<Line>[]) => {
+  const { counts, right } = kindMatrix(scores, 'jev')
+  return [
+    '## The question kind',
+    wrap(
+      `Jev's most likely kind of question against its writer's, on all ${scores.length} lines: right on ` +
+        `${rate(right)}. Each row is the writer's kind, and each column Jev's, or a tie when two kinds share the top.`
+    ),
+    table(
+      ["Writer's kind", ...kinds.map((kind) => kindNames[kind]), 'Tie'],
+      kinds.map((kind) => [
+        kindNames[kind],
+        ...[...kinds, 'tie' as const].map((called) => String(counts[kind][called]))
+      ])
+    )
+  ]
+}
+
 /** Each fold's cut-off for the embeddings ranker, which holds a line when no phrase's cosine reaches it. */
 const cutOffSection = (cutOffs: readonly number[]) => {
   const values = cutOffs.map((cutOff) => (cutOff === Infinity ? 'none, holding every line' : cutOff.toFixed(3)))
@@ -251,6 +278,7 @@ const render = (
     'Who wrote the data',
     ...groups.map(({ name }) => name),
     'Big buttons on yes-or-no, pain, and consent lines',
+    ...(names.includes('jev') ? ['The question kind'] : []),
     ...(cutOffs.embeddings ? ["The embeddings ranker's cut-offs"] : []),
     'Latency'
   ]
@@ -303,6 +331,7 @@ const render = (
         )
       ),
       ...bigButtonSection(scores),
+      ...(names.includes('jev') ? kindSection(scores) : []),
       ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings) : []),
       '## Latency',
       wrap(

@@ -1,7 +1,7 @@
 import type { Phrase } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
 import { keyword, place, type Ranker } from '../src/rankers'
-import { bigButtons, scoreLines, sharesNoWord, summarize, topSixGap } from '../src/score'
+import { bigButtons, kindMatrix, scoreLines, sharesNoWord, summarize, topSixGap } from '../src/score'
 import { smallBank, waitImTyping } from './small-bank'
 
 const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
@@ -276,4 +276,32 @@ test('lists every big button with its ranker, line, and phrase, and whether the 
     ['sure', 'cold', 'im-cold', false],
     ['sure', 'costs', 'how-much-is-this', false]
   ])
+})
+
+test("counts a ranker's most likely kind of question against its writer's, a tie apart", async () => {
+  const kinded = [
+    { text: 'Do you want some water?', place: 'home', kind: 'yes_no' as const, acceptable: [] },
+    { text: 'Tea or coffee?', place: 'home', kind: 'either_or' as const, acceptable: [] },
+    { text: 'How was physio?', place: 'home', kind: 'open' as const, acceptable: [] },
+    { text: 'Nice weather today.', place: 'home', kind: 'not_a_question' as const, acceptable: [] }
+  ]
+  // Yes-or-no for "Do", a tie for "Tea", and open for the rest.
+  const guess: Ranker = (line) => ({
+    kind: {
+      yes_no: line.startsWith('Do') ? 0.8 : 0,
+      either_or: line.startsWith('Tea') ? 0.5 : 0,
+      open: line.startsWith('Tea') ? 0.5 : line.startsWith('Do') ? 0.2 : 0.9,
+      not_a_question: 0
+    },
+    topic: {},
+    scores: new Map(),
+    onPhone: false
+  })
+  const { lines: scored } = await scoreLines(kinded, bank, { guess })
+  const { counts, right } = kindMatrix(scored, 'guess')
+  expect(right).toEqual({ k: 2, n: 4 })
+  expect(counts.yes_no).toEqual({ yes_no: 1, either_or: 0, open: 0, not_a_question: 0, tie: 0 })
+  expect(counts.either_or).toEqual({ yes_no: 0, either_or: 0, open: 0, not_a_question: 0, tie: 1 })
+  expect(counts.open).toEqual({ yes_no: 0, either_or: 0, open: 1, not_a_question: 0, tie: 0 })
+  expect(counts.not_a_question).toEqual({ yes_no: 0, either_or: 0, open: 1, not_a_question: 0, tie: 0 })
 })
