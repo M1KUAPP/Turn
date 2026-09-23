@@ -18,6 +18,7 @@ Contents:
 1.  [Latency and throughput](#latency-and-throughput)
 1.  [IPv6 in CF-Connecting-IP](#ipv6-in-cf-connecting-ip)
 1.  [Local measurement](#local-measurement)
+1.  [Hands-on check](#hands-on-check)
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
@@ -289,6 +290,40 @@ object reached through `runInDurableObject`, reading each statement's
   That Cloudflare counts rows as workerd does locally is inference from
   the row count patch in workerd's source.
 
+## Hands-on check
+
+Run on September 23, 2026, against `turn-relay` on the team's Cloudflare
+account, from one Mac over IPv4, as ten fixed check users,
+`00000000-0000-4000-8000-000000000981` to
+`00000000-0000-4000-8000-000000000990`. Times are UTC.
+
+- **Before.** The relay served #96's version `e3ebe6b9`, with the
+  `ADDRESS_LIMITER` binding. From 17:43:49, 20 configuration requests from
+  one check user, one every 2 seconds, all got `200`, in a median of 438
+  ms from the Mac (least 367, most 754).
+- **The deploy.** `wrangler deploy` of #99's reviewed head, at 18:24:44,
+  reconciled the exports with "Created: Address", listed
+  `env.ADDRESS (Address)` among the bindings, and made version `625d2d82`,
+  serving all traffic, with no rate limiting binding left.
+- **The added call.** From 18:25:05, the same 20 requests all got `200`,
+  in a median of 475 ms (least 430, most 3,266 for the first, which met a
+  new object), and from 18:28:36 in a median of 509 ms (least 430, most
+  613).
+- **A burst from one address.** 150 configuration requests, 15 from each
+  of the ten check users, eight at a time, from 0.50 seconds into a
+  minute, were all answered within 9.59 seconds: 120 got `200`, 12 for
+  each user, and 30 got `429` with `Retry-After: 60`.
+- **One ID.** In the next minute, 31 configuration requests from one check
+  user got 30 `200`s, then `429` with `Retry-After: 60` at the 31st.
+- **A line.** In the next minute, a line from another check user got `200`
+  with Jev's answer, its 3 scores, and 19 free lines left, after 472 ms in
+  Jev and 655 ms in the relay.
+- Synthesis: the address's count holds exactly against a burst like the
+  one the binding let through, answering 120 of 150 where the binding
+  refused none of 250 in 18 seconds, and the ID's count and lines work as
+  before. The added call costs tens of milliseconds a request from this
+  Mac, a figure that carries the network's variance.
+
 ## Gaps
 
 - **The binding's price.** No page read states one, or a quota.
@@ -299,8 +334,9 @@ object reached through `runInDurableObject`, reading each statement's
   storage, and what `deleteAll()` from an alarm costs in rows, isn't said
   beyond "Each `setAlarm()` is billed as a single row written" and
   "Deletes are counted as rows written." ([DO pricing][cf-do-pricing])
-- **Latency.** No figure for a Worker-to-object call; not measured, since
-  this task ran no live requests.
+- **Latency.** No page gives a figure for a Worker-to-object call, and the
+  hands-on check timed only whole requests from this Mac, whose medians
+  moved by 37 and 71 ms with the network's variance in them.
 - **Names.** Whether names appear in the dashboard's lists, logs, or
   analytics wasn't found.
 - **Storage per object on Free.** The limits page gives both 10 GB and 1
