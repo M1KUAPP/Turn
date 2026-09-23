@@ -130,6 +130,33 @@ test('follows the policy each answer carries, not the one the configuration gave
   expect(replayed[0].row.slots.filter((id) => id !== null)).toHaveLength(1)
 })
 
+test("keeps its one user within the relay's 30 requests a minute, waiting only once it must (SEC-3)", async () => {
+  vi.useFakeTimers({ toFake: ['setTimeout', 'Date'] })
+  try {
+    const spy = fakeRelay((request) => answered(request))
+    const answer = spy.getMockImplementation()!
+    const times: number[] = []
+    spy.mockImplementation(async (input, init) => {
+      times.push(Date.now())
+      return answer(input, init)
+    })
+    let done = false
+    const replaying = replay(lines(...Array.from({ length: 40 }, (_, i) => `Line ${i + 1}`)), relay).finally(() => {
+      done = true
+    })
+    while (!done) await vi.advanceTimersByTimeAsync(1000)
+    const { replayed } = await replaying
+    expect(replayed.map(({ by }) => by)).toEqual(Array(40).fill('relay'))
+    expect(times).toHaveLength(41)
+    // At most 29 of its requests in any 60 seconds, one fewer than the relay allows, in case two arrive closer.
+    for (const start of times) expect(times.filter((t) => t >= start && t < start + 60_000).length).toBeLessThan(30)
+    // The configuration and the first 28 lines go at once.
+    expect(times[28]).toBe(times[0])
+  } finally {
+    vi.useRealTimers()
+  }
+})
+
 test('has the phone rank a line when the relay fails, answers nothing, or answers too late', async () => {
   fakeRelay((request, signal) => {
     if (request.seq === 1) return Response.json({ error: 'jev_unavailable' }, { status: 503 })
