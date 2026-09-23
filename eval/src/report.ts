@@ -3,12 +3,15 @@ import { writeFileSync } from 'node:fs'
 import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
+import { sentenceEmbedding, type SentenceEmbedding } from './apple'
+import { brier, reliability, reliabilityPlot, topPhrase, type Brier, type Reliability } from './calibration'
 import { plot, riskCoverage, type Curve, type Point } from './curves'
 import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
-import { atCutOff, embeddingModel, embeddings, workersAi } from './embeddings'
+import { atCutOff, embeddingModel, embeddings, qwen, qwenInstruction, qwenModel, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
 import { cell, listOf, table, wrap } from './prose'
 import { keyword, place } from './rankers'
+import { reranker, rerankerModel } from './reranker'
 import {
   bigButtons,
   kindMatrix,
@@ -173,8 +176,14 @@ const groupSections = (
   ]
 }
 
-/** Jev's pin, where it's set, and what Jev reported answering as, then Workers AI's model (EVAL-6). */
-const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
+/** What the report names of Apple's sentence embedding, as its helper named it. */
+type Apple = Pick<SentenceEmbedding, 'revision' | 'dimension' | 'system'>
+
+/**
+ * Jev's pin, where it's set, and what Jev reported answering as, then Workers AI's models and Apple's sentence
+ * embedding, with its revision, dimension, and system (EVAL-6).
+ */
+const models = (pin: string, calls: readonly JevCall[], naming: Naming, apple: Apple) => {
   const byModel = [...Map.groupBy(calls, (call) => call.model)]
   const answered = listOf(
     byModel.map(
@@ -185,7 +194,10 @@ const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
   )
   return (
     `- **Models:** ${capital(naming.jev)}, pinned to ${naming.model(pin)} by \`worker/wrangler.jsonc\`, ` +
-    `which answered as ${answered}; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
+    `which answered as ${answered}; Workers AI's \`${embeddingModel}\`, with \`cls\` pooling, ` +
+    `\`${rerankerModel}\`, and \`${qwenModel}\`, with the instruction "${qwenInstruction}"; and Apple's ` +
+    `English sentence embedding at revision ${apple.revision}, of ${apple.dimension} numbers, on macOS ` +
+    `${apple.system}.`
   )
 }
 
@@ -276,23 +288,75 @@ const curveSection = (count: number, curves: readonly Curve[], image: string) =>
   ]
 }
 
-/** Each fold's cut-off for the embeddings ranker, which holds a line when no phrase's cosine reaches it. */
-const cutOffSection = (cutOffs: readonly number[], fold: readonly number[]) => {
-  const values = cutOffs.map((cutOff, held) => {
-    const count = fold.filter((f) => f === held).length
-    if (count === 0) return 'no lines to score'
-    const value = cutOff === Infinity ? 'none, holding every line,' : cutOff.toFixed(3)
-    return `${value} for ${count} ${count === 1 ? 'line' : 'lines'}`
-  })
+/**
+ * Each fold's cut-off for each ranker whose scores aren't probabilities, which holds a line when no phrase's score
+ * reaches it, to three significant figures, since the reranker's scores are small.
+ */
+const cutOffSection = (cutOffs: Readonly<Record<string, readonly number[]>>, fold: readonly number[]) => {
+  const counts = [0, 1, 2, 3, 4].map((held) => fold.filter((f) => f === held).length)
+  const value = (cutOff: number, held: number) =>
+    counts[held] === 0 ? 'no lines' : cutOff === Infinity ? 'hold all' : cutOff.toPrecision(3)
   return [
-    "## The embeddings ranker's cut-offs",
+    '## The cut-offs for holding',
     wrap(
       'The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable ' +
-        "reply. Each fold's lines were scored at the cut-off, of the six highest cosines of each of the other four " +
-        "folds' lines, that made the most of those lines right, a tie going to the higher. A line whose top phrase " +
-        "falls short of its cut-off shows no phrase: the row holds, unless the phone's yes-or-no rule brings the " +
-        'fixed buttons. Folds 1 to 5: ' +
-        `${listOf(values)}.`
+        `reply: folds 1 to 5 held ${listOf(counts.map(String))} lines. For each ranker below, each fold's lines ` +
+        "were scored at the cut-off, of the six highest scores of each of the other four folds' lines, that made the " +
+        'most of those lines right, a tie going to the higher; "hold all" is one above every score. A line whose top ' +
+        "phrase falls short of its cut-off shows no phrase: the row holds, unless the phone's yes-or-no rule brings " +
+        'the fixed buttons.'
+    ),
+    table(
+      ['Ranker', ...counts.map((_, held) => `Fold ${held + 1}`)],
+      Object.entries(cutOffs).map(([name, values]) => [name, ...values.map(value)])
+    )
+  ]
+}
+
+/** Three decimals, without the zeros that end them. */
+const decimals = (value: number) => String(Number(value.toFixed(3)))
+
+/**
+ * Jev's top phrase against whether it's acceptable, on every line (EVAL-8): the reliability diagram beside the report,
+ * a table of its fit's blocks with the band's range across each as its text, and the Brier score with its interval
+ * and CORP's decomposition.
+ */
+const calibrationSection = ({ forecasts, blocks, band }: Reliability, score: Brier, image: string, naming: Naming) => {
+  const name = capital(naming.jev)
+  const right = forecasts.filter((forecast) => forecast.right).length
+  const rows = blocks.map(({ low, high, lines, right, value }) => {
+    const across = band.filter(({ score }) => score >= low && score <= high)
+    const lowest = Math.min(...across.map((bounds) => bounds.low))
+    const highest = Math.max(...across.map((bounds) => bounds.high))
+    return [
+      low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
+      String(lines),
+      String(right),
+      value.toFixed(2),
+      `${lowest.toFixed(2)} to ${highest.toFixed(2)}`
+    ]
+  })
+  const three = (value: number) => value.toFixed(3)
+  return [
+    `## ${name}'s calibration`,
+    `![Reliability of ${name}'s top phrase](${image})`,
+    wrap(
+      `Each line's top phrase in ${naming.jev}'s first timed ranking, the one the row would show first, against ` +
+        `whether it's acceptable, on all ${forecasts.length} lines: ${right} of them are. The line is the ` +
+        "pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, " +
+        "never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated " +
+        "ranker's fit would follow the diagonal. The band holds 90% of the fits from 9,999 resamples of the lines " +
+        'with each outcome drawn as its score says, as a calibrated ranker would; the table gives each block, with ' +
+        "the band's range across its scores."
+    ),
+    table(['Scores', 'Lines', 'Acceptable', 'Fitted share', '90% band'], rows),
+    wrap(
+      `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
+        `one that isn't, is ${three(score.score)}, with a 95% bootstrap interval of ${three(score.low)} to ` +
+        `${three(score.high)}; lower is better. Always forecasting the share acceptable, ${right} of ` +
+        `${forecasts.length}, would score ${three(score.uncertainty)}. CORP's decomposition gives a miscalibration ` +
+        `of ${three(score.miscalibration)} and a discrimination of ${three(score.discrimination)}: the Brier score ` +
+        'is the miscalibration, minus the discrimination, plus that score of always forecasting the share.'
     )
   ]
 }
@@ -316,9 +380,11 @@ const render = (
     curves: readonly Curve[]
     image: string
     naming: Naming
+    apple: Apple
+    calibration: { reliability: Reliability; brier: Brier; image: string }
   }
 ) => {
-  const { run, file, pin, calls, curves, image, naming } = details
+  const { run, file, pin, calls, curves, image, naming, apple, calibration } = details
   const names = Object.keys(timings.rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true, verdict: true },
@@ -362,8 +428,9 @@ const render = (
     ),
     bigButtonSection(scores, naming),
     ...(names.includes('jev') ? [kindSection(scores, naming)] : []),
+    calibrationSection(calibration.reliability, calibration.brier, calibration.image, naming),
     curveSection(scores.length, curves, image),
-    ...(cutOffs.embeddings ? [cutOffSection(cutOffs.embeddings, fold)] : []),
+    ...(Object.keys(cutOffs).length > 0 ? [cutOffSection(cutOffs, fold)] : []),
     [
       '## Latency',
       wrap(
@@ -381,7 +448,7 @@ const render = (
         `- **Run:** ${run}.`,
         wrap(`- **Lines:** the ${labeled.length} in \`${file}\`.`, '  '),
         "- **Bank:** the app's own, `app/src/content/starter-bank.json`.",
-        wrap(models(pin, calls, naming), '  ')
+        wrap(models(pin, calls, naming, apple), '  ')
       ].join('\n'),
       wrap(
         'Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that ' +
@@ -393,10 +460,14 @@ const render = (
       ),
       [
         "- **Rankers:** place gives the place's phrases in the bank's order; keyword, the phone's own ranking by " +
-          "shared words; embeddings, the cosine between the line and each phrase, with the phone's yes-or-no rule " +
-          'and no big button, showing no phrase below a cut-off that five-fold cross-validation sets; and ' +
+          'shared words; embeddings, the cosine between the line and each phrase; ' +
           `${naming.ranker('jev')}, the relay's request as ${naming.jev} answers it, which the row's rules take with ` +
-          'their starting policy: a floor of 0.6, a big button above 0.85, and a margin of 0.15.',
+          'their starting policy: a floor of 0.6, a big button above 0.85, and a margin of 0.15; reranker, the ' +
+          "cross-encoder's score for the line and each phrase; qwen3, the cosine between the line, embedded as a " +
+          'query under its instruction, and each phrase; and apple, the cosine between the line and each phrase in ' +
+          "Apple's sentence embedding, computed on a Mac as the phone would. Like embeddings, the last three take " +
+          "the phone's yes-or-no rule and bring no big button, and each of the four shows no phrase below its own " +
+          'cut-off, which five-fold cross-validation sets.',
         '- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. ' +
           'A ranker ranks only the phrases it scores above 0, so keyword ranks none on a line that shares no word. ' +
           'Chance is a random order of the same phrases. The mean reciprocal rank is a mean of ranks, not a rate, ' +
@@ -432,12 +503,12 @@ const commit = () => {
 }
 
 /**
- * `bun run eval`: scores the four rankers on the labeled lines in `eval/lines.jsonl`, or the file `--lines` names, and
- * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3), with its plot beside it. The embeddings
- * ranker needs `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev `TYPESAFE_API_KEY`, in the environment.
- * `--unnamed` names Jev as the hosted decision model, for the README while naming is off. It scores any of the 80
- * lines, whatever file holds them, only from a clean working tree, so the history shows Jev's settings committed
- * before any result (EVAL-2).
+ * `bun run eval`: scores the seven rankers on the labeled lines in `eval/lines.jsonl`, or the file `--lines` names, and
+ * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3, EVAL-8), with its two plots beside it. The
+ * embeddings, reranker, and qwen3 rankers need `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev
+ * `TYPESAFE_API_KEY`, in the environment, and apple needs a Mac with Swift. `--unnamed` names Jev as the hosted
+ * decision model, for the README while naming is off. It scores any of the 80 lines, whatever file holds them, only
+ * from a clean working tree, so the history shows Jev's settings committed before any result (EVAL-2).
  */
 export async function main(args: readonly string[]): Promise<void> {
   const { values } = parseArgs({
@@ -455,17 +526,43 @@ export async function main(args: readonly string[]): Promise<void> {
   }
   const pin = relayModel()
   const jevRanker = jev(pin)
-  const rankers = { place, keyword, embeddings: embeddings(workersAi()), jev: jevRanker }
-  const scores = await scoreLines(labeled, phrases, rankers, { embeddings: atCutOff })
-  const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
-  const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
-  const curves = Object.keys(rankers).map((name) => [naming.ranker(name), riskCoverage(scores.lines, name)] as const)
-  // The plot sits beside the report, named after it, so the report's relative link finds it.
-  const image = `${basename(out, '.md')}-risk-coverage.svg`
-  writeFileSync(join(dirname(out), image), plot(curves))
-  const run = `${date}, at commit \`${hash}\`${clean ? '' : ' with uncommitted changes'}`
-  writeFileSync(out, render(labeled, scores, { run, file, pin, calls: jevRanker.calls, curves, image, naming }))
-  console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
+  const bge = workersAi()
+  const rerank = reranker()
+  const qwen3 = qwen()
+  // Started last, once every key is found, and closed however the run ends, since it keeps the process open.
+  const apple = await sentenceEmbedding()
+  try {
+    const rankers = {
+      place,
+      keyword,
+      embeddings: embeddings(bge),
+      jev: jevRanker,
+      reranker: rerank,
+      qwen3: embeddings(qwen3.documents, qwen3.queries),
+      apple: embeddings(apple.embed)
+    }
+    const atCutOffs = { embeddings: atCutOff, reranker: atCutOff, qwen3: atCutOff, apple: atCutOff }
+    const scores = await scoreLines(labeled, phrases, rankers, atCutOffs)
+    const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
+    const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
+    const curves = Object.keys(rankers).map((name) => [naming.ranker(name), riskCoverage(scores.lines, name)] as const)
+    // The plots sit beside the report, named after it, so the report's relative links find them.
+    const image = `${basename(out, '.md')}-risk-coverage.svg`
+    writeFileSync(join(dirname(out), image), plot(curves))
+    const fit = reliability(topPhrase(scores.lines, 'jev'))
+    const calibration = {
+      reliability: fit,
+      brier: brier(fit.forecasts),
+      image: `${basename(out, '.md')}-reliability.svg`
+    }
+    writeFileSync(join(dirname(out), calibration.image), reliabilityPlot(fit, capital(naming.jev)))
+    const run = `${date}, at commit \`${hash}\`${clean ? '' : ' with uncommitted changes'}`
+    const { calls } = jevRanker
+    writeFileSync(out, render(labeled, scores, { run, file, pin, calls, curves, image, naming, apple, calibration }))
+    console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
+  } finally {
+    await apple.close()
+  }
 }
 
 if (import.meta.main) await main(process.argv.slice(2))
