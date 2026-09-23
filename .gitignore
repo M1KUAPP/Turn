@@ -81,6 +81,8 @@ tmbootpicker.efi
 # Development
 .superpowers/
 node_modules/
+.expo/
+app/ios/
 
 # Environment
 .env*
