@@ -85,7 +85,8 @@ Contents:
   shows it. A client can then land 30 requests at :59 and 30 at :00, and a
   refused call costs nothing if production matches the emulator. The
   31st-request test is exact against the local simulator, where counting is
-  serial; production's cached counts may let a few more through.
+  serial; production's cached counts let many more through, as the
+  hands-on check found.
 
 [mf-client]: https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/src/workers/ratelimit/ratelimit.worker.ts
 [mf-object]: https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/src/workers/ratelimit/ratelimit-object.worker.ts
@@ -179,10 +180,10 @@ Contents:
   1, 2026" ([DO limits][cf-do-limits]).
 - Synthesis: an `UPDATE` of one counter row, with no index on the column
   it changes, writes one row. A line that reaches Jev costs one Worker
-  request, one to the user's object, and one to the budget's per Jev call,
-  retries included, plus a budget row per call; the fallback count adds a
-  row per request. Judging's volume stays far under 100,000 a day and 1,000
-  a second. Keying the budget's row by the UTC date, such as `2026-09-23`,
+  request, one to the user's object, which also counts it, and one to the
+  budget's per Jev call, retries included, plus a row for the count and one
+  per call. Judging's volume stays far under 100,000 a day and 1,000 a
+  second. Keying the budget's row by the UTC date, such as `2026-09-23`,
   resets it at midnight UTC without an alarm.
 
 [do-notes]: /docs/research/0010-cloudflare-workers.md#durable-objects-on-the-free-and-paid-plans
@@ -249,7 +250,7 @@ Paths are under `node_modules/.bun/`, in `miniflare@5.20260921.0-alpha`
 - **No address in the tests.** Miniflare sets `CF-Connecting-IP` from the
   socket's address, on requests that reach it over its socket
   (`MF workers/core/entry.worker.js:4985-4987`). The relay's tests call
-  the Worker's `fetch` directly (`worker/test/helpers.ts:27-28`), so their
+  the Worker's `fetch` directly (`worker/test/helpers.ts:43-45`), so their
   requests carry none unless a test sets one.
 - **Local test.** On September 23, 2026, with both bindings added to the
   relay's `wrangler.jsonc` under the test pool:
@@ -269,14 +270,14 @@ Paths are under `node_modules/.bun/`, in `miniflare@5.20260921.0-alpha`
 Run on September 23, 2026, against `turn-relay` on the team's Cloudflare
 account, from one machine, with fresh random app user IDs. Times are UTC.
 
-- **The deploy.** `wrangler deploy` of the branch at `1bbeaa5` accepted
-  both `ratelimits` bindings, listed as "Rate Limit", and created the
-  `Budget` object ("Created: Budget"), as version `67d894ef`.
+- **The deploy.** `wrangler deploy` of the branch, after round 1's review
+  fixes, accepted both `ratelimits` bindings, listed as "Rate Limit", and
+  created the `Budget` object ("Created: Budget"), as version `67d894ef`.
 - **The account's plan.** Wrangler's login can't read it:
   `GET /accounts/{account_id}/subscriptions` and `GET /user/subscriptions`
   answer `403` with code 10000, and the Workers account settings hold only
-  `"default_usage_model": "standard"`. The relay's docs place the account
-  on Workers Free.
+  `"default_usage_model": "standard"`. #16 recorded the account on the Free
+  plan.
 - **The binding, per ID.** 40 configuration requests from one ID, from
   15:52:00 to 15:52:14, all got `200`. A burst of 150 from another ID,
   from 15:55:00, got its first `429 rate_limited`, with `Retry-After: 60`,
@@ -291,10 +292,13 @@ account, from one machine, with fresh random app user IDs. Times are UTC.
 - **The budget.** A line from a fresh ID got `200` with its answer, through
   the new `Budget` object.
 - **The exact count.** With the ID's count moved into the user's object,
-  at `debfef7`, deployed as version `843ade31`, 40 requests from one ID,
-  from 16:08:00 to 16:08:20, got 30 `200`s, then 10
-  `429 rate_limited`s, each with `Retry-After: 60`. A line from a fresh ID
-  at 16:11:01 got `200`.
+  deployed as version `843ade31`, 40 requests from one ID, from 16:08:00 to
+  16:08:20, got 30 `200`s, then 10 `429 rate_limited`s, each with
+  `Retry-After: 60`. A line from a fresh ID at 16:11:01 got `200`.
+- **The final order.** With the count in the call that serves each
+  request, behind the address's limit, deployed as version `e3ebe6b9`, 40
+  requests from one ID, from 16:53:00 to 16:53:15, again got 30 `200`s,
+  then 10 `429`s with `Retry-After: 60`, and a line at 16:54:01 got `200`.
 - **The binding, per address.** From the machine's own address, 150
   requests across six IDs, from 16:09:00 to 16:10:11, all got `200`. So did
   250 more, eight at a time across ten IDs, all answered within the first
