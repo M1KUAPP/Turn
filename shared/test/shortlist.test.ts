@@ -161,7 +161,10 @@ describe('isYesNo', () => {
     'Is the new nurse here?',
     'Are you tired?',
     'Don’t you want it?',
-    "Won't you sit down?"
+    "Won't you sit down?",
+    'Having a good day?',
+    'Been waiting long?',
+    'Done with lunch?'
   ])('counts "%s"', (line) => expect(isYesNo(line)).toBe(true))
 
   test.each(["It's cold out today.", "You're tired?", 'How was physio today?', 'Water?', ''])(
