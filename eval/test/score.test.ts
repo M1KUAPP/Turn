@@ -145,3 +145,20 @@ test("works out chance over each line's own shortlist, however long", () => {
   // (1 + 1/2 + 1/3 + 1/4) / 4
   expect(chance.meanReciprocalRank).toBeCloseTo(25 / 48, 12)
 })
+
+test('times the shortlist and each ranker three times per line, leaving out a warm-up pass', () => {
+  let calls = 0
+  const slowAtFirst: Ranker = (line, shortlist, index, context) => {
+    // 5 ms a line in the first pass only, as code that must be compiled first is slow.
+    const until = performance.now() + (calls++ < lines.length ? 5 : 0)
+    while (performance.now() < until);
+    return keyword(line, shortlist, index, context)
+  }
+  const { timings } = scoreLines(lines, bank, { place, slowAtFirst })
+  expect(calls).toBe(4 * lines.length)
+  expect(timings.shortlist).toHaveLength(3 * lines.length)
+  expect(timings.rankers.place).toHaveLength(3 * lines.length)
+  expect(timings.rankers.slowAtFirst).toHaveLength(3 * lines.length)
+  expect(Math.max(...timings.rankers.slowAtFirst)).toBeLessThan(5)
+  for (const ms of [...timings.shortlist, ...timings.rankers.place]) expect(ms).toBeGreaterThanOrEqual(0)
+})
