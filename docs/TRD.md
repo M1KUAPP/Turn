@@ -363,6 +363,7 @@ Errors return `{ "error": "<code>" }`:
 | Status | Code              | When                                           | The app                             |
 | ------ | ----------------- | ---------------------------------------------- | ----------------------------------- |
 | 400    | `invalid_request` | a header, field, or length outside the limits  | ranks on the phone; logs the bug    |
+| 404    | `not_found`       | a path or method the relay doesn't serve       | ranks on the phone; logs the bug    |
 | 409    | `duplicate`       | a line ID this user's free lines already hold  | ranks on the phone; logs the bug    |
 | 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
 | 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
@@ -419,8 +420,11 @@ category names, and the place's name together (LISTEN-5):
 - **Tag, then cut.** A tag can make text longer, so the app tags first, then
   keeps the line's last 300 characters, cuts the place's and the categories'
   names to 40, and swaps any candidate over 200 characters for the next
-  phrase in the shortlist, so a request never breaks the relay's limits
-  (LISTEN-6, SEC-2).
+  phrase in the shortlist. Fields within those limits can still pass the
+  body's 16 KB when their scripts take two or more bytes a character, such
+  as 40 candidates of 200 Chinese characters, so the app then drops
+  candidates from the end of the shortlist until the request fits, and a
+  request never breaks the relay's limits (LISTEN-6, SEC-2).
 - The candidates' ids don't change, so Jev's answers map back to the user's
   own text, and the tag map stays on the phone.
 - The place's name is tagged like the rest, so no name the tagger finds
@@ -525,21 +529,29 @@ with the model pinned (SEC-2):
   options, far below a Choice's limit of 255, and nothing documented caps 42
   questions: TypeSafe's own cookbooks send 54 and 62 in one request.
 - **The call.** `@typesafe-ai/sdk` 0.6.0 with every option in code:
-  `defaultModel: 'jev-1.13.0'`, `logLevel: 'off'`, `timeout: 1500` per
-  attempt, and `retry: { maxRetries: 1, respectRetryAfter: false }`, under
-  `AbortSignal.timeout(2500)`. The SDK's defaults would let one call run
+  `baseURL: 'https://api.typesafe.ai'`, `defaultModel: 'jev-1.13.0'`,
+  `logLevel: 'off'`, `timeout: 1500` per attempt, and
+  `retry: { maxRetries: 1, respectRetryAfter: false }`, under
+  `AbortSignal.timeout(2500)`. The SDK reads the key, the address, the
+  model, and the log level from `process.env` when the code leaves them
+  out, and Workers put the vars and secrets there, so a stray var could
+  otherwise send each line and the key elsewhere
+  ([relay notes][relay-sdk]). The SDK's defaults would let one call run
   about 31.5 seconds.
-- **Errors.** A `429`, a `529`, a timeout, or a `5xx` becomes
-  `jev_unavailable`. Running out of credits has no documented status: the
-  SDK passes a `402` as its base `APIError`, which the object logs as
-  `credits` and answers as `jev_unavailable` (AVAIL-2).
+- **Errors.** Any failure becomes `jev_unavailable`: a `429`, a `529`, a
+  `5xx`, another status, a timeout, a lost connection, or an answer out of
+  shape, which the object checks itself, since the SDK returns Jev's body
+  unchecked. Running out of credits has no documented status: the SDK
+  passes a `402` as its base `APIError`, which the relay logs as `credits`
+  and answers as `jev_unavailable` (AVAIL-2).
 - **Size and cost.** About 1,700 to 1,900 input tokens a line, by the
   services notes' estimate, or up to about $0.00008 at $0.042 per
-  million; the object logs `usage.input_tokens` and the `model` field of
+  million; the relay logs `usage.input_tokens` and the `model` field of
   each answer, so a silent model change would show.
 
 [svc-request]: /docs/research/0024-turn-services.md#the-request-body-for-one-partner-line
 [jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
+[relay-sdk]: /docs/research/0038-turn-relay.md#the-sdks-client-and-call
 
 ### From probabilities to the row
 
@@ -1030,10 +1042,10 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 `app/app.config.ts` sets ([iPhone build notes][ios-modules]):
 
-- **`ios.bundleIdentifier`:** `com.m1ku.turn`, chosen on September 23.
-  Only Apple refusing to register it at the first device build can change
-  it; after that it never changes, since the Devpost entry names it
-  (SUBMIT-5).
+- **`ios.bundleIdentifier`:** `com.m1ku.turn`, chosen on September 23 and
+  registered by Apple for the Personal Team by the first successful build to
+  the phone the same day ([video iPhone notes][video-iphone]). It never
+  changes, since the Devpost entry names it (SUBMIT-5).
 - **`ios.deploymentTarget`:** `"26"`, the built-in property that replaced
   the build-properties setting in SDK 56 (COMPAT-1).
 - **`expo-build-properties`:** the plugin with `ios.enableSceneSupport` set
@@ -1061,6 +1073,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 [design-launch]: /docs/DESIGN.md#launch
 [design-colors]: /docs/DESIGN.md#colors
 [design-words]: /docs/DESIGN.md#strings-the-prd-leaves-open
+[video-iphone]: /docs/research/0037-turn-video-iphone.md#hands-on-check
 
 ## Security and privacy
 
@@ -1075,7 +1088,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | `JEV_ON`                             | var    | the relay        | the switch that turns Jev off (STATE-3)     |
 | `TYPESAFE_NAMED`                     | var    | the relay        | whether the texts name TypeSafe (CONSENT-7) |
 | `FREE_LINES`                         | var    | the relay        | 20 (PAY-1)                                  |
-| `POLICY`                             | var    | the relay        | the row's policy, as JSON (ROW-8)           |
+| `POLICY`                             | var    | the relay        | the policy's changed values (ROW-8)         |
 | `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
 | `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
 | Test Store public key                | public | the app's config | RevenueCat's SDK in debug builds            |
@@ -1112,9 +1125,19 @@ ran under Wrangler 4.136.2:
       "simple": { "limit": 120, "period": 60 }
     }
   ],
-  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+  "observability": {
+    "enabled": true,
+    "logs": { "invocation_logs": false },
+    "traces": { "enabled": false }
+  },
   "secrets": { "required": ["TYPESAFE_API_KEY", "RC_SECRET_KEY", "ID_SALT"] },
-  "vars": { "JEV_MODEL": "jev-1.13.0", "JEV_ON": "true", "FREE_LINES": "20" }
+  "vars": {
+    "JEV_MODEL": "jev-1.13.0",
+    "JEV_ON": "true",
+    "TYPESAFE_NAMED": "false",
+    "FREE_LINES": "20",
+    "POLICY": {}
+  }
 }
 ```
 
@@ -1123,6 +1146,24 @@ ran under Wrangler 4.136.2:
   which Git ignores, and a committed `.dev.vars.example` names them for anyone
   who runs the relay with their own keys (SEC-1)
   ([services notes][svc-secrets]).
+- **The committed file,** `worker/wrangler.jsonc`, holds all of this but
+  `BUDGET` and `ratelimits`, which come with the rate limits and the daily
+  budget (#35).
+- **Vars** are read at every request, so a change reaches the next answer
+  or configuration with no app build (ROW-8, CONSENT-7):
+  - `JEV_ON` and `TYPESAFE_NAMED` are on only as `"true"`, so a typo turns
+    Jev off and leaves TypeSafe unnamed, and `TYPESAFE_NAMED` starts
+    `"false"`.
+  - `POLICY` holds only the values that differ from `startingPolicy` in
+    `@turn/shared/row`: JSON in `wrangler.jsonc`, or a string from
+    `wrangler deploy --var` or the dashboard. With no `POLICY` at all, the
+    starting policy holds.
+  - An unknown key, a value of the wrong type, or a number outside 0 to 1
+    in `POLICY`, a `FREE_LINES` that isn't a whole number, or no
+    `JEV_MODEL`, with which the SDK would pick a model of its own, answers
+    `500 internal`, so a mistake shows at the next request.
+  - A var changed in the dashboard lasts until the next `wrangler deploy`,
+    which puts back `wrangler.jsonc`'s values.
 - **The Test Store key** is the only RevenueCat key the app carries, and it
   sits in the app's committed configuration so judges can build from source.
   RevenueCat's blogs keep test keys out of version control and advise
@@ -1136,10 +1177,22 @@ ran under Wrangler 4.136.2:
 
 ### Validation and abuse limits
 
-- **Headers:** `X-Turn-User` must be a lowercase version 4 UUID, and
-  `X-Turn-Build` `device` or `simulator`; anything else gets `400`.
+- **Headers:** `X-Turn-User` must be a lowercase version 4 UUID,
+  `X-Turn-Version` 1 to 32 visible ASCII characters, `X-Turn-Build`
+  `device` or `simulator`, and a line's `Content-Type` `application/json`,
+  with or without parameters such as the charset; anything else gets
+  `400`.
 - **Lengths:** as in [Relay API](#relay-api), checked before any count or
-  call (SEC-2).
+  call (SEC-2). The relay stops reading a body once it passes 16 KB,
+  whatever its `Content-Length` says. A line and each name and text need at
+  least one character, and a place may be empty. Characters are Unicode
+  code points, as SQLite's `length()` counts them in the phone's checks, so
+  a text within the phone's limits is within the relay's; the 16 KB in all
+  is the app's to keep, as [tag, then cut](#names-as-tags) says.
+- **Fields:** `lineId` is a lowercase version 4 UUID and `seq` a whole
+  number from 0; category and candidate ids hold 1 to 64 characters and
+  are unique in their list; and no category is `consent`, the topic option
+  every line has.
 - **Rate:** 30 requests a minute per ID hash, through Cloudflare's rate
   limiting binding with a 60-second period, and 120 a minute per address as
   a backstop only, since mobile networks share addresses (SEC-3). The
@@ -1196,10 +1249,20 @@ monitoring, and "Jev is not trained on customer requests or responses"
 
 ### Logs and counts
 
-- **One log line per request** from the relay: the time, the first 8
-  characters of the ID's hash, the sequence number, the outcome (`answered`,
-  `paywall`, `limited`, `failed`, or `off`), and the milliseconds in Jev and
-  in all; never a line, phrase, place, or category (METRIC-1, PRIV-2).
+- **One log line per request** from the relay, never a line, phrase,
+  place, category, ID, line ID, or error message (METRIC-1, PRIV-2). The
+  Worker writes it as one object, whose keys Workers Logs indexes as
+  fields ([relay notes][relay-logs]), each only once it's known:
+  - `at`, the time;
+  - `user`, the first 8 characters of the ID's hash;
+  - `seq`, the sequence number;
+  - `outcome`: `answered`, `paywall`, `limited`, `failed`, or `off` for a
+    line; `credits` for a line Jev refused with a `402`; `invalid`,
+    `not_found`, or `internal` for a request refused with that error; and
+    `config` for the configuration;
+  - `ms`, with the milliseconds in all as `total` and in Jev as `jev`;
+  - `model` and `inputTokens`, as Jev reports them;
+  - `jevStatus`, the status a failed call to Jev returned.
 - **What else is logged.** The relay turns off automatic invocation logs,
   which hold each request's details, and leaves tracing off: from October
   1, 2026, traces count against the same quota, and a trace of the
@@ -1212,6 +1275,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
   a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
+[relay-logs]: /docs/research/0038-turn-relay.md#workers-logs
 
 ### Service life
 
