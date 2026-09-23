@@ -1,9 +1,8 @@
 import { fixedButtons } from '@turn/shared/row'
 import { PhraseIndex } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
-import { bank, lines, secondLabeling, type Line } from '../src/data'
+import { bank, lines, phrases, secondLabeling, type Line } from '../src/data'
 
-const phrases = bank.categories.flatMap((category) => category.phrases)
 const phraseIds = phrases.map((phrase) => phrase.id)
 const textById = new Map(phrases.map((phrase) => [phrase.id, phrase.text]))
 const stripIds = bank.categories
@@ -30,8 +29,6 @@ const sharesAWord = (line: Line) => {
   return index.match(line.text).length > 0
 }
 
-const count = (keep: (line: Line) => boolean) => lines.filter(keep).length
-
 test("lists each line's acceptable replies by bank id, labeled by someone other than its writer (EVAL-1)", () => {
   for (const line of lines) {
     expect(line.labeler, line.id).toMatch(/\S/)
@@ -46,7 +43,7 @@ test.todo('has at least 16 lines with no acceptable reply (EVAL-1)')
 
 test('has at least 10 lines that share no content word with any acceptable reply (EVAL-1)', () => {
   const answeredByRanking = (line: Line) => line.acceptable.some((id) => !fixedButtons.includes(id))
-  expect(count((line) => answeredByRanking(line) && !sharesAWord(line))).toBeGreaterThanOrEqual(10)
+  expect(lines.filter((line) => answeredByRanking(line) && !sharesAWord(line)).length).toBeGreaterThanOrEqual(10)
 })
 
 test('commits a second labeling of every line beside the first, by another labeler', () => {

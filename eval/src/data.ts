@@ -39,3 +39,6 @@ export const secondLabeling: Labels[] = readRows('../second-labeling.jsonl')
 
 /** The starter bank, from the app's own file. */
 export const bank: StarterBank = JSON.parse(read('../../app/src/content/starter-bank.json'))
+
+/** Every phrase in the bank, in the bank's order. */
+export const phrases = bank.categories.flatMap((category) => category.phrases)
