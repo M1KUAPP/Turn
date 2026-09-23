@@ -11,6 +11,13 @@
         "prettier": "^3.9.8",
       },
     },
+    "eval": {
+      "name": "@turn/eval",
+      "devDependencies": {
+        "typescript": "7.0.2",
+        "vitest": "4.1.11",
+      },
+    },
     "shared": {
       "name": "@turn/shared",
       "devDependencies": {
@@ -103,6 +110,8 @@
     "@simple-libs/stream-utils": ["@simple-libs/stream-utils@2.0.0", "", {}, "sha512-fCTuZK4QBa+39Oz9l4OGfJfz+GpwCp3AqO7Zch3to99xHPgstVsRFpeQ8LNd2o1Gv8raL2mCFwiaHh7bFSp5DQ=="],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
+
+    "@turn/eval": ["@turn/eval@workspace:eval"],
 
     "@turn/shared": ["@turn/shared@workspace:shared"],
 
