@@ -227,6 +227,16 @@ Prettier, `check_md.py` with `--contents`, and `fact_scan.py` for new prose.
 Before the pull request, `git log --reverse --format='%h %s' main..` shows
 the lines' commit before the bank's.
 
+- **Two false positives.** As that plan's appendix has it, `check_md.py`
+  toggles a code block on any fence, so it ends this plan's four-backtick
+  appendix block at the brief's inner `json` fence, then reports a
+  119-column prose line and a fence without a language. The session's copy
+  closes a block only on a bare fence of the same character, at least as
+  long as the one that opened it, as CommonMark does; with that change it
+  prints `OK` for this plan and for plan 0010, the note, and the TRD.
+- **Fact-scan misses** that aren't claims from a source capture: `1987`, the
+  year of a cited paper, and `404`, an HTTP status, in the note.
+
 [docs-gate]: /docs/plans/0009-plan-storage.md#verification-gate
 
 ## Tasks
@@ -241,8 +251,9 @@ prompt doesn't name or runs git.
 A background agent wrote `docs/research/0032-turn-starter-content.md` in
 about six minutes. Blocked pages and a spent search budget left the patient
 boards, the pain tools' own words, and the ALS message lists under its gaps,
-so the bank rests on CONTENT-1, the AAC notes, and what the note did read. It
-passed the docs gate once a line starting with `#18` was rewrapped, and is
+so the bank rests on CONTENT-1, the AAC notes, and what the note did read.
+Once a line starting with `#18` was rewrapped, it passed the docs gate apart
+from the fact-scan misses the [gate](#verification-gate) names, and it is
 committed as `docs(research): add notes on the starter content`.
 
 ### Task 2: This plan
