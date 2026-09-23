@@ -7,7 +7,7 @@ import { plot, riskCoverage, type Point } from './curves'
 import { linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
-import { listOf, wrap } from './prose'
+import { cell, listOf, table, wrap } from './prose'
 import { keyword, place } from './rankers'
 import {
   bigButtons,
@@ -35,13 +35,6 @@ export const rate = ({ k, n }: Count): string => {
   const interval = wilson(k, n)
   if (interval === null) return '0 of 0'
   return `${k} of ${n}, ${percent(k / n)} (${percent(interval.low)} to ${percent(interval.high)})`
-}
-
-/** A Markdown table, padded as Prettier pads one, so the report passes the repo's lint. */
-const table = (header: readonly string[], rows: readonly (readonly string[])[]) => {
-  const widths = header.map((cell, i) => Math.max(3, cell.length, ...rows.map((row) => row[i].length)))
-  const line = (cells: readonly string[]) => `| ${cells.map((cell, i) => cell.padEnd(widths[i])).join(' | ')} |`
-  return [line(header), line(widths.map((width) => '-'.repeat(width))), ...rows.map(line)].join('\n')
 }
 
 /** Who wrote and labeled the lines, counted from the file, then who made the 80 lines and the bank, as the TRD says. */
@@ -191,9 +184,6 @@ const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
     `median of ${tokens} input tokens a call; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
   )
 }
-
-/** A table's cell holding text, with any pipe escaped so it can't end the cell. */
-const cell = (text: string) => text.replaceAll('|', '\\|')
 
 /** Whether EVAL-5 names a line: its writer marked it yes-or-no, or its concerns name pain or consent. */
 const sensitive = (line: Line) =>
