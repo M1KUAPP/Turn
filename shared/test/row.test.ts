@@ -1,6 +1,8 @@
 import { describe, expect, test } from 'vitest'
 import { applyAnswer, emptyRow, startingPolicy, type Answer, type Row } from '../src/row'
 
+const yesNo = { yes_no: 0.9, either_or: 0.05, open: 0.03, not_a_question: 0.02 }
+
 /** An open question about food, scoring the candidates in the given order. */
 const answer = (seq: number, scores: Record<string, number>, rest: Partial<Answer> = {}): Answer =>
   Object.freeze({
@@ -55,5 +57,23 @@ describe('applyAnswer', () => {
     // The app raises seq when a line starts, so an older answer loses before the new line's arrives.
     const started = { ...row, seq: 3 }
     expect(applyAnswer(started, answer(2, { tea: 0.9 }))).toBe(started)
+  })
+
+  test('puts Yes, No, and Not sure in slots 1 to 3 for a yes-or-no question, and never a big button (ROW-4)', () => {
+    const row = replay(answer(1, { water: 0.95, tea: 0.7 }, { kind: yesNo }))
+    expect(row.big).toBeNull()
+    expect(row.slots).toEqual(['yes', 'no', 'not-sure', 'water', 'tea', null])
+  })
+
+  test('shows only the fixed buttons for a topic that gets nothing else (EVAL-5)', () => {
+    const policy = { ...startingPolicy, fixedOnlyTopics: ['body-pain'] }
+    const row = replay(answer(1, { water: 0.95 }, { topic: { 'body-pain': 0.9, food: 0.1 }, policy }))
+    expect(row.big).toBeNull()
+    expect(row.slots).toEqual(['yes', 'no', 'not-sure', null, null, null])
+  })
+
+  test("frees the fixed buttons' slots when the next line is no yes-or-no question", () => {
+    const row = replay(answer(1, { water: 0.7, tea: 0.7 }, { kind: yesNo }), answer(2, { juice: 0.7 }))
+    expect(row.slots).toEqual(['juice', null, null, 'water', 'tea', null])
   })
 })

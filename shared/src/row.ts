@@ -41,15 +41,16 @@ export type Ranking = {
 /** A ranking for one line, with the policy the rules follow. */
 export type Answer = Ranking & { seq: number; policy: Policy }
 
+/** Yes, No, and Not sure: the fixed buttons' phrase ids, in the order they take slots 1 to 3 (ROW-4). */
+export const fixedButtons: readonly string[] = Object.freeze(['yes', 'no', 'not-sure'])
+
 /** What the row shows. The rules return a new row and never change the one they're given. */
 export type Row = {
   /** The newest line's sequence number: the app raises it when a line starts, and an older line's answer is dropped. */
   seq: number
   /** The big button's phrase, shown across the row over the six slots. */
   big: string | null
-  /** Whether Yes, No, and Not sure hold slots 1 to 3. */
-  fixedButtons: boolean
-  /** The six slots' phrases: null for an empty slot, or one a fixed button holds. */
+  /** The six slots' phrase ids, the fixed buttons' among them, or null for an empty slot. */
   slots: readonly (string | null)[]
   /** The category whose tab is marked. */
   tab: string | null
@@ -58,7 +59,6 @@ export type Row = {
 export const emptyRow: Row = Object.freeze({
   seq: 0,
   big: null,
-  fixedButtons: false,
   slots: Object.freeze([null, null, null, null, null, null]),
   tab: null
 })
@@ -71,19 +71,25 @@ const mostLikely = <K extends string>(odds: Readonly<Record<K, number>>): K | nu
 }
 
 /** Applies the TRD's rules for the row to an answer. Nothing here speaks; only a tap does (ROW-6). */
-export function applyAnswer(row: Row, { seq, topic: topics, scores, policy }: Answer): Row {
+export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy }: Answer): Row {
   if (seq < row.seq) return row
   const topic = mostLikely(topics)
+  const fixedTopic = topic !== null && policy.fixedOnlyTopics.includes(topic)
+  const showFixed = kind.yes_no >= policy.floor || fixedTopic
   // A stable sort, so the shortlist's order breaks ties.
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
-  if (top && top[1] > policy.bigAbove && !(topic !== null && policy.noBigTopics.includes(topic))) {
+  if (!showFixed && top && top[1] > policy.bigAbove && !(topic !== null && policy.noBigTopics.includes(topic))) {
     return { ...row, seq, big: top[0] }
   }
-  const slots = [...row.slots]
+  const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
+  if (showFixed) slots.splice(0, 3, ...fixedButtons)
+  if (fixedTopic) slots.fill(null, 3)
+  const usable = showFixed ? (fixedTopic ? [] : [3, 4, 5]) : [0, 1, 2, 3, 4, 5]
   for (const [id] of fresh) {
-    const empty = slots.indexOf(null)
-    if (empty === -1) break
+    if (slots.includes(id)) continue
+    const empty = usable.find((i) => slots[i] === null)
+    if (empty === undefined) break
     slots[empty] = id
   }
   return { ...row, seq, slots }
