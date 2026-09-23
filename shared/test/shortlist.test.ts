@@ -12,6 +12,14 @@ const ids = (phrases: readonly Phrase[]) => phrases.map((p) => p.id)
 const range = (from: number, to: number) =>
   Array.from({ length: Math.abs(to - from) + 1 }, (_, i) => (from <= to ? from + i : from - i))
 
+/** Ids such as w00 and w01, numbered so they read in order. */
+const numbered = (prefix: string) => (i: number) => `${prefix}${String(i).padStart(2, '0')}`
+const w = numbered('w')
+
+/** Phrases w{to} down to w00 that share "water", each a word longer than the next, so w00 scores highest. */
+const water = (to: number) =>
+  range(to, 0).map((i) => phrase(w(i), ['Water', ...Array.from({ length: i }, (_, j) => `x${j}`)].join(' ')))
+
 const pick = (line: string, context: Partial<Context> & Pick<Context, 'bank'>) =>
   ids(pickShortlist(line, new PhraseIndex(), { row: [], place: 'home', taps: new Map(), ...context }))
 
@@ -77,10 +85,7 @@ describe('pickShortlist', () => {
 
   test('then up to 24 phrases that share a word with the line, best first', () => {
     // Shorter phrases score higher, so w00 comes first, though the grid lists it last.
-    const w = (i: number) => `w${String(i).padStart(2, '0')}`
-    const words = (n: number) => Array.from({ length: n }, (_, i) => `x${i}`)
-    const water = range(29, 0).map((i) => phrase(w(i), ['Water', ...words(i)].join(' ')))
-    expect(pick('Some water?', { bank: [...plain('a', 'b'), ...water], row: ['b'] })).toEqual([
+    expect(pick('Some water?', { bank: [...plain('a', 'b'), ...water(29)], row: ['b'] })).toEqual([
       'b',
       ...range(0, 23).map(w),
       'a',
@@ -89,7 +94,7 @@ describe('pickShortlist', () => {
   })
 
   test("fills up to 40 with the rest by taps, then the grid's order", () => {
-    const p = (i: number) => `p${String(i).padStart(2, '0')}`
+    const p = numbered('p')
     const taps = new Map([
       [p(30), 2],
       [p(10), 5],
@@ -107,7 +112,7 @@ describe('pickShortlist', () => {
   })
 
   test("takes up to 8 of the most-tapped before the place's, which come most-tapped first", () => {
-    const o = (i: number) => `o${String(i).padStart(2, '0')}`
+    const o = numbered('o')
     const home = ['h00', 'h01', 'h02', 'h03']
     const bank = [...plain(...range(0, 11).map(o)), ...home.map((id) => phrase(id, `Plain ${id}`, ['home']))]
     const taps = new Map<string, number>([...range(2, 11).map((i): [string, number] => [o(i), i + 1]), ['h02', 1]])
@@ -135,10 +140,7 @@ describe('pickShortlist', () => {
   })
 
   test('holds each phrase once, and one already taken leaves a later step its places', () => {
-    const w = (i: number) => `w${String(i).padStart(2, '0')}`
-    const words = (n: number) => Array.from({ length: n }, (_, i) => `x${i}`)
-    const water = range(23, 0).map((i) => phrase(w(i), ['Water', ...words(i)].join(' ')))
-    const bank = [phrase('r', 'Water, please', ['home']), ...plain('a'), ...water]
+    const bank = [phrase('r', 'Water, please', ['home']), ...plain('a'), ...water(23)]
     expect(pick('Some water?', { bank, row: ['r'], taps: new Map([['r', 3]]) })).toEqual([
       'r',
       ...range(0, 23).map(w),
@@ -147,7 +149,7 @@ describe('pickShortlist', () => {
   })
 
   test('takes a phrase no line has suggested among the most-tapped once it has the taps (BANK-6)', () => {
-    const p = (i: number) => `p${String(i).padStart(2, '0')}`
+    const p = numbered('p')
     const bank = [phrase('water', 'Water, please'), ...plain(...range(0, 57).map(p)), phrase('late', 'Plain late')]
     expect(pick('Some water?', { bank })).not.toContain('late')
     expect(pick('Some water?', { bank, taps: new Map([['late', 3]]) }).slice(0, 2)).toEqual(['water', 'late'])
@@ -210,7 +212,13 @@ describe('rankOnPhone', () => {
       ['water', 1],
       ['hard', 0]
     ])
-    expect(ranking).toMatchObject({ kind: { yes_no: 1 }, topic: {}, onPhone: true })
+  })
+
+  test('gives a yes-or-no line that kind, and no topic', () => {
+    const ranking = ranked('Do you want some water?', [phrase('water', 'Water, please')])
+    expect(ranking.kind).toEqual({ yes_no: 1, either_or: 0, open: 0, not_a_question: 0 })
+    expect(ranking.topic).toEqual({})
+    expect(ranked('Water?', [phrase('water', 'Water, please')]).kind.yes_no).toBe(0)
   })
 
   describe("through the row's rules", () => {
