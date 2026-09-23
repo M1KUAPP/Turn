@@ -2,21 +2,34 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { beforeAll, expect, test } from 'vitest'
+import { beforeAll, expect, test, vi } from 'vitest'
+import { sentenceEmbedding } from '../src/apple'
 import { main, rate } from '../src/report'
-import { fakeServices } from './services'
+import { fakeSentenceEmbedding, fakeServices } from './services'
+
+// Apple's sentence embedding runs in a Swift helper that only a Mac has, so every run here stands in for it.
+vi.mock('../src/apple', async (original) => ({
+  ...(await original<typeof import('../src/apple')>()),
+  sentenceEmbedding: vi.fn((await import('./services')).fakeSentenceEmbedding)
+}))
 
 const fixture = fileURLToPath(new URL('fixture/lines.jsonl', import.meta.url))
 let report = ''
 
+/** What the run asked qwen3 for: each request's body. */
+let qwenBodies: { queries?: string[]; documents?: string[]; instruction?: string }[] = []
+
 let outDir = ''
 
 beforeAll(async () => {
-  fakeServices()
+  const services = fakeServices()
   outDir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
   const out = join(outDir, 'results.md')
   await main(['--lines', fixture, '--out', out])
   report = readFileSync(out, 'utf8')
+  qwenBodies = services.mock.calls
+    .filter(([url]) => String(url).endsWith('/@cf/qwen/qwen3-embedding-0.6b'))
+    .map(([, init]) => JSON.parse(String(init?.body)))
 })
 
 /** The report's section under a heading, up to the next heading of the same level or higher. */
@@ -191,7 +204,7 @@ test('says so in a whole sentence when a group has no lines', async () => {
     )
   )
   // One line fills one fold, so four have no lines, and the report says so rather than give their cut-offs.
-  expect(one.replace(/\s+/g, ' ').match(/no lines to score/g)).toHaveLength(4)
+  expect(one.match(/\| no lines(?= +\|)/g)).toHaveLength(16)
   const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
   for (const line of empty.split('\n').filter((line) => !line.startsWith('|'))) {
     expect(line.length, line).toBeLessThanOrEqual(80)
@@ -204,8 +217,8 @@ test("says how the app picks each shortlist, and what that leaves of the line in
   expect(report).toMatch(prose("so the place ranker's top 1 and top 6 never depend on the line"))
 })
 
-test('scores all four rankers on the same lines, in every group and step (EVAL-3)', () => {
-  const rankers = ['place', 'keyword', 'embeddings', 'jev']
+test('scores all seven rankers on the same lines, in every group and step (EVAL-3, EVAL-8)', () => {
+  const rankers = ['place', 'keyword', 'embeddings', 'jev', 'reranker', 'qwen3', 'apple']
   for (const group of ['all lines', 'yes-or-no lines', 'pain and consent lines']) {
     for (const ranker of rankers) {
       expect(cells(section(`### Ranking on ${group}`), ranker), `${group} ${ranker}`).toHaveLength(3)
@@ -215,12 +228,15 @@ test('scores all four rankers on the same lines, in every group and step (EVAL-3
   for (const step of ['shortlist', ...rankers]) expect(cells(section('## Latency'), step), step).toHaveLength(3)
 })
 
-test("names Jev's pin, what Jev answered as, and Workers AI's model (EVAL-6)", () => {
+test("names Jev's pin, what Jev answered as, Workers AI's models, and Apple's embedding (EVAL-6)", () => {
   // 8 lines in four passes.
   expect(report).toMatch(
     prose(
       '- **Models:** Jev, pinned to `jev-1.13.0` by `worker/wrangler.jsonc`, which answered as `jev-1.13.0` on all ' +
-        "32 calls; and Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling."
+        "32 calls; Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling, `@cf/baai/bge-reranker-base`, and " +
+        '`@cf/qwen/qwen3-embedding-0.6b`, with the instruction "Given what a conversation partner just said, ' +
+        'retrieve the reply that answers it"; and Apple\'s English sentence embedding at revision 1, of 512 numbers, ' +
+        'on macOS Version 27.0 (Build 26A428).'
     )
   )
 })
@@ -255,19 +271,20 @@ test("gives EVAL-4's verdict on all lines alone, and each subset's interval with
   }
 })
 
-test("lists the embeddings ranker's five cut-offs, each chosen on the other folds", () => {
-  const cutOffs = section("## The embeddings ranker's cut-offs")
-  expect(cutOffs).toMatch(prose('Folds 1 to 5:'))
-  // The fixture's 8 lines make folds of 2, 2, 2, 1, and 1.
-  const folds = cutOffs.replace(/\s+/g, ' ').match(/(\d\.\d{3}|none, holding every line,) for \d lines?/g) ?? []
-  expect(folds.map((each) => each.split(' for ')[1]).toSorted()).toEqual([
-    '1 line',
-    '1 line',
-    '2 lines',
-    '2 lines',
-    '2 lines'
-  ])
-  expect(report).toContain("1.  [The embeddings ranker's cut-offs](#the-embeddings-rankers-cut-offs)")
+test('lists the five cut-offs of each ranker whose scores need one, each chosen on the other folds', () => {
+  const cutOffs = section('## The cut-offs for holding')
+  // The fixture's 8 lines, dealt round, make folds of 2, 2, 2, 1, and 1.
+  expect(cutOffs).toMatch(prose('folds 1 to 5 held 2, 2, 2, 1, and 1 lines.'))
+  for (const ranker of ['embeddings', 'reranker', 'qwen3', 'apple']) {
+    const values = cells(cutOffs, ranker) ?? []
+    expect(values, ranker).toHaveLength(5)
+    for (const value of values) expect(value, ranker).toMatch(/^(\d\.\d\d+|\d\.\d+e-\d+|hold all)$/)
+  }
+  // The stand-in reranker's scores are cosines over 1,000, so its cut-offs keep three figures past their zeros.
+  expect(cells(cutOffs, 'reranker')?.filter((value) => /^0\.000\d{3}$/.test(value)).length).toBeGreaterThan(0)
+  expect(cells(cutOffs, 'place')).toBeUndefined()
+  expect(cells(cutOffs, 'jev')).toBeUndefined()
+  expect(report).toContain('1.  [The cut-offs for holding](#the-cut-offs-for-holding)')
 })
 
 test('lists every big button on a yes-or-no, pain, or consent line, and whether it was right (EVAL-5)', () => {
@@ -307,10 +324,12 @@ test("gives Jev's question kind against its writer's, as accuracy and a confusio
 test("plots every ranker's risk against its coverage beside the report, with a table as its text", async () => {
   const curves = section('## Risk and coverage')
   expect(curves).toContain('![Risk against coverage for each ranker](results-risk-coverage.svg)')
-  expect(readFileSync(join(outDir, 'results-risk-coverage.svg'), 'utf8').match(/<polyline /g)).toHaveLength(4)
+  expect(readFileSync(join(outDir, 'results-risk-coverage.svg'), 'utf8').match(/<polyline /g)).toHaveLength(7)
   // place covers every line at once, 7 of its 8 rows wrong, as the row's table says.
   expect(cells(curves, 'place')).toEqual(Array(5).fill('88% at 100%'))
-  for (const ranker of ['keyword', 'embeddings', 'jev']) expect(cells(curves, ranker), ranker).toHaveLength(5)
+  for (const ranker of ['keyword', 'embeddings', 'jev', 'reranker', 'qwen3', 'apple']) {
+    expect(cells(curves, ranker), ranker).toHaveLength(5)
+  }
 })
 
 test("names Jev nowhere with --unnamed, calling it the hosted decision model with its pin's version", async () => {
@@ -319,7 +338,10 @@ test("names Jev nowhere with --unnamed, calling it the hosted decision model wit
   await main(['--lines', fixture, '--out', join(dir, 'results.md'), '--unnamed'])
   const unnamed = readFileSync(join(dir, 'results.md'), 'utf8')
   const plotted = readFileSync(join(dir, 'results-risk-coverage.svg'), 'utf8')
-  for (const text of [unnamed, plotted]) expect(text).not.toMatch(/jev|typesafe/i)
+  const calibrated = readFileSync(join(dir, 'results-reliability.svg'), 'utf8')
+  for (const text of [unnamed, plotted, calibrated]) expect(text).not.toMatch(/jev|typesafe/i)
+  expect(unnamed).toContain("## The hosted decision model's calibration")
+  expect(calibrated).toContain("<title>Reliability of The hosted decision model's top phrase</title>")
   expect(unnamed).toMatch(prose('- **Models:** The hosted decision model, pinned to version 1.13.0 by'))
   expect(unnamed).toMatch(prose('which answered as version 1.13.0 on all 32 calls'))
   expect(unnamed).toMatch(prose('The hosted decision model minus embeddings in top 6:'))
@@ -356,5 +378,48 @@ test('wraps the Lines line, so only a path too long for any line runs past 80 co
 test('lists every section in its contents, in order, and nothing else', () => {
   const contents = [...report.matchAll(/^1\.  \[(.+)\]\(#.+\)$/gm)].map(([, heading]) => heading)
   expect(contents).toEqual([...report.matchAll(/^## (.+)$/gm)].map(([, heading]) => heading))
-  expect(contents).toHaveLength(10)
+  expect(contents).toHaveLength(11)
+})
+
+test("draws Jev's reliability diagram beside the report, its blocks as its text, and the Brier score (EVAL-8)", () => {
+  const calibration = section("## Jev's calibration")
+  expect(calibration).toContain("![Reliability of Jev's top phrase](results-reliability.svg)")
+  expect(readFileSync(join(outDir, 'results-reliability.svg'), 'utf8')).toContain(
+    "<title>Reliability of Jev's top phrase</title>"
+  )
+  // Every line shares a word with some phrase, which the stand-in scores 0.9, so every top score is 0.9: right on
+  // fixture-1, 3, and 6, and wrong on the other five. Eight lines drawn at 0.9 as if calibrated put the fit's 5th and
+  // 95th percentiles at 6 and 8 of 8.
+  expect(cells(calibration, '0.9')).toEqual(['8', '3', '0.38', '0.75 to 1.00'])
+  expect(calibration).toMatch(prose('on all 8 lines: 3 of them are.'))
+  // (3 × 0.1² + 5 × 0.9²) / 8; always 3/8 scores 3/8 × 5/8, and so does the fit, which is 3/8 on every line.
+  expect(calibration).toMatch(prose('is 0.510, with a 95% bootstrap interval of'))
+  expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234.'))
+  expect(calibration).toMatch(prose('a miscalibration of 0.276 and a discrimination of 0.000:'))
+})
+
+test("sends each line to qwen3 as a query under the TRD's instruction, and the phrases as documents", () => {
+  const instruction = 'Given what a conversation partner just said, retrieve the reply that answers it'
+  const queried = qwenBodies.filter((body) => body.queries)
+  // Each of the 8 lines in four passes, the warm-up's included.
+  expect(queried).toHaveLength(32)
+  for (const body of queried) expect(body).toEqual({ queries: [expect.any(String)], instruction })
+  const texts = readFileSync(fixture, 'utf8')
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line).text)
+  expect(new Set(queried.flatMap((body) => body.queries))).toEqual(new Set(texts))
+  const documents = qwenBodies.filter((body) => body.documents)
+  expect(documents.length).toBeGreaterThan(0)
+  for (const body of documents) expect(body.instruction).toBeUndefined()
+})
+
+test("closes Apple's helper even when a ranker fails", async () => {
+  const embedding = await fakeSentenceEmbedding()
+  const close = vi.spyOn(embedding, 'close')
+  vi.mocked(sentenceEmbedding).mockResolvedValueOnce(embedding)
+  // No stand-in for the services, so the embeddings ranker's first request fails.
+  const out = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'results.md')
+  await expect(main(['--lines', fixture, '--out', out])).rejects.toThrow('This test called fetch without mocking it')
+  expect(close).toHaveBeenCalledOnce()
 })

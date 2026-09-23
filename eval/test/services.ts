@@ -1,6 +1,8 @@
 import type { JevRequest } from '@turn/shared/jev'
 import { isYesNo } from '@turn/shared/shortlist'
 import { vi } from 'vitest'
+import type { SentenceEmbedding } from '../src/apple'
+import { cosine } from '../src/embeddings'
 
 /** A text's words of three letters or more, lowercased, which the stand-ins below compare. */
 const words = (text: string) => new Set(text.toLowerCase().match(/[a-z']{3,}/g) ?? [])
@@ -25,6 +27,15 @@ export const fakeVector = (text: string): number[] => madeUpVector(text, 768)
 
 /** A made-up vector of 1,024 numbers, as qwen3's are. */
 export const fakeQwenVector = (text: string): number[] => madeUpVector(text, 1024)
+
+/** Stands in for Apple's sentence embedding and its Swift helper: 512 made-up numbers for each text, at revision 1. */
+export const fakeSentenceEmbedding = async (): Promise<SentenceEmbedding> => ({
+  embed: async (texts) => texts.map((text) => madeUpVector(text, 512)),
+  revision: 1,
+  dimension: 512,
+  system: 'Version 27.0 (Build 26A428)',
+  close: async () => {}
+})
 
 /**
  * A made-up answer from Jev: yes-or-no at 0.9 when the phone would call the line one, else open at 0.9; the first
@@ -51,12 +62,12 @@ export function fakeJevAnswer({ model, state, questions }: JevRequest) {
 }
 
 /**
- * A made-up answer from Workers AI's reranker: each context 0.9 when it shares a word with the query, else 0.01, best
- * first, as the live probe's answer came.
+ * A made-up answer from Workers AI's reranker: each context the cosine of its made-up vector with the query's, over
+ * 1,000, best first, as small as the live probe's scores and in their order.
  */
 export function fakeRerank({ query, contexts }: { query: string; contexts: { text: string }[] }) {
-  const line = words(query)
-  const scored = contexts.map(({ text }, id) => ({ id, score: [...words(text)].some((w) => line.has(w)) ? 0.9 : 0.01 }))
+  const line = fakeVector(query)
+  const scored = contexts.map(({ text }, id) => ({ id, score: cosine(line, fakeVector(text)) / 1000 }))
   return scored.toSorted((a, b) => b.score - a.score)
 }
 
