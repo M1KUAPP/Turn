@@ -1,3 +1,4 @@
+import type { Kind } from '@turn/shared/row'
 import { readFileSync } from 'node:fs'
 
 /** A partner line, as its writer wrote it and its first labeler labeled it (EVAL-1). */
@@ -5,7 +6,7 @@ export type Line = {
   id: string
   author: string
   text: string
-  kind: string
+  kind: Kind
   place: string
   topic: string
   concerns: string[]
