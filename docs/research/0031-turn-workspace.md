@@ -45,6 +45,11 @@ Read from the npm registry with `npm view`. Times are UTC.
 - **TypeScript's `latest` is 7.0.2**, from July 8, 2026, with a `tsc` bin
   and `"node": ">=16.20.0"`; the `dev` tag still names 3.9.4
   ([npm-typescript]). The TRD doesn't pin TypeScript.
+- **Expo SDK 57 pins TypeScript 6.** `expo-template-default` 57.0.26, the
+  `sdk-57` tag, has `"typescript": "~6.0.3"` in its dev dependencies
+  ([npm-expo-template]), and 6.0.3 is the newest 6.0 release. TypeScript
+  7.0.2's package exports only `./lib/version.cjs` and unstable APIs, and
+  its only bin is `tsc`, with no `tsserver` ([npm-typescript]).
 - **`2026-09-22` is accepted.** The relay's smoke test ran in workerd with
   that `compatibility_date`, and `wrangler types` stamped "Runtime types
   generated with workerd@1.20260921.1 2026-09-22" (see
@@ -58,6 +63,7 @@ Read from the npm registry with `npm view`. Times are UTC.
 [npm-plugin]: https://registry.npmjs.org/@cloudflare/vitest-plugin
 [npm-vitest]: https://registry.npmjs.org/vitest
 [npm-typescript]: https://registry.npmjs.org/typescript
+[npm-expo-template]: https://registry.npmjs.org/expo-template-default
 
 ## Hands-on check
 
