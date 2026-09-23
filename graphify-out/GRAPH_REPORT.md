@@ -2,7 +2,7 @@
 
 ## Corpus Check
 
-- 179 files · ~598,851 words
+- 179 files · ~598,982 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 14 file(s) not represented in the graph (top: (none) 7, .jsonl 4, .lock 1)
 
@@ -14,7 +14,7 @@
 
 ## Graph Freshness
 
-- Built from commit: `9c65a723`
+- Built from commit: `d351f7d2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -239,7 +239,7 @@
 - Turn's evaluation harness research notes
 - shortlist-speed.test.ts
 - Tasks
-- Turn's video iPhone notes
+- Turn's video iPhone research notes
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -1348,10 +1348,10 @@ Nodes (5): bank, lines, taps, vocabulary, words()
 Cohesion: 0.12
 Nodes (16): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 1: Research note, Task 2: This plan (+8 more)
 
-### Community 225 - "Turn's video iPhone notes"
+### Community 225 - "Turn's video iPhone research notes"
 
 Cohesion: 0.22
-Nodes (8): devicectl install and launch, Free and paid team App IDs, Gaps, Hands-on check, See also, The phone's model and iOS version, Turn's video iPhone notes, xcodebuild automatic signing
+Nodes (8): devicectl install and launch, Free and paid team App IDs, Gaps, Hands-on check, See also, The phone's model and iOS version, Turn's video iPhone research notes, xcodebuild automatic signing
 
 ## Knowledge Gaps
 
