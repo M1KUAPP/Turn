@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { applyAnswer, emptyRow, startingPolicy, type Answer, type Row } from '../src/row'
+import { applyAnswer, clearRow, emptyRow, phrasesInRow, startingPolicy, type Answer, type Row } from '../src/row'
 
 const yesNo = { yes_no: 0.9, either_or: 0.05, open: 0.03, not_a_question: 0.02 }
 
@@ -117,5 +117,22 @@ describe('applyAnswer', () => {
       answer(2, { juice: 0.4 }, { topic: { 'body-pain': 0.7, food: 0.3 } })
     )
     expect(held).toMatchObject({ tab: 'body-pain', slots: ['water', null, null, null, null, null] })
+  })
+})
+
+describe('clearRow', () => {
+  test('empties the six slots and forgets the remembered big phrase (ROW-10)', () => {
+    const cleared = clearRow(replay(answer(1, { a: 0.7, b: 0.7 }), answer(2, { w: 0.9 })))
+    expect(cleared).toEqual({ seq: 2, big: null, slots: [null, null, null, null, null, null], tab: null })
+    // Remembered, w would come first; forgotten, it takes its turn.
+    expect(applyAnswer(cleared, answer(3, { x: 0.7, w: 0.65 })).slots).toEqual(['x', 'w', null, null, null, null])
+  })
+})
+
+describe('phrasesInRow', () => {
+  test("lists the big button's phrase, then the slots', and never a fixed button", () => {
+    const row = replay(answer(1, { a: 0.7, b: 0.7 }, { kind: yesNo }), answer(2, { w: 0.9 }))
+    expect(row.slots).toEqual(['yes', 'no', 'not-sure', 'a', 'b', null])
+    expect(phrasesInRow(row)).toEqual(['w', 'a', 'b'])
   })
 })
