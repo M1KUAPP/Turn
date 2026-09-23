@@ -158,8 +158,9 @@ Contents:
   say whether a read returns it.
 - Synthesis: RELEASE-2's check runs `wrangler deployments status --json`,
   takes the version at 100%, then `wrangler versions view <id> --json`, and
-  compares only the `plain_text` bindings (`JEV_MODEL` and the thresholds)
-  with the run's frozen values, printing no `secret_text` entry. Neither
+  compares the `plain_text` bindings `JEV_MODEL` and `JEV_ON` and the
+  `json` binding `POLICY`, which Wrangler uploads for an object var, with
+  the run's frozen values, printing no `secret_text` entry. Neither
   command changes the Worker; a token needs only `Workers Scripts Read`.
 
 [cf-versions]: https://developers.cloudflare.com/workers/configuration/versions-and-deployments/
