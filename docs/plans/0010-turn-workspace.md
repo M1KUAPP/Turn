@@ -166,6 +166,12 @@ directive's steps map to skills:
 1.  **The hooks don't change.** They call `bunx lint-staged` and
     `bunx commitlint` at the root, where those tools stay root dependencies,
     and each commit's output shows them run.
+1.  **Prettier skips the source captures.** `bun run lint` already failed on
+    `main`: 60 of the 61 captures of outside pages in `docs/sources/`, added
+    on September 19, 2026, were never formatted. Formatting them would
+    rewrite the quotes in their front matter, 429 changed words, and one
+    file still failed after `prettier --write`, so `.prettierignore` gains
+    `docs/sources/` instead, in a commit of its own before the workspace's.
 
 [note-gaps]: /docs/research/0031-turn-workspace.md#gaps
 [note-check]: /docs/research/0031-turn-workspace.md#hands-on-check
@@ -212,7 +218,7 @@ bun run lint
 
 Markdown files run the gate from [the plan-storage plan][docs-gate]:
 Prettier, `check_md.py` with `--contents`, and `fact_scan.py` for new prose.
-After Task 6, `git check-ignore -v worker/.dev.vars` names the rule that
+After Task 7, `git check-ignore -v worker/.dev.vars` names the rule that
 ignores it, and `git status --short` lists no generated file.
 
 [docs-gate]: /docs/plans/0009-plan-storage.md#verification-gate
@@ -240,7 +246,20 @@ git add docs/plans/0010-turn-workspace.md
 git commit -m "docs(plan): add the plan for the workspace"
 ```
 
-### Task 3: The workspace and the shared package
+### Task 3: Prettier and the source captures
+
+- [ ] **Step 1: See it fail.** `bun run lint` exits 1 on 60 files in
+      `docs/sources/`.
+- [ ] **Step 2: Ignore them.** Add `docs/sources/` to `.prettierignore`,
+      then `bun run lint` passes.
+- [ ] **Step 3: Commit**
+
+```shell
+git add .prettierignore docs/plans/0010-turn-workspace.md
+git commit -m "chore: keep prettier off the source captures"
+```
+
+### Task 4: The workspace and the shared package
 
 **Files:** modify `package.json`, `bun.lock`, and `docs/TRD.md`; create
 `tsconfig.base.json` and
@@ -326,7 +345,7 @@ git add package.json bun.lock tsconfig.base.json shared docs/TRD.md
 git commit -m "build: add the bun workspace and the shared package"
 ```
 
-### Task 4: The evaluation's package
+### Task 5: The evaluation's package
 
 **Files:** modify `package.json` and `bun.lock`; create
 `eval/{package.json,tsconfig.json,src/smoke.test.ts}`.
@@ -347,7 +366,7 @@ git add package.json bun.lock eval
 git commit -m "build(eval): add the evaluation's package"
 ```
 
-### Task 5: The relay's package
+### Task 6: The relay's package
 
 **Files:** modify `package.json`, `bun.lock`, `.gitignore`, and
 `docs/TRD.md`; create `worker/{package.json,wrangler.jsonc,tsconfig.json}`,
@@ -435,7 +454,7 @@ git add package.json bun.lock .gitignore worker docs/TRD.md
 git commit -m "build(relay): add the relay's package, tested in the workers runtime"
 ```
 
-### Task 6: Local secrets
+### Task 7: Local secrets
 
 - [ ] **Step 1: Ignore them.** Under `.gitignore`'s `# Environment`, after
       `!.env.example`, add `.dev.vars*` and `!.dev.vars.example`.
@@ -462,7 +481,7 @@ git add .gitignore worker/.dev.vars.example
 git commit -m "build(relay): keep local secrets out of git and name them in an example"
 ```
 
-### Task 7: Graph, pull request, review, and merge
+### Task 8: Graph, pull request, review, and merge
 
 1.  Run `graphify update .`, check that the graph holds no `node_modules`,
     `.wrangler`, or generated types, and commit `graphify-out/` as
