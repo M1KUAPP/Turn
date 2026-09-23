@@ -155,11 +155,11 @@ Contents:
     dealt round-robin into five folds, since without the shuffle the
     file's order (one writer's 40, then the other's) would pick the folds
     ([statistics notes][stats-notes]). Each fold's cut-off is chosen on the
-    other four: of each of their lines' top cosines and one above them all
-    (hold every line), the one that makes the most lines right (a right big
-    button, row, or hold), ties going to the higher. The fold's lines are
-    then scored at it, so every reported outcome is out of fold, and the
-    report lists the five cut-offs. Plain accuracy rather than balanced
+    other four: of each of their lines' six highest cosines and one above
+    them all (hold every line), the one that makes the most lines right (a
+    right big button, row, or hold), ties going to the higher. The fold's
+    lines are then scored at it, so every reported outcome is out of fold,
+    and the report lists the five cut-offs. Plain accuracy rather than balanced
     accuracy, scikit-learn's default: the lines follow a real
     conversation's mix, about a fifth with no reply, and balanced accuracy
     would weigh the 8 lines with none as much as the 72 with one.
