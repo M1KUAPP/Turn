@@ -328,8 +328,8 @@ the date and the answer on the ticket.
 
 ### The naming request
 
-To `support@typesafe.ai`, and in TypeSafe's Discord if no answer comes
-within a day:
+To `sales@typesafe.ai`, where the [Jev notes][jev-mca] send questions on
+section 16.4, and in TypeSafe's Discord if no answer comes within a day:
 
 ```text
 Subject: Permission to name Jev and TypeSafe in our Shipaton 2026 entry
@@ -360,6 +360,8 @@ TypeSafe "a third-party AI service in the United States".
 Thank you,
 <name>, for the Turn team
 ```
+
+[jev-mca]: /docs/research/0005-jev.md#master-customer-agreement-terms-for-apps
 
 ### The organizers' question
 
