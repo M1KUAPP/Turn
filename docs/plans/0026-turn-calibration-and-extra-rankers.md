@@ -494,13 +494,13 @@ report on #64.
   0.000612 printed to three significant figures.
 - **"The 80 lines once"** in the TRD became "The 80 lines from a clean
   tree", since #45 scores them a second time.
-- **Mutations.** Every new rule was mutated once. Survivors got tests: bge's
-  second `shape` number, the reranker's count of scores, the order of the
-  helper's vectors, the band's level, a share right other than a half, the
-  floor's rule apart from the grid line under it, the band's outline, qwen3
-  taking each line as a query in the report's run, the cut-offs' figures,
-  and the band's range in the table. One survivor is equivalent: the report
-  prints the helper's revision, which can only be the pin.
+- **Mutations.** Every new rule was mutated once. Nine survivors got tests:
+  bge's second `shape` number, the order of the helper's vectors, the band's
+  level, a share right other than a half, the floor's rule apart from the
+  grid line under it, the band's outline, qwen3 taking each line as a query
+  in the report's run, the cut-offs' figures, and the band's range in the
+  table. One survivor is equivalent: the report prints the helper's
+  revision, which can only be the pin.
 - **A gate piped into `tail`** let a 121-column Swift line into a commit,
   which was amended before any push; the gate now runs unpiped, its exit
   code checked.
