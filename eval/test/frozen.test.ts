@@ -1,3 +1,5 @@
+import { buildJevRequest } from '@turn/shared/jev'
+import { startingPolicy } from '@turn/shared/row'
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -39,4 +41,49 @@ test('scores lines that are none of the 80 on a tree with changes', async () => 
   const out = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'results.md')
   await main(['--lines', fixture, '--out', out])
   expect(readFileSync(out, 'utf8')).toMatch(/at commit `[0-9a-f]+` with uncommitted changes\./)
+})
+
+test("keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)", () => {
+  expect(startingPolicy).toEqual({
+    floor: 0.6,
+    bigAbove: 0.85,
+    margin: 0.15,
+    yesNoPhrases: true,
+    noBigTopics: ['body-pain', 'consent'],
+    fixedOnlyTopics: []
+  })
+  // The question wording, for a line with no categories and one candidate, compared as sent, in its keys' order.
+  const request = buildJevRequest(
+    { line: 'Tea?', place: 'Home', categories: [], candidates: [{ id: 'tea', text: 'Tea, please' }] },
+    'jev-1.13.0'
+  )
+  const frozen = {
+    model: 'jev-1.13.0',
+    state: { partner_line: 'Tea?', place: 'Home' },
+    questions: {
+      kind: {
+        type: 'choice',
+        instructions: 'What kind of question is `partner_line`?',
+        criteria: {
+          yes_no: 'Can be answered with yes or no',
+          either_or: 'Asks the listener to pick one of the options it names',
+          open: "Needs an answer in the listener's own words",
+          not_a_question: 'A statement, greeting, or comment, not a question'
+        }
+      },
+      topic: {
+        type: 'choice',
+        instructions: 'What topic is `partner_line` about?',
+        criteria: { consent: 'Agreeing to or refusing care, treatment, or a procedure' }
+      },
+      c00: {
+        type: 'noul',
+        instructions: {
+          phrase: 'Tea, please',
+          question: '`phrase` answers what the partner just said in `partner_line`.'
+        }
+      }
+    }
+  }
+  expect(JSON.stringify(request, null, 2)).toBe(JSON.stringify(frozen, null, 2))
 })
