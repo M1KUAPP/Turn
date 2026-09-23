@@ -71,7 +71,7 @@ Contents:
 | expo-speech, RevenueCat SDK   |                            | in western North America
 +---------------+---------------+            +---------------v---------------+     +-----------+
                 |                            | Durable Object user-<hash>    |---->| Jev       |
-                | purchases, paywall         | free lines, entitlement cache |     | (TypeSafe)|
+                | purchases, paywall         | requests, free lines, listen  |     | (TypeSafe)|
                 v                            +---------------+-----------+---+     +-----------+
 +-------------------------------+                            |           |
 | RevenueCat (Test Store,       |<---------------------------+           | before each call
@@ -119,9 +119,9 @@ The path of one partner line:
     app gives it the next sequence number and cancels any request in flight.
 2.  The app tags names in the line and the shortlist, picks the 40
     candidates, and sends `POST /v1/lines`.
-3.  The relay checks the request, has `user-<hash>` count it against the
-    ID's 30 a minute, applies the address's limit, and passes the line to
-    `user-<hash>`.
+3.  The relay checks the request, applies the address's limit, and passes
+    the line to `user-<hash>`, which first counts it against the ID's 30 a
+    minute.
 4.  The object claims a free line or, past them, checks the entitlement; it
     answers `402` if neither allows the line. Otherwise it calls Jev within
     2.5 seconds, taking each attempt from the day's budget in `jev-calls`.
