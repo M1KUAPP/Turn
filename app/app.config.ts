@@ -20,6 +20,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     }
   },
   plugins: [
+    'expo-sqlite',
+    'expo-audio',
     ['expo-build-properties', { ios: { enableSceneSupport: true } }],
     ['./plugins/withBoardSplash', { backgroundColor: '#F2F2F7' }],
     ['expo-splash-screen', { backgroundColor: '#F2F2F7', dark: { backgroundColor: '#000000' } }]

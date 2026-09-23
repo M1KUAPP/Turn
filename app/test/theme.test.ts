@@ -4,7 +4,7 @@ import { parse } from 'yaml'
 
 vi.mock('react-native', () => ({ DynamicColorIOS: (values: unknown) => values }))
 
-import { colorValues, colors, textStyle, typography } from '../src/constants/theme'
+import { colorValues, colors, scaledTextStyle, textStyle, typography } from '../src/constants/theme'
 
 const design = readFileSync(new URL('../../docs/DESIGN.md', import.meta.url), 'utf8')
 const yamlBlocks = [...design.matchAll(/```yaml\n([\s\S]*?)\n```/g)].map((match) => parse(match[1]))
@@ -30,6 +30,11 @@ function contrast(first: string, second: string): number {
 }
 
 describe('Turn theme', () => {
+  test('scales both font and line height at accessibility text sizes', () => {
+    const style = scaledTextStyle('title3-emphasized', false, 3)
+    expect(style.fontSize).toBe(60)
+    expect(style.lineHeight).toBe(75)
+  })
   test('keeps every native dynamic color in step with the design', () => {
     expect(colorValues).toEqual(designColors)
     for (const [name, values] of Object.entries(designColors)) {
