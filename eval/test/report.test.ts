@@ -1,4 +1,4 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -326,4 +326,19 @@ test('names no model even when Jev reports one in other words, and counts a sing
   const unnamed = readFileSync(join(dir, 'results.md'), 'utf8')
   expect(unnamed).not.toMatch(/jev|typesafe/i)
   expect(unnamed).toMatch(prose('which answered as version 1.14.0 on 1 call and version 1.13.0 on 31 calls'))
+})
+
+test('wraps the Lines line, so only a path too long for any line runs past 80 columns', async () => {
+  const dir = join(
+    mkdtempSync(join(tmpdir(), 'turn-eval-')),
+    'a-folder-whose-name-is-long-enough-to-push-the-path-past-80'
+  )
+  mkdirSync(dir)
+  writeFileSync(join(dir, 'lines.jsonl'), readFileSync(fixture, 'utf8'))
+  fakeServices()
+  await main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
+  const long = readFileSync(join(dir, 'results.md'), 'utf8')
+    .split('\n')
+    .filter((line) => line.length > 80 && !line.startsWith('|') && !line.includes('](#'))
+  expect(long).toEqual([`  \`${join(dir, 'lines.jsonl')}\`.`])
 })
