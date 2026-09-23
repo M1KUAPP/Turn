@@ -10,11 +10,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "category",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L5"
+      "source_location": "L6"
     },
     {
       "id": "eval_test_starter_bank_test_phrase",
@@ -23,11 +23,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "phrase",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L4"
+      "source_location": "L5"
     },
     {
       "id": "eval_test_starter_bank_test_starterbank",
@@ -36,11 +36,115 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "starterbank",
       "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_src_row_answer",
+      "label": "Answer",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "answer",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L42"
+    },
+    {
+      "id": "shared_src_row_kind",
+      "label": "Kind",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "kind",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "shared_src_row_policy",
+      "label": "Policy",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "policy",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L2"
+    },
+    {
+      "id": "shared_src_row_ranking",
+      "label": "Ranking",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "ranking",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L30"
+    },
+    {
+      "id": "shared_src_row_row",
+      "label": "Row",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "row",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L48"
+    },
+    {
+      "id": "shared_src_shortlist_context",
+      "label": "Context",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "context",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L66"
+    },
+    {
+      "id": "shared_src_shortlist_phrase",
+      "label": "Phrase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "phrase",
+      "source_file": "shared/src/shortlist.ts",
       "source_location": "L6"
+    },
+    {
+      "id": "shared_src_shortlist_phraseindex",
+      "label": "PhraseIndex",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "phraseindex",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L26"
     },
     {
       "id": "eval_test_lines_test_line",
@@ -73,11 +177,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "categorybyid()",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L12"
+      "source_location": "L13"
     },
     {
       "id": "eval_test_starter_bank_test_phrasebytext",
@@ -85,11 +189,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "phrasebytext()",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L14"
+      "source_location": "L15"
     },
     {
       "id": "eval_test_starter_bank_test_phrasetexts",
@@ -97,11 +201,263 @@
       "_callable": true,
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "phrasetexts()",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L13"
+      "source_location": "L14"
+    },
+    {
+      "id": "shared_src_row_applyanswer",
+      "label": "applyAnswer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "applyanswer()",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L79"
+    },
+    {
+      "id": "shared_src_row_clearrow",
+      "label": "clearRow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "clearrow()",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L133"
+    },
+    {
+      "id": "shared_src_row_mostlikely",
+      "label": "mostLikely()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "mostlikely()",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L73"
+    },
+    {
+      "id": "shared_src_row_phrasesinrow",
+      "label": "phrasesInRow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "phrasesinrow()",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L138"
+    },
+    {
+      "id": "shared_src_shortlist_isyesno",
+      "label": "isYesNo()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "isyesno()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L121"
+    },
+    {
+      "id": "shared_src_shortlist_phraseindex_match",
+      "label": ".match()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": ".match()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L56"
+    },
+    {
+      "id": "shared_src_shortlist_phraseindex_update",
+      "label": ".update()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": ".update()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "shared_src_shortlist_pickshortlist",
+      "label": "pickShortlist()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "pickshortlist()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L78"
+    },
+    {
+      "id": "shared_src_shortlist_processterm",
+      "label": "processTerm()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "processterm()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "shared_src_shortlist_rankable",
+      "label": "rankable()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "rankable()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "shared_src_shortlist_rankonphone",
+      "label": "rankOnPhone()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "rankonphone()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L132"
+    },
+    {
+      "id": "shared_test_row_test_answer",
+      "label": "answer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "answer()",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_test_row_test_replay",
+      "label": "replay()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "replay()",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_words",
+      "label": "words()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "words()",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "shared_test_shortlist_test_ids",
+      "label": "ids()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "ids()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "shared_test_shortlist_test_numbered",
+      "label": "numbered()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "numbered()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "shared_test_shortlist_test_phrase",
+      "label": "phrase()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "phrase()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_test_shortlist_test_pick",
+      "label": "pick()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "pick()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "shared_test_shortlist_test_plain",
+      "label": "plain()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "plain()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "shared_test_shortlist_test_range",
+      "label": "range()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "range()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "shared_test_shortlist_test_water",
+      "label": "water()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "water()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L20"
     },
     {
       "id": "eval_test_lines_test_count",
@@ -3115,7 +3471,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1335"
+      "source_location": "L1365"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -3127,7 +3483,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1416"
+      "source_location": "L1446"
     },
     {
       "id": "docs_trd_overview",
@@ -3163,7 +3519,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1373"
+      "source_location": "L1403"
     },
     {
       "id": "docs_trd_see_also",
@@ -3175,7 +3531,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1458"
+      "source_location": "L1488"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -3199,7 +3555,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1299"
+      "source_location": "L1329"
     },
     {
       "id": "docs_trd_turn_technical_requirements",
@@ -11102,7 +11458,7 @@
       "node_kind": "heading",
       "norm_label": "from probabilities to the row",
       "source_file": "docs/TRD.md",
-      "source_location": "L534"
+      "source_location": "L544"
     },
     {
       "id": "docs_trd_names_as_tags",
@@ -11138,7 +11494,7 @@
       "node_kind": "heading",
       "norm_label": "the jev request",
       "source_file": "docs/TRD.md",
-      "source_location": "L458"
+      "source_location": "L468"
     },
     {
       "id": "docs_trd_the_phone_s_own_ranking",
@@ -11150,7 +11506,7 @@
       "node_kind": "heading",
       "norm_label": "the phone's own ranking",
       "source_file": "docs/TRD.md",
-      "source_location": "L591"
+      "source_location": "L620"
     },
     {
       "id": "docs_trd_the_shortlist",
@@ -11174,7 +11530,7 @@
       "node_kind": "heading",
       "norm_label": "timeouts, sequence numbers, and fallbacks",
       "source_file": "docs/TRD.md",
-      "source_location": "L578"
+      "source_location": "L607"
     },
     {
       "id": "docs_trd_accessibility_in_the_app",
@@ -11186,7 +11542,7 @@
       "node_kind": "heading",
       "norm_label": "accessibility in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L934"
+      "source_location": "L964"
     },
     {
       "id": "docs_trd_build_configuration",
@@ -11198,7 +11554,7 @@
       "node_kind": "heading",
       "norm_label": "build configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L999"
+      "source_location": "L1029"
     },
     {
       "id": "docs_trd_flows_on_the_phone",
@@ -11210,7 +11566,7 @@
       "node_kind": "heading",
       "norm_label": "flows on the phone",
       "source_file": "docs/TRD.md",
-      "source_location": "L907"
+      "source_location": "L937"
     },
     {
       "id": "docs_trd_networking",
@@ -11222,7 +11578,7 @@
       "node_kind": "heading",
       "norm_label": "networking",
       "source_file": "docs/TRD.md",
-      "source_location": "L898"
+      "source_location": "L928"
     },
     {
       "id": "docs_trd_screens_and_navigation",
@@ -11234,7 +11590,7 @@
       "node_kind": "heading",
       "norm_label": "screens and navigation",
       "source_file": "docs/TRD.md",
-      "source_location": "L859"
+      "source_location": "L889"
     },
     {
       "id": "docs_trd_state_and_storage",
@@ -11246,7 +11602,7 @@
       "node_kind": "heading",
       "norm_label": "state and storage",
       "source_file": "docs/TRD.md",
-      "source_location": "L887"
+      "source_location": "L917"
     },
     {
       "id": "docs_trd_the_iphone_app",
@@ -11258,7 +11614,7 @@
       "node_kind": "heading",
       "norm_label": "the iphone app",
       "source_file": "docs/TRD.md",
-      "source_location": "L857"
+      "source_location": "L887"
     },
     {
       "id": "docs_trd_evaluation",
@@ -11270,7 +11626,7 @@
       "node_kind": "heading",
       "norm_label": "evaluation",
       "source_file": "docs/TRD.md",
-      "source_location": "L1190"
+      "source_location": "L1220"
     },
     {
       "id": "docs_trd_metrics_intervals_and_thresholds",
@@ -11282,7 +11638,7 @@
       "node_kind": "heading",
       "norm_label": "metrics, intervals, and thresholds",
       "source_file": "docs/TRD.md",
-      "source_location": "L1244"
+      "source_location": "L1274"
     },
     {
       "id": "docs_trd_the_evaluation_data",
@@ -11294,7 +11650,7 @@
       "node_kind": "heading",
       "norm_label": "the evaluation data",
       "source_file": "docs/TRD.md",
-      "source_location": "L1192"
+      "source_location": "L1222"
     },
     {
       "id": "docs_trd_the_rankers",
@@ -11306,7 +11662,7 @@
       "node_kind": "heading",
       "norm_label": "the rankers",
       "source_file": "docs/TRD.md",
-      "source_location": "L1222"
+      "source_location": "L1252"
     },
     {
       "id": "docs_trd_the_replay_script",
@@ -11318,7 +11674,7 @@
       "node_kind": "heading",
       "norm_label": "the replay script",
       "source_file": "docs/TRD.md",
-      "source_location": "L1286"
+      "source_location": "L1316"
     },
     {
       "id": "docs_trd_the_report",
@@ -11330,7 +11686,7 @@
       "node_kind": "heading",
       "norm_label": "the report",
       "source_file": "docs/TRD.md",
-      "source_location": "L1292"
+      "source_location": "L1322"
     },
     {
       "id": "docs_trd_listening_and_speaking_on_the_phone",
@@ -11342,7 +11698,7 @@
       "node_kind": "heading",
       "norm_label": "listening and speaking on the phone",
       "source_file": "docs/TRD.md",
-      "source_location": "L604"
+      "source_location": "L634"
     },
     {
       "id": "docs_trd_the_audio_session",
@@ -11354,7 +11710,7 @@
       "node_kind": "heading",
       "norm_label": "the audio session",
       "source_file": "docs/TRD.md",
-      "source_location": "L655"
+      "source_location": "L685"
     },
     {
       "id": "docs_trd_the_turn_listen_module",
@@ -11366,7 +11722,7 @@
       "node_kind": "heading",
       "norm_label": "the turn-listen module",
       "source_file": "docs/TRD.md",
-      "source_location": "L606"
+      "source_location": "L636"
     },
     {
       "id": "docs_trd_the_turn_voice_module",
@@ -11378,7 +11734,7 @@
       "node_kind": "heading",
       "norm_label": "the turn-voice module",
       "source_file": "docs/TRD.md",
-      "source_location": "L690"
+      "source_location": "L720"
     },
     {
       "id": "docs_trd_when_transcription_isn_t_available",
@@ -11390,7 +11746,7 @@
       "node_kind": "heading",
       "norm_label": "when transcription isn't available",
       "source_file": "docs/TRD.md",
-      "source_location": "L716"
+      "source_location": "L746"
     },
     {
       "id": "docs_trd_data_inventory",
@@ -11402,7 +11758,7 @@
       "node_kind": "heading",
       "norm_label": "data inventory",
       "source_file": "docs/TRD.md",
-      "source_location": "L1129"
+      "source_location": "L1159"
     },
     {
       "id": "docs_trd_secrets_and_configuration",
@@ -11414,7 +11770,7 @@
       "node_kind": "heading",
       "norm_label": "secrets and configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L1035"
+      "source_location": "L1065"
     },
     {
       "id": "docs_trd_security_and_privacy",
@@ -11426,7 +11782,7 @@
       "node_kind": "heading",
       "norm_label": "security and privacy",
       "source_file": "docs/TRD.md",
-      "source_location": "L1033"
+      "source_location": "L1063"
     },
     {
       "id": "docs_trd_validation_and_abuse_limits",
@@ -11438,7 +11794,7 @@
       "node_kind": "heading",
       "norm_label": "validation and abuse limits",
       "source_file": "docs/TRD.md",
-      "source_location": "L1105"
+      "source_location": "L1135"
     },
     {
       "id": "docs_trd_data_model",
@@ -11498,7 +11854,7 @@
       "node_kind": "heading",
       "norm_label": "failure modes",
       "source_file": "docs/TRD.md",
-      "source_location": "L1150"
+      "source_location": "L1180"
     },
     {
       "id": "docs_trd_logs_and_counts",
@@ -11510,7 +11866,7 @@
       "node_kind": "heading",
       "norm_label": "logs and counts",
       "source_file": "docs/TRD.md",
-      "source_location": "L1165"
+      "source_location": "L1195"
     },
     {
       "id": "docs_trd_reliability_and_observability",
@@ -11522,7 +11878,7 @@
       "node_kind": "heading",
       "norm_label": "reliability and observability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1148"
+      "source_location": "L1178"
     },
     {
       "id": "docs_trd_service_life",
@@ -11534,7 +11890,7 @@
       "node_kind": "heading",
       "norm_label": "service life",
       "source_file": "docs/TRD.md",
-      "source_location": "L1184"
+      "source_location": "L1214"
     },
     {
       "id": "docs_trd_purchases_and_entitlements",
@@ -11546,7 +11902,7 @@
       "node_kind": "heading",
       "norm_label": "purchases and entitlements",
       "source_file": "docs/TRD.md",
-      "source_location": "L738"
+      "source_location": "L768"
     },
     {
       "id": "docs_trd_purchases_in_the_app",
@@ -11558,7 +11914,7 @@
       "node_kind": "heading",
       "norm_label": "purchases in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L771"
+      "source_location": "L801"
     },
     {
       "id": "docs_trd_revenuecat_setup",
@@ -11570,7 +11926,7 @@
       "node_kind": "heading",
       "norm_label": "revenuecat setup",
       "source_file": "docs/TRD.md",
-      "source_location": "L740"
+      "source_location": "L770"
     },
     {
       "id": "docs_trd_the_relay_s_entitlement_check",
@@ -11582,7 +11938,7 @@
       "node_kind": "heading",
       "norm_label": "the relay's entitlement check",
       "source_file": "docs/TRD.md",
-      "source_location": "L811"
+      "source_location": "L841"
     },
     {
       "id": "docs_sources_devpost_com_revenuecat_shipaton_2026",
@@ -14359,6 +14715,28 @@
       "source_location": "L1"
     },
     {
+      "id": "shared_package_dependencies",
+      "label": "dependencies",
+      "_origin": "ast",
+      "community": 197,
+      "community_name": "shared/package.json",
+      "file_type": "code",
+      "norm_label": "dependencies",
+      "source_file": "shared/package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "shared_package_dependencies_minisearch",
+      "label": "minisearch",
+      "_origin": "ast",
+      "community": 197,
+      "community_name": "shared/package.json",
+      "file_type": "code",
+      "norm_label": "minisearch",
+      "source_file": "shared/package.json",
+      "source_location": "L13"
+    },
+    {
       "id": "shared_package_devdependencies",
       "label": "devDependencies",
       "_origin": "ast",
@@ -14367,7 +14745,7 @@
       "file_type": "code",
       "norm_label": "devdependencies",
       "source_file": "shared/package.json",
-      "source_location": "L12"
+      "source_location": "L15"
     },
     {
       "id": "shared_package_devdependencies_typescript",
@@ -14378,7 +14756,7 @@
       "file_type": "code",
       "norm_label": "typescript",
       "source_file": "shared/package.json",
-      "source_location": "L13"
+      "source_location": "L16"
     },
     {
       "id": "shared_package_devdependencies_vitest",
@@ -14389,7 +14767,7 @@
       "file_type": "code",
       "norm_label": "vitest",
       "source_file": "shared/package.json",
-      "source_location": "L14"
+      "source_location": "L17"
     },
     {
       "id": "shared_package_exports",
@@ -14469,6 +14847,17 @@
       "source_location": "L4"
     },
     {
+      "id": "ref_minisearch",
+      "label": "minisearch",
+      "_origin": "ast",
+      "community": 197,
+      "community_name": "shared/package.json",
+      "file_type": "concept",
+      "norm_label": "minisearch",
+      "source_file": "shared/package.json",
+      "source_location": "L13"
+    },
+    {
       "id": "shared_package_json_ref_typescript",
       "label": "typescript",
       "_origin": "ast",
@@ -14477,7 +14866,7 @@
       "file_type": "concept",
       "norm_label": "typescript",
       "source_file": "shared/package.json",
-      "source_location": "L13"
+      "source_location": "L16"
     },
     {
       "id": "shared_package_json_ref_vitest",
@@ -14488,7 +14877,7 @@
       "file_type": "concept",
       "norm_label": "vitest",
       "source_file": "shared/package.json",
-      "source_location": "L14"
+      "source_location": "L17"
     },
     {
       "id": "docs_research_0031_turn_workspace",
@@ -14646,6 +15035,28 @@
       "source_location": "L1"
     },
     {
+      "id": "eval_package_dependencies",
+      "label": "dependencies",
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "eval/package.json",
+      "file_type": "code",
+      "norm_label": "dependencies",
+      "source_file": "eval/package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "eval_package_dependencies_turn_shared",
+      "label": "@turn/shared",
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "eval/package.json",
+      "file_type": "code",
+      "norm_label": "@turn/shared",
+      "source_file": "eval/package.json",
+      "source_location": "L10"
+    },
+    {
       "id": "eval_package_devdependencies",
       "label": "devDependencies",
       "_origin": "ast",
@@ -14654,7 +15065,7 @@
       "file_type": "code",
       "norm_label": "devdependencies",
       "source_file": "eval/package.json",
-      "source_location": "L9"
+      "source_location": "L12"
     },
     {
       "id": "eval_package_devdependencies_types_node",
@@ -14665,7 +15076,7 @@
       "file_type": "code",
       "norm_label": "@types/node",
       "source_file": "eval/package.json",
-      "source_location": "L10"
+      "source_location": "L13"
     },
     {
       "id": "eval_package_devdependencies_typescript",
@@ -14676,7 +15087,7 @@
       "file_type": "code",
       "norm_label": "typescript",
       "source_file": "eval/package.json",
-      "source_location": "L11"
+      "source_location": "L14"
     },
     {
       "id": "eval_package_devdependencies_vitest",
@@ -14687,7 +15098,7 @@
       "file_type": "code",
       "norm_label": "vitest",
       "source_file": "eval/package.json",
-      "source_location": "L12"
+      "source_location": "L15"
     },
     {
       "id": "eval_package_name",
@@ -14764,7 +15175,7 @@
       "file_type": "concept",
       "norm_label": "typescript",
       "source_file": "eval/package.json",
-      "source_location": "L11"
+      "source_location": "L14"
     },
     {
       "id": "eval_package_json_ref_vitest",
@@ -14775,7 +15186,18 @@
       "file_type": "concept",
       "norm_label": "vitest",
       "source_file": "eval/package.json",
-      "source_location": "L12"
+      "source_location": "L15"
+    },
+    {
+      "id": "ref_turn_shared",
+      "label": "@turn/shared",
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "eval/package.json",
+      "file_type": "concept",
+      "norm_label": "@turn/shared",
+      "source_file": "eval/package.json",
+      "source_location": "L10"
     },
     {
       "id": "ref_types_node",
@@ -14786,7 +15208,7 @@
       "file_type": "concept",
       "norm_label": "@types/node",
       "source_file": "eval/package.json",
-      "source_location": "L10"
+      "source_location": "L13"
     },
     {
       "id": "docs_sources_devpost_com_revenuecat_shipaton_2026_1st_place_best_app_for_galaxy_samsung_galaxy",
@@ -16386,7 +16808,7 @@
       "label": "starter-bank.test.ts",
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "starter-bank.test.ts",
       "source_file": "eval/test/starter-bank.test.ts",
@@ -16397,22 +16819,209 @@
       "label": "bank",
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "bank",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L8"
+      "source_location": "L9"
     },
     {
       "id": "eval_test_starter_bank_test_phrases",
       "label": "phrases",
       "_origin": "ast",
       "community": 209,
-      "community_name": "starter-bank.test.ts",
+      "community_name": "shortlist.test.ts",
       "file_type": "code",
       "norm_label": "phrases",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L11"
+      "source_location": "L12"
+    },
+    {
+      "id": "shared_src_common_words",
+      "label": "common-words.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "common-words.ts",
+      "source_file": "shared/src/common-words.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_src_common_words_commonwords",
+      "label": "commonWords",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "commonwords",
+      "source_file": "shared/src/common-words.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_src_row",
+      "label": "row.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "row.ts",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_src_row_emptyrow",
+      "label": "emptyRow",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "emptyrow",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L61"
+    },
+    {
+      "id": "shared_src_row_fixedbuttons",
+      "label": "fixedButtons",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "fixedbuttons",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L45"
+    },
+    {
+      "id": "shared_src_row_startingpolicy",
+      "label": "startingPolicy",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "startingpolicy",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "shared_src_shortlist",
+      "label": "shortlist.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "shortlist.ts",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_src_shortlist_yesnoopeners",
+      "label": "yesNoOpeners",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "yesnoopeners",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L108"
+    },
+    {
+      "id": "shared_test_row_test",
+      "label": "row.test.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "row.test.ts",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_row_test_yesno",
+      "label": "yesNo",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "yesno",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test",
+      "label": "shortlist-speed.test.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "shortlist-speed.test.ts",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_bank",
+      "label": "bank",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "bank",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_lines",
+      "label": "lines",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "lines",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_taps",
+      "label": "taps",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "taps",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_vocabulary",
+      "label": "vocabulary",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "vocabulary",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_test_shortlist_test",
+      "label": "shortlist.test.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "shortlist.test.ts",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_shortlist_test_w",
+      "label": "w",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "shortlist.test.ts",
+      "file_type": "code",
+      "norm_label": "w",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L17"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_how_to_win_shipyard",
@@ -16607,6 +17216,378 @@
       "norm_label": "lines",
       "source_file": "eval/test/lines.test.ts",
       "source_location": "L14"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row",
+      "label": "0012-turn-shortlist-and-row.md",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0012-turn-shortlist-and-row.md",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_decisions",
+      "label": "Decisions",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "decisions",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_design",
+      "label": "Design",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "design",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L122"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_global_constraints",
+      "label": "Global constraints",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "global constraints",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_out_of_scope",
+      "label": "Out of scope",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "out of scope",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L261"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_rejected_alternatives",
+      "label": "Rejected alternatives",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "rejected alternatives",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L244"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_skills",
+      "label": "Skills",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "skills",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L105"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_10_the_trd",
+      "label": "Task 10: The TRD",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 10: the trd",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L508"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_11_graph_pull_request_review_and_merge",
+      "label": "Task 11: Graph, pull request, review, and merge",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 11: graph, pull request, review, and merge",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L522"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_1_research_note",
+      "label": "Task 1: Research note",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 1: research note",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L294"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_2_this_plan",
+      "label": "Task 2: This plan",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 2: this plan",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L302"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_3_the_phrase_index",
+      "label": "Task 3: The phrase index",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 3: the phrase index",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_4_the_shortlist_s_order",
+      "label": "Task 4: The shortlist's order",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 4: the shortlist's order",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L358"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_5_yes_or_no_lines",
+      "label": "Task 5: Yes-or-no lines",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 5: yes-or-no lines",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L390"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_6_a_big_button_a_row_or_no_change",
+      "label": "Task 6: A big button, a row, or no change",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 6: a big button, a row, or no change",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L400"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_7_the_row_s_other_rules",
+      "label": "Task 7: The row's other rules",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 7: the row's other rules",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L444"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_8_the_phone_s_own_ranking",
+      "label": "Task 8: The phone's own ranking",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 8: the phone's own ranking",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L478"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_task_9_the_speed_test",
+      "label": "Task 9: The speed test",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 9: the speed test",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L498"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "label": "Tasks",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "tasks",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L287"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "label": "Turn's shortlist and row implementation plan",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's shortlist and row implementation plan",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0012_turn_shortlist_and_row_verification_gate",
+      "label": "Verification gate",
+      "_origin": "ast",
+      "community": 211,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verification gate",
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L269"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row",
+      "label": "0033-turn-shortlist-and-row.md",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0033-turn-shortlist-and-row.md",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_common_word_lists",
+      "label": "Common-word lists",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "common-word lists",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L112"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_curly_apostrophes",
+      "label": "Curly apostrophes",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "curly apostrophes",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L180"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_gaps",
+      "label": "Gaps",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "gaps",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L219"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_hands_on_check",
+      "label": "Hands-on check",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "hands-on check",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_minisearch_7_2_0",
+      "label": "MiniSearch 7.2.0",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "minisearch 7.2.0",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_see_also",
+      "label": "See also",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "see also",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L229"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_timing_tests_in_vitest_4_1",
+      "label": "Timing tests in Vitest 4.1",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "timing tests in vitest 4.1",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L192"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "label": "Turn's shortlist and row research notes",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's shortlist and row research notes",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0033_turn_shortlist_and_row_yes_or_no_question_openers",
+      "label": "Yes-or-no question openers",
+      "_origin": "ast",
+      "community": 212,
+      "community_name": "Turn's shortlist and row research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "yes-or-no question openers",
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L153"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_shipaton_2025",
@@ -34057,7 +35038,187 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L13",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row_applyanswer",
+      "target": "shared_src_row_mostlikely",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_pickshortlist",
+      "target": "shared_src_shortlist_phraseindex_update",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_pickshortlist",
+      "target": "shared_src_shortlist_phraseindex_match",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L97",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_rankonphone",
+      "target": "shared_src_shortlist_phraseindex_update",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_rankonphone",
+      "target": "shared_src_shortlist_phraseindex_match",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_rankonphone",
+      "target": "shared_src_shortlist_isyesno",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L148",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test_replay",
+      "target": "shared_src_row_applyanswer",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test_bank",
+      "target": "shared_test_shortlist_speed_test_words",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test_lines",
+      "target": "shared_test_shortlist_speed_test_words",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test_pick",
+      "target": "shared_src_shortlist_phraseindex",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test_pick",
+      "target": "shared_src_shortlist_pickshortlist",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test_pick",
+      "target": "shared_test_shortlist_test_ids",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test_plain",
+      "target": "shared_test_shortlist_test_phrase",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test_water",
+      "target": "shared_test_shortlist_test_phrase",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test_water",
+      "target": "shared_test_shortlist_test_w",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -34098,7 +35259,7 @@
     },
     {
       "source": "eval_package",
-      "target": "ref_types_node",
+      "target": "ref_turn_shared",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -34110,6 +35271,18 @@
     },
     {
       "source": "eval_package",
+      "target": "ref_types_node",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/package.json",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_package",
       "target": "eval_package_json_ref_typescript",
       "relation": "imports",
       "_origin": "ast",
@@ -34117,7 +35290,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "eval/package.json",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -34129,7 +35302,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "eval/package.json",
-      "source_location": "L12",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "shared_src_row_fixedbuttons",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L1",
       "weight": 1.0
     },
     {
@@ -34194,7 +35379,7 @@
     },
     {
       "source": "shared_package",
-      "target": "shared_package_json_ref_typescript",
+      "target": "ref_minisearch",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -34206,6 +35391,18 @@
     },
     {
       "source": "shared_package",
+      "target": "shared_package_json_ref_typescript",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/package.json",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_package",
       "target": "shared_package_json_ref_vitest",
       "relation": "imports",
       "_origin": "ast",
@@ -34213,7 +35410,271 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "shared/package.json",
-      "source_location": "L14",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_common_words_commonwords",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_row_ranking",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_answer",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_applyanswer",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_clearrow",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_emptyrow",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_phrasesinrow",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_row",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row_startingpolicy",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_src_shortlist_phrase",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_src_shortlist_phraseindex",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_src_shortlist_pickshortlist",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_row_applyanswer",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_row_emptyrow",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_row_row",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_row_startingpolicy",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist_context",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist_isyesno",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist_phrase",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist_phraseindex",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist_pickshortlist",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist_rankonphone",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -34262,6 +35723,103 @@
       "context": "import",
       "source_file": "worker/package.json",
       "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "shared_src_row",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "ref_minisearch",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_common_words",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_row",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L3",
+      "type_only": true,
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_src_row",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_src_shortlist",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_row",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_src_shortlist",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -40478,6 +42036,226 @@
       "confidence_score": 1.0,
       "source_file": "docs/plans/0011-turn-starter-content.md",
       "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row",
+      "target": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_design",
+      "target": "docs_plans_0012_turn_shortlist_and_row_decisions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_design",
+      "target": "docs_plans_0012_turn_shortlist_and_row_rejected_alternatives",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L244",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_design",
+      "target": "docs_plans_0012_turn_shortlist_and_row_out_of_scope",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L261",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_1_research_note",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_2_this_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L302",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_3_the_phrase_index",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_4_the_shortlist_s_order",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L358",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_5_yes_or_no_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L390",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_6_a_big_button_a_row_or_no_change",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_7_the_row_s_other_rules",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L444",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_8_the_phone_s_own_ranking",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L478",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_9_the_speed_test",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_10_the_trd",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L508",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "target": "docs_plans_0012_turn_shortlist_and_row_task_11_graph_pull_request_review_and_merge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L522",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "target": "docs_plans_0012_turn_shortlist_and_row_skills",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "target": "docs_plans_0012_turn_shortlist_and_row_design",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L122",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "target": "docs_plans_0012_turn_shortlist_and_row_verification_gate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "target": "docs_plans_0012_turn_shortlist_and_row_tasks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L287",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0012_turn_shortlist_and_row_turn_s_shortlist_and_row_implementation_plan",
+      "target": "docs_plans_0012_turn_shortlist_and_row_global_constraints",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0012-turn-shortlist-and-row.md",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -53857,6 +55635,105 @@
       "weight": 1.0
     },
     {
+      "source": "docs_research_0033_turn_shortlist_and_row",
+      "target": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_common_word_lists",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_yes_or_no_question_openers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_minisearch_7_2_0",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_curly_apostrophes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_timing_tests_in_vitest_4_1",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_gaps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_see_also",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0033_turn_shortlist_and_row_turn_s_shortlist_and_row_research_notes",
+      "target": "docs_research_0033_turn_shortlist_and_row_hands_on_check",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0033-turn-shortlist-and-row.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
       "source": "docs_sources_devpost_com_revenuecat_shipaton_2026",
       "target": "docs_sources_devpost_com_revenuecat_shipaton_2026_revenuecat_shipaton_2026",
       "relation": "contains",
@@ -62169,7 +64046,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L458",
+      "source_location": "L468",
       "weight": 1.0
     },
     {
@@ -62180,7 +64057,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L534",
+      "source_location": "L544",
       "weight": 1.0
     },
     {
@@ -62191,7 +64068,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L578",
+      "source_location": "L607",
       "weight": 1.0
     },
     {
@@ -62202,7 +64079,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L591",
+      "source_location": "L620",
       "weight": 1.0
     },
     {
@@ -62213,7 +64090,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1192",
+      "source_location": "L1222",
       "weight": 1.0
     },
     {
@@ -62224,7 +64101,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1222",
+      "source_location": "L1252",
       "weight": 1.0
     },
     {
@@ -62235,7 +64112,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1244",
+      "source_location": "L1274",
       "weight": 1.0
     },
     {
@@ -62246,7 +64123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1286",
+      "source_location": "L1316",
       "weight": 1.0
     },
     {
@@ -62257,7 +64134,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1292",
+      "source_location": "L1322",
       "weight": 1.0
     },
     {
@@ -62268,7 +64145,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L606",
+      "source_location": "L636",
       "weight": 1.0
     },
     {
@@ -62279,7 +64156,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L655",
+      "source_location": "L685",
       "weight": 1.0
     },
     {
@@ -62290,7 +64167,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L690",
+      "source_location": "L720",
       "weight": 1.0
     },
     {
@@ -62301,7 +64178,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L716",
+      "source_location": "L746",
       "weight": 1.0
     },
     {
@@ -62312,7 +64189,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L740",
+      "source_location": "L770",
       "weight": 1.0
     },
     {
@@ -62323,7 +64200,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L771",
+      "source_location": "L801",
       "weight": 1.0
     },
     {
@@ -62334,7 +64211,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L811",
+      "source_location": "L841",
       "weight": 1.0
     },
     {
@@ -62345,7 +64222,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1150",
+      "source_location": "L1180",
       "weight": 1.0
     },
     {
@@ -62356,7 +64233,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1165",
+      "source_location": "L1195",
       "weight": 1.0
     },
     {
@@ -62367,7 +64244,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1184",
+      "source_location": "L1214",
       "weight": 1.0
     },
     {
@@ -62378,7 +64255,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1035",
+      "source_location": "L1065",
       "weight": 1.0
     },
     {
@@ -62389,7 +64266,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1105",
+      "source_location": "L1135",
       "weight": 1.0
     },
     {
@@ -62400,7 +64277,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1129",
+      "source_location": "L1159",
       "weight": 1.0
     },
     {
@@ -62427,13 +64304,24 @@
     },
     {
       "source": "docs_trd_the_iphone_app",
+      "target": "docs_trd_build_configuration",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L1029",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_the_iphone_app",
       "target": "docs_trd_screens_and_navigation",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L859",
+      "source_location": "L889",
       "weight": 1.0
     },
     {
@@ -62444,7 +64332,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L887",
+      "source_location": "L917",
       "weight": 1.0
     },
     {
@@ -62455,7 +64343,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L898",
+      "source_location": "L928",
       "weight": 1.0
     },
     {
@@ -62466,7 +64354,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L907",
+      "source_location": "L937",
       "weight": 1.0
     },
     {
@@ -62477,18 +64365,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L934",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_the_iphone_app",
-      "target": "docs_trd_build_configuration",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L999",
+      "source_location": "L964",
       "weight": 1.0
     },
     {
@@ -62499,7 +64376,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1033",
+      "source_location": "L1063",
       "weight": 1.0
     },
     {
@@ -62510,7 +64387,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1148",
+      "source_location": "L1178",
       "weight": 1.0
     },
     {
@@ -62521,7 +64398,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1190",
+      "source_location": "L1220",
       "weight": 1.0
     },
     {
@@ -62543,7 +64420,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1299",
+      "source_location": "L1329",
       "weight": 1.0
     },
     {
@@ -62554,7 +64431,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1335",
+      "source_location": "L1365",
       "weight": 1.0
     },
     {
@@ -62565,7 +64442,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1373",
+      "source_location": "L1403",
       "weight": 1.0
     },
     {
@@ -62576,7 +64453,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1416",
+      "source_location": "L1446",
       "weight": 1.0
     },
     {
@@ -62587,7 +64464,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1458",
+      "source_location": "L1488",
       "weight": 1.0
     },
     {
@@ -62636,17 +64513,6 @@
     },
     {
       "source": "docs_trd_turn_technical_requirements",
-      "target": "docs_trd_listening_and_speaking_on_the_phone",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L604",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_turn_technical_requirements",
       "target": "docs_trd_system_architecture",
       "relation": "contains",
       "_origin": "ast",
@@ -62658,13 +64524,24 @@
     },
     {
       "source": "docs_trd_turn_technical_requirements",
+      "target": "docs_trd_listening_and_speaking_on_the_phone",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L634",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_turn_technical_requirements",
       "target": "docs_trd_purchases_and_entitlements",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L738",
+      "source_location": "L768",
       "weight": 1.0
     },
     {
@@ -62675,7 +64552,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L857",
+      "source_location": "L887",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_package",
+      "target": "eval_package_devdependencies",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/package.json",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -62724,7 +64612,7 @@
     },
     {
       "source": "eval_package",
-      "target": "eval_package_devdependencies",
+      "target": "eval_package_dependencies",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -62734,8 +64622,8 @@
       "weight": 1.0
     },
     {
-      "source": "eval_package_devdependencies",
-      "target": "eval_package_devdependencies_types_node",
+      "source": "eval_package_dependencies",
+      "target": "eval_package_dependencies_turn_shared",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -62746,13 +64634,24 @@
     },
     {
       "source": "eval_package_devdependencies",
+      "target": "eval_package_devdependencies_types_node",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/package.json",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_package_devdependencies",
       "target": "eval_package_devdependencies_typescript",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/package.json",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -62763,7 +64662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/package.json",
-      "source_location": "L12",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -62829,7 +64728,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -62840,7 +64739,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -62851,7 +64750,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -62862,7 +64761,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -62873,7 +64772,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -62884,7 +64783,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -62895,7 +64794,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -62906,7 +64805,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/test/starter-bank.test.ts",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -63186,13 +65085,24 @@
     },
     {
       "source": "shared_package",
-      "target": "shared_package_devdependencies",
+      "target": "shared_package_dependencies",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "shared/package.json",
       "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_package",
+      "target": "shared_package_devdependencies",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/package.json",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -63251,8 +65161,8 @@
       "weight": 1.0
     },
     {
-      "source": "shared_package_devdependencies",
-      "target": "shared_package_devdependencies_typescript",
+      "source": "shared_package_dependencies",
+      "target": "shared_package_dependencies_minisearch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -63263,13 +65173,24 @@
     },
     {
       "source": "shared_package_devdependencies",
+      "target": "shared_package_devdependencies_typescript",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/package.json",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_package_devdependencies",
       "target": "shared_package_devdependencies_vitest",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "shared/package.json",
-      "source_location": "L14",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -63292,6 +65213,424 @@
       "confidence_score": 1.0,
       "source_file": "shared/package.json",
       "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_common_words",
+      "target": "shared_src_common_words_commonwords",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/common-words.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_clearrow",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_phrasesinrow",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_startingpolicy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_policy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_kind",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_ranking",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_answer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_fixedbuttons",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_row",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_emptyrow",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_mostlikely",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_row",
+      "target": "shared_src_row_applyanswer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/row.ts",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_yesnoopeners",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_isyesno",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_rankonphone",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_rankable",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_processterm",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_phraseindex",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_phrase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_context",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist",
+      "target": "shared_src_shortlist_pickshortlist",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_test_row_test_replay",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_test_row_test_yesno",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_row_test",
+      "target": "shared_test_row_test_answer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/row.test.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_test_shortlist_speed_test_taps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_test_shortlist_speed_test_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_test_shortlist_speed_test_vocabulary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_test_shortlist_speed_test_words",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_speed_test",
+      "target": "shared_test_shortlist_speed_test_bank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_ids",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_range",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_numbered",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_w",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_water",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_pick",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_phrase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_test_shortlist_test",
+      "target": "shared_test_shortlist_test_plain",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -63614,6 +65953,28 @@
       "weight": 1.0
     },
     {
+      "source": "shared_src_shortlist_phraseindex",
+      "target": "shared_src_shortlist_phraseindex_update",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_phraseindex",
+      "target": "shared_src_shortlist_phraseindex_match",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
       "source": "docs_research_0007_ideation",
       "target": "docs_research_0008_idea_evidence",
       "relation": "references",
@@ -63634,8 +65995,32 @@
       "source_file": "docs/research/0007-ideation.md",
       "source_location": "L73",
       "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_phraseindex_update",
+      "target": "shared_src_shortlist_rankable",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "shared_src_shortlist_pickshortlist",
+      "target": "shared_src_shortlist_rankable",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L80",
+      "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "959353d769e1c80c2f68adea09cd2721ae455df5"
+  "built_at_commit": "a8c54c369a768705fa98bf2ac2841b131ada79b0"
 }
