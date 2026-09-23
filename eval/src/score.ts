@@ -1,6 +1,7 @@
 import { applyAnswer, emptyRow, fixedButtons, startingPolicy, type Ranking, type Row } from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, type Phrase } from '@turn/shared/shortlist'
-import type { Ranker } from './rankers'
+import { crossValidate, folds } from './cut-off'
+import type { CutOff, Ranker } from './rankers'
 import { chanceHit, chanceReciprocalRank, mean } from './stats'
 
 /** What scoring reads from a labeled partner line: the ids of every acceptable reply, or none. */
@@ -30,10 +31,14 @@ export type LineScore<Line extends ScoredLine> = {
 /** A count of k lines out of n, for a rate. */
 export type Count = { k: number; n: number }
 
-/** Every line's score, and each step's timings in milliseconds: the shortlist's and each ranker's. */
+/**
+ * Every line's score, each step's timings in milliseconds (the shortlist's and each ranker's), and, for a ranker with a
+ * cross-validated cut-off, each fold's.
+ */
 export type Scores<Line extends ScoredLine> = {
   lines: LineScore<Line>[]
   timings: { shortlist: number[]; rankers: Record<string, number[]> }
+  cutOffs: Record<string, number[]>
 }
 
 /** One ranker over a group of lines: its ranking, and what the user would see. */
@@ -75,17 +80,24 @@ const time = async <T>(samples: number[], work: () => T | Promise<T>): Promise<T
 /** The row the rules make of one line's ranking, from an empty row, with their starting policy. */
 const rowFor = (ranking: Ranking): Row => applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy })
 
+/** A ranking's top score, which a cut-off compares. */
+const top = (ranking: Ranking) => Math.max(...ranking.scores.values())
+
 /**
  * Scores each line alone, as the app would from an empty row, with the line's place and a fresh bank's lack of taps:
  * picks its shortlist, has each ranker rank it, one ranking at a time, and applies the row's rules with their starting
  * policy once every line is ranked. It times the shortlist and each ranking, a network trip included, over three
  * passes, after a warm-up pass it leaves out, since Bun and Node compile hot code as it runs and a first call opens its
  * connection; the lines are scored from the first of the three.
+ *
+ * A ranker with a cut-off is scored out of fold: five folds, stratified on whether a line has an acceptable reply, and
+ * each fold's lines at the cut-off that made the most of the other four folds' lines right (EVAL-2).
  */
 export async function scoreLines<Line extends ScoredLine>(
   lines: readonly Line[],
   bank: readonly Phrase[],
-  rankers: Readonly<Record<string, Ranker>>
+  rankers: Readonly<Record<string, Ranker>>,
+  cutOffs: Readonly<Record<string, CutOff>> = {}
 ): Promise<Scores<Line>> {
   const index = new PhraseIndex()
   const names = Object.keys(rankers)
@@ -109,7 +121,20 @@ export async function scoreLines<Line extends ScoredLine>(
   // The warm-up pass, whose timings are left out.
   await pass()
   const passes = [await pass(), await pass(), await pass()]
-  const scored = passes[0].ranked.map(({ line, shortlist, rankings }): LineScore<Line> => {
+  const { ranked } = passes[0]
+  const fold = folds(lines, (line) => line.acceptable.length > 0)
+  const chosen = Object.fromEntries(
+    Object.entries(cutOffs).map(([name, cut]) => {
+      const items = ranked.map(({ line, rankings }) => ({
+        ranking: rankings[name],
+        acceptable: new Set(line.acceptable)
+      }))
+      const right = ({ ranking, acceptable }: (typeof items)[number], cutOff: number) =>
+        outcomeOf(rowFor(cut(ranking, cutOff)), acceptable).startsWith('right')
+      return [name, crossValidate(items, fold, ({ ranking }) => top(ranking), right)]
+    })
+  )
+  const scored = ranked.map(({ line, shortlist, rankings }, i): LineScore<Line> => {
     const acceptable = new Set(line.acceptable)
     const byRanker = names.map((name) => {
       const ranking = rankings[name]
@@ -119,12 +144,14 @@ export async function scoreLines<Line extends ScoredLine>(
         .filter(([, score]) => score > 0)
         .sort(([, a], [, b]) => b - a)
         .map(([id]) => id)
-      const row = rowFor(ranking)
+      const cut = cutOffs[name]
+      const row = rowFor(cut ? cut(ranking, chosen[name][fold[i]]) : ranking)
       return [name, { ranking, order, row, outcome: outcomeOf(row, acceptable) }] as const
     })
     return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
   })
   return {
+    cutOffs: chosen,
     lines: scored,
     timings: {
       shortlist: passes.flatMap(({ timings }) => timings.shortlist),
