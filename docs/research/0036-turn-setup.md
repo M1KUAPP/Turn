@@ -45,8 +45,7 @@ The MCA's credit, expiry, and auto-refill terms are already quoted in the
   the key check in #14. It lists aliases, not the pinned `jev-1.13.0`, as
   the [relay notes][svc-pin] say, so the pin shows only in a systemone
   answer's `model`. Confirm the balance and the auto-refill switch in the
-  console by eye, and ask TypeSafe what an empty balance returns when asking
-  for consent to be named.
+  console by eye.
 
 [svc-pin]: /docs/research/0024-turn-services.md#the-model-pin-on-september-22-2026
 [ts-openapi]: https://api.typesafe.ai/openapi.json
