@@ -1,5 +1,6 @@
 import MiniSearch from 'minisearch'
 import { commonWords } from './common-words'
+import type { Ranking } from './row'
 
 /** A phrase in the user's bank, as the shortlist sees it. */
 export type Phrase = {
@@ -108,4 +109,34 @@ const yesNoOpeners: ReadonlySet<string> = new Set(
 export function isYesNo(line: string): boolean {
   const first = /^\W*([a-z]+(?:'[a-z]+)?)/.exec(line.toLowerCase().replaceAll('’', "'"))
   return first !== null && yesNoOpeners.has(first[1])
+}
+
+/**
+ * The phone's own ranking of a line over its shortlist (STATE-1): each phrase that shares a word with the line, other
+ * than common words, scores 1, the place's first, then by taps, then by keyword rank; the rest score 0. The caller adds
+ * the line's sequence number and the cached policy for the row's rules, which never show it as a big button.
+ */
+export function rankOnPhone(
+  line: string,
+  shortlist: readonly Phrase[],
+  index: PhraseIndex,
+  { place, taps }: Pick<Context, 'place' | 'taps'>
+): Ranking {
+  const rank = new Map(index.match(line).map((id, i) => [id, i]))
+  const atPlace = (phrase: Phrase) => (phrase.places.includes(place) ? 1 : 0)
+  const tapsOf = (phrase: Phrase) => taps.get(phrase.id) ?? 0
+  const rankOf = (phrase: Phrase) => rank.get(phrase.id) ?? Infinity
+  const sharing = shortlist
+    .filter((phrase) => rank.has(phrase.id))
+    .sort((a, b) => atPlace(b) - atPlace(a) || tapsOf(b) - tapsOf(a) || rankOf(a) - rankOf(b))
+  const rest = shortlist.filter((phrase) => !rank.has(phrase.id))
+  return {
+    kind: { yes_no: isYesNo(line) ? 1 : 0, either_or: 0, open: 0, not_a_question: 0 },
+    topic: {},
+    scores: new Map([
+      ...sharing.map((phrase) => [phrase.id, 1] as const),
+      ...rest.map((phrase) => [phrase.id, 0] as const)
+    ]),
+    onPhone: true
+  }
 }

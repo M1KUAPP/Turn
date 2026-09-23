@@ -71,7 +71,7 @@ const mostLikely = <K extends string>(odds: Readonly<Record<K, number>>): K | nu
 }
 
 /** Applies the TRD's rules for the row to an answer. Nothing here speaks; only a tap does (ROW-6). */
-export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy }: Answer): Row {
+export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy, onPhone }: Answer): Row {
   if (seq < row.seq) return row
   const topic = mostLikely(topics)
   const tab = topic !== null && topics[topic] >= policy.floor ? topic : null
@@ -85,9 +85,8 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
   if (!showFixed && !top) return { ...row, seq, tab }
-  if (!showFixed && top && top[1] > policy.bigAbove && !(topic !== null && policy.noBigTopics.includes(topic))) {
-    return { ...row, seq, big: top[0], tab }
-  }
+  const bigAllowed = !showFixed && !onPhone && !(topic !== null && policy.noBigTopics.includes(topic))
+  if (bigAllowed && top && top[1] > policy.bigAbove) return { ...row, seq, big: top[0], tab }
   const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
   if (!phrasesAllowed) slots.fill(null, 3)

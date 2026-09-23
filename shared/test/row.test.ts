@@ -50,6 +50,11 @@ describe('applyAnswer', () => {
     expect(row.slots).toEqual(['water', null, null, null, null, null])
   })
 
+  test("gives the phone's own ranking a row, never a big button, whatever its scores (STATE-1)", () => {
+    const row = replay(answer(1, { water: 1, tea: 0 }, { topic: {}, onPhone: true }))
+    expect(row).toMatchObject({ big: null, slots: ['water', null, null, null, null, null] })
+  })
+
   test('drops an answer for a line older than the newest (ROW-7)', () => {
     const row = replay(answer(2, { water: 0.7 }))
     expect(row.seq).toBe(2)
