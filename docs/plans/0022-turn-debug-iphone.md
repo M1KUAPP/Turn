@@ -315,8 +315,10 @@ note passed the docs gate and `idscan.py`. It was committed as
     plan as the spec, plus a fact-check agent, reviewing the tickets'
     drafts too. Post it as a PR comment, fix what it confirms in one commit
     per fix, and post a resolution comment.
-1.  List `docs/plans` and `docs/research` on `origin/main`; if a peer's
-    merge took 0020 or 0045, renumber in one commit and fix every link.
+1.  List `docs/plans` and `docs/research` on `origin/main`, in open pull
+    requests, and on peer branches; if another change took 0022 or 0045,
+    renumber in one commit and fix every link. This plan was first 0020,
+    until the review found `eval/no-reply-floor` had taken that number.
 1.  Comment on #88 with the evidence, then tick its boxes. Tick #22's last
     box, comment, and close it, as [Decisions](#decisions) says.
 1.  Rebase-merge the pull request, delete the branch on the remote and
