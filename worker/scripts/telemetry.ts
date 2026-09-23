@@ -3,16 +3,31 @@ import { isLogLine, type LogLine } from './summary'
 /** Where the relay's logs are read from: the Cloudflare account's ID, and an API token that may query Workers Logs. */
 export type Access = { account: string; token: string }
 
+/** A span of time, in milliseconds since 1970. */
+export type Range = { from: number; to: number }
+
+/** The account's ID and the token from the environment, never the command line, or null if either is missing. */
+export function accessFrom(env: Record<string, string | undefined>): Access | null {
+  const { TURN_CF_ACCOUNT_ID: account, TURN_CF_LOGS_TOKEN: token } = env
+  return account && token ? { account, token } : null
+}
+
+/** What a command prints when `accessFrom` finds nothing. */
+export const accessMissing = 'Set TURN_CF_ACCOUNT_ID and TURN_CF_LOGS_TOKEN, as worker/README.md says.'
+
+/** A failure as a command prints it: the error's message, never its stack. */
+export const messageOf = (error: unknown) => (error instanceof Error ? error.message : String(error))
+
 /** The most events one query returns. */
 export const pageSize = 2000
 
-const dayMs = 24 * 60 * 60 * 1000
+export const dayMs = 24 * 60 * 60 * 1000
 
 /**
  * A UTC day's range in milliseconds since 1970, from its midnight to the next, or to now if that's sooner, for a day
  * that has begun: yesterday unless one is named as `YYYY-MM-DD`. Null for any other name.
  */
-export function dayRange(day: string | undefined, now: number): { day: string; from: number; to: number } | null {
+export function dayRange(day: string | undefined, now: number): (Range & { day: string }) | null {
   const name = day ?? new Date(now - dayMs).toISOString().slice(0, 10)
   const from = Date.parse(`${name}T00:00:00.000Z`)
   // A name that parses back to itself, since some runtimes read February 30 as March 2.
@@ -33,12 +48,13 @@ const firstError = (answer: Answer | undefined) => {
 }
 
 /**
- * The relay's log lines between two times, in milliseconds since 1970, from Workers Logs through Cloudflare's telemetry
- * query API, with the count of events the query matched. It asks for the `turn-relay` Worker's events, 2,000 at a time
- * without saving the query, and pages on from the last event's ID until a page comes back short. Each event counts
- * once, and only if its payload is one of the relay's lines. It throws when the API refuses or answers out of shape.
+ * The relay's log lines in a range, from Workers Logs through Cloudflare's telemetry query API, with the count of
+ * events the query matched. It asks for the `turn-relay` Worker's events, 2,000 at a time, as a dry run, which doesn't
+ * persist the results, and pages on from the last event's ID until a page comes back short. Each event counts once,
+ * and only if its payload is one of the relay's lines. It throws when the API refuses, answers out of shape, or
+ * repeats a page.
  */
-export async function readLogs({ account, token }: Access, from: number, to: number) {
+export async function readLogs({ account, token }: Access, { from, to }: Range) {
   const accountUrl = `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(account)}`
   const seen = new Set<unknown>()
   const lines: LogLine[] = []
