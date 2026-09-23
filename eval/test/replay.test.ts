@@ -70,6 +70,16 @@ test('sends each line as the app would, as one new user, with the headers and bo
   expect(new Headers(posts[0][1]?.headers).get('Content-Type')).toBe('application/json')
 })
 
+test("sends a long line's last 300 characters, as the app does, counting each emoji as one", async () => {
+  const sent: LineRequest[] = []
+  fakeRelay((request) => {
+    sent.push(request)
+    return answered(request)
+  })
+  await replay(lines('😀'.repeat(10) + 'x'.repeat(295)), relay)
+  expect(sent[0].line).toBe('😀'.repeat(5) + 'x'.repeat(295))
+})
+
 test('counts slot changes: steady slots, a phrase that beats the lowest by the margin, and a hold', async () => {
   const requests: LineRequest[] = []
   // Six phrases from the middle of the first line's shortlist, and then the first phrase the row doesn't show.
