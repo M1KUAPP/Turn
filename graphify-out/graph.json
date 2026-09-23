@@ -20157,7 +20157,7 @@
       "node_kind": "heading",
       "norm_label": "decisions",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L90"
+      "source_location": "L91"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_design",
@@ -20169,7 +20169,7 @@
       "node_kind": "heading",
       "norm_label": "design",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L88"
+      "source_location": "L89"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_global_constraints",
@@ -20193,7 +20193,7 @@
       "node_kind": "heading",
       "norm_label": "out of scope",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L157"
+      "source_location": "L163"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_rejected_alternatives",
@@ -20205,7 +20205,7 @@
       "node_kind": "heading",
       "norm_label": "rejected alternatives",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L145"
+      "source_location": "L151"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_skills",
@@ -20217,7 +20217,7 @@
       "node_kind": "heading",
       "norm_label": "skills",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L69"
+      "source_location": "L70"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_1_research_note",
@@ -20229,7 +20229,7 @@
       "node_kind": "heading",
       "norm_label": "task 1: research note",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L220"
+      "source_location": "L226"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_2_this_plan",
@@ -20241,7 +20241,7 @@
       "node_kind": "heading",
       "norm_label": "task 2: this plan",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L228"
+      "source_location": "L234"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_3_the_phone",
@@ -20253,7 +20253,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: the phone",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L233"
+      "source_location": "L239"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_4_the_build",
@@ -20265,7 +20265,7 @@
       "node_kind": "heading",
       "norm_label": "task 4: the build",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L241"
+      "source_location": "L247"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_5_install_trust_and_launch",
@@ -20277,7 +20277,7 @@
       "node_kind": "heading",
       "norm_label": "task 5: install, trust, and launch",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L247"
+      "source_location": "L254"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_6_the_records",
@@ -20289,7 +20289,7 @@
       "node_kind": "heading",
       "norm_label": "task 6: the records",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L254"
+      "source_location": "L261"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_task_7_graph_pull_request_review_and_merge",
@@ -20301,7 +20301,7 @@
       "node_kind": "heading",
       "norm_label": "task 7: graph, pull request, review, and merge",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L265"
+      "source_location": "L270"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_tasks",
@@ -20313,7 +20313,7 @@
       "node_kind": "heading",
       "norm_label": "tasks",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L212"
+      "source_location": "L218"
     },
     {
       "id": "docs_plans_0016_turn_video_iphone_turn_s_video_iphone_implementation_plan",
@@ -20337,14 +20337,14 @@
       "node_kind": "heading",
       "norm_label": "verification gate",
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L163"
+      "source_location": "L169"
     },
     {
       "id": "docs_research_0037_turn_video_iphone",
       "label": "0037-turn-video-iphone.md",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "0037-turn-video-iphone.md",
@@ -20356,82 +20356,82 @@
       "label": "devicectl install and launch",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "devicectl install and launch",
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L59"
+      "source_location": "L62"
     },
     {
       "id": "docs_research_0037_turn_video_iphone_free_and_paid_team_app_ids",
       "label": "Free and paid team App IDs",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "free and paid team app ids",
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L142"
+      "source_location": "L146"
     },
     {
       "id": "docs_research_0037_turn_video_iphone_gaps",
       "label": "Gaps",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "gaps",
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L223"
+      "source_location": "L227"
     },
     {
       "id": "docs_research_0037_turn_video_iphone_hands_on_check",
       "label": "Hands-on check",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "hands-on check",
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L161"
+      "source_location": "L163"
     },
     {
       "id": "docs_research_0037_turn_video_iphone_see_also",
       "label": "See also",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L236"
+      "source_location": "L240"
     },
     {
       "id": "docs_research_0037_turn_video_iphone_the_phone_s_model_and_ios_version",
       "label": "The phone's model and iOS version",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "the phone's model and ios version",
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L85"
+      "source_location": "L89"
     },
     {
-      "id": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
-      "label": "Turn's video iPhone notes",
+      "id": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
+      "label": "Turn's video iPhone research notes",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "turn's video iphone notes",
+      "norm_label": "turn's video iphone research notes",
       "source_file": "docs/research/0037-turn-video-iphone.md",
       "source_location": "L1"
     },
@@ -20440,7 +20440,7 @@
       "label": "xcodebuild automatic signing",
       "_origin": "ast",
       "community": 225,
-      "community_name": "Turn's video iPhone notes",
+      "community_name": "Turn's video iPhone research notes",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "xcodebuild automatic signing",
@@ -47941,7 +47941,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L145",
+      "source_location": "L151",
       "weight": 1.0
     },
     {
@@ -47952,7 +47952,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L157",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -47963,7 +47963,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L90",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -47974,7 +47974,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L220",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -47985,7 +47985,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L228",
+      "source_location": "L234",
       "weight": 1.0
     },
     {
@@ -47996,7 +47996,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L233",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -48007,7 +48007,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L241",
+      "source_location": "L247",
       "weight": 1.0
     },
     {
@@ -48018,7 +48018,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L247",
+      "source_location": "L254",
       "weight": 1.0
     },
     {
@@ -48029,7 +48029,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L254",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -48040,7 +48040,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L265",
+      "source_location": "L270",
       "weight": 1.0
     },
     {
@@ -48051,7 +48051,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L163",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -48062,7 +48062,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L212",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -48084,7 +48084,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -48095,7 +48095,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0016-turn-video-iphone.md",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -61894,7 +61894,7 @@
     },
     {
       "source": "docs_research_0037_turn_video_iphone",
-      "target": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "target": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -61904,29 +61904,29 @@
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_free_and_paid_team_app_ids",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L142",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_hands_on_check",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L161",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_xcodebuild_automatic_signing",
       "relation": "contains",
       "_origin": "ast",
@@ -61937,47 +61937,47 @@
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_gaps",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L223",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_see_also",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L236",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_devicectl_install_and_launch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L59",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
-      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_notes",
+      "source": "docs_research_0037_turn_video_iphone_turn_s_video_iphone_research_notes",
       "target": "docs_research_0037_turn_video_iphone_the_phone_s_model_and_ios_version",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0037-turn-video-iphone.md",
-      "source_location": "L85",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -73254,5 +73254,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9c65a723cd763b1f5da5d4d4e7c2b3a5bfefe548"
+  "built_at_commit": "d351f7d202316e9d561aa3b315d604510dc3bc07"
 }
