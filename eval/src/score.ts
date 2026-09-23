@@ -36,30 +36,58 @@ const outcomeOf = (row: Row, acceptable: ReadonlySet<string>): Outcome => {
   return row.slots.some((id) => id !== null && acceptable.has(id)) ? 'right row' : 'wrong row'
 }
 
+/** Runs the work, adding how long it took, in milliseconds, to the samples. */
+const time = <T>(samples: number[], work: () => T): T => {
+  const start = performance.now()
+  const result = work()
+  samples.push(performance.now() - start)
+  return result
+}
+
 /**
  * Scores each line alone, as the app would from an empty row, with the line's place and a fresh bank's lack of taps:
- * picks its shortlist, has each ranker rank it, and applies the row's rules with their starting policy.
+ * picks its shortlist, has each ranker rank it, and applies the row's rules with their starting policy. It times the
+ * shortlist and each ranker's ranking and rules over three passes, one line at a time, after a warm-up pass it leaves
+ * out, since Bun and Node compile hot code as it runs.
  */
 export function scoreLines<Line extends ScoredLine>(
   lines: readonly Line[],
   bank: readonly Phrase[],
   rankers: Readonly<Record<string, Ranker>>
-): { lines: LineScore<Line>[] } {
+) {
   const index = new PhraseIndex()
-  return {
-    lines: lines.map((line) => {
+  const names = Object.keys(rankers)
+  const pass = () => {
+    const timings = {
+      shortlist: [] as number[],
+      rankers: Object.fromEntries(names.map((name) => [name, [] as number[]]))
+    }
+    const scored = lines.map((line): LineScore<Line> => {
       const context = { bank, row: [], place: line.place, taps: new Map<string, number>() }
-      const shortlist = pickShortlist(line.text, index, context)
+      const shortlist = time(timings.shortlist, () => pickShortlist(line.text, index, context))
       const acceptable = new Set(line.acceptable)
-      const scored = Object.entries(rankers).map(([name, rank]) => {
-        const ranking = rank(line.text, shortlist, index, context)
-        const row = applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy })
+      const byRanker = names.map((name) => {
+        const { ranking, row } = time(timings.rankers[name], () => {
+          const ranking = rankers[name](line.text, shortlist, index, context)
+          return { ranking, row: applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy }) }
+        })
         // A stable sort, so the ranking's own order breaks ties.
         const order = [...ranking.scores].sort(([, a], [, b]) => b - a).map(([id]) => id)
         return [name, { order, outcome: outcomeOf(row, acceptable) }] as const
       })
-      return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(scored) }
+      return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
     })
+    return { lines: scored, timings }
+  }
+  // The warm-up pass, whose timings are left out.
+  pass()
+  const passes = [pass(), pass(), pass()]
+  return {
+    lines: passes[0].lines,
+    timings: {
+      shortlist: passes.flatMap(({ timings }) => timings.shortlist),
+      rankers: Object.fromEntries(names.map((name) => [name, passes.flatMap(({ timings }) => timings.rankers[name])]))
+    }
   }
 }
 
