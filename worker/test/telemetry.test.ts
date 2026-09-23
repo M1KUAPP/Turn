@@ -15,18 +15,24 @@ const event = (
   dataset: 'cloudflare-workers'
 })
 
-/** A page of the query's events, with the count of all the events it matched. */
-const page =
-  (events: unknown[], count = events.length) =>
-  () =>
-    Response.json({ success: true, errors: [], result: { events: { events, count } } })
+/** A page of the query's events, whose own count, as the live API's, is how many it holds. */
+const page = (events: unknown[]) => () =>
+  Response.json({ success: true, errors: [], result: { events: { events, count: events.length } } })
+
+/** The count calculation's answer: how many events the range holds in all. */
+const total = (count: number) => () =>
+  Response.json({
+    success: true,
+    errors: [],
+    result: { calculations: [{ alias: 'events', calculation: 'count', aggregates: [{ value: count, count }] }] }
+  })
 
 /** The bodies the script posted to the query API. */
 const bodies = () => vi.mocked(globalThis.fetch).mock.calls.map(([, init]) => JSON.parse(String(init?.body)))
 
 describe("reading the relay's logs", () => {
-  test("asks for the relay's events in the range, 2,000 at a time, without saving the query", async () => {
-    mockCloudflare(page([event('e1')]))
+  test("asks for the relay's events in the range, 2,000 at a time, then for their count, as dry runs", async () => {
+    mockCloudflare(page([event('e1')]), total(1))
     const { lines, matched } = await readLogs(access, { from: 1790035200000, to: 1790121600000 })
     const [[input, init]] = vi.mocked(globalThis.fetch).mock.calls
     expect(String(input)).toBe(
@@ -45,6 +51,16 @@ describe("reading the relay's logs", () => {
         parameters: {
           filters: [{ key: '$metadata.service', operation: 'eq', type: 'string', value: 'turn-relay' }]
         }
+      },
+      {
+        queryId: 'turn-relay-logs',
+        timeframe: { from: 1790035200000, to: 1790121600000 },
+        view: 'calculations',
+        dry: true,
+        parameters: {
+          filters: [{ key: '$metadata.service', operation: 'eq', type: 'string', value: 'turn-relay' }],
+          calculations: [{ operator: 'count', alias: 'events' }]
+        }
       }
     ])
     expect(lines).toEqual([{ outcome: 'answered', ms: { total: 900, jev: 700 }, inputTokens: 512 }])
@@ -53,7 +69,7 @@ describe("reading the relay's logs", () => {
 
   test("pages on from the last event's ID until a page comes back short", async () => {
     const full = Array.from({ length: pageSize }, (_, i) => event(`a${i}`))
-    mockCloudflare(page(full, pageSize + 3), page([event('b0'), event('b1'), event('b2')], pageSize + 3))
+    mockCloudflare(page(full), page([event('b0'), event('b1'), event('b2')]), total(pageSize + 3))
     const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
     expect(lines).toHaveLength(pageSize + 3)
     expect(matched).toBe(pageSize + 3)
@@ -62,13 +78,14 @@ describe("reading the relay's logs", () => {
     expect(second).toMatchObject({ offset: `a${pageSize - 1}`, offsetDirection: 'next' })
   })
 
-  test("keeps only the relay's lines, each event once", async () => {
+  test("keeps only the relay's lines, each event once, and takes the total from the count", async () => {
     mockCloudflare(
-      page([event('e1'), event('e2', 'Worker started'), event('e3', { message: 'no outcome' }), event('e1')], 4)
+      page([event('e1'), event('e2', 'Worker started'), event('e3', { message: 'no outcome' }), event('e1')]),
+      total(5)
     )
     const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
     expect(lines).toHaveLength(1)
-    expect(matched).toBe(4)
+    expect(matched).toBe(5)
   })
 
   test('throws, without asking again, when a full page brings no event it has not seen', async () => {
@@ -87,13 +104,13 @@ describe("reading the relay's logs", () => {
     ['fails', () => new Response('Internal Server Error', { status: 500 })],
     ['answers out of shape', () => Response.json({ success: true, result: { events: {} } })],
     ['answers with no JSON', () => new Response('<html>', { status: 200 })],
-    ['answers with no count', () => Response.json({ success: true, result: { events: { events: [] } } })],
+    ['answers a count out of shape', [page([]), () => Response.json({ success: true, result: { calculations: [] } })]],
     [
       'answers a full page it could not page on from',
       page([...Array.from({ length: pageSize - 1 }, (_, i) => event(`a${i}`)), { source: { outcome: 'config' } }])
     ]
-  ])('throws, without the token, when the API %s', async (_, reply) => {
-    mockCloudflare(reply)
+  ])('throws, without the token, when the API %s', async (_, replies) => {
+    mockCloudflare(...[replies].flat())
     const error = await readLogs(access, { from: 0, to: 1 }).catch((error: unknown) => error)
     expect(error).toBeInstanceOf(Error)
     expect(String(error)).toMatch(/telemetry query/)
