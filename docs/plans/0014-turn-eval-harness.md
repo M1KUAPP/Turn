@@ -80,7 +80,7 @@ Contents:
   heredoc, no body line that starts with a word and a colon or with an issue
   reference, and no attribution lines. Stage explicit paths only, never `-A`
   or `.`, and never `skills-lock.json`, `.agents/`, or `.claude/`.
-- **The worktree.** Another session is labeling the lines for #21 in the
+- **The worktree.** Another session was labeling the lines for #21 in the
   main checkout, so this change is built in a separate worktree,
   `../revenuecat-score-rankers`, on the branch `eval/score-rankers`.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't
@@ -135,8 +135,7 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
     the second labeling is a JSON Lines file of `id`, `labeler`, and
     `acceptable` per line. The readers fail loudly on a line with no
     labels, an id the bank doesn't hold, or a line the second labeling
-    lacks, so until #21's labels land, both commands stop with a message
-    on the 80 lines.
+    lacks.
 1.  **One shortlist per line, from a fresh bank.** Each line is scored
     alone, from an empty row, with its place and no taps, so the
     most-tapped step adds nothing and the place's step takes the place's
@@ -231,12 +230,12 @@ The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
     No source the notes read gives an interval for these, so none is
     printed.
 
-1.  **`data.ts` builds on #21's.** #21's pull request adds
-    `eval/src/data.ts`, with the labels' types, for the package's checks.
-    This branch is stacked on that pull request and extends the module with
-    what the commands need, and #21's check of EVAL-1's quota uses
-    `sharesNoWord`, so the rule has one home. It rebases onto `main` once
-    #21's pull request merges.
+1.  **`data.ts` builds on #21's.** #21's pull request, #78, added
+    `eval/src/data.ts` for the package's checks. This branch was built on
+    it and rebased onto `main` when it merged. It extends the module with
+    what the commands need, exports the second labeling's `Labels` type
+    again for the count script, and points #21's check of EVAL-1's quota at
+    `sharesNoWord`, so the rule has one home.
 1.  **Commands.** Each command's file exports `main`, which its test calls,
     and runs it when `import.meta.main` is true, as Node 26 and Bun both
     set it. The root's `package.json` gains `eval` and `eval:count`, which
