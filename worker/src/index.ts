@@ -3,6 +3,7 @@ import { isOn, readConfig } from './config'
 import type { Terms } from './device'
 import { readLine, readUser, type User } from './request'
 
+export { Address } from './address'
 export { Budget } from './budget'
 export { Device } from './device'
 
@@ -52,8 +53,8 @@ const codes = {
 
 /**
  * Records how a request ended, and answers with that error's code and nothing else (SEC-4). A request over a rate limit
- * is told to wait 60 seconds: a whole clock minute for the ID's count, and the longest period the address's binding can
- * have, since it doesn't say when its window ends (SEC-3).
+ * is told to wait 60 seconds: the ID's count and the address's both start again when their clock minute ends, which is
+ * never further off (SEC-3).
  */
 function refuse(log: LogFacts, outcome: keyof typeof codes) {
   log.outcome = outcome
@@ -62,9 +63,9 @@ function refuse(log: LogFacts, outcome: keyof typeof codes) {
   return Response.json({ error: code }, { status: statuses[code], headers })
 }
 
-/** The hex SHA-256 of the salt and the user's ID, which can't be traced back to the ID without the salt. */
-async function hashUser(salt: string, userId: string) {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + userId))
+/** The hex SHA-256 of the salt and a user's ID or an address, which can't be traced back to either without the salt. */
+async function saltedHash(salt: string, value: string) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + value))
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
@@ -107,14 +108,14 @@ async function answerLine(line: LineRequest, env: Env, log: LogFacts, user: User
 }
 
 /**
- * Whether a request is within its address's 120 a minute, through the rate limiting binding: a loose backstop for IDs
- * minted on one address, which keeps a flood from their objects once it holds (SEC-3). Cloudflare sets
- * `CF-Connecting-IP` on requests from clients, and its edge won't take one from a client; any request without one
- * shares one count. Each ID's 30 are counted by its object, in the call that serves the request.
+ * Whether a request is within its address's 120 a minute, which the address's own object counts exactly, so a flood
+ * from IDs minted on one address reaches their objects no faster (SEC-3). The object is named by the salted hash of
+ * `CF-Connecting-IP`, which Cloudflare sets on requests from clients, and its edge won't take one from a client; any
+ * request without one shares one count. Each ID's 30 are counted by its object, in the call that serves the request.
  */
 async function withinAddressLimit(request: Request, env: Env) {
-  const address = request.headers.get('CF-Connecting-IP') ?? ''
-  return (await env.ADDRESS_LIMITER.limit({ key: address })).success
+  const hash = await saltedHash(env.ID_SALT, request.headers.get('CF-Connecting-IP') ?? '')
+  return env.ADDRESS.getByName(`address-${hash}`, { locationHint: 'wnam' }).admit()
 }
 
 /**
@@ -128,7 +129,7 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   if (!isLine && !isConfig) return refuse(log, 'not_found')
   const user = readUser(request.headers)
   if (!user) return refuse(log, 'invalid')
-  const hash = await hashUser(env.ID_SALT, user.id)
+  const hash = await saltedHash(env.ID_SALT, user.id)
   log.user = hash.slice(0, 8)
   const line = isLine ? await readLine(request) : undefined
   if (line === null) return refuse(log, 'invalid')

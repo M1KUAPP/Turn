@@ -11,6 +11,6 @@ beforeEach(() => {
 
 afterEach(async () => {
   vi.restoreAllMocks()
-  // Each object keeps its counts, and the rate limits keep theirs, which would otherwise carry into the next test.
+  // Each object keeps its counts, which would otherwise carry into the next test.
   await reset()
 })
