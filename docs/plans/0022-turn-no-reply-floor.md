@@ -247,9 +247,12 @@ prompt doesn't name or runs git.
 ### Task 1: Research note
 
 A background agent wrote `docs/research/0044-turn-no-reply-floor.md` in
-about five minutes. A script of the session's checked every quote against
-its source, and the session dropped one claim: the APS article names no
-author. The ACM and SAGE pages answer scripted requests with 403, and
+about five minutes. A script of the session's matched the note's quotes
+against their sources, and the session dropped one claim: the APS article
+names no author. The script matched only the end of one DSTC7 quote, which
+joined two sentences, and the review's fact check found it and three other
+errors, each fixed in its own commit. The ACM and SAGE pages answer
+scripted requests with 403, and
 OSF's help page, which answered 404, is named in a code span rather than
 linked. It is committed as
 `docs(research): add notes on meeting the no-reply floor`.
