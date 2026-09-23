@@ -57,6 +57,12 @@ describe('POST /v1/lines', () => {
     expect(jev).not.toHaveBeenCalled()
   })
 
+  test.each(['', undefined])('answers 500 internal with no call to Jev when JEV_MODEL is %j (SEC-2)', async (model) => {
+    const jev = mockJev()
+    await expectError(await postLine(lineRequest(), { JEV_MODEL: model }), 500, 'internal')
+    expect(jev).not.toHaveBeenCalled()
+  })
+
   test.each([
     ['JSON that does not parse', '{"seq": 7,'],
     ['a list', '[]'],
