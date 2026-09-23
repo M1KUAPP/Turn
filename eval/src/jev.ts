@@ -29,15 +29,15 @@ export function jevLine(line: string, place: string, shortlist: readonly Phrase[
   return { line, place: name, categories, candidates: shortlist.map(({ id, text }) => ({ id, text })) }
 }
 
-/** What Jev reported for one call: the model that answered and the input tokens it counted. */
-export type JevCall = { model: string; inputTokens: number }
+/** What Jev reported for one call: the model that answered. */
+export type JevCall = { model: string }
 
 /**
  * Jev as a ranker, as the relay runs it: the relay's request builder with the pinned model, and the relay's reading of
  * the answer. The client takes the team's key from the environment and sets the address, the model, and the log level
  * in code, since TypeSafe's SDK reads any it isn't given from the environment. It keeps the SDK's 10-second attempts
  * and two retries, since a slow link from the evaluation's machine shouldn't count against Jev; a call that still
- * fails throws. Each call's model and input tokens are kept in `calls`, for the report.
+ * fails throws. Each call's model is kept in `calls`, so the report can say whether Jev kept to the pin.
  */
 export function jev(model: string, env: Readonly<Record<string, string | undefined>> = process.env) {
   const apiKey = env.TYPESAFE_API_KEY
@@ -54,7 +54,7 @@ export function jev(model: string, env: Readonly<Record<string, string | undefin
   const rank: Ranker = async (line, shortlist, _index, { place }) => {
     const request = jevLine(line, place, shortlist)
     const result = await client.systemOne(buildJevRequest(request, model))
-    calls.push({ model: result.model, inputTokens: result.usage.input_tokens })
+    calls.push({ model: result.model })
     return readJevAnswer(result.answers, request)
   }
   return Object.assign(rank, { calls })
