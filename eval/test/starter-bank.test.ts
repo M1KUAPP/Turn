@@ -1,3 +1,4 @@
+import { fixedButtons } from '@turn/shared/row'
 import { readFileSync } from 'node:fs'
 import { expect, test } from 'vitest'
 
@@ -68,6 +69,10 @@ test('marks Quick, the strip, and body-pain fixed, as the data model does (BANK-
   ])
   expect(bank.categories.filter(({ fixed }) => fixed).map(({ id }) => id)).toEqual(['quick', 'body-pain', 'strip'])
   expect(phrases.filter(({ fixed }) => fixed).map(({ text }) => text)).toEqual(['Yes', 'No', 'Not sure'])
+})
+
+test("gives the fixed buttons the ids the row's rules put in slots 1 to 3 (ROW-4)", () => {
+  expect(phrases.filter(({ fixed }) => fixed).map(({ id }) => id)).toEqual(fixedButtons)
 })
 
 test("holds the phrases other tickets' checks name", () => {
