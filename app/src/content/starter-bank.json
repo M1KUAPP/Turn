@@ -1,0 +1,368 @@
+{
+  "categories": [
+    {
+      "id": "quick",
+      "name": "Quick",
+      "fixed": true,
+      "phrases": [
+        { "id": "yes", "text": "Yes", "fixed": true, "places": [] },
+        { "id": "no", "text": "No", "fixed": true, "places": [] },
+        { "id": "not-sure", "text": "Not sure", "fixed": true, "places": [] },
+        { "id": "i-dont-know", "text": "I don't know", "fixed": false, "places": [] },
+        { "id": "i-have-something-to-say", "text": "I have something to say", "fixed": false, "places": [] }
+      ]
+    },
+    {
+      "id": "chat",
+      "name": "Chat",
+      "fixed": false,
+      "phrases": [
+        { "id": "hi-how-are-you", "text": "Hi, how are you?", "fixed": false, "places": [] },
+        { "id": "im-good-thanks", "text": "I'm good, thanks", "fixed": false, "places": [] },
+        { "id": "good-morning", "text": "Good morning", "fixed": false, "places": ["home"] },
+        { "id": "good-night", "text": "Good night", "fixed": false, "places": ["home"] },
+        { "id": "nice-to-meet-you", "text": "Nice to meet you", "fixed": false, "places": ["out"] },
+        { "id": "see-you-soon", "text": "See you soon", "fixed": false, "places": [] },
+        { "id": "thank-you", "text": "Thank you", "fixed": false, "places": [] },
+        { "id": "thanks-you-too", "text": "Thanks, you too", "fixed": false, "places": ["shop", "out"] },
+        { "id": "yes-please", "text": "Yes, please", "fixed": false, "places": [] },
+        { "id": "no-thanks", "text": "No, thanks", "fixed": false, "places": [] },
+        { "id": "im-sorry", "text": "I'm sorry", "fixed": false, "places": [] },
+        { "id": "whats-new-with-you", "text": "What's new with you?", "fixed": false, "places": [] },
+        { "id": "what-do-you-think", "text": "What do you think?", "fixed": false, "places": [] },
+        { "id": "tell-me-more", "text": "Tell me more", "fixed": false, "places": [] },
+        { "id": "i-agree", "text": "I agree", "fixed": false, "places": [] },
+        { "id": "i-dont-agree", "text": "I don't agree", "fixed": false, "places": [] },
+        { "id": "me-too", "text": "Me too", "fixed": false, "places": [] },
+        { "id": "thats-so-funny", "text": "That's so funny", "fixed": false, "places": [] },
+        {
+          "id": "i-understand-everything-you-say",
+          "text": "I understand everything you say",
+          "fixed": false,
+          "places": []
+        },
+        {
+          "id": "please-talk-to-me-not-about-me",
+          "text": "Please talk to me, not about me",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "im-not-finished", "text": "I'm not finished", "fixed": false, "places": [] },
+        { "id": "thats-not-what-i-meant", "text": "That's not what I meant", "fixed": false, "places": [] }
+      ]
+    },
+    {
+      "id": "care",
+      "name": "Care and help",
+      "fixed": false,
+      "phrases": [
+        { "id": "can-you-help-me", "text": "Can you help me?", "fixed": false, "places": [] },
+        {
+          "id": "i-need-to-use-the-bathroom",
+          "text": "I need to use the bathroom",
+          "fixed": false,
+          "places": ["home"]
+        },
+        { "id": "please-help-me-sit-up", "text": "Please help me sit up", "fixed": false, "places": ["home"] },
+        { "id": "can-you-fix-my-pillow", "text": "Can you fix my pillow?", "fixed": false, "places": ["home"] },
+        { "id": "please-wipe-my-mouth", "text": "Please wipe my mouth", "fixed": false, "places": ["home"] },
+        { "id": "can-you-scratch-my-nose", "text": "Can you scratch my nose?", "fixed": false, "places": [] },
+        { "id": "i-need-my-glasses", "text": "I need my glasses", "fixed": false, "places": [] },
+        { "id": "please-charge-my-phone", "text": "Please charge my phone", "fixed": false, "places": ["home"] },
+        { "id": "can-you-turn-the-tv-down", "text": "Can you turn the TV down?", "fixed": false, "places": ["home"] },
+        { "id": "please-call-the-nurse", "text": "Please call the nurse", "fixed": false, "places": ["clinic"] },
+        { "id": "yes-go-ahead", "text": "Yes, go ahead", "fixed": false, "places": [] },
+        { "id": "please-wait", "text": "Please wait", "fixed": false, "places": [] },
+        { "id": "not-now", "text": "Not now", "fixed": false, "places": [] },
+        { "id": "stop-please", "text": "Stop, please", "fixed": false, "places": [] },
+        { "id": "gently-please", "text": "Gently, please", "fixed": false, "places": [] },
+        { "id": "thats-better", "text": "That's better", "fixed": false, "places": [] },
+        { "id": "what-are-you-going-to-do", "text": "What are you going to do?", "fixed": false, "places": ["clinic"] },
+        {
+          "id": "please-explain-that-again",
+          "text": "Please explain that again",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        {
+          "id": "ask-me-before-you-touch-me",
+          "text": "Ask me before you touch me",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "no-i-dont-want-that", "text": "No, I don't want that", "fixed": false, "places": [] },
+        { "id": "its-my-choice", "text": "It's my choice", "fixed": false, "places": [] }
+      ]
+    },
+    {
+      "id": "body-pain",
+      "name": "Body and pain",
+      "fixed": true,
+      "phrases": [
+        { "id": "it-hurts", "text": "It hurts", "fixed": false, "places": [] },
+        { "id": "the-pain-is-mild", "text": "The pain is mild", "fixed": false, "places": [] },
+        { "id": "the-pain-is-bad", "text": "The pain is bad", "fixed": false, "places": [] },
+        { "id": "the-pain-is-very-bad", "text": "The pain is very bad", "fixed": false, "places": [] },
+        {
+          "id": "ill-rate-my-pain-from-0-to-10",
+          "text": "I'll rate my pain from 0 to 10",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "my-head-hurts", "text": "My head hurts", "fixed": false, "places": [] },
+        { "id": "my-neck-hurts", "text": "My neck hurts", "fixed": false, "places": [] },
+        { "id": "my-back-hurts", "text": "My back hurts", "fixed": false, "places": [] },
+        { "id": "my-chest-hurts", "text": "My chest hurts", "fixed": false, "places": [] },
+        { "id": "my-stomach-hurts", "text": "My stomach hurts", "fixed": false, "places": [] },
+        { "id": "its-a-sharp-pain", "text": "It's a sharp pain", "fixed": false, "places": [] },
+        { "id": "its-a-dull-ache", "text": "It's a dull ache", "fixed": false, "places": [] },
+        { "id": "i-have-a-cramp", "text": "I have a cramp", "fixed": false, "places": [] },
+        { "id": "it-just-started", "text": "It just started", "fixed": false, "places": ["clinic"] },
+        {
+          "id": "its-been-like-this-for-days",
+          "text": "It's been like this for days",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "its-getting-worse", "text": "It's getting worse", "fixed": false, "places": ["clinic"] },
+        { "id": "it-hurts-to-move", "text": "It hurts to move", "fixed": false, "places": [] },
+        { "id": "the-pain-keeps-me-awake", "text": "The pain keeps me awake", "fixed": false, "places": [] },
+        { "id": "i-feel-sick", "text": "I feel sick", "fixed": false, "places": [] },
+        { "id": "i-feel-dizzy", "text": "I feel dizzy", "fixed": false, "places": [] },
+        { "id": "im-having-trouble-breathing", "text": "I'm having trouble breathing", "fixed": false, "places": [] },
+        { "id": "please-call-911", "text": "Please call 911", "fixed": false, "places": [] }
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Food and drink",
+      "fixed": false,
+      "phrases": [
+        { "id": "water-please", "text": "Water, please", "fixed": false, "places": ["home"] },
+        { "id": "coffee-please", "text": "Coffee, please", "fixed": false, "places": ["home", "out"] },
+        { "id": "im-hungry", "text": "I'm hungry", "fixed": false, "places": [] },
+        { "id": "im-thirsty", "text": "I'm thirsty", "fixed": false, "places": [] },
+        { "id": "more-please", "text": "More, please", "fixed": false, "places": ["home"] },
+        { "id": "im-not-hungry-right-now", "text": "I'm not hungry right now", "fixed": false, "places": [] },
+        { "id": "that-was-delicious", "text": "That was delicious", "fixed": false, "places": [] },
+        { "id": "can-i-have-a-straw", "text": "Can I have a straw?", "fixed": false, "places": ["out"] },
+        {
+          "id": "can-you-cut-this-up-for-me",
+          "text": "Can you cut this up for me?",
+          "fixed": false,
+          "places": ["home", "out"]
+        },
+        { "id": "smaller-bites-please", "text": "Smaller bites, please", "fixed": false, "places": ["home"] },
+        {
+          "id": "i-have-trouble-swallowing",
+          "text": "I have trouble swallowing",
+          "fixed": false,
+          "places": ["clinic", "out"]
+        },
+        { "id": "it-went-down-the-wrong-way", "text": "It went down the wrong way", "fixed": false, "places": [] },
+        { "id": "i-can-only-eat-soft-food", "text": "I can only eat soft food", "fixed": false, "places": ["out"] },
+        { "id": "can-i-see-the-menu", "text": "Can I see the menu?", "fixed": false, "places": ["out"] },
+        { "id": "check-please", "text": "Check, please", "fixed": false, "places": ["out"] },
+        {
+          "id": "ill-have-what-theyre-having",
+          "text": "I'll have what they're having",
+          "fixed": false,
+          "places": ["out"]
+        }
+      ]
+    },
+    {
+      "id": "feelings",
+      "name": "Feelings",
+      "fixed": false,
+      "phrases": [
+        { "id": "im-tired", "text": "I'm tired", "fixed": false, "places": [] },
+        { "id": "im-happy", "text": "I'm happy", "fixed": false, "places": [] },
+        { "id": "im-feeling-better", "text": "I'm feeling better", "fixed": false, "places": [] },
+        { "id": "im-cold", "text": "I'm cold", "fixed": false, "places": [] },
+        { "id": "im-too-hot", "text": "I'm too hot", "fixed": false, "places": [] },
+        { "id": "im-bored", "text": "I'm bored", "fixed": false, "places": [] },
+        { "id": "im-worried", "text": "I'm worried", "fixed": false, "places": [] },
+        { "id": "im-sad", "text": "I'm sad", "fixed": false, "places": [] },
+        { "id": "im-scared", "text": "I'm scared", "fixed": false, "places": [] },
+        { "id": "im-frustrated", "text": "I'm frustrated", "fixed": false, "places": [] },
+        { "id": "im-lonely", "text": "I'm lonely", "fixed": false, "places": [] },
+        { "id": "im-having-a-rough-day", "text": "I'm having a rough day", "fixed": false, "places": [] },
+        { "id": "im-a-little-grumpy-today", "text": "I'm a little grumpy today", "fixed": false, "places": [] },
+        {
+          "id": "i-dont-feel-like-talking-right-now",
+          "text": "I don't feel like talking right now",
+          "fixed": false,
+          "places": []
+        },
+        { "id": "i-love-it", "text": "I love it", "fixed": false, "places": [] },
+        { "id": "i-dont-like-it", "text": "I don't like it", "fixed": false, "places": [] }
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Family and friends",
+      "fixed": false,
+      "phrases": [
+        { "id": "i-love-you", "text": "I love you", "fixed": false, "places": [] },
+        { "id": "i-miss-you", "text": "I miss you", "fixed": false, "places": [] },
+        { "id": "im-glad-youre-here", "text": "I'm glad you're here", "fixed": false, "places": [] },
+        { "id": "how-was-your-day", "text": "How was your day?", "fixed": false, "places": ["home"] },
+        { "id": "hows-the-family", "text": "How's the family?", "fixed": false, "places": [] },
+        { "id": "i-could-use-a-hug", "text": "I could use a hug", "fixed": false, "places": [] },
+        { "id": "stay-a-little-longer", "text": "Stay a little longer", "fixed": false, "places": [] },
+        { "id": "when-will-i-see-you-again", "text": "When will I see you again?", "fixed": false, "places": [] },
+        { "id": "give-them-my-love", "text": "Give them my love", "fixed": false, "places": [] },
+        {
+          "id": "thanks-for-everything-you-do",
+          "text": "Thanks for everything you do",
+          "fixed": false,
+          "places": ["home"]
+        },
+        { "id": "im-proud-of-you", "text": "I'm proud of you", "fixed": false, "places": [] },
+        { "id": "dont-worry-about-me", "text": "Don't worry about me", "fixed": false, "places": [] },
+        {
+          "id": "id-like-some-time-to-myself",
+          "text": "I'd like some time to myself",
+          "fixed": false,
+          "places": ["home"]
+        },
+        { "id": "please-call-my-family", "text": "Please call my family", "fixed": false, "places": ["clinic"] }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "fixed": false,
+      "phrases": [
+        {
+          "id": "im-here-for-my-appointment",
+          "text": "I'm here for my appointment",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        {
+          "id": "when-is-my-next-appointment",
+          "text": "When is my next appointment?",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "can-i-talk-to-the-doctor", "text": "Can I talk to the doctor?", "fixed": false, "places": ["clinic"] },
+        {
+          "id": "can-you-write-that-down-for-me",
+          "text": "Can you write that down for me?",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "is-this-going-to-hurt", "text": "Is this going to hurt?", "fixed": false, "places": ["clinic"] },
+        {
+          "id": "can-we-try-something-else",
+          "text": "Can we try something else?",
+          "fixed": false,
+          "places": ["clinic"]
+        },
+        { "id": "it-went-well", "text": "It went well", "fixed": false, "places": ["clinic"] },
+        { "id": "it-was-hard", "text": "It was hard", "fixed": false, "places": ["clinic"] },
+        { "id": "its-time-for-my-medicine", "text": "It's time for my medicine", "fixed": false, "places": ["home"] },
+        {
+          "id": "i-already-took-my-medicine",
+          "text": "I already took my medicine",
+          "fixed": false,
+          "places": ["home"]
+        },
+        {
+          "id": "what-are-the-side-effects",
+          "text": "What are the side effects?",
+          "fixed": false,
+          "places": ["clinic", "shop"]
+        },
+        { "id": "i-need-a-refill", "text": "I need a refill", "fixed": false, "places": ["clinic", "shop"] },
+        { "id": "i-slept-well", "text": "I slept well", "fixed": false, "places": ["home"] },
+        { "id": "i-didnt-sleep-well", "text": "I didn't sleep well", "fixed": false, "places": ["home"] },
+        { "id": "im-ready-for-bed", "text": "I'm ready for bed", "fixed": false, "places": ["home"] }
+      ]
+    },
+    {
+      "id": "out-and-about",
+      "name": "Out and about",
+      "fixed": false,
+      "phrases": [
+        { "id": "excuse-me", "text": "Excuse me", "fixed": false, "places": ["shop", "out"] },
+        { "id": "just-looking-thanks", "text": "Just looking, thanks", "fixed": false, "places": ["shop"] },
+        {
+          "id": "can-you-help-me-find-something",
+          "text": "Can you help me find something?",
+          "fixed": false,
+          "places": ["shop"]
+        },
+        { "id": "can-you-reach-that-for-me", "text": "Can you reach that for me?", "fixed": false, "places": ["shop"] },
+        { "id": "how-much-is-this", "text": "How much is this?", "fixed": false, "places": ["shop"] },
+        { "id": "ill-pay-by-card", "text": "I'll pay by card", "fixed": false, "places": ["shop", "out"] },
+        {
+          "id": "can-you-help-me-with-the-card-reader",
+          "text": "Can you help me with the card reader?",
+          "fixed": false,
+          "places": ["shop", "out"]
+        },
+        { "id": "thats-everything-thanks", "text": "That's everything, thanks", "fixed": false, "places": ["shop"] },
+        {
+          "id": "wheres-the-restroom",
+          "text": "Where's the restroom?",
+          "fixed": false,
+          "places": ["clinic", "shop", "out"]
+        },
+        { "id": "can-you-hold-the-door", "text": "Can you hold the door?", "fixed": false, "places": ["shop", "out"] },
+        { "id": "is-there-an-elevator", "text": "Is there an elevator?", "fixed": false, "places": ["shop", "out"] },
+        {
+          "id": "how-long-is-the-wait",
+          "text": "How long is the wait?",
+          "fixed": false,
+          "places": ["clinic", "shop", "out"]
+        },
+        {
+          "id": "can-we-go-somewhere-quieter",
+          "text": "Can we go somewhere quieter?",
+          "fixed": false,
+          "places": ["out"]
+        },
+        { "id": "can-we-take-a-break", "text": "Can we take a break?", "fixed": false, "places": ["out"] },
+        { "id": "im-fine-just-slow", "text": "I'm fine, just slow", "fixed": false, "places": ["shop", "out"] },
+        {
+          "id": "im-waiting-for-my-ride",
+          "text": "I'm waiting for my ride",
+          "fixed": false,
+          "places": ["clinic", "out"]
+        },
+        {
+          "id": "id-like-to-go-home-now",
+          "text": "I'd like to go home now",
+          "fixed": false,
+          "places": ["clinic", "out"]
+        }
+      ]
+    },
+    {
+      "id": "strip",
+      "name": "Conversation strip",
+      "fixed": true,
+      "phrases": [
+        { "id": "wait-im-typing", "text": "Wait, I'm typing", "fixed": false, "places": [] },
+        { "id": "sorry-say-that-again", "text": "Sorry, say that again", "fixed": false, "places": [] },
+        { "id": "and-you", "text": "And you?", "fixed": false, "places": [] },
+        {
+          "id": "i-use-this-app-to-talk",
+          "text": "I use this app to talk. Please give me time.",
+          "fixed": false,
+          "places": []
+        },
+        { "id": "somethings-wrong", "text": "Something's wrong", "fixed": false, "places": [] }
+      ]
+    }
+  ],
+  "places": [
+    { "id": "home", "name": "Home" },
+    { "id": "clinic", "name": "Clinic" },
+    { "id": "shop", "name": "Shop" },
+    { "id": "out", "name": "Out" }
+  ]
+}
