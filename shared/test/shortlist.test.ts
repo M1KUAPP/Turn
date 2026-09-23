@@ -174,11 +174,20 @@ describe('isYesNo', () => {
 })
 
 describe('rankOnPhone', () => {
-  const ranked = (line: string, shortlist: Phrase[], taps: [string, number][] = []) => {
+  /** Ranks over a shortlist that is the whole bank, with the context it was picked with. */
+  const ranked = (line: string, shortlist: Phrase[], taps: [string, number][] = []) =>
+    rankOnPhone(line, shortlist, new PhraseIndex(), { bank: shortlist, row: [], place: 'home', taps: new Map(taps) })
+
+  test('brings the index in line with the bank before it ranks', () => {
+    const bank = [phrase('water', 'Water, please'), phrase('tea', 'Tea, please')]
     const index = new PhraseIndex()
-    index.update(shortlist)
-    return rankOnPhone(line, shortlist, index, { place: 'home', taps: new Map(taps) })
-  }
+    index.update([phrase('water', 'Juice, please'), phrase('tea', 'Tea, please')])
+    const ranking = rankOnPhone('Water?', bank, index, { bank, row: [], place: 'home', taps: new Map() })
+    expect([...ranking.scores]).toEqual([
+      ['water', 1],
+      ['tea', 0]
+    ])
+  })
 
   test("scores 1 for each phrase that shares a word, the place's first, then by taps, then by keyword rank", () => {
     const shortlist = [

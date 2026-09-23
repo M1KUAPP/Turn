@@ -125,15 +125,17 @@ export function isYesNo(line: string): boolean {
 
 /**
  * The phone's own ranking of a line over its shortlist (STATE-1): each phrase that shares a word with the line, other
- * than common words, scores 1, the place's first, then by taps, then by keyword rank; the rest score 0. The caller adds
- * the line's sequence number and the cached policy for the row's rules, which never show it as a big button.
+ * than common words, scores 1, the place's first, then by taps, then by keyword rank; the rest score 0. It takes the
+ * context the shortlist was picked with and brings the index in line with its bank first. The caller adds the line's
+ * sequence number and the cached policy for the row's rules, which never show it as a big button.
  */
 export function rankOnPhone(
   line: string,
   shortlist: readonly Phrase[],
   index: PhraseIndex,
-  { place, taps }: Pick<Context, 'place' | 'taps'>
+  { bank, place, taps }: Context
 ): Ranking {
+  index.update(bank)
   const rank = new Map(index.match(line).map((id, i) => [id, i]))
   const atPlace = (phrase: Phrase) => (phrase.places.includes(place) ? 1 : 0)
   const tapsOf = (phrase: Phrase) => taps.get(phrase.id) ?? 0
