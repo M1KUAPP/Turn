@@ -424,6 +424,24 @@ agreement 0.87 over the pairs, and alpha 0.64.
 - [ ] **Step 5: Update the issues:** tick #77's criteria and close it with
       a comment, and note on #40 that the count now meets every quota.
 
+The plan was numbered 0020 until peers' open branches took 0019 to 0021,
+so before the first push the branch was rebuilt to carry 0022 from its
+first commit. One review round found:
+
+- **Standards:** no hard violation and 5 judgement calls;
+- **Spec:** 1 error and 1 change the plan didn't ask for;
+- **Facts:** 4 errors, the worst the record saying the writer saw none of
+  the 80 lines.
+
+Thirteen commits fixed them. The resolution on the pull request gives the
+reasons for what stayed: the hand-kept record in the report and its test,
+the floor's test repeating the count's rule, the appendix scripts as they
+ran, EVAL-1's "teammate", and `line-84` beside `line-79`. The fact check
+ran `bun run eval` once, on a scratch copy of the 80 lines, which scores
+`place` and `keyword`, and deleted the report unread; the command prints
+only the report's path, so no one has read a ranker's result on the 80
+lines.
+
 ## Appendix: the writer's brief
 
 The writer got this brief, word for word, as its whole prompt, with
