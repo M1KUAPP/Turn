@@ -9,7 +9,7 @@ export class Address extends DurableObject<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env)
     // The address's requests in the current clock minute, which a new minute starts again from 0 (SEC-3).
-    createMinuteCount(ctx.storage.sql)
+    createMinuteCount(ctx.storage)
   }
 
   /**
