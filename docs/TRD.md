@@ -1030,10 +1030,10 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 `app/app.config.ts` sets ([iPhone build notes][ios-modules]):
 
-- **`ios.bundleIdentifier`:** `com.m1ku.turn`, chosen on September 23.
-  Only Apple refusing to register it at the first device build can change
-  it; after that it never changes, since the Devpost entry names it
-  (SUBMIT-5).
+- **`ios.bundleIdentifier`:** `com.m1ku.turn`, chosen on September 23 and
+  registered by Apple for the Personal Team at the first device build the
+  same day ([video iPhone notes][video-iphone]). It never changes, since
+  the Devpost entry names it (SUBMIT-5).
 - **`ios.deploymentTarget`:** `"26"`, the built-in property that replaced
   the build-properties setting in SDK 56 (COMPAT-1).
 - **`expo-build-properties`:** the plugin with `ios.enableSceneSupport` set
@@ -1061,6 +1061,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 [design-launch]: /docs/DESIGN.md#launch
 [design-colors]: /docs/DESIGN.md#colors
 [design-words]: /docs/DESIGN.md#strings-the-prd-leaves-open
+[video-iphone]: /docs/research/0037-turn-video-iphone.md#hands-on-check
 
 ## Security and privacy
 
