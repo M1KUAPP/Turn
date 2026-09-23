@@ -40,6 +40,7 @@ Contents:
 1.  [Tasks](#tasks)
 1.  [Appendix: the run's script](#appendix-the-runs-script)
 1.  [Appendix: the relay's check](#appendix-the-relays-check)
+1.  [Appendix: the relay's code check](#appendix-the-relays-code-check)
 
 [run-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/40
 [spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
@@ -200,8 +201,11 @@ Contents:
     `deployments status --json` names the version serving all traffic, and
     `versions view <id> --json` gives its bindings, of which only the
     `plain_text` `JEV_MODEL` and `JEV_ON` and the `json` `POLICY` are
-    printed. If one differs from `main`, the relay is deployed from `main`
-    after the merge and checked again.
+    printed. The script the relay serves is compared byte for byte with a
+    local `wrangler deploy --dry-run` build of this branch's `worker/`,
+    which uploads nothing, so the served request's wording and starting
+    policy are checked too. If one differs from `main`, the relay is
+    deployed from `main` after the merge and checked again.
 1.  **The report as written.** `eval/results.md` and
     `eval/results-risk-coverage.svg` are committed byte for byte as the run
     wrote them, checked by SHA-256 after the commit.
@@ -367,6 +371,12 @@ ID, share, and creation time, and its `JEV_MODEL`, `JEV_ON`, and `POLICY`.
   any first request does, since each asked as a fresh random user; the
   review found it. The script now asks as one fixed check user, and a
   third check with it, at 15:22 UTC, gave the same answers.
+- **The served code,** at 15:23 UTC, with the third appendix's script: the
+  relay's `index.js`, 46,631 bytes, is byte for byte a local build of this
+  branch's `worker/`, whose `worker/` and `shared/src` are `8ea25eb`'s:
+  SHA-256 `36ea37745254ed62d6efb63e366a0a30e7d54919d1649449acc508b7a1267074`.
+  So the relay sends the run's wording and serves its starting policy,
+  though version `30a35862` was made before #86 merged.
 
 ### Task 11: Pull request and review
 
@@ -444,4 +454,49 @@ print -r -- "$view" | jq -c '{created: .metadata.created_on}'
 print -r -- "$view" | jq -c '[.resources.bindings[]
   | select(.name == "JEV_MODEL" or .name == "JEV_ON" or .name == "POLICY")
   | {name, type, value: (.text // .json)}]'
+```
+
+## Appendix: the relay's code check
+
+`bundle-check.zsh`, run for decision 11 as
+`zsh -ic 'zsh bundle-check.zsh <worktree> <scratch folder>'`. It builds the
+worker locally, downloads the script the relay serves, and prints only
+their sizes and hashes and whether they match:
+
+```zsh
+#!/bin/zsh
+# RELEASE-2's code check: the script the team's relay serves against a
+# local build of the worktree's worker. `--dry-run` builds without
+# uploading, and the download changes nothing. It prints only sizes,
+# hashes, and whether the two match.
+setopt err_exit pipe_fail no_unset
+cd "${1:?}/worker"
+out="${2:?}"
+mkdir -p "$out/local"
+export CLOUDFLARE_ACCOUNT_ID="${TURN_CF_ACCOUNT_ID:?}"
+bunx wrangler deploy --dry-run --outdir "$out/local" >/dev/null 2>&1
+token="$(bunx wrangler auth token --json 2>/dev/null | jq -er .token)"
+api=https://api.cloudflare.com/client/v4/accounts
+# The script as uploaded, multipart form data, for the version serving.
+printf 'header = "Authorization: Bearer %s"\n' "$token" |
+  curl -sS --fail -K - -o "$out/deployed.multipart" \
+    -D "$out/deployed.headers" \
+    "$api/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/turn-relay"
+python3 - "$out" <<'EOF'
+import email, hashlib, re, sys
+from email import policy
+out = sys.argv[1]
+headers = open(f'{out}/deployed.headers', encoding='latin-1').read()
+kind = re.search(r'(?im)^content-type:\s*(.+)$', headers).group(1).strip()
+raw = open(f'{out}/deployed.multipart', 'rb').read()
+form = email.message_from_bytes(
+    b'Content-Type: ' + kind.encode() + b'\r\n\r\n' + raw, policy=policy.HTTP)
+local = open(f'{out}/local/index.js', 'rb').read()
+print('local index.js', len(local), hashlib.sha256(local).hexdigest())
+for part in form.iter_parts():
+    body = part.get_payload(decode=True) or b''
+    name = part.get_param('name', header='content-disposition')
+    same = 'same as local' if body == local else 'differs'
+    print('deployed', name, len(body), hashlib.sha256(body).hexdigest(), same)
+EOF
 ```
