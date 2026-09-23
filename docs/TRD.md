@@ -1288,9 +1288,11 @@ monitoring, and "Jev is not trained on customer requests or responses"
   - `user`, the first 8 characters of the ID's hash;
   - `seq`, the sequence number;
   - `outcome`: `answered`, `paywall`, `limited`, `failed`, or `off` for a
-    line; `credits` for a line Jev refused with a `402`; `invalid`,
-    `not_found`, or `internal` for a request refused with that error; and
-    `config` for the configuration;
+    line; `credits` for a line Jev refused with a `402`; `duplicate` for a
+    line ID already used, and `unverified` for a line past the free lines
+    whose check got no answer and no cached yes; `invalid`, `not_found`, or
+    `internal` for a request refused with that error; and `config` for the
+    configuration;
   - `ms`, with the milliseconds in all as `total` and in Jev as `jev`;
   - `model` and `inputTokens`, as Jev reports them;
   - `jevStatus`, the status a failed call to Jev returned.
@@ -1299,14 +1301,26 @@ monitoring, and "Jev is not trained on customer requests or responses"
   1, 2026, traces count against the same quota, and a trace of the
   RevenueCat call would keep the app user ID in its URL
   ([services notes][svc-logs]).
-- **A script** in `worker/scripts/` reads a day of logs and prints the counts
-  and latencies METRIC-2 names. The Free plan keeps logs for 3 days, so the
-  team runs it daily during judging.
+- **A script,** `bun run logs` in `worker/`, reads a UTC day of logs
+  through Cloudflare's telemetry query API with an API token, since
+  Wrangler's login can't, and prints the counts and latencies METRIC-2
+  names, the latencies over answered lines by nearest rank
+  ([the relay's README][relay-readme]). The Free plan keeps logs for 3
+  days, so the team runs it daily during judging.
+- **The credit alert.** TypeSafe publishes no balance and no low-balance
+  alert ([credit alert notes][alert-notes]), so a GitHub Actions workflow
+  reads the last 24 hours of logs every 3 hours. It opens an issue assigned
+  to the team when a line ran out of credits, or when the spend it
+  estimates at $0.042 a million input tokens passes `JEV_ALERT_DOLLARS`
+  (AVAIL-2); [the README][relay-alert] names who receives it.
 - **The daily check** during judging sends one typed line to the relay from
   a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
 [relay-logs]: /docs/research/0038-turn-relay.md#workers-logs
+[relay-readme]: /worker/README.md#daily-counts-from-the-logs
+[alert-notes]: /docs/research/0041-turn-credit-alert.md#typesafes-balance-alerts-and-billing
+[relay-alert]: /worker/README.md#the-credit-alert
 
 ### Service life
 
