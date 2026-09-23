@@ -2,7 +2,7 @@ import { copyFileSync, mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from 'vitest'
-import { checkLabels, linesFrom, phrases, readRows, type Line } from '../src/data'
+import { checkLabels, labelingFrom, linesFrom, phrases, readRows, type Line } from '../src/data'
 
 const fixture = (name: string) => new URL(`fixture/${name}`, import.meta.url)
 
@@ -52,4 +52,9 @@ test('names a file outside the repository by its absolute path', () => {
   const outside = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'lines.jsonl')
   copyFileSync(fixture('lines.jsonl'), outside)
   expect(linesFrom(outside).file).toBe(outside)
+})
+
+test("reads a command's second labeling from the file it names, or else the 80 lines' own", () => {
+  expect(labelingFrom(fixture('second-labeling.jsonl').pathname)).toHaveLength(8)
+  expect(labelingFrom(undefined)).toHaveLength(80)
 })
