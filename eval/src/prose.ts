@@ -11,6 +11,9 @@ export const wrap = (text: string, indent = ''): string => {
   return [...filled, line].join('\n')
 }
 
+/** Text with its first letter capitalized, to start a sentence. */
+export const capital = (text: string): string => text[0].toUpperCase() + text.slice(1)
+
 /** Joins names as prose: "a", "a and b", or "a, b, and c". */
 export const listOf = (items: readonly string[]): string =>
   items.length < 3 ? items.join(' and ') : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`

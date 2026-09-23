@@ -18,7 +18,7 @@ import { plot, riskCoverage, type Curve, type Point } from './curves'
 import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, qwen, qwenInstruction, qwenModel, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
-import { cell, listOf, table, wrap } from './prose'
+import { capital, cell, listOf, table, wrap } from './prose'
 import { keyword, place } from './rankers'
 import { reranker, rerankerModel } from './reranker'
 import {
@@ -77,9 +77,6 @@ const provenance = (labeled: readonly Line[]) => {
     ].join('\n')
   ]
 }
-
-/** Text with its first letter capitalized, to start a sentence. */
-const capital = (text: string) => text[0].toUpperCase() + text.slice(1)
 
 /** A share in points, to one decimal. */
 const points = (share: number) => (share * 100).toFixed(1)
@@ -338,7 +335,6 @@ type Calibration = { reliability: Reliability; brier: Brier; image: string; beyo
  */
 const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach }: Calibration, naming: Naming) => {
   const { forecasts } = fit
-  const name = capital(naming.jev)
   const right = forecasts.filter((forecast) => forecast.right).length
   const rows = againstBand(fit).map(({ low, high, lines, right, value, scores, outside }) => [
     low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
@@ -349,8 +345,8 @@ const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach
   ])
   const three = (value: number) => value.toFixed(3)
   return [
-    `## ${name}'s calibration`,
-    `![Reliability of ${name}'s top phrase](${image})`,
+    `## ${capital(naming.jev)}'s calibration`,
+    `![Reliability of ${naming.jev}'s top phrase](${image})`,
     wrap(
       `Each line's top phrase in ${naming.jev}'s first timed ranking, ties broken as the row breaks them, against ` +
         `whether it's acceptable, on all ${forecasts.length} lines: ${right} of them are. Of the ` +
@@ -578,7 +574,7 @@ export async function main(args: readonly string[]): Promise<void> {
       image: `${basename(out, '.md')}-reliability.svg`,
       beyondReach: beyondReach(scores.lines)
     }
-    writeFileSync(join(dirname(out), calibration.image), reliabilityPlot(fit, capital(naming.jev)))
+    writeFileSync(join(dirname(out), calibration.image), reliabilityPlot(fit, naming.jev))
     const run = `${date}, at commit \`${hash}\`${clean ? '' : ' with uncommitted changes'}`
     const { calls } = jevRanker
     writeFileSync(out, render(labeled, scores, { run, file, pin, calls, curves, image, naming, apple, calibration }))
