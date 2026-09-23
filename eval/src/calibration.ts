@@ -20,6 +20,13 @@ export function topPhrase<Line extends ScoredLine>(scores: readonly LineScore<Li
   })
 }
 
+/**
+ * How many lines have no acceptable phrase among their shortlist: those with no reply, those that Yes, No, or Not sure
+ * alone answer, and those whose replies the shortlist missed. Their top phrase is wrong whatever its score.
+ */
+export const beyondReach = <Line extends ScoredLine>(scores: readonly LineScore<Line>[]): number =>
+  scores.filter(({ line, shortlist }) => !shortlist.some((id) => line.acceptable.includes(id))).length
+
 /** Distinct scores from `low` to `high` that the fit gives one value, with their lines, right lines, and share. */
 export type Block = { low: number; high: number; lines: number; right: number; value: number }
 

@@ -394,6 +394,9 @@ test("draws Jev's reliability diagram beside the report, its blocks as its text,
   // 95th percentiles at 6 and 8 of 8, so 3 of 8 lies outside the band at its one score.
   expect(cells(calibration, '0.9')).toEqual(['8', '3', '0.38', '1 of 1 score'])
   expect(calibration).toMatch(prose('on all 8 lines: 3 of them are.'))
+  // fixture-4 and fixture-5 have no reply, and the 40 miss the replies of 2 of the 6 lines with one besides Yes, No,
+  // and Not sure, as the shortlist's recall of 4 of 6 says.
+  expect(calibration).toMatch(prose('Of the 8, 4 have no acceptable phrase among their 40, so their top phrase is'))
   // (3 × 0.1² + 5 × 0.9²) / 8; always 3/8 scores 3/8 × 5/8, and so does the fit, which is 3/8 on every line.
   expect(calibration).toMatch(prose('is 0.510, with a 95% bootstrap interval of'))
   expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234, so the'))
