@@ -1,0 +1,7 @@
+# Copy to .dev.vars, which Git ignores, and fill in your own values.
+# TypeSafe's API key, for calling Jev.
+TYPESAFE_API_KEY=
+# RevenueCat's secret API key, for the v2 entitlement check.
+RC_SECRET_KEY=
+# Hashes app user IDs: any long random string, such as `openssl rand -hex 32`.
+ID_SALT=
