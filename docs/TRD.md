@@ -594,6 +594,9 @@ on answer(a)
   and `not-sure`, so the app speaks and counts them like any phrase.
 - **Ties** go by the shortlist's order, so the app gives the rules each
   answer's scores in that order; the relay's JSON object can't carry it.
+- **A tie** for the most likely topic counts as each tied topic, so a tie
+  with a topic that never gets a big button gets none, and a tie marks no
+  tab.
 - **Clearing** empties the slots, forgets the big button's phrase, and
   unmarks the tab, but keeps the newest line's number (ROW-10).
 - **Nothing speaks** in these rules; only a tap does (ROW-6).

@@ -44,6 +44,29 @@ describe('applyAnswer', () => {
     expect(big.big).toBe('water')
   })
 
+  test.each([
+    ['food', 'body-pain'],
+    ['body-pain', 'food']
+  ])('reads a tie between %s and %s by its safer topic (ROW-3, EVAL-5)', (first, second) => {
+    const tie = { topic: { [first]: 0.45, [second]: 0.45, consent: 0.1 } }
+    expect(replay(answer(1, { water: 0.9 }, tie)).big).toBeNull()
+    const policy = { ...startingPolicy, fixedOnlyTopics: ['body-pain'] }
+    expect(replay(answer(1, { water: 0.9 }, { ...tie, policy })).slots).toEqual([
+      'yes',
+      'no',
+      'not-sure',
+      null,
+      null,
+      null
+    ])
+  })
+
+  test('marks no tab for a tie', () => {
+    const policy = { ...startingPolicy, floor: 0.4 }
+    const row = replay(answer(1, { water: 0.7 }, { topic: { food: 0.45, drinks: 0.45, consent: 0.1 }, policy }))
+    expect(row.tab).toBeNull()
+  })
+
   test('says which line the row still answers after a hold (ROW-3)', () => {
     const shown = replay(answer(1, { water: 0.7 }))
     expect(shown.answers).toBe(1)
