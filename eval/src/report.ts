@@ -305,7 +305,7 @@ const slug = (heading: string) =>
 const render = (
   labeled: readonly Line[],
   { lines: scores, timings, fold, cutOffs }: Scores<Line>,
-  about: {
+  details: {
     run: string
     file: string
     pin: string
@@ -315,7 +315,7 @@ const render = (
     naming: Naming
   }
 ) => {
-  const { run, file, pin, calls, curves, image, naming } = about
+  const { run, file, pin, calls, curves, image, naming } = details
   const names = Object.keys(timings.rankers)
   const groups = [
     { name: 'All lines', about: 'in the file', keep: () => true, verdict: true },
@@ -346,15 +346,31 @@ const render = (
       ...[50, 95, 100].map((q) => percentile(samples, q).toFixed(3))
     ])
   )
+  // Each section starts with its heading, which the contents list.
   const sections = [
-    'Who wrote the data',
-    ...groups.map(({ name }) => name),
-    'Big buttons on yes-or-no, pain, and consent lines',
-    ...(names.includes('jev') ? ['The question kind'] : []),
-    'Risk and coverage',
-    ...(cutOffs.embeddings ? ["The embeddings ranker's cut-offs"] : []),
-    'Latency'
+    provenance(labeled),
+    ...groups.map((group) =>
+      groupSections(
+        group,
+        scores.filter(({ line }) => group.keep(line)),
+        names,
+        naming
+      )
+    ),
+    bigButtonSection(scores, naming),
+    ...(names.includes('jev') ? [kindSection(scores, naming)] : []),
+    curveSection(scores.length, curves, image),
+    ...(cutOffs.embeddings ? [cutOffSection(cutOffs.embeddings, fold)] : []),
+    [
+      '## Latency',
+      wrap(
+        'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
+          "ranker's ranking, its network trip included."
+      ),
+      latency
+    ]
   ]
+  const headings = sections.map(([heading]) => heading.replace(/^## /, ''))
   return (
     [
       "# Turn's evaluation",
@@ -394,26 +410,8 @@ const render = (
         .map((item) => wrap(item, '  '))
         .join('\n'),
       'Contents:',
-      sections.map((heading) => `1.  [${heading}](#${slug(heading)})`).join('\n'),
-      ...provenance(labeled),
-      ...groups.flatMap((group) =>
-        groupSections(
-          group,
-          scores.filter(({ line }) => group.keep(line)),
-          names,
-          naming
-        )
-      ),
-      ...bigButtonSection(scores, naming),
-      ...(names.includes('jev') ? kindSection(scores, naming) : []),
-      ...curveSection(scores.length, curves, image),
-      ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings, fold) : []),
-      '## Latency',
-      wrap(
-        'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
-          "ranker's ranking, its network trip included."
-      ),
-      latency
+      headings.map((heading) => `1.  [${heading}](#${slug(heading)})`).join('\n'),
+      ...sections.flat()
     ].join('\n\n') + '\n'
   )
 }
