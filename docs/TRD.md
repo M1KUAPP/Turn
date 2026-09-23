@@ -146,7 +146,7 @@ The path of one partner line:
 | Jev                             | `jev-1.13.0`           | the only model on September 22, 2026                                     |
 | Wrangler                        | 4.136.2                | needs Node.js 22 or later; `compatibility_date` `2026-09-22`             |
 | `@cloudflare/vitest-plugin`     | 1.2.2, with Vitest 4.1 | the relay's tests; pins Wrangler 4.136.2 ([workspace notes][ws-notes])   |
-| TypeScript                      | 7.0.2                  | `tsc` in each workspace ([workspace notes][ws-notes])                    |
+| TypeScript                      | 6.0.3                  | `tsc` everywhere; Expo SDK 57's pin ([workspace notes][ws-notes])        |
 | `@revenuecat/cli`               | 0.1.3                  | headless Test Store purchases for the relay's tests                      |
 
 The iPhone build notes have the dates and licenses of the Expo libraries
