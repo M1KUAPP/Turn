@@ -143,13 +143,15 @@ with `/tdd`, runs the full suite at the end, and closes with
     in the day's budget. The Free plan's 100,000 rows a day cover about 890
     such devices, not 1,140, and its 100,000 object requests about 1,560,
     at 64 each. Rows still run out first, far above judging's volume.
-1.  **Its storage stays bounded.** Each new address's object keeps its
-    database, about 12 KB by Cloudflare's figure, until its data is
-    removed ([address limit notes][note-quotas]). At 3 rows for a new
+1.  **Its storage grows with new addresses.** Each new address's object
+    keeps its database, about 12 KB by Cloudflare's figure, until its data
+    is removed ([address limit notes][note-quotas]). At 3 rows for a new
     object, the Free plan's rows allow about 33,000 new addresses a day,
-    about 0.4 GB against the 5 GB it stores in all; minted IDs' objects
-    already grow the same way. An address's object holds nothing a later
-    minute reads.
+    about 0.4 GB. Its 5 GB is a total that no day resets, though, so a
+    sender moving through new addresses every day would fill it in about
+    12 days, as minted IDs' objects already could. An address's object
+    holds nothing a later minute reads, so dropping the class with a
+    `"deleted"` tombstone loses only the current minute's counts.
 1.  **An object per address.** `Address`, a SQLite Durable Object in
     `worker/src/address.ts`, is reached with
     `getByName('address-<hash>', { locationHint: 'wnam' })`, where the hash
