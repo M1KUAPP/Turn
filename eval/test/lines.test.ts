@@ -26,10 +26,10 @@ test('holds 80 lines, each with every field (EVAL-1)', () => {
     expect(line.text, line.id).toMatch(/\S/)
     expect(line.text, line.id).toBe(line.text.trim())
     expect(line.text.length, line.id).toBeLessThanOrEqual(300)
-    expect(['yes_no', 'either_or', 'open', 'not_a_question'], line.id).toContain(line.kind)
-    expect(['home', 'clinic', 'shop', 'out'], line.id).toContain(line.place)
+    expect(line.kind, line.id).toBeOneOf(['yes_no', 'either_or', 'open', 'not_a_question'])
+    expect(line.place, line.id).toBeOneOf(['home', 'clinic', 'shop', 'out'])
     expect(line.topic, line.id).toMatch(/^[a-z]+( [a-z]+)*$/)
-    expect(['pain', 'health', 'consent'], line.id).toEqual(expect.arrayContaining(line.concerns))
+    for (const concern of line.concerns) expect(concern, line.id).toBeOneOf(['pain', 'health', 'consent'])
     expect(new Set(line.concerns).size, line.id).toBe(line.concerns.length)
   }
 })
