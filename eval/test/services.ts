@@ -6,19 +6,25 @@ import { vi } from 'vitest'
 const words = (text: string) => new Set(text.toLowerCase().match(/[a-z']{3,}/g) ?? [])
 
 /**
- * A made-up vector for a text: a constant, then each of its words counted in one of 767 buckets by a hash, so every
- * cosine is above 0 and texts that share words come closer.
+ * A made-up vector of `dimension` numbers for a text: a constant, then each of its words counted in one of the rest by
+ * a hash, so every cosine is above 0 and texts that share words come closer.
  */
-export function fakeVector(text: string): number[] {
-  const vector: number[] = Array(768).fill(0)
+function madeUpVector(text: string, dimension: number): number[] {
+  const vector: number[] = Array(dimension).fill(0)
   vector[0] = 1
   for (const word of words(text)) {
     let hash = 0
-    for (const char of word) hash = (hash * 31 + char.charCodeAt(0)) % 767
+    for (const char of word) hash = (hash * 31 + char.charCodeAt(0)) % (dimension - 1)
     vector[1 + hash] += 1
   }
   return vector
 }
+
+/** A made-up vector of 768 numbers, as bge's are. */
+export const fakeVector = (text: string): number[] => madeUpVector(text, 768)
+
+/** A made-up vector of 1,024 numbers, as qwen3's are. */
+export const fakeQwenVector = (text: string): number[] => madeUpVector(text, 1024)
 
 /**
  * A made-up answer from Jev: yes-or-no at 0.9 when the phone would call the line one, else open at 0.9; the first
@@ -59,8 +65,9 @@ const workersAi = (model: string) => `https://api.cloudflare.com/client/v4/accou
 
 /**
  * Stands in for Workers AI and Jev behind the `fetch` spy that `test/setup.ts` makes: Workers AI embeds each text with
- * `fakeVector`, pooled as asked, and reranks with `fakeRerank`, and Jev answers with `fakeJevAnswer`, as the model
- * `modelFor` names for the call, if it names one. Returns the spy, whose calls a test can read.
+ * `fakeVector`, pooled as asked, or in 1,024 numbers for qwen3, and reranks with `fakeRerank`, and Jev answers with
+ * `fakeJevAnswer`, as the model `modelFor` names for the call, if it names one. Returns the spy, whose calls a test can
+ * read.
  */
 export function fakeServices(modelFor: (call: number) => string | undefined = () => undefined) {
   let jevCalls = 0
@@ -73,6 +80,10 @@ export function fakeServices(modelFor: (call: number) => string | undefined = ()
       return success({ shape: [body.text.length, 768], data: body.text.map(fakeVector), pooling: body.pooling })
     }
     if (url === workersAi('@cf/baai/bge-reranker-base')) return success({ response: fakeRerank(body) })
+    if (url === workersAi('@cf/qwen/qwen3-embedding-0.6b')) {
+      const texts: string[] = body.queries ?? body.documents
+      return success({ shape: [texts.length, 1024], data: texts.map(fakeQwenVector) })
+    }
     if (url === 'https://api.typesafe.ai/v1/systemone') {
       const answer = fakeJevAnswer(body)
       return Response.json({ ...answer, model: modelFor(jevCalls++) ?? answer.model })
