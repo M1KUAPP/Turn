@@ -1191,7 +1191,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
   consent, and the ids of every acceptable reply in the starter bank, or
   none (EVAL-1). For yes-or-no lines, acceptable replies may include the
   fixed buttons.
-- **By hand.** The public conversation sets are non-commercial,
+- **New lines.** The public conversation sets are non-commercial,
   share-alike, not redistributable, or unlicensed, so the team writes the
   lines, before looking at the bank, in the mix real questions have: about
   seven in ten questions yes-or-no, many of them declarative, such as
@@ -1202,8 +1202,17 @@ line to the phone's own ranking, and speaking never depends on the relay.
   ranks the phrases a user starts with. A fresh bank has no taps, so the
   shortlist's most-tapped slots fall back to the place's phrases and the
   bank's order, and the evaluation says so.
+- **Who wrote them.** At the team's direction, Claude subagents wrote both
+  files on September 23, 2026. Two wrote 40 lines each from a brief that
+  showed no phrase of the bank ([the brief][lines-brief]), so each line's
+  `author` is `claude-a` or `claude-b`; a third wrote the bank without
+  seeing the lines, and a fourth read every phrase. Text a language model
+  wrote may suit a ranker built on one, so the report and the README say
+  who wrote the lines and the bank. On that date, no teammate or clinic had
+  yet read the bank (CONTENT-5).
 
 [eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
+[lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
 
 ### The rankers
 

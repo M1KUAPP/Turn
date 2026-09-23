@@ -336,11 +336,12 @@ delete `eval/test/smoke.test.ts`.
 ### Task 8: The TRD
 
 - [ ] **Step 1: Say how the content was written.** In
-      [the evaluation data][trd-eval-data], say that two Claude subagents
-      that never saw the bank wrote the 80 lines on September 23, 2026, at
-      the team's direction, and that the report says so. In
-      [the repository layout](/docs/TRD.md#repository-layout), say that a
-      third wrote the starter bank and a fourth read it.
+      [the evaluation data][trd-eval-data], add a bullet: at the team's
+      direction, two Claude subagents that never saw the bank wrote the 80
+      lines on September 23, 2026, a third wrote the bank without seeing the
+      lines, and a fourth read every phrase; the report and the README say
+      so; and no teammate or clinic had yet read the bank. The bullet on
+      writing the lines is labeled "By hand", so it becomes "New lines".
 - [ ] **Step 2: Run the docs gate, then commit**
 
   ```shell
