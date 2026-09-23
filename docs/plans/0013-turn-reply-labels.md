@@ -140,14 +140,14 @@ Contents:
     doesn't match "leg": 4 of the first labeling's 54 lines share only a
     stem, and the other 50 still clear 10. The TRD records the rule, so
     #29's subset of lines with no shared word uses it.
-1.  **The checks.** `eval/test/labels.test.ts`: every line's labeler is
-    named and isn't its author; in each labeling, every id is in the bank,
-    none repeats, none is a strip phrase, and the fixed buttons appear only
-    on `yes_no` lines; at least 16 lines have none; at least 10 have no
+1.  **The checks.** `eval/test/labels.test.ts`: every line's labeler is named
+    and isn't its author; in each labeling, the ids are the bank's, in its order
+    and without repeats, none is a strip phrase, and the fixed buttons appear
+    only on `yes_no` lines; at least 16 lines have none; at least 10 have no
     shared content word; and the second labeling covers every line, in the
-    lines' order, by a labeler other than the first. `eval/src/data.ts`
-    reads the lines, the second labeling, and the bank for all three of the
-    package's checks, rather than a third copy of the reading and the types.
+    lines' order, by a labeler other than the first. `eval/src/data.ts` reads
+    the lines, the second labeling, and the bank for all three of the package's
+    checks, rather than a third copy of the reading and the types.
 1.  **The agreement is #29's to print.** Its count script prints the quotas
     and the agreement (EVAL-1). This pull request gives the agreement as
     evidence, as the [labeling notes][notes-agreement] suggest: for the
