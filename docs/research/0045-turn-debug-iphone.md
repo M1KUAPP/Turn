@@ -54,9 +54,9 @@ line numbers.
   - A malformed `ios/` from an earlier prebuild: "would you like to clear
     the project files and reinitialize them?" Without a TTY it clears them
     and warns instead (`prebuild/clearNativeFolder.js:193-204`).
-  - A locked phone: "Cannot launch ... Unlock <device name> to
-    continue..." Without a TTY it throws instead
-    (`run/ios/appleDevice/installOnDeviceAsync.js:138-147`).
+  - A locked phone: Expo asks the person to unlock it, and without a TTY
+    it throws instead (`run/ios/appleDevice/installOnDeviceAsync.js:138-147`,
+    quoted under [install and launch](#install-and-launch-on-ios-17-and-later)).
   - Prebuild's "Install the updated dependencies?", when a template
     changes `package.json` (`prebuild/prebuildAsync.js:156-159`).
   - None for CocoaPods: the install is non-interactive (see
@@ -313,10 +313,12 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   "Unable to launch app, number of tries exceeded" (`AppleDevice.js:294`,
   `AppleDevice.js:297`). An install without a launch warns "App ...
   installed but couldn't be launched. Open on device manually." (236).
-- **A locked phone.** devicectl's `Locked` error becomes "Device is locked,
-  unlock and try again." (`devicectl.js:161-162`), and the install path
-  says "Cannot launch <app> on <device name> because the device is locked."
-  (`installOnDeviceAsync.js:147`).
+- **A locked phone.** The install path asks "Cannot launch <app> because
+  the device is locked. Unlock <device name> to continue..." with a TTY,
+  and without one throws "Cannot launch <app> on <device name> because the
+  device is locked." (`installOnDeviceAsync.js:138-147`). devicectl's
+  `Locked` error becomes "Device is locked, unlock and try again."
+  (`devicectl.js:161-162`).
 - **An untrusted developer.** The CLI has no message of its own for it; the
   launch error is iOS's, as quoted in the [video iPhone
   notes][hands-on-0037].
