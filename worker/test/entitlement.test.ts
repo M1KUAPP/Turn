@@ -158,6 +158,19 @@ describe('lines past the free lines (PAY-7)', () => {
     expect(callsTo('api.revenuecat.com')).toHaveLength(4)
   })
 
+  test("keep the newest check's answer, not the last to finish", async () => {
+    mockRevenueCat(async () => {
+      await scheduler.wait(300)
+      return activeEntitlements()()
+    }, activeEntitlements(listen))
+    mockJev(...jevAnswers(2))
+    const older = postLine(lineRequest(), paid)
+    await scheduler.wait(50)
+    expect((await postLine(lineRequest({ refresh: true }), paid)).status).toBe(200)
+    await expectError(await older, 402, 'paywall')
+    expect((await postLine(lineRequest(), paid)).status).toBe(200)
+  })
+
   test('answer 503 jev_unavailable, never 402, when RevenueCat fails and no yes is cached', async () => {
     mockRevenueCat(rcError(503, 'server_error'), activeEntitlements(), rcError(500, 'server_error'))
     await expectError(await postLine(lineRequest(), paid), 503, 'jev_unavailable')

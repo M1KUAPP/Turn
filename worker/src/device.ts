@@ -98,8 +98,11 @@ export class Device extends DurableObject<Env> {
     if (freshNo && !refreshing) return 'no'
     const answer = await checkEntitlement(this.env, user)
     if (answer === 'unknown') return cached?.active ? 'yes' : 'unknown'
+    // The newest check's answer stays, not the last to finish: an older no mustn't cover a newer yes.
     this.ctx.storage.sql.exec(
-      'INSERT OR REPLACE INTO entitlement (id, active, checked_at, refreshed_at) VALUES (1, ?, ?, ?)',
+      'INSERT INTO entitlement (id, active, checked_at, refreshed_at) VALUES (1, ?, ?, ?) ' +
+        'ON CONFLICT (id) DO UPDATE SET active = excluded.active, checked_at = excluded.checked_at, ' +
+        'refreshed_at = excluded.refreshed_at WHERE excluded.checked_at >= entitlement.checked_at',
       answer === 'yes' ? 1 : 0,
       now,
       refreshing ? now : (cached?.refreshed_at ?? null)
