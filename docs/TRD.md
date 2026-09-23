@@ -1281,7 +1281,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
 
 | Ranker       | What it does                                                                                                                                        |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `place`      | the place's phrases in the bank's order, with no use of the line; the phone's own ranking of a line is `keyword`                                    |
+| `place`      | the shortlist's phrases at the line's place, then the rest, each in the bank's order, with no use of the line; it never holds                       |
 | `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                           |
 | `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off                  |
 | `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                                               |
@@ -1310,10 +1310,13 @@ see ([evaluation notes][eval-scoring]):
 | Up to six buttons  | Right if any is acceptable, else a wrong row | Wrong row        |
 | No change          | Missed reply                                 | Right hold       |
 
-- **Ranking,** on lines with an acceptable reply only: hit at 1, hit at 6,
-  and reciprocal rank, end to end and with every ranker over the same 40
-  phrases, beside chance rates: with one acceptable phrase among 40, 2.5%
-  at 1 and 15% at 6.
+- **Ranking,** on lines with an acceptable phrase besides the fixed buttons,
+  which no ranker orders: hit at 1, hit at 6, and reciprocal rank, end to
+  end and with every ranker over the same 40 phrases, beside chance rates:
+  with one acceptable phrase among 40, 2.5% at 1 and 15% at 6. Chance is
+  each line's own, for a random order of its shortlist, averaged over the
+  lines ([harness notes][harness-chance]). It's an expectation and the mean
+  reciprocal rank a mean of ranks, so neither carries an interval.
 - **The row:** the six outcomes above, coverage (the share of lines where
   the row changes), risk (the share of those rows that are wrong), and an
   always-hold baseline, which is right on every line with no reply.
@@ -1321,6 +1324,10 @@ see ([evaluation notes][eval-scoring]):
   reply made the 40, since Jev can't pick a phrase the shortlist dropped.
 - **Kind:** accuracy and a confusion matrix for the question-kind Choice,
   since a yes-or-no call brings up the fixed buttons.
+- **Subsets,** each scored apart (EVAL-3): yes-or-no lines, by their
+  writer's kind; pain and consent lines, whose concerns name pain or
+  consent; and lines that share no word with a reply, as the evaluation data
+  defines them.
 - **Intervals.** Every rate carries a 95% Wilson interval: a top-6 rate of 56 of
   80 spans 59% to 79%, and a big button right on all 40 lines where it shows can
   still be wrong up to 7.2% of the time, by a one-sided 95% bound. Differences
@@ -1334,12 +1341,15 @@ see ([evaluation notes][eval-scoring]):
   when no word is shared, as the phone does; and every ranker's
   risk-coverage curve is plotted.
 - **Latency:** each ranker's own work and network trip at the median, the
-  95th percentile, and the maximum, over at least three passes with warm-up
-  calls dropped and one request in flight; end-to-end time comes from the
-  phone (PERF-1).
+  95th percentile, and the maximum, by Hyndman and Fan's type 7, NumPy's
+  default ([harness notes][harness-percentiles]), over at least three passes
+  with warm-up calls dropped and one request in flight; end-to-end time
+  comes from the phone (PERF-1).
 
 [eval-scoring]: /docs/research/0025-turn-evaluation.md#a-scoring-scheme-for-turns-80-lines
 [eval-power]: /docs/research/0025-turn-evaluation.md#what-80-lines-can-and-cant-detect
+[harness-chance]: /docs/research/0035-turn-eval-harness.md#chance-rates
+[harness-percentiles]: /docs/research/0035-turn-eval-harness.md#percentiles-for-latency
 
 ### The replay script
 
@@ -1349,10 +1359,29 @@ microphone, and counts slot changes per line (ROW-5).
 
 ### The report
 
-`bun run eval` writes `eval/results.md`: one row per ranker with each
-metric, its interval, and the latency, plus the date, the model pin, and the
-commit; the README copies the table (EVAL-6). The script also lists every
-big button on a yes-or-no, pain, or consent line (EVAL-5).
+`bun run eval` scores the rankers on the lines in `eval/lines.jsonl`, or the
+file `--lines` names, and writes `eval/results.md`, or the file `--out`
+names: the date, the model pin, and the commit; who wrote and labeled the
+lines and who wrote the bank; for all lines and each subset, the ranking
+and the row, one row per ranker with each metric and its interval; and each
+step's latency. The README copies the table (EVAL-6). The script also lists
+every big button on a yes-or-no, pain, or consent line (EVAL-5).
+
+`bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when
+one falls short, then the labelers' agreement
+([harness notes][harness-agreement]):
+
+- **Some replies or none,** per line: a two-by-two table with percent
+  agreement, Cohen's kappa, and positive and negative agreement, since kappa
+  alone misleads when the margins are unbalanced.
+- **Each line and candidate phrase,** with every phrase the row can rank and,
+  on yes-or-no lines, the fixed buttons: positive agreement first, since
+  negative agreement and kappa move with the candidates' count.
+- **Krippendorff's alpha** with the MASI distance over each line's replies,
+  in exact thirds, where none against none is identical and none against
+  any reply shares nothing.
+
+[harness-agreement]: /docs/research/0035-turn-eval-harness.md#agreement-between-two-labelers
 
 ## Testing
 
