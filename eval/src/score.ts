@@ -2,7 +2,7 @@ import { applyAnswer, emptyRow, fixedButtons, startingPolicy, type Ranking, type
 import { PhraseIndex, pickShortlist, type Phrase } from '@turn/shared/shortlist'
 import { crossValidate, folds } from './cut-off'
 import type { CutOff, Ranker } from './rankers'
-import { chanceHit, chanceReciprocalRank, mean } from './stats'
+import { chanceHit, chanceReciprocalRank, mean, pairedBootstrap } from './stats'
 
 /** What scoring reads from a labeled partner line: the ids of every acceptable reply, or none. */
 export type ScoredLine = { text: string; place: string; acceptable: readonly string[] }
@@ -167,14 +167,18 @@ const tally = (seen: readonly Outcome[]) => {
   return counts
 }
 
+/** The lines a ranking counts, those with an acceptable phrase besides the fixed buttons, which no ranker orders. */
+const withPhrases = <Line extends ScoredLine>(scores: readonly LineScore<Line>[]) =>
+  scores
+    .map((score) => ({ ...score, phrases: new Set(score.line.acceptable.filter((id) => !fixedButtons.includes(id))) }))
+    .filter(({ phrases }) => phrases.size > 0)
+
 /**
  * Sums up a group of scored lines. The ranking counts only lines with an acceptable phrase besides the fixed buttons,
  * which no ranker orders; its means over no such lines are NaN. The row counts every line.
  */
 export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Line>[]): Summary {
-  const ranked = scores
-    .map((score) => ({ ...score, phrases: new Set(score.line.acceptable.filter((id) => !fixedButtons.includes(id))) }))
-    .filter(({ phrases }) => phrases.size > 0)
+  const ranked = withPhrases(scores)
   const inShortlist = ranked.map(({ shortlist, phrases }) => shortlist.filter((id) => phrases.has(id)).length)
   const names = Object.keys(scores[0]?.rankers ?? {})
   return {
@@ -206,6 +210,27 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
       })
     )
   }
+}
+
+/** How a ranker's top 6 compares with another's: `trails` and `leads` only when the whole interval lies on one side. */
+export type Verdict = 'trails' | 'leads' | 'no clear difference'
+
+/**
+ * The paired bootstrap's interval for ranker a's top-6 accuracy minus ranker b's, over the same lines with an
+ * acceptable phrase besides the fixed buttons, and its verdict: a trails b only when the whole interval lies below
+ * zero (EVAL-4), and leads only when it lies above. Null when no line has such a phrase.
+ */
+export function topSixGap<Line extends ScoredLine>(
+  scores: readonly LineScore<Line>[],
+  a: string,
+  b: string
+): { difference: number; low: number; high: number; verdict: Verdict } | null {
+  const ranked = withPhrases(scores)
+  const hits = (name: string) =>
+    ranked.map(({ rankers, phrases }) => (rankers[name].order.slice(0, 6).some((id) => phrases.has(id)) ? 1 : 0))
+  const gap = pairedBootstrap(hits(a), hits(b))
+  if (gap === null) return null
+  return { ...gap, verdict: gap.high < 0 ? 'trails' : gap.low > 0 ? 'leads' : 'no clear difference' }
 }
 
 /**
