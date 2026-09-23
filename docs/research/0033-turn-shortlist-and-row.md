@@ -68,9 +68,9 @@ Line numbers are in `src/MiniSearch.ts` at the `v7.2.0` tag.
   and removal, otherwise the index will be corrupted." `discard(id)` needs
   only the ID and leaves cleanup for later; `replace` is `discard` then `add`
   (line 1024); `has(id)` reads `_idToShortId` (line 1181). `vacuum()` is async,
-  in batches of 1,000 with 10 ms waits; `autoVacuum` defaults to true, with
-  `minDirtCount: 20` and `minDirtFactor: 0.1` (lines 2207-2210)
-  ([source][ms-src]).
+  in batches of 1,000 with 10 ms waits; `autoVacuum` defaults to true
+  (line 2188), with `minDirtCount: 20` and `minDirtFactor: 0.1`
+  (lines 2207-2210) ([source][ms-src]).
 - Synthesis: keep each phrase's indexed text and, on an edit or delete, call
   `remove(old)` then `add(new)`. That keeps counts exact and every score
   above 0, so "shares a word" can stay "appears in the results". Avoid
