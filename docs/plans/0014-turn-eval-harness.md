@@ -108,10 +108,11 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
   #29 and this plan as the spec, plus an agent that checks the facts.
 
 The seams are each file's exports: `wilson`, `percentile`, `chanceHit`, and
-`chanceReciprocalRank` in `stats.ts`; `place` and `keyword` in
-`rankers.ts`; `scoreLines`, `summarize`, and `sharesNoWord` in `score.ts`;
-`compareLabelings` in `agreement.ts`; the readers in `data.ts`; and `main`
-in `report.ts` and `count.ts`, the two commands.
+`chanceReciprocalRank` in `stats.ts`, beside the `mean` two modules share;
+`place` and `keyword` in `rankers.ts`; `scoreLines`, `summarize`, and
+`sharesNoWord` in `score.ts`; `compareLabelings` and `masiDistance` in
+`agreement.ts`; `readRows`, `phrasesOf`, `checkLabels`, and `linesFrom` in
+`data.ts`; and `main` in `report.ts` and `count.ts`, the two commands.
 
 [note]: /docs/research/0035-turn-eval-harness.md
 
@@ -230,11 +231,12 @@ in `report.ts` and `count.ts`, the two commands.
     No source the notes read gives an interval for these, so none is
     printed.
 
-1.  **`data.ts` meets #21's.** #21's labeling adds `eval/src/data.ts` for
-    the package's checks at the same time, with the same types. Whichever
-    change lands second merges the two into one module that reads the
-    lines, the labelings, and the bank, and points the existing checks at
-    it.
+1.  **`data.ts` builds on #21's.** #21's pull request adds
+    `eval/src/data.ts`, with the labels' types, for the package's checks.
+    This branch is stacked on that pull request and extends the module with
+    what the commands need, and #21's check of EVAL-1's quota uses
+    `sharesNoWord`, so the rule has one home. It rebases onto `main` once
+    #21's pull request merges.
 1.  **Commands.** Each command's file exports `main`, which its test calls,
     and runs it when `import.meta.main` is true, as Node 26 and Bun both
     set it. The root's `package.json` gains `eval` and `eval:count`, which
@@ -329,9 +331,10 @@ fact-scan misses only for its own arithmetic. It was committed as
 
 ### Task 4: Percentiles
 
-- [ ] **Step 1: Test** `percentile` against NumPy's default: 5.5 and 9.55
-      at 0.5 and 0.95 for 1 to 10, 120.5 and 228.05 for 1 to 240, the
-      maximum at 1, and any order of input.
+- [ ] **Step 1: Test** `percentile`, which takes q from 0 to 100 as
+      NumPy's does, against NumPy's default: 5.5 and 9.55 at the 50th and
+      95th for 1 to 10, 120.5 and 228.05 for 1 to 240, the maximum at the
+      100th, and any order of input.
 - [ ] **Step 2: Implement, run the gate, and commit** as
       `feat(eval): add type 7 percentiles for timings`.
 
@@ -400,8 +403,11 @@ fact-scan misses only for its own arithmetic. It was committed as
 ### Task 11: Alpha with MASI
 
 - [ ] **Step 1: Test** the same six units: alpha 93/269, the value NLTK
-      3.10.3 gives, and each unit's distance: 0, 1, 2/3, 8/9, 0, and 1.
-- [ ] **Step 2: Implement, run the gate, and commit** as
+      3.10.3 gives, and each unit's distance, `masiDistance`: 0, 1, 2/3,
+      8/9, 0, and 1, either way round.
+- [ ] **Step 2: Share the mean** that alpha needs with the scoring, and
+      commit as `refactor(eval): share the mean from the stats module`.
+- [ ] **Step 3: Implement, run the gate, and commit** as
       `feat(eval): add Krippendorff's alpha with the MASI distance`.
 
 ### Task 12: The data
@@ -415,7 +421,7 @@ fact-scan misses only for its own arithmetic. It was committed as
       and that a line with no labels, an unknown id, or a line the second
       labeling lacks fails with a message naming the line.
 - [ ] **Step 2: Implement, run the gate, and commit** as
-      `feat(eval): read labeled lines, a second labeling, and the bank`.
+      `feat(eval): read labeled lines from any file and check their labels`.
 
 ### Task 13: The report
 
@@ -438,13 +444,18 @@ modify `package.json`.
 **Files:** create `eval/src/count.ts` and `eval/test/count.test.ts`;
 modify `package.json`.
 
-- [ ] **Step 1: Test** `main` on the fixture: each quota with its count and
+- [ ] **Step 1: Read a command's lines in one place,** `linesFrom`, for
+      both commands, and commit as
+      `refactor(eval): read a command's lines in one place`.
+- [ ] **Step 2: Test** `main` on the fixture: each quota with its count and
       whether it's met, the none-or-some table and its numbers, the pairs'
       positive agreement, and alpha, all worked out by hand, and an exit
       code of 1, since 8 lines fall short of 80.
-- [ ] **Step 2: Implement, add
+- [ ] **Step 3: Implement, add
       `"eval:count": "bun eval/src/count.ts"`, run the gate, and commit** as
       `feat(eval): check EVAL-1's quotas and print the labelers' agreement`.
+- [ ] **Step 4: Point #21's check at the rule,** and commit as
+      `refactor(eval): count the no-shared-word quota with the harness's rule`.
 
 ### Task 15: The TRD
 
