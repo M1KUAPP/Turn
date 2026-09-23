@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest'
 import {
+  againstBand,
   brier,
   consistencyBand,
   fitAt,
@@ -191,6 +192,26 @@ test('shades the band along its upper bounds, low to high, and back along its lo
   ]
   const plotted = reliabilityPlot({ forecasts: worked, blocks: pav(worked), band }, 'Jev')
   expect(plotted).toContain('<polygon points="144.0,224.0 424.0,24.0 424.0,184.0 144.0,384.0" fill="#d1d5db"/>')
+})
+
+test("counts the scores where each block's fit lies outside the band, not the span of the band across it", () => {
+  const blocks = pav(worked)
+  const band = [
+    { score: 0.2, low: 0.1, high: 0.3 },
+    { score: 0.5, low: 0.35, high: 0.6 },
+    { score: 0.7, low: 0.5, high: 0.9 },
+    { score: 0.9, low: 0.8, high: 1 }
+  ]
+  // The first block's 0.4 lies above the band at 0.2 and below it at 0.7, though inside the band's whole span.
+  expect(againstBand({ forecasts: worked, blocks, band })).toEqual([
+    { ...blocks[0], scores: 3, outside: 2 },
+    { ...blocks[1], scores: 1, outside: 0 }
+  ])
+  // Half right at 0.1 and at 0.9 pools into one block of 0.5, outside the band at both scores.
+  const halves = forecasts(
+    ...Array.from({ length: 20 }, (_, i): [number, boolean] => [i < 10 ? 0.1 : 0.9, i % 2 === 0])
+  )
+  expect(againstBand(reliability(halves))).toMatchObject([{ low: 0.1, high: 0.9, value: 0.5, scores: 2, outside: 2 }])
 })
 
 test('holds 90% of the resampled fits: at one score, the 5th and 95th percentiles of a binomial share', () => {

@@ -131,6 +131,22 @@ export const reliability = (forecasts: readonly Forecast[]): Reliability => ({
   band: consistencyBand(forecasts)
 })
 
+/** A block of the fit against the band: how many distinct scores it spans, and at how many its fit lies outside. */
+export type AgainstBand = Block & { scores: number; outside: number }
+
+/**
+ * Each block of the fit against the consistency band, which holds 90% of the resampled fits at each score apart: at
+ * how many of the block's distinct scores its fit lies outside the band there. The band is pointwise, so even a
+ * calibrated ranker's fit lies outside it at about one score in ten.
+ */
+export function againstBand({ blocks, band }: Reliability): AgainstBand[] {
+  return blocks.map((block) => {
+    const within = band.filter(({ score }) => score >= block.low && score <= block.high)
+    const outside = within.filter(({ low, high }) => block.value < low || block.value > high).length
+    return { ...block, scores: within.length, outside }
+  })
+}
+
 /** The diagram's size and margins, in pixels: a square plot, then a strip of bars under it, and a legend beside it. */
 const frame = { width: 640, height: 560, left: 64, top: 24, side: 400, gap: 16, strip: 60 }
 const stripTop = frame.top + frame.side + frame.gap
