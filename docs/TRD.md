@@ -943,8 +943,8 @@ on line(lineId, refresh)
   Store can't buy in the Simulator, the relay's `SIMULATOR_UNLIMITED` switch
   skips the count for requests marked `simulator` until judging ends on
   October 13 (PAY-9). The header can be forged, which costs only Jev
-  credits; the per-ID rate limit (#35) will bound that, so the switch stays
-  off unless the check needs it.
+  credits, and the per-ID rate limit and the daily budget bound that; the
+  switch stays off unless the check needs it.
 
 [rc-v2]: /docs/research/0009-revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
 [svc-server]: /docs/research/0024-turn-services.md#test-store-purchases-on-the-server
