@@ -71,6 +71,12 @@ Contents:
   2,000. A `count` calculation over the same range gave 44, and 0 for a
   range with no events. Each event's `$metadata.service` was `turn-relay`,
   and its `source` was the relay's object, with its fields as keys.
+- **IDs repeat.** Later that day, 85 events held only 80 distinct
+  `$metadata.id` values: events that different requests logged in the
+  same millisecond shared one, while each had its own `requestId` and
+  `rayId`. The "Unique event ID" is unique only per millisecond, so an
+  event is told apart by its ID and its request together, and paging from
+  an ID that several events share may skip some of them.
 - **One event.** Each has `$metadata`, "Structured metadata extracted from
   the event. These fields are indexed and available for filtering and
   aggregation."; `source`, the "Raw log payload. May be a string or a
