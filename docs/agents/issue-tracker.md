@@ -3,6 +3,9 @@
 Issues and specs for this repo live as GitHub issues in
 `RevenueCat-M1KU/RevenueCat`. Use the `gh` CLI for all operations.
 
+Plans are the exception: a change's plan is committed on its branch as
+`docs/plans/YYYY-MM-DD-<topic>.md`, and `/code-review` takes it as the spec.
+
 Contents:
 
 1.  [Conventions](#conventions)
