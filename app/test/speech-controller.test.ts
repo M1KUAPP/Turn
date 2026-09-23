@@ -36,6 +36,22 @@ function fixture() {
 }
 
 describe('speech controller', () => {
+  test('identifies only the phrase currently speaking', async () => {
+    const app = fixture()
+    await app.controller.speak('Yes', 'yes')
+    expect(app.controller.getSnapshot().activePhraseId).toBe('yes')
+
+    await app.controller.speak('No', 'no')
+    expect(app.controller.getSnapshot().activePhraseId).toBe('no')
+    app.utterances[1].options.onDone()
+    expect(app.controller.getSnapshot().activePhraseId).toBeNull()
+
+    await app.controller.repeat()
+    expect(app.controller.getSnapshot().activePhraseId).toBe('no')
+    await app.controller.stop()
+    expect(app.controller.getSnapshot().activePhraseId).toBeNull()
+  })
+
   test('a second tap stops the first and ignores stale completion', async () => {
     const app = fixture()
     await app.controller.speak('Yes', 'yes')
