@@ -1223,9 +1223,22 @@ line to the phone's own ranking, and speaking never depends on the relay.
 
 - **`eval/lines.jsonl`:** 80 partner lines, each with an id, its author, the
   text, its kind, a place, the topic, whether it concerns pain, health, or
-  consent, and the ids of every acceptable reply in the starter bank, or
-  none (EVAL-1). For yes-or-no lines, acceptable replies may include the
-  fixed buttons.
+  consent, its `labeler`, and in `acceptable` the ids of every acceptable
+  reply in the starter bank, or none (EVAL-1). For yes-or-no lines,
+  acceptable replies may include the fixed buttons. No line lists a strip
+  phrase, since the row never ranks them.
+- **`eval/second-labeling.jsonl`:** a second labeler's `acceptable` ids for
+  every line, in the same order, which only the agreement reads.
+- **No shared word.** A line shares no content word with its replies when
+  the phone's keyword ranking, run over those replies alone, matches none
+  of them; the fixed buttons' words count. EVAL-1's 10 and EVAL-3's subset
+  take only lines with an acceptable reply besides the fixed buttons, which
+  come from the question-kind call rather than the ranking
+  ([the labels' plan][labels-plan]).
+- **Too few lines with no reply.** The two labelings left 8 and 7 lines
+  with no acceptable reply, short of EVAL-1's 16, and nothing changed to
+  close the gap, so the check holds that quota as a to-do until
+  [#77][floor-issue] adds lines or changes the floor.
 - **New lines.** The public conversation sets are non-commercial,
   share-alike, not redistributable, or unlicensed, so the lines are written
   for Turn, by writers who haven't seen the bank, in the mix real questions
@@ -1237,17 +1250,26 @@ line to the phone's own ranking, and speaking never depends on the relay.
   ranks the phrases a user starts with. A fresh bank has no taps, so the
   shortlist's most-tapped slots fall back to the place's phrases and the
   bank's order, and the evaluation says so.
-- **Who wrote them.** At the team's direction, Claude subagents wrote both
-  files on September 23, 2026. Two wrote 40 lines each from a brief that
-  showed no phrase of the bank ([the brief][lines-brief]), so each line's
-  `author` is `claude-a` or `claude-b`; a third wrote the bank without
-  seeing the lines, and a fourth read every phrase. Text a language model
-  wrote may suit a ranker built on one, so the report and the README say
-  who wrote the lines and the bank. On that date, no teammate had yet read
-  the bank (CONTENT-1), and no clinic had reviewed it (CONTENT-5).
+- **Who wrote and labeled them.** At the team's direction, Claude subagents
+  wrote both files on September 23, 2026. Two wrote 40 lines each from a
+  brief that showed no phrase of the bank ([the brief][lines-brief]), so
+  each line's `author` is `claude-a` or `claude-b`; a third wrote the bank
+  without seeing the lines, and a fourth read every phrase. Two more,
+  `claude-c` and `claude-d`, then labeled every line's replies, each alone
+  and from a brief that set no quota ([the labelers' brief][labels-brief]);
+  `claude-c`'s labeling is the one the evaluation scores. Text a language
+  model wrote or labeled may suit a ranker built on one, and two labelings
+  by one model show consistency rather than correctness, so the report and
+  the README say who wrote the lines and the bank and who labeled the
+  replies. On that date, no teammate had yet read the bank (CONTENT-1) or
+  labeled a line (EVAL-1), and no clinic had reviewed the bank
+  (CONTENT-5).
 
 [eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
+[labels-plan]: /docs/plans/0013-turn-reply-labels.md#decisions
+[labels-brief]: /docs/plans/0013-turn-reply-labels.md#appendix-the-labelers-brief
+[floor-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/77
 
 ### The rankers
 
