@@ -6,15 +6,15 @@ September 23, 2026, and judgment starts with "Synthesis:".
 
 Contents:
 
-1.  [TypeSafe](#typesafe)
+1.  [TypeSafe's API and credits](#typesafes-api-and-credits)
 1.  [Cloudflare and Wrangler 4.136.2](#cloudflare-and-wrangler-41362)
 1.  [Apple, Xcode 27, and iOS 27](#apple-xcode-27-and-ios-27)
-1.  [Git](#git)
+1.  [A key in Git's history](#a-key-in-gits-history)
 1.  [Hands-on check](#hands-on-check)
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
-## TypeSafe
+## TypeSafe's API and credits
 
 The MCA's credit, expiry, and auto-refill terms are already quoted in the
 [Jev notes](/docs/research/0005-jev.md#free-tier-credits-and-programs).
@@ -181,7 +181,7 @@ xcrun devicectl device info details --device "<name>" \
 [ap-devmode]: https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device
 [ap-enterprise]: https://support.apple.com/en-us/118254
 
-## Git
+## A key in Git's history
 
 - **Pickaxe.** `-S<string>` looks "for differences that change the number
   of occurrences of the specified <string> (i.e. addition/deletion) in a
