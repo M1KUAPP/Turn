@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { bank, checkLabels, phrasesOf, readRows, type Line } from '../src/data'
+import { bank, checkLabels, linesFrom, phrasesOf, readRows, type Line } from '../src/data'
 
 const fixture = (name: string) => new URL(`fixture/${name}`, import.meta.url)
 
@@ -37,4 +37,11 @@ test('accepts labels that name phrases in the bank, and names the first line who
   expect(() => checkLabels([{ id: 'line-03', acceptable: ['yes', 'water-plz'] }], bank)).toThrow(
     "line-03 lists water-plz, which the starter bank doesn't hold"
   )
+})
+
+test("reads a command's lines from the file it names, or else the 80, naming the file from the repository's root", () => {
+  expect(linesFrom(fixture('lines.jsonl').pathname)).toMatchObject({ file: 'eval/test/fixture/lines.jsonl' })
+  expect(linesFrom(fixture('lines.jsonl').pathname).lines).toHaveLength(8)
+  expect(linesFrom(undefined)).toMatchObject({ file: 'eval/lines.jsonl' })
+  expect(linesFrom(undefined).lines).toHaveLength(80)
 })
