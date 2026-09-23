@@ -2,7 +2,7 @@ import { fixedButtons } from '@turn/shared/row'
 import { rankable } from '@turn/shared/shortlist'
 import { parseArgs } from 'node:util'
 import { compareLabelings } from './agreement'
-import { checkLabels, linesFrom, phrases, readRows, secondLabeling, type Labels, type Line } from './data'
+import { labelingFrom, linesFrom, phrases, type Line } from './data'
 import { sharesNoWord } from './score'
 
 /** Three decimals, so a negative agreement of 0.996 doesn't print as a perfect 1.00. */
@@ -17,8 +17,7 @@ const names = (labelers: readonly string[]) => [...new Set(labelers)].join(' and
 export function main(args: readonly string[]): number {
   const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, second: { type: 'string' } } })
   const { lines, file } = linesFrom(values.lines)
-  const second: Labels[] = values.second === undefined ? secondLabeling : readRows(values.second)
-  checkLabels(second)
+  const second = labelingFrom(values.second)
   const count = (keep: (line: Line) => boolean) => lines.filter(keep).length
   const atLeast = (what: string, least: number, keep: (line: Line) => boolean) => {
     const found = count(keep)
