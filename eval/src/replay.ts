@@ -59,8 +59,8 @@ export async function replay(
   let row: Row = emptyRow
   for (const [i, line] of lines.entries()) {
     const seq = i + 1
-    // One line at a time, so no answer arrives after a newer line's.
-    const before = row
+    // The app raises the row's number as a line starts, so an answer for an older line is dropped (ROW-7).
+    const before: Row = { ...row, seq }
     const context = { bank: phrases, row: phrasesInRow(before), place: line.place, taps: new Map<string, number>() }
     const shortlist = pickShortlist(line.text, index, context)
     let answer: Answer | undefined
