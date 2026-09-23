@@ -19,11 +19,13 @@ export type JevReply =
 /** One app user's object, which calls Jev for their lines. */
 export class Device extends DurableObject<Env> {
   /**
-   * Every option is set here, since the SDK reads any it lacks from `process.env`, which holds the Worker's vars and
-   * secrets: two attempts of at most 1.5 seconds each, with no wait for a server's `Retry-After`, and no logs.
+   * Two attempts of at most 1.5 seconds each, with no wait for a server's `Retry-After`, and no logs. The key, the
+   * address, the model, and the log level are all set here, since the SDK reads any of them the code leaves out from
+   * `process.env`, which holds the Worker's vars and secrets.
    */
   private readonly jev = new TypeSafeClient({
     apiKey: this.env.TYPESAFE_API_KEY,
+    baseURL: 'https://api.typesafe.ai',
     defaultModel: this.env.JEV_MODEL,
     logLevel: 'off',
     timeout: 1500,
