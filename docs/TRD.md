@@ -1302,6 +1302,17 @@ ran under Wrangler 4.136.2:
   - **What it doesn't hold:** a sender with many addresses, such as one
     IPv6 client moving through its /64, meets a new count at each, so the
     daily budget is what caps such a flood's calls to Jev.
+  - **What one address can still spend.** At 120 requests a minute, each
+    from a new ID, one address writes 8 rows a request, 1 for its count
+    and 7 in the new user's object, or 11 if each is a line. So it spends
+    the Free plan's 100,000 rows a day in about 75 to 105 minutes, where
+    the binding's live pace, had it held nothing back, took about 11 to
+    15; then every call to an object fails with `500 internal` until
+    midnight UTC.
+  - **A shared address's price.** The address's count comes first, so one
+    sender behind a carrier's NAT can spend the address's 120 in a minute
+    alone, its own requests past 30 refused by its ID's count, while its
+    neighbours wait for the next minute.
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
   lines nor `listen` guards Jev's credits. One more Durable Object counts Jev
