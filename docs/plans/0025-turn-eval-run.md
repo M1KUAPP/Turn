@@ -197,10 +197,10 @@ Contents:
     [run's notes][notes-relay] describe. `GET /v1/config` on the team's
     relay must serve the evaluated policy with `jevOn` true. Wrangler's
     `deployments status --json` names the version serving all traffic, and
-    `versions view <id> --json` gives its `plain_text` bindings, of which
-    only `JEV_MODEL`, `JEV_ON`, and `POLICY` are printed. If one differs
-    from `main`, the relay is deployed from `main` after the merge and
-    checked again.
+    `versions view <id> --json` gives its bindings, of which only the
+    `plain_text` `JEV_MODEL` and `JEV_ON` and the `json` `POLICY` are
+    printed. If one differs from `main`, the relay is deployed from `main`
+    after the merge and checked again.
 1.  **The report as written.** `eval/results.md` and
     `eval/results-risk-coverage.svg` are committed byte for byte as the run
     wrote them, checked by SHA-256 after the commit.
