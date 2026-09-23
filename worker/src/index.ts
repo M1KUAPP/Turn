@@ -52,7 +52,8 @@ const codes = {
 
 /**
  * Records how a request ended, and answers with that error's code and nothing else (SEC-4). A request over a rate limit
- * is told to wait the binding's whole 60 seconds, since the binding doesn't say when its window ends (SEC-3).
+ * is told to wait 60 seconds, the longest period a binding can have, since the binding doesn't say when its window
+ * ends (SEC-3).
  */
 function refuse(log: LogFacts, outcome: keyof typeof codes) {
   log.outcome = outcome
