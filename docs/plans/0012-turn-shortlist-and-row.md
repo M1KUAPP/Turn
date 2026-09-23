@@ -73,8 +73,10 @@ Contents:
   loads the bank, sums the taps, renders the row, marks the tab, and
   announces is [#43][app-ticket] and [#48][relay-app-ticket]; the relay's
   wire types are [#24][relay-ticket]; the evaluation's rankers are
-  [#29][eval-ticket]; and the replay script is [#37][replay-ticket]. No
-  package imports `@turn/shared` yet, so none gains the dependency.
+  [#29][eval-ticket]; and the replay script is [#37][replay-ticket]. The
+  evaluation gains `@turn/shared` as a workspace dependency for one check,
+  that the starter bank's fixed buttons carry the ids the row's rules use,
+  which the first review round asked for.
 - **Versions** are pinned exactly, not as ranges.
 - **Code** follows the repo's Prettier settings (single quotes, no
   semicolons, 120 columns, no trailing commas) and TypeScript's `strict`.
