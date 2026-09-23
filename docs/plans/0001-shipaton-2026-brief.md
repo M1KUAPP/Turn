@@ -8,9 +8,9 @@
 Shipaton 2026 for the team and the agents working in this repo.
 
 **Architecture:** One new Markdown file distilled from
-[the research notes](/docs/research/shipaton-2026.md), which cite every claim
-to `docs/sources/`. The brief keeps the facts a team acts on; the notes keep
-the per-claim citations and the long tables. Each task adds whole sections
+[the research notes](/docs/research/0001-shipaton-2026.md), which cite every
+claim to `docs/sources/`. The brief keeps the facts a team acts on; the notes
+keep the per-claim citations and the long tables. Each task adds whole sections
 together with their `Contents:` entries, so every commit leaves a consistent
 document.
 
@@ -38,10 +38,9 @@ Contents:
   wrapped at 80 characters (links, tables, headings, and code blocks are
   exempt); no trailing whitespace; `- ` bullets; a language on every fenced
   code block.
-- Repo links use root paths such as `/docs/research/shipaton-2026.md`. Long or
-  repeated links become reference links, defined before the next heading
-  after first use, or at the end of the document when used in several
-  sections.
+- Repo links use root paths such as `/docs/research/0001-shipaton-2026.md`. Long
+  or repeated links become reference links, defined before the next heading
+  after first use, or at the end of the document when used in several sections.
 - Facts come only from `docs/sources/`, through the research notes. Copy
   figures verbatim. Label anything from the 2024 Ship-a-ton, Shipaton 2025, or
   Shipyard with its edition. Use absolute dates, never "N days left".

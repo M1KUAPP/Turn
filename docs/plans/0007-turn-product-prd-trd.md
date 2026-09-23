@@ -471,8 +471,8 @@ exist. So, as PR #7 did for the idea:
   Turn's version lives.
 - Repoint every link to the three files, keeping anchors, in
   `docs/DESIGN.md`, the archived idea, the three archived files, and the
-  notes `ios-design.md`, `game-design.md`, `frontend-trends.md`, and
-  `motionsites.md`; update `docs/DESIGN.md`'s superseded note to match.
+  notes `0015-ios-design.md`, `0016-game-design.md`, `0014-frontend-trends.md`,
+  and `0013-motionsites.md`; update `docs/DESIGN.md`'s superseded note to match.
 - Point the Guessling lines of the brief's, the context's, and the idea's See
   also lists at the archived files in the same commit, and add lines for
   Turn's documents once they exist.
@@ -563,9 +563,10 @@ rebuilds `Contents:`, and places each reference definition where
 
 **Files:**
 
-- Create: `docs/research/aac-practice.md`, `docs/research/turn-ios.md`,
-  `docs/research/turn-services.md`, and `docs/research/turn-evaluation.md`,
-  each written by a background research agent from primary sources.
+- Create: `docs/research/0022-aac-practice.md`,
+  `docs/research/0023-turn-ios.md`, `docs/research/0024-turn-services.md`, and
+  `docs/research/0025-turn-evaluation.md`, each written by a background research
+  agent from primary sources.
 
 - [ ] **Step 1: Check each note**
 
@@ -576,13 +577,13 @@ fact scan is informational.
 - [ ] **Step 2: Commit each note on its own**
 
 ```shell
-git add docs/research/aac-practice.md
+git add docs/research/0022-aac-practice.md
 git commit -m "docs(research): add notes on AAC practice for Turn"
-git add docs/research/turn-ios.md
+git add docs/research/0023-turn-ios.md
 git commit -m "docs(research): add notes on Turn's iPhone build"
-git add docs/research/turn-services.md
+git add docs/research/0024-turn-services.md
 git commit -m "docs(research): add notes on Turn's relay and services"
-git add docs/research/turn-evaluation.md
+git add docs/research/0025-turn-evaluation.md
 git commit -m "docs(research): add notes on evaluating reply ranking"
 ```
 

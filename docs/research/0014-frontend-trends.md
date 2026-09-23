@@ -7,7 +7,7 @@ These notes fed Guessling's design system and art direction, now the
 [archived Guessling design](/docs/archive/guessling-design.md); every source was
 read on September 22, 2026, so versions, prices, and features are as of that
 date, and judgment starts with "Synthesis:". motionsites.ai itself has its own
-[research notes](/docs/research/motionsites.md).
+[research notes](/docs/research/0013-motionsites.md).
 
 Contents:
 
@@ -1379,12 +1379,12 @@ What the sources don't settle for DESIGN.md, as of September 22, 2026:
   [reactions, sound, and haptics](/docs/archive/guessling-trd.md#reactions-sound-and-haptics)
   and [accessibility](/docs/archive/guessling-trd.md#accessibility)
   requirements.
-- [RevenueCat and Expo research notes](/docs/research/revenuecat-expo.md), on
-  Expo SDK 57 and the EAS build image.
-- [Apple requirements for Guessling](/docs/research/apple-requirements.md),
+- [RevenueCat and Expo research notes](/docs/research/0009-revenuecat-expo.md),
+  on Expo SDK 57 and the EAS build image.
+- [Apple requirements for Guessling](/docs/research/0011-apple-requirements.md),
   including sound, haptics, and accessibility labels.
-- [motionsites.ai research notes](/docs/research/motionsites.md), the other half
-  of the research behind DESIGN.md.
+- [motionsites.ai research notes](/docs/research/0013-motionsites.md), the other
+  half of the research behind DESIGN.md.
 - [Markdown style guide](/docs/references/markdown-style.md), which a DESIGN.md
   in this repo follows.
 

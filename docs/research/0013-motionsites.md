@@ -1561,8 +1561,8 @@ if LIVE:
 [trd-a11y]: /docs/archive/guessling-trd.md#accessibility
 [expo-video]: https://docs.expo.dev/versions/v57.0.0/sdk/video/
 [product-character]: /docs/archive/guessling-product.md#the-guessling-character
-[rc-paywalls]: /docs/research/revenuecat-expo.md#revenuecat-paywalls-and-customer-center-in-react-native
-[shipaton-cats]: /docs/research/shipaton-2026.md#revenuecat-core-category-requirements
-[cf-pages]: /docs/research/cloudflare-workers.md#hosting-the-privacy-policy-and-terms
-[bp-store]: /docs/research/best-practices.md#store-listing-and-discoverability
-[bp-video]: /docs/research/best-practices.md#demo-video-and-write-up
+[rc-paywalls]: /docs/research/0009-revenuecat-expo.md#revenuecat-paywalls-and-customer-center-in-react-native
+[shipaton-cats]: /docs/research/0001-shipaton-2026.md#revenuecat-core-category-requirements
+[cf-pages]: /docs/research/0010-cloudflare-workers.md#hosting-the-privacy-policy-and-terms
+[bp-store]: /docs/research/0002-best-practices.md#store-listing-and-discoverability
+[bp-video]: /docs/research/0002-best-practices.md#demo-video-and-write-up

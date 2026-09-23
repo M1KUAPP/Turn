@@ -5,13 +5,13 @@ Award: an app more ambitious than Guessling, chosen through ten new rounds of
 ideation, with Jev at its core.
 
 **Architecture:** Three new research notes, on the
-[Next Gen Award](/docs/research/next-gen.md),
-[new phone technology](/docs/research/next-gen-tech.md), and
-[Jev patterns](/docs/research/jev-patterns.md), join the
+[Next Gen Award](/docs/research/0019-next-gen.md),
+[new phone technology](/docs/research/0018-next-gen-tech.md), and
+[Jev patterns](/docs/research/0017-jev-patterns.md), join the
 [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), and the
-[Jev notes](/docs/research/jev.md) as the inputs to ten rounds of ideation.
+[Jev notes](/docs/research/0005-jev.md) as the inputs to ten rounds of ideation.
 Each round is one task and one commit, logged in
-`docs/research/next-gen-ideation.md`; round 5 adds an evidence note. The
+`docs/research/0020-next-gen-ideation.md`; round 5 adds an evidence note. The
 Guessling idea moves to `docs/archive/guessling-idea.md`, and the documents
 built on it point there and say they are superseded. The new `docs/IDEA.md`
 is then written section by section, linking to the brief, the context, and
@@ -88,8 +88,8 @@ what to ship by when, how to pitch it, and what could go wrong.
 
 ### What changes for Next Gen
 
-The [Next Gen notes](/docs/research/next-gen.md) change the problem the first
-ideation solved:
+The [Next Gen notes](/docs/research/0019-next-gen.md) change the problem the
+first ideation solved:
 
 - **No store release.** Entries submit a demo video under two minutes and a
   public open-source repository with a detectable license instead of a store
@@ -227,7 +227,7 @@ pointing at the new idea's sections or at anchors that no longer exist. So:
 - Add a note under the H1 of each of the four Guessling documents that it
   describes the superseded idea. Their content stays as it is; rewriting
   them for the new idea is later work.
-- The first ideation log, `docs/research/ideation.md`, stays where it is:
+- The first ideation log, `docs/research/0007-ideation.md`, stays where it is:
   its rounds record why Guessling was chosen.
 
 ### Rejected alternatives
@@ -286,8 +286,9 @@ file unless their prompt names one, and never run git.
 
 **Files:**
 
-- Create: `docs/research/next-gen.md`, `docs/research/next-gen-tech.md`, and
-  `docs/research/jev-patterns.md`, each written by a background research
+- Create: `docs/research/0019-next-gen.md`,
+  `docs/research/0018-next-gen-tech.md`, and
+  `docs/research/0017-jev-patterns.md`, each written by a background research
   agent from primary sources.
 
 - [ ] **Step 1: Check the three notes**
@@ -298,11 +299,11 @@ opened by hand.
 - [ ] **Step 2: Commit each note on its own**
 
 ```shell
-git add docs/research/next-gen.md
+git add docs/research/0019-next-gen.md
 git commit -m "docs(research): add the Next Gen Award notes"
-git add docs/research/next-gen-tech.md
+git add docs/research/0018-next-gen-tech.md
 git commit -m "docs(research): add notes on new phone technology"
-git add docs/research/jev-patterns.md
+git add docs/research/0017-jev-patterns.md
 git commit -m "docs(research): add notes on Jev's patterns"
 ```
 
@@ -319,7 +320,7 @@ git commit -m "docs(plan): add the Next Gen idea plan"
 
 **Files:**
 
-- Create: `docs/research/next-gen-ideation.md`
+- Create: `docs/research/0020-next-gen-ideation.md`
 
 **Interfaces:**
 
@@ -330,8 +331,8 @@ git commit -m "docs(plan): add the Next Gen idea plan"
 - [ ] **Step 1: Write the failing assertions**
 
 ```shell
-touch docs/research/next-gen-ideation.md
-check docs/research/next-gen-ideation.md '^# Next Gen ideation log$' \
+touch docs/research/0020-next-gen-ideation.md
+check docs/research/0020-next-gen-ideation.md '^# Next Gen ideation log$' \
   '^## Round 1: constraints and rubric$' '\*\*N1\.' 'Technical ambition' \
   'Assumptions' 'too simple'
 ```
@@ -364,7 +365,7 @@ Expected misses in the fact scan: the rubric weights.
 - [ ] **Step 4: Commit**
 
 ```shell
-git add docs/research/next-gen-ideation.md
+git add docs/research/0020-next-gen-ideation.md
 git commit -m "docs(ideation): set the Next Gen constraints and rubric (round 1)"
 ```
 
@@ -414,7 +415,7 @@ git commit -m "docs(ideation): score the survivors against Guessling (round 4)"
 
 - [ ] **Step 1: Dispatch a background research agent**
 
-It writes `docs/research/next-gen-evidence.md` for the top five: rival apps
+It writes `docs/research/0021-next-gen-evidence.md` for the top five: rival apps
 with their ratings and prices, 2026 gallery entries that overlap, student
 entries above all, primary evidence that the problem matters, whether each
 technical part exists on the devices the team has, and Jev's jagged edges

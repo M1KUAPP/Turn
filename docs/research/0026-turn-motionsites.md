@@ -77,7 +77,7 @@ are.
   rights, and prompts near Turn load commercial type from font mirrors. See
   [License and terms][ms-note-license].
 
-[ms-note-license]: /docs/research/motionsites.md#license-and-terms
+[ms-note-license]: /docs/research/0013-motionsites.md#license-and-terms
 
 ## Sources and method
 
@@ -125,8 +125,8 @@ are.
   still reads "All rights reserved" ([ms-home]); and the DESIGN.md page still
   shows four "Coming soon" cards ([ms-design-md]).
 
-[ms-note-match]: /docs/research/motionsites.md#how-the-corpus-matches-the-live-catalog
-[ms-note-prices]: /docs/research/motionsites.md#prices-on-september-22-2026
+[ms-note-match]: /docs/research/0013-motionsites.md#how-the-corpus-matches-the-live-catalog
+[ms-note-prices]: /docs/research/0013-motionsites.md#prices-on-september-22-2026
 [ms-unlimited]: https://motionsites.ai/unlimited
 [ms-unlimited-js]: https://motionsites.ai/assets/unlimited-K6uVgjuc.js
 [ms-dialog-js]: https://motionsites.ai/assets/PromptDetailDialog-ORjvw6mN.js
@@ -175,7 +175,7 @@ motionsites.ai (numbered and `ms-`), the 88 whose subject is close to Turn,
 and the 41 about a mobile app; the corpus itself is described in the earlier
 note's [local prompt corpus][ms-note-corpus] section.
 
-[ms-note-corpus]: /docs/research/motionsites.md#the-local-prompt-corpus
+[ms-note-corpus]: /docs/research/0013-motionsites.md#the-local-prompt-corpus
 
 ### Subjects close to Turn
 
@@ -230,8 +230,8 @@ earlier note's [Dates and the newest prompts][ms-note-dates].
   accessibility, and 27 of the 29 that ask for contrast, are archive texts in
   the "premium" [working-prompt mode][ms-note-modes].
 
-[ms-note-dates]: /docs/research/motionsites.md#dates-and-the-newest-prompts
-[ms-note-modes]: /docs/research/motionsites.md#working-prompt-modes
+[ms-note-dates]: /docs/research/0013-motionsites.md#dates-and-the-newest-prompts
+[ms-note-modes]: /docs/research/0013-motionsites.md#working-prompt-modes
 
 ### Text size, weight, and opacity
 
@@ -288,7 +288,7 @@ light, and 403 undetermined pages among all 813, and 39, 11, and 38 among the
   motion. Of 7 prompts that say content appears on hover, 1 offers a focus or
   touch fallback.
 
-[ms-note-bg]: /docs/research/motionsites.md#page-backgrounds-and-hex-colors
+[ms-note-bg]: /docs/research/0013-motionsites.md#page-backgrounds-and-hex-colors
 
 ### Button sizes
 
@@ -506,7 +506,7 @@ Every bullet here is judgment. Turn's constraints come from its
 note's [Web-only patterns][ms-note-web].
 
 [product-principles]: /docs/PRODUCT.md#product-principles
-[ms-note-web]: /docs/research/motionsites.md#web-only-patterns
+[ms-note-web]: /docs/research/0013-motionsites.md#web-only-patterns
 
 ### The native iPhone app
 
@@ -540,7 +540,7 @@ note's [Web-only patterns][ms-note-web].
     feedback without changing the target under the finger.
 
 [prd-consent]: /docs/PRD.md#permission-and-consent
-[aac-fixed]: /docs/research/aac-practice.md#fixed-button-positions-and-motor-automaticity
+[aac-fixed]: /docs/research/0022-aac-practice.md#fixed-button-positions-and-motor-automaticity
 [prd-grid]: /docs/PRD.md#the-speaking-grid
 
 ### The demo video
@@ -591,7 +591,7 @@ note's [Web-only patterns][ms-note-web].
 [dp-steps]: https://help.devpost.com/article/126-know-your-submission-steps
 [dp-gallery]: https://revenuecat-shipaton-2026.devpost.com/project-gallery
 [dp-portrait]: https://devpost.com/software/cancelled-subscription-assistent
-[ship-form]: /docs/research/shipaton-2026.md#devpost-form-walkthrough
+[ship-form]: /docs/research/0001-shipaton-2026.md#devpost-form-walkthrough
 
 ### The README on GitHub
 
@@ -633,11 +633,11 @@ note's [Web-only patterns][ms-note-web].
 - Synthesis: a website would only repeat the README; after a store release,
   one static page with the privacy notice and a support address will do.
 
-[ng-criteria]: /docs/research/next-gen.md#next-gen-criteria-and-scoring
+[ng-criteria]: /docs/research/0019-next-gen.md#next-gen-criteria-and-scoring
 [prd-settings]: /docs/PRD.md#settings
 [prd-submit]: /docs/PRD.md#submission-requirements
-[svc-rc-privacy]: /docs/research/turn-services.md#revenuecats-terms-on-privacy-notices
-[bp-privacy]: /docs/research/best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
+[svc-rc-privacy]: /docs/research/0024-turn-services.md#revenuecats-terms-on-privacy-notices
+[bp-privacy]: /docs/research/0002-best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
 
 ## Conflicts between sources
 
@@ -659,7 +659,7 @@ note's [Web-only patterns][ms-note-web].
   have `prompt.md` and 622 `working-prompt.md`
   ([What each file holds][ms-note-files]).
 
-[ms-note-files]: /docs/research/motionsites.md#what-each-file-holds
+[ms-note-files]: /docs/research/0013-motionsites.md#what-each-file-holds
 
 ## Gaps
 
@@ -1068,7 +1068,7 @@ for g, v in GROUPS.items():
               f'{sum(1 for x in per.values() if x and min(x) < 44)} prompts go under 44 px')
 ```
 
-[ms-note-script]: /docs/research/motionsites.md#appendix-analysis-script
+[ms-note-script]: /docs/research/0013-motionsites.md#appendix-analysis-script
 
 ## See also
 
@@ -1076,25 +1076,25 @@ for g, v in GROUPS.items():
   especially [What 27 prompts share][ms-note-27] and
   [Patterns that carry over][ms-note-carry].
 - The sibling notes behind `docs/DESIGN.md`:
-  [frontend trends](/docs/research/turn-frontend-trends.md),
-  [AAC design](/docs/research/aac-design.md), and
-  [iOS design](/docs/research/turn-ios-design.md).
+  [frontend trends](/docs/research/0027-turn-frontend-trends.md),
+  [AAC design](/docs/research/0028-aac-design.md), and
+  [iOS design](/docs/research/0029-turn-ios-design.md).
 - The PRD's [accessibility requirements][prd-a11y] and [reply row][prd-row],
   the TRD's [accessibility in the app][trd-a11y], the idea's
   [pitch][idea-pitch], and the [Next Gen notes][ng-submit].
 
-[ms-note-carry]: /docs/research/motionsites.md#patterns-that-carry-over
-[ms-note]: /docs/research/motionsites.md
+[ms-note-carry]: /docs/research/0013-motionsites.md#patterns-that-carry-over
+[ms-note]: /docs/research/0013-motionsites.md
 [prd-a11y]: /docs/PRD.md#accessibility
 [ms-index-js]: https://motionsites.ai/assets/Index-DISY_D2l.js
 [wcag22]: https://www.w3.org/TR/WCAG22/
 [wcag-errata]: https://www.w3.org/WAI/WCAG22/errata/
 [wcag2ict]: https://www.w3.org/TR/wcag2ict-22/
-[ms-note-27]: /docs/research/motionsites.md#what-27-prompts-share
+[ms-note-27]: /docs/research/0013-motionsites.md#what-27-prompts-share
 [u-pause]: https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html
 [u-animation]: https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html
 [trd-a11y]: /docs/TRD.md#accessibility-in-the-app
 [prd-row]: /docs/PRD.md#the-reply-row
 [idea-pitch]: /docs/IDEA.md#pitch
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
+[ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
 [dp-day-box]: https://devpost.com/software/day-box

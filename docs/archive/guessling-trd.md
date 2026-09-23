@@ -122,7 +122,7 @@ The path of one question:
     response; the app shows the Guessling's reaction and adds the answer to
     the round's history.
 
-[cf-latency]: /docs/research/cloudflare-workers.md#latency-and-placement
+[cf-latency]: /docs/research/0010-cloudflare-workers.md#latency-and-placement
 
 ## Stack and repository
 
@@ -155,9 +155,9 @@ The path of one question:
   ([RevenueCat notes on EAS Update][rc-eas-update]). It can join a later
   build if the team wants JavaScript bug fixes during judging.
 
-[cf-nodejs]: /docs/research/cloudflare-workers.md#nodejs-compatibility-by-default
-[rc-eas-update]: /docs/research/revenuecat-expo.md#eas-update-and-app-store-rules
-[ios-versions]: /docs/research/ios-design.md#package-versions-in-sdk-57
+[cf-nodejs]: /docs/research/0010-cloudflare-workers.md#nodejs-compatibility-by-default
+[rc-eas-update]: /docs/research/0009-revenuecat-expo.md#eas-update-and-app-store-rules
+[ios-versions]: /docs/research/0015-ios-design.md#package-versions-in-sdk-57
 
 ### Repository layout
 
@@ -228,7 +228,7 @@ interface AppConfig {
 }
 ```
 
-[cf-kv-publish]: /docs/research/cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
+[cf-kv-publish]: /docs/research/0010-cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
 
 ### Player data in each puzzle's Durable Object
 
@@ -457,7 +457,7 @@ into spaces, spaces collapsed, and a leading "a", "an", or "the" removed, so "An
 Octopus!" becomes "octopus". `publish.ts` stores `names` in the same form,
 so a guess is right exactly when its name form is in `names` (GUESS-2).
 
-[cf-gates]: /docs/research/cloudflare-workers.md#single-threaded-execution-and-input-and-output-gates
+[cf-gates]: /docs/research/0010-cloudflare-workers.md#single-threaded-execution-and-input-and-output-gates
 
 ### Sharing one Jev call per wording
 
@@ -493,7 +493,7 @@ Losing the map when the object is evicted is safe, since answered wordings
 are in storage. A failed call rejects every waiting request, which the app
 shows as busy.
 
-[cf-concurrency]: /docs/research/cloudflare-workers.md#concurrent-first-answers-to-a-new-wording
+[cf-concurrency]: /docs/research/0010-cloudflare-workers.md#concurrent-first-answers-to-a-new-wording
 
 ### The match request
 
@@ -607,8 +607,8 @@ const match = await client.systemOne(matchRequest, { signal: budget })
   open issue reports the key echoed into the SDK's connection errors
   (SEC-4).
 
-[cf-sdk]: /docs/research/cloudflare-workers.md#the-sdk-under-workerd
-[cf-counting]: /docs/research/cloudflare-workers.md#counting-in-a-durable-object
+[cf-sdk]: /docs/research/0010-cloudflare-workers.md#the-sdk-under-workerd
+[cf-counting]: /docs/research/0010-cloudflare-workers.md#counting-in-a-durable-object
 
 ## Puzzle days and content tooling
 
@@ -648,7 +648,7 @@ function isPlayableDate(localDate: string, now = Date.now()): boolean {
 - **The clock.** In a deployed Worker, `Date.now()` moves only on I/O,
   which is close enough for choosing a date.
 
-[cf-dates]: /docs/research/cloudflare-workers.md#choosing-todays-puzzle-for-a-players-date
+[cf-dates]: /docs/research/0010-cloudflare-workers.md#choosing-todays-puzzle-for-a-players-date
 
 ### From draft to published puzzle
 
@@ -686,7 +686,7 @@ must fix, and the idea's [bank rule][idea-stack] applies if that's too
 many. The schedule is reviewed against the content rules before each
 puzzle is published (CONTENT-7, CONTENT-9).
 
-[cf-fetch]: /docs/research/cloudflare-workers.md#calling-the-system-one-api-with-fetch
+[cf-fetch]: /docs/research/0010-cloudflare-workers.md#calling-the-system-one-api-with-fetch
 [idea-stack]: /docs/archive/guessling-idea.md#stack-and-data-flow
 
 ### Fixing a puzzle after its day
@@ -819,7 +819,7 @@ https://apps.apple.com/redeem?ctx=offercodes&id={apple_app_id}&code={code}
   the same flow in a TestFlight build through the Sandbox Account settings
   (RELEASE-2) ([RevenueCat notes on offer codes][rc-codes]).
 
-[rc-codes]: /docs/research/revenuecat-expo.md#apple-offer-codes
+[rc-codes]: /docs/research/0009-revenuecat-expo.md#apple-offer-codes
 
 ## The iPhone app
 
@@ -918,12 +918,12 @@ composer's glass comes from `expo-glass-effect`, and symbols from
   audio mode and a microphone usage string
   ([iOS notes on sounds][ios-sounds]).
 
-[apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
+[apple-sound]: /docs/research/0011-apple-requirements.md#sound-and-the-silent-switch
 [design-guessling]: /docs/archive/guessling-design.md#the-guessling
 [design-motion]: /docs/archive/guessling-design.md#motion
 [design-sound]: /docs/archive/guessling-design.md#sound-and-haptics
-[ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
-[ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
+[ios-reduce-motion]: /docs/research/0015-ios-design.md#reduce-motion-in-reanimated
+[ios-sounds]: /docs/research/0015-ios-design.md#short-sounds-in-expo
 
 ### Accessibility
 
@@ -948,9 +948,9 @@ composer's glass comes from `expo-glass-effect`, and symbols from
   VoiceOver, whatever alt text the editor holds, so nothing the paywall
   must say goes in an image ([iOS notes on the paywall][ios-paywall]).
 
-[ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
-[ios-scaling]: /docs/research/ios-design.md#how-react-native-scales-text
-[ios-paywall]: /docs/research/ios-design.md#limits-on-matching-the-app
+[ios-dark]: /docs/research/0015-ios-design.md#dark-mode-in-the-app-config
+[ios-scaling]: /docs/research/0015-ios-design.md#how-react-native-scales-text
+[ios-paywall]: /docs/research/0015-ios-design.md#limits-on-matching-the-app
 
 ### Build configuration
 
@@ -988,7 +988,7 @@ export default {
   share sheet and the paywall included, is checked on an iPad simulator
   (COMPAT-3).
 
-[rc-pm]: /docs/research/revenuecat-expo.md#privacy-manifests-in-expo
+[rc-pm]: /docs/research/0009-revenuecat-expo.md#privacy-manifests-in-expo
 [design-icon]: /docs/archive/guessling-design.md#the-app-icon
 [design-launch]: /docs/archive/guessling-design.md#launch
 
@@ -1033,7 +1033,7 @@ export default {
 - A client that makes up new IDs escapes the per-player limits; the shared
   Jev budget is the backstop.
 
-[cf-ratelimit]: /docs/research/cloudflare-workers.md#limiting-requests-per-device
+[cf-ratelimit]: /docs/research/0010-cloudflare-workers.md#limiting-requests-per-device
 
 ### Data inventory
 
@@ -1106,7 +1106,7 @@ again.
   numbers with the latest consistency results (METRIC-5); RevenueCat's charts
   give the money (METRIC-3).
 
-[cf-ae]: /docs/research/cloudflare-workers.md#workers-analytics-engine
+[cf-ae]: /docs/research/0010-cloudflare-workers.md#workers-analytics-engine
 
 ### The daily check
 
@@ -1162,7 +1162,7 @@ date logic takes the clock as a parameter
 [review essentials][ctx-apple] and RevenueCat's launch checklist are the
 pre-flight (RELEASE-1).
 
-[cf-tests]: /docs/research/cloudflare-workers.md#local-development-and-tests
+[cf-tests]: /docs/research/0010-cloudflare-workers.md#local-development-and-tests
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
 
 ## Environments and release
@@ -1285,12 +1285,12 @@ product and legal ones.
 - [RevenueCat notes][rc-notes], [Cloudflare notes][cf-notes],
   [Apple notes][apple-notes], [daily puzzle notes][daily-notes], and
   [iOS design notes][ios-notes]: the sources behind the choices here.
-- [Jev notes](/docs/research/jev.md): the API, the SDKs, the limits, and the
-  terms.
+- [Jev notes](/docs/research/0005-jev.md): the API, the SDKs, the limits, and
+  the terms.
 
-[rc-notes]: /docs/research/revenuecat-expo.md
-[cf-notes]: /docs/research/cloudflare-workers.md
-[apple-notes]: /docs/research/apple-requirements.md
-[daily-notes]: /docs/research/daily-puzzles.md
-[ios-notes]: /docs/research/ios-design.md
-[rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+[rc-notes]: /docs/research/0009-revenuecat-expo.md
+[cf-notes]: /docs/research/0010-cloudflare-workers.md
+[apple-notes]: /docs/research/0011-apple-requirements.md
+[daily-notes]: /docs/research/0012-daily-puzzles.md
+[ios-notes]: /docs/research/0015-ios-design.md
+[rc-v2]: /docs/research/0009-revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements

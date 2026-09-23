@@ -6,7 +6,7 @@ how they monetized and grew, what their submissions stressed, and where they are
 now, mapped to the Shipaton 2026 categories. Web sources were accessed on
 September 21, 2026, store figures are as of that date, and each claim cites its
 source; this builds on, rather than repeats, the past-editions summary in
-`docs/research/shipaton-2026.md`.
+`docs/research/0001-shipaton-2026.md`.
 
 Contents:
 

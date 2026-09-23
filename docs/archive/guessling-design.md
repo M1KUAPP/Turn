@@ -74,8 +74,8 @@ answer at the end. When the round ends, the Guessling turns the card over.
   still and plain, so the Guessling's reactions carry the feeling, as
   Anthropic's skill puts it, "Spend your boldness in one place".
 
-[ft-gdm]: /docs/research/frontend-trends.md#sections-and-tokens-in-the-specification
-[ft-anthropic]: /docs/research/frontend-trends.md#anthropics-frontend-design-skill
+[ft-gdm]: /docs/research/0014-frontend-trends.md#sections-and-tokens-in-the-specification
+[ft-anthropic]: /docs/research/0014-frontend-trends.md#anthropics-frontend-design-skill
 [product-principles]: /docs/archive/guessling-product.md#product-principles
 
 ### Principles
@@ -179,11 +179,11 @@ What Guessling does with them:
     ships no media or font that a prompt points to
     ([motionsites.ai license][ms-license]).
 
-[ms-findings]: /docs/research/motionsites.md#findings-for-designmd
-[ft-findings]: /docs/research/frontend-trends.md#findings-for-designmd
+[ms-findings]: /docs/research/0013-motionsites.md#findings-for-designmd
+[ft-findings]: /docs/research/0014-frontend-trends.md#findings-for-designmd
 [trd-app]: /docs/archive/guessling-trd.md#the-iphone-app
-[ios-findings]: /docs/research/ios-design.md#findings-for-designmd
-[ms-license]: /docs/research/motionsites.md#license-and-terms
+[ios-findings]: /docs/research/0015-ios-design.md#findings-for-designmd
+[ms-license]: /docs/research/0013-motionsites.md#license-and-terms
 
 ## The Guessling
 
@@ -212,7 +212,7 @@ the Guessling's role, personality, and voice; this section draws it.
   mouth also sit in one face group, so the head shake can slide them
   together.
 
-[game-silhouette]: /docs/research/game-design.md#silhouette-and-staging
+[game-silhouette]: /docs/research/0016-game-design.md#silhouette-and-staging
 
 ### Poses
 
@@ -241,7 +241,7 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
   bow, like Akinator's genie, never in a defeated pose
   ([game notes][game-signals]).
 
-[game-signals]: /docs/research/game-design.md#how-characters-show-yes-no-unsure-and-delight
+[game-signals]: /docs/research/0016-game-design.md#how-characters-show-yes-no-unsure-and-delight
 
 ### The answer card
 
@@ -284,7 +284,7 @@ it doubles as the Reduce Motion frame. Every pose appears with its words.
   Rive is the upgrade path if the poses ever need a state machine
   ([iOS notes on drawing the character][ios-character]).
 
-[ios-character]: /docs/research/ios-design.md#drawing-and-animating-the-character
+[ios-character]: /docs/research/0015-ios-design.md#drawing-and-animating-the-character
 
 ## Colors
 
@@ -357,9 +357,9 @@ option for each variant" ([iOS notes on color][ios-color]).
   1.5 to 5.1 to 1 on white, so text uses the tokens above
   ([iOS notes on system colors][ios-system-colors]).
 
-[ios-color]: /docs/research/ios-design.md#semantic-and-system-colors
-[ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
-[ios-system-colors]: /docs/research/ios-design.md#semantic-and-system-colors
+[ios-color]: /docs/research/0015-ios-design.md#semantic-and-system-colors
+[ios-dark]: /docs/research/0015-ios-design.md#dark-mode-in-the-app-config
+[ios-system-colors]: /docs/research/0015-ios-design.md#semantic-and-system-colors
 
 ### Contrast
 
@@ -385,7 +385,7 @@ need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
 | `card`       | `no`          | A No pip's or badge's glyph and edge, and a wrong-guess ring              | 4.8:1  | 3.5:1  | 6.6:1                | 5.3:1               | 3:1      |
 | `primary`    | `desk`        | The Guessling against the table                                           | 3.6:1  | 10.6:1 | 4.9:1                | 11.7:1              | 3:1      |
 
-[ios-wcag]: /docs/research/ios-design.md#wcag-22-contrast-minimums
+[ios-wcag]: /docs/research/0015-ios-design.md#wcag-22-contrast-minimums
 
 ### Answer colors
 
@@ -410,7 +410,7 @@ need 3 to 1 against what's next to them (A11Y-5; [iOS notes][ios-wcag]).
   Guessling's own moment, and never a Yes or a No; Stone, for the replies
   that use no turn, is plainly neither.
 
-[game-squares]: /docs/research/game-design.md#the-share-squares-measured
+[game-squares]: /docs/research/0016-game-design.md#the-share-squares-measured
 
 ## Typography
 
@@ -526,8 +526,8 @@ scaling][ios-scaling]).
   mock-ups of user interfaces". Nunito never ships in the app or loads on
   the web pages.
 
-[ios-fonts]: /docs/research/ios-design.md#system-fonts-and-their-licenses
-[ios-scaling]: /docs/research/ios-design.md#how-react-native-scales-text
+[ios-fonts]: /docs/research/0015-ios-design.md#system-fonts-and-their-licenses
+[ios-scaling]: /docs/research/0015-ios-design.md#how-react-native-scales-text
 [nunito]: https://github.com/google/fonts/tree/main/ofl/nunito
 
 ## Layout
@@ -606,10 +606,10 @@ Sizes are points: the format's `px` means a point on the iPhone.
   would let white cards scroll under Chalk text at close to 1 to 1
   ([iOS notes on headers][ios-headers]).
 
-[ios-key]: /docs/research/ios-design.md#the-compatibility-key
-[ios-glass-views]: /docs/research/ios-design.md#glass-views-in-expo
-[ios-headers]: /docs/research/ios-design.md#headers-sheets-and-tabs-in-expo-router
-[ios-glass-color]: /docs/research/ios-design.md#color-and-controls-on-glass
+[ios-key]: /docs/research/0015-ios-design.md#the-compatibility-key
+[ios-glass-views]: /docs/research/0015-ios-design.md#glass-views-in-expo
+[ios-headers]: /docs/research/0015-ios-design.md#headers-sheets-and-tabs-in-expo-router
+[ios-glass-color]: /docs/research/0015-ios-design.md#color-and-controls-on-glass
 
 ## Shapes
 
@@ -635,7 +635,7 @@ rounded:
 - **Soft everywhere.** No sharp corners, and no square and round corners
   in the same view.
 
-[ios-glass-controls]: /docs/research/ios-design.md#glass-in-custom-controls
+[ios-glass-controls]: /docs/research/0015-ios-design.md#glass-in-custom-controls
 
 ## Components
 
@@ -890,7 +890,7 @@ Type:
   use", so none goes into the icon, the Guessling, or the paywall's images
   ([iOS notes on the symbol license][ios-symbols-license]).
 
-[ios-symbols-license]: /docs/research/ios-design.md#sf-symbols-license-terms
+[ios-symbols-license]: /docs/research/0015-ios-design.md#sf-symbols-license-terms
 
 ### Banners
 
@@ -954,7 +954,7 @@ motion:
 - **Only transform and opacity** animate, never layout; and no Reanimated
   CSS animations or transitions, which ignore Reduce Motion.
 
-[ios-springs]: /docs/research/ios-design.md#springs-and-layout-animations
+[ios-springs]: /docs/research/0015-ios-design.md#springs-and-layout-animations
 
 ### Reactions
 
@@ -981,7 +981,7 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 - **One blink** ends each reaction, which then holds its key pose until the
   next question is sent.
 
-[game-timing]: /docs/research/game-design.md#reaction-durations
+[game-timing]: /docs/research/0016-game-design.md#reaction-durations
 
 ### Reduce Motion
 
@@ -1001,7 +1001,7 @@ sound starts; and VoiceOver announces the words. Then the body moves:
 - **Screens.** Native transitions cross-fade under Reduce Motion by
   themselves.
 
-[ios-reduce-motion]: /docs/research/ios-design.md#reduce-motion-in-reanimated
+[ios-reduce-motion]: /docs/research/0015-ios-design.md#reduce-motion-in-reanimated
 
 ### Screen motion
 
@@ -1053,8 +1053,8 @@ sound starts; and VoiceOver announces the words. Then the body moves:
   The round is complete without either.
 
 [trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
-[ios-sounds]: /docs/research/ios-design.md#short-sounds-in-expo
-[ios-haptics]: /docs/research/ios-design.md#haptics-in-expo
+[ios-sounds]: /docs/research/0015-ios-design.md#short-sounds-in-expo
+[ios-haptics]: /docs/research/0015-ios-design.md#haptics-in-expo
 
 ## Screens
 
@@ -1208,7 +1208,7 @@ RevenueCat's paywall, configured in its editor, which the SDK in version
 - **The AI Editor** takes "a design.md file to define your brand colors,
   fonts, and styling guidelines", so the team hands it this file.
 
-[ios-paywall]: /docs/research/ios-design.md#revenuecat-paywalls-styling
+[ios-paywall]: /docs/research/0015-ios-design.md#revenuecat-paywalls-styling
 
 ### Launch
 
@@ -1218,7 +1218,7 @@ RevenueCat's paywall, configured in its editor, which the SDK in version
   screens][ios-launch]). `expo-splash-screen` sets `backgroundColor` and a
   `dark` value.
 
-[ios-launch]: /docs/research/ios-design.md#launch-screens
+[ios-launch]: /docs/research/0015-ios-design.md#launch-screens
 
 ## Words on screen
 
@@ -1316,8 +1316,8 @@ what each iPhone setting changes.
   ([Apple notes][apple-labels]); the app has no video, so captions and
   audio descriptions don't apply.
 
-[game-color]: /docs/research/game-design.md#apple-on-color-and-feedback
-[apple-labels]: /docs/research/apple-requirements.md#what-each-label-claims
+[game-color]: /docs/research/0016-game-design.md#apple-on-color-and-feedback
+[apple-labels]: /docs/research/0011-apple-requirements.md#what-each-label-claims
 
 ## Web pages
 
@@ -1364,7 +1364,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
 - **For Devpost.** A 1024 × 1024 PNG of the default look, which Shipaton's
   rules ask for.
 
-[ios-icons]: /docs/research/ios-design.md#ios-26-icons-and-icon-composer
+[ios-icons]: /docs/research/0015-ios-design.md#ios-26-icons-and-icon-composer
 
 ### Screenshots
 
@@ -1399,7 +1399,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   archive needs Guessling+ ([iOS notes on store assets][ios-store]).
 
 [idea-video]: /docs/archive/guessling-idea.md#launch-and-pitch
-[ios-store]: /docs/research/ios-design.md#store-and-pitch-assets
+[ios-store]: /docs/research/0015-ios-design.md#store-and-pitch-assets
 
 ## Do's and don'ts
 
@@ -1435,7 +1435,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   describes; Google's linter reads them, but whether Stitch's and
   RevenueCat's importers do is untested ([trends notes][ft-style]).
 
-[ft-style]: /docs/research/frontend-trends.md#a-designmd-that-follows-this-repos-style-guide
+[ft-style]: /docs/research/0014-frontend-trends.md#a-designmd-that-follows-this-repos-style-guide
 
 ### Keeping code in step
 
@@ -1453,7 +1453,7 @@ The Worker serves `/privacy`, `/terms`, and `/support` as static files
   through.
 - A change starts here, then reaches `theme.ts`, never the other way.
 
-[ft-agents]: /docs/research/frontend-trends.md#how-agents-are-meant-to-use-designmd
+[ft-agents]: /docs/research/0014-frontend-trends.md#how-agents-are-meant-to-use-designmd
 
 ### Checks before a screen ships
 
@@ -1519,15 +1519,15 @@ Each has a safe default, which this document follows until someone decides.
   and animates it.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the art risk,
   and the video.
-- [motionsites.ai notes](/docs/research/motionsites.md),
-  [trends notes](/docs/research/frontend-trends.md),
-  [iOS notes](/docs/research/ios-design.md), and
-  [game and character notes](/docs/research/game-design.md): the research
+- [motionsites.ai notes](/docs/research/0013-motionsites.md),
+  [trends notes](/docs/research/0014-frontend-trends.md),
+  [iOS notes](/docs/research/0015-ios-design.md), and
+  [game and character notes](/docs/research/0016-game-design.md): the research
   behind these choices.
 - [Google's DESIGN.md format][gdm]: the specification and the linter.
 
 [gdm]: https://github.com/google-labs-code/design.md
 [idea-risks]: /docs/archive/guessling-idea.md#risks
-[game-findings]: /docs/research/game-design.md#findings-for-designmd
-[game-ai]: /docs/research/game-design.md#ai-assisted-art-and-the-rules
+[game-findings]: /docs/research/0016-game-design.md#findings-for-designmd
+[game-ai]: /docs/research/0016-game-design.md#ai-assisted-art-and-the-rules
 [idea-open]: /docs/archive/guessling-idea.md#assumptions-and-open-questions

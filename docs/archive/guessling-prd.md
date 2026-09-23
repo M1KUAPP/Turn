@@ -179,7 +179,7 @@ says how each is built.
   player's round left open at midnight accepts a turn 23 hours later, and
   the server refuses turns on it after 12:00 UTC two days after its date.
 
-[daily-when]: /docs/research/daily-puzzles.md#when-a-new-puzzle-appears
+[daily-when]: /docs/research/0012-daily-puzzles.md#when-a-new-puzzle-appears
 
 ### Asking a question
 
@@ -250,7 +250,7 @@ says how each is built.
   ...?", or "Is it the ...?" that names an accepted name counts as a right
   guess. Check: "Is it an octopus?" solves the octopus puzzle.
 
-[daily-rules]: /docs/research/daily-puzzles.md#rules-of-the-classic-game
+[daily-rules]: /docs/research/0012-daily-puzzles.md#rules-of-the-classic-game
 
 ### The end of a round
 
@@ -275,7 +275,7 @@ says how each is built.
   set NYT and LinkedIn show ([daily puzzle notes][daily-end]). Check: the
   counts after three rounds.
 
-[daily-end]: /docs/research/daily-puzzles.md#end-of-round-screens
+[daily-end]: /docs/research/0012-daily-puzzles.md#end-of-round-screens
 
 ### Sharing a result
 
@@ -301,7 +301,7 @@ Guessling #12 9/20
 https://apps.apple.com/app/id<APP_ID>
 ```
 
-[daily-share]: /docs/research/daily-puzzles.md#nyt-share-formats
+[daily-share]: /docs/research/0012-daily-puzzles.md#nyt-share-formats
 
 ### Streak
 
@@ -371,7 +371,7 @@ https://apps.apple.com/app/id<APP_ID>
   subscription settings. Check: both open.
 
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
-[rc-buttons]: /docs/research/revenuecat-expo.md#close-restore-and-legal-buttons
+[rc-buttons]: /docs/research/0009-revenuecat-expo.md#close-restore-and-legal-buttons
 
 ### Reporting an answer
 
@@ -467,7 +467,7 @@ https://apps.apple.com/app/id<APP_ID>
 - **CONTENT-9, Should.** No category runs two days in a row. Check: the
   schedule of dates and categories.
 
-[cf-kv]: /docs/research/cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
+[cf-kv]: /docs/research/0010-cloudflare-workers.md#publishing-tomorrows-puzzle-ahead-of-time
 [product-puzzles]: /docs/archive/guessling-product.md#puzzles
 
 ## Non-functional requirements
@@ -501,7 +501,7 @@ https://apps.apple.com/app/id<APP_ID>
   puzzles are published and that Jev answers a test question, and tells the
   team if not. Check: an unpublished date triggers the message.
 
-[apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
+[apple-subs]: /docs/research/0011-apple-requirements.md#auto-renewable-subscription-rules
 
 ### Privacy
 
@@ -524,7 +524,7 @@ https://apps.apple.com/app/id<APP_ID>
 - **PRIV-5, Must.** The App Privacy answers match the TRD's data inventory
   (STORE-5). Check: side by side.
 
-[apple-policy]: /docs/research/apple-requirements.md#what-the-privacy-policy-must-say
+[apple-policy]: /docs/research/0011-apple-requirements.md#what-the-privacy-policy-must-say
 
 ### Security
 
@@ -544,7 +544,7 @@ https://apps.apple.com/app/id<APP_ID>
   purpose ([RevenueCat notes][rc-keys]). Check: the TestFlight build
   starts, which it wouldn't with that key.
 
-[rc-keys]: /docs/research/revenuecat-expo.md#configuring-the-sdk-and-api-keys
+[rc-keys]: /docs/research/0009-revenuecat-expo.md#configuring-the-sdk-and-api-keys
 
 ### Accessibility
 
@@ -567,7 +567,7 @@ https://apps.apple.com/app/id<APP_ID>
   task, the purchase included; they're voluntary for now
   ([Apple notes][apple-a11y]). Check: each claimed label's criteria.
 
-[apple-a11y]: /docs/research/apple-requirements.md#what-each-label-claims
+[apple-a11y]: /docs/research/0011-apple-requirements.md#what-each-label-claims
 
 ### Compatibility
 
@@ -602,7 +602,7 @@ https://apps.apple.com/app/id<APP_ID>
   launch plan: players, puzzles solved, questions asked, and the latest
   consistency results. Check: it runs on September 29.
 
-[rc-report]: /docs/research/revenuecat-expo.md#paywall-reporting
+[rc-report]: /docs/research/0009-revenuecat-expo.md#paywall-reporting
 
 ## App Store listing and review
 
@@ -654,9 +654,9 @@ apply; these are Guessling's own.
   availability settings.
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
-[apple-rating]: /docs/research/apple-requirements.md#questionnaire-answers-for-guessling
-[apple-privacy]: /docs/research/apple-requirements.md#guesslings-data-classified
-[apple-eu]: /docs/research/apple-requirements.md#eu-trader-status-and-storefronts
+[apple-rating]: /docs/research/0011-apple-requirements.md#questionnaire-answers-for-guessling
+[apple-privacy]: /docs/research/0011-apple-requirements.md#guesslings-data-classified
+[apple-eu]: /docs/research/0011-apple-requirements.md#eu-trader-status-and-storefronts
 
 ## Release criteria
 
@@ -743,7 +743,7 @@ safe default:
   new puzzle every day until the last subscription ends. Safe default: keep
   a buffer of at least a week of checked puzzles from October 2026 on.
 
-[apple-age-laws]: /docs/research/apple-requirements.md#age-assurance-laws-in-us-states
+[apple-age-laws]: /docs/research/0011-apple-requirements.md#age-assurance-laws-in-us-states
 
 ## See also
 
@@ -755,10 +755,10 @@ safe default:
   and sounds, as tokens and rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the schedule, the risks,
   and the pitch.
-- [RevenueCat notes](/docs/research/revenuecat-expo.md),
-  [Cloudflare notes](/docs/research/cloudflare-workers.md),
-  [Apple notes](/docs/research/apple-requirements.md), and
-  [daily puzzle notes](/docs/research/daily-puzzles.md): the sources behind
+- [RevenueCat notes](/docs/research/0009-revenuecat-expo.md),
+  [Cloudflare notes](/docs/research/0010-cloudflare-workers.md),
+  [Apple notes](/docs/research/0011-apple-requirements.md), and
+  [daily puzzle notes](/docs/research/0012-daily-puzzles.md): the sources behind
   the requirements.
 
 [idea-open]: /docs/archive/guessling-idea.md#assumptions-and-open-questions

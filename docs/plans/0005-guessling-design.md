@@ -321,9 +321,10 @@ file unless their prompt names one, and never run git.
 
 **Files:**
 
-- Create: `docs/research/motionsites.md`, `docs/research/frontend-trends.md`,
-  `docs/research/ios-design.md`, and `docs/research/game-design.md`, written
-  by four background research agents from primary sources.
+- Create: `docs/research/0013-motionsites.md`,
+  `docs/research/0014-frontend-trends.md`, `docs/research/0015-ios-design.md`,
+  and `docs/research/0016-game-design.md`, written by four background research
+  agents from primary sources.
 - Create: this plan.
 
 - [ ] **Step 1: Check each note and the plan**
@@ -335,13 +336,13 @@ informational.
 - [ ] **Step 2: Commit each note on its own, then the plan**
 
 ```shell
-git add docs/research/motionsites.md
+git add docs/research/0013-motionsites.md
 git commit -m "docs(research): add notes on the motionsites.ai catalog"
-git add docs/research/frontend-trends.md
+git add docs/research/0014-frontend-trends.md
 git commit -m "docs(research): add notes on frontend trends and DESIGN.md"
-git add docs/research/ios-design.md
+git add docs/research/0015-ios-design.md
 git commit -m "docs(research): add notes on designing for iOS 26 with Expo"
-git add docs/research/game-design.md
+git add docs/research/0016-game-design.md
 git commit -m "docs(research): add notes on puzzle game and character design"
 git add docs/plans/0005-guessling-design.md
 git commit -m "docs(plan): plan the design document"
@@ -415,9 +416,9 @@ git commit -m "docs(design): add the frame and the overview"
 - [ ] **Step 1: Write the failing assertions**
 
 ```shell
-check docs/DESIGN.md '^## Influences and trends$' '/docs/research/motionsites\.md' \
-  '/docs/research/frontend-trends\.md' '/docs/research/ios-design\.md' \
-  '/docs/research/game-design\.md'
+check docs/DESIGN.md '^## Influences and trends$' '/docs/research/0013-motionsites\.md' \
+  '/docs/research/0014-frontend-trends\.md' '/docs/research/0015-ios-design\.md' \
+  '/docs/research/0016-game-design\.md'
 ```
 
 - [ ] **Step 2: Write the section**

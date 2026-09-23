@@ -29,7 +29,7 @@ Contents:
 [product-doc]: /docs/PRODUCT.md
 [prd-doc]: /docs/PRD.md
 [trd-doc]: /docs/TRD.md
-[jp-evals]: /docs/research/jev-patterns.md#evals-calibration-and-consistency
+[jp-evals]: /docs/research/0017-jev-patterns.md#evals-calibration-and-consistency
 
 ## Findings for the product, PRD, and TRD
 
@@ -335,7 +335,7 @@ ECE = sum over bins m of (|B_m| / n) * |acc(B_m) - conf(B_m)|
   cut-offs (see
   [Keeping threshold tuning out of the result](#keeping-threshold-tuning-out-of-the-result)).
 
-[jp-routing]: /docs/research/jev-patterns.md#confidence-gated-routing-pattern
+[jp-routing]: /docs/research/0017-jev-patterns.md#confidence-gated-routing-pattern
 
 ## Uncertainty with 80 partner lines
 
@@ -513,7 +513,7 @@ gap = bootstrap((jev, emb), lambda a, b, axis: a.mean(axis) - b.mean(axis),
   without the team's keys, and a seeded bootstrap keeps the intervals the same
   on every run.
 
-[jp-cookbooks]: /docs/research/jev-patterns.md#multi-step-and-real-time-cookbooks
+[jp-cookbooks]: /docs/research/0017-jev-patterns.md#multi-step-and-real-time-cookbooks
 
 ## Keeping threshold tuning out of the result
 
@@ -810,7 +810,7 @@ what the numbers were.
   fitting phrase, and ratings. Converser's partners rated speed and quality no
   differently ([ev-without]), so partner ratings may not move.
 
-[ev-jagged]: /docs/research/next-gen-evidence.md#jevs-jagged-edges-for-turn
+[ev-jagged]: /docs/research/0021-next-gen-evidence.md#jevs-jagged-edges-for-turn
 
 ## Baselines: BM25 and embeddings
 
@@ -1165,7 +1165,7 @@ Stivers' shares of questions:
   with most groups "unable to type even a single selection within these bounds"
   ([rayman-2024]).
 
-[ev-need]: /docs/research/next-gen-evidence.md#evidence-that-turns-problem-matters
+[ev-need]: /docs/research/0021-next-gen-evidence.md#evidence-that-turns-problem-matters
 [rayman-2024]: https://pubmed.ncbi.nlm.nih.gov/37916671/
 
 ### Measuring time to the row
@@ -1215,9 +1215,9 @@ Stivers' shares of questions:
 [apple-st-attributes]: https://developer.apple.com/documentation/speech/speechtranscriber/resultattributeoption
 [apple-ossignposter]: https://developer.apple.com/documentation/os/ossignposter
 [rn-performance]: https://reactnative.dev/docs/global-performance
-[tech-speech]: /docs/research/next-gen-tech.md#speechanalyzer-and-speechtranscriber
-[jev-latency]: /docs/research/jev.md#rate-limits-context-length-and-latency
-[cf-placement]: /docs/research/cloudflare-workers.md#latency-and-placement
+[tech-speech]: /docs/research/0018-next-gen-tech.md#speechanalyzer-and-speechtranscriber
+[jev-latency]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
+[cf-placement]: /docs/research/0010-cloudflare-workers.md#latency-and-placement
 
 ### A latency target for Turn
 
@@ -1328,8 +1328,8 @@ What the sources don't say that Turn's evaluation needs, as of September 22,
   from a course copy of the publisher's PDF.
 
 [idea-how]: /docs/IDEA.md#how-it-works
-[ev-without]: /docs/research/next-gen-evidence.md#turn-without-jev
-[tech-embed]: /docs/research/next-gen-tech.md#workers-ai-embeddings-and-vectorize
+[ev-without]: /docs/research/0021-next-gen-evidence.md#turn-without-jev
+[tech-embed]: /docs/research/0018-next-gen-tech.md#workers-ai-embeddings-and-vectorize
 [voorhees-1999]: https://trec.nist.gov/pubs/trec8/papers/qa_report.pdf
 [ubuntu-2015]: https://arxiv.org/abs/1506.08909
 [geifman-2017]: https://arxiv.org/abs/1705.08500
@@ -1346,7 +1346,7 @@ What the sources don't say that Turn's evaluation needs, as of September 22,
 [nixon-2019]: https://arxiv.org/abs/1904.01685
 [kumar-2019]: https://arxiv.org/abs/1909.10155
 [roelofs-2022]: https://arxiv.org/abs/2012.08668
-[jp-calibration]: /docs/research/jev-patterns.md#calibration-claims-and-evidence
+[jp-calibration]: /docs/research/0017-jev-patterns.md#calibration-claims-and-evidence
 [hf-bge]: https://huggingface.co/BAAI/bge-small-en-v1.5
 [card-2020]: https://arxiv.org/abs/2010.06595
 [idea-jev]: /docs/IDEA.md#how-jev-fits

@@ -110,7 +110,7 @@ being said, and nothing to wait for.
 - **What it rules out.** Decoration, mascots, clinical icons, gradients, and
   anything that moves on its own.
 
-[aac-criticize]: /docs/research/aac-design.md#what-users-criticize
+[aac-criticize]: /docs/research/0028-aac-design.md#what-users-criticize
 
 ### Scope
 
@@ -123,7 +123,7 @@ being said, and nothing to wait for.
   a partner view that flips the last phrase toward the partner, an
   [open question](#open-questions); and any appearance setting inside the app.
 
-[ms-web]: /docs/research/turn-motionsites.md#a-one-page-website
+[ms-web]: /docs/research/0026-turn-motionsites.md#a-one-page-website
 
 ### Assumptions
 
@@ -172,16 +172,16 @@ note that holds its sources.
   So its craft transfers and its sizes don't: its buttons are a median of 40
   pixels, under Turn's 44-point floor ([motionsites notes][ms-findings]).
 
-[ms-spec]: /docs/research/turn-motionsites.md#layout-and-type-in-the-closest-prompts
-[ms-a11y]: /docs/research/turn-motionsites.md#accessibility-of-the-common-patterns
-[ms-color]: /docs/research/turn-motionsites.md#color-imagery-and-motion-in-the-closest-prompts
-[ft-sample]: /docs/research/turn-frontend-trends.md#a-turn-shaped-sample-through-the-linter
-[ft-studies]: /docs/research/turn-frontend-trends.md#studies-of-ai-generated-interfaces
-[ft-kits]: /docs/research/turn-frontend-trends.md#styling-and-component-kits
-[ft-m3e]: /docs/research/turn-frontend-trends.md#material-3-expressive-and-older-users
-[aac-patterns]: /docs/research/aac-design.md#patterns-across-the-apps
-[ft-bans]: /docs/research/turn-frontend-trends.md#bans-that-suit-an-aac-app
-[ms-findings]: /docs/research/turn-motionsites.md#findings-for-designmd
+[ms-spec]: /docs/research/0026-turn-motionsites.md#layout-and-type-in-the-closest-prompts
+[ms-a11y]: /docs/research/0026-turn-motionsites.md#accessibility-of-the-common-patterns
+[ms-color]: /docs/research/0026-turn-motionsites.md#color-imagery-and-motion-in-the-closest-prompts
+[ft-sample]: /docs/research/0027-turn-frontend-trends.md#a-turn-shaped-sample-through-the-linter
+[ft-studies]: /docs/research/0027-turn-frontend-trends.md#studies-of-ai-generated-interfaces
+[ft-kits]: /docs/research/0027-turn-frontend-trends.md#styling-and-component-kits
+[ft-m3e]: /docs/research/0027-turn-frontend-trends.md#material-3-expressive-and-older-users
+[aac-patterns]: /docs/research/0028-aac-design.md#patterns-across-the-apps
+[ft-bans]: /docs/research/0027-turn-frontend-trends.md#bans-that-suit-an-aac-app
+[ms-findings]: /docs/research/0026-turn-motionsites.md#findings-for-designmd
 
 ## Colors
 
@@ -281,7 +281,7 @@ colors:
     dark-hc: '#000000'
 ```
 
-[ft-appearances]: /docs/research/turn-frontend-trends.md#appearances-contrast-and-motion-the-format-lacks
+[ft-appearances]: /docs/research/0027-turn-frontend-trends.md#appearances-contrast-and-motion-the-format-lacks
 
 ### Color roles
 
@@ -321,9 +321,9 @@ colors:
   coding in AAC comes from symbol grids for children, and no study tested it
   on text ([AAC design notes][aac-color]).
 
-[ios-grays]: /docs/research/turn-ios-design.md#system-colors-and-grays
-[ms-contrast]: /docs/research/turn-motionsites.md#text-contrast-143
-[aac-color]: /docs/research/aac-design.md#color-coding-and-backgrounds
+[ios-grays]: /docs/research/0029-turn-ios-design.md#system-colors-and-grays
+[ms-contrast]: /docs/research/0026-turn-motionsites.md#text-contrast-143
+[aac-color]: /docs/research/0028-aac-design.md#color-coding-and-backgrounds
 
 ### Contrast
 
@@ -375,7 +375,7 @@ them (A11Y-7).
   white cards stand off it with their edges; the dark board is black, as in
   iOS's own dark appearance, with dark gray cards.
 
-[aac-polarity]: /docs/research/aac-design.md#dark-mode-contrast-polarity-and-glare
+[aac-polarity]: /docs/research/0028-aac-design.md#dark-mode-contrast-polarity-and-glare
 
 ## Typography
 
@@ -486,12 +486,12 @@ are its regular and emphasized ones ([iOS design notes][ios-dt]).
   are set in Atkinson Hyperlegible Next, under the SIL Open Font License
   ([Turn's iOS design notes][ios-pitch-fonts]).
 
-[aac-type]: /docs/research/aac-design.md#text-size-line-length-and-fonts
-[ios-dt]: /docs/research/ios-design.md#dynamic-type-sizes
-[ios-scale]: /docs/research/turn-ios-design.md#scaling-text-in-react-native-086
-[ios-bold]: /docs/research/turn-ios-design.md#bold-text-and-custom-fonts
-[ft-type]: /docs/research/turn-frontend-trends.md#bold-large-and-variable-type
-[ios-pitch-fonts]: /docs/research/turn-ios-design.md#fonts-in-the-video-and-gallery-images
+[aac-type]: /docs/research/0028-aac-design.md#text-size-line-length-and-fonts
+[ios-dt]: /docs/research/0015-ios-design.md#dynamic-type-sizes
+[ios-scale]: /docs/research/0029-turn-ios-design.md#scaling-text-in-react-native-086
+[ios-bold]: /docs/research/0029-turn-ios-design.md#bold-text-and-custom-fonts
+[ft-type]: /docs/research/0027-turn-frontend-trends.md#bold-large-and-variable-type
+[ios-pitch-fonts]: /docs/research/0029-turn-ios-design.md#fonts-in-the-video-and-gallery-images
 
 ## Layout
 
@@ -572,8 +572,8 @@ bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
   where one thumb reaches best, and the top bar holds only what isn't speech
   ([AAC design notes][aac-reach]).
 
-[ios-bars]: /docs/research/turn-ios-design.md#bars-that-minimize-and-new-scroll-edges
-[aac-reach]: /docs/research/aac-design.md#one-handed-use-and-where-controls-sit
+[ios-bars]: /docs/research/0029-turn-ios-design.md#bars-that-minimize-and-new-scroll-edges
+[aac-reach]: /docs/research/0028-aac-design.md#one-handed-use-and-where-controls-sit
 
 ### Widths
 
@@ -611,7 +611,7 @@ points, about 13 characters of `title3-emphasized` inside 12-point padding.
   AX5 a slot is 154 points tall, and the row holds its height whatever it
   shows.
 
-[ios-dt-turn]: /docs/research/turn-ios-design.md#dynamic-type-sizes-for-turns-styles
+[ios-dt-turn]: /docs/research/0029-turn-ios-design.md#dynamic-type-sizes-for-turns-styles
 
 ### With the keyboard up
 
@@ -649,10 +649,10 @@ points, about 13 characters of `title3-emphasized` inside 12-point padding.
   moves Turn's own colors to their `-hc` values
   ([Turn's iOS design notes][ios-glass-settings]).
 
-[ios-key]: /docs/research/turn-ios-design.md#the-compatibility-key-under-xcode-27
-[ios-chrome]: /docs/research/turn-ios-design.md#turns-chrome-that-turns-to-glass
-[ios-glass-expo]: /docs/research/turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
-[ios-glass-settings]: /docs/research/turn-ios-design.md#settings-that-change-glass
+[ios-key]: /docs/research/0029-turn-ios-design.md#the-compatibility-key-under-xcode-27
+[ios-chrome]: /docs/research/0029-turn-ios-design.md#turns-chrome-that-turns-to-glass
+[ios-glass-expo]: /docs/research/0029-turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
+[ios-glass-settings]: /docs/research/0029-turn-ios-design.md#settings-that-change-glass
 
 ## Shapes
 
@@ -677,7 +677,7 @@ rounded:
   padding between them; `sm` is for small marks inside cards, such as the
   speaking symbol.
 
-[ios-capsule]: /docs/research/ios-design.md#glass-in-custom-controls
+[ios-capsule]: /docs/research/0015-ios-design.md#glass-in-custom-controls
 
 ## Components
 
@@ -1019,9 +1019,9 @@ The row's height and its six slots are fixed for the text size and the screen
 - **Announcing.** A changed row is announced once, as the number of replies:
   "3 replies", or "1 reply" for the big button (A11Y-2).
 
-[aac-cost]: /docs/research/aac-design.md#what-prediction-displays-cost
-[ios-symbols]: /docs/research/turn-ios-design.md#symbols-for-speaking-listening-and-answering
-[aac-stale]: /docs/research/aac-design.md#stale-rows-empty-rows-and-targets-that-move
+[aac-cost]: /docs/research/0028-aac-design.md#what-prediction-displays-cost
+[ios-symbols]: /docs/research/0029-turn-ios-design.md#symbols-for-speaking-listening-and-answering
+[aac-stale]: /docs/research/0028-aac-design.md#stale-rows-empty-rows-and-targets-that-move
 
 ### The strip
 
@@ -1086,7 +1086,7 @@ word:
 - **Free lines.** The count, "20 free", sits under "Listen" in `subheadline`,
   in tabular figures, until Turn Listen is bought (PAY-1).
 
-[aac-light]: /docs/research/aac-design.md#showing-a-bystander-that-a-device-listens
+[aac-light]: /docs/research/0028-aac-design.md#showing-a-bystander-that-a-device-listens
 
 ### The place picker
 
@@ -1153,7 +1153,7 @@ A 52-point bar above the home indicator, with four capsule buttons in
   on the board, with `body` text and `link` for links.
 - **Symbol buttons.** At least 44 by 44 points, each with a label.
 
-[ios-hig-changes]: /docs/research/turn-ios-design.md#hig-changes-since-june-2025
+[ios-hig-changes]: /docs/research/0029-turn-ios-design.md#hig-changes-since-june-2025
 
 ## Motion
 
@@ -1189,10 +1189,10 @@ is the whole inventory ([trends notes][ft-proposals]).
   effect, since `expo-symbols` never reads Reduce Motion
   ([Turn's iOS design notes][ios-light]).
 
-[ft-proposals]: /docs/research/turn-frontend-trends.md#modes-motion-and-accessibility-in-open-proposals
-[ios-put]: /docs/research/turn-ios-design.md#motion-when-buttons-stay-put
-[ms-motion]: /docs/research/turn-motionsites.md#motion-222-and-233
-[ft-reanimated]: /docs/research/turn-frontend-trends.md#reanimated-and-moti
+[ft-proposals]: /docs/research/0027-turn-frontend-trends.md#modes-motion-and-accessibility-in-open-proposals
+[ios-put]: /docs/research/0029-turn-ios-design.md#motion-when-buttons-stay-put
+[ms-motion]: /docs/research/0026-turn-motionsites.md#motion-222-and-233
+[ft-reanimated]: /docs/research/0027-turn-frontend-trends.md#reanimated-and-moti
 
 ## Sound and haptics
 
@@ -1207,7 +1207,7 @@ is the whole inventory ([trends notes][ft-proposals]).
   loudspeaker in Listen mode, as VOICE-4 and the
   [TRD's audio session](/docs/TRD.md#the-audio-session) set.
 
-[ios-haptics]: /docs/research/turn-ios-design.md#haptics-while-turn-listens-or-speaks
+[ios-haptics]: /docs/research/0029-turn-ios-design.md#haptics-while-turn-listens-or-speaks
 
 ## Screens
 
@@ -1260,7 +1260,7 @@ keeps what it showed.
 - Every word is text, never an image, so Accessibility Reader and VoiceOver
   read it ([Turn's iOS design notes][ios-reader]).
 
-[ios-reader]: /docs/research/turn-ios-design.md#accessibility-features-in-ios-26-and-27
+[ios-reader]: /docs/research/0029-turn-ios-design.md#accessibility-features-in-ios-26-and-27
 
 ### The consent card
 
@@ -1286,8 +1286,8 @@ from across a table or beside a mounted phone (CONSENT-4)
   it holds only the under-18 switch and Read aloud, so the partner can answer
   at a glance ([AAC design notes][aac-consent]).
 
-[aac-mounted]: /docs/research/aac-design.md#mounted-phones-and-wheelchairs
-[aac-consent]: /docs/research/aac-design.md#consent-notices-people-read
+[aac-mounted]: /docs/research/0028-aac-design.md#mounted-phones-and-wheelchairs
+[aac-consent]: /docs/research/0028-aac-design.md#consent-notices-people-read
 
 ### Settings
 
@@ -1356,9 +1356,9 @@ editor to match:
   there's nothing to design, and the video names it as a test purchase
   ([Turn's iOS design notes][ios-test-store]).
 
-[ios-paywall-a11y]: /docs/research/turn-ios-design.md#dynamic-type-voiceover-and-reduce-motion-in-paywalls
-[ios-paywall-limits]: /docs/research/turn-ios-design.md#limits-on-matching-turns-design
-[ios-test-store]: /docs/research/turn-ios-design.md#the-paywall-under-test-store
+[ios-paywall-a11y]: /docs/research/0029-turn-ios-design.md#dynamic-type-voiceover-and-reduce-motion-in-paywalls
+[ios-paywall-limits]: /docs/research/0029-turn-ios-design.md#limits-on-matching-turns-design
+[ios-test-store]: /docs/research/0029-turn-ios-design.md#the-paywall-under-test-store
 
 ### Launch
 
@@ -1366,7 +1366,7 @@ The launch screen is the `board` color in each appearance, with no image,
 since Apple says to "Avoid using a launch screen as a branding opportunity"
 ([Turn's iOS design notes][ios-launch]); the grid follows within two seconds.
 
-[ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
+[ios-launch]: /docs/research/0029-turn-ios-design.md#the-launch-screen-in-expo-sdk-57
 
 ## Words on screen
 
@@ -1389,7 +1389,7 @@ since Apple says to "Avoid using a launch screen as a branding opportunity"
   one line, with no alarm color, since a breakdown in public is a social one
   too ([AAC design notes][aac-stigma]).
 
-[aac-tone]: /docs/research/aac-design.md#identity-and-tone
+[aac-tone]: /docs/research/0028-aac-design.md#identity-and-tone
 
 ### Strings the PRD leaves open
 
@@ -1522,8 +1522,8 @@ listing, since each label has published criteria
 - **Where.** An iPhone on iOS 26 and the iOS 27 simulator; VoiceOver, Switch
   Control, and Voice Control on the iPhone, since the simulator lacks them.
 
-[ios-labels]: /docs/research/turn-ios-design.md#accessibility-nutrition-labels-for-turn
-[aac-touch]: /docs/research/aac-design.md#touch-settings-in-ios-27
+[ios-labels]: /docs/research/0029-turn-ios-design.md#accessibility-nutrition-labels-for-turn
+[aac-touch]: /docs/research/0028-aac-design.md#touch-settings-in-ios-27
 
 ## App icon and pitch assets
 
@@ -1540,7 +1540,7 @@ listing, since each label has published criteria
   tinted looks.
 - **Shipaton's icon.** Icon Composer's flattened 1024 by 1024 export.
 
-[ios-icon]: /docs/research/turn-ios-design.md#icon-appearances-and-icon-composer-2
+[ios-icon]: /docs/research/0029-turn-ios-design.md#icon-appearances-and-icon-composer-2
 
 ### Screenshots and Devpost images
 
@@ -1558,8 +1558,8 @@ listing, since each label has published criteria
   Next, since Devpost shows a portrait screenshot alone at 264 by 573 pixels
   ([motionsites notes][ms-devpost]).
 
-[ios-devpost]: /docs/research/turn-ios-design.md#devpost-images
-[ms-devpost]: /docs/research/turn-motionsites.md#devpost-gallery-images-and-thumbnail
+[ios-devpost]: /docs/research/0029-turn-ios-design.md#devpost-images
+[ms-devpost]: /docs/research/0026-turn-motionsites.md#devpost-gallery-images-and-thumbnail
 
 ### The README's images
 
@@ -1572,7 +1572,7 @@ listing, since each label has published criteria
   since GitHub pauses GIFs for people who reduce motion
   ([motionsites notes][ms-readme]).
 
-[ms-readme]: /docs/research/turn-motionsites.md#the-readme-on-github
+[ms-readme]: /docs/research/0026-turn-motionsites.md#the-readme-on-github
 
 ### The video
 
@@ -1594,9 +1594,9 @@ listing, since each label has published criteria
 - **Sound.** Turn's speech and the partner's voice, with no music under them;
   Jev and TypeSafe go unnamed until TypeSafe agrees (SUBMIT-6).
 
-[ios-youtube]: /docs/research/turn-ios-design.md#youtube-thumbnails-and-captions
-[ms-video]: /docs/research/turn-motionsites.md#the-demo-video
-[ios-capture]: /docs/research/turn-ios-design.md#simulator-screenshots-and-recordings-in-xcode-27
+[ios-youtube]: /docs/research/0029-turn-ios-design.md#youtube-thumbnails-and-captions
+[ms-video]: /docs/research/0026-turn-motionsites.md#the-demo-video
+[ios-capture]: /docs/research/0029-turn-ios-design.md#simulator-screenshots-and-recordings-in-xcode-27
 
 ## Do's and don'ts
 
@@ -1635,9 +1635,9 @@ listing, since each label has published criteria
   files can point agents to this file, rather than an import that loads it
   into every session ([trends notes][ft-agents]).
 
-[ft-linter]: /docs/research/turn-frontend-trends.md#what-the-linter-checks
-[ft-generators]: /docs/research/turn-frontend-trends.md#generators-that-emit-expo-or-native-code
-[ft-agents]: /docs/research/turn-frontend-trends.md#where-agents-meet-the-file
+[ft-linter]: /docs/research/0027-turn-frontend-trends.md#what-the-linter-checks
+[ft-generators]: /docs/research/0027-turn-frontend-trends.md#generators-that-emit-expo-or-native-code
+[ft-agents]: /docs/research/0027-turn-frontend-trends.md#where-agents-meet-the-file
 
 ### Keeping code in step
 
@@ -1685,8 +1685,8 @@ Each has a safe default, which this document follows until someone decides.
   has tested a portrait-locked iPhone app on its inner display. Safe default:
   the width rules above ([Turn's iOS design notes][ios-resize]).
 
-[aac-partner]: /docs/research/aac-design.md#displays-that-face-the-partner
-[aac-guards]: /docs/research/aac-design.md#guards-against-accidental-activation
+[aac-partner]: /docs/research/0028-aac-design.md#displays-that-face-the-partner
+[aac-guards]: /docs/research/0028-aac-design.md#guards-against-accidental-activation
 
 ## See also
 
@@ -1698,26 +1698,26 @@ Each has a safe default, which this document follows until someone decides.
   this document describes.
 - [Idea](/docs/IDEA.md): the pitch, the schedule, and the risks.
 - The research behind these choices:
-  [motionsites.ai for Turn](/docs/research/turn-motionsites.md),
-  [frontend trends](/docs/research/turn-frontend-trends.md),
-  [AAC interface design](/docs/research/aac-design.md),
-  [Turn's iOS design](/docs/research/turn-ios-design.md), and
-  [AAC practice](/docs/research/aac-practice.md).
+  [motionsites.ai for Turn](/docs/research/0026-turn-motionsites.md),
+  [frontend trends](/docs/research/0027-turn-frontend-trends.md),
+  [AAC interface design](/docs/research/0028-aac-design.md),
+  [Turn's iOS design](/docs/research/0029-turn-ios-design.md), and
+  [AAC practice](/docs/research/0022-aac-practice.md).
 - [Google's DESIGN.md format][gdm]: the specification and the linter.
 - [Guessling design](/docs/archive/guessling-design.md): the design for the
   team's first idea, archived.
 
 [gdm]: https://github.com/google-labs-code/design.md
 [product-principles]: /docs/PRODUCT.md#product-principles
-[ft-tokens]: /docs/research/turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
-[aac-stigma]: /docs/research/aac-design.md#social-acceptability-and-stigma
-[ft-calm]: /docs/research/turn-frontend-trends.md#calm-technology
-[aac-targets]: /docs/research/aac-design.md#target-size-and-spacing-for-tremor-and-weakness
-[ios-glass-content]: /docs/research/turn-ios-design.md#content-and-controls-on-glass
-[ft-nobans]: /docs/research/turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
-[ios-light]: /docs/research/turn-ios-design.md#a-pulsing-listening-light
-[ios-resize]: /docs/research/turn-ios-design.md#resizable-iphone-apps-and-iphone-duo
-[ms-app]: /docs/research/turn-motionsites.md#the-native-iphone-app
+[ft-tokens]: /docs/research/0027-turn-frontend-trends.md#what-goes-in-tokens-and-what-in-prose
+[aac-stigma]: /docs/research/0028-aac-design.md#social-acceptability-and-stigma
+[ft-calm]: /docs/research/0027-turn-frontend-trends.md#calm-technology
+[aac-targets]: /docs/research/0028-aac-design.md#target-size-and-spacing-for-tremor-and-weakness
+[ios-glass-content]: /docs/research/0029-turn-ios-design.md#content-and-controls-on-glass
+[ft-nobans]: /docs/research/0027-turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
+[ios-light]: /docs/research/0029-turn-ios-design.md#a-pulsing-listening-light
+[ios-resize]: /docs/research/0029-turn-ios-design.md#resizable-iphone-apps-and-iphone-duo
+[ms-app]: /docs/research/0026-turn-motionsites.md#the-native-iphone-app
 [trd-a11y]: /docs/TRD.md#accessibility-in-the-app
-[aac-confidence]: /docs/research/aac-design.md#whether-to-show-confidence
-[aac-grid]: /docs/research/aac-design.md#grid-size-scrolling-and-navigation
+[aac-confidence]: /docs/research/0028-aac-design.md#whether-to-show-confidence
+[aac-grid]: /docs/research/0028-aac-design.md#grid-size-scrolling-and-navigation

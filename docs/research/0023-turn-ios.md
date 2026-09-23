@@ -20,7 +20,7 @@ Contents:
 1.  [Conflicts between sources](#conflicts-between-sources)
 1.  [Gaps](#gaps)
 
-[tech-notes]: /docs/research/next-gen-tech.md
+[tech-notes]: /docs/research/0018-next-gen-tech.md
 
 ## Findings for the product, PRD, and TRD
 
@@ -91,7 +91,7 @@ own these facts. The [technology notes][tech-speech] already cover the
 versions, the on-device promise, languages, and concurrency; this section adds
 what the transcription module needs.
 
-[tech-speech]: /docs/research/next-gen-tech.md#speechanalyzer-and-speechtranscriber
+[tech-speech]: /docs/research/0018-next-gen-tech.md#speechanalyzer-and-speechtranscriber
 
 ### From the microphone to the analyzer
 
@@ -391,7 +391,7 @@ inputBuilder.yield(AnalyzerInput(buffer: converted))
 [st]: https://developer.apple.com/documentation/speech/speechtranscriber
 [dictation]: https://developer.apple.com/documentation/speech/dictationtranscriber
 [dictation-frequent]: https://developer.apple.com/documentation/speech/dictationtranscriber/reportingoption/frequentfinalization
-[tech-conflicts]: /docs/research/next-gen-tech.md#conflicts-between-sources
+[tech-conflicts]: /docs/research/0018-next-gen-tech.md#conflicts-between-sources
 [ios27-notes]: https://developer.apple.com/documentation/ios-ipados-release-notes/ios-ipados-27-release-notes
 
 ## Listening and speaking at once
@@ -682,7 +682,7 @@ iOS 14 and measure similarity; this section adds what name swapping and an
 embedding shortlist need. No NaturalLanguage symbol is newer than iOS 17, and
 Apple keeps no NaturalLanguage updates page.
 
-[ev-simpler]: /docs/research/next-gen-evidence.md#what-simpler-methods-offer
+[ev-simpler]: /docs/research/0021-next-gen-evidence.md#what-simpler-methods-offer
 
 ### Swapping names for tags with NLTagger
 
@@ -797,9 +797,9 @@ technology notes already cover [what the Modules API is][tech-bridge],
 [development builds][tech-dev-builds], and the free account's
 [7-day, 3-device limits][tech-accounts].
 
-[tech-bridge]: /docs/research/next-gen-tech.md#writing-a-swift-bridge-with-expo-modules
-[tech-dev-builds]: /docs/research/next-gen-tech.md#expo-go-and-development-builds
-[tech-accounts]: /docs/research/next-gen-tech.md#apple-accounts-for-a-student-team
+[tech-bridge]: /docs/research/0018-next-gen-tech.md#writing-a-swift-bridge-with-expo-modules
+[tech-dev-builds]: /docs/research/0018-next-gen-tech.md#expo-go-and-development-builds
+[tech-accounts]: /docs/research/0018-next-gen-tech.md#apple-accounts-for-a-student-team
 
 ### Scaffolding and autolinking local modules
 
@@ -901,7 +901,7 @@ export default requireNativeModule<MyModule>('MyModule')
   doesn't edit the module's podspec, which still says 16.4, so keep the checks
   either way.
 
-[rc-min-ios]: /docs/research/revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
+[rc-min-ios]: /docs/research/0009-revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
 [glass-module]: https://github.com/expo/expo/blob/sdk-57/packages/expo-glass-effect/ios/GlassEffectModule.swift
 [build-props]: https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/
 
@@ -1021,7 +1021,7 @@ Sources: [expo-speech][npm-expo-speech]; [expo-speech-recognition][npm-esr];
   Either way, no recognition task runs long enough to meet the one-minute
   limit.
 
-[tech-modules]: /docs/research/next-gen-tech.md#speech-camera-and-model-modules
+[tech-modules]: /docs/research/0018-next-gen-tech.md#speech-camera-and-model-modules
 [esr-changelog]: https://github.com/jamsch/expo-speech-recognition/blob/v57.1.0/CHANGELOG.md
 [esr-79]: https://github.com/jamsch/expo-speech-recognition/issues/79
 [sfspeech]: https://developer.apple.com/documentation/speech/sfspeechrecognizer
@@ -1147,7 +1147,7 @@ so.
 [react-keys]: https://react.dev/learn/rendering-lists
 [rn-info]: https://reactnative.dev/docs/0.86/accessibilityinfo
 [rn-a11y]: https://reactnative.dev/docs/0.86/accessibility
-[design-text]: /docs/research/ios-design.md#how-react-native-scales-text
+[design-text]: /docs/research/0015-ios-design.md#how-react-native-scales-text
 
 ## Conflicts between sources
 
@@ -1239,7 +1239,7 @@ What no source settled on September 22, 2026:
 - **React Native.** Nothing on keeping VoiceOver focus through a re-render or
   on layout shift.
 
-[ev-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
+[ev-devices]: /docs/research/0021-next-gen-evidence.md#turn-on-students-devices
 [sa]: https://developer.apple.com/documentation/speech/speechanalyzer
 [sample-26]: https://developer.apple.com/documentation/speech/bringing-advanced-speech-to-text-capabilities-to-your-app
 [install-audio-tap]: https://developer.apple.com/documentation/avfaudio/avaudionode/installaudiotap(onbus:buffersize:format:tapprovider:)

@@ -354,7 +354,7 @@ Synthesis: the table condenses the app sections below it, where the sources are.
   text, size, and color of the captions", and its accuracy "shouldn't be relied
   upon in high-risk or emergency situations" ([guide][captions-guide]).
 
-[aac-live-speech]: /docs/research/aac-practice.md#live-speech
+[aac-live-speech]: /docs/research/0022-aac-practice.md#live-speech
 [ls-support]: https://support.apple.com/en-us/105018
 [ls-guide]: https://support.apple.com/guide/iphone/type-to-speak-iphcf92d2d9b/27/ios/27
 [captions-guide]: https://support.apple.com/guide/iphone/get-live-captions-of-spoken-audio-iphe0990f7bb/27/ios/27
@@ -391,7 +391,7 @@ Most display research in AAC used symbols and children; this section says where
 its findings reach literate adults and where they don't. The [AAC practice
 notes][aac-fixed] cover fixed positions.
 
-[aac-fixed]: /docs/research/aac-practice.md#fixed-button-positions-and-motor-automaticity
+[aac-fixed]: /docs/research/0022-aac-practice.md#fixed-button-positions-and-motor-automaticity
 
 ### Color coding and backgrounds
 
@@ -491,16 +491,16 @@ notes][aac-fixed] cover fixed positions.
   readability" for 48 adults with dyslexia ([Rello and Baeza-Yates,
   2013][rello-2013]); and a 2026 meta-analysis found dyslexia fonts had "no
   consistent or reliable effect" ([Azzarello et al., 2026][azzarello-2026]).
-- Synthesis: the [iOS design note](/docs/research/turn-ios-design.md) covers
-  Dynamic Type; this research adds a floor. At accessibility sizes the row and
-  the grid should drop columns so each phrase keeps about 13 characters a line,
-  down to one phrase a line, and never truncate. Left-align phrase text so each
-  line starts in the same place, keep safety-critical controls off the far left
-  edge alone, and let the layout survive a text-size change in mid-conversation,
-  since iOS 27 lets people "Change the size of text while you're in an app"
-  ([Apple][ug-text]). Use the system font with Bold Text honored; Atkinson
-  Hyperlegible Next can be an option but not a claim, and Turn shouldn't ship a
-  dyslexia font.
+- Synthesis: the [iOS design note](/docs/research/0029-turn-ios-design.md)
+  covers Dynamic Type; this research adds a floor. At accessibility sizes the
+  row and the grid should drop columns so each phrase keeps about 13 characters
+  a line, down to one phrase a line, and never truncate. Left-align phrase text
+  so each line starts in the same place, keep safety-critical controls off the
+  far left edge alone, and let the layout survive a text-size change in
+  mid-conversation, since iOS 27 lets people "Change the size of text while
+  you're in an app" ([Apple][ug-text]). Use the system font with Bold Text
+  honored; Atkinson Hyperlegible Next can be an option but not a claim, and Turn
+  shouldn't ship a dyslexia font.
 
 [legge-bigelow-2011]: https://pmc.ncbi.nlm.nih.gov/articles/PMC3428264/
 [calabrese-2016]: https://pmc.ncbi.nlm.nih.gov/articles/PMC4961000/
@@ -564,7 +564,7 @@ the iPhone 11's "326 ppi" screen draws two pixels per point and the iPhone 17's
 ([HIG][hig-images]); so 12 mm is 77 or 72 points, 18 mm is 116 or 109, and
 [A11Y-1][prd-a11y]'s 64 points is 10.0 to 10.6 mm.
 
-[aac-targets]: /docs/research/aac-practice.md#minimum-target-sizes
+[aac-targets]: /docs/research/0022-aac-practice.md#minimum-target-sizes
 [hig-images]: https://developer.apple.com/design/human-interface-guidelines/images
 
 ### Target size and spacing for tremor and weakness
@@ -656,7 +656,7 @@ the iPhone 11's "326 ppi" screen draws two pixels per point and the iPhone 17's
 [p2g-accidental]: https://www.assistiveware.com/support/proloquo2go/alternative-access/access-method
 [nwacs-keyguards]: https://nwacs.info/blog/2021/5/keyguards-improve-activation-accuracy
 [mccormack-1990]: https://pubmed.ncbi.nlm.nih.gov/2330961/
-[aac-wcag]: /docs/research/aac-practice.md#wcag-22-in-a-native-app
+[aac-wcag]: /docs/research/0022-aac-practice.md#wcag-22-in-a-native-app
 
 ### One-handed use and where controls sit
 
@@ -921,7 +921,7 @@ login page and a 403. No reviewer is named.
 The [AAC practice notes][aac-own-words] cover what AAC users say about AI
 suggestions; this section covers how to display them and the system's doubt.
 
-[aac-own-words]: /docs/research/aac-practice.md#speaking-in-their-own-words
+[aac-own-words]: /docs/research/0022-aac-practice.md#speaking-in-their-own-words
 
 ### How mainstream products mark suggestions
 
@@ -957,7 +957,7 @@ suggestions; this section covers how to display them and the system's doubt.
 [hohenstein-2023]: https://doi.org/10.1038/s41598-023-30938-9
 [khadpe-2025]: https://arxiv.org/abs/2509.09645
 [hohenstein-jung-2020]: https://doi.org/10.1016/j.chb.2019.106190
-[aac-authorship]: /docs/research/aac-practice.md#authorship-and-how-partners-see-suggestions
+[aac-authorship]: /docs/research/0022-aac-practice.md#authorship-and-how-partners-see-suggestions
 
 ### Whether to show confidence
 
@@ -1101,7 +1101,7 @@ suggestions; this section covers how to display them and the system's doubt.
   ([listing][rejoin-listing]) came after Vocable's GPT answers of September 18,
   2023 ([listing][voc-listing]).
 
-[aac-fail]: /docs/research/aac-practice.md#why-prestored-phrase-systems-work-or-fail
+[aac-fail]: /docs/research/0022-aac-practice.md#why-prestored-phrase-systems-work-or-fail
 [rejoin-als]: https://rejoinvoice.com/aac-for-als
 
 ## Gaps
@@ -1150,13 +1150,13 @@ What the sources read don't say, as of September 23, 2026:
   this note tests.
 - [TRD](/docs/TRD.md#the-iphone-app): the iPhone app's screens and
   accessibility.
-- [iOS design notes](/docs/research/turn-ios-design.md), [frontend trends
-  notes](/docs/research/turn-frontend-trends.md), and [motionsites.ai
-  notes](/docs/research/turn-motionsites.md): the sibling notes for DESIGN.md,
-  written on September 23, 2026.
+- [iOS design notes](/docs/research/0029-turn-ios-design.md), [frontend trends
+  notes](/docs/research/0027-turn-frontend-trends.md), and [motionsites.ai
+  notes](/docs/research/0026-turn-motionsites.md): the sibling notes for
+  DESIGN.md, written on September 23, 2026.
 
-[aac-notes]: /docs/research/aac-practice.md
-[ev-rivals]: /docs/research/next-gen-evidence.md#turn-rival-apps
+[aac-notes]: /docs/research/0022-aac-practice.md
+[ev-rivals]: /docs/research/0021-next-gen-evidence.md#turn-rival-apps
 [p4t-listing]: https://apps.apple.com/us/app/proloquo4text-aac/id751646884
 [pred-listing]: https://apps.apple.com/us/app/predictable/id404445007
 [spoken-listing]: https://apps.apple.com/us/app/spoken-tap-to-talk-aac/id1034487817
@@ -1186,7 +1186,7 @@ What the sources read don't say, as of September 23, 2026:
 [nicolau-jorge-2012]: https://doi.org/10.1145/2384916.2384939
 [bergstrom-2014]: https://doi.org/10.1145/2556288.2557354
 [hig-layout]: https://developer.apple.com/design/human-interface-guidelines/layout
-[aac-listen]: /docs/research/aac-practice.md#partners-and-devices-that-listen
+[aac-listen]: /docs/research/0022-aac-practice.md#partners-and-devices-that-listen
 [lightwriter-guide]: https://myturn-prod-attachments.s3-us-west-2.amazonaws.com/6/536/item/1009030/file_attachment/lightwriter_sl40_connect-0E30BE32-ECFF-2BFA-1A1B-17222A7A57FF.pdf
 [sobel-2017]: https://doi.org/10.1145/3025453.3025610
 [aacrobat-2017]: https://doi.org/10.1145/2998181.2998215

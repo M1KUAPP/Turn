@@ -61,7 +61,7 @@ Contents:
   - The _phone's own ranking_ is the ranking the phone does without Jev,
     offline or when Jev fails.
 
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
+[ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
 [idea-schedule]: /docs/IDEA.md#schedule-to-september-30
 [idea-scope]: /docs/IDEA.md#scope-of-the-first-version
 [trd-trace]: /docs/TRD.md#requirements-traceability
@@ -484,7 +484,7 @@ says how each is built.
   Turn ([AAC notes][aac-clinic]). The team records what it changed. Check:
   the review notes in the repository.
 
-[aac-clinic]: /docs/research/aac-practice.md#what-a-clinic-review-can-check
+[aac-clinic]: /docs/research/0022-aac-practice.md#what-a-clinic-review-can-check
 
 ## Evaluation requirements
 
@@ -791,8 +791,8 @@ safe default:
   of AAC users ([AAC notes][aac-partners]). Safe default: keep the card
   short, and ask the clinic's review whether it is fair to partners.
 
-[svc-notices]: /docs/research/turn-services.md#notices-consent-and-sensitive-data
-[aac-partners]: /docs/research/aac-practice.md#partners-and-devices-that-listen
+[svc-notices]: /docs/research/0024-turn-services.md#notices-consent-and-sensitive-data
+[aac-partners]: /docs/research/0022-aac-practice.md#partners-and-devices-that-listen
 
 ## See also
 
@@ -802,10 +802,10 @@ safe default:
 - [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and
   rules a coding agent can follow.
 - [Idea](/docs/IDEA.md): the schedule, the risks, and the pitch.
-- [AAC practice notes](/docs/research/aac-practice.md),
-  [iPhone build notes](/docs/research/turn-ios.md),
-  [relay and services notes](/docs/research/turn-services.md), and
-  [evaluation notes](/docs/research/turn-evaluation.md): the sources behind
+- [AAC practice notes](/docs/research/0022-aac-practice.md),
+  [iPhone build notes](/docs/research/0023-turn-ios.md),
+  [relay and services notes](/docs/research/0024-turn-services.md), and
+  [evaluation notes](/docs/research/0025-turn-evaluation.md): the sources behind
   the requirements.
 - [Guessling product requirements](/docs/archive/guessling-prd.md): the
   requirements for the team's first idea, archived.

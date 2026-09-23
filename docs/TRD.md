@@ -122,7 +122,7 @@ The path of one partner line:
     [row's rules](#from-probabilities-to-the-row), and renders the row.
 7.  The user taps a reply; `expo-speech` speaks it while listening pauses.
 
-[svc-placement]: /docs/research/turn-services.md#placement-near-typesafe-and-revenuecat
+[svc-placement]: /docs/research/0024-turn-services.md#placement-near-typesafe-and-revenuecat
 
 ## Stack and repository
 
@@ -153,9 +153,9 @@ and MiniSearch, all MIT ([iPhone build notes][ios-libs]), and the iOS design
 notes have Reanimated's pins in SDK 57 ([iOS design notes][ios-rea]), which
 the [design's motion][design-motion] uses.
 
-[rc-expo]: /docs/research/revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
-[ios-libs]: /docs/research/turn-ios.md#libraries-on-september-22-2026
-[ios-rea]: /docs/research/ios-design.md#reanimated-4-in-sdk-57
+[rc-expo]: /docs/research/0009-revenuecat-expo.md#expo-sdk-react-native-and-minimum-ios
+[ios-libs]: /docs/research/0023-turn-ios.md#libraries-on-september-22-2026
+[ios-rea]: /docs/research/0015-ios-design.md#reanimated-4-in-sdk-57
 
 ### Repository layout
 
@@ -274,7 +274,7 @@ CREATE TABLE entitlement (
   device's object and 1 in the daily budget's, so the Free plan's 100,000
   rows a day cover about 1,600 devices spending all 20 lines in one day.
 
-[svc-count]: /docs/research/turn-services.md#counting-free-partner-lines-per-device
+[svc-count]: /docs/research/0024-turn-services.md#counting-free-partner-lines-per-device
 
 ### What is never stored
 
@@ -385,8 +385,8 @@ reports only errors, so Turn sets its own rule
 - **Length.** The app keeps a line's last 300 characters once its names are
   tagged (LISTEN-6).
 
-[ios-line-end]: /docs/research/turn-ios.md#ending-the-partners-line
-[eval-latency]: /docs/research/turn-evaluation.md#a-latency-target-for-turn
+[ios-line-end]: /docs/research/0023-turn-ios.md#ending-the-partners-line
+[eval-latency]: /docs/research/0025-turn-evaluation.md#a-latency-target-for-turn
 
 ### Names as tags
 
@@ -414,7 +414,7 @@ category names, and the place's name together (LISTEN-5):
 - The place's name is tagged like the rest, so no name the tagger finds
   leaves the phone; a place such as Clinic or Home has none (PLACE-3).
 
-[ios-names]: /docs/research/turn-ios.md#swapping-names-for-tags-with-nltagger
+[ios-names]: /docs/research/0023-turn-ios.md#swapping-names-for-tags-with-nltagger
 
 ### The shortlist
 
@@ -440,8 +440,8 @@ notes' test scanned 2,000 stored vectors in 2.3 ms on a Mac
 At 2,000 phrases, the BM25 index is built once at launch and updated on each
 edit, so a shortlist takes at most 50 milliseconds (PERF-4, BANK-7).
 
-[ios-ranker]: /docs/research/turn-ios.md#a-phrase-ranker-in-typescript
-[ios-embed]: /docs/research/turn-ios.md#sentence-embeddings-for-a-shortlist
+[ios-ranker]: /docs/research/0023-turn-ios.md#a-phrase-ranker-in-typescript
+[ios-embed]: /docs/research/0023-turn-ios.md#sentence-embeddings-for-a-shortlist
 
 ### The Jev request
 
@@ -516,8 +516,8 @@ with the model pinned (SEC-2):
   million; the object logs `usage.input_tokens` and the `model` field of
   each answer, so a silent model change would show.
 
-[svc-request]: /docs/research/turn-services.md#the-request-body-for-one-partner-line
-[jev-api]: /docs/research/jev.md#the-system-one-http-api
+[svc-request]: /docs/research/0024-turn-services.md#the-request-body-for-one-partner-line
+[jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
 
 ### From probabilities to the row
 
@@ -638,7 +638,7 @@ events: onPartial { text }, onLine { text, endedAt }, onState { state, reason? }
 - **Threads.** One `NLTagger` per call, since "An `NLTagger` isn’t safe for
   concurrent use".
 
-[ios-mic]: /docs/research/turn-ios.md#from-the-microphone-to-the-analyzer
+[ios-mic]: /docs/research/0023-turn-ios.md#from-the-microphone-to-the-analyzer
 
 ### The audio session
 
@@ -673,7 +673,7 @@ and the default category is silenced by the Silent switch
   reinstalls the tap and restarts the engine, and never releases the engine
   inside the handler.
 
-[ios-session]: /docs/research/turn-ios.md#audio-session-category-mode-and-options
+[ios-session]: /docs/research/0023-turn-ios.md#audio-session-category-mode-and-options
 
 ### The turn-voice module
 
@@ -699,7 +699,7 @@ events: onVoicesChanged {}
 - **Stopping (SPEAK-2).** A new tap calls `Speech.stop()` before speaking,
   since `expo-speech` queues utterances.
 
-[ios-pv]: /docs/research/turn-ios.md#personal-voice
+[ios-pv]: /docs/research/0023-turn-ios.md#personal-voice
 
 ### When transcription isn't available
 
@@ -752,9 +752,9 @@ Listen mode says so and offers the typed-line field.
 - **The relay's key:** a v2 secret key with only
   `customer_information:customers:read`.
 
-[svc-setup]: /docs/research/turn-services.md#setting-up-test-store-in-the-dashboard
-[svc-one-time]: /docs/research/turn-services.md#one-time-products-in-test-store
-[rc-sandbox]: /docs/research/revenuecat-expo.md#recommended-backend-pattern
+[svc-setup]: /docs/research/0024-turn-services.md#setting-up-test-store-in-the-dashboard
+[svc-one-time]: /docs/research/0024-turn-services.md#one-time-products-in-test-store
+[rc-sandbox]: /docs/research/0009-revenuecat-expo.md#recommended-backend-pattern
 
 ### Purchases in the app
 
@@ -794,7 +794,7 @@ Listen mode says so and offers the typed-line field.
 - **No attributes.** The app sets no RevenueCat customer attributes, so
   RevenueCat receives only the app user ID and the purchase (PRIV-4).
 
-[svc-ids]: /docs/research/turn-services.md#identifiers-that-survive-a-reinstall
+[svc-ids]: /docs/research/0024-turn-services.md#identifiers-that-survive-a-reinstall
 
 ### The relay's entitlement check
 
@@ -839,8 +839,8 @@ on line(lineId, refresh)
   October 13 (PAY-9). The header can be forged, which costs only Jev
   credits, and the per-ID rate limit still applies.
 
-[rc-v2]: /docs/research/revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
-[svc-server]: /docs/research/turn-services.md#test-store-purchases-on-the-server
+[rc-v2]: /docs/research/0009-revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
+[svc-server]: /docs/research/0024-turn-services.md#test-store-purchases-on-the-server
 
 ## The iPhone app
 
@@ -870,7 +870,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 [design-home]: /docs/DESIGN.md#the-home-screen
 [design-permission]: /docs/DESIGN.md#the-permission-step
-[ios-glass-expo]: /docs/research/turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
+[ios-glass-expo]: /docs/research/0029-turn-ios-design.md#glass-in-expo-sdk-57-and-how-to-avoid-it
 
 ### State and storage
 
@@ -974,13 +974,13 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **Testing.** "VoiceOver isn't available via the simulator", so
   VoiceOver, Switch Control, and Voice Control are tested on a phone.
 
-[ios-row]: /docs/research/turn-ios.md#a-steady-row-in-react-native
+[ios-row]: /docs/research/0023-turn-ios.md#a-steady-row-in-react-native
 [design-row]: /docs/DESIGN.md#the-row
 [design-bottom-bar]: /docs/DESIGN.md#the-bottom-bar
 [design-type]: /docs/DESIGN.md#typography
-[aac-rn]: /docs/research/aac-practice.md#react-natives-accessibility-api
-[ios-rn-settings]: /docs/research/turn-ios-design.md#colors-and-settings-in-react-native-086
-[ios-scale-turn]: /docs/research/turn-ios-design.md#scaling-text-in-react-native-086
+[aac-rn]: /docs/research/0022-aac-practice.md#react-natives-accessibility-api
+[ios-rn-settings]: /docs/research/0029-turn-ios-design.md#colors-and-settings-in-react-native-086
+[ios-scale-turn]: /docs/research/0029-turn-ios-design.md#scaling-text-in-react-native-086
 [design-code]: /docs/DESIGN.md#keeping-code-in-step
 [design-sound]: /docs/DESIGN.md#sound-and-haptics
 
@@ -1012,7 +1012,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **`extra`:** the relay's URL, the Test Store public key, and the build's
   kind, `device` or `simulator`, for `X-Turn-Build`.
 
-[ios-launch]: /docs/research/turn-ios-design.md#the-launch-screen-in-expo-sdk-57
+[ios-launch]: /docs/research/0029-turn-ios-design.md#the-launch-screen-in-expo-sdk-57
 [design-icon]: /docs/DESIGN.md#the-app-icon
 [design-launch]: /docs/DESIGN.md#launch
 [design-colors]: /docs/DESIGN.md#colors
@@ -1088,7 +1088,7 @@ ran under Wrangler 4.136.2:
 - **No secret key** is in the repository or its history, which a secret
   scan checks before it goes public (SUBMIT-1).
 
-[svc-secrets]: /docs/research/turn-services.md#secrets-and-wranglerjsonc-for-the-relay
+[svc-secrets]: /docs/research/0024-turn-services.md#secrets-and-wranglerjsonc-for-the-relay
 
 ### Validation and abuse limits
 
@@ -1111,8 +1111,8 @@ ran under Wrangler 4.136.2:
   (STATE-3).
 - **Errors** carry only the codes above (SEC-4).
 
-[svc-ratelimit]: /docs/research/turn-services.md#the-rate-limiting-binding-for-turn
-[svc-abuse]: /docs/research/turn-services.md#limiting-abuse-of-the-free-lines
+[svc-ratelimit]: /docs/research/0024-turn-services.md#the-rate-limiting-binding-for-turn
+[svc-abuse]: /docs/research/0024-turn-services.md#limiting-abuse-of-the-free-lines
 
 ### Data inventory
 
@@ -1131,7 +1131,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
 ([Jev notes][jev-data]); the permission step and the privacy notice say so
 (CONSENT-1, CONTENT-4).
 
-[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
+[jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
 
 ## Reliability and observability
 
@@ -1167,7 +1167,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
 - **The daily check** during judging sends one typed line to the relay from
   a team member's phone or the Simulator and records the result (AVAIL-1).
 
-[svc-logs]: /docs/research/turn-services.md#workers-logs-and-traces-for-the-relay
+[svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
 
 ### Service life
 
@@ -1196,7 +1196,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
   shortlist's most-tapped slots fall back to the place's phrases and the
   bank's order, and the evaluation says so.
 
-[eval-data]: /docs/research/turn-evaluation.md#writing-turns-80-lines
+[eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 
 ### The rankers
 
@@ -1218,7 +1218,7 @@ line to the phone's own ranking, and speaking never depends on the relay.
   "How was physio?" is where keyword ranking and embeddings should fail and
   Jev should earn its place ([evaluation notes][eval-baselines]).
 
-[eval-baselines]: /docs/research/turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
+[eval-baselines]: /docs/research/0025-turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
 
 ### Metrics, intervals, and thresholds
 
@@ -1259,8 +1259,8 @@ see ([evaluation notes][eval-scoring]):
   calls dropped and one request in flight; end-to-end time comes from the
   phone (PERF-1).
 
-[eval-scoring]: /docs/research/turn-evaluation.md#a-scoring-scheme-for-turns-80-lines
-[eval-power]: /docs/research/turn-evaluation.md#what-80-lines-can-and-cant-detect
+[eval-scoring]: /docs/research/0025-turn-evaluation.md#a-scoring-scheme-for-turns-80-lines
+[eval-power]: /docs/research/0025-turn-evaluation.md#what-80-lines-can-and-cant-detect
 
 ### The replay script
 
@@ -1346,7 +1346,7 @@ in the first version.
   and the release checklist records each Must's check with the build it ran
   on (RELEASE-1 to RELEASE-5).
 
-[ios-free-build]: /docs/research/turn-ios.md#building-to-an-iphone-with-a-free-account
+[ios-free-build]: /docs/research/0023-turn-ios.md#building-to-an-iphone-with-a-free-account
 
 ## Requirements traceability
 
@@ -1444,17 +1444,17 @@ product and legal ones.
 - [iPhone build notes][ios-notes], [relay and services notes][svc-notes],
   [evaluation notes][eval-notes], [Jev notes][jev-notes],
   [Cloudflare notes][cf-notes], and
-  [RevenueCat notes](/docs/research/revenuecat-expo.md): the sources behind
+  [RevenueCat notes](/docs/research/0009-revenuecat-expo.md): the sources behind
   the choices here.
 - [Guessling technical requirements](/docs/archive/guessling-trd.md): the
   build of the team's first idea, archived.
 
-[ios-notes]: /docs/research/turn-ios.md
-[svc-notes]: /docs/research/turn-services.md
-[eval-notes]: /docs/research/turn-evaluation.md
-[jev-notes]: /docs/research/jev.md
-[cf-notes]: /docs/research/cloudflare-workers.md
-[ios-modules]: /docs/research/turn-ios.md#two-local-swift-modules-in-expo
-[svc-key]: /docs/research/turn-services.md#the-test-store-api-key
-[tech-expo]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
+[ios-notes]: /docs/research/0023-turn-ios.md
+[svc-notes]: /docs/research/0024-turn-services.md
+[eval-notes]: /docs/research/0025-turn-evaluation.md
+[jev-notes]: /docs/research/0005-jev.md
+[cf-notes]: /docs/research/0010-cloudflare-workers.md
+[ios-modules]: /docs/research/0023-turn-ios.md#two-local-swift-modules-in-expo
+[svc-key]: /docs/research/0024-turn-services.md#the-test-store-api-key
+[tech-expo]: /docs/research/0018-next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
 [design-motion]: /docs/DESIGN.md#motion

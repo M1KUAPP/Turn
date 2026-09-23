@@ -25,7 +25,7 @@ Contents:
 1.  [Conflicts between sources](#conflicts-between-sources)
 1.  [Gaps](#gaps)
 
-[ev-turn]: /docs/research/next-gen-evidence.md#turn-aac-that-ranks-the-users-own-phrases
+[ev-turn]: /docs/research/0021-next-gen-evidence.md#turn-aac-that-ranks-the-users-own-phrases
 
 ## Findings for the product, PRD, and TRD
 
@@ -1112,7 +1112,7 @@ The [evidence notes][ev-devices] cover Personal Voice's languages, the
 authorization call, and Expo's gap; this section adds what users see and what
 apps may do, as of September 22, 2026.
 
-[ev-devices]: /docs/research/next-gen-evidence.md#turn-on-students-devices
+[ev-devices]: /docs/research/0021-next-gen-evidence.md#turn-on-students-devices
 
 ### Personal Voice for users in iOS 26 and iOS 27
 
@@ -1469,8 +1469,8 @@ apps may do, as of September 22, 2026.
 [da-fonte-2026]: https://pubmed.ncbi.nlm.nih.gov/41723854/
 [gosnell-2011]: https://doi.org/10.1044/aac20.3.87
 [mcnaughton-2013]: https://pubmed.ncbi.nlm.nih.gov/23705813/
-[apple-labels]: /docs/research/apple-requirements.md#accessibility-nutrition-labels
-[r6-turn]: /docs/research/next-gen-ideation.md#turn-under-attack
+[apple-labels]: /docs/research/0011-apple-requirements.md#accessibility-nutrition-labels
+[r6-turn]: /docs/research/0020-next-gen-ideation.md#turn-under-attack
 
 ## Conflicts between sources
 
@@ -1580,13 +1580,13 @@ What the sources read don't say, as of September 22, 2026:
 [gajos-2008]: https://doi.org/10.1145/1357054.1357252
 [todman-2008]: https://pubmed.ncbi.nlm.nih.gov/18830912/
 [beukelman-2011]: https://pmc.ncbi.nlm.nih.gov/articles/PMC3096454/
-[ev-without]: /docs/research/next-gen-evidence.md#turn-without-jev
+[ev-without]: /docs/research/0021-next-gen-evidence.md#turn-without-jev
 [bedrosian-2003]: https://pubmed.ncbi.nlm.nih.gov/12959461/
 [mccoy-2007]: https://pubmed.ncbi.nlm.nih.gov/17364489/
-[ev-need]: /docs/research/next-gen-evidence.md#evidence-that-turns-problem-matters
+[ev-need]: /docs/research/0021-next-gen-evidence.md#evidence-that-turns-problem-matters
 [higginbotham-2009]: https://pubmed.ncbi.nlm.nih.gov/18608144/
 [fager-2019]: https://pmc.ncbi.nlm.nih.gov/articles/PMC6436971/
-[ev-harm]: /docs/research/next-gen-evidence.md#harm-from-a-wrong-turn-decision
+[ev-harm]: /docs/research/0021-next-gen-evidence.md#harm-from-a-wrong-turn-decision
 [bedrosian-2020]: https://pubmed.ncbi.nlm.nih.gov/32362177/
 [valencia-2023]: https://doi.org/10.1145/3544548.3581560
 [compa-2024]: https://doi.org/10.1145/3613904.3642762
@@ -1605,7 +1605,7 @@ What the sources read don't say, as of September 22, 2026:
 [nr-2025]: https://www.apple.com/newsroom/2025/05/apple-unveils-powerful-accessibility-features-coming-later-this-year/
 [ios26-pdf]: https://www.apple.com/os/pdf/All_New_Features_iOS_26_Sept_2025.pdf
 [nr-2026]: https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/
-[ios-type]: /docs/research/ios-design.md#how-react-native-scales-text
+[ios-type]: /docs/research/0015-ios-design.md#how-react-native-scales-text
 [hig-a11y]: https://developer.apple.com/design/human-interface-guidelines/accessibility
 [wcag22]: https://www.w3.org/TR/WCAG22/
 [wcag2ict]: https://www.w3.org/TR/wcag2ict-22/
