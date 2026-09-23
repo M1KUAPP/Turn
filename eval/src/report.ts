@@ -66,6 +66,9 @@ const provenance = (labeled: readonly Line[]) => {
   ]
 }
 
+/** Text with its first letter capitalized, to start a sentence. */
+const capital = (text: string) => text[0].toUpperCase() + text.slice(1)
+
 /** A share in points, to one decimal. */
 const points = (share: number) => (share * 100).toFixed(1)
 
@@ -73,12 +76,11 @@ const points = (share: number) => (share * 100).toFixed(1)
  * How the report names Jev: by name, or, while naming is off, as the hosted decision model, with its pin's version but
  * not its name, so the README can copy the table (CONSENT-7).
  */
-type Naming = { Jev: string; jev: string; ranker: (name: string) => string; model: (model: string) => string }
+type Naming = { jev: string; ranker: (name: string) => string; model: (model: string) => string }
 
-const named: Naming = { Jev: 'Jev', jev: 'Jev', ranker: (name) => name, model: (model) => `\`${model}\`` }
+const named: Naming = { jev: 'Jev', ranker: (name) => name, model: (model) => `\`${model}\`` }
 
 const unnamed: Naming = {
-  Jev: 'The hosted decision model',
   jev: 'the hosted decision model',
   ranker: (name) => (name === 'jev' ? 'hosted decision model' : name),
   // Only the version's numbers, since whatever else a model's name holds may name it.
@@ -104,8 +106,9 @@ const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[], n
   }
   return [
     wrap(
-      `${naming.Jev} minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, with a 95% ` +
-        `paired interval of ${points(low)} to ${points(high)}${verdict ? `, so ${says[gap.verdict]}` : ''}.`
+      `${capital(naming.jev)} minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, ` +
+        `with a 95% paired interval of ${points(low)} to ${points(high)}` +
+        `${verdict ? `, so ${says[gap.verdict]}` : ''}.`
     )
   ]
 }
@@ -181,8 +184,8 @@ const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
     )
   )
   return (
-    `- **Models:** ${naming.Jev}, pinned to ${naming.model(pin)} by \`worker/wrangler.jsonc\`, which answered as ` +
-    `${answered}; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
+    `- **Models:** ${capital(naming.jev)}, pinned to ${naming.model(pin)} by \`worker/wrangler.jsonc\`, ` +
+    `which answered as ${answered}; and Workers AI's \`${embeddingModel}\`, with \`cls\` pooling.`
   )
 }
 
@@ -228,9 +231,9 @@ const kindSection = (scores: readonly LineScore<Line>[], naming: Naming) => {
   return [
     '## The question kind',
     wrap(
-      `${naming.Jev}'s most likely kind of question against its writer's, on all ${scores.length} lines: right on ` +
-        `${rate(right)}. Each row is the writer's kind, and each column ${naming.jev}'s, or a tie when two kinds ` +
-        'share the top.'
+      `${capital(naming.jev)}'s most likely kind of question against its writer's, on all ${scores.length} lines: ` +
+        `right on ${rate(right)}. Each row is the writer's kind, and each column ${naming.jev}'s, or a tie when ` +
+        'two kinds share the top.'
     ),
     table(
       ["Writer's kind", ...kinds.map((kind) => kindNames[kind]), 'Tie'],
@@ -400,12 +403,12 @@ const render = (
           'so it has no interval.',
         '- **The row:** coverage is the share of lines where the row changes, and risk the share of those rows ' +
           'that are wrong. Always holding is right on every line with no acceptable reply.',
-        `- **Intervals:** every rate carries its 95% Wilson interval. ${naming.Jev} minus embeddings in top 6 ` +
-          'carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed ' +
-          `seed, and ${naming.jev} trails only when the whole interval on all lines lies below zero; the subsets' ` +
-          'intervals carry no verdict, since more intervals would make a false one likelier.',
-        `- **${naming.Jev}'s answers** vary a little from call to call, so each line is scored from the first of ` +
-          'the three timed passes, and the big buttons come from all four answers, the warm-up included.'
+        `- **Intervals:** every rate carries its 95% Wilson interval. ${capital(naming.jev)} minus embeddings in ` +
+          'top 6 carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a ' +
+          `committed seed, and ${naming.jev} trails only when the whole interval on all lines lies below zero; ` +
+          "the subsets' intervals carry no verdict, since more intervals would make a false one likelier.",
+        `- **${capital(naming.jev)}'s answers** vary a little from call to call, so each line is scored from the ` +
+          'first of the three timed passes, and the big buttons come from all four answers, the warm-up included.'
       ]
         .map((item) => wrap(item, '  '))
         .join('\n'),
