@@ -212,6 +212,32 @@
       "source_location": "L311"
     },
     {
+      "id": "eval_src_rankers_ranker",
+      "label": "Ranker",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "ranker",
+      "source_file": "eval/src/rankers.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "shared_src_row_ranking",
+      "label": "Ranking",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "ranking",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L30"
+    },
+    {
       "id": "shared_src_shortlist_context",
       "label": "Context",
       "_callable": true,
@@ -238,13 +264,26 @@
       "source_location": "L6"
     },
     {
+      "id": "shared_src_shortlist_phraseindex",
+      "label": "PhraseIndex",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "phraseindex",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L26"
+    },
+    {
       "id": "eval_src_apple_sentenceembedding",
       "label": "sentenceEmbedding",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "sentenceembedding",
       "source_file": "eval/src/apple.ts",
@@ -257,10 +296,114 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "embed",
       "source_file": "eval/src/embeddings.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "eval_src_embeddings_vectors",
+      "label": "Vectors",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "vectors",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "eval_src_rankers_atcutoff",
+      "label": "AtCutOff",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "atcutoff",
+      "source_file": "eval/src/rankers.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "eval_src_reranker_scored",
+      "label": "Scored",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "scored",
+      "source_file": "eval/src/reranker.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "eval_src_workers_ai_answer",
+      "label": "Answer",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "answer",
+      "source_file": "eval/src/workers-ai.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "eval_src_workers_ai_env",
+      "label": "Env",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "env",
+      "source_file": "eval/src/workers-ai.ts",
+      "source_location": "L2"
+    },
+    {
+      "id": "shared_src_relay_errorcode",
+      "label": "ErrorCode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "errorcode",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L86"
+    },
+    {
+      "id": "shared_src_row_policy",
+      "label": "Policy",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "policy",
+      "source_file": "shared/src/row.ts",
+      "source_location": "L2"
+    },
+    {
+      "id": "worker_src_address_address",
+      "label": "Address",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "address",
+      "source_file": "worker/src/address.ts",
       "source_location": "L8"
     },
     {
@@ -277,6 +420,19 @@
       "source_location": "L4"
     },
     {
+      "id": "worker_src_device_device",
+      "label": "Device",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "device",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L57"
+    },
+    {
       "id": "worker_src_index_logfacts",
       "label": "LogFacts",
       "_callable": true,
@@ -287,6 +443,19 @@
       "file_type": "code",
       "norm_label": "logfacts",
       "source_file": "worker/src/index.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "worker_src_request_user",
+      "label": "User",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "user",
+      "source_file": "worker/src/request.ts",
       "source_location": "L13"
     },
     {
@@ -316,6 +485,32 @@
       "source_location": "L15"
     },
     {
+      "id": "shared_src_relay_candidate",
+      "label": "Candidate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "candidate",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "shared_src_relay_category",
+      "label": "Category",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "category",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L23"
+    },
+    {
       "id": "shared_src_relay_config",
       "label": "Config",
       "_callable": true,
@@ -342,6 +537,19 @@
       "source_location": "L58"
     },
     {
+      "id": "shared_src_relay_linerequest",
+      "label": "LineRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "linerequest",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L40"
+    },
+    {
       "id": "shared_src_row_answer",
       "label": "Answer",
       "_callable": true,
@@ -366,19 +574,6 @@
       "norm_label": "row",
       "source_file": "shared/src/row.ts",
       "source_location": "L48"
-    },
-    {
-      "id": "shared_src_shortlist_phraseindex",
-      "label": "PhraseIndex",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "phraseindex",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L26"
     },
     {
       "id": "app_src_constants_theme_colorname",
@@ -431,6 +626,19 @@
       "norm_label": "storyboard",
       "source_file": "app/plugins/withBoardSplash.ts",
       "source_location": "L3"
+    },
+    {
+      "id": "shared_src_relay_outcome",
+      "label": "Outcome",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 238,
+      "community_name": "summary.ts",
+      "file_type": "code",
+      "norm_label": "outcome",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L70"
     },
     {
       "id": "worker_scripts_alert_finding",
@@ -521,6 +729,45 @@
       "file_type": "code",
       "norm_label": "range",
       "source_file": "worker/scripts/telemetry.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "worker_src_entitlement_entitlement",
+      "label": "Entitlement",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "entitlement",
+      "source_file": "worker/src/entitlement.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "worker_src_entitlement_item",
+      "label": "Item",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "item",
+      "source_file": "worker/src/entitlement.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "worker_src_entitlement_settings",
+      "label": "Settings",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "settings",
+      "source_file": "worker/src/entitlement.ts",
       "source_location": "L7"
     },
     {
@@ -615,30 +862,69 @@
       "source_location": "L27"
     },
     {
-      "id": "shared_src_row_ranking",
-      "label": "Ranking",
+      "id": "worker_src_device_cached",
+      "label": "Cached",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 243,
       "community_name": "shared/src/jev.ts",
       "file_type": "code",
-      "norm_label": "ranking",
-      "source_file": "shared/src/row.ts",
-      "source_location": "L30"
+      "norm_label": "cached",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L38"
     },
     {
-      "id": "worker_src_device_device",
-      "label": "Device",
+      "id": "worker_src_device_jevreply",
+      "label": "JevReply",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
+      "community": 243,
+      "community_name": "shared/src/jev.ts",
       "file_type": "code",
-      "norm_label": "device",
+      "norm_label": "jevreply",
       "source_file": "worker/src/device.ts",
-      "source_location": "L56"
+      "source_location": "L12"
+    },
+    {
+      "id": "worker_src_device_linereply",
+      "label": "LineReply",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 243,
+      "community_name": "shared/src/jev.ts",
+      "file_type": "code",
+      "norm_label": "linereply",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "worker_src_device_terms",
+      "label": "Terms",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 243,
+      "community_name": "shared/src/jev.ts",
+      "file_type": "code",
+      "norm_label": "terms",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "eval_src_calibration_againstband",
+      "label": "againstBand",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 254,
+      "community_name": "report.ts",
+      "file_type": "code",
+      "norm_label": "againstband",
+      "source_file": "eval/src/calibration.ts",
+      "source_location": "L153"
     },
     {
       "id": "eval_src_report_apple",
@@ -678,19 +964,6 @@
       "norm_label": "naming",
       "source_file": "eval/src/report.ts",
       "source_location": "L89"
-    },
-    {
-      "id": "eval_src_calibration_againstband",
-      "label": "againstBand",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "againstband",
-      "source_file": "eval/src/calibration.ts",
-      "source_location": "L153"
     },
     {
       "id": "eval_src_calibration_block",
@@ -808,266 +1081,6 @@
       "norm_label": "scoredline",
       "source_file": "eval/src/score.ts",
       "source_location": "L16"
-    },
-    {
-      "id": "worker_src_entitlement_item",
-      "label": "Item",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "item",
-      "source_file": "worker/src/entitlement.ts",
-      "source_location": "L10"
-    },
-    {
-      "id": "worker_src_entitlement_settings",
-      "label": "Settings",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "settings",
-      "source_file": "worker/src/entitlement.ts",
-      "source_location": "L7"
-    },
-    {
-      "id": "worker_src_request_user",
-      "label": "User",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "user",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L13"
-    },
-    {
-      "id": "eval_src_embeddings_vectors",
-      "label": "Vectors",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "vectors",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L14"
-    },
-    {
-      "id": "eval_src_rankers_atcutoff",
-      "label": "AtCutOff",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "atcutoff",
-      "source_file": "eval/src/rankers.ts",
-      "source_location": "L19"
-    },
-    {
-      "id": "eval_src_rankers_ranker",
-      "label": "Ranker",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "ranker",
-      "source_file": "eval/src/rankers.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "eval_src_reranker_scored",
-      "label": "Scored",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "scored",
-      "source_file": "eval/src/reranker.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "eval_src_workers_ai_answer",
-      "label": "Answer",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "answer",
-      "source_file": "eval/src/workers-ai.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "eval_src_workers_ai_env",
-      "label": "Env",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "env",
-      "source_file": "eval/src/workers-ai.ts",
-      "source_location": "L2"
-    },
-    {
-      "id": "shared_src_relay_candidate",
-      "label": "Candidate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "candidate",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "shared_src_relay_category",
-      "label": "Category",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "category",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L23"
-    },
-    {
-      "id": "shared_src_relay_errorcode",
-      "label": "ErrorCode",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "errorcode",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L86"
-    },
-    {
-      "id": "shared_src_relay_linerequest",
-      "label": "LineRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "linerequest",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L40"
-    },
-    {
-      "id": "shared_src_relay_outcome",
-      "label": "Outcome",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "outcome",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L70"
-    },
-    {
-      "id": "shared_src_row_policy",
-      "label": "Policy",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "policy",
-      "source_file": "shared/src/row.ts",
-      "source_location": "L2"
-    },
-    {
-      "id": "worker_src_device_cached",
-      "label": "Cached",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "cached",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L37"
-    },
-    {
-      "id": "worker_src_device_jevreply",
-      "label": "JevReply",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "jevreply",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L11"
-    },
-    {
-      "id": "worker_src_device_linereply",
-      "label": "LineReply",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "linereply",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L25"
-    },
-    {
-      "id": "worker_src_device_terms",
-      "label": "Terms",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "terms",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L34"
-    },
-    {
-      "id": "worker_src_entitlement_entitlement",
-      "label": "Entitlement",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "entitlement",
-      "source_file": "worker/src/entitlement.ts",
-      "source_location": "L4"
     },
     {
       "id": "eval_src_agreement_agreementof",
@@ -1418,30 +1431,6 @@
       "source_location": "L50"
     },
     {
-      "id": "eval_src_cut_off_folds",
-      "label": "folds()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "folds()",
-      "source_file": "eval/src/cut-off.ts",
-      "source_location": "L11"
-    },
-    {
-      "id": "eval_src_embeddings_atcutoff",
-      "label": "atCutOff()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "atcutoff()",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L131"
-    },
-    {
       "id": "eval_src_score_intopsix",
       "label": "inTopSix()",
       "_callable": true,
@@ -1574,138 +1563,6 @@
       "source_location": "L194"
     },
     {
-      "id": "eval_src_stats_below",
-      "label": "below()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "below()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L76"
-    },
-    {
-      "id": "eval_src_stats_bootstrap",
-      "label": "bootstrap()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "bootstrap()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L90"
-    },
-    {
-      "id": "eval_src_stats_bootstrapmean",
-      "label": "bootstrapMean()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "bootstrapmean()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L97"
-    },
-    {
-      "id": "eval_src_stats_chancehit",
-      "label": "chanceHit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "chancehit()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L32"
-    },
-    {
-      "id": "eval_src_stats_chancereciprocalrank",
-      "label": "chanceReciprocalRank()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "chancereciprocalrank()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L42"
-    },
-    {
-      "id": "eval_src_stats_mean",
-      "label": "mean()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "mean()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L2"
-    },
-    {
-      "id": "eval_src_stats_pairedbootstrap",
-      "label": "pairedBootstrap()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "pairedbootstrap()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L104"
-    },
-    {
-      "id": "eval_src_stats_percentile",
-      "label": "percentile()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "percentile()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L21"
-    },
-    {
-      "id": "eval_src_stats_rotl",
-      "label": "rotl()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "rotl()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L52"
-    },
-    {
-      "id": "eval_src_stats_seeded",
-      "label": "seeded()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "seeded()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L61"
-    },
-    {
-      "id": "eval_src_stats_wilson",
-      "label": "wilson()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "wilson()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L8"
-    },
-    {
       "id": "eval_test_score_test_run",
       "label": "run()",
       "_callable": true,
@@ -1718,16 +1575,16 @@
       "source_location": "L37"
     },
     {
-      "id": "eval_test_stats_test_oneto",
-      "label": "oneTo()",
+      "id": "eval_src_score_sharesnoword",
+      "label": "sharesNoWord()",
       "_callable": true,
       "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
+      "community": 217,
+      "community_name": "shortlist.ts",
       "file_type": "code",
-      "norm_label": "oneto()",
-      "source_file": "eval/test/stats.test.ts",
-      "source_location": "L14"
+      "norm_label": "sharesnoword()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L334"
     },
     {
       "id": "eval_test_curves_test_byline",
@@ -1754,6 +1611,42 @@
       "source_location": "L65"
     },
     {
+      "id": "shared_src_shortlist_phraseindex_match",
+      "label": ".match()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": ".match()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L56"
+    },
+    {
+      "id": "shared_src_shortlist_phraseindex_update",
+      "label": ".update()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": ".update()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "shared_src_shortlist_pickshortlist",
+      "label": "pickShortlist()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "pickshortlist()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L78"
+    },
+    {
       "id": "shared_src_shortlist_processterm",
       "label": "processTerm()",
       "_callable": true,
@@ -1766,12 +1659,156 @@
       "source_location": "L20"
     },
     {
+      "id": "shared_src_shortlist_rankable",
+      "label": "rankable()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "rankable()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "shared_src_shortlist_rankonphone",
+      "label": "rankOnPhone()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "rankonphone()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L132"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_words",
+      "label": "words()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "words()",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "shared_test_shortlist_test_ids",
+      "label": "ids()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "ids()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "shared_test_shortlist_test_numbered",
+      "label": "numbered()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "numbered()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "shared_test_shortlist_test_phrase",
+      "label": "phrase()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "phrase()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_test_shortlist_test_pick",
+      "label": "pick()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "pick()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "shared_test_shortlist_test_plain",
+      "label": "plain()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "plain()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "shared_test_shortlist_test_range",
+      "label": "range()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "range()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "shared_test_shortlist_test_water",
+      "label": "water()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "water()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "eval_src_embeddings_atcutoff",
+      "label": "atCutOff()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "atcutoff()",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L131"
+    },
+    {
+      "id": "eval_src_embeddings_batched",
+      "label": "batched()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "batched()",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L23"
+    },
+    {
       "id": "eval_src_embeddings_cosine",
       "label": "cosine()",
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "cosine()",
       "source_file": "eval/src/embeddings.ts",
@@ -1783,11 +1820,83 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "embeddings()",
       "source_file": "eval/src/embeddings.ts",
       "source_location": "L103"
+    },
+    {
+      "id": "eval_src_embeddings_qwen",
+      "label": "qwen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "qwen()",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L65"
+    },
+    {
+      "id": "eval_src_embeddings_vectorsin",
+      "label": "vectorsIn()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "vectorsin()",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "eval_src_embeddings_workersai",
+      "label": "workersAi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "workersai()",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L38"
+    },
+    {
+      "id": "eval_src_rankers_phonekind",
+      "label": "phoneKind()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "phonekind()",
+      "source_file": "eval/src/rankers.ts",
+      "source_location": "L22"
+    },
+    {
+      "id": "eval_src_reranker_reranker",
+      "label": "reranker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "reranker()",
+      "source_file": "eval/src/reranker.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "eval_src_workers_ai_runmodel",
+      "label": "runModel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "runmodel()",
+      "source_file": "eval/src/workers-ai.ts",
+      "source_location": "L12"
     },
     {
       "id": "eval_test_apple_test_ended",
@@ -1795,7 +1904,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "ended()",
       "source_file": "eval/test/apple.test.ts",
@@ -1807,7 +1916,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "folder()",
       "source_file": "eval/test/apple.test.ts",
@@ -1819,7 +1928,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "standin()",
       "source_file": "eval/test/apple.test.ts",
@@ -1831,7 +1940,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "cells()",
       "source_file": "eval/test/report.test.ts",
@@ -1843,7 +1952,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "prose()",
       "source_file": "eval/test/report.test.ts",
@@ -1855,7 +1964,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "section()",
       "source_file": "eval/test/report.test.ts",
@@ -1867,7 +1976,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "endpoint()",
       "source_file": "eval/test/services.ts",
@@ -1879,7 +1988,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fakejevanswer()",
       "source_file": "eval/test/services.ts",
@@ -1891,7 +2000,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fakeqwenvector()",
       "source_file": "eval/test/services.ts",
@@ -1903,7 +2012,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fakererank()",
       "source_file": "eval/test/services.ts",
@@ -1915,7 +2024,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fakesentenceembedding()",
       "source_file": "eval/test/services.ts",
@@ -1927,7 +2036,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fakeservices()",
       "source_file": "eval/test/services.ts",
@@ -1939,7 +2048,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fakevector()",
       "source_file": "eval/test/services.ts",
@@ -1951,7 +2060,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "madeupvector()",
       "source_file": "eval/test/services.ts",
@@ -1963,7 +2072,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "words()",
       "source_file": "eval/test/services.ts",
@@ -1975,11 +2084,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "isyesno()",
       "source_file": "shared/src/shortlist.ts",
       "source_location": "L121"
+    },
+    {
+      "id": "eval_test_replay_test_fakerelay",
+      "label": "fakeRelay()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "fakerelay()",
+      "source_file": "eval/test/replay.test.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "worker_src_address_address_admit",
+      "label": ".admit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".admit()",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "worker_src_address_address_constructor",
+      "label": ".constructor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".constructor()",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L9"
     },
     {
       "id": "worker_src_budget_budget_constructor",
@@ -2066,6 +2211,150 @@
       "source_location": "L33"
     },
     {
+      "id": "worker_src_device_device_admit",
+      "label": ".admit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".admit()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L92"
+    },
+    {
+      "id": "worker_src_device_device_answer",
+      "label": ".answer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".answer()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L173"
+    },
+    {
+      "id": "worker_src_device_device_ask",
+      "label": ".ask()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".ask()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L207"
+    },
+    {
+      "id": "worker_src_device_device_cached",
+      "label": ".cached()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".cached()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L116"
+    },
+    {
+      "id": "worker_src_device_device_claim",
+      "label": ".claim()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".claim()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L105"
+    },
+    {
+      "id": "worker_src_device_device_claimed",
+      "label": ".claimed()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".claimed()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L97"
+    },
+    {
+      "id": "worker_src_device_device_config",
+      "label": ".config()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".config()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L163"
+    },
+    {
+      "id": "worker_src_device_device_constructor",
+      "label": ".constructor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".constructor()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L75"
+    },
+    {
+      "id": "worker_src_device_device_entitled",
+      "label": ".entitled()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".entitled()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L127"
+    },
+    {
+      "id": "worker_src_device_device_freelinesleft",
+      "label": ".freeLinesLeft()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".freelinesleft()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L157"
+    },
+    {
+      "id": "worker_src_device_device_jev",
+      "label": ".jev()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": ".jev()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L63"
+    },
+    {
+      "id": "worker_src_device_unlessaborted",
+      "label": "unlessAborted()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "unlessaborted()",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L47"
+    },
+    {
       "id": "worker_src_index_answerline",
       "label": "answerLine()",
       "_callable": true,
@@ -2075,7 +2364,7 @@
       "file_type": "code",
       "norm_label": "answerline()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L85"
+      "source_location": "L86"
     },
     {
       "id": "worker_src_index_devicefor",
@@ -2087,7 +2376,7 @@
       "file_type": "code",
       "norm_label": "devicefor()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L72"
+      "source_location": "L73"
     },
     {
       "id": "worker_src_index_fetch",
@@ -2099,19 +2388,7 @@
       "file_type": "code",
       "norm_label": "fetch()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L147"
-    },
-    {
-      "id": "worker_src_index_hashuser",
-      "label": "hashUser()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 220,
-      "community_name": "src/index.ts",
-      "file_type": "code",
-      "norm_label": "hashuser()",
-      "source_file": "worker/src/index.ts",
-      "source_location": "L66"
+      "source_location": "L148"
     },
     {
       "id": "worker_src_index_refuse",
@@ -2123,7 +2400,7 @@
       "file_type": "code",
       "norm_label": "refuse()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L58"
+      "source_location": "L59"
     },
     {
       "id": "worker_src_index_route",
@@ -2135,7 +2412,19 @@
       "file_type": "code",
       "norm_label": "route()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L124"
+      "source_location": "L125"
+    },
+    {
+      "id": "worker_src_index_saltedhash",
+      "label": "saltedHash()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "saltedhash()",
+      "source_file": "worker/src/index.ts",
+      "source_location": "L67"
     },
     {
       "id": "worker_src_index_termsfor",
@@ -2147,7 +2436,7 @@
       "file_type": "code",
       "norm_label": "termsfor()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L78"
+      "source_location": "L79"
     },
     {
       "id": "worker_src_index_withinaddresslimit",
@@ -2159,7 +2448,103 @@
       "file_type": "code",
       "norm_label": "withinaddresslimit()",
       "source_file": "worker/src/index.ts",
-      "source_location": "L115"
+      "source_location": "L116"
+    },
+    {
+      "id": "worker_src_minute_count_countinminute",
+      "label": "countInMinute()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "countinminute()",
+      "source_file": "worker/src/minute-count.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "worker_src_minute_count_createminutecount",
+      "label": "createMinuteCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "createminutecount()",
+      "source_file": "worker/src/minute-count.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "worker_src_request_islinerequest",
+      "label": "isLineRequest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "islinerequest()",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L45"
+    },
+    {
+      "id": "worker_src_request_islist",
+      "label": "isList()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "islist()",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L39"
+    },
+    {
+      "id": "worker_src_request_isrecord",
+      "label": "isRecord()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "isrecord()",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "worker_src_request_istext",
+      "label": "isText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "istext()",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "worker_src_request_readline",
+      "label": "readLine()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "readline()",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L82"
+    },
+    {
+      "id": "worker_src_request_readtext",
+      "label": "readText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "readtext()",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L63"
     },
     {
       "id": "worker_src_request_readuser",
@@ -2258,18 +2643,6 @@
       "source_location": "L94"
     },
     {
-      "id": "eval_src_score_sharesnoword",
-      "label": "sharesNoWord()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "sharesnoword()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L334"
-    },
-    {
       "id": "eval_test_rankers_test_answer",
       "label": "answer()",
       "_callable": true,
@@ -2292,18 +2665,6 @@
       "norm_label": "answered()",
       "source_file": "eval/test/replay.test.ts",
       "source_location": "L30"
-    },
-    {
-      "id": "eval_test_replay_test_fakerelay",
-      "label": "fakeRelay()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "fakerelay()",
-      "source_file": "eval/test/replay.test.ts",
-      "source_location": "L17"
     },
     {
       "id": "eval_test_replay_test_lines",
@@ -2378,66 +2739,6 @@
       "source_location": "L138"
     },
     {
-      "id": "shared_src_shortlist_phraseindex_match",
-      "label": ".match()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": ".match()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L56"
-    },
-    {
-      "id": "shared_src_shortlist_phraseindex_update",
-      "label": ".update()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": ".update()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L37"
-    },
-    {
-      "id": "shared_src_shortlist_pickshortlist",
-      "label": "pickShortlist()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "pickshortlist()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L78"
-    },
-    {
-      "id": "shared_src_shortlist_rankable",
-      "label": "rankable()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "rankable()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L18"
-    },
-    {
-      "id": "shared_src_shortlist_rankonphone",
-      "label": "rankOnPhone()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "rankonphone()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L132"
-    },
-    {
       "id": "shared_test_row_test_answer",
       "label": "answer()",
       "_callable": true,
@@ -2460,102 +2761,6 @@
       "norm_label": "replay()",
       "source_file": "shared/test/row.test.ts",
       "source_location": "L19"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_words",
-      "label": "words()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "words()",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "shared_test_shortlist_test_ids",
-      "label": "ids()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "ids()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L10"
-    },
-    {
-      "id": "shared_test_shortlist_test_numbered",
-      "label": "numbered()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "numbered()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "shared_test_shortlist_test_phrase",
-      "label": "phrase()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "phrase()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "shared_test_shortlist_test_pick",
-      "label": "pick()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "pick()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L23"
-    },
-    {
-      "id": "shared_test_shortlist_test_plain",
-      "label": "plain()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "plain()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "shared_test_shortlist_test_range",
-      "label": "range()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "range()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "shared_test_shortlist_test_water",
-      "label": "water()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "water()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L20"
     },
     {
       "id": "app_src_constants_theme_textstyle",
@@ -3110,6 +3315,30 @@
       "source_location": "L24"
     },
     {
+      "id": "worker_src_entitlement_checkentitlement",
+      "label": "checkEntitlement()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "checkentitlement()",
+      "source_file": "worker/src/entitlement.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "worker_src_entitlement_isitem",
+      "label": "isItem()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "isitem()",
+      "source_file": "worker/src/entitlement.ts",
+      "source_location": "L12"
+    },
+    {
       "id": "worker_test_budget_test_budget",
       "label": "budget()",
       "_callable": true,
@@ -3467,7 +3696,7 @@
       "file_type": "code",
       "norm_label": "expectlimited()",
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L27"
+      "source_location": "L19"
     },
     {
       "id": "worker_test_limits_test_from",
@@ -3479,19 +3708,19 @@
       "file_type": "code",
       "norm_label": "from()",
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
-      "id": "worker_test_limits_test_inonewindow",
-      "label": "inOneWindow()",
+      "id": "worker_test_limits_test_useupaddress",
+      "label": "useUpAddress()",
       "_callable": true,
       "_origin": "ast",
       "community": 242,
       "community_name": "helpers.ts",
       "file_type": "code",
-      "norm_label": "inonewindow()",
+      "norm_label": "useupaddress()",
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L21"
+      "source_location": "L95"
     },
     {
       "id": "worker_test_lines_test_start",
@@ -3614,138 +3843,6 @@
       "source_location": "L84"
     },
     {
-      "id": "worker_src_device_device_admit",
-      "label": ".admit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".admit()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L94"
-    },
-    {
-      "id": "worker_src_device_device_answer",
-      "label": ".answer()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".answer()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L188"
-    },
-    {
-      "id": "worker_src_device_device_ask",
-      "label": ".ask()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".ask()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L222"
-    },
-    {
-      "id": "worker_src_device_device_cached",
-      "label": ".cached()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".cached()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L131"
-    },
-    {
-      "id": "worker_src_device_device_claim",
-      "label": ".claim()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".claim()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L120"
-    },
-    {
-      "id": "worker_src_device_device_claimed",
-      "label": ".claimed()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".claimed()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L112"
-    },
-    {
-      "id": "worker_src_device_device_config",
-      "label": ".config()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".config()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L178"
-    },
-    {
-      "id": "worker_src_device_device_constructor",
-      "label": ".constructor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".constructor()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L74"
-    },
-    {
-      "id": "worker_src_device_device_entitled",
-      "label": ".entitled()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".entitled()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L142"
-    },
-    {
-      "id": "worker_src_device_device_freelinesleft",
-      "label": ".freeLinesLeft()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".freelinesleft()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L172"
-    },
-    {
-      "id": "worker_src_device_device_jev",
-      "label": ".jev()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 247,
-      "community_name": "Device",
-      "file_type": "code",
-      "norm_label": ".jev()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L62"
-    },
-    {
       "id": "eval_src_prose_capital",
       "label": "capital()",
       "_callable": true,
@@ -3840,6 +3937,18 @@
       "norm_label": "calibrationtable()",
       "source_file": "eval/src/report.ts",
       "source_location": "L333"
+    },
+    {
+      "id": "eval_src_report_commit",
+      "label": "commit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 254,
+      "community_name": "report.ts",
+      "file_type": "code",
+      "norm_label": "commit()",
+      "source_file": "eval/src/report.ts",
+      "source_location": "L521"
     },
     {
       "id": "eval_src_report_curvesection",
@@ -4022,6 +4131,18 @@
       "source_location": "L292"
     },
     {
+      "id": "eval_src_stats_wilson",
+      "label": "wilson()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 254,
+      "community_name": "report.ts",
+      "file_type": "code",
+      "norm_label": "wilson()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L8"
+    },
+    {
       "id": "eval_src_calibration_across",
       "label": "across()",
       "_callable": true,
@@ -4190,16 +4311,16 @@
       "source_location": "L48"
     },
     {
-      "id": "eval_src_report_commit",
-      "label": "commit()",
+      "id": "eval_src_cut_off_folds",
+      "label": "folds()",
       "_callable": true,
       "_origin": "ast",
       "community": 256,
       "community_name": "calibration.ts",
       "file_type": "code",
-      "norm_label": "commit()",
-      "source_file": "eval/src/report.ts",
-      "source_location": "L521"
+      "norm_label": "folds()",
+      "source_file": "eval/src/cut-off.ts",
+      "source_location": "L11"
     },
     {
       "id": "eval_src_report_main",
@@ -4212,6 +4333,126 @@
       "norm_label": "main()",
       "source_file": "eval/src/report.ts",
       "source_location": "L540"
+    },
+    {
+      "id": "eval_src_stats_below",
+      "label": "below()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "below()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L76"
+    },
+    {
+      "id": "eval_src_stats_bootstrap",
+      "label": "bootstrap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "bootstrap()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L90"
+    },
+    {
+      "id": "eval_src_stats_bootstrapmean",
+      "label": "bootstrapMean()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "bootstrapmean()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L97"
+    },
+    {
+      "id": "eval_src_stats_chancehit",
+      "label": "chanceHit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "chancehit()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L32"
+    },
+    {
+      "id": "eval_src_stats_chancereciprocalrank",
+      "label": "chanceReciprocalRank()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "chancereciprocalrank()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L42"
+    },
+    {
+      "id": "eval_src_stats_mean",
+      "label": "mean()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "mean()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L2"
+    },
+    {
+      "id": "eval_src_stats_pairedbootstrap",
+      "label": "pairedBootstrap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "pairedbootstrap()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L104"
+    },
+    {
+      "id": "eval_src_stats_percentile",
+      "label": "percentile()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "percentile()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "eval_src_stats_rotl",
+      "label": "rotl()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "rotl()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "eval_src_stats_seeded",
+      "label": "seeded()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "seeded()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L61"
     },
     {
       "id": "eval_src_svg_escaped",
@@ -4286,6 +4527,18 @@
       "source_location": "L20"
     },
     {
+      "id": "eval_test_stats_test_oneto",
+      "label": "oneTo()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "oneto()",
+      "source_file": "eval/test/stats.test.ts",
+      "source_location": "L14"
+    },
+    {
       "id": "eval_test_setup_guard",
       "label": "guard()",
       "_callable": true,
@@ -4296,198 +4549,6 @@
       "norm_label": "guard()",
       "source_file": "eval/test/setup.ts",
       "source_location": "L10"
-    },
-    {
-      "id": "worker_src_entitlement_checkentitlement",
-      "label": "checkEntitlement()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "checkentitlement()",
-      "source_file": "worker/src/entitlement.ts",
-      "source_location": "L23"
-    },
-    {
-      "id": "worker_src_entitlement_isitem",
-      "label": "isItem()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "isitem()",
-      "source_file": "worker/src/entitlement.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "worker_src_request_islinerequest",
-      "label": "isLineRequest()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "islinerequest()",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L45"
-    },
-    {
-      "id": "worker_src_request_islist",
-      "label": "isList()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "islist()",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L39"
-    },
-    {
-      "id": "worker_src_request_isrecord",
-      "label": "isRecord()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "isrecord()",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L24"
-    },
-    {
-      "id": "worker_src_request_istext",
-      "label": "isText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "istext()",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L35"
-    },
-    {
-      "id": "worker_src_request_readline",
-      "label": "readLine()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "readline()",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L82"
-    },
-    {
-      "id": "worker_src_request_readtext",
-      "label": "readText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "readtext()",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L63"
-    },
-    {
-      "id": "eval_src_embeddings_batched",
-      "label": "batched()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "batched()",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L23"
-    },
-    {
-      "id": "eval_src_embeddings_qwen",
-      "label": "qwen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "qwen()",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L65"
-    },
-    {
-      "id": "eval_src_embeddings_vectorsin",
-      "label": "vectorsIn()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "vectorsin()",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L17"
-    },
-    {
-      "id": "eval_src_embeddings_workersai",
-      "label": "workersAi()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "workersai()",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L38"
-    },
-    {
-      "id": "eval_src_rankers_phonekind",
-      "label": "phoneKind()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "phonekind()",
-      "source_file": "eval/src/rankers.ts",
-      "source_location": "L22"
-    },
-    {
-      "id": "eval_src_reranker_reranker",
-      "label": "reranker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "reranker()",
-      "source_file": "eval/src/reranker.ts",
-      "source_location": "L18"
-    },
-    {
-      "id": "eval_src_workers_ai_runmodel",
-      "label": "runModel()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "runmodel()",
-      "source_file": "eval/src/workers-ai.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "worker_src_device_unlessaborted",
-      "label": "unlessAborted()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "unlessaborted()",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L46"
     },
     {
       "id": "eval_src_sentence_embedding_fail",
@@ -7572,7 +7633,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1761"
+      "source_location": "L1785"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -7584,7 +7645,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1848"
+      "source_location": "L1872"
     },
     {
       "id": "docs_trd_overview",
@@ -7608,7 +7669,7 @@
       "node_kind": "heading",
       "norm_label": "relay api",
       "source_file": "docs/TRD.md",
-      "source_location": "L349"
+      "source_location": "L361"
     },
     {
       "id": "docs_trd_requirements_traceability",
@@ -7620,7 +7681,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1805"
+      "source_location": "L1829"
     },
     {
       "id": "docs_trd_see_also",
@@ -7632,7 +7693,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1887"
+      "source_location": "L1911"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -7656,7 +7717,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1716"
+      "source_location": "L1740"
     },
     {
       "id": "docs_trd_turn_technical_requirements",
@@ -15547,7 +15608,7 @@
       "node_kind": "heading",
       "norm_label": "decision pipeline",
       "source_file": "docs/TRD.md",
-      "source_location": "L428"
+      "source_location": "L440"
     },
     {
       "id": "docs_trd_from_probabilities_to_the_row",
@@ -15559,7 +15620,7 @@
       "node_kind": "heading",
       "norm_label": "from probabilities to the row",
       "source_file": "docs/TRD.md",
-      "source_location": "L607"
+      "source_location": "L619"
     },
     {
       "id": "docs_trd_names_as_tags",
@@ -15571,7 +15632,7 @@
       "node_kind": "heading",
       "norm_label": "names as tags",
       "source_file": "docs/TRD.md",
-      "source_location": "L455"
+      "source_location": "L467"
     },
     {
       "id": "docs_trd_the_end_of_a_line",
@@ -15583,7 +15644,7 @@
       "node_kind": "heading",
       "norm_label": "the end of a line",
       "source_file": "docs/TRD.md",
-      "source_location": "L430"
+      "source_location": "L442"
     },
     {
       "id": "docs_trd_the_jev_request",
@@ -15595,7 +15656,7 @@
       "node_kind": "heading",
       "norm_label": "the jev request",
       "source_file": "docs/TRD.md",
-      "source_location": "L523"
+      "source_location": "L535"
     },
     {
       "id": "docs_trd_the_phone_s_own_ranking",
@@ -15607,7 +15668,7 @@
       "node_kind": "heading",
       "norm_label": "the phone's own ranking",
       "source_file": "docs/TRD.md",
-      "source_location": "L684"
+      "source_location": "L696"
     },
     {
       "id": "docs_trd_the_shortlist",
@@ -15619,7 +15680,7 @@
       "node_kind": "heading",
       "norm_label": "the shortlist",
       "source_file": "docs/TRD.md",
-      "source_location": "L486"
+      "source_location": "L498"
     },
     {
       "id": "docs_trd_timeouts_sequence_numbers_and_fallbacks",
@@ -15631,7 +15692,7 @@
       "node_kind": "heading",
       "norm_label": "timeouts, sequence numbers, and fallbacks",
       "source_file": "docs/TRD.md",
-      "source_location": "L670"
+      "source_location": "L682"
     },
     {
       "id": "docs_trd_accessibility_in_the_app",
@@ -15643,7 +15704,7 @@
       "node_kind": "heading",
       "norm_label": "accessibility in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L1044"
+      "source_location": "L1056"
     },
     {
       "id": "docs_trd_build_configuration",
@@ -15655,7 +15716,7 @@
       "node_kind": "heading",
       "norm_label": "build configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L1109"
+      "source_location": "L1121"
     },
     {
       "id": "docs_trd_flows_on_the_phone",
@@ -15667,7 +15728,7 @@
       "node_kind": "heading",
       "norm_label": "flows on the phone",
       "source_file": "docs/TRD.md",
-      "source_location": "L1017"
+      "source_location": "L1029"
     },
     {
       "id": "docs_trd_networking",
@@ -15679,7 +15740,7 @@
       "node_kind": "heading",
       "norm_label": "networking",
       "source_file": "docs/TRD.md",
-      "source_location": "L1008"
+      "source_location": "L1020"
     },
     {
       "id": "docs_trd_screens_and_navigation",
@@ -15691,7 +15752,7 @@
       "node_kind": "heading",
       "norm_label": "screens and navigation",
       "source_file": "docs/TRD.md",
-      "source_location": "L969"
+      "source_location": "L981"
     },
     {
       "id": "docs_trd_state_and_storage",
@@ -15703,7 +15764,7 @@
       "node_kind": "heading",
       "norm_label": "state and storage",
       "source_file": "docs/TRD.md",
-      "source_location": "L997"
+      "source_location": "L1009"
     },
     {
       "id": "docs_trd_the_iphone_app",
@@ -15715,7 +15776,7 @@
       "node_kind": "heading",
       "norm_label": "the iphone app",
       "source_file": "docs/TRD.md",
-      "source_location": "L967"
+      "source_location": "L979"
     },
     {
       "id": "docs_trd_evaluation",
@@ -15727,7 +15788,7 @@
       "node_kind": "heading",
       "norm_label": "evaluation",
       "source_file": "docs/TRD.md",
-      "source_location": "L1407"
+      "source_location": "L1431"
     },
     {
       "id": "docs_trd_metrics_intervals_and_thresholds",
@@ -15739,7 +15800,7 @@
       "node_kind": "heading",
       "norm_label": "metrics, intervals, and thresholds",
       "source_file": "docs/TRD.md",
-      "source_location": "L1534"
+      "source_location": "L1558"
     },
     {
       "id": "docs_trd_the_evaluation_data",
@@ -15751,7 +15812,7 @@
       "node_kind": "heading",
       "norm_label": "the evaluation data",
       "source_file": "docs/TRD.md",
-      "source_location": "L1409"
+      "source_location": "L1433"
     },
     {
       "id": "docs_trd_the_rankers",
@@ -15763,7 +15824,7 @@
       "node_kind": "heading",
       "norm_label": "the rankers",
       "source_file": "docs/TRD.md",
-      "source_location": "L1474"
+      "source_location": "L1498"
     },
     {
       "id": "docs_trd_the_replay_script",
@@ -15775,7 +15836,7 @@
       "node_kind": "heading",
       "norm_label": "the replay script",
       "source_file": "docs/TRD.md",
-      "source_location": "L1633"
+      "source_location": "L1657"
     },
     {
       "id": "docs_trd_the_report",
@@ -15787,7 +15848,7 @@
       "node_kind": "heading",
       "norm_label": "the report",
       "source_file": "docs/TRD.md",
-      "source_location": "L1673"
+      "source_location": "L1697"
     },
     {
       "id": "docs_trd_listening_and_speaking_on_the_phone",
@@ -15799,7 +15860,7 @@
       "node_kind": "heading",
       "norm_label": "listening and speaking on the phone",
       "source_file": "docs/TRD.md",
-      "source_location": "L698"
+      "source_location": "L710"
     },
     {
       "id": "docs_trd_the_audio_session",
@@ -15811,7 +15872,7 @@
       "node_kind": "heading",
       "norm_label": "the audio session",
       "source_file": "docs/TRD.md",
-      "source_location": "L749"
+      "source_location": "L761"
     },
     {
       "id": "docs_trd_the_turn_listen_module",
@@ -15823,7 +15884,7 @@
       "node_kind": "heading",
       "norm_label": "the turn-listen module",
       "source_file": "docs/TRD.md",
-      "source_location": "L700"
+      "source_location": "L712"
     },
     {
       "id": "docs_trd_the_turn_voice_module",
@@ -15835,7 +15896,7 @@
       "node_kind": "heading",
       "norm_label": "the turn-voice module",
       "source_file": "docs/TRD.md",
-      "source_location": "L784"
+      "source_location": "L796"
     },
     {
       "id": "docs_trd_when_transcription_isn_t_available",
@@ -15847,7 +15908,7 @@
       "node_kind": "heading",
       "norm_label": "when transcription isn't available",
       "source_file": "docs/TRD.md",
-      "source_location": "L810"
+      "source_location": "L822"
     },
     {
       "id": "docs_trd_data_inventory",
@@ -15859,7 +15920,7 @@
       "node_kind": "heading",
       "norm_label": "data inventory",
       "source_file": "docs/TRD.md",
-      "source_location": "L1319"
+      "source_location": "L1341"
     },
     {
       "id": "docs_trd_secrets_and_configuration",
@@ -15871,7 +15932,7 @@
       "node_kind": "heading",
       "norm_label": "secrets and configuration",
       "source_file": "docs/TRD.md",
-      "source_location": "L1148"
+      "source_location": "L1160"
     },
     {
       "id": "docs_trd_security_and_privacy",
@@ -15883,7 +15944,7 @@
       "node_kind": "heading",
       "norm_label": "security and privacy",
       "source_file": "docs/TRD.md",
-      "source_location": "L1146"
+      "source_location": "L1158"
     },
     {
       "id": "docs_trd_validation_and_abuse_limits",
@@ -15895,7 +15956,7 @@
       "node_kind": "heading",
       "norm_label": "validation and abuse limits",
       "source_file": "docs/TRD.md",
-      "source_location": "L1254"
+      "source_location": "L1261"
     },
     {
       "id": "docs_trd_data_model",
@@ -15907,7 +15968,7 @@
       "node_kind": "heading",
       "norm_label": "data model",
       "source_file": "docs/TRD.md",
-      "source_location": "L207"
+      "source_location": "L210"
     },
     {
       "id": "docs_trd_the_phone_s_database",
@@ -15919,7 +15980,7 @@
       "node_kind": "heading",
       "norm_label": "the phone's database",
       "source_file": "docs/TRD.md",
-      "source_location": "L209"
+      "source_location": "L212"
     },
     {
       "id": "docs_trd_the_relay_s_storage",
@@ -15931,7 +15992,7 @@
       "node_kind": "heading",
       "norm_label": "the relay's storage",
       "source_file": "docs/TRD.md",
-      "source_location": "L267"
+      "source_location": "L270"
     },
     {
       "id": "docs_trd_what_is_never_stored",
@@ -15943,7 +16004,7 @@
       "node_kind": "heading",
       "norm_label": "what is never stored",
       "source_file": "docs/TRD.md",
-      "source_location": "L339"
+      "source_location": "L351"
     },
     {
       "id": "docs_trd_failure_modes",
@@ -15955,7 +16016,7 @@
       "node_kind": "heading",
       "norm_label": "failure modes",
       "source_file": "docs/TRD.md",
-      "source_location": "L1340"
+      "source_location": "L1363"
     },
     {
       "id": "docs_trd_logs_and_counts",
@@ -15967,7 +16028,7 @@
       "node_kind": "heading",
       "norm_label": "logs and counts",
       "source_file": "docs/TRD.md",
-      "source_location": "L1356"
+      "source_location": "L1380"
     },
     {
       "id": "docs_trd_reliability_and_observability",
@@ -15979,7 +16040,7 @@
       "node_kind": "heading",
       "norm_label": "reliability and observability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1338"
+      "source_location": "L1361"
     },
     {
       "id": "docs_trd_service_life",
@@ -15991,7 +16052,7 @@
       "node_kind": "heading",
       "norm_label": "service life",
       "source_file": "docs/TRD.md",
-      "source_location": "L1401"
+      "source_location": "L1425"
     },
     {
       "id": "docs_trd_purchases_and_entitlements",
@@ -16003,7 +16064,7 @@
       "node_kind": "heading",
       "norm_label": "purchases and entitlements",
       "source_file": "docs/TRD.md",
-      "source_location": "L832"
+      "source_location": "L844"
     },
     {
       "id": "docs_trd_purchases_in_the_app",
@@ -16015,7 +16076,7 @@
       "node_kind": "heading",
       "norm_label": "purchases in the app",
       "source_file": "docs/TRD.md",
-      "source_location": "L865"
+      "source_location": "L877"
     },
     {
       "id": "docs_trd_revenuecat_setup",
@@ -16027,7 +16088,7 @@
       "node_kind": "heading",
       "norm_label": "revenuecat setup",
       "source_file": "docs/TRD.md",
-      "source_location": "L834"
+      "source_location": "L846"
     },
     {
       "id": "docs_trd_the_relay_s_entitlement_check",
@@ -16039,7 +16100,7 @@
       "node_kind": "heading",
       "norm_label": "the relay's entitlement check",
       "source_file": "docs/TRD.md",
-      "source_location": "L905"
+      "source_location": "L917"
     },
     {
       "id": "docs_sources_devpost_com_revenuecat_shipaton_2026",
@@ -16255,7 +16316,7 @@
       "node_kind": "heading",
       "norm_label": "repository layout",
       "source_file": "docs/TRD.md",
-      "source_location": "L171"
+      "source_location": "L174"
     },
     {
       "id": "docs_trd_stack_and_repository",
@@ -16267,7 +16328,7 @@
       "node_kind": "heading",
       "norm_label": "stack and repository",
       "source_file": "docs/TRD.md",
-      "source_location": "L137"
+      "source_location": "L140"
     },
     {
       "id": "docs_trd_versions_on_september_22_2026",
@@ -16279,7 +16340,7 @@
       "node_kind": "heading",
       "norm_label": "versions on september 22, 2026",
       "source_file": "docs/TRD.md",
-      "source_location": "L139"
+      "source_location": "L142"
     },
     {
       "id": "docs_research_0029_turn_ios_design_a_pulsing_listening_light",
@@ -23014,69 +23075,14 @@
       "source_location": "L30"
     },
     {
-      "id": "eval_src_stats",
-      "label": "stats.ts",
+      "id": "eval_src_rankers",
+      "label": "rankers.ts",
       "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
+      "community": 217,
+      "community_name": "shortlist.ts",
       "file_type": "code",
-      "norm_label": "stats.ts",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_src_stats_resamples",
-      "label": "resamples",
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "resamples",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L84"
-    },
-    {
-      "id": "eval_src_stats_seed",
-      "label": "seed",
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "seed",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L55"
-    },
-    {
-      "id": "eval_test_cut_off_test",
-      "label": "cut-off.test.ts",
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "cut-off.test.ts",
-      "source_file": "eval/test/cut-off.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_test_cut_off_test_labeled",
-      "label": "labeled",
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "labeled",
-      "source_file": "eval/test/cut-off.test.ts",
-      "source_location": "L10"
-    },
-    {
-      "id": "eval_test_stats_test",
-      "label": "stats.test.ts",
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "stats.test.ts",
-      "source_file": "eval/test/stats.test.ts",
+      "norm_label": "rankers.ts",
+      "source_file": "eval/src/rankers.ts",
       "source_location": "L1"
     },
     {
@@ -23133,6 +23139,28 @@
       "norm_label": "scored",
       "source_file": "eval/test/curves.test.ts",
       "source_location": "L8"
+    },
+    {
+      "id": "eval_test_cut_off_test",
+      "label": "cut-off.test.ts",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "cut-off.test.ts",
+      "source_file": "eval/test/cut-off.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_cut_off_test_labeled",
+      "label": "labeled",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "labeled",
+      "source_file": "eval/test/cut-off.test.ts",
+      "source_location": "L10"
     },
     {
       "id": "eval_test_rankers_test",
@@ -23331,6 +23359,83 @@
       "norm_label": "yesnoopeners",
       "source_file": "shared/src/shortlist.ts",
       "source_location": "L108"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test",
+      "label": "shortlist-speed.test.ts",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "shortlist-speed.test.ts",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_bank",
+      "label": "bank",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "bank",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_lines",
+      "label": "lines",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "lines",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_taps",
+      "label": "taps",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "taps",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_vocabulary",
+      "label": "vocabulary",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "vocabulary",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_test_shortlist_test",
+      "label": "shortlist.test.ts",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "shortlist.test.ts",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_shortlist_test_w",
+      "label": "w",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "w",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L17"
     },
     {
       "id": "docs_plans_0014_turn_eval_harness",
@@ -23649,7 +23754,7 @@
       "label": "apple.ts",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "apple.ts",
       "source_file": "eval/src/apple.ts",
@@ -23660,7 +23765,7 @@
       "label": "appleRevision",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "applerevision",
       "source_file": "eval/src/apple.ts",
@@ -23671,18 +23776,95 @@
       "label": "helper",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "helper",
       "source_file": "eval/src/apple.ts",
       "source_location": "L10"
     },
     {
+      "id": "eval_src_embeddings",
+      "label": "embeddings.ts",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "embeddings.ts",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_embeddings_embeddingmodel",
+      "label": "embeddingModel",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "embeddingmodel",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "eval_src_embeddings_qweninstruction",
+      "label": "qwenInstruction",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "qweninstruction",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "eval_src_embeddings_qwenmodel",
+      "label": "qwenModel",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "qwenmodel",
+      "source_file": "eval/src/embeddings.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "eval_src_reranker",
+      "label": "reranker.ts",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "reranker.ts",
+      "source_file": "eval/src/reranker.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_reranker_rerankermodel",
+      "label": "rerankerModel",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "rerankermodel",
+      "source_file": "eval/src/reranker.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "eval_src_workers_ai",
+      "label": "workers-ai.ts",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "workers-ai.ts",
+      "source_file": "eval/src/workers-ai.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "eval_test_apple_test",
       "label": "apple.test.ts",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "apple.test.ts",
       "source_file": "eval/test/apple.test.ts",
@@ -23693,7 +23875,7 @@
       "label": "named",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "named",
       "source_file": "eval/test/apple.test.ts",
@@ -23704,7 +23886,7 @@
       "label": "embeddings.test.ts",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "embeddings.test.ts",
       "source_file": "eval/test/embeddings.test.ts",
@@ -23715,7 +23897,7 @@
       "label": "home",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "home",
       "source_file": "eval/test/embeddings.test.ts",
@@ -23726,7 +23908,7 @@
       "label": "shortlist",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "shortlist",
       "source_file": "eval/test/embeddings.test.ts",
@@ -23737,7 +23919,7 @@
       "label": "report.test.ts",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "report.test.ts",
       "source_file": "eval/test/report.test.ts",
@@ -23748,7 +23930,7 @@
       "label": "fixture",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "fixture",
       "source_file": "eval/test/report.test.ts",
@@ -23759,7 +23941,7 @@
       "label": "qwenBodies",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "qwenbodies",
       "source_file": "eval/test/report.test.ts",
@@ -23770,10 +23952,21 @@
       "label": "services.ts",
       "_origin": "ast",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "file_type": "code",
       "norm_label": "services.ts",
       "source_file": "eval/test/services.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_workers_ai_test",
+      "label": "workers-ai.test.ts",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "workers-ai.test.ts",
+      "source_file": "eval/test/workers-ai.test.ts",
       "source_location": "L1"
     },
     {
@@ -23949,6 +24142,17 @@
       "source_location": "L40"
     },
     {
+      "id": "worker_src_address",
+      "label": "address.ts",
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "address.ts",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "worker_src_budget",
       "label": "budget.ts",
       "_origin": "ast",
@@ -23990,7 +24194,7 @@
       "file_type": "code",
       "norm_label": "codes",
       "source_file": "worker/src/index.ts",
-      "source_location": "L39"
+      "source_location": "L40"
     },
     {
       "id": "worker_src_index_statuses",
@@ -24001,7 +24205,40 @@
       "file_type": "code",
       "norm_label": "statuses",
       "source_file": "worker/src/index.ts",
-      "source_location": "L27"
+      "source_location": "L28"
+    },
+    {
+      "id": "worker_src_minute_count",
+      "label": "minute-count.ts",
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "minute-count.ts",
+      "source_file": "worker/src/minute-count.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "worker_src_request",
+      "label": "request.ts",
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "request.ts",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "worker_src_request_builds",
+      "label": "builds",
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "builds",
+      "source_file": "worker/src/request.ts",
+      "source_location": "L10"
     },
     {
       "id": "eval_src_replay",
@@ -24070,6 +24307,39 @@
       "source_location": "L9"
     },
     {
+      "id": "shared_src_relay",
+      "label": "relay.ts",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "relay.ts",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_src_relay_limits",
+      "label": "limits",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "limits",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "shared_src_relay_requestsperminute",
+      "label": "requestsPerMinute",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "requestsperminute",
+      "source_file": "shared/src/relay.ts",
+      "source_location": "L20"
+    },
+    {
       "id": "shared_src_row",
       "label": "row.ts",
       "_origin": "ast",
@@ -24125,81 +24395,15 @@
       "source_location": "L4"
     },
     {
-      "id": "shared_test_shortlist_speed_test",
-      "label": "shortlist-speed.test.ts",
+      "id": "worker_test_config_test",
+      "label": "worker/test/config.test.ts",
       "_origin": "ast",
       "community": 221,
       "community_name": "replay.ts",
       "file_type": "code",
-      "norm_label": "shortlist-speed.test.ts",
-      "source_file": "shared/test/shortlist-speed.test.ts",
+      "norm_label": "worker/test/config.test.ts",
+      "source_file": "worker/test/config.test.ts",
       "source_location": "L1"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_bank",
-      "label": "bank",
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "bank",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L9"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_lines",
-      "label": "lines",
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "lines",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_taps",
-      "label": "taps",
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "taps",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L14"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_vocabulary",
-      "label": "vocabulary",
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "vocabulary",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "shared_test_shortlist_test",
-      "label": "shortlist.test.ts",
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "shortlist.test.ts",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "shared_test_shortlist_test_w",
-      "label": "w",
-      "_origin": "ast",
-      "community": 221,
-      "community_name": "replay.ts",
-      "file_type": "code",
-      "norm_label": "w",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L17"
     },
     {
       "id": "docs_research_0035_turn_eval_harness",
@@ -26665,6 +26869,17 @@
       "source_location": "L1"
     },
     {
+      "id": "worker_src_entitlement",
+      "label": "entitlement.ts",
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "entitlement.ts",
+      "source_file": "worker/src/entitlement.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "worker_test_budget_test",
       "label": "budget.test.ts",
       "_origin": "ast",
@@ -26673,17 +26888,6 @@
       "file_type": "code",
       "norm_label": "budget.test.ts",
       "source_file": "worker/test/budget.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "worker_test_config_test",
-      "label": "worker/test/config.test.ts",
-      "_origin": "ast",
-      "community": 242,
-      "community_name": "helpers.ts",
-      "file_type": "code",
-      "norm_label": "worker/test/config.test.ts",
-      "source_file": "worker/test/config.test.ts",
       "source_location": "L1"
     },
     {
@@ -27026,6 +27230,17 @@
       "norm_label": "line",
       "source_file": "shared/test/jev.test.ts",
       "source_location": "L4"
+    },
+    {
+      "id": "worker_src_device",
+      "label": "device.ts",
+      "_origin": "ast",
+      "community": 243,
+      "community_name": "shared/src/jev.ts",
+      "file_type": "code",
+      "norm_label": "device.ts",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L1"
     },
     {
       "id": "docs_plans_0019_turn_paywall_logs_alert",
@@ -27674,6 +27889,222 @@
       "norm_label": "verification gate",
       "source_file": "docs/plans/0022-turn-no-reply-floor.md",
       "source_location": "L216"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit",
+      "label": "0027-turn-address-limit.md",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0027-turn-address-limit.md",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_decisions",
+      "label": "Decisions",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "decisions",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L117"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_design",
+      "label": "Design",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "design",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L115"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_global_constraints",
+      "label": "Global constraints",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "global constraints",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_out_of_scope",
+      "label": "Out of scope",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "out of scope",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L307"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_rejected_alternatives",
+      "label": "Rejected alternatives",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "rejected alternatives",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L278"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_review_round_1",
+      "label": "Review round 1",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "review round 1",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L250"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_skills",
+      "label": "Skills",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "skills",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L96"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_1_research_notes",
+      "label": "Task 1: Research notes",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 1: research notes",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L341"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_2_this_plan",
+      "label": "Task 2: This plan",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 2: this plan",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L347"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_3_one_minute_s_count",
+      "label": "Task 3: One minute's count",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 3: one minute's count",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L352"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_4_the_address_s_object",
+      "label": "Task 4: The address's object",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 4: the address's object",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L361"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_5_mutations",
+      "label": "Task 5: Mutations",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 5: mutations",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L374"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_6_the_trd",
+      "label": "Task 6: The TRD",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 6: the trd",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_task_7_graph_pull_request_review_deploy_and_merge",
+      "label": "Task 7: Graph, pull request, review, deploy, and merge",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 7: graph, pull request, review, deploy, and merge",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L384"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_tasks",
+      "label": "Tasks",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "tasks",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L334"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "label": "Turn's exact address limit implementation plan",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's exact address limit implementation plan",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_verification_gate",
+      "label": "Verification gate",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verification gate",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L312"
     },
     {
       "id": "docs_research_0039_turn_free_lines",
@@ -28814,6 +29245,39 @@
       "source_location": "L36"
     },
     {
+      "id": "eval_src_stats",
+      "label": "stats.ts",
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "stats.ts",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_stats_resamples",
+      "label": "resamples",
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "resamples",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L84"
+    },
+    {
+      "id": "eval_src_stats_seed",
+      "label": "seed",
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "seed",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L55"
+    },
+    {
       "id": "eval_src_svg",
       "label": "svg.ts",
       "_origin": "ast",
@@ -28845,6 +29309,17 @@
       "norm_label": "worked",
       "source_file": "eval/test/calibration.test.ts",
       "source_location": "L23"
+    },
+    {
+      "id": "eval_test_stats_test",
+      "label": "stats.test.ts",
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "calibration.ts",
+      "file_type": "code",
+      "norm_label": "stats.test.ts",
+      "source_file": "eval/test/stats.test.ts",
+      "source_location": "L1"
     },
     {
       "id": "docs_research_0043_turn_eval_statistics",
@@ -29760,37 +30235,160 @@
       "source_location": "L109"
     },
     {
-      "id": "worker_src_entitlement",
-      "label": "entitlement.ts",
+      "id": "docs_research_0050_turn_address_limit",
+      "label": "0050-turn-address-limit.md",
       "_origin": "ast",
       "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "entitlement.ts",
-      "source_file": "worker/src/entitlement.ts",
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0050-turn-address-limit.md",
+      "source_file": "docs/research/0050-turn-address-limit.md",
       "source_location": "L1"
     },
     {
-      "id": "worker_src_request",
-      "label": "request.ts",
+      "id": "docs_research_0050_turn_address_limit_adding_a_class_with_exports",
+      "label": "Adding a class with exports",
       "_origin": "ast",
       "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "request.ts",
-      "source_file": "worker/src/request.ts",
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "adding a class with exports",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L161"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_duration_billing",
+      "label": "Duration billing",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "duration billing",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_gaps",
+      "label": "Gaps",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "gaps",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L292"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_ipv6_in_cf_connecting_ip",
+      "label": "IPv6 in CF-Connecting-IP",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ipv6 in cf-connecting-ip",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L240"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_latency_and_throughput",
+      "label": "Latency and throughput",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "latency and throughput",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L211"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_local_measurement",
+      "label": "Local measurement",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "local measurement",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L264"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_object_names_and_privacy",
+      "label": "Object names and privacy",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "object names and privacy",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L185"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_see_also",
+      "label": "See also",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "see also",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_the_binding_s_price",
+      "label": "The binding's price",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the binding's price",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L137"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_the_free_plan_s_quotas",
+      "label": "The Free plan's quotas",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the free plan's quotas",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "label": "Turn's address limit research notes",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's address limit research notes",
+      "source_file": "docs/research/0050-turn-address-limit.md",
       "source_location": "L1"
     },
     {
-      "id": "worker_src_request_builds",
-      "label": "builds",
+      "id": "docs_research_0050_turn_address_limit_what_a_durable_object_request_costs",
+      "label": "What a Durable Object request costs",
       "_origin": "ast",
       "community": 264,
-      "community_name": "request.ts",
-      "file_type": "code",
-      "norm_label": "builds",
-      "source_file": "worker/src/request.ts",
-      "source_location": "L10"
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what a durable object request costs",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L66"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers",
@@ -30282,149 +30880,6 @@
       "node_kind": "heading",
       "norm_label": "turn's relay limits research notes",
       "source_file": "docs/research/0046-turn-relay-limits.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_src_embeddings",
-      "label": "embeddings.ts",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "embeddings.ts",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_src_embeddings_embeddingmodel",
-      "label": "embeddingModel",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "embeddingmodel",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "eval_src_embeddings_qweninstruction",
-      "label": "qwenInstruction",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "qweninstruction",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L55"
-    },
-    {
-      "id": "eval_src_embeddings_qwenmodel",
-      "label": "qwenModel",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "qwenmodel",
-      "source_file": "eval/src/embeddings.ts",
-      "source_location": "L52"
-    },
-    {
-      "id": "eval_src_rankers",
-      "label": "rankers.ts",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "rankers.ts",
-      "source_file": "eval/src/rankers.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_src_reranker",
-      "label": "reranker.ts",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "reranker.ts",
-      "source_file": "eval/src/reranker.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_src_reranker_rerankermodel",
-      "label": "rerankerModel",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "rerankermodel",
-      "source_file": "eval/src/reranker.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "eval_src_workers_ai",
-      "label": "workers-ai.ts",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "workers-ai.ts",
-      "source_file": "eval/src/workers-ai.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_test_workers_ai_test",
-      "label": "workers-ai.test.ts",
-      "_origin": "ast",
-      "community": 267,
-      "community_name": "embeddings.ts",
-      "file_type": "code",
-      "norm_label": "workers-ai.test.ts",
-      "source_file": "eval/test/workers-ai.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "shared_src_relay",
-      "label": "relay.ts",
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "relay.ts",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "shared_src_relay_limits",
-      "label": "limits",
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "limits",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "shared_src_relay_requestsperminute",
-      "label": "requestsPerMinute",
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "requestsperminute",
-      "source_file": "shared/src/relay.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "worker_src_device",
-      "label": "device.ts",
-      "_origin": "ast",
-      "community": 268,
-      "community_name": "relay.ts",
-      "file_type": "code",
-      "norm_label": "device.ts",
-      "source_file": "worker/src/device.ts",
       "source_location": "L1"
     },
     {
@@ -50352,6 +50807,30 @@
       "weight": 1.0
     },
     {
+      "source": "worker_src_address_address_admit",
+      "target": "worker_src_minute_count_countinminute",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_address_address_constructor",
+      "target": "worker_src_minute_count_createminutecount",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
       "source": "worker_src_config_readconfig",
       "target": "worker_src_config_ison",
       "relation": "calls",
@@ -50412,6 +50891,18 @@
       "weight": 1.0
     },
     {
+      "source": "worker_src_device_device_admit",
+      "target": "worker_src_minute_count_countinminute",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
       "source": "worker_src_device_device_answer",
       "target": "worker_src_device_device_admit",
       "relation": "calls",
@@ -50420,7 +50911,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L190",
+      "source_location": "L175",
       "weight": 1.0
     },
     {
@@ -50432,7 +50923,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L192",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -50444,7 +50935,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L195",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -50456,7 +50947,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L198",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -50468,7 +50959,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L212",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -50480,7 +50971,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L229",
+      "source_location": "L214",
       "weight": 1.0
     },
     {
@@ -50492,7 +50983,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L232",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -50504,7 +50995,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L242",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
@@ -50516,7 +51007,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L245",
+      "source_location": "L230",
       "weight": 1.0
     },
     {
@@ -50528,7 +51019,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L124",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -50540,7 +51031,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L179",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -50552,7 +51043,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L179",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_device_device_constructor",
+      "target": "worker_src_minute_count_createminutecount",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -50564,7 +51067,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L144",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -50576,7 +51079,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L149",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -50588,7 +51091,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L173",
+      "source_location": "L158",
       "weight": 1.0
     },
     {
@@ -50600,7 +51103,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/device.ts",
-      "source_location": "L174",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -50636,7 +51139,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L86",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -50648,7 +51151,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L87",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -50660,7 +51163,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -50672,7 +51175,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -50684,7 +51187,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L151",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -50696,7 +51199,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L153",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -50708,7 +51211,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L128",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -50720,19 +51223,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L129",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
       "source": "worker_src_index_route",
-      "target": "worker_src_index_hashuser",
+      "target": "worker_src_index_saltedhash",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L131",
+      "source_location": "L132",
       "weight": 1.0
     },
     {
@@ -50744,7 +51247,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L133",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -50756,7 +51259,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L136",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -50768,7 +51271,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L137",
+      "source_location": "L138",
       "weight": 1.0
     },
     {
@@ -50780,7 +51283,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L138",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -50792,7 +51295,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L139",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -50804,7 +51307,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L139",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -50816,7 +51319,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/src/index.ts",
-      "source_location": "L80",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_index_withinaddresslimit",
+      "target": "worker_src_index_saltedhash",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/src/index.ts",
+      "source_location": "L117",
       "weight": 1.0
     },
     {
@@ -51092,7 +51607,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L28",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -51104,12 +51619,36 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L15",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_test_limits_test_useupaddress",
+      "target": "worker_test_limits_test_from",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/test/limits.test.ts",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_test_limits_test_useupaddress",
+      "target": "worker_test_helpers_getconfig",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "worker/test/limits.test.ts",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
       "source": "worker_src_index",
-      "target": "worker_src_budget",
+      "target": "worker_src_address",
       "relation": "re_exports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -51121,7 +51660,7 @@
     },
     {
       "source": "worker_src_index",
-      "target": "worker_src_device",
+      "target": "worker_src_budget",
       "relation": "re_exports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -51129,6 +51668,18 @@
       "context": "export",
       "source_file": "worker/src/index.ts",
       "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_index",
+      "target": "worker_src_device",
+      "relation": "re_exports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "export",
+      "source_file": "worker/src/index.ts",
+      "source_location": "L8",
       "type_only": true,
       "weight": 1.0
     },
@@ -51141,7 +51692,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "worker/src/device.ts",
-      "source_location": "L142",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -55897,6 +56448,30 @@
       "weight": 1.0
     },
     {
+      "source": "worker_src_address",
+      "target": "worker_src_minute_count_countinminute",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_address",
+      "target": "worker_src_minute_count_createminutecount",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "worker_src_config",
       "target": "shared_src_relay_config",
       "relation": "imports",
@@ -56038,6 +56613,30 @@
       "context": "import",
       "source_file": "worker/src/device.ts",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_device",
+      "target": "worker_src_minute_count_countinminute",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_device",
+      "target": "worker_src_minute_count_createminutecount",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -57123,6 +57722,18 @@
     {
       "source": "worker_test_limits_test",
       "target": "worker_test_helpers_postlinefrom",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/test/limits.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_test_limits_test",
+      "target": "worker_test_helpers_sha256",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -59560,6 +60171,18 @@
       "weight": 1.0
     },
     {
+      "source": "worker_src_address",
+      "target": "worker_src_minute_count",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/src/address.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "worker_src_config",
       "target": "shared_src_relay",
       "relation": "imports_from",
@@ -59630,6 +60253,18 @@
       "context": "import",
       "source_file": "worker/src/device.ts",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_device",
+      "target": "worker_src_minute_count",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -60077,7 +60712,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "worker/src/device.ts",
-      "source_location": "L188",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -60089,12 +60724,12 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "worker/src/device.ts",
-      "source_location": "L222",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
       "source": "worker_src_index",
-      "target": "worker_src_budget_budget",
+      "target": "worker_src_address_address",
       "relation": "re_exports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -60106,7 +60741,7 @@
     },
     {
       "source": "worker_src_index",
-      "target": "worker_src_device_device",
+      "target": "worker_src_budget_budget",
       "relation": "re_exports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -60114,6 +60749,18 @@
       "context": "re-export",
       "source_file": "worker/src/index.ts",
       "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_index",
+      "target": "worker_src_device_device",
+      "relation": "re_exports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "re-export",
+      "source_file": "worker/src/index.ts",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -70150,6 +70797,193 @@
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
       "source_location": "L526",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit",
+      "target": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_design",
+      "target": "docs_plans_0027_turn_address_limit_decisions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_design",
+      "target": "docs_plans_0027_turn_address_limit_review_round_1",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_design",
+      "target": "docs_plans_0027_turn_address_limit_rejected_alternatives",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L278",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_design",
+      "target": "docs_plans_0027_turn_address_limit_out_of_scope",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L307",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_1_research_notes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L341",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_2_this_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_3_one_minute_s_count",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L352",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_4_the_address_s_object",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L361",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_5_mutations",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L374",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_6_the_trd",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_tasks",
+      "target": "docs_plans_0027_turn_address_limit_task_7_graph_pull_request_review_deploy_and_merge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "target": "docs_plans_0027_turn_address_limit_design",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "target": "docs_plans_0027_turn_address_limit_verification_gate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "target": "docs_plans_0027_turn_address_limit_tasks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L334",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "target": "docs_plans_0027_turn_address_limit_global_constraints",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
+      "target": "docs_plans_0027_turn_address_limit_skills",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -85190,6 +86024,138 @@
       "weight": 1.0
     },
     {
+      "source": "docs_research_0050_turn_address_limit",
+      "target": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_duration_billing",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_the_binding_s_price",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_adding_a_class_with_exports",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L161",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_object_names_and_privacy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_latency_and_throughput",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_the_free_plan_s_quotas",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_ipv6_in_cf_connecting_ip",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_local_measurement",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L264",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_gaps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L292",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_see_also",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_what_a_durable_object_request_costs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
       "source": "docs_sources_devpost_com_revenuecat_shipaton_2026",
       "target": "docs_sources_devpost_com_revenuecat_shipaton_2026_revenuecat_shipaton_2026",
       "relation": "contains",
@@ -93436,7 +94402,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L209",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
@@ -93447,7 +94413,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L267",
+      "source_location": "L270",
       "weight": 1.0
     },
     {
@@ -93458,7 +94424,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L339",
+      "source_location": "L351",
       "weight": 1.0
     },
     {
@@ -93469,7 +94435,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L430",
+      "source_location": "L442",
       "weight": 1.0
     },
     {
@@ -93480,7 +94446,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L455",
+      "source_location": "L467",
       "weight": 1.0
     },
     {
@@ -93491,7 +94457,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L486",
+      "source_location": "L498",
       "weight": 1.0
     },
     {
@@ -93502,7 +94468,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L523",
+      "source_location": "L535",
       "weight": 1.0
     },
     {
@@ -93513,7 +94479,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L607",
+      "source_location": "L619",
       "weight": 1.0
     },
     {
@@ -93524,7 +94490,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L670",
+      "source_location": "L682",
       "weight": 1.0
     },
     {
@@ -93535,7 +94501,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L684",
+      "source_location": "L696",
       "weight": 1.0
     },
     {
@@ -93546,7 +94512,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1409",
+      "source_location": "L1433",
       "weight": 1.0
     },
     {
@@ -93557,7 +94523,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1474",
+      "source_location": "L1498",
       "weight": 1.0
     },
     {
@@ -93568,7 +94534,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1534",
+      "source_location": "L1558",
       "weight": 1.0
     },
     {
@@ -93579,7 +94545,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1633",
+      "source_location": "L1657",
       "weight": 1.0
     },
     {
@@ -93590,7 +94556,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1673",
+      "source_location": "L1697",
       "weight": 1.0
     },
     {
@@ -93601,7 +94567,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L700",
+      "source_location": "L712",
       "weight": 1.0
     },
     {
@@ -93612,7 +94578,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L749",
+      "source_location": "L761",
       "weight": 1.0
     },
     {
@@ -93623,7 +94589,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L784",
+      "source_location": "L796",
       "weight": 1.0
     },
     {
@@ -93634,7 +94600,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L810",
+      "source_location": "L822",
       "weight": 1.0
     },
     {
@@ -93645,7 +94611,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L834",
+      "source_location": "L846",
       "weight": 1.0
     },
     {
@@ -93656,7 +94622,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L865",
+      "source_location": "L877",
       "weight": 1.0
     },
     {
@@ -93667,7 +94633,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L905",
+      "source_location": "L917",
       "weight": 1.0
     },
     {
@@ -93678,7 +94644,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1340",
+      "source_location": "L1363",
       "weight": 1.0
     },
     {
@@ -93689,7 +94655,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1356",
+      "source_location": "L1380",
       "weight": 1.0
     },
     {
@@ -93700,7 +94666,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1401",
+      "source_location": "L1425",
       "weight": 1.0
     },
     {
@@ -93711,7 +94677,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1148",
+      "source_location": "L1160",
       "weight": 1.0
     },
     {
@@ -93722,7 +94688,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1254",
+      "source_location": "L1261",
       "weight": 1.0
     },
     {
@@ -93733,7 +94699,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1319",
+      "source_location": "L1341",
       "weight": 1.0
     },
     {
@@ -93744,7 +94710,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L139",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -93755,62 +94721,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L171",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_the_iphone_app",
-      "target": "docs_trd_networking",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L1008",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_the_iphone_app",
-      "target": "docs_trd_flows_on_the_phone",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L1017",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_the_iphone_app",
-      "target": "docs_trd_accessibility_in_the_app",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L1044",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_the_iphone_app",
-      "target": "docs_trd_build_configuration",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L1109",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_the_iphone_app",
-      "target": "docs_trd_screens_and_navigation",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L969",
+      "source_location": "L174",
       "weight": 1.0
     },
     {
@@ -93821,7 +94732,62 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L997",
+      "source_location": "L1009",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_the_iphone_app",
+      "target": "docs_trd_networking",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L1020",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_the_iphone_app",
+      "target": "docs_trd_flows_on_the_phone",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L1029",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_the_iphone_app",
+      "target": "docs_trd_accessibility_in_the_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L1056",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_the_iphone_app",
+      "target": "docs_trd_build_configuration",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L1121",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_the_iphone_app",
+      "target": "docs_trd_screens_and_navigation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L981",
       "weight": 1.0
     },
     {
@@ -93832,7 +94798,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1146",
+      "source_location": "L1158",
       "weight": 1.0
     },
     {
@@ -93843,7 +94809,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1338",
+      "source_location": "L1361",
       "weight": 1.0
     },
     {
@@ -93854,7 +94820,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L137",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -93865,7 +94831,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1407",
+      "source_location": "L1431",
       "weight": 1.0
     },
     {
@@ -93876,7 +94842,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1716",
+      "source_location": "L1740",
       "weight": 1.0
     },
     {
@@ -93887,7 +94853,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1761",
+      "source_location": "L1785",
       "weight": 1.0
     },
     {
@@ -93898,7 +94864,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1805",
+      "source_location": "L1829",
       "weight": 1.0
     },
     {
@@ -93909,7 +94875,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1848",
+      "source_location": "L1872",
       "weight": 1.0
     },
     {
@@ -93920,7 +94886,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1887",
+      "source_location": "L1911",
       "weight": 1.0
     },
     {
@@ -93931,18 +94897,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L207",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_trd_turn_technical_requirements",
-      "target": "docs_trd_relay_api",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/TRD.md",
-      "source_location": "L349",
+      "source_location": "L210",
       "weight": 1.0
     },
     {
@@ -93958,13 +94913,24 @@
     },
     {
       "source": "docs_trd_turn_technical_requirements",
+      "target": "docs_trd_relay_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/TRD.md",
+      "source_location": "L361",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_trd_turn_technical_requirements",
       "target": "docs_trd_decision_pipeline",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L428",
+      "source_location": "L440",
       "weight": 1.0
     },
     {
@@ -93986,7 +94952,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L698",
+      "source_location": "L710",
       "weight": 1.0
     },
     {
@@ -93997,7 +94963,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L832",
+      "source_location": "L844",
       "weight": 1.0
     },
     {
@@ -94008,7 +94974,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L967",
+      "source_location": "L979",
       "weight": 1.0
     },
     {
@@ -98896,6 +99862,17 @@
       "weight": 1.0
     },
     {
+      "source": "worker_src_address",
+      "target": "worker_src_address_address",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/src/address.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
       "source": "worker_src_budget",
       "target": "worker_src_budget_budget",
       "relation": "contains",
@@ -98969,7 +99946,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -98980,7 +99957,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -98991,7 +99968,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -99002,7 +99979,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L37",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -99013,7 +99990,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L46",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -99024,7 +100001,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -99090,7 +100067,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L115",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -99101,7 +100078,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L124",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -99112,7 +100089,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -99123,7 +100100,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L147",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -99134,7 +100111,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -99145,7 +100122,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L39",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -99156,18 +100133,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L58",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
       "source": "worker_src_index",
-      "target": "worker_src_index_hashuser",
+      "target": "worker_src_index_saltedhash",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -99178,7 +100155,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L72",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -99189,7 +100166,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L78",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -99200,7 +100177,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/index.ts",
-      "source_location": "L85",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_minute_count",
+      "target": "worker_src_minute_count_countinminute",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/src/minute-count.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_minute_count",
+      "target": "worker_src_minute_count_createminutecount",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/src/minute-count.ts",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -99805,18 +100804,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "worker_test_limits_test",
-      "target": "worker_test_limits_test_inonewindow",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "worker/test/limits.test.ts",
-      "source_location": "L21",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -99827,7 +100815,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/test/limits.test.ts",
-      "source_location": "L27",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_test_limits_test",
+      "target": "worker_test_limits_test_useupaddress",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/test/limits.test.ts",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -100014,6 +101013,28 @@
       "weight": 1.0
     },
     {
+      "source": "worker_src_address_address",
+      "target": "worker_src_address_address_admit",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/src/address.ts",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_address_address",
+      "target": "worker_src_address_address_constructor",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/src/address.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
       "source": "worker_src_budget_budget",
       "target": "worker_src_budget_budget_take",
       "relation": "method",
@@ -100037,24 +101058,13 @@
     },
     {
       "source": "worker_src_device_device",
-      "target": "worker_src_device_device_claimed",
-      "relation": "method",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "worker/src/device.ts",
-      "source_location": "L112",
-      "weight": 1.0
-    },
-    {
-      "source": "worker_src_device_device",
       "target": "worker_src_device_device_claim",
       "relation": "method",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L120",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -100065,7 +101075,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L131",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -100076,7 +101086,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L142",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -100087,7 +101097,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L172",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -100098,7 +101108,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L178",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -100109,7 +101119,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L188",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -100120,7 +101130,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L222",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -100131,7 +101141,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L62",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -100142,7 +101152,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L74",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -100153,7 +101163,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "worker/src/device.ts",
-      "source_location": "L94",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "worker_src_device_device",
+      "target": "worker_src_device_device_claimed",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "worker/src/device.ts",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -100468,5 +101489,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "729439421f894b9b5478f7ff3599ab254dd5f164"
+  "built_at_commit": "95e9233dc870c7f8c5f4c4a9bd95df97825fa9b8"
 }
