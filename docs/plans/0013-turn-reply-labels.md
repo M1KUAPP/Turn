@@ -261,10 +261,10 @@ its own estimate of the pairs. It is committed as
 **Files:** create `eval/src/data.ts`; modify `eval/test/lines.test.ts` and
 `eval/test/starter-bank.test.ts`.
 
-- [ ] **Step 1: Move the reading.** `eval/src/data.ts` exports the `Line`,
-      `Phrase`, `Category`, and `StarterBank` types and the parsed `lines`
-      and `bank`, read with `node:fs` as the two checks read them now; both
-      checks import them instead.
+- [ ] **Step 1: Move the reading.** `eval/src/data.ts` exports the `Line`
+      type and the parsed `lines` and `bank`, read with `node:fs` as the two
+      checks read them now; both checks import them instead. The types no
+      check imports stay inside the module.
 - [ ] **Step 2: Run the gate.** `@turn/eval` still passes its 8 tests.
 - [ ] **Step 3: Commit**
 
@@ -339,8 +339,7 @@ and `eval/test/labels.test.ts`.
 
 - [ ] **Step 1: Extend the check:** a second labeling of every line, in the
       lines' order, by a labeler other than the first, held to the same
-      rules for its ids. `eval/src/data.ts` exports `secondLabeling` and its
-      `Labels` type.
+      rules for its ids. `eval/src/data.ts` exports `secondLabeling`.
 - [ ] **Step 2: See it fail** with `ENOENT` for the new file.
 - [ ] **Step 3: Write the file** from `claude-d`'s: one object per line with
       `id`, `"labeler": "claude-d"`, and `acceptable` in the bank's order.
