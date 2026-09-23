@@ -53,3 +53,42 @@ export class PhraseIndex {
     return this.search.search(line).map((result) => result.id)
   }
 }
+
+/** What the shortlist reads from the phone for one line. */
+export type Context = {
+  /** The whole bank, in the grid's order. */
+  bank: readonly Phrase[]
+  /** The ids of the phrases in the row: the big button's first, then the slots'. */
+  row: readonly string[]
+  /** The id of the place the user is in. */
+  place: string
+  /** Each phrase's taps over the last 30 days, by id. */
+  taps: ReadonlyMap<string, number>
+}
+
+/** The candidates Jev scores for a line, in the TRD's order and without duplicates (ROW-2). */
+export function pickShortlist(line: string, index: PhraseIndex, { bank, row, place, taps }: Context): Phrase[] {
+  index.update(bank)
+  const byId = new Map(bank.filter(rankable).map((phrase) => [phrase.id, phrase]))
+  const picked = new Map<string, Phrase>()
+  const take = (ids: Iterable<string>, limit: number) => {
+    let taken = 0
+    for (const id of ids) {
+      if (taken === limit || picked.size === 40) return
+      const phrase = byId.get(id)
+      if (!phrase || picked.has(id)) continue
+      picked.set(id, phrase)
+      taken++
+    }
+  }
+  const tapsOf = (phrase: Phrase) => taps.get(phrase.id) ?? 0
+  const idsOf = (phrases: Phrase[]) => phrases.map((phrase) => phrase.id)
+  // A stable sort, so the grid's order breaks ties.
+  const byTaps = [...byId.values()].sort((a, b) => tapsOf(b) - tapsOf(a))
+  take(row, Infinity)
+  take(index.match(line), 24)
+  take(idsOf(byTaps.filter((phrase) => tapsOf(phrase) > 0)), 8)
+  take(idsOf(byTaps.filter((phrase) => phrase.places.includes(place))), 8)
+  take(idsOf(byTaps), Infinity)
+  return [...picked.values()]
+}
