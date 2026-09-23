@@ -48,3 +48,56 @@ export function chanceReciprocalRank(n: number, g: number): number {
   }
   return expected
 }
+
+const rotl = (x: number, k: number) => (x << k) | (x >>> (32 - k))
+
+/** The seed the evaluation's shuffles and resamples start from, committed so every run draws the same numbers. */
+const seed = [0xcbe300d9, 0x05bdaea0, 0xc518bed1, 0x49317689] as const
+
+/**
+ * A generator of 32-bit integers from the seed: Blackman and Vigna's xoshiro128** 1.1, whose 128 bits of state must
+ * not all be zero. `Math.random` can't be seeded, and a run must draw the same numbers every time.
+ */
+export function seeded([a, b, c, d]: readonly number[] = seed): () => number {
+  return () => {
+    const result = Math.imul(rotl(Math.imul(b, 5), 7), 9) >>> 0
+    const t = b << 9
+    c ^= a
+    d ^= b
+    b ^= c
+    a ^= d
+    c ^= t
+    d = rotl(d, 11)
+    return result
+  }
+}
+
+/** A whole number from 0 to n − 1, each equally likely: a draw past the last whole multiple of n is drawn again. */
+export function below(n: number, next: () => number): number {
+  const limit = 2 ** 32 - (2 ** 32 % n)
+  let x = next()
+  while (x >= limit) x = next()
+  return x % n
+}
+
+/**
+ * The paired bootstrap's 95% interval for the mean of a − b over the same items: 9,999 resamples of the items, each
+ * the same for both, SciPy's default count, and the 2.5th and 97.5th percentiles of their means. When no item splits
+ * a and b, every resample gives the same mean, and so does the interval. Null for no items.
+ */
+export function pairedBootstrap(
+  a: readonly number[],
+  b: readonly number[],
+  resamples = 9999
+): { difference: number; low: number; high: number } | null {
+  const n = a.length
+  if (n === 0) return null
+  const gaps = a.map((value, i) => value - b[i])
+  const next = seeded()
+  const means = Array.from({ length: resamples }, () => {
+    let sum = 0
+    for (let i = 0; i < n; i++) sum += gaps[below(n, next)]
+    return sum / n
+  })
+  return { difference: mean(gaps), low: percentile(means, 2.5), high: percentile(means, 97.5) }
+}
