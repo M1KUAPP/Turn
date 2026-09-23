@@ -75,7 +75,7 @@ export class Device extends DurableObject<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env)
     // The user's requests in the current clock minute, which a new minute starts again from 0 (SEC-3).
-    createMinuteCount(ctx.storage.sql)
+    createMinuteCount(ctx.storage)
     // The ID of each free line claimed, which is deleted if Jev fails, so only answered lines count (PAY-1).
     ctx.storage.sql.exec('CREATE TABLE IF NOT EXISTS free_lines (line_id TEXT PRIMARY KEY, at INTEGER NOT NULL)')
     // RevenueCat's last answer, and when a line with `refresh` last skipped a cached no (PAY-4, PAY-7).
