@@ -38,6 +38,7 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+1.  [Review, round 1](#review-round-1)
 1.  [Appendix: the run's script](#appendix-the-runs-script)
 1.  [Appendix: the relay's check](#appendix-the-relays-check)
 1.  [Appendix: the relay's code check](#appendix-the-relays-code-check)
@@ -394,6 +395,43 @@ the branch; remove both worktrees.
 
 Tick what the evidence proves, comment with the evidence, close #40, and
 leave notes on #45 and #64.
+
+## Review, round 1
+
+Three reviewers (Standards, Spec, and a fact check and bug hunt) found 5, 5,
+and 8 problems ([the review][review-95]); none ran `bun run eval`. What
+changed:
+
+- **The settings' test** builds its request with the relay's own pin,
+  `relayModel()`, and with `jevLine` at home, so it also holds the bank's
+  place and nine categories that every request in the run carried. A pin of
+  `jev-1.14.0`, "Care and help" renamed, and "Home" renamed each fail it,
+  and its comment says why it repeats the shared tests' wording.
+- **RELEASE-2** checks the served code as well as the vars: the relay's
+  `index.js` is byte for byte a build of `main`'s worker (Task 10).
+- **The relay's check** asks as one fixed check user, since each of the
+  first two checks made a new user's object, and the plan says what it
+  prints and that it changes no configuration. It wraps at 80 columns.
+- **`line-05`'s right big button** shows the guards can let one through on
+  a yes-or-no or consent line, and EVAL-5's policy wouldn't stop it; Task 9
+  and #40's closing comment say so.
+- **The plan and the note** are now 0025 and 0047, since another session's
+  branch holds 0024 and 0046. The decisions use lazy numbering, and the
+  note ends with its gaps, reads `POLICY` as a `json` binding, credits the
+  TRD with sources for 0.6 and 0.85 only, and fixes a command's syntax,
+  `deployments status`'s fields, and a moved link.
+- **Kept:**
+  - the run's script as it ran, with a note on its unchecked token;
+  - the decisions' text as pushed before the run, so decision 2 still
+    names only the tests it named then, though `shared/test/jev.test.ts`
+    also pins the wording;
+  - the pushed commit messages, though `db1b14a`'s says the relay's check
+    prints only the vars, the switches, and the policy, and `21391a4`'s
+    says the test fails on a change to any setting it names.
+- **For #40's comment:** EVAL-1's tick claims only the count, since agents
+  labeled the lines, and the count's output and the verdict go on #40.
+
+[review-95]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/95#issuecomment-5797518034
 
 ## Appendix: the run's script
 
