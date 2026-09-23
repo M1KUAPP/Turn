@@ -319,8 +319,8 @@ const cutOffSection = (cutOffs: Readonly<Record<string, readonly number[]>>, fol
   ]
 }
 
-/** Three decimals, without the zeros that end them. */
-const decimals = (value: number) => String(Number(value.toFixed(3)))
+/** A score to three places at most, without the zeros that end it. */
+const upToThreePlaces = (value: number) => String(Number(value.toFixed(3)))
 
 /**
  * What the calibration section reports: the diagram's makings and its image, the Brier score, and how many lines have
@@ -333,7 +333,7 @@ export const calibrationTable = (fit: Reliability): string =>
   table(
     ['Scores', 'Lines', 'Acceptable', 'Fitted share', 'Outside the band'],
     againstBand(fit).map(({ low, high, lines, right, value, scores, outside }) => [
-      low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
+      low === high ? upToThreePlaces(low) : `${upToThreePlaces(low)} to ${upToThreePlaces(high)}`,
       String(lines),
       String(right),
       value.toFixed(2),
@@ -346,16 +346,18 @@ export const calibrationTable = (fit: Reliability): string =>
  * a table of its fit's blocks with how many of each block's scores the fit leaves the band at as its text, and the
  * Brier score with its interval and CORP's decomposition.
  */
-const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach }: Calibration, naming: Naming) => {
+const calibrationSection = ({ reliability: fit, brier: result, image, beyondReach }: Calibration, naming: Naming) => {
   const { forecasts } = fit
-  const right = forecasts.filter((forecast) => forecast.right).length
-  const three = (value: number) => value.toFixed(3)
+  const { score, low, high, uncertainty, miscalibration, discrimination, skill } = result
+  const acceptable = forecasts.filter(({ right }) => right).length
+  /** A Brier score or one of its parts, always to three places. */
+  const threePlaces = (value: number) => value.toFixed(3)
   return [
     `## ${capital(naming.jev)}'s calibration`,
     `![Reliability of ${naming.jev}'s top phrase](${image})`,
     wrap(
       `Each line's top phrase in ${naming.jev}'s first timed ranking, ties broken as the row breaks them, against ` +
-        `whether it's acceptable, on all ${forecasts.length} lines: ${right} of them are. Of the ` +
+        `whether it's acceptable, on all ${forecasts.length} lines: ${acceptable} of them are. Of the ` +
         `${forecasts.length}, ${beyondReach} have no acceptable phrase among their 40, so their top phrase is wrong ` +
         'whatever its score. The line is the ' +
         "pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, " +
@@ -368,15 +370,15 @@ const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach
     calibrationTable(fit),
     wrap(
       `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
-        `one that isn't, is ${three(score.score)}, with a 95% bootstrap interval of ${three(score.low)} to ` +
-        `${three(score.high)}; lower is better. Always forecasting the share acceptable, ${right} of ` +
-        `${forecasts.length}, would score ${three(score.uncertainty)}` +
-        (Number.isNaN(score.skill)
+        `one that isn't, is ${threePlaces(score)}, with a 95% bootstrap interval of ${threePlaces(low)} to ` +
+        `${threePlaces(high)}; lower is better. Always forecasting the share acceptable, ${acceptable} of ` +
+        `${forecasts.length}, would score ${threePlaces(uncertainty)}` +
+        (Number.isNaN(skill)
           ? ', which leaves no skill score, since every line is right or none is. '
-          : `, so the skill score, 1 minus the Brier score over that, is ${three(score.skill)}: above 0 beats ` +
+          : `, so the skill score, 1 minus the Brier score over that, is ${threePlaces(skill)}: above 0 beats ` +
             'that constant forecast, and below 0 does worse. ') +
         `CORP's decomposition gives a miscalibration ` +
-        `of ${three(score.miscalibration)} and a discrimination of ${three(score.discrimination)}: before rounding, ` +
+        `of ${threePlaces(miscalibration)} and a discrimination of ${threePlaces(discrimination)}: before rounding, ` +
         'the Brier score is the miscalibration, minus the discrimination, plus that score of always forecasting ' +
         'the share.'
     )
