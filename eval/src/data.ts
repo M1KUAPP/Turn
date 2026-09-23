@@ -27,7 +27,8 @@ type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
 type StarterBank = { categories: Category[]; places: { id: string; name: string }[] }
 
 const here = (path: string) => new URL(path, import.meta.url)
-const root = fileURLToPath(here('../../'))
+/** The repository's root folder. */
+export const root = fileURLToPath(here('../../'))
 
 /** Reads a JSON Lines file, one object per row, from a URL or a path from the working directory. */
 export const readRows = (file: URL | string) =>

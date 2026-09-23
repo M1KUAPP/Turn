@@ -2,13 +2,12 @@ import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { linesFrom, phrases, type Line } from './data'
+import { linesFrom, phrases, root, type Line } from './data'
 import { keyword, place } from './rankers'
 import { outcomes, scoreLines, sharesNoWord, summarize, type Count, type LineScore } from './score'
 import { percentile, wilson } from './stats'
 
 const rankers = { place, keyword }
-const root = fileURLToPath(new URL('../../', import.meta.url))
 
 /** A share as the TRD writes one: in whole percents at or above 10%, and to one decimal below. */
 const percent = (share: number) => {
