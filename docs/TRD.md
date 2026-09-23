@@ -1336,7 +1336,7 @@ ran under Wrangler 4.136.2:
 | A partner line                          | the phone's memory        | the caption, at most two minutes | the relay and TypeSafe, tagged, with the place's name                            |
 | The app user ID                         | RevenueCat's SDK          | the SDK's own storage            | RevenueCat, and the relay, which stores its hash                                 |
 | Free lines used, the cached entitlement | the user's Durable Object | until the relay is deleted       | nowhere                                                                          |
-| An address's requests this minute       | the address's object      | one row, rewritten each minute   | nowhere                                                                          |
+| An address's last minute's count        | the address's object      | until the relay is deleted       | nowhere                                                                          |
 | Request logs                            | Workers Logs              | 3 days on the Free plan          | Cloudflare                                                                       |
 | Purchases                               | RevenueCat                | RevenueCat's retention           | RevenueCat                                                                       |
 
