@@ -6,19 +6,20 @@
   // Next to Jev, which answers from us-west-2.
   "placement": { "region": "aws:us-west-2" },
   // One object per app user, reached by the salted hash of their ID, which counts their requests and free lines and
-  // calls Jev for their lines, and one for the relay, which counts the day's calls to Jev (SEC-3, SEC-5).
+  // calls Jev for their lines; one per address, reached by the salted hash of the address, which counts its 120
+  // requests a minute (SEC-3); and one for the relay, which counts the day's calls to Jev (SEC-5).
   "durable_objects": {
     "bindings": [
       { "name": "DEVICE", "class_name": "Device" },
+      { "name": "ADDRESS", "class_name": "Address" },
       { "name": "BUDGET", "class_name": "Budget" }
     ]
   },
   "exports": {
     "Device": { "type": "durable-object", "storage": "sqlite" },
+    "Address": { "type": "durable-object", "storage": "sqlite" },
     "Budget": { "type": "durable-object", "storage": "sqlite" }
   },
-  // 120 requests a minute from each address, a backstop for IDs minted on one; each ID's object counts its 30 (SEC-3).
-  "ratelimits": [{ "name": "ADDRESS_LIMITER", "namespace_id": "1002", "simple": { "limit": 120, "period": 60 } }],
   // Only the relay's own log line: invocation logs hold each request's details, and traces the IDs in URLs.
   "observability": { "enabled": true, "logs": { "invocation_logs": false }, "traces": { "enabled": false } },
   // A deploy fails while any of these is unset (SEC-1).

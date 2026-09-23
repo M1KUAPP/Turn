@@ -8,20 +8,12 @@ import {
   lineRequest,
   loggedAt,
   postLineFrom,
+  sha256,
   userHash
 } from './helpers'
 
 /** The headers of a fresh app user ID, unless one is given, on this address, as Cloudflare sets `CF-Connecting-IP`. */
 const from = (address: string, id?: string) => headersFor(id, { 'CF-Connecting-IP': address })
-
-/**
- * Waits for the next minute when fewer than 5 seconds of this one are left, since the binding's windows roll over on
- * the minute, and a test's requests must fall in one window.
- */
-async function inOneWindow() {
-  const left = 60_000 - (Date.now() % 60_000)
-  if (left < 5_000) await scheduler.wait(left + 100)
-}
 
 /** Checks that a response is the rate limit's `429`, which tells the app to wait out the minute. */
 async function expectLimited(response: Response) {
@@ -29,16 +21,16 @@ async function expectLimited(response: Response) {
   expect(response.headers.get('Retry-After')).toBe('60')
 }
 
+// The user's object and the address's count each clock minute's requests by `Date`, which these tests set.
+beforeEach(() => {
+  vi.setSystemTime(new Date('2026-10-01T12:00:30.000Z'))
+})
+
 afterEach(() => {
   vi.useRealTimers()
 })
 
-// The user's object counts each clock minute's requests by `Date`, which these tests set; the binding keeps real time.
 describe("an ID's limit (SEC-3)", () => {
-  beforeEach(() => {
-    vi.setSystemTime(new Date('2026-10-01T12:00:30.000Z'))
-  })
-
   test('answers 30 requests from one ID in a minute, and gives the 31st 429 with no line claimed or sent', async () => {
     const id = crypto.randomUUID()
     const sent = from('203.0.113.1', id)
@@ -95,20 +87,49 @@ describe("an ID's limit (SEC-3)", () => {
   })
 })
 
-describe("an address's limit (SEC-3)", { timeout: 15_000 }, () => {
-  test("answers 120 requests from one address in a minute, and gives the 121st, a new ID's line, 429", async () => {
-    await inOneWindow()
+describe("an address's limit (SEC-3)", () => {
+  /** Sends an address's 120 requests of a minute, as configuration requests from five fresh IDs, each answered. */
+  async function useUpAddress(address: string) {
     for (let user = 0; user < 5; user++) {
-      const sent = from('203.0.113.10')
+      const sent = from(address)
       for (let i = 0; i < 24; i++) expect((await getConfig({}, sent)).status).toBe(200)
     }
-    await expectLimited(await postLineFrom(from('203.0.113.10')))
+  }
+
+  test("answers 120 requests from one address in a minute, and gives the 121st, a new ID's line, 429", async () => {
+    await useUpAddress('203.0.113.10')
+    const id = crypto.randomUUID()
+    await expectLimited(await postLineFrom(from('203.0.113.10', id)))
     expect(callsTo('api.typesafe.ai')).toHaveLength(0)
+    expect(await claimedLines(id)).toEqual([])
     expect((await getConfig({}, from('203.0.113.11'))).status).toBe(200)
   })
 
+  test("refuses a request over it before the request reaches any user's object", async () => {
+    await useUpAddress('203.0.113.12')
+    const getByName = vi.fn()
+    await expectLimited(await getConfig({ DEVICE: { getByName } }, from('203.0.113.12')))
+    expect(getByName).not.toHaveBeenCalled()
+  })
+
+  test('starts again in the next minute', async () => {
+    vi.setSystemTime(new Date('2026-10-01T12:00:59.000Z'))
+    await useUpAddress('203.0.113.14')
+    await expectLimited(await getConfig({}, from('203.0.113.14')))
+    vi.setSystemTime(new Date('2026-10-01T12:01:00.000Z'))
+    expect((await getConfig({}, from('203.0.113.14'))).status).toBe(200)
+  })
+
+  test('counts exactly 120 of 150 simultaneous requests from one address', async () => {
+    const users = Array.from({ length: 10 }, () => from('203.0.113.15'))
+    const statuses = await Promise.all(
+      users.flatMap((sent) => Array.from({ length: 15 }, async () => (await getConfig({}, sent)).status))
+    )
+    expect(statuses.filter((status) => status === 200)).toHaveLength(120)
+    expect(statuses.filter((status) => status === 429)).toHaveLength(30)
+  })
+
   test("doesn't count a line that fails its checks (SEC-2)", async () => {
-    await inOneWindow()
     for (let user = 0; user < 5; user++) {
       const sent = from('203.0.113.13')
       for (let i = 0; i < 24; i++) {
@@ -118,14 +139,13 @@ describe("an address's limit (SEC-3)", { timeout: 15_000 }, () => {
     expect((await getConfig({}, from('203.0.113.13'))).status).toBe(200)
   })
 
-  test('refuses a request over it before the request reaches any object', async () => {
-    await inOneWindow()
-    for (let user = 0; user < 5; user++) {
-      const sent = from('203.0.113.12')
-      for (let i = 0; i < 24; i++) await getConfig({}, sent)
-    }
-    const getByName = vi.fn()
-    await expectLimited(await getConfig({ DEVICE: { getByName } }, from('203.0.113.12')))
-    expect(getByName).not.toHaveBeenCalled()
+  test("names the address's object by its salted hash, and requests without one share the salt's", async () => {
+    const getByName = vi.fn(() => ({ admit: async () => true }))
+    expect((await getConfig({ ADDRESS: { getByName } }, from('203.0.113.16'))).status).toBe(200)
+    expect((await getConfig({ ADDRESS: { getByName } }, headersFor())).status).toBe(200)
+    expect(getByName.mock.calls).toEqual([
+      [`address-${await sha256('test-salt203.0.113.16')}`, { locationHint: 'wnam' }],
+      [`address-${await sha256('test-salt')}`, { locationHint: 'wnam' }]
+    ])
   })
 })
