@@ -35,6 +35,12 @@ const isAnswer = (body: unknown): body is LineAnswer => {
   return typeof seq === 'number' && parts.every((part) => typeof part === 'object' && part !== null)
 }
 
+/**
+ * The most requests the replay's one user sends in any 60 seconds: one fewer than the 30 the relay allows an ID
+ * (SEC-3), in case two arrive closer together than they left.
+ */
+const perMinute = 29
+
 /** The headers the relay checks, for the replay's made-up user, who counts as a Simulator build. */
 const headers = (user: string) => ({
   'Content-Type': 'application/json',
@@ -51,7 +57,8 @@ const headers = (user: string) => ({
  * with the next sequence number and a shortlist whose first phrases are the row's. The row takes each answer, with its
  * scores back in the shortlist's order and the policy it carries. When the relay fails or no answer comes within 3
  * seconds, the phone ranks the line with the cached policy (STATE-2), and with Jev off it ranks every line (STATE-3).
- * A `402` stops the replay, since the app would open the paywall there (STATE-4).
+ * A `402` stops the replay, since the app would open the paywall there (STATE-4). A request that would be the user's
+ * 30th in 60 seconds waits until it wouldn't, so the relay's limit never ranks a line on the phone (SEC-3).
  */
 export async function replay(
   lines: readonly RecordedLine[],
@@ -59,6 +66,8 @@ export async function replay(
   wait = 3000
 ): Promise<{ replayed: Replayed[]; stopped?: number }> {
   const user = randomUUID()
+  // When each of the user's requests left, by the clock the relay's minutes follow.
+  const sent = [Date.now()]
   const got = await fetch(`${relay}/v1/config`, { headers: headers(user), signal: AbortSignal.timeout(wait) })
   if (!got.ok) throw new Error(`The relay answered ${got.status} to GET /v1/config`)
   const config = (await got.json()) as Config
@@ -78,6 +87,9 @@ export async function replay(
       // The app sends a line's last 300 characters, counted as the relay counts them (LISTEN-6).
       const text = [...line.text].slice(-limits.line).join('')
       const request: LineRequest = { lineId: randomUUID(), seq, ...jevLine(text, line.place, shortlist) }
+      const pause = sent.length < perMinute ? 0 : sent[sent.length - perMinute] + 60_000 - Date.now()
+      if (pause > 0) await new Promise((resolve) => setTimeout(resolve, pause))
+      sent.push(Date.now())
       const started = performance.now()
       const timedOut = (error: unknown) => error instanceof Error && error.name === 'TimeoutError'
       try {
