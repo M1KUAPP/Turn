@@ -3015,7 +3015,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1322"
+      "source_location": "L1321"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -3027,7 +3027,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1403"
+      "source_location": "L1402"
     },
     {
       "id": "docs_trd_overview",
@@ -3063,7 +3063,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1360"
+      "source_location": "L1359"
     },
     {
       "id": "docs_trd_see_also",
@@ -3075,7 +3075,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1445"
+      "source_location": "L1444"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -13902,7 +13902,7 @@
       "node_kind": "heading",
       "norm_label": "out of scope",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L198"
+      "source_location": "L209"
     },
     {
       "id": "docs_plans_0010_turn_workspace_rejected_alternatives",
@@ -13914,7 +13914,7 @@
       "node_kind": "heading",
       "norm_label": "rejected alternatives",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L182"
+      "source_location": "L190"
     },
     {
       "id": "docs_plans_0010_turn_workspace_skills",
@@ -13938,7 +13938,7 @@
       "node_kind": "heading",
       "norm_label": "task 1: research note",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L233"
+      "source_location": "L244"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_2_this_plan",
@@ -13950,7 +13950,7 @@
       "node_kind": "heading",
       "norm_label": "task 2: this plan",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L240"
+      "source_location": "L251"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_3_prettier_and_the_source_captures",
@@ -13962,7 +13962,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: prettier and the source captures",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L249"
+      "source_location": "L260"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_4_the_workspace_and_the_shared_package",
@@ -13974,7 +13974,7 @@
       "node_kind": "heading",
       "norm_label": "task 4: the workspace and the shared package",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L262"
+      "source_location": "L273"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_5_the_evaluation_s_package",
@@ -13986,7 +13986,7 @@
       "node_kind": "heading",
       "norm_label": "task 5: the evaluation's package",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L348"
+      "source_location": "L358"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_6_the_relay_s_package",
@@ -13998,7 +13998,7 @@
       "node_kind": "heading",
       "norm_label": "task 6: the relay's package",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L369"
+      "source_location": "L379"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_7_local_secrets",
@@ -14010,7 +14010,7 @@
       "node_kind": "heading",
       "norm_label": "task 7: local secrets",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L459"
+      "source_location": "L469"
     },
     {
       "id": "docs_plans_0010_turn_workspace_task_8_graph_pull_request_review_and_merge",
@@ -14022,7 +14022,7 @@
       "node_kind": "heading",
       "norm_label": "task 8: graph, pull request, review, and merge",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L486"
+      "source_location": "L496"
     },
     {
       "id": "docs_plans_0010_turn_workspace_tasks",
@@ -14034,7 +14034,7 @@
       "node_kind": "heading",
       "norm_label": "tasks",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L226"
+      "source_location": "L237"
     },
     {
       "id": "docs_plans_0010_turn_workspace_turn_s_workspace_implementation_plan",
@@ -14058,7 +14058,7 @@
       "node_kind": "heading",
       "norm_label": "verification gate",
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L206"
+      "source_location": "L217"
     },
     {
       "id": "worker_package",
@@ -14412,7 +14412,7 @@
       "node_kind": "heading",
       "norm_label": "bun workspaces",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L166"
+      "source_location": "L172"
     },
     {
       "id": "docs_research_0031_turn_workspace_gaps",
@@ -14424,7 +14424,7 @@
       "node_kind": "heading",
       "norm_label": "gaps",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L314"
+      "source_location": "L320"
     },
     {
       "id": "docs_research_0031_turn_workspace_hands_on_check",
@@ -14436,7 +14436,7 @@
       "node_kind": "heading",
       "norm_label": "hands-on check",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L62"
+      "source_location": "L68"
     },
     {
       "id": "docs_research_0031_turn_workspace_one_typescript_source_package_for_every_consumer",
@@ -14448,7 +14448,7 @@
       "node_kind": "heading",
       "norm_label": "one typescript source package for every consumer",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L253"
+      "source_location": "L259"
     },
     {
       "id": "docs_research_0031_turn_workspace_prettier_and_the_git_hooks",
@@ -14460,7 +14460,7 @@
       "node_kind": "heading",
       "norm_label": "prettier and the git hooks",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L269"
+      "source_location": "L275"
     },
     {
       "id": "docs_research_0031_turn_workspace_recommended_layout_and_scripts",
@@ -14472,7 +14472,7 @@
       "node_kind": "heading",
       "norm_label": "recommended layout and scripts",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L285"
+      "source_location": "L291"
     },
     {
       "id": "docs_research_0031_turn_workspace_see_also",
@@ -14484,7 +14484,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L329"
+      "source_location": "L335"
     },
     {
       "id": "docs_research_0031_turn_workspace_the_workers_vitest_plugin",
@@ -14496,7 +14496,7 @@
       "node_kind": "heading",
       "norm_label": "the workers vitest plugin",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L200"
+      "source_location": "L206"
     },
     {
       "id": "docs_research_0031_turn_workspace_turn_s_workspace_research_notes",
@@ -14532,7 +14532,7 @@
       "node_kind": "heading",
       "norm_label": "wrangler's generated types and local secrets",
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L224"
+      "source_location": "L230"
     },
     {
       "id": "eval_package",
@@ -15844,25 +15844,25 @@
       "source_location": "L1"
     },
     {
-      "id": "eval_src_smoke_test",
-      "label": "eval/src/smoke.test.ts",
+      "id": "eval_test_smoke_test",
+      "label": "eval/test/smoke.test.ts",
       "_origin": "ast",
       "community": 205,
-      "community_name": "eval/src/smoke.test.ts",
+      "community_name": "eval/test/smoke.test.ts",
       "file_type": "code",
-      "norm_label": "eval/src/smoke.test.ts",
-      "source_file": "eval/src/smoke.test.ts",
+      "norm_label": "eval/test/smoke.test.ts",
+      "source_file": "eval/test/smoke.test.ts",
       "source_location": "L1"
     },
     {
-      "id": "shared_src_smoke_test",
-      "label": "shared/src/smoke.test.ts",
+      "id": "shared_test_smoke_test",
+      "label": "shared/test/smoke.test.ts",
       "_origin": "ast",
       "community": 206,
-      "community_name": "shared/src/smoke.test.ts",
+      "community_name": "shared/test/smoke.test.ts",
       "file_type": "code",
-      "norm_label": "shared/src/smoke.test.ts",
-      "source_file": "shared/src/smoke.test.ts",
+      "norm_label": "shared/test/smoke.test.ts",
+      "source_file": "shared/test/smoke.test.ts",
       "source_location": "L1"
     },
     {
@@ -39508,7 +39508,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L182",
+      "source_location": "L190",
       "weight": 1.0
     },
     {
@@ -39519,7 +39519,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L198",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -39530,7 +39530,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L233",
+      "source_location": "L244",
       "weight": 1.0
     },
     {
@@ -39541,7 +39541,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L240",
+      "source_location": "L251",
       "weight": 1.0
     },
     {
@@ -39552,7 +39552,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L249",
+      "source_location": "L260",
       "weight": 1.0
     },
     {
@@ -39563,7 +39563,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L262",
+      "source_location": "L273",
       "weight": 1.0
     },
     {
@@ -39574,7 +39574,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L348",
+      "source_location": "L358",
       "weight": 1.0
     },
     {
@@ -39585,7 +39585,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L369",
+      "source_location": "L379",
       "weight": 1.0
     },
     {
@@ -39596,7 +39596,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L459",
+      "source_location": "L469",
       "weight": 1.0
     },
     {
@@ -39607,7 +39607,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L486",
+      "source_location": "L496",
       "weight": 1.0
     },
     {
@@ -39618,7 +39618,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L206",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -39629,7 +39629,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
-      "source_location": "L226",
+      "source_location": "L237",
       "weight": 1.0
     },
     {
@@ -52851,7 +52851,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L166",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -52873,7 +52873,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L200",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -52884,7 +52884,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L224",
+      "source_location": "L230",
       "weight": 1.0
     },
     {
@@ -52895,7 +52895,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L253",
+      "source_location": "L259",
       "weight": 1.0
     },
     {
@@ -52906,7 +52906,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L269",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -52917,7 +52917,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L285",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -52928,7 +52928,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L314",
+      "source_location": "L320",
       "weight": 1.0
     },
     {
@@ -52939,7 +52939,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L329",
+      "source_location": "L335",
       "weight": 1.0
     },
     {
@@ -52950,7 +52950,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0031-turn-workspace.md",
-      "source_location": "L62",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -61651,7 +61651,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1322",
+      "source_location": "L1321",
       "weight": 1.0
     },
     {
@@ -61662,7 +61662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1360",
+      "source_location": "L1359",
       "weight": 1.0
     },
     {
@@ -61673,7 +61673,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1403",
+      "source_location": "L1402",
       "weight": 1.0
     },
     {
@@ -61684,7 +61684,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1445",
+      "source_location": "L1444",
       "weight": 1.0
     },
     {
@@ -62580,5 +62580,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0eb253dcfb8722e72c136560348717275333e3e3"
+  "built_at_commit": "04c6b7fffa9ae7e44dc735dd79e47820c32af582"
 }
