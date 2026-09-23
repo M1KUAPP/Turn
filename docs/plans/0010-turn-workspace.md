@@ -129,7 +129,9 @@ directive's steps map to skills:
     request with 404 until its routes arrive, and its test checks, inside
     workerd, that `navigator.userAgent` is `Cloudflare-Workers` and that a
     request to the Worker gets 404. Without the plugin, that test fails to
-    import `cloudflare:workers`, which is its red step. No package imports
+    import `cloudflare:workers`, which is its red step. Every package keeps
+    its tests in `test/`, apart from `src/`, so no test file is reachable
+    through the shared package's `exports`. No package imports
     `@turn/shared` yet: the first ticket that uses it adds the
     `workspace:*` dependency with the first file.
 1.  **TypeScript 6.0.3, `strict`, from one base.** A root
@@ -268,9 +270,9 @@ git commit -m "chore: keep prettier off the source captures"
 
 **Files:** modify `package.json`, `bun.lock`, and `docs/TRD.md`; create
 `tsconfig.base.json` and
-`shared/{package.json,tsconfig.json,src/smoke.test.ts}`.
+`shared/{package.json,tsconfig.json,test/smoke.test.ts}`.
 
-- [ ] **Step 1: Write the failing smoke test** in `shared/src/smoke.test.ts`:
+- [ ] **Step 1: Write the failing smoke test** in `shared/test/smoke.test.ts`:
 
 ```ts
 import { expect, test } from 'vitest'
@@ -313,7 +315,7 @@ test('Vitest runs TypeScript in this package', () => {
 ```
 
 `shared/package.json`, and a `shared/tsconfig.json` that extends
-`../tsconfig.base.json` and includes `src`:
+`../tsconfig.base.json` and includes `src` and `test`:
 
 ```json
 {
@@ -352,10 +354,10 @@ git commit -m "build: add the bun workspace and the shared package"
 ### Task 5: The evaluation's package
 
 **Files:** modify `package.json` and `bun.lock`; create
-`eval/{package.json,tsconfig.json,src/smoke.test.ts}`.
+`eval/{package.json,tsconfig.json,test/smoke.test.ts}`.
 
 - [ ] **Step 1: Write the smoke test,** the shared package's test, in
-      `eval/src/smoke.test.ts`. Until `eval` is a workspace, `bun run test`
+      `eval/test/smoke.test.ts`. Until `eval` is a workspace, `bun run test`
       doesn't run it.
 - [ ] **Step 2: Add the package.** `eval/package.json` is the shared
       package's without `exports`, named `@turn/eval`, and its
