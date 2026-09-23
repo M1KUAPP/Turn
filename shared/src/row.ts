@@ -63,6 +63,9 @@ export const emptyRow: Row = Object.freeze({
   tab: null
 })
 
+/** Floating-point slack, so a phrase that beats another by exactly the margin counts as beating it. */
+const slack = 1e-9
+
 /** The key with the highest value, the first of any tie, or null when there's none. */
 const mostLikely = <K extends string>(odds: Readonly<Record<K, number>>): K | null => {
   let best: K | null = null
@@ -115,8 +118,9 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
       slots[slot] = id
       continue
     }
+    // A new phrase must beat the lowest shown, and by at least the margin.
     const low = lowest(usable)
-    if (low === undefined || score - scoreAt(low) < policy.margin) break
+    if (low === undefined || score <= scoreAt(low) || score - scoreAt(low) < policy.margin - slack) break
     slots[low] = id
   }
   return { ...row, seq, big: null, slots, tab }
