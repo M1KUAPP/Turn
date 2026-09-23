@@ -19,7 +19,7 @@ export async function sha256(text: string) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
-/** Sends a request to the Worker's handler with some vars changed, as the next request after a change would see them. */
+/** Sends a request to the Worker's handler with some vars changed, as the next request after a change sees them. */
 export const send = (request: Request, changes: Partial<Record<keyof Env, unknown>> = {}) =>
   worker.fetch(request, { ...env, ...changes } as Env)
 

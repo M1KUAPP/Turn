@@ -8,7 +8,7 @@
   // One object per app user, reached by the salted hash of their ID, which calls Jev for their lines.
   "durable_objects": { "bindings": [{ "name": "DEVICE", "class_name": "Device" }] },
   "exports": { "Device": { "type": "durable-object", "storage": "sqlite" } },
-  // Only the relay's own log line: invocation logs hold each request's details, and traces the IDs in RevenueCat's URLs.
+  // Only the relay's own log line: invocation logs hold each request's details, and traces the IDs in URLs.
   "observability": { "enabled": true, "logs": { "invocation_logs": false }, "traces": { "enabled": false } },
   // A deploy fails while any of these is unset (SEC-1).
   "secrets": { "required": ["TYPESAFE_API_KEY", "RC_SECRET_KEY", "ID_SALT"] },
