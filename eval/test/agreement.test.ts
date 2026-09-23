@@ -29,7 +29,7 @@ test('compares the call on each line, some replies or none, with kappa and posit
   expect(noneOrSome.negative).toBeCloseTo(2 / 3, 12)
 })
 
-test('compares each line and candidate phrase, where only kappa and negative agreement move with the candidates', () => {
+test("compares each line and candidate, where only kappa and negative agreement move with the pairs' count", () => {
   const { pairs } = compareLabelings(units(8))
   expect(pairs).toMatchObject({ a: 4, b: 2, c: 4, d: 38 })
   expect(pairs.percent).toBeCloseTo(7 / 8, 12)
@@ -43,7 +43,7 @@ test('compares each line and candidate phrase, where only kappa and negative agr
   expect(wider.negative).toBeCloseTo(230 / 233, 12)
 })
 
-test('gives each line the MASI distance, either way round, with none against none at 0 and none against any reply at 1', () => {
+test('gives the MASI distance either way round: none against none is 0, and none against any reply is 1', () => {
   expect(units(8).map(({ first, second }) => masiDistance(first, second))).toEqual([
     0,
     1,
