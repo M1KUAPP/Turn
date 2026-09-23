@@ -416,15 +416,15 @@ const render = (
   )
 }
 
-/** The commit the run is on, marked when the working tree has changes the commit lacks. */
+/** The commit the run is on, and whether the working tree has changes the commit lacks. */
 const commit = () => {
   const git = (...args: string[]) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim()
   const hash = git('rev-parse', '--short', 'HEAD')
   try {
     git('diff', '--quiet', 'HEAD')
-    return `\`${hash}\``
+    return { hash, clean: true }
   } catch {
-    return `\`${hash}\` with uncommitted changes`
+    return { hash, clean: false }
   }
 }
 
@@ -432,7 +432,8 @@ const commit = () => {
  * `bun run eval`: scores the four rankers on the labeled lines in `eval/lines.jsonl`, or the file `--lines` names, and
  * writes the report to `eval/results.md`, or the file `--out` names (EVAL-3), with its plot beside it. The embeddings
  * ranker needs `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, and Jev `TYPESAFE_API_KEY`, in the environment.
- * `--unnamed` names Jev as the hosted decision model, for the README while naming is off.
+ * `--unnamed` names Jev as the hosted decision model, for the README while naming is off. It scores the 80 lines only
+ * from a clean working tree, so the history shows Jev's settings committed before any result (EVAL-2).
  */
 export async function main(args: readonly string[]): Promise<void> {
   const { values } = parseArgs({
@@ -441,6 +442,13 @@ export async function main(args: readonly string[]): Promise<void> {
   })
   const naming = values.unnamed ? unnamed : named
   const { lines: labeled, file } = linesFrom(values.lines)
+  const { hash, clean } = commit()
+  if (file === 'eval/lines.jsonl' && !clean) {
+    throw new Error(
+      "Commit every change before scoring eval/lines.jsonl, so the history shows Jev's settings before any result " +
+        '(EVAL-2)'
+    )
+  }
   const pin = relayModel()
   const jevRanker = jev(pin)
   const rankers = { place, keyword, embeddings: embeddings(workersAi()), jev: jevRanker }
@@ -451,7 +459,7 @@ export async function main(args: readonly string[]): Promise<void> {
   // The plot sits beside the report, named after it, so the report's relative link finds it.
   const image = `${basename(out, '.md')}-risk-coverage.svg`
   writeFileSync(join(dirname(out), image), plot(curves))
-  const run = `${date}, at commit ${commit()}`
+  const run = `${date}, at commit \`${hash}\`${clean ? '' : ' with uncommitted changes'}`
   writeFileSync(out, render(labeled, scores, { run, file, pin, calls: jevRanker.calls, curves, image, naming }))
   console.log(`Wrote ${values.out ?? 'eval/results.md'}`)
 }
