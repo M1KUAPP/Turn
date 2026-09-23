@@ -398,6 +398,13 @@ export CLOUDFLARE_API_TOKEN="$(cd worker && bunx wrangler auth token --json | jq
 bun run eval "$@"
 ```
 
+The script stays as it ran. The review found two gaps in its token line: in
+zsh, `export` hides a failed substitution from `err_exit`, and `jq -r`
+prints `null` for an answer with no token, which `${…:?}` lets through. A
+sturdier line reads the token with `jq -er` into a plain variable, then
+exports it. Neither gap mattered here: the token worked, since the report
+holds the embeddings ranker's scores for all 80 lines.
+
 ## Appendix: the relay's check
 
 `relay-check.zsh`, run as
