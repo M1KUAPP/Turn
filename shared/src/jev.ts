@@ -35,7 +35,8 @@ const keyFor = (index: number) => `c${String(index).padStart(2, '0')}`
 
 /**
  * Builds the request for one line: the kind, the topic over the user's category ids plus `consent`, and one Noul per
- * candidate, in the candidates' order, with the model pinned (SEC-2).
+ * candidate, in the candidates' order, with the model pinned (SEC-2). The topic's options keep the categories' order,
+ * except that ids that read as whole numbers, such as `12`, come first, as JavaScript orders an object's keys.
  */
 export function buildJevRequest({ line, place, categories, candidates }: JevLine, model: string): JevRequest {
   const topics = Object.fromEntries(categories.map(({ id, name }) => [id, name]))
