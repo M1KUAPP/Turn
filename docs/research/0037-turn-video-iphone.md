@@ -154,7 +154,7 @@ Contents:
   match the bundle ID you entered in the target's Summary pane in Xcode."
   ([Register an App ID][register])
 - Synthesis: the free `com.m1ku.turn` App ID expires after 7 days, so it
-  shouldn't hold the name for good. Whether a paid team can register it
+  shouldn't hold the name for good. Whether another team can register it
   inside those 7 days is under Gaps.
 
 [account]: https://developer.apple.com/help/account/basics/about-your-developer-account
@@ -199,12 +199,12 @@ attached.
 - **Signing with the phone.** A signed build that overlapped the phone's
   restart for Developer Mode failed with "Timed out waiting for all
   destinations matching the provided destination specifier to become
-  available". The next, from
-  10:08:08 to 10:08:43 with `-destination id=<UDID>` and both provisioning
-  flags, printed `** BUILD SUCCEEDED **`. It signed with a new Apple
-  Development identity and the profile "iOS Team Provisioning Profile:
-  com.m1ku.turn", created at 10:08:39 and expiring at 10:08:39 on September
-  30, with 1 device and an application identifier of the team ID followed
+  available". The next, from 10:08:08 to 10:08:43 with
+  `-destination id=<UDID>` and both provisioning flags, printed
+  `** BUILD SUCCEEDED **`. It signed with a new Apple Development identity
+  and the profile "iOS Team Provisioning Profile: com.m1ku.turn", created
+  at 10:08:39 and expiring at 10:08:39 on September 30, with 1 device and
+  an application identifier of the team ID followed
   by `.com.m1ku.turn`. The Mac then held "1 valid identities found".
 - **Install and trust.** `devicectl device install app` succeeded at
   10:08:56. A launch at 10:09:06 failed with CoreDeviceError 10002: "Unable
