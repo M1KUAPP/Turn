@@ -81,7 +81,11 @@ const unnamed: Naming = {
   Jev: 'The hosted decision model',
   jev: 'the hosted decision model',
   ranker: (name) => (name === 'jev' ? 'hosted decision model' : name),
-  model: (model) => `version ${model.replace(/^jev-/, '')}`
+  // Only the version's numbers, since whatever else a model's name holds may name it.
+  model: (model) => {
+    const version = /\d+(?:\.\d+)*/.exec(model)?.[0]
+    return version === undefined ? 'a version it gives no number for' : `version ${version}`
+  }
 }
 
 /**
@@ -171,7 +175,9 @@ const models = (pin: string, calls: readonly JevCall[], naming: Naming) => {
   const byModel = [...Map.groupBy(calls, (call) => call.model)]
   const answered = listOf(
     byModel.map(
-      ([model, made]) => `${naming.model(model)} on ${made.length === calls.length ? 'all ' : ''}${made.length} calls`
+      ([model, made]) =>
+        `${naming.model(model)} on ${made.length === calls.length ? 'all ' : ''}${made.length} ` +
+        (made.length === 1 ? 'call' : 'calls')
     )
   )
   const tokens = Math.round(
