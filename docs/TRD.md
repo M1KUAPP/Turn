@@ -1537,13 +1537,21 @@ microphone, and counts slot changes per line (ROW-5):
 bun run replay --lines eval/replay.jsonl --relay http://localhost:8787
 ```
 
-- **As the app would.** It gets the configuration once, then sends each line
-  as one new user's, with the next sequence number, a new line ID, and a
-  shortlist whose first phrases are the row's, and each request says
-  `X-Turn-Build: simulator`. The row takes each answer with the policy it
-  carries. A failure or no answer within 3 seconds has the phone rank the
-  line (STATE-2), with Jev off the phone ranks every line (STATE-3), and a
-  `402` stops the replay, where the app would open the paywall (STATE-4).
+- **As the app would.** It gets the configuration once, then sends each
+  line's last 300 characters as one new user's (LISTEN-6), with the next
+  sequence number, a new line ID, and a shortlist whose first phrases are
+  the row's, and each request says `X-Turn-Build: simulator`. The row's
+  number rises as each line starts, so an older line's answer is dropped
+  (ROW-7), and the row takes each answer with the policy it carries. A
+  failure, an answer out of shape, or no answer within 3 seconds has the
+  phone rank the line (STATE-2), with Jev off the phone ranks every line
+  (STATE-3), and a `402` stops the replay, where the app would open the
+  paywall (STATE-4).
+- **Past the free lines.** A new user has 20 free lines (PAY-1), so the
+  replay test's 50 lines reach a `402` unless the relay's
+  `SIMULATOR_UNLIMITED` switch is on, which lets a Simulator build's lines go
+  uncounted (PAY-9); for a local relay, `wrangler dev` takes
+  `--var SIMULATOR_UNLIMITED:true`.
 - **What it prints:** a row for each line, with who ranked it, the big button
   or the six slots, the slot changes, whether the row held, and the times,
   then the totals.

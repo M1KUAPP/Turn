@@ -4,7 +4,7 @@ import { mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test, vi } from 'vitest'
-import { main, replay } from '../src/replay'
+import { main, render, replay } from '../src/replay'
 
 const relay = 'http://relay.test'
 const config: Config = { jevOn: true, typesafeNamed: false, freeLinesLeft: 20, policy: startingPolicy }
@@ -176,6 +176,10 @@ test('stops at a 402, where the app would open the paywall', async () => {
   const { replayed, stopped } = await replay(lines('One', 'Two', 'Three'), relay)
   expect(replayed).toHaveLength(1)
   expect(stopped).toBe(2)
+  expect(render('lines.jsonl', relay, { replayed, stopped }).replace(/\s+/g, ' ')).toContain(
+    'The relay answered 402 at line 2: the app would open the paywall there, so the replay stopped. A relay whose ' +
+      "SIMULATOR_UNLIMITED switch is on doesn't count a Simulator build's lines"
+  )
 })
 
 test("stops when the relay won't give its configuration", async () => {
