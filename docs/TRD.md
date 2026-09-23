@@ -62,10 +62,10 @@ Contents:
 ## System architecture
 
 ```text
-+-------------------------------+   HTTPS    +-------------------------------+
-| iPhone app (Expo, TypeScript) |----------->| Worker: turn-relay            |
-| grid, row rules, bank (SQLite)|  /v1/lines | validate, rate-limit, config  |
-| turn-listen: SpeechTranscriber|<-----------| /v1/config                    |
++-------------------------------+   HTTPS    +-------------------------------+     +-------------------------------+
+| iPhone app (Expo, TypeScript) |----------->| Worker: turn-relay            |---->| Durable Object address-<hash> |
+| grid, row rules, bank (SQLite)|  /v1/lines | validate, rate-limit, config  |     | the address's requests        |
+| turn-listen: SpeechTranscriber|<-----------| /v1/config                    |     +-------------------------------+
 |   and name tagging            |            +---------------+---------------+
 | turn-voice: Personal Voice    |                            | one object per user,
 | expo-speech, RevenueCat SDK   |                            | in western North America
@@ -97,6 +97,9 @@ What each part owns:
   runs with `"placement": { "region": "aws:us-west-2" }`, next to Jev. It
   checks headers and lengths, applies the rate limits, serves the
   configuration, and passes each line to the user's Durable Object.
+- **The address's Durable Object,** one per address, counts the address's
+  requests each minute, before any user's object, and refuses them past
+  120 (SEC-3).
 - **The user's Durable Object** counts the user's requests each minute and
   their free lines, keeps the `listen` entitlement it has confirmed, builds
   the Jev request, and calls Jev. It's created with `locationHint: "wnam"`,
@@ -119,9 +122,9 @@ The path of one partner line:
     app gives it the next sequence number and cancels any request in flight.
 2.  The app tags names in the line and the shortlist, picks the 40
     candidates, and sends `POST /v1/lines`.
-3.  The relay checks the request, applies the address's limit, and passes
-    the line to `user-<hash>`, which first counts it against the ID's 30 a
-    minute.
+3.  The relay checks the request, counts it in `address-<hash>` against
+    the address's 120 a minute, and passes the line to `user-<hash>`, which
+    first counts it against the ID's 30 a minute.
 4.  The object claims a free line or, past them, checks the entitlement; it
     answers `402` if neither allows the line. Otherwise it calls Jev within
     2.5 seconds, taking each attempt from the day's budget in `jev-calls`.
