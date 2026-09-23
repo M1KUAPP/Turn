@@ -20,7 +20,7 @@ export type Line = {
 }
 
 /** One line's acceptable replies in the second labeling, which only the labelers' agreement reads. */
-type Labels = Pick<Line, 'id' | 'labeler' | 'acceptable'>
+export type Labels = Pick<Line, 'id' | 'labeler' | 'acceptable'>
 
 type Phrase = { id: string; text: string; fixed: boolean; places: string[] }
 type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
