@@ -54,12 +54,8 @@ async function hashUser(salt: string, user: string) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
-/** Checks a line before anything else (SEC-2), then asks the user's object for Jev's answer. */
-async function answerLine(request: Request, env: Env, log: Log, started: number): Promise<Response> {
-  const user = readUser(request.headers)
-  if (!user) return refuse(log, 'invalid')
-  const hash = await hashUser(env.ID_SALT, user)
-  log.user = hash.slice(0, 8)
+/** Checks a line before anything else (SEC-2), then asks the user's object, named by the hash, for Jev's answer. */
+async function answerLine(request: Request, env: Env, log: Log, started: number, hash: string): Promise<Response> {
   const line = await readLine(request)
   if (!line) return refuse(log, 'invalid')
   log.seq = line.seq
@@ -86,20 +82,20 @@ async function answerLine(request: Request, env: Env, log: Log, started: number)
   return Response.json(answer)
 }
 
-async function serveConfig(request: Request, env: Env, log: Log): Promise<Response> {
+/** Finds the route, then checks the headers every request carries, before a line's body or the configuration. */
+async function route(request: Request, env: Env, log: Log, started: number): Promise<Response> {
+  const { pathname } = new URL(request.url)
+  const isLine = request.method === 'POST' && pathname === '/v1/lines'
+  const isConfig = request.method === 'GET' && pathname === '/v1/config'
+  if (!isLine && !isConfig) return refuse(log, 'not_found')
   const user = readUser(request.headers)
   if (!user) return refuse(log, 'invalid')
-  log.user = (await hashUser(env.ID_SALT, user)).slice(0, 8)
+  const hash = await hashUser(env.ID_SALT, user)
+  log.user = hash.slice(0, 8)
+  if (isLine) return answerLine(request, env, log, started, hash)
   const config = readConfig(env)
   log.outcome = 'config'
   return Response.json(config)
-}
-
-function route(request: Request, env: Env, log: Log, started: number): Promise<Response> | Response {
-  const { pathname } = new URL(request.url)
-  if (request.method === 'POST' && pathname === '/v1/lines') return answerLine(request, env, log, started)
-  if (request.method === 'GET' && pathname === '/v1/config') return serveConfig(request, env, log)
-  return refuse(log, 'not_found')
 }
 
 export default {
