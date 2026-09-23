@@ -3,9 +3,11 @@ import { env } from 'cloudflare:workers'
 import { describe, expect, test, vi } from 'vitest'
 import {
   expectError,
+  expectRefused,
   headers,
   jevAnswer,
   jevError,
+  lineFor,
   lineRequest,
   mockJev,
   postLine,
@@ -81,10 +83,11 @@ describe('POST /v1/lines', () => {
     })
   })
 
-  test('answers 503 jev_off with no call to Jev while the switch is off (STATE-3)', async () => {
-    const jev = mockJev()
-    await expectError(await postLine(lineRequest(), { JEV_ON: 'false' }), 503, 'jev_off')
-    expect(jev).not.toHaveBeenCalled()
+  test('answers 503 jev_off, reaching neither the object nor Jev, while the switch is off (STATE-3)', async () => {
+    const getByName = vi.fn()
+    await expectError(await postLine(lineRequest(), { JEV_ON: 'false', DEVICE: { getByName } }), 503, 'jev_off')
+    expect(getByName).not.toHaveBeenCalled()
+    expect(vi.mocked(globalThis.fetch)).not.toHaveBeenCalled()
   })
 
   test.each(['', undefined])('answers 500 internal with no call to Jev when JEV_MODEL is %j (SEC-2)', async (model) => {
@@ -104,18 +107,14 @@ describe('POST /v1/lines', () => {
     ['a category with no name', lineRequest({ categories: [{ id: 'food' }] as never })],
     ['a candidate whose id is a number', lineRequest({ candidates: [{ id: 1, text: 'Yes' }] as never })],
     ['a refresh that is text', { ...lineRequest(), refresh: 'true' }]
-  ])('refuses %s with 400 invalid_request and no call to Jev', async (_, body) => {
-    const jev = mockJev()
-    await expectError(await postLine(body), 400, 'invalid_request')
-    expect(jev).not.toHaveBeenCalled()
+  ])('refuses %s with 400 invalid_request, reaching neither the object nor Jev', async (_, body) => {
+    await expectRefused(lineFor(body))
   })
 })
 
 describe("a line's limits (SEC-2)", () => {
   /** A request's body with a field of 17,000 characters, which the relay would otherwise ignore. */
   const oversized = JSON.stringify({ ...lineRequest(), padding: 'x'.repeat(17_000) })
-  const post = (body: string, sent: Record<string, string>) =>
-    send(new Request('https://relay.test/v1/lines', { method: 'POST', headers: { ...headers, ...sent }, body }))
   const categories = (count: number) =>
     Array.from({ length: count }, (_, i) => ({ id: `c${i}`, name: `Category ${i}` }))
   const candidates = (count: number) => Array.from({ length: count }, (_, i) => ({ id: `p${i}`, text: `Phrase ${i}` }))
@@ -135,10 +134,8 @@ describe("a line's limits (SEC-2)", () => {
     ['a category id twice', lineRequest({ categories: [...categories(2), { id: 'c0', name: 'Again' }] })],
     ['a candidate id twice', lineRequest({ candidates: [...candidates(2), { id: 'p1', text: 'Again' }] })],
     ['a category named by the fixed consent option', lineRequest({ categories: [{ id: 'consent', name: 'Consent' }] })]
-  ])('refuses %s with 400 invalid_request and no call to Jev', async (_, body) => {
-    const jev = mockJev()
-    await expectError(await postLine(body), 400, 'invalid_request')
-    expect(jev).not.toHaveBeenCalled()
+  ])('refuses %s with 400 invalid_request, reaching neither the object nor Jev', async (_, body) => {
+    await expectRefused(lineFor(body))
   })
 
   test.each([
@@ -151,10 +148,8 @@ describe("a line's limits (SEC-2)", () => {
     ],
     ['a body sent as text', JSON.stringify(lineRequest()), { 'Content-Type': 'text/plain' }],
     ['a body with no type', JSON.stringify(lineRequest()), {}]
-  ])('refuses %s with 400 invalid_request and no call to Jev', async (_, body, sent) => {
-    const jev = mockJev()
-    await expectError(await post(body, sent), 400, 'invalid_request')
-    expect(jev).not.toHaveBeenCalled()
+  ])('refuses %s with 400 invalid_request, reaching neither the object nor Jev', async (_, body, sent) => {
+    await expectRefused(lineFor(body, { ...headers, ...sent }))
   })
 
   test('answers a line at every limit, counting each emoji as one character', async () => {
@@ -166,7 +161,7 @@ describe("a line's limits (SEC-2)", () => {
     })
     const topic = Object.fromEntries([...full.categories.map(({ id }) => [id, 0.05]), ['consent', 0.4]])
     mockJev(() => Response.json(jevAnswer(Array(40).fill(0.5), topic)))
-    const response = await post(JSON.stringify(full), { 'Content-Type': 'application/json; charset=utf-8' })
+    const response = await send(lineFor(full, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }))
     expect(response.status).toBe(200)
     expect(Object.keys(((await response.json()) as { scores: object }).scores)).toHaveLength(40)
   })
