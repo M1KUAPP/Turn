@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 145 files · ~552,322 words
+- 145 files · ~555,410 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 10 file(s) not represented in the graph (top: (none) 6, .lock 1, .jsonl 1)
 
 ## Summary
 
-- 2823 nodes · 2684 edges · 211 communities (200 shown, 5 thin omitted)
+- 2826 nodes · 2688 edges · 211 communities (200 shown, 5 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `dd24eccd`
+- Built from commit: `959353d7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -1236,8 +1236,8 @@ Nodes (3): extends, include, ../tsconfig.base.json
 
 ### Community 205 - "Tasks"
 
-Cohesion: 0.10
-Nodes (20): Appendix: the line writers' brief, Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: Review and merge (+12 more)
+Cohesion: 0.09
+Nodes (21): Appendix: the bank's briefs, Appendix: the line writers' brief, Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills (+13 more)
 
 ### Community 208 - "Turn's starter content research notes"
 
@@ -1246,13 +1246,13 @@ Nodes (8): Consent and refusal for people who can't speak, Default content in te
 
 ### Community 209 - "starter-bank.test.ts"
 
-Cohesion: 0.29
-Nodes (5): bank, Category, Phrase, phrases, StarterBank
+Cohesion: 0.25
+Nodes (7): bank, Category, categoryById(), Phrase, phrases, phraseTexts(), StarterBank
 
 ## Knowledge Gaps
 
-- **2232 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2227 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2364 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2233 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2228 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2365 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -1261,12 +1261,12 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Google Play review`, `Store listing and discoverability`, `Apple App Store review`, `Retention and push notifications`, `Demo video and write-up`, `Samsung Galaxy Store review`, `Monetization and paywall benchmarks`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2232 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2233 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**

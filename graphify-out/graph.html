@@ -253,7 +253,7 @@
         </div>
         <div id="legend"></div>
       </div>
-      <div id="stats">2823 nodes &middot; 2684 edges &middot; 211 communities</div>
+      <div id="stats">2826 nodes &middot; 2688 edges &middot; 211 communities</div>
     </div>
     <script>
       const RAW_NODES = [
@@ -323,17 +323,43 @@
           degree: 1
         },
         {
-          id: 'eval_test_starter_bank_test_texts',
-          label: 'texts()',
+          id: 'eval_test_starter_bank_test_categorybyid',
+          label: 'categoryById()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'categoryById()',
+          community: 209,
+          community_name: 'starter-bank.test.ts',
+          source_file: 'eval/test/starter-bank.test.ts',
+          file_type: 'code',
+          degree: 2
+        },
+        {
+          id: 'eval_test_starter_bank_test_phrasebytext',
+          label: 'phraseByText()',
           color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'texts()',
+          title: 'phraseByText()',
           community: 209,
           community_name: 'starter-bank.test.ts',
           source_file: 'eval/test/starter-bank.test.ts',
           file_type: 'code',
           degree: 1
+        },
+        {
+          id: 'eval_test_starter_bank_test_phrasetexts',
+          label: 'phraseTexts()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'phraseTexts()',
+          community: 209,
+          community_name: 'starter-bank.test.ts',
+          source_file: 'eval/test/starter-bank.test.ts',
+          file_type: 'code',
+          degree: 2
         },
         {
           id: 'eval_test_lines_test_count',
@@ -17654,6 +17680,19 @@
           degree: 1
         },
         {
+          id: 'docs_plans_0011_turn_starter_content_appendix_the_bank_s_briefs',
+          label: "Appendix: the bank's briefs",
+          color: { background: '#EDC948', border: '#EDC948', highlight: { background: '#ffffff', border: '#EDC948' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Appendix: the bank&#x27;s briefs',
+          community: 205,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0011-turn-starter-content.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
           id: 'docs_plans_0011_turn_starter_content_appendix_the_line_writers_brief',
           label: "Appendix: the line writers' brief",
           color: { background: '#EDC948', border: '#EDC948', highlight: { background: '#ffffff', border: '#EDC948' } },
@@ -17891,14 +17930,14 @@
           id: 'docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan',
           label: "Turn's starter content implementation plan",
           color: { background: '#EDC948', border: '#EDC948', highlight: { background: '#ffffff', border: '#EDC948' } },
-          size: 13.6,
+          size: 14.1,
           font: { size: 0, color: '#ffffff' },
           title: 'Turn&#x27;s starter content implementation plan',
           community: 205,
           community_name: 'Tasks',
           source_file: 'docs/plans/0011-turn-starter-content.md',
           file_type: 'document',
-          degree: 7
+          degree: 8
         },
         {
           id: 'docs_plans_0011_turn_starter_content_verification_gate',
@@ -18060,14 +18099,14 @@
           id: 'eval_test_starter_bank_test',
           label: 'starter-bank.test.ts',
           color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
-          size: 13.1,
+          size: 14.1,
           font: { size: 0, color: '#ffffff' },
           title: 'starter-bank.test.ts',
           community: 209,
           community_name: 'starter-bank.test.ts',
           source_file: 'eval/test/starter-bank.test.ts',
           file_type: 'code',
-          degree: 6
+          degree: 8
         },
         {
           id: 'eval_test_starter_bank_test_bank',
@@ -37032,7 +37071,37 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'eval_test_starter_bank_test_texts',
+          from: 'eval_test_starter_bank_test_categorybyid',
+          to: 'eval_test_starter_bank_test_phrasetexts',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_test_starter_bank_test_categorybyid',
+          to: 'eval_test_starter_bank_test',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_test_starter_bank_test_phrasebytext',
+          to: 'eval_test_starter_bank_test',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_test_starter_bank_test_phrasetexts',
           to: 'eval_test_starter_bank_test',
           label: 'contains',
           title: 'contains [EXTRACTED]',
@@ -49793,6 +49862,16 @@
         },
         {
           from: 'docs_plans_0011_turn_starter_content',
+          to: 'docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0011_turn_starter_content_appendix_the_bank_s_briefs',
           to: 'docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan',
           label: 'contains',
           title: 'contains [EXTRACTED]',
@@ -64058,11 +64137,11 @@
         { cid: 202, color: '#E15759', label: 'eval/tsconfig.json', count: 6 },
         { cid: 203, color: '#76B7B2', label: 'shared/tsconfig.json', count: 4 },
         { cid: 204, color: '#59A14F', label: 'index.ts', count: 2 },
-        { cid: 205, color: '#EDC948', label: 'Tasks', count: 21 },
+        { cid: 205, color: '#EDC948', label: 'Tasks', count: 22 },
         { cid: 206, color: '#B07AA1', label: 'shared/test/smoke.test.ts', count: 1 },
         { cid: 207, color: '#FF9DA7', label: 'index.test.ts', count: 1 },
         { cid: 208, color: '#9C755F', label: 'Turn&#x27;s starter content research notes', count: 9 },
-        { cid: 209, color: '#BAB0AC', label: 'starter-bank.test.ts', count: 7 },
+        { cid: 209, color: '#BAB0AC', label: 'starter-bank.test.ts', count: 9 },
         { cid: 210, color: '#4E79A7', label: 'lines.test.ts', count: 4 }
       ]
 
