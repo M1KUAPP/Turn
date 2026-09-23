@@ -264,11 +264,19 @@ This file, with the decisions above.
   categories and one candidate equals the whole request, wording included.
 - **Check that it can fail:** a margin of 0.2, a changed kind's
   description, and a changed Noul question each fail it; then restore.
+- **Done:** it passed at once, and each of six changes failed it: a margin
+  of 0.2, `consent` dropped from `noBigTopics`, a kind's description
+  reworded, the Noul question shortened, two kinds swapped in order, and a
+  key added to the request's `state`.
 
 ### Task 4: Push before the run
 
 Push the branch, and note the push's time from GitHub's activity for the
 branch. No commit.
+
+- **Done:** GitHub's activity for the branch records its creation at
+  14:20:44 UTC on September 23, 2026, at `21391a4`, which holds the note,
+  this plan, and the test.
 
 ### Task 5: The preflight
 
@@ -277,10 +285,36 @@ In the detached worktree at `8ea25eb`, run the appendix's script with
 scratchpad. It must write a report in which Jev answered as `jev-1.13.0`.
 No commit.
 
+- **Attempt 1,** 14:25:39 to 14:26:20 UTC: it stopped at its first Workers
+  AI request, before any Jev call, with Bun's `fetch` error "unknown
+  certificate verification error", and wrote no report. Bun and curl
+  reached the same host from the tool's shell a few minutes later, and
+  nothing was changed.
+- **Attempt 2,** 14:30:49 to 14:31:35 UTC: it wrote the report. Jev
+  answered as version 1.13.0 on all 32 calls, and neither the report nor
+  its plot holds "jev" or "TypeSafe".
+
 ### Task 6: EVAL-1's count
 
 In the same worktree, `bun run eval:count`: every quota met, exit 0, and
 the agreement printed. No commit; the output goes into the pull request.
+
+- **Done** at 14:32 UTC, exit 0:
+
+  ```text
+  EVAL-1's quotas, on the 80 lines in eval/lines.jsonl:
+  - 80 lines, of exactly 80: met
+  - 16 with no acceptable reply, of at least 16: met
+  - 37 yes-or-no, of at least 24: met
+  - 30 about pain or health, of at least 8: met
+  - 10 asking for consent, of at least 4: met
+  - 49 sharing no word with a reply, of at least 10: met
+
+  The labelers' agreement, claude-c and claude-g's labels against claude-d and claude-h's:
+  - Some replies or none, on 80 lines: both some on 63, only the first on 1, only the second on 3, and both none on 13; agreement 0.950, Cohen's kappa 0.836, positive agreement 0.969, and negative agreement 0.867.
+  - Each line and candidate phrase, on 12191 pairs: both on 335, only the first on 71, only the second on 26, and neither on 11759; positive agreement 0.874, and negative agreement 0.996 and Cohen's kappa 0.869, which move with the pairs' count.
+  - Krippendorff's alpha with the MASI distance over each line's replies: 0.643.
+  ```
 
 ### Task 7: The run
 
@@ -288,20 +322,45 @@ In the same worktree, with a clean tree at `8ea25eb`, the appendix's script
 with `--unnamed`. Log each attempt here: its start, its end, and how it
 ended.
 
+- **Attempt 1,** 14:33:43 to 14:41:03 UTC, the only one: it exited 0 and
+  wrote the report and its plot, whose SHA-256 are these:
+
+  ```text
+  c31f019cdd5286674274b62a040189666d16b99e4a875c018dd2e680b6bb7e84  eval/results.md
+  6ff610a77328b7d96c3b58f3c62ac34a6a69ad2acd8f5a6f1e53f54ee7d1a446  eval/results-risk-coverage.svg
+  ```
+
 ### Task 8: The report
 
 Copy `eval/results.md` and `eval/results-risk-coverage.svg` from the run's
 worktree, commit them, and check their SHA-256 against the run's files.
+
+- **Done:** committed before anyone read them, and both hashes match in the
+  working tree and in the commit.
 
 ### Task 9: The rules
 
 Read the report and apply decisions 8 and 9, each change in its own
 commit, and record here what each rule found.
 
+- **EVAL-5:** the report lists one big button on a yes-or-no, pain, or
+  consent line: "Yes, go ahead" on `line-05`, in 1 of Jev's 4 answers, and
+  it's right. None is wrong, so `POLICY` stays `{}`, with no commit.
+- **EVAL-4:** on all lines, Jev minus embeddings in top 6 is +29.7 points,
+  with a paired interval of 17.2 to 42.2, so Jev leads embeddings, and
+  `jev-rerank` isn't built.
+
 ### Task 10: RELEASE-2's check
 
 Decision 11's reads, with the second appendix's script, which prints only
 the three vars, the switches, and the policy.
+
+- **Done** during the run, at 14:36 UTC, and after it, at 14:43 UTC, with
+  the same answers. `GET /v1/config` served `jevOn` true, `typesafeNamed`
+  false, and the starting policy. Version `30a35862`, created at 12:58:31
+  UTC, served all traffic, with `JEV_MODEL` `jev-1.13.0`, `JEV_ON` `"true"`,
+  and `POLICY` `{}`, as `main`'s `worker/wrangler.jsonc` has them. No deploy
+  was needed.
 
 ### Task 11: Pull request and review
 
