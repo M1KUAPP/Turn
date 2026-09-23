@@ -1,3 +1,4 @@
+import type { LineRequest } from '@turn/shared/relay'
 import { describe, expect, test, vi } from 'vitest'
 import { headers, jevAnswer, jevError, lineRequest, mockJev, postLine, send, sha256, user } from './helpers'
 
@@ -6,13 +7,19 @@ describe('the log', () => {
     const log = vi.spyOn(console, 'log')
     const others = (['error', 'warn', 'info', 'debug'] as const).map((name) => vi.spyOn(console, name))
     mockJev(() => Response.json(jevAnswer()), jevError(402), jevError(529), jevError(529))
+    const sent: LineRequest[] = []
+    const post = (changes: Partial<LineRequest> = {}, vars: Parameters<typeof postLine>[1] = {}) => {
+      const body = lineRequest(changes)
+      sent.push(body)
+      return postLine(body, vars)
+    }
     const session = [
       () => send(new Request('https://relay.test/v1/config', { headers })),
-      () => postLine(lineRequest()),
-      () => postLine(lineRequest({ line: 'a'.repeat(301) })),
-      () => postLine(lineRequest(), { JEV_ON: 'false' }),
-      () => postLine(lineRequest()),
-      () => postLine(lineRequest()),
+      () => post(),
+      () => post({ line: 'a'.repeat(301) }),
+      () => post({}, { JEV_ON: 'false' }),
+      () => post(),
+      () => post(),
       () => send(new Request('https://relay.test/v2/lines', { method: 'POST', headers }))
     ]
     for (const request of session) await request()
@@ -40,12 +47,11 @@ describe('the log', () => {
       [{ at, outcome: 'not_found', ms: { total: ms } }]
     ])
     const written = JSON.stringify(log.mock.calls)
-    const { line, place, categories, candidates, lineId } = lineRequest()
-    for (const text of [line, place, ...categories.map(({ name }) => name), ...candidates.map(({ text }) => text)]) {
-      expect(written).not.toContain(text)
+    for (const { line, place, categories, candidates, lineId } of sent) {
+      const texts = [line, place, lineId, ...categories.map(({ name }) => name), ...candidates.map(({ text }) => text)]
+      for (const text of texts) expect(written).not.toContain(text)
     }
     expect(written).not.toContain(user)
-    expect(written).not.toContain(lineId)
     for (const other of others) expect(other).not.toHaveBeenCalled()
   })
 })
