@@ -4,45 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "id": "eval_src_agreement_agreement",
-      "label": "Agreement",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "agreement",
-      "source_file": "eval/src/agreement.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "eval_src_agreement_table",
-      "label": "Table",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "table",
-      "source_file": "eval/src/agreement.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "eval_src_agreement_unit",
-      "label": "Unit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "unit",
-      "source_file": "eval/src/agreement.ts",
-      "source_location": "L19"
-    },
-    {
       "id": "eval_src_data_category",
       "label": "Category",
       "_callable": true,
@@ -108,108 +69,17 @@
       "source_location": "L27"
     },
     {
-      "id": "eval_src_score_bigbutton",
-      "label": "BigButton",
+      "id": "eval_src_jev_jevcall",
+      "label": "JevCall",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
+      "community": 217,
+      "community_name": "shortlist.ts",
       "file_type": "code",
-      "norm_label": "bigbutton",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L279"
-    },
-    {
-      "id": "eval_src_score_called",
-      "label": "Called",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "called",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L250"
-    },
-    {
-      "id": "eval_src_score_count",
-      "label": "Count",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "count",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L44"
-    },
-    {
-      "id": "eval_src_score_outcome",
-      "label": "Outcome",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "outcome",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L27"
-    },
-    {
-      "id": "eval_src_score_rankersummary",
-      "label": "RankerSummary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "rankersummary",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L58"
-    },
-    {
-      "id": "eval_src_score_scores",
-      "label": "Scores",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "scores",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L50"
-    },
-    {
-      "id": "eval_src_score_summary",
-      "label": "Summary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "summary",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L68"
-    },
-    {
-      "id": "eval_src_score_verdict",
-      "label": "Verdict",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "verdict",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L311"
+      "norm_label": "jevcall",
+      "source_file": "eval/src/jev.ts",
+      "source_location": "L33"
     },
     {
       "id": "eval_src_rankers_ranker",
@@ -262,19 +132,6 @@
       "norm_label": "phrase",
       "source_file": "shared/src/shortlist.ts",
       "source_location": "L6"
-    },
-    {
-      "id": "shared_src_shortlist_phraseindex",
-      "label": "PhraseIndex",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "phraseindex",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L26"
     },
     {
       "id": "eval_src_apple_sentenceembedding",
@@ -433,6 +290,19 @@
       "source_location": "L57"
     },
     {
+      "id": "worker_src_device_terms",
+      "label": "Terms",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 220,
+      "community_name": "src/index.ts",
+      "file_type": "code",
+      "norm_label": "terms",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L35"
+    },
+    {
       "id": "worker_src_index_logfacts",
       "label": "LogFacts",
       "_callable": true,
@@ -574,6 +444,58 @@
       "norm_label": "row",
       "source_file": "shared/src/row.ts",
       "source_location": "L48"
+    },
+    {
+      "id": "shared_src_shortlist_phraseindex",
+      "label": "PhraseIndex",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "phraseindex",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "worker_src_device_cached",
+      "label": "Cached",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "cached",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L38"
+    },
+    {
+      "id": "worker_src_device_jevreply",
+      "label": "JevReply",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "jevreply",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "worker_src_device_linereply",
+      "label": "LineReply",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "linereply",
+      "source_file": "worker/src/device.ts",
+      "source_location": "L26"
     },
     {
       "id": "app_src_constants_theme_colorname",
@@ -784,19 +706,6 @@
       "source_location": "L130"
     },
     {
-      "id": "eval_src_jev_jevcall",
-      "label": "JevCall",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "jevcall",
-      "source_file": "eval/src/jev.ts",
-      "source_location": "L33"
-    },
-    {
       "id": "shared_src_jev_choice",
       "label": "Choice",
       "_callable": true,
@@ -862,71 +771,6 @@
       "source_location": "L27"
     },
     {
-      "id": "worker_src_device_cached",
-      "label": "Cached",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "cached",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L38"
-    },
-    {
-      "id": "worker_src_device_jevreply",
-      "label": "JevReply",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "jevreply",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "worker_src_device_linereply",
-      "label": "LineReply",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "linereply",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "worker_src_device_terms",
-      "label": "Terms",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "terms",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L35"
-    },
-    {
-      "id": "eval_src_calibration_againstband",
-      "label": "againstBand",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 254,
-      "community_name": "report.ts",
-      "file_type": "code",
-      "norm_label": "againstband",
-      "source_file": "eval/src/calibration.ts",
-      "source_location": "L153"
-    },
-    {
       "id": "eval_src_report_apple",
       "label": "Apple",
       "_callable": true,
@@ -966,13 +810,26 @@
       "source_location": "L89"
     },
     {
+      "id": "eval_src_calibration_againstband",
+      "label": "againstBand",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "againstband",
+      "source_file": "eval/src/calibration.ts",
+      "source_location": "L153"
+    },
+    {
       "id": "eval_src_calibration_block",
       "label": "Block",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "block",
       "source_file": "eval/src/calibration.ts",
@@ -985,7 +842,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "bounds",
       "source_file": "eval/src/calibration.ts",
@@ -998,7 +855,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "brier",
       "source_file": "eval/src/calibration.ts",
@@ -1011,7 +868,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "forecast",
       "source_file": "eval/src/calibration.ts",
@@ -1024,11 +881,115 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "reliability",
       "source_file": "eval/src/calibration.ts",
       "source_location": "L139"
+    },
+    {
+      "id": "eval_src_score_bigbutton",
+      "label": "BigButton",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "bigbutton",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L279"
+    },
+    {
+      "id": "eval_src_score_called",
+      "label": "Called",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "called",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L250"
+    },
+    {
+      "id": "eval_src_score_count",
+      "label": "Count",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "count",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L44"
+    },
+    {
+      "id": "eval_src_score_outcome",
+      "label": "Outcome",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "outcome",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "eval_src_score_rankersummary",
+      "label": "RankerSummary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "rankersummary",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L58"
+    },
+    {
+      "id": "eval_src_score_scores",
+      "label": "Scores",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "scores",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L50"
+    },
+    {
+      "id": "eval_src_score_summary",
+      "label": "Summary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "summary",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L68"
+    },
+    {
+      "id": "eval_src_score_verdict",
+      "label": "Verdict",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "verdict",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L311"
     },
     {
       "id": "eval_src_curves_curve",
@@ -1036,8 +997,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
+      "community": 267,
+      "community_name": "curves.ts",
       "file_type": "code",
       "norm_label": "curve",
       "source_file": "eval/src/curves.ts",
@@ -1049,8 +1010,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
+      "community": 267,
+      "community_name": "curves.ts",
       "file_type": "code",
       "norm_label": "point",
       "source_file": "eval/src/curves.ts",
@@ -1062,8 +1023,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
+      "community": 267,
+      "community_name": "curves.ts",
       "file_type": "code",
       "norm_label": "linescore",
       "source_file": "eval/src/score.ts",
@@ -1075,72 +1036,51 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
+      "community": 267,
+      "community_name": "curves.ts",
       "file_type": "code",
       "norm_label": "scoredline",
       "source_file": "eval/src/score.ts",
       "source_location": "L16"
     },
     {
-      "id": "eval_src_agreement_agreementof",
-      "label": "agreementOf()",
+      "id": "eval_src_agreement_agreement",
+      "label": "Agreement",
       "_callable": true,
+      "_callable_class": true,
       "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
+      "community": 268,
+      "community_name": "agreement.ts",
       "file_type": "code",
-      "norm_label": "agreementof()",
+      "norm_label": "agreement",
       "source_file": "eval/src/agreement.ts",
-      "source_location": "L26"
+      "source_location": "L16"
     },
     {
-      "id": "eval_src_agreement_alphaof",
-      "label": "alphaOf()",
+      "id": "eval_src_agreement_table",
+      "label": "Table",
       "_callable": true,
+      "_callable_class": true,
       "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
+      "community": 268,
+      "community_name": "agreement.ts",
       "file_type": "code",
-      "norm_label": "alphaof()",
+      "norm_label": "table",
       "source_file": "eval/src/agreement.ts",
-      "source_location": "L67"
+      "source_location": "L4"
     },
     {
-      "id": "eval_src_agreement_comparelabelings",
-      "label": "compareLabelings()",
+      "id": "eval_src_agreement_unit",
+      "label": "Unit",
       "_callable": true,
+      "_callable_class": true,
       "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
+      "community": 268,
+      "community_name": "agreement.ts",
       "file_type": "code",
-      "norm_label": "comparelabelings()",
+      "norm_label": "unit",
       "source_file": "eval/src/agreement.ts",
-      "source_location": "L79"
-    },
-    {
-      "id": "eval_src_agreement_masidistance",
-      "label": "masiDistance()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "masidistance()",
-      "source_file": "eval/src/agreement.ts",
-      "source_location": "L53"
-    },
-    {
-      "id": "eval_src_agreement_tableof",
-      "label": "tableOf()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "tableof()",
-      "source_file": "eval/src/agreement.ts",
-      "source_location": "L43"
+      "source_location": "L19"
     },
     {
       "id": "eval_src_count_main",
@@ -1177,18 +1117,6 @@
       "norm_label": "rounded()",
       "source_file": "eval/src/count.ts",
       "source_location": "L10"
-    },
-    {
-      "id": "eval_src_data_amongtheeighty",
-      "label": "amongTheEighty()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "amongtheeighty()",
-      "source_file": "eval/src/data.ts",
-      "source_location": "L47"
     },
     {
       "id": "eval_src_data_checklabels",
@@ -1249,30 +1177,6 @@
       "norm_label": "readrows()",
       "source_file": "eval/src/data.ts",
       "source_location": "L34"
-    },
-    {
-      "id": "eval_test_agreement_test_candidates",
-      "label": "candidates()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "candidates()",
-      "source_file": "eval/test/agreement.test.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "eval_test_agreement_test_units",
-      "label": "units()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "units()",
-      "source_file": "eval/test/agreement.test.ts",
-      "source_location": "L7"
     },
     {
       "id": "eval_test_count_test_fixture",
@@ -1407,186 +1311,6 @@
       "source_location": "L6"
     },
     {
-      "id": "eval_src_cut_off_choosecutoff",
-      "label": "chooseCutOff()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "choosecutoff()",
-      "source_file": "eval/src/cut-off.ts",
-      "source_location": "L31"
-    },
-    {
-      "id": "eval_src_cut_off_crossvalidate",
-      "label": "crossValidate()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "crossvalidate()",
-      "source_file": "eval/src/cut-off.ts",
-      "source_location": "L50"
-    },
-    {
-      "id": "eval_src_score_intopsix",
-      "label": "inTopSix()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "intopsix()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L204"
-    },
-    {
-      "id": "eval_src_score_kindmatrix",
-      "label": "kindMatrix()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "kindmatrix()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L262"
-    },
-    {
-      "id": "eval_src_score_likeliest",
-      "label": "likeliest()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "likeliest()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L252"
-    },
-    {
-      "id": "eval_src_score_outcomeof",
-      "label": "outcomeOf()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "outcomeof()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L79"
-    },
-    {
-      "id": "eval_src_score_scorelines",
-      "label": "scoreLines()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "scorelines()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L113"
-    },
-    {
-      "id": "eval_src_score_summarize",
-      "label": "summarize()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "summarize()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L210"
-    },
-    {
-      "id": "eval_src_score_tally",
-      "label": "tally()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "tally()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L184"
-    },
-    {
-      "id": "eval_src_score_time",
-      "label": "time()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "time()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L86"
-    },
-    {
-      "id": "eval_src_score_topsix",
-      "label": "topSix()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "topsix()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L100"
-    },
-    {
-      "id": "eval_src_score_topsixgap",
-      "label": "topSixGap()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "topsixgap()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L318"
-    },
-    {
-      "id": "eval_src_score_withphrases",
-      "label": "withPhrases()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "withphrases()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L194"
-    },
-    {
-      "id": "eval_test_score_test_run",
-      "label": "run()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "run()",
-      "source_file": "eval/test/score.test.ts",
-      "source_location": "L37"
-    },
-    {
-      "id": "eval_src_score_sharesnoword",
-      "label": "sharesNoWord()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "sharesnoword()",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L334"
-    },
-    {
       "id": "eval_test_curves_test_byline",
       "label": "byLine()",
       "_callable": true,
@@ -1611,42 +1335,6 @@
       "source_location": "L65"
     },
     {
-      "id": "shared_src_shortlist_phraseindex_match",
-      "label": ".match()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": ".match()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L56"
-    },
-    {
-      "id": "shared_src_shortlist_phraseindex_update",
-      "label": ".update()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": ".update()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L37"
-    },
-    {
-      "id": "shared_src_shortlist_pickshortlist",
-      "label": "pickShortlist()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "pickshortlist()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L78"
-    },
-    {
       "id": "shared_src_shortlist_processterm",
       "label": "processTerm()",
       "_callable": true,
@@ -1659,124 +1347,16 @@
       "source_location": "L20"
     },
     {
-      "id": "shared_src_shortlist_rankable",
-      "label": "rankable()",
+      "id": "eval_src_data_amongtheeighty",
+      "label": "amongTheEighty()",
       "_callable": true,
       "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
+      "community": 219,
+      "community_name": "embeddings.ts",
       "file_type": "code",
-      "norm_label": "rankable()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L18"
-    },
-    {
-      "id": "shared_src_shortlist_rankonphone",
-      "label": "rankOnPhone()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "rankonphone()",
-      "source_file": "shared/src/shortlist.ts",
-      "source_location": "L132"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_words",
-      "label": "words()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "words()",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "shared_test_shortlist_test_ids",
-      "label": "ids()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "ids()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L10"
-    },
-    {
-      "id": "shared_test_shortlist_test_numbered",
-      "label": "numbered()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "numbered()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "shared_test_shortlist_test_phrase",
-      "label": "phrase()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "phrase()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "shared_test_shortlist_test_pick",
-      "label": "pick()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "pick()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L23"
-    },
-    {
-      "id": "shared_test_shortlist_test_plain",
-      "label": "plain()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "plain()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "shared_test_shortlist_test_range",
-      "label": "range()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "range()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "shared_test_shortlist_test_water",
-      "label": "water()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "water()",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L20"
+      "norm_label": "amongtheeighty()",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L47"
     },
     {
       "id": "eval_src_embeddings_atcutoff",
@@ -1863,6 +1443,18 @@
       "source_location": "L38"
     },
     {
+      "id": "eval_src_jev_relaymodel",
+      "label": "relayModel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "relaymodel()",
+      "source_file": "eval/src/jev.ts",
+      "source_location": "L12"
+    },
+    {
       "id": "eval_src_rankers_phonekind",
       "label": "phoneKind()",
       "_callable": true,
@@ -1873,6 +1465,30 @@
       "norm_label": "phonekind()",
       "source_file": "eval/src/rankers.ts",
       "source_location": "L22"
+    },
+    {
+      "id": "eval_src_report_commit",
+      "label": "commit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "commit()",
+      "source_file": "eval/src/report.ts",
+      "source_location": "L521"
+    },
+    {
+      "id": "eval_src_report_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "eval/src/report.ts",
+      "source_location": "L540"
     },
     {
       "id": "eval_src_reranker_reranker",
@@ -2643,6 +2259,18 @@
       "source_location": "L94"
     },
     {
+      "id": "eval_src_score_sharesnoword",
+      "label": "sharesNoWord()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "sharesnoword()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L334"
+    },
+    {
       "id": "eval_test_rankers_test_answer",
       "label": "answer()",
       "_callable": true,
@@ -2739,6 +2367,66 @@
       "source_location": "L138"
     },
     {
+      "id": "shared_src_shortlist_phraseindex_match",
+      "label": ".match()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": ".match()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L56"
+    },
+    {
+      "id": "shared_src_shortlist_phraseindex_update",
+      "label": ".update()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": ".update()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "shared_src_shortlist_pickshortlist",
+      "label": "pickShortlist()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "pickshortlist()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L78"
+    },
+    {
+      "id": "shared_src_shortlist_rankable",
+      "label": "rankable()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "rankable()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "shared_src_shortlist_rankonphone",
+      "label": "rankOnPhone()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "rankonphone()",
+      "source_file": "shared/src/shortlist.ts",
+      "source_location": "L132"
+    },
+    {
       "id": "shared_test_row_test_answer",
       "label": "answer()",
       "_callable": true,
@@ -2761,6 +2449,102 @@
       "norm_label": "replay()",
       "source_file": "shared/test/row.test.ts",
       "source_location": "L19"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_words",
+      "label": "words()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "words()",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "shared_test_shortlist_test_ids",
+      "label": "ids()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "ids()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "shared_test_shortlist_test_numbered",
+      "label": "numbered()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "numbered()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "shared_test_shortlist_test_phrase",
+      "label": "phrase()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "phrase()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_test_shortlist_test_pick",
+      "label": "pick()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "pick()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "shared_test_shortlist_test_plain",
+      "label": "plain()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "plain()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "shared_test_shortlist_test_range",
+      "label": "range()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "range()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "shared_test_shortlist_test_water",
+      "label": "water()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "water()",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L20"
     },
     {
       "id": "app_src_constants_theme_textstyle",
@@ -3759,18 +3543,6 @@
       "source_location": "L26"
     },
     {
-      "id": "eval_src_jev_relaymodel",
-      "label": "relayModel()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "relaymodel()",
-      "source_file": "eval/src/jev.ts",
-      "source_location": "L12"
-    },
-    {
       "id": "shared_src_jev_buildjevrequest",
       "label": "buildJevRequest()",
       "_callable": true,
@@ -3937,18 +3709,6 @@
       "norm_label": "calibrationtable()",
       "source_file": "eval/src/report.ts",
       "source_location": "L333"
-    },
-    {
-      "id": "eval_src_report_commit",
-      "label": "commit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 254,
-      "community_name": "report.ts",
-      "file_type": "code",
-      "norm_label": "commit()",
-      "source_file": "eval/src/report.ts",
-      "source_location": "L521"
     },
     {
       "id": "eval_src_report_curvesection",
@@ -4131,36 +3891,12 @@
       "source_location": "L292"
     },
     {
-      "id": "eval_src_stats_wilson",
-      "label": "wilson()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 254,
-      "community_name": "report.ts",
-      "file_type": "code",
-      "norm_label": "wilson()",
-      "source_file": "eval/src/stats.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "eval_src_calibration_across",
-      "label": "across()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "across()",
-      "source_file": "eval/src/calibration.ts",
-      "source_location": "L167"
-    },
-    {
       "id": "eval_src_calibration_beyondreach",
       "label": "beyondReach()",
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "beyondreach()",
       "source_file": "eval/src/calibration.ts",
@@ -4172,7 +3908,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "byscore()",
       "source_file": "eval/src/calibration.ts",
@@ -4184,7 +3920,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "consistencyband()",
       "source_file": "eval/src/calibration.ts",
@@ -4196,7 +3932,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "fitat()",
       "source_file": "eval/src/calibration.ts",
@@ -4208,23 +3944,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "pav()",
       "source_file": "eval/src/calibration.ts",
       "source_location": "L44"
-    },
-    {
-      "id": "eval_src_calibration_reliabilityplot",
-      "label": "reliabilityPlot()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "reliabilityplot()",
-      "source_file": "eval/src/calibration.ts",
-      "source_location": "L176"
     },
     {
       "id": "eval_src_calibration_topphrase",
@@ -4232,83 +3956,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "topphrase()",
       "source_file": "eval/src/calibration.ts",
       "source_location": "L15"
     },
     {
-      "id": "eval_src_calibration_up",
-      "label": "up()",
+      "id": "eval_src_cut_off_choosecutoff",
+      "label": "chooseCutOff()",
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "up()",
-      "source_file": "eval/src/calibration.ts",
-      "source_location": "L168"
+      "norm_label": "choosecutoff()",
+      "source_file": "eval/src/cut-off.ts",
+      "source_location": "L31"
     },
     {
-      "id": "eval_src_curves_plot",
-      "label": "plot()",
+      "id": "eval_src_cut_off_crossvalidate",
+      "label": "crossValidate()",
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "plot()",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L55"
-    },
-    {
-      "id": "eval_src_curves_riskcoverage",
-      "label": "riskCoverage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "riskcoverage()",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "eval_src_curves_top",
-      "label": "top()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "top()",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "eval_src_curves_x",
-      "label": "x()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "x()",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L47"
-    },
-    {
-      "id": "eval_src_curves_y",
-      "label": "y()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "y()",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L48"
+      "norm_label": "crossvalidate()",
+      "source_file": "eval/src/cut-off.ts",
+      "source_location": "L50"
     },
     {
       "id": "eval_src_cut_off_folds",
@@ -4316,23 +3992,143 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "folds()",
       "source_file": "eval/src/cut-off.ts",
       "source_location": "L11"
     },
     {
-      "id": "eval_src_report_main",
-      "label": "main()",
+      "id": "eval_src_score_intopsix",
+      "label": "inTopSix()",
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "eval/src/report.ts",
-      "source_location": "L540"
+      "norm_label": "intopsix()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L204"
+    },
+    {
+      "id": "eval_src_score_kindmatrix",
+      "label": "kindMatrix()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "kindmatrix()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L262"
+    },
+    {
+      "id": "eval_src_score_likeliest",
+      "label": "likeliest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "likeliest()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L252"
+    },
+    {
+      "id": "eval_src_score_outcomeof",
+      "label": "outcomeOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "outcomeof()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L79"
+    },
+    {
+      "id": "eval_src_score_scorelines",
+      "label": "scoreLines()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "scorelines()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L113"
+    },
+    {
+      "id": "eval_src_score_summarize",
+      "label": "summarize()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "summarize()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L210"
+    },
+    {
+      "id": "eval_src_score_tally",
+      "label": "tally()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "tally()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L184"
+    },
+    {
+      "id": "eval_src_score_time",
+      "label": "time()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "time()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L86"
+    },
+    {
+      "id": "eval_src_score_topsix",
+      "label": "topSix()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "topsix()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L100"
+    },
+    {
+      "id": "eval_src_score_topsixgap",
+      "label": "topSixGap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "topsixgap()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L318"
+    },
+    {
+      "id": "eval_src_score_withphrases",
+      "label": "withPhrases()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "withphrases()",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L194"
     },
     {
       "id": "eval_src_stats_below",
@@ -4340,7 +4136,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "below()",
       "source_file": "eval/src/stats.ts",
@@ -4352,7 +4148,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "bootstrap()",
       "source_file": "eval/src/stats.ts",
@@ -4364,7 +4160,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "bootstrapmean()",
       "source_file": "eval/src/stats.ts",
@@ -4376,7 +4172,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "chancehit()",
       "source_file": "eval/src/stats.ts",
@@ -4388,7 +4184,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "chancereciprocalrank()",
       "source_file": "eval/src/stats.ts",
@@ -4400,7 +4196,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "mean()",
       "source_file": "eval/src/stats.ts",
@@ -4412,7 +4208,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "pairedbootstrap()",
       "source_file": "eval/src/stats.ts",
@@ -4424,7 +4220,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "percentile()",
       "source_file": "eval/src/stats.ts",
@@ -4436,7 +4232,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "rotl()",
       "source_file": "eval/src/stats.ts",
@@ -4448,59 +4244,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "seeded()",
       "source_file": "eval/src/stats.ts",
       "source_location": "L61"
     },
     {
-      "id": "eval_src_svg_escaped",
-      "label": "escaped()",
+      "id": "eval_src_stats_wilson",
+      "label": "wilson()",
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "escaped()",
-      "source_file": "eval/src/svg.ts",
-      "source_location": "L2"
-    },
-    {
-      "id": "eval_src_svg_grid",
-      "label": "grid()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "grid()",
-      "source_file": "eval/src/svg.ts",
-      "source_location": "L14"
-    },
-    {
-      "id": "eval_src_svg_svg",
-      "label": "svg()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "svg()",
-      "source_file": "eval/src/svg.ts",
-      "source_location": "L37"
-    },
-    {
-      "id": "eval_src_svg_tag",
-      "label": "tag()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "tag()",
-      "source_file": "eval/src/svg.ts",
-      "source_location": "L5"
+      "norm_label": "wilson()",
+      "source_file": "eval/src/stats.ts",
+      "source_location": "L8"
     },
     {
       "id": "eval_test_calibration_test_exactband",
@@ -4508,7 +4268,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "exactband()",
       "source_file": "eval/test/calibration.test.ts",
@@ -4520,11 +4280,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "forecasts()",
       "source_file": "eval/test/calibration.test.ts",
       "source_location": "L20"
+    },
+    {
+      "id": "eval_test_score_test_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "eval/test/score.test.ts",
+      "source_location": "L37"
     },
     {
       "id": "eval_test_stats_test_oneto",
@@ -4532,7 +4304,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "oneto()",
       "source_file": "eval/test/stats.test.ts",
@@ -4549,6 +4321,234 @@
       "norm_label": "guard()",
       "source_file": "eval/test/setup.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "eval_src_calibration_across",
+      "label": "across()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "across()",
+      "source_file": "eval/src/calibration.ts",
+      "source_location": "L167"
+    },
+    {
+      "id": "eval_src_calibration_reliabilityplot",
+      "label": "reliabilityPlot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "reliabilityplot()",
+      "source_file": "eval/src/calibration.ts",
+      "source_location": "L176"
+    },
+    {
+      "id": "eval_src_calibration_up",
+      "label": "up()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "up()",
+      "source_file": "eval/src/calibration.ts",
+      "source_location": "L168"
+    },
+    {
+      "id": "eval_src_curves_plot",
+      "label": "plot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "plot()",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "eval_src_curves_riskcoverage",
+      "label": "riskCoverage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "riskcoverage()",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "eval_src_curves_top",
+      "label": "top()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "top()",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "eval_src_curves_x",
+      "label": "x()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "x()",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L47"
+    },
+    {
+      "id": "eval_src_curves_y",
+      "label": "y()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "y()",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L48"
+    },
+    {
+      "id": "eval_src_svg_escaped",
+      "label": "escaped()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "escaped()",
+      "source_file": "eval/src/svg.ts",
+      "source_location": "L2"
+    },
+    {
+      "id": "eval_src_svg_grid",
+      "label": "grid()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "grid()",
+      "source_file": "eval/src/svg.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "eval_src_svg_svg",
+      "label": "svg()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "svg()",
+      "source_file": "eval/src/svg.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "eval_src_svg_tag",
+      "label": "tag()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "tag()",
+      "source_file": "eval/src/svg.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "eval_src_agreement_agreementof",
+      "label": "agreementOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "agreementof()",
+      "source_file": "eval/src/agreement.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "eval_src_agreement_alphaof",
+      "label": "alphaOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "alphaof()",
+      "source_file": "eval/src/agreement.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "eval_src_agreement_comparelabelings",
+      "label": "compareLabelings()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "comparelabelings()",
+      "source_file": "eval/src/agreement.ts",
+      "source_location": "L79"
+    },
+    {
+      "id": "eval_src_agreement_masidistance",
+      "label": "masiDistance()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "masidistance()",
+      "source_file": "eval/src/agreement.ts",
+      "source_location": "L53"
+    },
+    {
+      "id": "eval_src_agreement_tableof",
+      "label": "tableOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "tableof()",
+      "source_file": "eval/src/agreement.ts",
+      "source_location": "L43"
+    },
+    {
+      "id": "eval_test_agreement_test_candidates",
+      "label": "candidates()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "candidates()",
+      "source_file": "eval/test/agreement.test.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "eval_test_agreement_test_units",
+      "label": "units()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "units()",
+      "source_file": "eval/test/agreement.test.ts",
+      "source_location": "L7"
     },
     {
       "id": "eval_src_sentence_embedding_fail",
@@ -7633,7 +7633,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1785"
+      "source_location": "L1796"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -7645,7 +7645,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1872"
+      "source_location": "L1883"
     },
     {
       "id": "docs_trd_overview",
@@ -7681,7 +7681,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1829"
+      "source_location": "L1840"
     },
     {
       "id": "docs_trd_see_also",
@@ -7693,7 +7693,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1911"
+      "source_location": "L1922"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -7717,7 +7717,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1740"
+      "source_location": "L1751"
     },
     {
       "id": "docs_trd_turn_technical_requirements",
@@ -15788,7 +15788,7 @@
       "node_kind": "heading",
       "norm_label": "evaluation",
       "source_file": "docs/TRD.md",
-      "source_location": "L1431"
+      "source_location": "L1434"
     },
     {
       "id": "docs_trd_metrics_intervals_and_thresholds",
@@ -15800,7 +15800,7 @@
       "node_kind": "heading",
       "norm_label": "metrics, intervals, and thresholds",
       "source_file": "docs/TRD.md",
-      "source_location": "L1558"
+      "source_location": "L1561"
     },
     {
       "id": "docs_trd_the_evaluation_data",
@@ -15812,7 +15812,7 @@
       "node_kind": "heading",
       "norm_label": "the evaluation data",
       "source_file": "docs/TRD.md",
-      "source_location": "L1433"
+      "source_location": "L1436"
     },
     {
       "id": "docs_trd_the_rankers",
@@ -15824,7 +15824,7 @@
       "node_kind": "heading",
       "norm_label": "the rankers",
       "source_file": "docs/TRD.md",
-      "source_location": "L1498"
+      "source_location": "L1501"
     },
     {
       "id": "docs_trd_the_replay_script",
@@ -15836,7 +15836,7 @@
       "node_kind": "heading",
       "norm_label": "the replay script",
       "source_file": "docs/TRD.md",
-      "source_location": "L1657"
+      "source_location": "L1660"
     },
     {
       "id": "docs_trd_the_report",
@@ -15848,7 +15848,7 @@
       "node_kind": "heading",
       "norm_label": "the report",
       "source_file": "docs/TRD.md",
-      "source_location": "L1697"
+      "source_location": "L1700"
     },
     {
       "id": "docs_trd_listening_and_speaking_on_the_phone",
@@ -15920,7 +15920,7 @@
       "node_kind": "heading",
       "norm_label": "data inventory",
       "source_file": "docs/TRD.md",
-      "source_location": "L1341"
+      "source_location": "L1344"
     },
     {
       "id": "docs_trd_secrets_and_configuration",
@@ -16016,7 +16016,7 @@
       "node_kind": "heading",
       "norm_label": "failure modes",
       "source_file": "docs/TRD.md",
-      "source_location": "L1363"
+      "source_location": "L1366"
     },
     {
       "id": "docs_trd_logs_and_counts",
@@ -16028,7 +16028,7 @@
       "node_kind": "heading",
       "norm_label": "logs and counts",
       "source_file": "docs/TRD.md",
-      "source_location": "L1380"
+      "source_location": "L1383"
     },
     {
       "id": "docs_trd_reliability_and_observability",
@@ -16040,7 +16040,7 @@
       "node_kind": "heading",
       "norm_label": "reliability and observability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1361"
+      "source_location": "L1364"
     },
     {
       "id": "docs_trd_service_life",
@@ -16052,7 +16052,7 @@
       "node_kind": "heading",
       "norm_label": "service life",
       "source_file": "docs/TRD.md",
-      "source_location": "L1425"
+      "source_location": "L1428"
     },
     {
       "id": "docs_trd_purchases_and_entitlements",
@@ -21581,17 +21581,6 @@
       "source_location": "L17"
     },
     {
-      "id": "eval_src_agreement",
-      "label": "agreement.ts",
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "agreement.ts",
-      "source_file": "eval/src/agreement.ts",
-      "source_location": "L1"
-    },
-    {
       "id": "eval_src_count",
       "label": "count.ts",
       "_origin": "ast",
@@ -21612,6 +21601,17 @@
       "norm_label": "data.ts",
       "source_file": "eval/src/data.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "eval_src_data_bank",
+      "label": "bank",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "data.ts",
+      "file_type": "code",
+      "norm_label": "bank",
+      "source_file": "eval/src/data.ts",
+      "source_location": "L56"
     },
     {
       "id": "eval_src_data_lines",
@@ -21656,17 +21656,6 @@
       "norm_label": "secondlabeling",
       "source_file": "eval/src/data.ts",
       "source_location": "L53"
-    },
-    {
-      "id": "eval_test_agreement_test",
-      "label": "agreement.test.ts",
-      "_origin": "ast",
-      "community": 209,
-      "community_name": "data.ts",
-      "file_type": "code",
-      "norm_label": "agreement.test.ts",
-      "source_file": "eval/test/agreement.test.ts",
-      "source_location": "L1"
     },
     {
       "id": "eval_test_count_test",
@@ -23009,70 +22998,278 @@
       "source_location": "L17"
     },
     {
-      "id": "eval_src_cut_off",
-      "label": "cut-off.ts",
+      "id": "eval_results_extras",
+      "label": "results-extras.md",
       "_origin": "ast",
       "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "cut-off.ts",
-      "source_file": "eval/src/cut-off.ts",
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "results-extras.md",
+      "source_file": "eval/results-extras.md",
       "source_location": "L1"
     },
     {
-      "id": "eval_src_cut_off_foldcount",
-      "label": "foldCount",
+      "id": "eval_results_extras_all_lines",
+      "label": "All lines",
       "_origin": "ast",
       "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "foldcount",
-      "source_file": "eval/src/cut-off.ts",
-      "source_location": "L4"
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "all lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L88"
     },
     {
-      "id": "eval_src_score",
-      "label": "score.ts",
+      "id": "eval_results_extras_big_buttons_on_yes_or_no_pain_and_consent_lines",
+      "label": "Big buttons on yes-or-no, pain, and consent lines",
       "_origin": "ast",
       "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "score.ts",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L1"
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "big buttons on yes-or-no, pain, and consent lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L237"
     },
     {
-      "id": "eval_src_score_kinds",
-      "label": "kinds",
+      "id": "eval_results_extras_latency",
+      "label": "Latency",
       "_origin": "ast",
       "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "kinds",
-      "source_file": "eval/src/score.ts",
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "latency",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L334"
+    },
+    {
+      "id": "eval_results_extras_lines_that_share_no_word_with_a_reply",
+      "label": "Lines that share no word with a reply",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "lines that share no word with a reply",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L199"
+    },
+    {
+      "id": "eval_results_extras_pain_and_consent_lines",
+      "label": "Pain and consent lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "pain and consent lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L162"
+    },
+    {
+      "id": "eval_results_extras_ranking_on_all_lines",
+      "label": "Ranking on all lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ranking on all lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "eval_results_extras_ranking_on_lines_that_share_no_word_with_a_reply",
+      "label": "Ranking on lines that share no word with a reply",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ranking on lines that share no word with a reply",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L204"
+    },
+    {
+      "id": "eval_results_extras_ranking_on_pain_and_consent_lines",
+      "label": "Ranking on pain and consent lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ranking on pain and consent lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L166"
+    },
+    {
+      "id": "eval_results_extras_ranking_on_yes_or_no_lines",
+      "label": "Ranking on yes-or-no lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ranking on yes-or-no lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L129"
+    },
+    {
+      "id": "eval_results_extras_risk_and_coverage",
+      "label": "Risk and coverage",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "risk and coverage",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L295"
+    },
+    {
+      "id": "eval_results_extras_the_cut_offs_for_holding",
+      "label": "The cut-offs for holding",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the cut-offs for holding",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L317"
+    },
+    {
+      "id": "eval_results_extras_the_hosted_decision_model_s_calibration",
+      "label": "The hosted decision model's calibration",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the hosted decision model's calibration",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L260"
+    },
+    {
+      "id": "eval_results_extras_the_question_kind",
+      "label": "The question kind",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the question kind",
+      "source_file": "eval/results-extras.md",
       "source_location": "L246"
     },
     {
-      "id": "eval_src_score_outcomes",
-      "label": "outcomes",
+      "id": "eval_results_extras_the_row_on_all_lines",
+      "label": "The row on all lines",
       "_origin": "ast",
       "community": 216,
-      "community_name": "score.ts",
-      "file_type": "code",
-      "norm_label": "outcomes",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L19"
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the row on all lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L112"
     },
     {
-      "id": "eval_src_score_rightoutcomes",
-      "label": "rightOutcomes",
+      "id": "eval_results_extras_the_row_on_lines_that_share_no_word_with_a_reply",
+      "label": "The row on lines that share no word with a reply",
       "_origin": "ast",
       "community": 216,
-      "community_name": "score.ts",
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the row on lines that share no word with a reply",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L224"
+    },
+    {
+      "id": "eval_results_extras_the_row_on_pain_and_consent_lines",
+      "label": "The row on pain and consent lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the row on pain and consent lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L186"
+    },
+    {
+      "id": "eval_results_extras_the_row_on_yes_or_no_lines",
+      "label": "The row on yes-or-no lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the row on yes-or-no lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L149"
+    },
+    {
+      "id": "eval_results_extras_turn_s_evaluation",
+      "label": "Turn's evaluation",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's evaluation",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_results_extras_who_wrote_the_data",
+      "label": "Who wrote the data",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "who wrote the data",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "eval_results_extras_yes_or_no_lines",
+      "label": "Yes-or-no lines",
+      "_origin": "ast",
+      "community": 216,
+      "community_name": "Turn's evaluation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "yes-or-no lines",
+      "source_file": "eval/results-extras.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "eval_src_jev",
+      "label": "eval/src/jev.ts",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
       "file_type": "code",
-      "norm_label": "rightoutcomes",
-      "source_file": "eval/src/score.ts",
-      "source_location": "L30"
+      "norm_label": "eval/src/jev.ts",
+      "source_file": "eval/src/jev.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_jev_categories",
+      "label": "categories",
+      "_origin": "ast",
+      "community": 217,
+      "community_name": "shortlist.ts",
+      "file_type": "code",
+      "norm_label": "categories",
+      "source_file": "eval/src/jev.ts",
+      "source_location": "L20"
     },
     {
       "id": "eval_src_rankers",
@@ -23359,83 +23556,6 @@
       "norm_label": "yesnoopeners",
       "source_file": "shared/src/shortlist.ts",
       "source_location": "L108"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test",
-      "label": "shortlist-speed.test.ts",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "shortlist-speed.test.ts",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_bank",
-      "label": "bank",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "bank",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L9"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_lines",
-      "label": "lines",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "lines",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_taps",
-      "label": "taps",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "taps",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L14"
-    },
-    {
-      "id": "shared_test_shortlist_speed_test_vocabulary",
-      "label": "vocabulary",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "vocabulary",
-      "source_file": "shared/test/shortlist-speed.test.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "shared_test_shortlist_test",
-      "label": "shortlist.test.ts",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "shortlist.test.ts",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "shared_test_shortlist_test_w",
-      "label": "w",
-      "_origin": "ast",
-      "community": 217,
-      "community_name": "shortlist.ts",
-      "file_type": "code",
-      "norm_label": "w",
-      "source_file": "shared/test/shortlist.test.ts",
-      "source_location": "L17"
     },
     {
       "id": "docs_plans_0014_turn_eval_harness",
@@ -23750,6 +23870,17 @@
       "source_location": "L298"
     },
     {
+      "id": "node_child_process",
+      "label": "node:child_process",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "confidence": "EXTRACTED",
+      "file_type": "code",
+      "norm_label": "node:child_process",
+      "source_file": "node:child_process"
+    },
+    {
       "id": "eval_src_apple",
       "label": "apple.ts",
       "_origin": "ast",
@@ -23913,6 +24044,28 @@
       "norm_label": "shortlist",
       "source_file": "eval/test/embeddings.test.ts",
       "source_location": "L9"
+    },
+    {
+      "id": "eval_test_frozen_test",
+      "label": "frozen.test.ts",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "frozen.test.ts",
+      "source_file": "eval/test/frozen.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_frozen_test_git",
+      "label": "git",
+      "_origin": "ast",
+      "community": 219,
+      "community_name": "embeddings.ts",
+      "file_type": "code",
+      "norm_label": "git",
+      "source_file": "eval/test/frozen.test.ts",
+      "source_location": "L13"
     },
     {
       "id": "eval_test_report_test",
@@ -24395,14 +24548,91 @@
       "source_location": "L4"
     },
     {
-      "id": "worker_test_config_test",
-      "label": "worker/test/config.test.ts",
+      "id": "shared_test_shortlist_speed_test",
+      "label": "shortlist-speed.test.ts",
       "_origin": "ast",
       "community": 221,
       "community_name": "replay.ts",
       "file_type": "code",
-      "norm_label": "worker/test/config.test.ts",
-      "source_file": "worker/test/config.test.ts",
+      "norm_label": "shortlist-speed.test.ts",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_bank",
+      "label": "bank",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "bank",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_lines",
+      "label": "lines",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "lines",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_taps",
+      "label": "taps",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "taps",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "shared_test_shortlist_speed_test_vocabulary",
+      "label": "vocabulary",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "vocabulary",
+      "source_file": "shared/test/shortlist-speed.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "shared_test_shortlist_test",
+      "label": "shortlist.test.ts",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "shortlist.test.ts",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "shared_test_shortlist_test_w",
+      "label": "w",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "w",
+      "source_file": "shared/test/shortlist.test.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "worker_src_device",
+      "label": "device.ts",
+      "_origin": "ast",
+      "community": 221,
+      "community_name": "replay.ts",
+      "file_type": "code",
+      "norm_label": "device.ts",
+      "source_file": "worker/src/device.ts",
       "source_location": "L1"
     },
     {
@@ -26891,6 +27121,17 @@
       "source_location": "L1"
     },
     {
+      "id": "worker_test_config_test",
+      "label": "worker/test/config.test.ts",
+      "_origin": "ast",
+      "community": 242,
+      "community_name": "helpers.ts",
+      "file_type": "code",
+      "norm_label": "worker/test/config.test.ts",
+      "source_file": "worker/test/config.test.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "worker_test_count_test",
       "label": "worker/test/count.test.ts",
       "_origin": "ast",
@@ -27067,72 +27308,6 @@
       "source_location": "L1"
     },
     {
-      "id": "node_child_process",
-      "label": "node:child_process",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "confidence": "EXTRACTED",
-      "file_type": "code",
-      "norm_label": "node:child_process",
-      "source_file": "node:child_process"
-    },
-    {
-      "id": "eval_src_data_bank",
-      "label": "bank",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "bank",
-      "source_file": "eval/src/data.ts",
-      "source_location": "L56"
-    },
-    {
-      "id": "eval_src_jev",
-      "label": "eval/src/jev.ts",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "eval/src/jev.ts",
-      "source_file": "eval/src/jev.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_src_jev_categories",
-      "label": "categories",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "categories",
-      "source_file": "eval/src/jev.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "eval_test_frozen_test",
-      "label": "frozen.test.ts",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "frozen.test.ts",
-      "source_file": "eval/test/frozen.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "eval_test_frozen_test_git",
-      "label": "git",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "git",
-      "source_file": "eval/test/frozen.test.ts",
-      "source_location": "L13"
-    },
-    {
       "id": "eval_test_jev_test",
       "label": "eval/test/jev.test.ts",
       "_origin": "ast",
@@ -27230,17 +27405,6 @@
       "norm_label": "line",
       "source_file": "shared/test/jev.test.ts",
       "source_location": "L4"
-    },
-    {
-      "id": "worker_src_device",
-      "label": "device.ts",
-      "_origin": "ast",
-      "community": 243,
-      "community_name": "shared/src/jev.ts",
-      "file_type": "code",
-      "norm_label": "device.ts",
-      "source_file": "worker/src/device.ts",
-      "source_location": "L1"
     },
     {
       "id": "docs_plans_0019_turn_paywall_logs_alert",
@@ -27948,7 +28112,7 @@
       "node_kind": "heading",
       "norm_label": "out of scope",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L307"
+      "source_location": "L322"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_rejected_alternatives",
@@ -27960,7 +28124,7 @@
       "node_kind": "heading",
       "norm_label": "rejected alternatives",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L278"
+      "source_location": "L293"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_review_round_1",
@@ -27996,7 +28160,7 @@
       "node_kind": "heading",
       "norm_label": "task 1: research notes",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L341"
+      "source_location": "L356"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_task_2_this_plan",
@@ -28008,7 +28172,7 @@
       "node_kind": "heading",
       "norm_label": "task 2: this plan",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L347"
+      "source_location": "L362"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_task_3_one_minute_s_count",
@@ -28020,7 +28184,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: one minute's count",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L352"
+      "source_location": "L367"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_task_4_the_address_s_object",
@@ -28032,7 +28196,7 @@
       "node_kind": "heading",
       "norm_label": "task 4: the address's object",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L361"
+      "source_location": "L376"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_task_5_mutations",
@@ -28044,7 +28208,7 @@
       "node_kind": "heading",
       "norm_label": "task 5: mutations",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L374"
+      "source_location": "L389"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_task_6_the_trd",
@@ -28056,7 +28220,7 @@
       "node_kind": "heading",
       "norm_label": "task 6: the trd",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L379"
+      "source_location": "L394"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_task_7_graph_pull_request_review_deploy_and_merge",
@@ -28068,7 +28232,7 @@
       "node_kind": "heading",
       "norm_label": "task 7: graph, pull request, review, deploy, and merge",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L384"
+      "source_location": "L399"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_tasks",
@@ -28080,7 +28244,19 @@
       "node_kind": "heading",
       "norm_label": "tasks",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L334"
+      "source_location": "L349"
+    },
+    {
+      "id": "docs_plans_0027_turn_address_limit_the_live_check_s_results",
+      "label": "The live check's results",
+      "_origin": "ast",
+      "community": 247,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the live check's results",
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L278"
     },
     {
       "id": "docs_plans_0027_turn_address_limit_turn_s_exact_address_limit_implementation_plan",
@@ -28104,7 +28280,7 @@
       "node_kind": "heading",
       "norm_label": "verification gate",
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L312"
+      "source_location": "L327"
     },
     {
       "id": "docs_research_0039_turn_free_lines",
@@ -29183,7 +29359,7 @@
       "label": "calibration.ts",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "calibration.ts",
       "source_file": "eval/src/calibration.ts",
@@ -29194,62 +29370,84 @@
       "label": "frame",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "frame",
       "source_file": "eval/src/calibration.ts",
       "source_location": "L162"
     },
     {
-      "id": "eval_src_curves",
-      "label": "curves.ts",
+      "id": "eval_src_cut_off",
+      "label": "cut-off.ts",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "curves.ts",
-      "source_file": "eval/src/curves.ts",
+      "norm_label": "cut-off.ts",
+      "source_file": "eval/src/cut-off.ts",
       "source_location": "L1"
     },
     {
-      "id": "eval_src_curves_colors",
-      "label": "colors",
+      "id": "eval_src_cut_off_foldcount",
+      "label": "foldCount",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "colors",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L41"
+      "norm_label": "foldcount",
+      "source_file": "eval/src/cut-off.ts",
+      "source_location": "L4"
     },
     {
-      "id": "eval_src_curves_dashes",
-      "label": "dashes",
+      "id": "eval_src_score",
+      "label": "score.ts",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "dashes",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L44"
+      "norm_label": "score.ts",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L1"
     },
     {
-      "id": "eval_src_curves_size",
-      "label": "size",
+      "id": "eval_src_score_kinds",
+      "label": "kinds",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
-      "norm_label": "size",
-      "source_file": "eval/src/curves.ts",
-      "source_location": "L36"
+      "norm_label": "kinds",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L246"
+    },
+    {
+      "id": "eval_src_score_outcomes",
+      "label": "outcomes",
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "outcomes",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "eval_src_score_rightoutcomes",
+      "label": "rightOutcomes",
+      "_origin": "ast",
+      "community": 256,
+      "community_name": "score.ts",
+      "file_type": "code",
+      "norm_label": "rightoutcomes",
+      "source_file": "eval/src/score.ts",
+      "source_location": "L30"
     },
     {
       "id": "eval_src_stats",
       "label": "stats.ts",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "stats.ts",
       "source_file": "eval/src/stats.ts",
@@ -29260,7 +29458,7 @@
       "label": "resamples",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "resamples",
       "source_file": "eval/src/stats.ts",
@@ -29271,29 +29469,18 @@
       "label": "seed",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "seed",
       "source_file": "eval/src/stats.ts",
       "source_location": "L55"
     },
     {
-      "id": "eval_src_svg",
-      "label": "svg.ts",
-      "_origin": "ast",
-      "community": 256,
-      "community_name": "calibration.ts",
-      "file_type": "code",
-      "norm_label": "svg.ts",
-      "source_file": "eval/src/svg.ts",
-      "source_location": "L1"
-    },
-    {
       "id": "eval_test_calibration_test",
       "label": "calibration.test.ts",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "calibration.test.ts",
       "source_file": "eval/test/calibration.test.ts",
@@ -29304,7 +29491,7 @@
       "label": "worked",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "worked",
       "source_file": "eval/test/calibration.test.ts",
@@ -29315,7 +29502,7 @@
       "label": "stats.test.ts",
       "_origin": "ast",
       "community": 256,
-      "community_name": "calibration.ts",
+      "community_name": "score.ts",
       "file_type": "code",
       "norm_label": "stats.test.ts",
       "source_file": "eval/test/stats.test.ts",
@@ -30256,7 +30443,7 @@
       "node_kind": "heading",
       "norm_label": "adding a class with exports",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L161"
+      "source_location": "L162"
     },
     {
       "id": "docs_research_0050_turn_address_limit_duration_billing",
@@ -30268,7 +30455,7 @@
       "node_kind": "heading",
       "norm_label": "duration billing",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L107"
+      "source_location": "L108"
     },
     {
       "id": "docs_research_0050_turn_address_limit_gaps",
@@ -30280,7 +30467,19 @@
       "node_kind": "heading",
       "norm_label": "gaps",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L292"
+      "source_location": "L327"
+    },
+    {
+      "id": "docs_research_0050_turn_address_limit_hands_on_check",
+      "label": "Hands-on check",
+      "_origin": "ast",
+      "community": 264,
+      "community_name": "Turn's address limit research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "hands-on check",
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L293"
     },
     {
       "id": "docs_research_0050_turn_address_limit_ipv6_in_cf_connecting_ip",
@@ -30292,7 +30491,7 @@
       "node_kind": "heading",
       "norm_label": "ipv6 in cf-connecting-ip",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L240"
+      "source_location": "L241"
     },
     {
       "id": "docs_research_0050_turn_address_limit_latency_and_throughput",
@@ -30304,7 +30503,7 @@
       "node_kind": "heading",
       "norm_label": "latency and throughput",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L211"
+      "source_location": "L212"
     },
     {
       "id": "docs_research_0050_turn_address_limit_local_measurement",
@@ -30316,7 +30515,7 @@
       "node_kind": "heading",
       "norm_label": "local measurement",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L264"
+      "source_location": "L265"
     },
     {
       "id": "docs_research_0050_turn_address_limit_object_names_and_privacy",
@@ -30328,7 +30527,7 @@
       "node_kind": "heading",
       "norm_label": "object names and privacy",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L185"
+      "source_location": "L186"
     },
     {
       "id": "docs_research_0050_turn_address_limit_see_also",
@@ -30340,7 +30539,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L311"
+      "source_location": "L347"
     },
     {
       "id": "docs_research_0050_turn_address_limit_the_binding_s_price",
@@ -30352,7 +30551,7 @@
       "node_kind": "heading",
       "norm_label": "the binding's price",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L137"
+      "source_location": "L138"
     },
     {
       "id": "docs_research_0050_turn_address_limit_the_free_plan_s_quotas",
@@ -30364,7 +30563,7 @@
       "node_kind": "heading",
       "norm_label": "the free plan's quotas",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L24"
+      "source_location": "L25"
     },
     {
       "id": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
@@ -30388,7 +30587,7 @@
       "node_kind": "heading",
       "norm_label": "what a durable object request costs",
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L66"
+      "source_location": "L67"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers",
@@ -30412,7 +30611,7 @@
       "node_kind": "heading",
       "norm_label": "appendix: the run's script",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L599"
+      "source_location": "L686"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_decisions",
@@ -30424,7 +30623,7 @@
       "node_kind": "heading",
       "norm_label": "decisions",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L113"
+      "source_location": "L114"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_design",
@@ -30436,7 +30635,7 @@
       "node_kind": "heading",
       "norm_label": "design",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L111"
+      "source_location": "L112"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_global_constraints",
@@ -30448,7 +30647,7 @@
       "node_kind": "heading",
       "norm_label": "global constraints",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L52"
+      "source_location": "L53"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_out_of_scope",
@@ -30460,7 +30659,7 @@
       "node_kind": "heading",
       "norm_label": "out of scope",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L297"
+      "source_location": "L298"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_rejected_alternatives",
@@ -30472,7 +30671,7 @@
       "node_kind": "heading",
       "norm_label": "rejected alternatives",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L284"
+      "source_location": "L285"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_review_round_1",
@@ -30484,7 +30683,7 @@
       "node_kind": "heading",
       "norm_label": "review, round 1",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L550"
+      "source_location": "L552"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_skills",
@@ -30496,7 +30695,7 @@
       "node_kind": "heading",
       "norm_label": "skills",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L96"
+      "source_location": "L97"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_10_seven_rankers_and_the_calibration_in_the_report",
@@ -30508,7 +30707,7 @@
       "node_kind": "heading",
       "norm_label": "task 10: seven rankers and the calibration in the report",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L447"
+      "source_location": "L448"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_11_the_trd",
@@ -30520,7 +30719,7 @@
       "node_kind": "heading",
       "norm_label": "task 11: the trd",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L459"
+      "source_location": "L460"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_12_a_live_check_on_the_fixture",
@@ -30532,7 +30731,7 @@
       "node_kind": "heading",
       "norm_label": "task 12: a live check on the fixture",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L464"
+      "source_location": "L465"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_13_the_first_pull_request",
@@ -30544,7 +30743,7 @@
       "node_kind": "heading",
       "norm_label": "task 13: the first pull request",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L474"
+      "source_location": "L475"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_14_the_run",
@@ -30556,7 +30755,7 @@
       "node_kind": "heading",
       "norm_label": "task 14: the run",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L479"
+      "source_location": "L480"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_15_the_second_pull_request_and_45",
@@ -30568,7 +30767,7 @@
       "node_kind": "heading",
       "norm_label": "task 15: the second pull request and #45",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L485"
+      "source_location": "L486"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_1_research_notes",
@@ -30580,7 +30779,7 @@
       "node_kind": "heading",
       "norm_label": "task 1: research notes",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L330"
+      "source_location": "L331"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_2_this_plan",
@@ -30592,7 +30791,7 @@
       "node_kind": "heading",
       "norm_label": "task 2: this plan",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L336"
+      "source_location": "L337"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_3_one_call_for_every_workers_ai_model",
@@ -30604,7 +30803,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: one call for every workers ai model",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L340"
+      "source_location": "L341"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_4_the_reranker",
@@ -30616,7 +30815,7 @@
       "node_kind": "heading",
       "norm_label": "task 4: the reranker",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L352"
+      "source_location": "L353"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_5_qwen3",
@@ -30628,7 +30827,7 @@
       "node_kind": "heading",
       "norm_label": "task 5: qwen3",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L370"
+      "source_location": "L371"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_6_apple_s_sentence_embedding",
@@ -30640,7 +30839,7 @@
       "node_kind": "heading",
       "norm_label": "task 6: apple's sentence embedding",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L387"
+      "source_location": "L388"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_7_a_general_percentile_bootstrap",
@@ -30652,7 +30851,7 @@
       "node_kind": "heading",
       "norm_label": "task 7: a general percentile bootstrap",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L405"
+      "source_location": "L406"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_8_pav_the_band_and_the_brier_score",
@@ -30664,7 +30863,7 @@
       "node_kind": "heading",
       "norm_label": "task 8: pav, the band, and the brier score",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L416"
+      "source_location": "L417"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_task_9_the_reliability_plot",
@@ -30676,7 +30875,7 @@
       "node_kind": "heading",
       "norm_label": "task 9: the reliability plot",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L437"
+      "source_location": "L438"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_tasks",
@@ -30688,7 +30887,7 @@
       "node_kind": "heading",
       "norm_label": "tasks",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L328"
+      "source_location": "L329"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_the_live_check_on_the_fixture",
@@ -30700,7 +30899,31 @@
       "node_kind": "heading",
       "norm_label": "the live check on the fixture",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L526"
+      "source_location": "L527"
+    },
+    {
+      "id": "docs_plans_0026_turn_calibration_and_extra_rankers_the_second_pull_request_s_review",
+      "label": "The second pull request's review",
+      "_origin": "ast",
+      "community": 265,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the second pull request's review",
+      "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
+      "source_location": "L666"
+    },
+    {
+      "id": "docs_plans_0026_turn_calibration_and_extra_rankers_the_second_run",
+      "label": "The second run",
+      "_origin": "ast",
+      "community": 265,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the second run",
+      "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
+      "source_location": "L601"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_turn_s_calibration_and_three_extra_rankers_implementation_plan",
@@ -30724,7 +30947,7 @@
       "node_kind": "heading",
       "norm_label": "verification gate",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L307"
+      "source_location": "L308"
     },
     {
       "id": "docs_plans_0026_turn_calibration_and_extra_rankers_what_changed_while_building",
@@ -30736,7 +30959,7 @@
       "node_kind": "heading",
       "norm_label": "what changed while building",
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L491"
+      "source_location": "L492"
     },
     {
       "id": "docs_research_0046_turn_relay_limits",
@@ -30880,6 +31103,83 @@
       "node_kind": "heading",
       "norm_label": "turn's relay limits research notes",
       "source_file": "docs/research/0046-turn-relay-limits.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_curves",
+      "label": "curves.ts",
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "curves.ts",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_curves_colors",
+      "label": "colors",
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "colors",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L41"
+    },
+    {
+      "id": "eval_src_curves_dashes",
+      "label": "dashes",
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "dashes",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L44"
+    },
+    {
+      "id": "eval_src_curves_size",
+      "label": "size",
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "size",
+      "source_file": "eval/src/curves.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "eval_src_svg",
+      "label": "svg.ts",
+      "_origin": "ast",
+      "community": 267,
+      "community_name": "curves.ts",
+      "file_type": "code",
+      "norm_label": "svg.ts",
+      "source_file": "eval/src/svg.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_src_agreement",
+      "label": "agreement.ts",
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "agreement.ts",
+      "source_file": "eval/src/agreement.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_agreement_test",
+      "label": "agreement.test.ts",
+      "_origin": "ast",
+      "community": 268,
+      "community_name": "agreement.ts",
+      "file_type": "code",
+      "norm_label": "agreement.test.ts",
+      "source_file": "eval/test/agreement.test.ts",
       "source_location": "L1"
     },
     {
@@ -70510,7 +70810,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L113",
+      "source_location": "L114",
       "weight": 1.0
     },
     {
@@ -70521,7 +70821,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L284",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -70532,7 +70832,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L297",
+      "source_location": "L298",
       "weight": 1.0
     },
     {
@@ -70543,7 +70843,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L330",
+      "source_location": "L331",
       "weight": 1.0
     },
     {
@@ -70554,7 +70854,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L336",
+      "source_location": "L337",
       "weight": 1.0
     },
     {
@@ -70565,7 +70865,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L340",
+      "source_location": "L341",
       "weight": 1.0
     },
     {
@@ -70576,7 +70876,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L352",
+      "source_location": "L353",
       "weight": 1.0
     },
     {
@@ -70587,7 +70887,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L370",
+      "source_location": "L371",
       "weight": 1.0
     },
     {
@@ -70598,7 +70898,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L387",
+      "source_location": "L388",
       "weight": 1.0
     },
     {
@@ -70609,7 +70909,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L405",
+      "source_location": "L406",
       "weight": 1.0
     },
     {
@@ -70620,7 +70920,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L416",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -70631,7 +70931,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L437",
+      "source_location": "L438",
       "weight": 1.0
     },
     {
@@ -70642,7 +70942,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L447",
+      "source_location": "L448",
       "weight": 1.0
     },
     {
@@ -70653,7 +70953,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L459",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -70664,7 +70964,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L464",
+      "source_location": "L465",
       "weight": 1.0
     },
     {
@@ -70675,7 +70975,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L474",
+      "source_location": "L475",
       "weight": 1.0
     },
     {
@@ -70686,7 +70986,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L479",
+      "source_location": "L480",
       "weight": 1.0
     },
     {
@@ -70697,7 +70997,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L485",
+      "source_location": "L486",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0026_turn_calibration_and_extra_rankers_the_second_run",
+      "target": "docs_plans_0026_turn_calibration_and_extra_rankers_the_second_pull_request_s_review",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
+      "source_location": "L666",
       "weight": 1.0
     },
     {
@@ -70708,7 +71019,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L111",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -70719,7 +71030,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L307",
+      "source_location": "L308",
       "weight": 1.0
     },
     {
@@ -70730,7 +71041,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L328",
+      "source_location": "L329",
       "weight": 1.0
     },
     {
@@ -70741,7 +71052,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L491",
+      "source_location": "L492",
       "weight": 1.0
     },
     {
@@ -70752,7 +71063,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -70763,7 +71074,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L550",
+      "source_location": "L552",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0026_turn_calibration_and_extra_rankers_turn_s_calibration_and_three_extra_rankers_implementation_plan",
+      "target": "docs_plans_0026_turn_calibration_and_extra_rankers_the_second_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
+      "source_location": "L601",
       "weight": 1.0
     },
     {
@@ -70774,7 +71096,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L599",
+      "source_location": "L686",
       "weight": 1.0
     },
     {
@@ -70785,7 +71107,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -70796,7 +71118,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0026-turn-calibration-and-extra-rankers.md",
-      "source_location": "L526",
+      "source_location": "L527",
       "weight": 1.0
     },
     {
@@ -70834,7 +71156,7 @@
     },
     {
       "source": "docs_plans_0027_turn_address_limit_design",
-      "target": "docs_plans_0027_turn_address_limit_rejected_alternatives",
+      "target": "docs_plans_0027_turn_address_limit_the_live_check_s_results",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -70845,13 +71167,24 @@
     },
     {
       "source": "docs_plans_0027_turn_address_limit_design",
+      "target": "docs_plans_0027_turn_address_limit_rejected_alternatives",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0027-turn-address-limit.md",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0027_turn_address_limit_design",
       "target": "docs_plans_0027_turn_address_limit_out_of_scope",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L307",
+      "source_location": "L322",
       "weight": 1.0
     },
     {
@@ -70862,7 +71195,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L341",
+      "source_location": "L356",
       "weight": 1.0
     },
     {
@@ -70873,7 +71206,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L347",
+      "source_location": "L362",
       "weight": 1.0
     },
     {
@@ -70884,7 +71217,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L352",
+      "source_location": "L367",
       "weight": 1.0
     },
     {
@@ -70895,7 +71228,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L361",
+      "source_location": "L376",
       "weight": 1.0
     },
     {
@@ -70906,7 +71239,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L374",
+      "source_location": "L389",
       "weight": 1.0
     },
     {
@@ -70917,7 +71250,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L379",
+      "source_location": "L394",
       "weight": 1.0
     },
     {
@@ -70928,7 +71261,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L384",
+      "source_location": "L399",
       "weight": 1.0
     },
     {
@@ -70950,7 +71283,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L312",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -70961,7 +71294,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0027-turn-address-limit.md",
-      "source_location": "L334",
+      "source_location": "L349",
       "weight": 1.0
     },
     {
@@ -86042,7 +86375,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L107",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -86053,7 +86386,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L137",
+      "source_location": "L138",
       "weight": 1.0
     },
     {
@@ -86064,7 +86397,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L161",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -86075,7 +86408,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L185",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -86086,18 +86419,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L211",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
-      "target": "docs_research_0050_turn_address_limit_the_free_plan_s_quotas",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L24",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
@@ -86108,7 +86430,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L240",
+      "source_location": "L241",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_the_free_plan_s_quotas",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -86119,7 +86452,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L264",
+      "source_location": "L265",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0050_turn_address_limit_turn_s_address_limit_research_notes",
+      "target": "docs_research_0050_turn_address_limit_hands_on_check",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0050-turn-address-limit.md",
+      "source_location": "L293",
       "weight": 1.0
     },
     {
@@ -86130,7 +86474,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L292",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -86141,7 +86485,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L311",
+      "source_location": "L347",
       "weight": 1.0
     },
     {
@@ -86152,7 +86496,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/research/0050-turn-address-limit.md",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -94512,7 +94856,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1433",
+      "source_location": "L1436",
       "weight": 1.0
     },
     {
@@ -94523,7 +94867,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1498",
+      "source_location": "L1501",
       "weight": 1.0
     },
     {
@@ -94534,7 +94878,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1558",
+      "source_location": "L1561",
       "weight": 1.0
     },
     {
@@ -94545,7 +94889,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1657",
+      "source_location": "L1660",
       "weight": 1.0
     },
     {
@@ -94556,7 +94900,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1697",
+      "source_location": "L1700",
       "weight": 1.0
     },
     {
@@ -94644,7 +94988,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1363",
+      "source_location": "L1366",
       "weight": 1.0
     },
     {
@@ -94655,7 +94999,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1380",
+      "source_location": "L1383",
       "weight": 1.0
     },
     {
@@ -94666,7 +95010,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1425",
+      "source_location": "L1428",
       "weight": 1.0
     },
     {
@@ -94699,7 +95043,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1341",
+      "source_location": "L1344",
       "weight": 1.0
     },
     {
@@ -94809,7 +95153,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1361",
+      "source_location": "L1364",
       "weight": 1.0
     },
     {
@@ -94831,7 +95175,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1431",
+      "source_location": "L1434",
       "weight": 1.0
     },
     {
@@ -94842,7 +95186,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1740",
+      "source_location": "L1751",
       "weight": 1.0
     },
     {
@@ -94853,7 +95197,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1785",
+      "source_location": "L1796",
       "weight": 1.0
     },
     {
@@ -94864,7 +95208,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1829",
+      "source_location": "L1840",
       "weight": 1.0
     },
     {
@@ -94875,7 +95219,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1872",
+      "source_location": "L1883",
       "weight": 1.0
     },
     {
@@ -94886,7 +95230,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1911",
+      "source_location": "L1922",
       "weight": 1.0
     },
     {
@@ -95151,6 +95495,226 @@
       "confidence_score": 1.0,
       "source_file": "eval/results.md",
       "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras",
+      "target": "eval_results_extras_turn_s_evaluation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_all_lines",
+      "target": "eval_results_extras_the_row_on_all_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_all_lines",
+      "target": "eval_results_extras_ranking_on_all_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_lines_that_share_no_word_with_a_reply",
+      "target": "eval_results_extras_ranking_on_lines_that_share_no_word_with_a_reply",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_lines_that_share_no_word_with_a_reply",
+      "target": "eval_results_extras_the_row_on_lines_that_share_no_word_with_a_reply",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_pain_and_consent_lines",
+      "target": "eval_results_extras_ranking_on_pain_and_consent_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_pain_and_consent_lines",
+      "target": "eval_results_extras_the_row_on_pain_and_consent_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_yes_or_no_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_pain_and_consent_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_lines_that_share_no_word_with_a_reply",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_big_buttons_on_yes_or_no_pain_and_consent_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L237",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_the_question_kind",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_the_hosted_decision_model_s_calibration",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_risk_and_coverage",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L295",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_the_cut_offs_for_holding",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L317",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_latency",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L334",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_who_wrote_the_data",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_turn_s_evaluation",
+      "target": "eval_results_extras_all_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_yes_or_no_lines",
+      "target": "eval_results_extras_ranking_on_yes_or_no_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_results_extras_yes_or_no_lines",
+      "target": "eval_results_extras_the_row_on_yes_or_no_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/results-extras.md",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -101489,5 +102053,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "95e9233dc870c7f8c5f4c4a9bd95df97825fa9b8"
+  "built_at_commit": "accb1d71f13ba960510b53efb8ad643a58087148"
 }
