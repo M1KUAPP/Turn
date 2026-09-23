@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect, test, vi } from 'vitest'
-import { relayModel } from '../src/jev'
+import { jevLine, relayModel } from '../src/jev'
 import { main } from '../src/report'
 import { fakeServices } from './services'
 
@@ -53,9 +53,11 @@ test("keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)",
     noBigTopics: ['body-pain', 'consent'],
     fixedOnlyTopics: []
   })
-  // The question wording, for a line with no categories and one candidate, compared as sent, in its keys' order.
+  // The request the run sent for a line at home, with one candidate: the wording, the pin, and the bank's place and
+  // categories, compared as sent, in its keys' order. `shared/test/jev.test.ts` pins the wording piece by piece and the
+  // relay's snapshot can be rewritten with `vitest -u`, so this holds all of it in one place, as EVAL-2 froze it.
   const request = buildJevRequest(
-    { line: 'Tea?', place: 'Home', categories: [], candidates: [{ id: 'tea', text: 'Tea, please' }] },
+    jevLine('Tea?', 'home', [{ id: 'tea', text: 'Tea, please', places: [] }]),
     relayModel()
   )
   const frozen = {
@@ -75,7 +77,18 @@ test("keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)",
       topic: {
         type: 'choice',
         instructions: 'What topic is `partner_line` about?',
-        criteria: { consent: 'Agreeing to or refusing care, treatment, or a procedure' }
+        criteria: {
+          quick: 'Quick',
+          chat: 'Chat',
+          care: 'Care and help',
+          'body-pain': 'Body and pain',
+          food: 'Food and drink',
+          feelings: 'Feelings',
+          family: 'Family and friends',
+          health: 'Health',
+          'out-and-about': 'Out and about',
+          consent: 'Agreeing to or refusing care, treatment, or a procedure'
+        }
       },
       c00: {
         type: 'noul',
