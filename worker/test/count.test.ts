@@ -71,7 +71,7 @@ describe('the free lines (PAY-1)', () => {
     expect(await leftAfter(await postLine(lineRequest()))).toBe(19)
   })
 
-  test("keep a free claim that a paid copy of its line ID doesn't release when its own call fails (SEC-6)", async () => {
+  test("keep a free claim that a failing paid copy of its line ID doesn't release (SEC-6)", async () => {
     const vars = { FREE_LINES: '1' }
     // Jev's calls in the order they arrive: the first line's, failing late; the free copy's, answering later; and the
     // paid copy's, failing.
