@@ -42,12 +42,15 @@ const provenance = (labeled: readonly Line[]) => {
       wrap(
         "- **The 80 lines, their labels, and the bank,** as the TRD's evaluation data records: at the team's " +
           'direction, Claude subagents wrote the 80 lines and the starter bank on September 23, 2026. Two wrote 40 ' +
-          "lines each from a brief that showed no phrase of the bank, so each line's author is claude-a or " +
-          'claude-b; a third wrote the bank without seeing the lines, and a fourth read every phrase. Two more, ' +
-          "claude-c and claude-d, then labeled every line's replies, each alone and from a brief that set no " +
-          "quota; claude-c's labeling is the one the evaluation scores. Text a language model wrote or labeled may " +
-          'suit a ranker built on one, and two labelings by one model show consistency rather than correctness. On ' +
-          'that date, no teammate had yet read the bank or labeled a line, and no clinic had reviewed the bank.',
+          'lines each from a brief that showed no phrase of the bank, as claude-a and claude-b; a third wrote the ' +
+          'bank without seeing the lines, and a fourth read every phrase. Two more, claude-c and claude-d, then ' +
+          "labeled every line's replies, each alone and from a brief that set no quota. Their labels left too few " +
+          'lines with no reply, so claude-f, which saw neither the bank nor the lines, wrote 20 more lines meant to ' +
+          'have none, and claude-g and claude-h labeled them among the 80 by the same rules; 12 of them replaced ' +
+          "lines with a reply, so that 16 lines have none. claude-c's labeling, with claude-g's for the new lines, " +
+          'is the one the evaluation scores. Text a language model wrote or labeled may suit a ranker built on ' +
+          'one, and two labelings by one model show consistency rather than correctness. On that date, no ' +
+          'teammate had yet read the bank or labeled a line, and no clinic had reviewed the bank.',
         '  '
       )
     ].join('\n')
