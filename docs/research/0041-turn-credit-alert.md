@@ -35,7 +35,7 @@ The spec's two operations and the docs' silence on refills are already in the
   `x-typesafe-request-id` (`index.mjs:1`), `retry-after-ms` and
   `retry-after` (`index.mjs:99-101`), and `content-type` (`index.mjs:680`).
   Its code and types have no match for "credit", "balance", or "402"; the
-  two "billing" matches are a doc comment's example question
+  three "billing" matches are a doc comment's example question
   (`index.mjs:543-545`).
 - **The balance lives in the console.** "Customer may view Customer's
   current Credit balance in Customer's account." ([MCA][ts-mca])
@@ -59,8 +59,8 @@ The spec's two operations and the docs' silence on refills are already in the
   Required" never appears ([full docs][ts-llms-full]); the spec lists only
   `200` and `422` ([OpenAPI][ts-openapi]). The SDK passes a 402 as the base
   `APIError` ([relay notes][relay-errors]), and the relay logs it as
-  `credits` (`worker/src/device.ts:58`). The body TypeSafe would send is
-  unknown.
+  `credits` (`ask` in `worker/src/device.ts`). The body TypeSafe would send
+  is unknown.
 - **Price.** Unchanged since the [Jev notes][jev-prices]: `jev-1.13.0`
   costs "$42 / $0.042" per Btok and per Mtok. "Charged per input token.
   Output tokens are free." ([Models][ts-models]) Per model: "The rate at
@@ -164,9 +164,9 @@ The spec's two operations and the docs' silence on refills are already in the
 ## Telling low credits from the logs
 
 - **What the relay logs.** An answered line's object carries `model` and
-  `inputTokens`, taken from `result.usage.input_tokens`
-  (`worker/src/device.ts:52`), and a 402 becomes outcome `credits`
-  (`device.ts:58`), as the [TRD][trd-logs] lays out.
+  `inputTokens`, taken from `result.usage.input_tokens`, and a 402 becomes
+  outcome `credits`, both in `ask` in `worker/src/device.ts`, as the
+  [TRD][trd-logs] lays out.
 - **Billed per input token.** Credits "are consumed by each Input submitted
   to the Services" ([MCA][ts-mca]); `input_tokens` are the "billable input
   tokens" ([OpenAPI][ts-openapi]); the price is "Charged per input token"
