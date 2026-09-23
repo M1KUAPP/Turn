@@ -140,10 +140,11 @@ Contents:
   (`cf.unique_visitor_id`), which "relies on a cookie-based visitor
   identification mechanism" ([WAF parameters][cf-waf-params]); the binding
   page advises against IP keys ([Cloudflare notes][cf-ratelimit-notes]).
-- Synthesis: hash `CF-Connecting-IP` with the salt, like the ID. Grouping
-  IPv6 by /64 would be Turn's own choice, not Cloudflare's advice; as a
-  backstop behind the per-ID limit and the daily budget, the plain value is
-  enough.
+- Synthesis: key the address's limit on `CF-Connecting-IP` as the Worker
+  gets it. Grouping IPv6 by /64 would be Turn's own choice, not
+  Cloudflare's advice; as a backstop behind the per-ID limit and the daily
+  budget, the plain value is enough. Whether a client's own value survives
+  is for a live check to show.
 
 [cf-headers]: https://developers.cloudflare.com/fundamentals/reference/http-headers/
 [cf-pseudo]: https://developers.cloudflare.com/network/pseudo-ipv4/
