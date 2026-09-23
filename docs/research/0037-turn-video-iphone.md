@@ -146,7 +146,7 @@ Contents:
   limits for a free team: 10 App IDs and 3 devices, each expiring after 7
   days, 3 apps per device, and profiles that expire 7 days from issuance.
 - **Reinstalling.** "You'll need to rebuild and reinstall your app to your
-  device after expiration." ([Compare memberships][memberships])
+  device after expiration." ([Developer account overview][account])
 - **Matching bundle IDs.** "The explicit App ID you enter here should
   match the bundle ID you entered in the target's Summary pane in Xcode."
   ([Register an App ID][register])
@@ -154,7 +154,7 @@ Contents:
   shouldn't hold the name for good. Whether a paid team can register it
   inside those 7 days is under Gaps.
 
-[memberships]: https://developer.apple.com/support/compare-memberships/
+[account]: https://developer.apple.com/help/account/basics/about-your-developer-account
 [register]: https://developer.apple.com/help/account/identifiers/register-an-app-id/
 
 ## Hands-on check
