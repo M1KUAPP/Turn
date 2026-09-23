@@ -128,8 +128,9 @@ Contents:
   ([account tokens][cf-acct-tokens]).
 - **User tokens.** "From the Cloudflare dashboard, go to My Profile > API
   Tokens for user tokens." A permission is chosen as a group (Account,
-  User, or Zone) and then "`Edit` for full CRUDL operations or `Read` for
-  read-only access" ([create a token][cf-create-token]).
+  User, or Zone), and "`Edit` is full CRUDL (create, read, update, delete,
+  list) access, while `Read` is the read permission and list where
+  appropriate." ([create a token][cf-create-token])
 - **Not on the permissions list.** The permissions reference page, as
   read, has no Workers Observability row ([permissions][cf-permissions]).
 - Synthesis: the script needs a token with the account permission
@@ -188,19 +189,21 @@ The three commands below print without logging in.
   "Maximum log size | 256 KB". "After the limit is exceed, a 1% head-based
   sample will be applied for the remainder of the day."
   ([Workers Logs][cf-wlogs])
-- **Sampling.** "head_sampling_rate allows you to log a percentage of
-  incoming requests"; "The valid range is from 0 to 1, where 0 indicates
-  zero out of one hundred requests are logged, and 1 indicates every
-  request is logged." ([Workers Logs][cf-wlogs]) `worker/wrangler.jsonc`
-  doesn't set it, and Wrangler's schema describes it only as "The
-  sampling rate" (`config-schema.json`, line 3963).
+- **Sampling.** "Head-based sampling allows you to log a percentage of
+  incoming requests to your Cloudflare Worker." "The valid range is from 0
+  to 1, where 0 indicates zero out of one hundred requests are logged, and
+  1 indicates every request is logged. If `head_sampling_rate` is
+  unspecified, it is configured to a default value of 1 (100%)."
+  ([Workers Logs][cf-wlogs]) `worker/wrangler.jsonc` doesn't set it, and
+  Wrangler's schema describes it only as "The sampling rate"
+  (`config-schema.json`, line 3963).
 - **Late events.** The Workers Logs page, as read, says nothing about how
   long an event takes to become queryable ([Workers Logs][cf-wlogs]).
-- Synthesis: at Turn's volume, 200,000 a day is far off, so every request
-  should be logged. Query the previous whole UTC day, once that day has
-  ended, and have the script print `result.events.count` beside the rows
-  it read, so a short or sampled day shows. A day run later than 3 days
-  finds nothing.
+- Synthesis: at Turn's volume, 200,000 a day is far off, and with no
+  `head_sampling_rate` every request is logged. Query the previous whole UTC
+  day, once that day has ended, and have the script print `result.events.count`
+  beside the rows it read, so a short or sampled day shows. A day run later than
+  3 days finds nothing.
 
 [cf-wlogs]: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
 
@@ -221,7 +224,8 @@ The three commands below print without logging in.
   group wasn't seen, since the dashboard needs a login.
 - **Free past 200,000.** The 1% sample sentence follows the per-account
   row of 5 billion; what Free does past its daily 200,000 wasn't found.
-- **Late events and sampling's default.** Neither is on the pages read.
+- **Late events.** How long an event takes to become queryable isn't on
+  the pages read.
 - **The second scope list.** Which command uses `CF_REGISTERED_SCOPES`,
   perhaps the bundled `cf-wrangler` bin, wasn't traced.
 - **Quotes from docs pages.** Those pages came through a fetch tool that
