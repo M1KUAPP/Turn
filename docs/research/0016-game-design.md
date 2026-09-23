@@ -666,7 +666,7 @@ its animation script ([aki-game]).
 [rive-data-binding]: https://rive.app/docs/editor/data-binding/migration-guide
 [rive-rn-migration]: https://rive.app/docs/runtimes/react-native/migration-guide
 [rive-expo]: https://rive.app/docs/runtimes/react-native/adding-rive-to-expo
-[rc-dev-build]: /docs/research/revenuecat-expo.md#development-builds-expo-go-and-preview-api-mode
+[rc-dev-build]: /docs/research/0009-revenuecat-expo.md#development-builds-expo-go-and-preview-api-mode
 [rive-reduced-motion]: https://rive.app/docs/editor/accessibility/reduced-motion
 [lottie-rn]: https://github.com/lottie-react-native/lottie-react-native
 [lottie-spec]: https://lottie.github.io/lottie-spec/latest/
@@ -919,7 +919,7 @@ Machado, Oliveira, and Fernandes's matrices ([machado]); see
 [nyt-pips-game]: https://www.nytimes.com/games/pips
 [finch-sound]: https://help.finchcare.com/hc/en-us/articles/39759518297229-Sound-Settings
 [hs-haptics]: https://help.headspace.com/hc/en-us/articles/1260804149670-Closed-Captions-and-Haptic-Assistance-Options
-[apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
+[apple-sound]: /docs/research/0011-apple-requirements.md#sound-and-the-silent-switch
 
 ## Making a mascot as a small team
 
@@ -998,7 +998,7 @@ Machado, Oliveira, and Fernandes's matrices ([machado]); see
 
 [sh-vibe]: /docs/sources/www.shipathon.com/[]-vibe-code.md
 [sh-submit]: /docs/sources/www.shipathon.com/[]-blog-how-to-submit-your-app-for-shipaton.md
-[apple-ai]: /docs/research/apple-requirements.md#rules-about-ai-since-2025
+[apple-ai]: /docs/research/0011-apple-requirements.md#rules-about-ai-since-2025
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
 [usco-ai]: https://www.copyright.gov/newsnet/2025/1060.html
 [brief-lessons]: /docs/BRIEF.md#lessons-from-past-winners
@@ -1216,13 +1216,13 @@ What the sources don't say that DESIGN.md needs, as of September 22, 2026:
   how the reactions, sound, and haptics are built.
 - [Daily puzzle notes][daily]: release times, share formats, streaks,
   archives, and end-of-round screens.
-- [Apple notes](/docs/research/apple-requirements.md#sharing-haptics-and-sound):
+- [Apple notes](/docs/research/0011-apple-requirements.md#sharing-haptics-and-sound):
   share sheet, haptics, and sound rules, and the Accessibility Nutrition
   Labels.
 - [Brief](/docs/BRIEF.md#rules-to-watch) and
   [context](/docs/CONTEXT.md#what-the-official-rules-add): Shipaton's rules.
 
-[daily]: /docs/research/daily-puzzles.md
+[daily]: /docs/research/0012-daily-puzzles.md
 [dp-rules]: https://revenuecat-shipaton-2026.devpost.com/rules
 [nyt-wordle-game]: https://www.nytimes.com/games/wordle/index.html
 [nyt-wordle-help]: https://help.nytimes.com/360011158491-New-York-Times-Games/24611727334932-Wordle
@@ -1244,7 +1244,7 @@ What the sources don't say that DESIGN.md needs, as of September 22, 2026:
 [expo-bundled]: https://github.com/expo/expo/blob/sdk-57/packages/expo/bundledNativeModules.json
 [expo-pr-lottie]: https://github.com/expo/expo/pull/37969
 [expo-reanimated]: https://docs.expo.dev/versions/v57.0.0/sdk/reanimated/
-[apple-labels]: /docs/research/apple-requirements.md#what-each-label-claims
+[apple-labels]: /docs/research/0011-apple-requirements.md#what-each-label-claims
 [hig-a11y]: https://developer.apple.com/design/human-interface-guidelines/accessibility
 [rn-a11yinfo]: https://reactnative.dev/docs/0.86/accessibilityinfo
 [wcag22]: https://www.w3.org/TR/WCAG22/

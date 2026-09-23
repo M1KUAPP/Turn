@@ -1416,5 +1416,5 @@ date; every page was accessed on September 21, 2026.
 [dp-demo-blog]: https://info.devpost.com/blog/6-tips-for-making-a-hackathon-demo-video
 [dp-judges-blog]: https://info.devpost.com/blog/hackathon-judging-tips
 [dp-criteria-blog]: https://info.devpost.com/blog/understanding-hackathon-submission-and-judging-criteria
-[repo-notes]: /docs/research/shipaton-2026.md
+[repo-notes]: /docs/research/0001-shipaton-2026.md
 [repo-brief]: /docs/BRIEF.md

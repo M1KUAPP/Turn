@@ -2,7 +2,8 @@
 
 What a team needs to know to enter RevenueCat Shipaton 2026. Every fact here is
 condensed from the captures in `docs/sources/`, and the
-[research notes](/docs/research/shipaton-2026.md) cite the source of each one.
+[research notes](/docs/research/0001-shipaton-2026.md) cite the source of each
+one.
 
 Contents:
 
@@ -501,8 +502,8 @@ settles several of them and gives a different winners date.
 
 ## See also
 
-- [Research notes](/docs/research/shipaton-2026.md): per-claim citations and
-  the full perk, event, and livestream tables.
+- [Research notes](/docs/research/0001-shipaton-2026.md): per-claim citations
+  and the full perk, event, and livestream tables.
 - [Context](/docs/CONTEXT.md): what the official rules settle or change,
   what past winners did, best practices from primary sources, and related
   materials.

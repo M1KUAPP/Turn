@@ -94,7 +94,7 @@ services "is directed to children"
 ([Jev notes on store review][jev-store]), nor for players who want endless
 or competitive play, which version 1.0 leaves out.
 
-[jev-store]: /docs/research/jev.md#store-review-and-jev
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
 
 ## Positioning
 
@@ -123,7 +123,7 @@ the player's own words, with answers a person has checked in advance.
 Consistent answers are something Guessling must measure and show, not
 something its rivals are known to lack.
 
-[ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
+[ev-hunch]: /docs/research/0008-idea-evidence.md#hunch-a-daily-20-questions-game
 
 ## Product principles
 
@@ -231,8 +231,8 @@ The moments that carry the product:
   2022 it swapped a Wordle answer mid-rollout and left some players on the old
   word ([daily puzzle notes][daily-fair]).
 
-[apple-rating]: /docs/research/apple-requirements.md#questionnaire-answers-for-guessling
-[daily-fair]: /docs/research/daily-puzzles.md#fairness-and-corrections
+[apple-rating]: /docs/research/0011-apple-requirements.md#questionnaire-answers-for-guessling
+[daily-fair]: /docs/research/0012-daily-puzzles.md#fairness-and-corrections
 
 ## Business model
 
@@ -263,7 +263,7 @@ The moments that carry the product:
 
 [idea-money]: /docs/archive/guessling-idea.md#monetization
 [prd-pay]: /docs/archive/guessling-prd.md#the-paywall-and-purchases
-[apple-subs]: /docs/research/apple-requirements.md#auto-renewable-subscription-rules
+[apple-subs]: /docs/research/0011-apple-requirements.md#auto-renewable-subscription-rules
 
 ## Success metrics
 
@@ -328,7 +328,7 @@ is named; the rest are watched and reported as rates, as the idea's
 
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
 [ctx-push]: /docs/CONTEXT.md#retention-and-push-notifications
-[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
+[jev-lang]: /docs/research/0005-jev.md#jev-platform-and-language-support
 
 ## What Guessling is not
 
@@ -350,11 +350,11 @@ is named; the rest are watched and reported as rates, as the idea's
   built.
 - [Design](/docs/archive/guessling-design.md): how Guessling looks, moves,
   and sounds, as tokens and rules a coding agent can follow.
-- [Evidence notes](/docs/research/idea-evidence.md): rivals, reviews, and
+- [Evidence notes](/docs/research/0008-idea-evidence.md): rivals, reviews, and
   demand behind the idea.
-- [Daily puzzle notes](/docs/research/daily-puzzles.md): how other daily
+- [Daily puzzle notes](/docs/research/0012-daily-puzzles.md): how other daily
   games handle the day, sharing, streaks, and archives.
-- [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
+- [Jev notes](/docs/research/0005-jev.md): what Jev is, its API, prices, limits,
   and terms.
 
 [idea-problem]: /docs/archive/guessling-idea.md#problem-and-audience

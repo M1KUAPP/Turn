@@ -8,14 +8,14 @@
 RevenueCat Shipaton 2026 by September 30, 2026, chosen through ten rounds of
 ideation, with Jev built into the project.
 
-**Architecture:** Two new research notes, on [Jev](/docs/research/jev.md) and
-the [2026 project gallery](/docs/research/gallery-2026.md), join the
-[brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) as the inputs to
-ten rounds of ideation. Each round is one task and one commit, logged in
-`docs/research/ideation.md`. `docs/IDEA.md` then states the chosen idea and
+**Architecture:** Two new research notes, on [Jev](/docs/research/0005-jev.md)
+and the [2026 project gallery](/docs/research/0006-gallery-2026.md), join the
+[brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) as the inputs to ten
+rounds of ideation. Each round is one task and one commit, logged in
+`docs/research/0007-ideation.md`. `docs/IDEA.md` then states the chosen idea and
 how to ship it, linking to the brief, the context, and the log instead of
-repeating them. Each task on the idea adds whole sections with their
-`Contents:` entries, so every commit leaves a consistent document.
+repeating them. Each task on the idea adds whole sections with their `Contents:`
+entries, so every commit leaves a consistent document.
 
 **Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged,
 commitlint with Conventional Commits, the `gh` CLI, Python 3 with curl for the
@@ -47,7 +47,7 @@ Contents:
   become reference links, defined before the next heading after first use, or
   at the end of the document when used in several sections.
 - Facts come from the brief, the context, and the notes in `docs/research/`.
-  Jev is described only as the [Jev notes](/docs/research/jev.md) describe
+  Jev is described only as the [Jev notes](/docs/research/0005-jev.md) describe
   it. New facts found during ideation, such as competing apps and their
   prices, go into a research note with a source for each.
 - Don't repeat the brief or the context. `docs/IDEA.md` links to their
@@ -203,18 +203,18 @@ check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" || echo "MISSING:
 ## Tasks
 
 The inputs are the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md),
-the [Jev notes](/docs/research/jev.md), and the
-[gallery notes](/docs/research/gallery-2026.md). Every subagent prompt below
-also carries the repo rule: run `graphify query "<question>"` before grepping
-or reading repo files. Subagents write no repo file unless their prompt names
-one, and never run git.
+the [Jev notes](/docs/research/0005-jev.md), and the
+[gallery notes](/docs/research/0006-gallery-2026.md). Every subagent prompt
+below also carries the repo rule: run `graphify query "<question>"` before
+grepping or reading repo files. Subagents write no repo file unless their prompt
+names one, and never run git.
 
 ### Task 1: Research notes
 
 **Files:**
 
-- Create: `docs/research/jev.md` and `docs/research/gallery-2026.md`, written
-  by two background research agents from primary sources.
+- Create: `docs/research/0005-jev.md` and `docs/research/0006-gallery-2026.md`,
+  written by two background research agents from primary sources.
 
 - [ ] **Step 1: Check both notes**
 
@@ -224,9 +224,9 @@ opened by hand.
 - [ ] **Step 2: Commit each note on its own**
 
 ```shell
-git add docs/research/jev.md
+git add docs/research/0005-jev.md
 git commit -m "docs(research): add Jev notes"
-git add docs/research/gallery-2026.md
+git add docs/research/0006-gallery-2026.md
 git commit -m "docs(research): map the 2026 project gallery"
 ```
 
@@ -234,7 +234,7 @@ git commit -m "docs(research): map the 2026 project gallery"
 
 **Files:**
 
-- Create: `docs/research/ideation.md`
+- Create: `docs/research/0007-ideation.md`
 
 **Interfaces:**
 
@@ -245,8 +245,8 @@ git commit -m "docs(research): map the 2026 project gallery"
 - [ ] **Step 1: Write the failing assertions**
 
 ```shell
-touch docs/research/ideation.md
-check docs/research/ideation.md '^# Shipaton 2026 ideation log$' \
+touch docs/research/0007-ideation.md
+check docs/research/0007-ideation.md '^# Shipaton 2026 ideation log$' \
   '^## Round 1: constraints and rubric$' '\*\*C1\.' 'Jev centrality' 'Assumptions'
 ```
 
@@ -276,7 +276,7 @@ Expected misses in the fact scan: the rubric weights.
 - [ ] **Step 4: Commit**
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): set the constraints and rubric (round 1)"
 ```
 
@@ -284,7 +284,7 @@ git commit -m "docs(ideation): set the constraints and rubric (round 1)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 2 and its entry in
+- Modify: `docs/research/0007-ideation.md` (append Round 2 and its entry in
   `Contents:`)
 
 - [ ] **Step 1: Dispatch three generator subagents in parallel**
@@ -305,9 +305,9 @@ mobile app hackathon. Today is September 22, 2026; the deadline is September
 
 Read first. Run `graphify query "<question>"` before grepping or reading any
 repo file; a hook enforces it.
-- docs/research/ideation.md, Round 1: the hard constraints and the rubric.
-- docs/research/jev.md, all of it. Describe Jev only as it does.
-- docs/research/gallery-2026.md: clusters, saturated spaces, open spaces.
+- docs/research/0007-ideation.md, Round 1: the hard constraints and the rubric.
+- docs/research/0005-jev.md, all of it. Describe Jev only as it does.
+- docs/research/0006-gallery-2026.md: clusters, saturated spaces, open spaces.
 - docs/BRIEF.md: "Prizes and categories", "Rules to watch", and "Winning
   playbook".
 - docs/CONTEXT.md: "What wins each category" and "Monetization and
@@ -325,7 +325,7 @@ For each idea, return exactly these fields:
 - Problem and evidence: two lines naming the brief, category page, or gallery
   gap it answers.
 - Core loop: three steps.
-- Jev's job: the Jev capability, naming its section in docs/research/jev.md,
+- Jev's job: the Jev capability, naming its section in docs/research/0005-jev.md,
   and what breaks without it.
 - Money: what's free, what's paid, the price, and the paywall moment.
 - Categories: one primary and at most two secondary, with at most one
@@ -344,13 +344,13 @@ logline, lens, primary category, and Jev's job.
 - [ ] **Step 3: Run the gate and the assertions**
 
 ```shell
-check docs/research/ideation.md '^## Round 2: thirty candidates$' '^\| 30 '
+check docs/research/0007-ideation.md '^## Round 2: thirty candidates$' '^\| 30 '
 ```
 
 - [ ] **Step 4: Commit**
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): generate thirty candidates (round 2)"
 ```
 
@@ -358,7 +358,7 @@ git commit -m "docs(ideation): generate thirty candidates (round 2)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 3)
+- Modify: `docs/research/0007-ideation.md` (append Round 3)
 
 - [ ] **Step 1: Screen**
 
@@ -372,10 +372,10 @@ rescue failed ideas that one named change would fix.
 
 Add `## Round 3: screening` with a table of number, name, result, and reason,
 then run the gate and
-`check docs/research/ideation.md '^## Round 3: screening$' 'Survivors'`.
+`check docs/research/0007-ideation.md '^## Round 3: screening$' 'Survivors'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): screen the candidates (round 3)"
 ```
 
@@ -383,7 +383,7 @@ git commit -m "docs(ideation): screen the candidates (round 3)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 4)
+- Modify: `docs/research/0007-ideation.md` (append Round 4)
 
 - [ ] **Step 1: Score the survivors**
 
@@ -397,8 +397,8 @@ categories, but not your scores:
 
 ```text
 You are scoring app ideas for a RevenueCat Shipaton 2026 entry. Read the
-Round 1 section of docs/research/ideation.md for the hard constraints and the
-rubric, and docs/research/jev.md and docs/research/gallery-2026.md as needed.
+Round 1 section of docs/research/0007-ideation.md for the hard constraints and the
+rubric, and docs/research/0005-jev.md and docs/research/0006-gallery-2026.md as needed.
 Run `graphify query "<question>"` before grepping or reading any repo file.
 Don't write files and don't run git.
 
@@ -420,10 +420,10 @@ buildability. The top five go on.
 
 Add `## Round 4: scoring` with a table of name, the seven averaged scores,
 the total, and the rank, then run the gate and
-`check docs/research/ideation.md '^## Round 4: scoring$' 'Top five'`.
+`check docs/research/0007-ideation.md '^## Round 4: scoring$' 'Top five'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): score the survivors (round 4)"
 ```
 
@@ -431,8 +431,8 @@ git commit -m "docs(ideation): score the survivors (round 4)"
 
 **Files:**
 
-- Create: `docs/research/idea-evidence.md` (written by a research subagent)
-- Modify: `docs/research/ideation.md` (append Round 5)
+- Create: `docs/research/0008-idea-evidence.md` (written by a research subagent)
+- Modify: `docs/research/0007-ideation.md` (append Round 5)
 
 - [ ] **Step 1: Dispatch the evidence research agent**
 
@@ -442,11 +442,11 @@ Research evidence for five app ideas for a RevenueCat Shipaton 2026 entry
 sources: the closest competing App Store apps (name, price, and US rating
 count, from the App Store pages or Apple's iTunes Search API), what their
 reviews complain about, demand signals (Reddit, forums, search), and anything
-in docs/research/jev.md that limits the idea. Take gallery overlap from
-docs/research/gallery-2026.md. Cite a source for every claim.
+in docs/research/0005-jev.md that limits the idea. Take gallery overlap from
+docs/research/0006-gallery-2026.md. Cite a source for every claim.
 
-Write docs/research/idea-evidence.md, following the conventions of
-docs/research/related-materials.md and docs/references/markdown-style.md: one
+Write docs/research/0008-idea-evidence.md, following the conventions of
+docs/research/0003-related-materials.md and docs/references/markdown-style.md: one
 H1, a 1–3 sentence introduction, a `Contents:` list in lazy numbering
 (`1.  [Heading](#anchor)`), one H2 per idea, reference-style links defined at
 the end of the section that first uses them, prose wrapped at 80 characters,
@@ -462,7 +462,7 @@ for, the evidence against, and whether it should move up or down.
 - [ ] **Step 2: Check and commit the note**
 
 ```shell
-git add docs/research/idea-evidence.md
+git add docs/research/0008-idea-evidence.md
 git commit -m "docs(research): gather evidence for the top five ideas"
 ```
 
@@ -470,10 +470,10 @@ git commit -m "docs(research): gather evidence for the top five ideas"
 
 Add `## Round 5: evidence` with the evidence for and against each idea, any
 score the evidence moves (with the reason), and the top three. Run the gate
-and `check docs/research/ideation.md '^## Round 5: evidence$' 'Top three'`.
+and `check docs/research/0007-ideation.md '^## Round 5: evidence$' 'Top three'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): weigh the evidence for the top five (round 5)"
 ```
 
@@ -481,7 +481,7 @@ git commit -m "docs(ideation): weigh the evidence for the top five (round 5)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 6)
+- Modify: `docs/research/0007-ideation.md` (append Round 6)
 
 - [ ] **Step 1: Dispatch the red-team subagent**
 
@@ -509,10 +509,10 @@ its odds. Be adversarial and don't praise.
 
 Add `## Round 6: red team` with the panel's scores, the failure modes, and
 which fixes are accepted or rejected, with reasons. Run the gate and
-`check docs/research/ideation.md '^## Round 6: red team$' 'Accepted'`.
+`check docs/research/0007-ideation.md '^## Round 6: red team$' 'Accepted'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): red-team the finalists (round 6)"
 ```
 
@@ -520,7 +520,7 @@ git commit -m "docs(ideation): red-team the finalists (round 6)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 7)
+- Modify: `docs/research/0007-ideation.md` (append Round 7)
 
 - [ ] **Step 1: Choose and sharpen**
 
@@ -537,10 +537,10 @@ titles found through Apple's iTunes Search API on September 22, 2026.
 
 Add `## Round 7: the choice` with the re-scores, the decision, what was
 borrowed, and the name. Run the gate and
-`check docs/research/ideation.md '^## Round 7: the choice$' 'Decision'`.
+`check docs/research/0007-ideation.md '^## Round 7: the choice$' 'Decision'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): choose the idea (round 7)"
 ```
 
@@ -548,7 +548,7 @@ git commit -m "docs(ideation): choose the idea (round 7)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 8)
+- Modify: `docs/research/0007-ideation.md` (append Round 8)
 
 - [ ] **Step 1: Design**
 
@@ -561,10 +561,11 @@ judges a free month or longer.
 - [ ] **Step 2: Log, check, and commit**
 
 Add `## Round 8: monetization`. Run the gate and
-`check docs/research/ideation.md '^## Round 8: monetization$' 'October 13'`.
+`check docs/research/0007-ideation.md '^## Round 8: monetization$' 'October
+13'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): design the monetization (round 8)"
 ```
 
@@ -572,7 +573,7 @@ git commit -m "docs(ideation): design the monetization (round 8)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 9)
+- Modify: `docs/research/0007-ideation.md` (append Round 9)
 
 - [ ] **Step 1: Cut and schedule**
 
@@ -587,11 +588,11 @@ September 24; and the review-safety checklist from the context.
 Add `## Round 9: scope, stack, and schedule`, then run the gate and:
 
 ```shell
-check docs/research/ideation.md '^## Round 9: scope, stack, and schedule$' 'September 24'
+check docs/research/0007-ideation.md '^## Round 9: scope, stack, and schedule$' 'September 24'
 ```
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): cut the scope and set the schedule (round 9)"
 ```
 
@@ -599,7 +600,7 @@ git commit -m "docs(ideation): cut the scope and set the schedule (round 9)"
 
 **Files:**
 
-- Modify: `docs/research/ideation.md` (append Round 10)
+- Modify: `docs/research/0007-ideation.md` (append Round 10)
 
 - [ ] **Step 1: Test the pitch**
 
@@ -611,10 +612,11 @@ which the app must be approved before the fallback applies.
 - [ ] **Step 2: Log, check, and commit**
 
 Add `## Round 10: pitch test`. Run the gate and
-`check docs/research/ideation.md '^## Round 10: pitch test$' 'Final score'`.
+`check docs/research/0007-ideation.md '^## Round 10: pitch test$' 'Final
+score'`.
 
 ```shell
-git add docs/research/ideation.md
+git add docs/research/0007-ideation.md
 git commit -m "docs(ideation): test the pitch (round 10)"
 ```
 
@@ -641,7 +643,7 @@ Expected: four `MISSING:` lines.
 - [ ] **Step 2: Write the sections**
 
 - Intro (at most 3 sentences): the app in one line; it was chosen through ten
-  rounds of ideation logged in `docs/research/ideation.md`; the brief and
+  rounds of ideation logged in `docs/research/0007-ideation.md`; the brief and
   the context hold the rules and background, so this document links to them.
 - At a glance: name, logline, store, price, primary and secondary
   categories, Jev's job, and the dates that matter: in review by September

@@ -7,7 +7,7 @@ convention and its linter, AI generators that build native apps and the
 evidence on how accessible generated interfaces are, React Native libraries for
 Expo SDK 57, and the visual trends of 2025 and 2026. Every source was read on
 September 23, 2026, and judgment starts with "Synthesis:". The
-[frontend trends notes](/docs/research/frontend-trends.md) written for
+[frontend trends notes](/docs/research/0014-frontend-trends.md) written for
 Guessling on September 22 are linked, not repeated.
 
 Contents:
@@ -88,7 +88,7 @@ are.
 Google's `google-labs-code/design.md` repository, its releases, issues, and
 pull requests, the npm registry, and the CLI itself own these facts. The
 earlier notes'
-[DESIGN.md convention](/docs/research/frontend-trends.md#the-designmd-convention)
+[DESIGN.md convention](/docs/research/0014-frontend-trends.md#the-designmd-convention)
 section covers the format's origin, its eight sections, VoltAgent's
 collection, and Stitch; this one adds what changed and what the linter does
 with a file shaped like Turn's.
@@ -243,7 +243,7 @@ in fenced `yaml` blocks.
   colors", "headline, body, and label font families", and roundedness
   ([Stitch usage][stitch-dmd-usage]), so it can't hold four appearances. The
   earlier notes cover
-  [how agents are meant to use DESIGN.md](/docs/research/frontend-trends.md#how-agents-are-meant-to-use-designmd).
+  [how agents are meant to use DESIGN.md](/docs/research/0014-frontend-trends.md#how-agents-are-meant-to-use-designmd).
 - **Claude Code.** It reads `CLAUDE.md` or `AGENTS.md`; "Imported files are
   expanded and loaded into context at launch", its docs advise "target under
   200 lines per CLAUDE.md file", and path-scoped rules "only apply when Claude
@@ -261,7 +261,7 @@ in fenced `yaml` blocks.
 Each generator's own docs, `llms.txt` files, changelogs, and repositories own
 the product facts; the papers and reports own the measurements. The earlier
 notes'
-[AI UI generators](/docs/research/frontend-trends.md#ai-ui-generators-in-september-2026)
+[AI UI generators](/docs/research/0014-frontend-trends.md#ai-ui-generators-in-september-2026)
 section covers the web generators and their prices. v0 still builds
 "functional web applications" ([v0][v0-faqs]), "Lovable does not generate
 projects in React Native" ([Lovable][lovable-publish]), and Figma Make's
@@ -465,7 +465,7 @@ The npm registry owns versions, dates, and licenses; each library's docs and
 source own the rest. `expo` 57.0.24, published September 18, 2026, is the
 newest 57.x, and SDK 58 has been in beta since September 15 ([npm][npm-expo];
 [SDK 58 beta][expo-sdk58-beta]). The iOS design notes'
-[package versions](/docs/research/ios-design.md#package-versions-in-sdk-57)
+[package versions](/docs/research/0015-ios-design.md#package-versions-in-sdk-57)
 still hold for the modules SDK 57 pins.
 
 [npm-expo]: https://registry.npmjs.org/expo
@@ -608,7 +608,7 @@ the last column. SDK 57's default template already depends on `@expo/ui`,
   to rerender" ([docs][rea-use-reduced]); 4.7.0's hook still returns a
   constant set when its module loads ([source][rea-hook-470]). The iOS design
   notes give the full
-  [Reduce Motion behavior](/docs/research/ios-design.md#reduce-motion-in-reanimated).
+  [Reduce Motion behavior](/docs/research/0015-ios-design.md#reduce-motion-in-reanimated).
 - **CSS animations still ignore it.** A maintainer's commit in an unmerged
   pull request says "CSS has no reduced-motion support, but the hook
   Reanimated exports can drive the duration instead"
@@ -659,8 +659,8 @@ the last column. SDK 57's default template already depends on `@expo/ui`,
 
 Apple's, Google's, W3C's, and researchers' own pages own these facts. The
 earlier notes cover the announcements, including
-[what Apple's settings do to Liquid Glass](/docs/research/frontend-trends.md#apples-liquid-glass),
-and [Turn's iOS design notes](/docs/research/turn-ios-design.md) cover the
+[what Apple's settings do to Liquid Glass](/docs/research/0014-frontend-trends.md#apples-liquid-glass),
+and [Turn's iOS design notes](/docs/research/0029-turn-ios-design.md) cover the
 platform's APIs.
 
 ### Liquid Glass and its legibility
@@ -812,7 +812,7 @@ platform's APIs.
   Amnesia", and keeps the list "near 20 entries: recognition degrades with
   length" (September 9, 2026, [Expo][expo-native-slop]).
 - The earlier notes collect
-  [Anthropic's, Google's, Webflow's, Figma's, and Vercel's critiques](/docs/research/frontend-trends.md#critiques-of-ai-generated-sameness).
+  [Anthropic's, Google's, Webflow's, Figma's, and Vercel's critiques](/docs/research/0014-frontend-trends.md#critiques-of-ai-generated-sameness).
 - Synthesis: for Turn, sameness matters less than inaccessibility; the tells
   worth banning also cost legibility or steadiness, such as entrances,
   squish on every press, and colors that break in dark mode.
@@ -862,7 +862,7 @@ platform's APIs.
   control costs a turn; the AAC evidence for fixed positions points the same
   way ([AAC notes][aac-fixed]).
 
-[aac-fixed]: /docs/research/aac-practice.md#fixed-button-positions-and-motor-automaticity
+[aac-fixed]: /docs/research/0022-aac-practice.md#fixed-button-positions-and-motor-automaticity
 
 ## How DESIGN.md should serve agents for Turn
 
@@ -886,7 +886,7 @@ Synthesis throughout: this section applies the ones above to the PRD's
   without a tap); the motion table; and the checks.
 - **Values in code too.** The earlier finding still holds that the theme file
   mirrors the tokens under a unit test
-  ([earlier findings](/docs/research/frontend-trends.md#findings-for-designmd));
+  ([earlier findings](/docs/research/0014-frontend-trends.md#findings-for-designmd));
   a script from the `dtcg` or `css-vars` export to `DynamicColorIOS` is short,
   since the exporters flatten appearances to names such as `surface.light-hc`.
 - **Concrete over hopeful.** Vague requests failed in the studies and
@@ -950,7 +950,7 @@ Synthesis throughout: this section applies the ones above to the PRD's
   user's own words ([principles][product-principles]).
 - **Font bans.** The earlier notes record bans on Inter and on "default
   system fonts"
-  ([earlier notes](/docs/research/frontend-trends.md#anthropics-frontend-design-skill));
+  ([earlier notes](/docs/research/0014-frontend-trends.md#anthropics-frontend-design-skill));
   for Turn the system font is the accessible choice, and Expo's fix for
   "Inter Everywhere" is "System type (SF / Roboto) by default"
   ([Expo][expo-native-slop]).
@@ -1001,7 +1001,7 @@ Synthesis throughout: this section applies the ones above to the PRD's
 - **a0.dev's SDK.** "Expo SDK 54 as of 11/18/25" against "Must use version
   52" for Expo Go on Android ([upgrading][a0-upgrade]; [testing][a0-testing]).
 - **Native tabs' status.** The
-  [iOS design notes](/docs/research/ios-design.md#headers-sheets-and-tabs-in-expo-router)
+  [iOS design notes](/docs/research/0015-ios-design.md#headers-sheets-and-tabs-in-expo-router)
   call SDK 57's native tabs alpha; the v57 reference page carries no badge,
   and the SDK 58 beta calls them "stable" ([reference][expo-native-tabs-57];
   [SDK 58 beta][expo-sdk58-beta]).
@@ -1053,15 +1053,15 @@ What no source settled on September 23, 2026:
 
 ## See also
 
-- [Frontend trends research notes](/docs/research/frontend-trends.md), for
+- [Frontend trends research notes](/docs/research/0014-frontend-trends.md), for
   Guessling, which this note updates.
-- [Turn's motionsites.ai notes](/docs/research/turn-motionsites.md),
-  [AAC design notes](/docs/research/aac-design.md), and
-  [Turn's iOS design notes](/docs/research/turn-ios-design.md), the rest of
+- [Turn's motionsites.ai notes](/docs/research/0026-turn-motionsites.md),
+  [AAC design notes](/docs/research/0028-aac-design.md), and
+  [Turn's iOS design notes](/docs/research/0029-turn-ios-design.md), the rest of
   the research behind Turn's DESIGN.md.
-- [AAC practice research notes](/docs/research/aac-practice.md), with React
+- [AAC practice research notes](/docs/research/0022-aac-practice.md), with React
   Native's accessibility API and WCAG 2.2 in a native app.
-- [iOS design research notes](/docs/research/ios-design.md), on Reanimated,
+- [iOS design research notes](/docs/research/0015-ios-design.md), on Reanimated,
   text scaling, colors, and glass in Expo.
 - [Markdown style guide](/docs/references/markdown-style.md), which a
   DESIGN.md in this repo follows.

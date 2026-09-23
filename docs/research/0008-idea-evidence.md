@@ -55,8 +55,8 @@ Contents:
   through known URLs, site navigation, and each site's own search.
 
 [itunes-api]: https://performance-partners.apple.com/search-api
-[gallery]: /docs/research/gallery-2026.md
-[jev]: /docs/research/jev.md
+[gallery]: /docs/research/0006-gallery-2026.md
+[jev]: /docs/research/0005-jev.md
 
 ## Hunch, a daily 20-questions game
 
@@ -246,8 +246,8 @@ last two sell daily puzzles.
 [h-wp-20q]: https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Twenty_questions/monthly/2025090100/2026083100
 [h-wp-aki]: https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Akinator/monthly/2025090100/2026083100
 [h-wp-wordle]: https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Wordle/monthly/2025090100/2026083100
-[gallery-totals]: /docs/research/gallery-2026.md#gallery-totals
-[ideation-r3]: /docs/research/ideation.md#round-3-screening
+[gallery-totals]: /docs/research/0006-gallery-2026.md#gallery-totals
+[ideation-r3]: /docs/research/0007-ideation.md#round-3-screening
 [h-dasverhor]: https://devpost.com/software/das-verhor-the-interrogation
 
 ## Subtext, tone tags for autistic and ADHD adults
@@ -437,7 +437,7 @@ relationships, and ChatGPT stands for the general assistants.
 [s-rd-autism-search]: https://www.reddit.com/r/autism/search.rss?q=tone+text&restrict_sr=on&sort=new&limit=100&t=year
 [s-rd-adhd-search]: https://www.reddit.com/r/ADHD/search.rss?q=tone+text+message&restrict_sr=on&sort=new&limit=100&t=year
 [iphone-guide]: https://support.apple.com/guide/iphone/welcome/ios
-[jev-uses]: /docs/research/jev.md#use-cases-the-docs-list
+[jev-uses]: /docs/research/0005-jev.md#use-cases-the-docs-list
 
 ## Flagged, a job-posting red-flag checker
 
@@ -765,8 +765,8 @@ are one-time purchases; Proloquo2Go, a symbol app, is listed for its price.
 [y-rd-slp]: https://www.reddit.com/r/slp/new/.rss?limit=100
 [y-alsforums]: https://www.alsforums.com/community/
 [y-wp-aac]: https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Augmentative_and_alternative_communication/monthly/2025090100/2026083100
-[jev-api]: /docs/research/jev.md#the-system-one-http-api
-[jev-rate]: /docs/research/jev.md#rate-limits-context-length-and-latency
+[jev-api]: /docs/research/0005-jev.md#the-system-one-http-api
+[jev-rate]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
 
 ## Earshot, announcement alerts for Deaf and hard-of-hearing travelers
 
@@ -925,7 +925,7 @@ speech, and flight apps push the changes that announcements repeat.
 [e-rd-deaf-search]: https://www.reddit.com/r/deaf/search.rss?q=airport&restrict_sr=on&sort=new&limit=100&t=year
 [e-rd-hoh-search]: https://www.reddit.com/r/hardofhearing/search.rss?q=airport&restrict_sr=on&sort=new&limit=100&t=year
 [e-alldeaf]: https://www.alldeaf.com/community/
-[gallery-open]: /docs/research/gallery-2026.md#open-idea-spaces
+[gallery-open]: /docs/research/0006-gallery-2026.md#open-idea-spaces
 
 ## Summary
 
@@ -970,18 +970,18 @@ scored 77.5 and the sixth, Take-Home, 76 ([ideation log][ideation-r4]).
   down and out of the top five, since a one-point cut to its differentiation
   score, worth 2 points of the total, drops it below Take-Home.
 
-[ideation-r4]: /docs/research/ideation.md#round-4-scoring
-[gallery-clusters]: /docs/research/gallery-2026.md#idea-clusters-by-count
-[gallery-other]: /docs/research/gallery-2026.md#other-prize-categories
-[gallery-list]: /docs/research/gallery-2026.md#full-project-list
-[jev-what]: /docs/research/jev.md#what-jev-is
-[jev-data]: /docs/research/jev.md#offline-behavior-and-data-handling
-[jev-limits]: /docs/research/jev.md#known-limitations-on-the-jaggedness-page
-[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
-[jev-store]: /docs/research/jev.md#store-review-and-jev
-[jev-terms]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
-[jev-gotchas]: /docs/research/jev.md#gotchas-in-the-api-and-sdks
-[jev-cookbooks]: /docs/research/jev.md#cookbooks-and-demos
+[ideation-r4]: /docs/research/0007-ideation.md#round-4-scoring
+[gallery-clusters]: /docs/research/0006-gallery-2026.md#idea-clusters-by-count
+[gallery-other]: /docs/research/0006-gallery-2026.md#other-prize-categories
+[gallery-list]: /docs/research/0006-gallery-2026.md#full-project-list
+[jev-what]: /docs/research/0005-jev.md#what-jev-is
+[jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
+[jev-limits]: /docs/research/0005-jev.md#known-limitations-on-the-jaggedness-page
+[jev-lang]: /docs/research/0005-jev.md#jev-platform-and-language-support
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
+[jev-terms]: /docs/research/0005-jev.md#master-customer-agreement-terms-for-apps
+[jev-gotchas]: /docs/research/0005-jev.md#gotchas-in-the-api-and-sdks
+[jev-cookbooks]: /docs/research/0005-jev.md#cookbooks-and-demos
 [ts-jagged]: https://docs.typesafe.ai/model-jaggedness/jev-1.13
 [cb-choice]: https://docs.typesafe.ai/cookbooks/consistency_choice_cookbook
 [ios27]: https://support.apple.com/guide/iphone/whats-new-in-ios-27-iphfed2c4091/ios

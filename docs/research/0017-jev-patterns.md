@@ -20,7 +20,7 @@ Contents:
 1.  [Conflicts between sources](#conflicts-between-sources)
 1.  [Gaps](#gaps)
 
-[jev-notes]: /docs/research/jev.md
+[jev-notes]: /docs/research/0005-jev.md
 
 ## Key findings
 
@@ -356,7 +356,7 @@ ran `jev-latest`, which returned `jev-1.13.0` on September 11, 2026
 | [Self-consistency: choices][cb-consistency-choice] | The same request repeated 15 times                                             | 15                          | 8 Choices                                          | "mean round-trip latency of 114ms"                   |
 | [Autoresearch][cb-autoresearch]                    | An LLM proposes questions, Jev answers every row, CatBoost fits; 5 rounds      | "2,000 requests" per round  | Up to 18 proposed changes per round                | Held-out RMSE 1.772 against 2.145 for a direct score |
 
-[jev-cookbooks]: /docs/research/jev.md#cookbooks-and-demos
+[jev-cookbooks]: /docs/research/0005-jev.md#cookbooks-and-demos
 [ts-cookbooks]: https://docs.typesafe.ai/cookbooks
 
 ### How decisions chain across calls
@@ -674,7 +674,7 @@ workflow configurations is this note's ordering of the published numbers.
   matching the jaggedness page. Decisions over language, intent, tone, and
   policy fit Jev; arithmetic, dates, and exact matching belong in code.
 
-[jev-jagged]: /docs/research/jev.md#known-limitations-on-the-jaggedness-page
+[jev-jagged]: /docs/research/0005-jev.md#known-limitations-on-the-jaggedness-page
 
 ### Calibration claims and evidence
 
@@ -801,11 +801,11 @@ record.
 [ts-sitemap]: https://docs.typesafe.ai/sitemap.xml
 [ts-py-changelog]: https://docs.typesafe.ai/sdk/python/changelog
 [ts-js-changelog]: https://docs.typesafe.ai/sdk/javascript/changelog
-[jev-surfaces]: /docs/research/jev.md#jev-product-surfaces
+[jev-surfaces]: /docs/research/0005-jev.md#jev-product-surfaces
 [or-jev]: https://openrouter.ai/~typesafe/jev-latest/
 [vercel-typesafe]: https://vercel.com/docs/ai-gateway/sdks-and-apis/typesafe
 [ts-incident-api]: https://status.typesafe.ai/incident/1070670
-[jev-gaps]: /docs/research/jev.md#gaps
+[jev-gaps]: /docs/research/0005-jev.md#gaps
 [ts-console]: https://console.typesafe.ai/login
 
 ## Programs, licenses, and open source
@@ -825,7 +825,7 @@ record.
   If you have a use case that needs a speedier Jev, contact us at
   sales@typesafe.ai and tell us more." ([ts-home])
 
-[jev-programs]: /docs/research/jev.md#free-tier-credits-and-programs
+[jev-programs]: /docs/research/0005-jev.md#free-tier-credits-and-programs
 
 ### Licenses of TypeSafe's public repositories
 
@@ -869,7 +869,7 @@ record.
   forbids open-sourcing the code, and the MCA's confidentiality duty attaches to
   the key.
 
-[jev-keys]: /docs/research/jev.md#installing-an-sdk-and-authenticating
+[jev-keys]: /docs/research/0005-jev.md#installing-an-sdk-and-authenticating
 
 ### Publicity clause and under-18 statement
 
@@ -993,7 +993,7 @@ Roles that TypeSafe's own pages give an LLM next to Jev:
   [What changed since the Jev notes](#what-changed-since-the-jev-notes));
   the notes' other conflicts are in [their own list][jev-conflicts].
 
-[jev-conflicts]: /docs/research/jev.md#conflicts-between-sources
+[jev-conflicts]: /docs/research/0005-jev.md#conflicts-between-sources
 
 ## Gaps
 
@@ -1052,7 +1052,7 @@ What TypeSafe's pages don't say that an ambitious app needs, as of September 22,
 [ts-mca]: https://typesafe.ai/legal/mca
 [ts-privacy]: https://typesafe.ai/legal/privacy-policy
 [ts-llms]: https://docs.typesafe.ai/llms.txt
-[jev-limits]: /docs/research/jev.md#rate-limits-context-length-and-latency
+[jev-limits]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
 [ts-confidence-routing]: https://docs.typesafe.ai/patterns/confidence-routing
 [ts-confidence]: https://docs.typesafe.ai/confidence
 [ts-intent]: https://docs.typesafe.ai/patterns/intent-routing

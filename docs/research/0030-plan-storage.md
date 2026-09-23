@@ -202,7 +202,7 @@ Facts that bear on every option: no mattpocock skill will write another plan
 file (see
 [where mattpocock/skills puts documents](#where-mattpocockskills-puts-documents)),
 and `docs/superpowers/plans/` is linked from `docs/DESIGN.md`,
-`docs/research/frontend-trends.md`, and `docs/archive/guessling-design.md`,
+`docs/research/0014-frontend-trends.md`, and `docs/archive/guessling-design.md`,
 and named 15 times inside the plans themselves: 10 links and 5 `git add`
 commands.
 

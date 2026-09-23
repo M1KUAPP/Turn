@@ -120,7 +120,7 @@ were expanded without installing them, and nothing ran on a device.
   so the [rules for custom glass][ios-lg-custom] stand.
 
 [nr-ios27]: https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/
-[ios-gaps]: /docs/research/ios-design.md#gaps
+[ios-gaps]: /docs/research/0015-ios-design.md#gaps
 [hig-materials]: https://developer.apple.com/design/human-interface-guidelines/materials
 
 ### The compatibility key under Xcode 27
@@ -143,7 +143,7 @@ were expanded without installing them, and nothing ran on a device.
 [doc-udrc]: https://developer.apple.com/documentation/bundleresources/information-property-list/uidesignrequirescompatibility
 [expo-stack]: https://docs.expo.dev/router/advanced/stack/
 [prd-compat]: /docs/PRD.md#compatibility
-[tech-xcode27]: /docs/research/next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
+[tech-xcode27]: /docs/research/0018-next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
 
 ### Resizable iPhone apps and iPhone Duo
 
@@ -173,7 +173,7 @@ were expanded without installing them, and nothing ran on a device.
 
 [hig-duo]: https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo
 [doc-prep-duo]: https://developer.apple.com/documentation/technologyoverviews/preparing-your-app-for-iphone-duo
-[apple-iphone-runs]: /docs/research/apple-requirements.md#where-an-iphone-app-runs
+[apple-iphone-runs]: /docs/research/0011-apple-requirements.md#where-an-iphone-app-runs
 
 ### Bars that minimize and new scroll edges
 
@@ -272,8 +272,8 @@ Sources for the table: [About iOS 26 Updates][kb-ios26-updates];
   apps][ug-per-app]), so Turn reads each setting at runtime and follows its
   change event; every piece of prose is `Text`, so Reader gets it.
 
-[aac-pv]: /docs/research/aac-practice.md#personal-voice-for-users-in-ios-26-and-ios-27
-[aac-vc]: /docs/research/aac-practice.md#voice-control
+[aac-pv]: /docs/research/0022-aac-practice.md#personal-voice-for-users-in-ios-26-and-ios-27
+[aac-vc]: /docs/research/0022-aac-practice.md#voice-control
 [nr-2025]: https://www.apple.com/newsroom/2025/05/apple-unveils-powerful-accessibility-features-coming-later-this-year/
 [nr-2026]: https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/
 [ug-reader]: https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/27/ios/27
@@ -313,7 +313,7 @@ Apple's HIG, WWDC sessions, and user guides, and Expo's docs and source, own
 these facts; this section maps the [components that adopt glass][ios-lg-system]
 onto the [TRD's routes][trd-screens].
 
-[ios-lg-system]: /docs/research/ios-design.md#system-components-that-adopt-it
+[ios-lg-system]: /docs/research/0015-ios-design.md#system-components-that-adopt-it
 [trd-screens]: /docs/TRD.md#screens-and-navigation
 
 ### Turn's chrome that turns to glass
@@ -338,7 +338,7 @@ contains your controls to maintain consistency" above it
 - Synthesis: every glass surface in the table is UIKit's, so it follows the
   slider and accessibility settings with no code from Turn.
 
-[ios-router]: /docs/research/ios-design.md#headers-sheets-and-tabs-in-expo-router
+[ios-router]: /docs/research/0015-ios-design.md#headers-sheets-and-tabs-in-expo-router
 [hig-keyboards]: https://developer.apple.com/design/human-interface-guidelines/virtual-keyboards
 
 ### Settings that change glass
@@ -416,7 +416,7 @@ gives a reading sheet its own background:
 />
 ```
 
-[ios-versions]: /docs/research/ios-design.md#package-versions-in-sdk-57
+[ios-versions]: /docs/research/0015-ios-design.md#package-versions-in-sdk-57
 [npm-expo]: https://registry.npmjs.org/expo
 [expo-glass]: https://docs.expo.dev/versions/v57.0.0/sdk/glass-effect/
 [doc-glass-identity]: https://developer.apple.com/documentation/swiftui/glass/identity
@@ -505,7 +505,7 @@ Larger Accessibility Sizes switch, and the other styles and sizes are in the
   on iPhone, and nowhere else: not in a title card, a caption, or a thumbnail.
 
 [ny-dmg]: https://devimages-cdn.apple.com/design/resources/download/NY.dmg
-[ios-fonts-rn]: /docs/research/ios-design.md#system-fonts-in-react-native
+[ios-fonts-rn]: /docs/research/0015-ios-design.md#system-fonts-in-react-native
 
 ### Atkinson Hyperlegible Next
 
@@ -564,7 +564,7 @@ Sources for the table: [SF Pro download][sf-pro-dmg];
   artwork, and Settings' licenses screen carries the font's notice
   ([iOS design notes][ios-ofl]).
 
-[ios-ofl]: /docs/research/ios-design.md#the-sil-open-font-license
+[ios-ofl]: /docs/research/0015-ios-design.md#the-sil-open-font-license
 
 ## Color for Turn
 
@@ -573,7 +573,7 @@ these facts. Semantic colors, contrast rules, `PlatformColor`, and
 `DynamicColorIOS` with `highContrastLight` and `highContrastDark` are in the
 [iOS design notes][ios-rn-colors].
 
-[ios-rn-colors]: /docs/research/ios-design.md#colors-in-react-native
+[ios-rn-colors]: /docs/research/0015-ios-design.md#colors-in-react-native
 
 ### System colors and grays
 
@@ -605,8 +605,8 @@ computed with WCAG's formula ([WCAG notes][ios-wcag]).
   and phrase buttons take an edge at least as strong as Gray in light and
   Gray 2 in dark, the weakest grays that reach 3 to 1.
 
-[ios-sys-colors]: /docs/research/ios-design.md#semantic-and-system-colors
-[ios-wcag]: /docs/research/ios-design.md#wcag-22-contrast-minimums
+[ios-sys-colors]: /docs/research/0015-ios-design.md#semantic-and-system-colors
+[ios-wcag]: /docs/research/0015-ios-design.md#wcag-22-contrast-minimums
 
 ### Colors and settings in React Native 0.86
 
@@ -751,9 +751,9 @@ springs, and CSS animations are in the [iOS design notes][ios-rea-rm].
 [hig-haptics]: https://developer.apple.com/design/human-interface-guidelines/playing-haptics
 [doc-playing-haptics]: https://developer.apple.com/documentation/applepencil/playing-haptic-feedback-in-your-app
 [ug-sounds]: https://support.apple.com/guide/iphone/change-sounds-and-vibrations-iph07c867f28/27/ios/27
-[ios-haptics]: /docs/research/ios-design.md#haptics-in-expo
+[ios-haptics]: /docs/research/0015-ios-design.md#haptics-in-expo
 [trd-audio]: /docs/TRD.md#the-audio-session
-[apple-haptics]: /docs/research/apple-requirements.md#haptics-rules
+[apple-haptics]: /docs/research/0011-apple-requirements.md#haptics-rules
 
 ## SF Symbols for Turn
 
@@ -825,7 +825,7 @@ the icon facts, and Expo's docs the SDK 57 side. Icon Composer basics,
 prebuild's handling of `.icon`, and launch screen rules are in the
 [iOS design notes][ios-icons].
 
-[ios-icons]: /docs/research/ios-design.md#ios-26-icons-and-icon-composer
+[ios-icons]: /docs/research/0015-ios-design.md#ios-26-icons-and-icon-composer
 
 ### Icon appearances and Icon Composer 2
 
@@ -855,7 +855,7 @@ prebuild's handling of `.icon`, and launch screen rules are in the
 [doc-icon-composer]: https://developer.apple.com/documentation/xcode/creating-your-app-icon-using-icon-composer
 [icon-composer]: https://developer.apple.com/icon-composer/
 [expo-icons-guide]: https://docs.expo.dev/develop/user-interface/splash-screen-and-app-icon/
-[ios-icons-expo]: /docs/research/ios-design.md#icons-in-expo
+[ios-icons-expo]: /docs/research/0015-ios-design.md#icons-in-expo
 
 ### The launch screen in Expo SDK 57
 
@@ -869,7 +869,7 @@ prebuild's handling of `.icon`, and launch screen rules are in the
   background color in light and dark with no image, and no appearance setting
   of Turn's own.
 
-[ios-launch]: /docs/research/ios-design.md#launch-screens
+[ios-launch]: /docs/research/0015-ios-design.md#launch-screens
 
 ## RevenueCat's paywall for Turn
 
@@ -878,8 +878,8 @@ Presenting the paywall and its buttons is in the [RevenueCat notes][rc-present],
 and the editor, fonts, and presentation in the
 [iOS design notes][ios-pw-editor].
 
-[rc-present]: /docs/research/revenuecat-expo.md#presenting-a-paywall
-[ios-pw-editor]: /docs/research/ios-design.md#what-the-paywall-editor-sets
+[rc-present]: /docs/research/0009-revenuecat-expo.md#presenting-a-paywall
+[ios-pw-editor]: /docs/research/0015-ios-design.md#what-the-paywall-editor-sets
 
 ### What the paywall editor styles
 
@@ -939,7 +939,7 @@ views under [RevenueCatUI's V2 templates][rc-v2-dir].
 
 [rc-test-store]: https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store
 [prd-pay]: /docs/PRD.md#the-paywall-and-purchases
-[svc-paywalls]: /docs/research/turn-services.md#paywalls-customer-center-and-restore
+[svc-paywalls]: /docs/research/0024-turn-services.md#paywalls-customer-center-and-restore
 
 ### Limits on matching Turn's design
 
@@ -951,7 +951,7 @@ views under [RevenueCatUI's V2 templates][rc-v2-dir].
 - Synthesis: the paywall matches Turn in type, color, and wording, with hex
   values for light and dark taken from the app's own tokens.
 
-[ios-pw-limits]: /docs/research/ios-design.md#limits-on-matching-the-app
+[ios-pw-limits]: /docs/research/0015-ios-design.md#limits-on-matching-the-app
 
 ## Pitch assets
 
@@ -1116,7 +1116,7 @@ What no source settled on September 23, 2026:
   run while Turn transcribes, and how the Test Store alert looks in the iOS 27
   simulator ([services notes][svc-simulator]).
 
-[svc-simulator]: /docs/research/turn-services.md#test-store-in-debug-builds-and-the-simulator
+[svc-simulator]: /docs/research/0024-turn-services.md#test-store-in-debug-builds-and-the-simulator
 
 ## See also
 
@@ -1131,19 +1131,19 @@ What no source settled on September 23, 2026:
   [accessibility][prd-a11y] requirements and the TRD's
   [accessibility in the app][trd-a11y].
 
-[sib-motionsites]: /docs/research/turn-motionsites.md
-[sib-trends]: /docs/research/turn-frontend-trends.md
-[aac-access]: /docs/research/aac-practice.md#ios-access-features-aac-users-rely-on
-[aac-rn]: /docs/research/aac-practice.md#react-natives-accessibility-api
+[sib-motionsites]: /docs/research/0026-turn-motionsites.md
+[sib-trends]: /docs/research/0027-turn-frontend-trends.md
+[aac-access]: /docs/research/0022-aac-practice.md#ios-access-features-aac-users-rely-on
+[aac-rn]: /docs/research/0022-aac-practice.md#react-natives-accessibility-api
 [trd-a11y]: /docs/TRD.md#accessibility-in-the-app
 [design-md]: /docs/DESIGN.md
-[ios-design]: /docs/research/ios-design.md
-[turn-ios]: /docs/research/turn-ios.md
-[aac-notes]: /docs/research/aac-practice.md
+[ios-design]: /docs/research/0015-ios-design.md
+[turn-ios]: /docs/research/0023-turn-ios.md
+[aac-notes]: /docs/research/0022-aac-practice.md
 [wwdc26-102]: https://developer.apple.com/videos/play/wwdc2026/102/
 [kb-ios26-updates]: https://support.apple.com/en-us/123075
 [ug-display-27]: https://support.apple.com/guide/iphone/adjust-iphone-display-and-text-settings-iphd6804774e/27/ios/27
-[ios-lg-custom]: /docs/research/ios-design.md#glass-in-custom-controls
+[ios-lg-custom]: /docs/research/0015-ios-design.md#glass-in-custom-controls
 [wwdc26-278]: https://developer.apple.com/videos/play/wwdc2026/278/
 [hig-layout]: https://developer.apple.com/design/human-interface-guidelines/layout
 [doc-hub-env]: https://developer.apple.com/documentation/xcode/configuring-the-environment-of-a-simulated-device
@@ -1154,42 +1154,42 @@ What no source settled on September 23, 2026:
 [product-principles]: /docs/PRODUCT.md#product-principles
 [hig-branding]: https://developer.apple.com/design/human-interface-guidelines/branding
 [prd-consent]: /docs/PRD.md#permission-and-consent
-[ios-dt-sizes]: /docs/research/ios-design.md#dynamic-type-sizes
+[ios-dt-sizes]: /docs/research/0015-ios-design.md#dynamic-type-sizes
 [hig-typography]: https://developer.apple.com/design/human-interface-guidelines/typography
 [sf-pro-dmg]: https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg
-[aac-eye]: /docs/research/aac-practice.md#dwell-eye-tracking-and-head-tracking
+[aac-eye]: /docs/research/0022-aac-practice.md#dwell-eye-tracking-and-head-tracking
 [ug-borders]: https://support.apple.com/guide/iphone/make-onscreen-elements-easier-to-see-zokq2zmg6rn1/27/ios/27
-[apple-labels]: /docs/research/apple-requirements.md#what-each-label-claims
+[apple-labels]: /docs/research/0011-apple-requirements.md#what-each-label-claims
 [gh-router-formsheet]: https://github.com/expo/expo/blob/7687b07947a5c866adeb11abbceae72403ccb188/packages/expo-router/src/fork/native-stack/createNativeStackNavigator.tsx
-[svc-sheet]: /docs/research/turn-services.md#the-test-store-purchase-sheet
+[svc-sheet]: /docs/research/0024-turn-services.md#the-test-store-purchase-sheet
 [rn-a11yinfo]: https://reactnative.dev/docs/0.86/accessibilityinfo
 [wwdc26-251]: https://developer.apple.com/videos/play/wwdc2026/251/
-[ios-rn-scale]: /docs/research/ios-design.md#how-react-native-scales-text
+[ios-rn-scale]: /docs/research/0015-ios-design.md#how-react-native-scales-text
 [prd-a11y]: /docs/PRD.md#accessibility
-[ios-expo-font]: /docs/research/ios-design.md#fonts-bundled-with-expo-font
+[ios-expo-font]: /docs/research/0015-ios-design.md#fonts-bundled-with-expo-font
 [rn-a11y-mgr]: https://github.com/react/react-native/blob/v0.86.3/packages/react-native/React/CoreModules/RCTAccessibilityManager.mm
 [wwdc20-10020]: https://developer.apple.com/videos/play/wwdc2020/10020/
 [bi-next-pr]: https://www.brailleinstitute.org/about-us/news/braille-institute-launches-enhanced-atkinson-hyperlegible-font-to-make-reading-easier/
 [bi-freefont]: https://www.brailleinstitute.org/freefont/
 [gf-ahn-meta]: https://github.com/google/fonts/blob/main/ofl/atkinsonhyperlegiblenext/METADATA.pb
-[ios-sym-lic]: /docs/research/ios-design.md#sf-symbols-license-terms
+[ios-sym-lic]: /docs/research/0015-ios-design.md#sf-symbols-license-terms
 [shipaton-rules]: https://revenuecat-shipaton-2026.devpost.com/rules
 [hig-color]: https://developer.apple.com/design/human-interface-guidelines/color
 [rn-a11yinfo-src]: https://github.com/react/react-native/blob/v0.86.3/packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
 [doc-show-borders-ax]: https://developer.apple.com/documentation/accessibility/accessibilitysettings/showbordersenabled
 [doc-button-shapes]: https://developer.apple.com/documentation/uikit/uiaccessibility/buttonshapesenabled
 [doc-show-borders]: https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityshowborders
-[ios-rea-rm]: /docs/research/ios-design.md#reduce-motion-in-reanimated
-[ios-expo-symbols]: /docs/research/ios-design.md#expo-symbols-in-sdk-57
+[ios-rea-rm]: /docs/research/0015-ios-design.md#reduce-motion-in-reanimated
+[ios-expo-symbols]: /docs/research/0015-ios-design.md#expo-symbols-in-sdk-57
 [sf-symbols-dmg]: https://devimages-cdn.apple.com/design/resources/download/SF-Symbols-27.dmg
-[sib-aac-design]: /docs/research/aac-design.md
+[sib-aac-design]: /docs/research/0028-aac-design.md
 [doc-xcode27]: https://developer.apple.com/documentation/xcode-release-notes/xcode-27-release-notes
-[ios-dark]: /docs/research/ios-design.md#dark-mode-in-the-app-config
+[ios-dark]: /docs/research/0015-ios-design.md#dark-mode-in-the-app-config
 [trd-build]: /docs/TRD.md#build-configuration
 [rc-components]: https://www.revenuecat.com/docs/tools/paywalls/creating-paywalls/components
 [rc-uiconfig]: https://github.com/RevenueCat/purchases-ios/blob/5.90.1/RevenueCatUI/Templates/V2/ViewModelHelpers/UIConfigProvider.swift
-[ios-pw-fonts]: /docs/research/ios-design.md#fonts-and-text-size-in-paywalls
+[ios-pw-fonts]: /docs/research/0015-ios-design.md#fonts-and-text-size-in-paywalls
 [rc-v2-dir]: https://github.com/RevenueCat/purchases-ios/tree/5.90.1/RevenueCatUI/Templates/V2
 [hig-iap]: https://developer.apple.com/design/human-interface-guidelines/apple-in-app-purchase
-[ios-devpost]: /docs/research/ios-design.md#devpost-gallery-and-thumbnail
+[ios-devpost]: /docs/research/0015-ios-design.md#devpost-gallery-and-thumbnail
 [wwdc20-10647]: https://developer.apple.com/videos/play/wwdc2020/10647/

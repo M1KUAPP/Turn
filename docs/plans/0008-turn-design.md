@@ -427,10 +427,10 @@ expects it.
 
 ### Task 1: Research notes
 
-Four background agents wrote `docs/research/turn-motionsites.md`,
-`turn-frontend-trends.md`, `aac-design.md`, and `turn-ios-design.md`. Each
-passed the gate, with link failures only where a site answers scripts with
-HTTP 403, and each was committed on its own:
+Four background agents wrote `docs/research/0026-turn-motionsites.md`,
+`0027-turn-frontend-trends.md`, `0028-aac-design.md`, and
+`0029-turn-ios-design.md`. Each passed the gate, with link failures only where a
+site answers scripts with HTTP 403, and each was committed on its own:
 
 ```shell
 git commit -m "docs(research): add notes on motionsites.ai through Turn's lens"

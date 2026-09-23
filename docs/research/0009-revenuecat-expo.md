@@ -51,8 +51,8 @@ Contents:
 1.  [See also](#see-also)
 
 [idea-build]: /docs/archive/guessling-idea.md#build-plan
-[rm-quickstart]: /docs/research/related-materials.md#quickstart-and-sdk-installation
-[bp-review]: /docs/research/best-practices.md#apple-app-store-review
+[rm-quickstart]: /docs/research/0003-related-materials.md#quickstart-and-sdk-installation
+[bp-review]: /docs/research/0002-best-practices.md#apple-app-store-review
 
 ## Expo on September 22, 2026
 
@@ -120,7 +120,7 @@ the App Store rules they point to.
 
 [eas-infra]: https://docs.expo.dev/build-reference/infrastructure/
 [apple-xcode]: https://developer.apple.com/xcode/system-requirements
-[bp-timing]: /docs/research/best-practices.md#apple-review-timing-and-expedited-review
+[bp-timing]: /docs/research/0002-best-practices.md#apple-review-timing-and-expedited-review
 
 ### iPhone-only apps and iPad compatibility
 
@@ -158,7 +158,7 @@ the App Store rules they point to.
 [expo-device-family]: https://github.com/expo/expo/blob/sdk-57/packages/%40expo/config-plugins/src/ios/DeviceFamily.ts
 [asc-mac]: https://developer.apple.com/help/app-store-connect/manage-your-apps-availability/manage-availability-of-iphone-and-ipad-apps-on-macs-with-apple-silicon
 [asc-vision]: https://developer.apple.com/help/app-store-connect/manage-your-apps-availability/manage-availability-of-iphone-and-ipad-apps-on-apple-vision-pro
-[bp-screenshots]: /docs/research/best-practices.md#screenshots-and-app-previews-on-apple
+[bp-screenshots]: /docs/research/0002-best-practices.md#screenshots-and-app-previews-on-apple
 
 ### Export compliance and ITSAppUsesNonExemptEncryption
 
@@ -318,8 +318,8 @@ Offerings, entitlements, the Test Store, and sandbox testing are in the
 [related materials][rm-products] and [best practices][bp-sandbox] notes; this
 section adds what an Expo app and its Worker need.
 
-[rm-products]: /docs/research/related-materials.md#products-entitlements-and-offerings
-[bp-sandbox]: /docs/research/best-practices.md#sandbox-testing-on-apple
+[rm-products]: /docs/research/0003-related-materials.md#products-entitlements-and-offerings
+[bp-sandbox]: /docs/research/0002-best-practices.md#sandbox-testing-on-apple
 
 ### SDK versions on September 22, 2026
 
@@ -518,7 +518,7 @@ Sources for the table: [npm-rnp]; [npm-rnpui]; [rnp-podspec]; [phc-podspec];
   ([rnp-src])
 
 [rc-restoring]: https://www.revenuecat.com/docs/getting-started/restoring-purchases
-[bp-guidelines]: /docs/research/best-practices.md#app-review-guidelines-for-a-subscription-app
+[bp-guidelines]: /docs/research/0002-best-practices.md#app-review-guidelines-for-a-subscription-app
 
 ### Trial and introductory-offer eligibility
 
@@ -729,7 +729,7 @@ analytics SDK; RevenueCat's charts cover all three.
 [rc-paywall-conversion]: https://www.revenuecat.com/docs/dashboard-and-metrics/charts/paywall-conversion-chart
 [rc-paywall-encounter]: https://www.revenuecat.com/docs/dashboard-and-metrics/charts/paywall-encounter-chart
 [rc-new-trials]: https://www.revenuecat.com/docs/dashboard-and-metrics/charts/new-trials-chart
-[rm-charts]: /docs/research/related-materials.md#charts-and-traction-metrics
+[rm-charts]: /docs/research/0003-related-materials.md#charts-and-traction-metrics
 
 ### Customer Center in React Native
 
@@ -776,7 +776,7 @@ The project ID and secret-key basics are in the
 [related materials][rm-keys]; this section covers reading an entitlement from
 the Worker.
 
-[rm-keys]: /docs/research/related-materials.md#project-id-and-api-keys
+[rm-keys]: /docs/research/0003-related-materials.md#project-id-and-api-keys
 
 ### REST API v1 subscriber endpoint
 
@@ -1006,10 +1006,10 @@ The basics, including that a RevenueCat app declares "Purchases", are in the
   [Jev notes][jev-store]; Crash Data joins the label only with
   `expo-updates` ([expo-app-stores]).
 
-[bp-privacy]: /docs/research/best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
+[bp-privacy]: /docs/research/0002-best-practices.md#privacy-policy-privacy-labels-and-terms-of-use
 [ios-podspec]: https://github.com/RevenueCat/purchases-ios/blob/5.90.1/RevenueCat.podspec
 [idea-review]: /docs/archive/guessling-idea.md#review-safety-checklist
-[jev-store]: /docs/research/jev.md#store-review-and-jev
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
 
 ## What RevenueCat documents about Expo
 
@@ -1177,11 +1177,11 @@ What the sources didn't settle on September 22, 2026:
 
 ## See also
 
-- [Related materials](/docs/research/related-materials.md): RevenueCat setup
-  pages, SDK releases, the Test Store, charts, and API keys.
-- [Best practices](/docs/research/best-practices.md): App Review, sandbox
+- [Related materials](/docs/research/0003-related-materials.md): RevenueCat
+  setup pages, SDK releases, the Test Store, charts, and API keys.
+- [Best practices](/docs/research/0002-best-practices.md): App Review, sandbox
   testing, and privacy labels.
-- [Jev notes](/docs/research/jev.md): the API the Worker calls for answers.
+- [Jev notes](/docs/research/0005-jev.md): the API the Worker calls for answers.
 - [Guessling idea](/docs/archive/guessling-idea.md): Guessling's design, stack,
   and schedule.
 
@@ -1216,7 +1216,7 @@ What the sources didn't settle on September 22, 2026:
 [sk-offer-codes]: https://developer.apple.com/documentation/storekit/supporting-offer-codes-in-your-app
 [asc-offer-codes]: https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-up-subscription-offer-codes
 [rc-webhook-events]: https://www.revenuecat.com/docs/integrations/webhooks/event-types-and-fields
-[rm-paywalls]: /docs/research/related-materials.md#paywalls-and-customer-center
+[rm-paywalls]: /docs/research/0003-related-materials.md#paywalls-and-customer-center
 [phc-enums]: https://github.com/RevenueCat/purchases-hybrid-common/blob/19.2.0/typescript/src/enums.ts
 [rc-paywall-components]: https://www.revenuecat.com/docs/tools/paywalls/creating-paywalls/components
 [rc-charts]: https://www.revenuecat.com/docs/dashboard-and-metrics/charts

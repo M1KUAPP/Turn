@@ -144,7 +144,7 @@ Contents:
 All dates are in 2026. `react-native-purchases` and `-ui` 10.10.1, published
 September 21, are in the [RevenueCat notes][rc-versions].
 
-[rc-versions]: /docs/research/revenuecat-expo.md#sdk-versions-on-september-22-2026
+[rc-versions]: /docs/research/0009-revenuecat-expo.md#sdk-versions-on-september-22-2026
 
 ## Liquid Glass
 
@@ -1564,8 +1564,8 @@ the RevenueCat notes, under [Presenting a paywall][rc-present] and
 [Close, restore, and legal buttons][rc-buttons]; its platforms and multipage
 floors are in the [related materials][rm-paywalls].
 
-[rc-present]: /docs/research/revenuecat-expo.md#presenting-a-paywall
-[rc-buttons]: /docs/research/revenuecat-expo.md#close-restore-and-legal-buttons
+[rc-present]: /docs/research/0009-revenuecat-expo.md#presenting-a-paywall
+[rc-buttons]: /docs/research/0009-revenuecat-expo.md#close-restore-and-legal-buttons
 
 ### What the paywall editor sets
 
@@ -2122,8 +2122,8 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
   [Devpost form walkthrough][ship-devpost].
 
 [trd-app]: /docs/archive/guessling-trd.md#the-iphone-app
-[apple-notes]: /docs/research/apple-requirements.md
-[rc-notes]: /docs/research/revenuecat-expo.md
+[apple-notes]: /docs/research/0011-apple-requirements.md
+[rc-notes]: /docs/research/0009-revenuecat-expo.md
 [sf-symbols-archive]: https://web.archive.org/web/20251115121846/https://developer.apple.com/sf-symbols/
 [nr-ios27]: https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/
 [hig-materials]: https://developer.apple.com/design/human-interface-guidelines/materials
@@ -2165,7 +2165,7 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [wcag22]: https://www.w3.org/TR/WCAG22/
 [wcag2ict]: https://www.w3.org/TR/wcag2ict-22/
 [hig-motion]: https://developer.apple.com/design/human-interface-guidelines/motion
-[apple-a11y-labels]: /docs/research/apple-requirements.md#what-each-label-claims
+[apple-a11y-labels]: /docs/research/0011-apple-requirements.md#what-each-label-claims
 [wwdc20-10020]: https://developer.apple.com/videos/play/wwdc2020/10020/
 [rea-compat]: https://docs.swmansion.com/react-native-reanimated/docs/guides/compatibility/
 [rea-450]: https://github.com/software-mansion/react-native-reanimated/releases/tag/4.5.0
@@ -2185,14 +2185,14 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [expo-haptics]: https://docs.expo.dev/versions/v57.0.0/sdk/haptics/
 [hig-haptics]: https://developer.apple.com/design/human-interface-guidelines/playing-haptics
 [doc-selection-changed]: https://developer.apple.com/documentation/uikit/uiselectionfeedbackgenerator/selectionchanged()
-[apple-haptics]: /docs/research/apple-requirements.md#haptics-rules
+[apple-haptics]: /docs/research/0011-apple-requirements.md#haptics-rules
 [expo-audio]: https://docs.expo.dev/versions/v57.0.0/sdk/audio/
 [gh-audio-player]: https://github.com/expo/expo/blob/sdk-57/packages/expo-audio/ios/AudioPlayer.swift
 [gh-audio-records]: https://github.com/expo/expo/blob/sdk-57/packages/expo-audio/ios/AudioRecords.swift#L3-L10
 [gh-audio-module]: https://github.com/expo/expo/blob/sdk-57/packages/expo-audio/ios/AudioModule.swift#L754-L842
 [gh-audio-plugin]: https://github.com/expo/expo/blob/sdk-57/packages/expo-audio/plugin/src/withAudio.ts#L42-L66
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
-[apple-sound]: /docs/research/apple-requirements.md#sound-and-the-silent-switch
+[apple-sound]: /docs/research/0011-apple-requirements.md#sound-and-the-silent-switch
 [hig-app-icons]: https://developer.apple.com/design/human-interface-guidelines/app-icons
 [wwdc25-361]: https://developer.apple.com/videos/play/wwdc2025/361/
 [expo-icons-guide]: https://docs.expo.dev/develop/user-interface/splash-screen-and-app-icon/
@@ -2205,7 +2205,7 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [hig-sf-symbols]: https://developer.apple.com/design/human-interface-guidelines/sf-symbols
 [sf-symbols]: https://developer.apple.com/sf-symbols/
 [xcode-sla]: https://www.apple.com/legal/sla/docs/xcode.pdf
-[rm-paywalls]: /docs/research/related-materials.md#paywalls-and-customer-center
+[rm-paywalls]: /docs/research/0003-related-materials.md#paywalls-and-customer-center
 [rc-paywalls]: https://www.revenuecat.com/docs/tools/paywalls
 [rc-components]: https://www.revenuecat.com/docs/tools/paywalls/creating-paywalls/components
 [rc-states]: https://www.revenuecat.com/docs/tools/paywalls/creating-paywalls/customer-states
@@ -2217,7 +2217,7 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [gh-paywall-proxy]: https://github.com/RevenueCat/purchases-hybrid-common/blob/19.2.0/ios/PurchasesHybridCommon/PurchasesHybridCommonUI/Paywalls/PaywallProxy.swift
 [asc-screenshots]: https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications
 [asc-upload-media]: https://developer.apple.com/help/app-store-connect/manage-app-information/upload-app-previews-and-screenshots
-[bp-screenshots]: /docs/research/best-practices.md#screenshots-and-app-previews-on-apple
+[bp-screenshots]: /docs/research/0002-best-practices.md#screenshots-and-app-previews-on-apple
 [asc-preview-specs]: https://developer.apple.com/help/app-store-connect/reference/app-information/app-preview-specifications
 [as-product-page]: https://developer.apple.com/app-store/product-page/
 [as-app-previews]: https://developer.apple.com/app-store/app-previews/
@@ -2227,9 +2227,9 @@ What the sources don't say that DESIGN.md may need, as of September 22, 2026:
 [devpost-126]: https://help.devpost.com/article/126-know-your-submission-steps
 [devpost-85]: https://help.devpost.com/article/85-uploading-a-demo-video
 [shipaton-rules]: https://revenuecat-shipaton-2026.devpost.com/rules
-[ship-devpost]: /docs/research/shipaton-2026.md#devpost-form-walkthrough
+[ship-devpost]: /docs/research/0001-shipaton-2026.md#devpost-form-walkthrough
 [trd-build]: /docs/archive/guessling-trd.md#build-configuration
 [trd-reactions]: /docs/archive/guessling-trd.md#reactions-sound-and-haptics
 [prd-compat]: /docs/archive/guessling-prd.md#compatibility
 [product-character]: /docs/archive/guessling-product.md#the-guessling-character
-[apple-share]: /docs/research/apple-requirements.md#share-sheet-rules
+[apple-share]: /docs/research/0011-apple-requirements.md#share-sheet-rules

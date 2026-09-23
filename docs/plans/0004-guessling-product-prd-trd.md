@@ -416,10 +416,10 @@ git.
 
 **Files:**
 
-- Create: `docs/research/revenuecat-expo.md`,
-  `docs/research/cloudflare-workers.md`,
-  `docs/research/apple-requirements.md`, and
-  `docs/research/daily-puzzles.md`, written by four background research
+- Create: `docs/research/0009-revenuecat-expo.md`,
+  `docs/research/0010-cloudflare-workers.md`,
+  `docs/research/0011-apple-requirements.md`, and
+  `docs/research/0012-daily-puzzles.md`, written by four background research
   agents from primary sources.
 - Create: this plan.
 
@@ -432,13 +432,13 @@ informational.
 - [ ] **Step 2: Commit each note on its own, then the plan**
 
 ```shell
-git add docs/research/revenuecat-expo.md
+git add docs/research/0009-revenuecat-expo.md
 git commit -m "docs(research): add notes on RevenueCat in an Expo app"
-git add docs/research/cloudflare-workers.md
+git add docs/research/0010-cloudflare-workers.md
 git commit -m "docs(research): add notes on the Cloudflare Workers backend"
-git add docs/research/apple-requirements.md
+git add docs/research/0011-apple-requirements.md
 git commit -m "docs(research): add notes on Apple's requirements for Guessling"
-git add docs/research/daily-puzzles.md
+git add docs/research/0012-daily-puzzles.md
 git commit -m "docs(research): add notes on daily puzzle conventions"
 git add docs/plans/0004-guessling-product-prd-trd.md
 git commit -m "docs(plan): plan the product, PRD, and TRD documents"

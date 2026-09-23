@@ -723,9 +723,9 @@ What the sources don't say that the PRD needs, as of September 22, 2026:
 - [Guessling idea](/docs/archive/guessling-idea.md), especially
   [What the app does](/docs/archive/guessling-idea.md#what-the-app-does) and
   [Monetization](/docs/archive/guessling-idea.md#monetization).
-- [Evidence for the top five ideas](/docs/research/idea-evidence.md#hunch-a-daily-20-questions-game),
+- [Evidence for the top five ideas](/docs/research/0008-idea-evidence.md#hunch-a-daily-20-questions-game),
   which covers the rival apps and Apple News+'s share summary.
-- [Jev research notes](/docs/research/jev.md), on the model that answers
+- [Jev research notes](/docs/research/0005-jev.md), on the model that answers
   the questions.
 
 [nyt-wordle-help]: https://help.nytimes.com/360011158491-New-York-Times-Games/24611727334932-Wordle

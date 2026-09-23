@@ -47,7 +47,7 @@ Contents:
   submitted by Wednesday, September 30, 2026, on the idea's
   [schedule][idea-schedule].
 
-[ng-submit]: /docs/research/next-gen.md#what-a-next-gen-entry-must-submit
+[ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
 [idea-jev]: /docs/IDEA.md#how-jev-fits
 [idea-schedule]: /docs/IDEA.md#schedule-to-september-30
 
@@ -110,7 +110,7 @@ Turn isn't built, in its first version, for:
   tracking, but its first version adds none of its own.
 - **Emergencies.** Turn is not an emergency service.
 
-[ng-minors]: /docs/research/next-gen.md#minors-ages-and-accounts
+[ng-minors]: /docs/research/0019-next-gen.md#minors-ages-and-accounts
 
 ## Positioning
 
@@ -144,7 +144,7 @@ generated, chosen by a model that can say none fits. Turn doesn't claim to
 be the first AAC app that listens; it has to show, in its evaluation, that
 its ranking beats simpler methods.
 
-[ev-rivals]: /docs/research/next-gen-evidence.md#turn-rival-apps
+[ev-rivals]: /docs/research/0021-next-gen-evidence.md#turn-rival-apps
 
 ## Product principles
 
@@ -180,7 +180,7 @@ requirements.
   ranks phrases on the phone by the words of the partner's line, the place,
   and the letters typed.
 
-[aac-fail]: /docs/research/aac-practice.md#why-prestored-phrase-systems-work-or-fail
+[aac-fail]: /docs/research/0022-aac-practice.md#why-prestored-phrase-systems-work-or-fail
 [prd-row]: /docs/PRD.md#the-reply-row
 
 ## The experience
@@ -250,7 +250,7 @@ leaves the phone whole.
 - **It grows with use.** Every typed reply joins the bank, and the phrases the
   user taps most rise in the shortlist.
 
-[aac-strip]: /docs/research/aac-practice.md#quick-fire-turn-holding-and-repair-messages
+[aac-strip]: /docs/research/0022-aac-practice.md#quick-fire-turn-holding-and-repair-messages
 
 ## Business model
 
@@ -322,7 +322,7 @@ named.
   sandbox data, with no revenue target. Its charts, paywall views included,
   count production data only, so the entry reports no conversion rate.
 
-[aac-measures]: /docs/research/aac-practice.md#rate-savings-and-acceptance-measures
+[aac-measures]: /docs/research/0022-aac-practice.md#rate-savings-and-acceptance-measures
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 [idea-risks]: /docs/IDEA.md#risks
 [prd-perf]: /docs/PRD.md#performance
@@ -353,7 +353,7 @@ named.
   - A backup of the phrase bank the user controls, if users fear losing it
     with a phone.
 
-[jev-lang]: /docs/research/jev.md#jev-platform-and-language-support
+[jev-lang]: /docs/research/0005-jev.md#jev-platform-and-language-support
 
 ## What Turn is not
 
@@ -376,12 +376,12 @@ named.
   rules a coding agent can follow.
 - [AAC practice notes][aac-notes]: design conventions, access, outcome
   measures, and ethics in AAC.
-- [Evidence notes](/docs/research/next-gen-evidence.md): rivals, need, and
+- [Evidence notes](/docs/research/0021-next-gen-evidence.md): rivals, need, and
   harm behind the idea.
-- [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
+- [Jev notes](/docs/research/0005-jev.md): what Jev is, its API, prices, limits,
   and terms.
 - [Guessling product](/docs/archive/guessling-product.md): the product
   document for the team's first idea, archived.
 
 [idea-problem]: /docs/IDEA.md#problem-and-audience
-[aac-notes]: /docs/research/aac-practice.md
+[aac-notes]: /docs/research/0022-aac-practice.md

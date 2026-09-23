@@ -1319,7 +1319,7 @@ URLs that failed to resolve, with the correct page where one exists:
 | `https://revenuecat-shipaton-2024.devpost.com/`                                                                 | HTTP 404                     | `revenuecat-ship-a-ton.devpost.com`    |
 
 [brief]: /docs/BRIEF.md
-[notes]: /docs/research/shipaton-2026.md
+[notes]: /docs/research/0001-shipaton-2026.md
 [rules]: https://revenuecat-shipaton-2026.devpost.com/rules
 [dp-resources]: https://revenuecat-shipaton-2026.devpost.com/resources
 [rc-submit]: https://www.revenuecat.com/blog/engineering/how-to-submit-your-app-for-shipaton

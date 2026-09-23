@@ -9,7 +9,7 @@
 Guessling is the app this team will ship for RevenueCat Shipaton 2026: a
 daily 20-questions game in which Jev answers any yes-or-no question a player
 types, the same way for every player. Ten rounds of ideation chose it, and
-the [ideation log](/docs/research/ideation.md) records each one. The
+the [ideation log](/docs/research/0007-ideation.md) records each one. The
 [brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) hold the
 contest's rules and background, so this document links to them, with facts
 as of September 22, 2026.
@@ -55,7 +55,7 @@ Contents:
 
 [ctx-review]: /docs/CONTEXT.md#getting-through-store-review
 [brief-dates]: /docs/BRIEF.md#key-dates
-[log-r1]: /docs/research/ideation.md#round-1-constraints-and-rubric
+[log-r1]: /docs/research/0007-ideation.md#round-1-constraints-and-rubric
 [ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
 
 ## Problem and audience
@@ -87,7 +87,7 @@ Contents:
 The [evidence notes][ev-hunch] and the [gallery notes][gallery-other] have
 the sources.
 
-[gallery-other]: /docs/research/gallery-2026.md#other-prize-categories
+[gallery-other]: /docs/research/0006-gallery-2026.md#other-prize-categories
 
 ## What the app does
 
@@ -218,11 +218,11 @@ Data, consent, and terms:
   video and the write-up, and asks it to confirm the notice and the privacy
   policy ([terms][jev-terms]).
 
-[jev-what]: /docs/research/jev.md#what-jev-is
-[jev-latency]: /docs/research/jev.md#rate-limits-context-length-and-latency
-[jev-prices]: /docs/research/jev.md#jev-prices
-[jev-store]: /docs/research/jev.md#store-review-and-jev
-[jev-terms]: /docs/research/jev.md#master-customer-agreement-terms-for-apps
+[jev-what]: /docs/research/0005-jev.md#what-jev-is
+[jev-latency]: /docs/research/0005-jev.md#rate-limits-context-length-and-latency
+[jev-prices]: /docs/research/0005-jev.md#jev-prices
+[jev-store]: /docs/research/0005-jev.md#store-review-and-jev
+[jev-terms]: /docs/research/0005-jev.md#master-customer-agreement-terms-for-apps
 
 ## Monetization
 
@@ -304,7 +304,7 @@ Left out, with the reason:
 
 Round 9 of the [ideation log][log-r9] has the reasoning behind this plan.
 
-[log-r9]: /docs/research/ideation.md#round-9-scope-stack-and-schedule
+[log-r9]: /docs/research/0007-ideation.md#round-9-scope-stack-and-schedule
 
 ### Stack and data flow
 
@@ -508,16 +508,16 @@ Ten rounds, from wide to narrow, each logged with its method and decision:
 1.  [Round 10][r10] tested the pitch, gave a final score of 79.5, and set the
     triggers listed under [Risks](#risks).
 
-[r1]: /docs/research/ideation.md#round-1-constraints-and-rubric
-[r2]: /docs/research/ideation.md#round-2-thirty-candidates
-[r3]: /docs/research/ideation.md#round-3-screening
-[r4]: /docs/research/ideation.md#round-4-scoring
-[r5]: /docs/research/ideation.md#round-5-evidence
-[r6]: /docs/research/ideation.md#round-6-red-team
-[r7]: /docs/research/ideation.md#round-7-the-choice
-[r8]: /docs/research/ideation.md#round-8-monetization
-[r9]: /docs/research/ideation.md#round-9-scope-stack-and-schedule
-[r10]: /docs/research/ideation.md#round-10-pitch-test
+[r1]: /docs/research/0007-ideation.md#round-1-constraints-and-rubric
+[r2]: /docs/research/0007-ideation.md#round-2-thirty-candidates
+[r3]: /docs/research/0007-ideation.md#round-3-screening
+[r4]: /docs/research/0007-ideation.md#round-4-scoring
+[r5]: /docs/research/0007-ideation.md#round-5-evidence
+[r6]: /docs/research/0007-ideation.md#round-6-red-team
+[r7]: /docs/research/0007-ideation.md#round-7-the-choice
+[r8]: /docs/research/0007-ideation.md#round-8-monetization
+[r9]: /docs/research/0007-ideation.md#round-9-scope-stack-and-schedule
+[r10]: /docs/research/0007-ideation.md#round-10-pitch-test
 
 ## Assumptions and open questions
 
@@ -579,13 +579,13 @@ Still open, each with a safe default:
   built, traced to the product requirements.
 - [Design](/docs/archive/guessling-design.md): how Guessling looks, moves,
   and sounds, as tokens and rules a coding agent can follow.
-- [Ideation log](/docs/research/ideation.md): the ten rounds that chose
+- [Ideation log](/docs/research/0007-ideation.md): the ten rounds that chose
   Guessling, with their scores.
-- [Jev notes](/docs/research/jev.md): what Jev is, its API, prices, limits,
+- [Jev notes](/docs/research/0005-jev.md): what Jev is, its API, prices, limits,
   and terms.
-- [Gallery notes](/docs/research/gallery-2026.md): the 1,115 projects in the
-  2026 gallery on September 22, 2026.
-- [Evidence notes](/docs/research/idea-evidence.md): rivals, reviews, and
+- [Gallery notes](/docs/research/0006-gallery-2026.md): the 1,115 projects in
+  the 2026 gallery on September 22, 2026.
+- [Evidence notes](/docs/research/0008-idea-evidence.md): rivals, reviews, and
   demand for the top five ideas.
 
-[ev-hunch]: /docs/research/idea-evidence.md#hunch-a-daily-20-questions-game
+[ev-hunch]: /docs/research/0008-idea-evidence.md#hunch-a-daily-20-questions-game

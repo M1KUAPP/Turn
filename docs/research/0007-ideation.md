@@ -3,9 +3,9 @@
 The ten rounds of ideation behind [the idea](/docs/archive/guessling-idea.md),
 run on September 22, 2026 for RevenueCat Shipaton 2026. They start from the
 [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), the
-[Jev notes](/docs/research/jev.md), and the
-[gallery notes](/docs/research/gallery-2026.md), and narrow thirty candidates to
-one idea; each round ends with a decision the next one builds on.
+[Jev notes](/docs/research/0005-jev.md), and the
+[gallery notes](/docs/research/0006-gallery-2026.md), and narrow thirty
+candidates to one idea; each round ends with a decision the next one builds on.
 
 Contents:
 
@@ -70,11 +70,11 @@ An idea that breaks one is out.
 
 [ctx-review]: /docs/CONTEXT.md#getting-through-store-review
 [brief-review]: /docs/BRIEF.md#app-review-timing
-[jev]: jev.md
+[jev]: 0005-jev.md
 [ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
 [ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
 [ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
-[bp-apple]: /docs/research/best-practices.md#app-review-guidelines-for-a-subscription-app
+[bp-apple]: /docs/research/0002-best-practices.md#app-review-guidelines-for-a-subscription-app
 
 ### Assumptions
 
@@ -318,7 +318,7 @@ Earshot. They go to Round 5.
 **Method:** a research subagent checked each idea's competing App Store apps
 and built-in iOS features, their reviews, demand from the people who have the
 problem, Jev's documented limits, and gallery overlap, from primary sources.
-The [evidence notes](idea-evidence.md) cite each finding; the log's author
+The [evidence notes](0008-idea-evidence.md) cite each finding; the log's author
 confirmed the two App Store rivals that move the ranking most. Scores move
 only where the evidence changes a criterion.
 
@@ -573,7 +573,7 @@ for: "a monetization model that fits the genre instead of fighting it".
 codes that cover judging to October 13.
 
 [ctx-money-r8]: /docs/CONTEXT.md#monetization-and-paywalls
-[ev-hunch]: idea-evidence.md#hunch-a-daily-20-questions-game
+[ev-hunch]: 0008-idea-evidence.md#hunch-a-daily-20-questions-game
 
 ## Round 9: scope, stack, and schedule
 
