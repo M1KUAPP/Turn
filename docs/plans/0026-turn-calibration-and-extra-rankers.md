@@ -652,13 +652,17 @@ September 23, 2026. The run followed decision 13:
 - **Latency** at the median: embeddings 172 ms, Jev 1,123 ms, the reranker
   414 ms, qwen3 1,278 ms (6,496 ms at the 95th percentile), and apple 6.5 ms
   on this Mac.
-- **The plot's legend** covers some of seven curves, where it cleared four.
-  The file stays as the run wrote it, and the table under the plot gives
-  the same numbers; the fix goes to a follow-up.
+- **The plot's legend,** in its top right corner, covers parts of the seven
+  curves, where it cleared the first run's four. The file stays as the run
+  wrote it. The table under the plot gives each curve's risk at 80% and 100%
+  coverage, where the legend sits, and [issue #101][legend-issue] moves the
+  legend.
 
 `eval/results.md` stays the first run's, at `8ea25eb`, and is the table the
 README will copy. `eval/results-extras.md` is the second run's, at
 `1b3ff03`, and every result above comes from it.
+
+[legend-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/101
 
 ## Appendix: the run's script
 
