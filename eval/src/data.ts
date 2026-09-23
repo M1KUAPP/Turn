@@ -73,7 +73,10 @@ export function linesFrom(path: string | undefined): { lines: Line[]; file: stri
   return { lines: found, file: inRepository.startsWith('..') ? resolve(path) : inRepository }
 }
 
-/** The second labeling a command reads: the file its `--second` names, or else `eval/second-labeling.jsonl`, checked. */
+/**
+ * The second labeling a command reads: the file its `--second` names, or else `eval/second-labeling.jsonl`, checked
+ * against the bank.
+ */
 export function labelingFrom(path: string | undefined): Labels[] {
   const found: Labels[] = path === undefined ? secondLabeling : readRows(path)
   checkLabels(found)
