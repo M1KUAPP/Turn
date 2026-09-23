@@ -1359,43 +1359,49 @@ line to the phone's own ranking, and speaking never depends on the relay.
   take only lines with an acceptable reply besides the fixed buttons, which
   come from the question-kind call rather than the ranking
   ([the labels' plan][labels-plan]).
-- **Too few lines with no reply.** The two labelings left 8 and 7 lines
-  with no acceptable reply, short of EVAL-1's 16, and nothing changed to
-  close the gap, so the check holds that quota as a to-do until
-  [#77][floor-issue] adds lines or changes the floor.
+- **Lines with no reply.** The first two labelings left 8 and 7 lines with
+  no acceptable reply, short of EVAL-1's 16, so [#77][floor-issue] had 20
+  new lines written to have none and labeled among the 80 by the same
+  rules. In an order fixed before any new label was read, each new line
+  replaced a line with a reply at its own place until the scored labeling
+  had 16 lines with none, which took 12 ([the floor's plan][floor-plan]).
 - **New lines.** The public conversation sets are non-commercial,
   share-alike, not redistributable, or unlicensed, so the lines are written
   for Turn, by writers who haven't seen the bank, in the mix real questions
   have: about seven in ten questions yes-or-no, many of them declarative,
   such as "You're tired?", and about a fifth of lines with no acceptable
-  reply. A second teammate labels the acceptable replies, which
-  [#76][teammate-labels] still asks for, and the script reports their
-  agreement ([evaluation notes][eval-data]).
+  reply. A second labeler labels the acceptable replies, and the script
+  reports their agreement ([evaluation notes][eval-data]).
 - **The starter bank** comes from the app's own file, so the evaluation
   ranks the phrases a user starts with. A fresh bank has no taps, so the
   shortlist's most-tapped slots fall back to the place's phrases and the
   bank's order, and the evaluation says so.
 - **Who wrote and labeled them.** At the team's direction, Claude subagents
   wrote both files on September 23, 2026. Two wrote 40 lines each from a
-  brief that showed no phrase of the bank ([the brief][lines-brief]), so
-  each line's `author` is `claude-a` or `claude-b`; a third wrote the bank
-  without seeing the lines, and a fourth read every phrase. Two more,
-  `claude-c` and `claude-d`, then labeled every line's replies, each alone
-  and from a brief that set no quota ([the labelers' brief][labels-brief]);
-  `claude-c`'s labeling is the one the evaluation scores. Text a language
-  model wrote or labeled may suit a ranker built on one, and two labelings
-  by one model show consistency rather than correctness, so the report and
-  the README say who wrote the lines and the bank and who labeled the
-  replies. On that date, no teammate had yet read the bank (CONTENT-1) or
-  labeled a line (EVAL-1), and no clinic had reviewed the bank
-  (CONTENT-5).
+  brief that showed no phrase of the bank ([the brief][lines-brief]), as
+  `claude-a` and `claude-b`; a third wrote the bank without seeing the
+  lines, and a fourth read every phrase. Two more, `claude-c` and
+  `claude-d`, then labeled every line's replies, each alone and from a
+  brief that set no quota ([the labelers' brief][labels-brief]). Their
+  labels left too few lines with no reply, so `claude-f`, which saw neither
+  the bank nor the lines, wrote 20 more lines meant to have none
+  ([the writer's brief][writer-brief]), and `claude-g` and `claude-h`
+  labeled them among the 80 by the same rules; 12 of them replaced lines
+  with a reply. `claude-c`'s labeling, with `claude-g`'s for the new lines,
+  is the one the evaluation scores. Text a language model wrote or labeled
+  may suit a ranker built on one, and two labelings by one model show
+  consistency rather than correctness, so the report and the README say
+  who wrote the lines and the bank and who labeled the replies. On that
+  date, no teammate had yet read the bank (CONTENT-1) or labeled a line
+  (EVAL-1), and no clinic had reviewed the bank (CONTENT-5).
 
 [eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
 [labels-plan]: /docs/plans/0013-turn-reply-labels.md#decisions
 [labels-brief]: /docs/plans/0013-turn-reply-labels.md#appendix-the-labelers-brief
-[teammate-labels]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/76
 [floor-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/77
+[floor-plan]: /docs/plans/0022-turn-no-reply-floor.md#decisions
+[writer-brief]: /docs/plans/0022-turn-no-reply-floor.md#appendix-the-writers-brief
 
 ### The rankers
 
