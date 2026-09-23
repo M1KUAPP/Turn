@@ -402,13 +402,14 @@ Errors return `{ "error": "<code>" }`:
 | 404    | `not_found`       | a path or method the relay doesn't serve       | ranks on the phone; logs the bug    |
 | 409    | `duplicate`       | a line ID this user's free lines already hold  | ranks on the phone; logs the bug    |
 | 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
-| 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
+| 429    | `rate_limited`    | over a rate limit, with `Retry-After: 60`      | ranks on the phone                  |
 | 503    | `jev_off`         | the configuration turns Jev off (STATE-3)      | ranks on the phone; degraded notice |
 | 503    | `jev_unavailable` | Jev or RevenueCat's check timed out or failed  | ranks on the phone (STATE-2)        |
+| 503    | `jev_unavailable` | the day's calls to Jev are spent (SEC-5)       | ranks on the phone (STATE-2)        |
 | 500    | `internal`        | anything else                                  | ranks on the phone                  |
 
 The body may hold at most 16 KB, and a request that breaks any limit above
-gets `400` before any count or call (SEC-2).
+gets `400` before the free-line count or any call (SEC-2).
 
 ## Decision pipeline
 
