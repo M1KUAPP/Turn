@@ -24,14 +24,14 @@ test("asks Workers AI's reranker with the line as the query and the shortlist's 
 })
 
 test("scores each phrase what the model gave its index, in the shortlist's order, whatever the answer's", async () => {
-  // Best first, as Workers AI answered in the live probe.
-  const response = shortlist.map((_, id) => ({ id, score: (id + 1) / 100 })).toReversed()
+  // Best first, as Workers AI answered in the live probe, down to a score of 0, the least a sigmoid gives.
+  const response = shortlist.map((_, id) => ({ id, score: id / 100 })).toReversed()
   vi.mocked(fetch).mockImplementationOnce(answer(response))
   const ranking = await reranker()('Do you want some water?', shortlist, new PhraseIndex(), home)
-  expect([...ranking.scores]).toEqual(shortlist.map(({ id }, i) => [id, (i + 1) / 100]))
+  expect([...ranking.scores]).toEqual(shortlist.map(({ id }, i) => [id, i / 100]))
 })
 
-test("refuses an answer that doesn't score each phrase once", async () => {
+test("refuses an answer that doesn't score each phrase once, from 0 to 1", async () => {
   const each = shortlist.map((_, id) => ({ id, score: 0.5 }))
   const wrong = [
     each.slice(1),
@@ -41,12 +41,15 @@ test("refuses an answer that doesn't score each phrase once", async () => {
     [...each.slice(1), { id: '0', score: 0.5 }],
     [...each.slice(1), { id: 0, score: '0.5' }],
     [...each.slice(1), { id: 0 }],
+    // A raw logit, which would drop every phrase scored 0 or less from the ranking.
+    [...each.slice(1), { id: 0, score: -2.3 }],
+    [...each.slice(1), { id: 0, score: 1.5 }],
     null
   ]
   for (const response of wrong) {
     vi.mocked(fetch).mockImplementationOnce(answer(response))
     await expect(reranker()('Hello', shortlist, new PhraseIndex(), home)).rejects.toThrow(
-      `Workers AI's answer doesn't score each of the ${shortlist.length} phrases once`
+      `Workers AI's answer doesn't score each of the ${shortlist.length} phrases once, from 0 to 1`
     )
   }
 })
