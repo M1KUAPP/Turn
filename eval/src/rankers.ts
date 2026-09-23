@@ -12,6 +12,12 @@ export type Ranker = (
   context: Context
 ) => Ranking | Promise<Ranking>
 
+/**
+ * For a ranker whose scores aren't probabilities: the ranking the row's rules see at a cut-off, which five-fold
+ * cross-validation sets (EVAL-2).
+ */
+export type CutOff = (ranking: Ranking, cutOff: number) => Ranking
+
 /** The phone's own ranking: phrases sharing a word with the line score 1, and a line with none holds (STATE-1). */
 export const keyword = rankOnPhone satisfies Ranker
 
