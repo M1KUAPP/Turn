@@ -112,6 +112,13 @@ describe("an address's limit (SEC-3)", () => {
     expect(getByName).not.toHaveBeenCalled()
   })
 
+  test('keeps one count through the whole clock minute', async () => {
+    vi.setSystemTime(new Date('2026-10-01T12:00:00.000Z'))
+    await useUpAddress('203.0.113.17')
+    vi.setSystemTime(new Date('2026-10-01T12:00:59.999Z'))
+    await expectLimited(await getConfig({}, from('203.0.113.17')))
+  })
+
   test('starts again in the next minute', async () => {
     vi.setSystemTime(new Date('2026-10-01T12:00:59.000Z'))
     await useUpAddress('203.0.113.14')
