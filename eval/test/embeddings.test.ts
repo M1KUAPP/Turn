@@ -24,7 +24,7 @@ test('asks Workers AI for cls vectors with the account and token from the enviro
 })
 
 test('needs both the account and the token', () => {
-  const needs = 'The embeddings ranker needs CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in the environment'
+  const needs = 'Workers AI needs CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in the environment'
   expect(() => workersAi({ CLOUDFLARE_API_TOKEN: 'token' })).toThrow(needs)
   expect(() => workersAi({ CLOUDFLARE_ACCOUNT_ID: 'account' })).toThrow(needs)
 })
@@ -48,7 +48,8 @@ test('refuses an answer pooled by mean, or short of one 768-number vector for ea
     .mockImplementationOnce(answer({ shape: [2, 768], data: [fakeVector('Hi')], pooling: 'cls' }))
     .mockImplementationOnce(answer({ shape: [1, 768], data: [[0.1, 0.2]], pooling: 'cls' }))
     .mockImplementationOnce(answer({ shape: [1, 768], data: [], pooling: 'cls' }))
-  for (let i = 0; i < 4; i++) {
+    .mockImplementationOnce(answer({ shape: [1, 512], data: [fakeVector('Hi')], pooling: 'cls' }))
+  for (let i = 0; i < 5; i++) {
     await expect(workersAi()(['Hi'])).rejects.toThrow("Workers AI's answer holds no 768-number cls vector")
   }
 })
