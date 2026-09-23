@@ -6,12 +6,12 @@ ID to 30 requests a minute and each address to 120, answering `429` with
 answering `jev_unavailable` until midnight UTC.
 
 **Architecture:** Once a request's headers and a line's body pass, the
-user's `Device` object counts the request against the ID's 30 a minute,
-and then the Worker asks the `ADDRESS_LIMITER` binding, keyed by
-`CF-Connecting-IP`, before the configuration or the line. The ID's count
+Worker asks the `ADDRESS_LIMITER` binding, keyed by `CF-Connecting-IP`,
+and the user's `Device` object then counts the request against the ID's
+30 a minute as the first step of the call that serves it. The ID's count
 began as a second binding, which the live check found too loose. A new
-`Budget` Durable Object, one for the
-whole relay, keeps the UTC day's count of calls to Jev. The user's `Device`
+`Budget` Durable Object, one for the whole relay, keeps the UTC day's
+count of calls to Jev. The user's `Device`
 object gives the TypeSafe client a `fetch` that takes each attempt,
 retries included, from that count, and a refused attempt ends the line as
 `spent`, which answers `503 jev_unavailable`. The day's size is a new var,
@@ -115,7 +115,7 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 - **`/tdd`:** each behavior starts from a failing test at the Worker's
   `fetch`, with Jev mocked.
 - **`/pr`:** the pull request's body.
-- **`/code-review`:** one round, on its Standards and Spec axes, with the
+- **`/code-review`:** two rounds, on its Standards and Spec axes, with the
   issue and this plan as the spec, plus a fact-check and bug-hunt agent.
 
 [note-limits]: /docs/research/0046-turn-relay-limits.md
@@ -126,22 +126,24 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 
 1.  **A line's checks, then the limits.** In `route()`, once `readUser`
     passes and the ID is hashed, a line's body is read and checked
-    (SEC-2), then the user's object counts the request, and then the
-    address's binding. A request over either gets `429 rate_limited`
-    before the configuration, a free line's claim, or any call. Invalid
-    headers or lines get `400` first and count against nothing, as the TRD
-    had it.
-1.  **The ID's count, then the address's.** A request the user's own count
-    refuses doesn't count against the address, so one user past 30 can't
-    use up the 120 that others on a shared mobile address rely on. IDs
-    minted on one address each pass their own count and meet the address's
-    after 120.
-1.  **The ID's count lives in the user's object.** `Device.admit()` keeps a
-    `requests` table of one row, the clock minute and its count, and in
-    one `transactionSync()` writes the count plus one below 30, or refuses
-    and writes nothing. It began as a `USER_LIMITER` binding, until the
-    live check found that one ID's first 73 requests in a minute passed it,
-    so the ticket's fallback took its place.
+    (SEC-2), then the address's binding, and then the user's object counts
+    the request. A request over either gets `429 rate_limited` before the
+    configuration, a free line's claim, or any call. Invalid headers or
+    lines get `400` first and count against nothing, as the TRD had it.
+1.  **The address's limit, then the ID's.** Once the binding holds, a flood
+    from IDs minted on one address meets no object, so it spends none of
+    the Free plan's 100,000 object requests and rows a day. The price is
+    that one user's refused requests still count against a shared
+    address, whose binding is loose anyway.
+1.  **The ID's count lives in the user's object.** `admit()`, the first
+    step of `answer()` and `config()`, the one call that serves each
+    request, keeps a `requests` table of one row, the clock minute and its
+    count, and in one `transactionSync()` writes the count plus one below
+    30, or refuses and writes nothing. The limit is `requestsPerMinute` in
+    `@turn/shared/relay`. It began as a `USER_LIMITER` binding, until the
+    live check found that one ID's first 73 requests in a minute passed
+    it; the ticket's fallback is for a binding that isn't available, but
+    SEC-3's 30 needed it anyway.
 1.  **The address's binding.** `ADDRESS_LIMITER`, namespace `"1002"`, with
     `"simple": { "limit": 120, "period": 60 }`, in `worker/wrangler.jsonc`.
     Its key is `CF-Connecting-IP`, unhashed, which the relay stores and
@@ -215,8 +217,8 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     limiter keeps real time. A spy on `Budget.prototype.take`, which the
     objects share with the tests, stands in for a slow budget and counts
     the budget's calls. The helpers hold another user's headers, the
-    Simulator's, the log's time, and a line posted from given headers, and
-    `expectRefused` takes the error a refusal expects.
+    Simulator's, the log's time, a user's claimed lines, and a line posted
+    from given headers.
 1.  **Every guard is mutated once.** Before the pull request, each limit,
     the order of the two, the `Retry-After`, the budget's comparison and
     day, the abort, and the release of a claim are broken one at a time,
@@ -274,27 +276,48 @@ limit, and that one test passed without the budget. Kept, with reasons:
 
 ### The live check's results
 
-The first deploy, at `1bbeaa5`, put both bindings on the team's account.
-They refused, but loosely: 40 requests from one ID in 15 seconds all got
-`200`, and a burst of 150 from another got its first `429` at request 74,
-27 seconds in. Requests that set their own `CF-Connecting-IP` got `403`
-from Cloudflare's edge, and a line got its answer through the `Budget`
-object ([relay limits notes][note-live]). So, as the ticket's fallback
-says, the user's object took over the ID's count, in one new commit with
-its tests. After the second deploy, at `debfef7`, the 31st of 40 requests
-from one ID got `429`, and a line got its answer. The address's binding
-answered all 250 of a burst within 18 seconds. The account's plan
-couldn't be read with Wrangler's login.
+The first deploy, after round 1's fixes, put both bindings on the team's
+account, which #16 recorded on the Free plan. `USER_LIMITER` refused, but
+loosely: 40 requests from one ID in 15 seconds all got `200`, and a burst
+of 150 from another got its first `429` at request 74, 27 seconds in.
+Requests that set their own `CF-Connecting-IP` got `403` from Cloudflare's
+edge, and a line got its answer through the `Budget` object
+([relay limits notes][note-live]). So SEC-3 needed the ticket's fallback,
+though the binding was available: the user's object took over the ID's
+count. After the second deploy, the 31st of 40 requests from one ID got
+`429`, and a line got its answer. `ADDRESS_LIMITER` refused none of 250
+requests from one address in 18 seconds, which #98 takes up. Wrangler's
+login couldn't read the account's plan. After round 2, the third deploy,
+with the count in the call that serves each request, again answered 30 of
+40 and gave the rest `429`, and a line got its answer.
 
 [note-live]: /docs/research/0046-turn-relay-limits.md#hands-on-check
+
+### Review round 2
+
+A second round, on round 1's fixes and the live check's change, found 9
+Standards, 5 Spec, and 8 fact-check problems; the decisions above hold
+its fixes. The worst was that counting each request in a call of its own
+cost every request one more billed object call and put the objects
+before the address's limit. Kept, with reasons:
+
+- **The count's and the budget's one shape:** two small objects, each
+  with its own table and window, read more plainly than a shared helper.
+- **`freeLines` and `dailyCalls` side by side,** as in round 1.
+- **The address's backstop:** it held nothing back live, so #98 decides
+  whether to count it exactly; the day's budget caps Jev's calls
+  meanwhile.
 
 ### Rejected alternatives
 
 - **The binding for the ID:** live, one ID's first 73 requests in a minute
   passed it, where SEC-3 allows 30.
-- **The binding in front of the object's count:** it would spare a flood's
-  object requests only after half a minute, and a flood uses up the
-  Worker's own 100,000 a day as fast.
+- **A binding in front of the ID's count:** the address's binding already
+  stands before the objects, and this one would spare only one ID's flood,
+  and only after half a minute.
+- **The ID's count before the address's limit:** every request would reach
+  an object first, a flood from one address included, and as a call of
+  its own it cost each request one more billed object call.
 - **The seconds to the next minute as `Retry-After`:** they fit the local
   simulation's windows, but production's alignment is undocumented.
 - **A `Retry-After` to midnight UTC on a spent budget:** SEC-5 has it
@@ -377,10 +400,10 @@ own; it passed the docs gate and was committed.
 
 - [ ] **Step 1: Write the failing tests:** 30 requests from a fresh ID
       answer, and the 31st, a line, gets `429 rate_limited` with
-      `Retry-After: 60`, reaching neither the object nor Jev, while another
-      ID on the same address still answers; the 121st request from one
-      address, across IDs, gets `429`; a user's refused requests don't
-      count against their address; and the log says `limited`.
+      `Retry-After: 60`, with no free line claimed and no call to Jev,
+      while another ID on the same address still answers; the 121st
+      request from one address, across IDs, gets `429` before it reaches
+      any object; and the log says `limited`.
 - [ ] **Step 2: See them fail,** add the bindings and the check, see them
       pass, run the gate, and commit as
       `feat(relay): limit the requests of each ID and address`.
@@ -421,7 +444,7 @@ modify `worker/wrangler.jsonc`, `worker/src/device.ts`,
     `chore(graphify): refresh the graph after the relay's limits`.
 1.  Re-read #35, push the branch, and open the pull request with the `/pr`
     template and "Closes #35".
-1.  Run one `/code-review` round against `main`, with the issue and this
+1.  Run two `/code-review` rounds against `main`, with the issue and this
     plan as the spec, and a fact-check and bug-hunt agent; post it as a PR
     comment, fix what it confirms in one commit per fix or group of related
     fixes, and post a resolution comment.
