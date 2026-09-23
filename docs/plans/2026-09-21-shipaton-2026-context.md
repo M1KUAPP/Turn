@@ -1,9 +1,8 @@
 # Shipaton 2026 context implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use
-> superpowers:subagent-driven-development (recommended) or
-> superpowers:executing-plans to implement this plan task-by-task. Steps use
-> checkbox (`- [ ]`) syntax for tracking.
+> Written for obra/superpowers' `subagent-driven-development` and
+> `executing-plans` skills, which the repo replaced with mattpocock/skills
+> on September 22, 2026. The tasks below are done.
 
 **Goal:** Add `docs/CONTEXT.md`, the background a team needs to build a
 winning RevenueCat Shipaton 2026 entry: past winners in depth, primary-source
