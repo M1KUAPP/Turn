@@ -1,23 +1,9 @@
-import type { Config, ErrorCode, LineAnswer } from '@turn/shared/relay'
+import type { Config, ErrorCode, LineAnswer, Outcome } from '@turn/shared/relay'
 import { isOn, readConfig } from './config'
 import type { Terms } from './device'
 import { readLine, readUser, type User } from './request'
 
 export { Device } from './device'
-
-/** How a request ended, in its log line (METRIC-1). */
-type Outcome =
-  | 'config'
-  | 'answered'
-  | 'paywall'
-  | 'duplicate'
-  | 'unverified'
-  | 'invalid'
-  | 'not_found'
-  | 'off'
-  | 'failed'
-  | 'credits'
-  | 'internal'
 
 /**
  * What a request's log line is made from, gathered as the request goes: each fact once it's known, and never any text
