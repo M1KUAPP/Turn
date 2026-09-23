@@ -143,6 +143,12 @@ pass to `/wizard`. The directive's steps map to skills:
 1.  **The TRD names it.** [Build configuration][trd-build] gets the ID and
     the date it was chosen, since #22 builds `app/app.config.ts` from that
     section.
+1.  **The relay's subdomain stays out of the docs.** The account's
+    workers.dev subdomain is shaped like a student ID, so the notes, the
+    plan, and the comments name the Worker `turn-relay` and leave the
+    subdomain out. The team decides whether to rename it in the Cloudflare
+    dashboard before #22 puts the relay's URL in the app's configuration,
+    which makes it public.
 1.  **Two follow-up tickets** carry the rest, each a `ready-for-human` Task
     under #13 in the Speaking milestone, with `priority:must`:
     - **Jev's credits and the two questions** (`area:relay`): #14's second,
@@ -156,8 +162,8 @@ pass to `/wizard`. The directive's steps map to skills:
       phone.
 1.  **Closing.** Each ticket's body ticks what the session proved, and each
     unticked box names its follow-up. A comment on each gives the evidence;
-    #22 and #24 get the bundle ID, the relay's address, and the secrets'
-    state; and the pull request closes both tickets.
+    #22 and #24 get the bundle ID, where to read the relay's address, and
+    the secrets' state; and the pull request closes both tickets.
 
 [note-hands]: /docs/research/0036-turn-setup.md#hands-on-check
 [note-apple]: /docs/research/0036-turn-setup.md#apple-xcode-27-and-ios-27
@@ -178,7 +184,7 @@ pass to `/wizard`. The directive's steps map to skills:
   ID; `dev.workers.<subdomain>.turn`, from the relay's subdomain, ties the
   app's ID to a label that changes if the subdomain does.
 - **The relay's address in the TRD:** the app's configuration takes it when
-  #22 builds the app, and the comment on #22 carries it until then.
+  #22 builds the app, after the team settles the subdomain.
 
 ### Out of scope
 
