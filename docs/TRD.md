@@ -1526,7 +1526,29 @@ see ([evaluation notes][eval-scoring]):
 
 The replay script (EVAL-7) sends the replay test's lines as text, in
 conversation order, through the relay and the shared row rules, with no
-microphone, and counts slot changes per line (ROW-5).
+microphone, and counts slot changes per line (ROW-5):
+
+```shell
+bun run replay --lines eval/replay.jsonl --relay http://localhost:8787
+```
+
+- **As the app would.** It gets the configuration once, then sends each line
+  as one new user's, with the next sequence number, a new line ID, and a
+  shortlist whose first phrases are the row's, and each request says
+  `X-Turn-Build: simulator`. The row takes each answer with the policy it
+  carries. A failure or no answer within 3 seconds has the phone rank the
+  line (STATE-2), with Jev off the phone ranks every line (STATE-3), and a
+  `402` stops the replay, where the app would open the paywall (STATE-4).
+- **What it prints:** a row for each line, with who ranked it, the big button
+  or the six slots, the slot changes, whether the row held, and the times,
+  then the totals.
+- **Where it runs:** against the relay under `wrangler dev` in `worker/`,
+  whose secrets come from `worker/.dev.vars` or, without that file, the
+  shell; and against the team's relay by its address, which stays out of the
+  repository.
+- **The lines.** Until the replay test records its lines,
+  `eval/replay.jsonl` holds ten lines of a morning at home and out, which
+  Claude wrote for this on September 23, 2026; none is among the 80.
 
 ### The report
 
