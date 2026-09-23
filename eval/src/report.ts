@@ -352,15 +352,16 @@ const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach
     `## ${name}'s calibration`,
     `![Reliability of ${name}'s top phrase](${image})`,
     wrap(
-      `Each line's top phrase in ${naming.jev}'s first timed ranking, the one the row would show first, against ` +
+      `Each line's top phrase in ${naming.jev}'s first timed ranking, ties broken as the row breaks them, against ` +
         `whether it's acceptable, on all ${forecasts.length} lines: ${right} of them are. Of the ` +
         `${forecasts.length}, ${beyondReach} have no acceptable phrase among their 40, so their top phrase is wrong ` +
         'whatever its score. The line is the ' +
         "pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, " +
         "never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated " +
-        "ranker's fit would follow the diagonal. The band holds 90% of the fits from 9,999 resamples of the lines " +
-        'with each outcome drawn as its score says, as a calibrated ranker would; the table gives each block, with ' +
-        'the number of its scores where the fit lies outside the band.'
+        "ranker's fit would follow the diagonal. At each score, the band holds 90% of the fits from 9,999 resamples " +
+        "of the lines, each outcome drawn as its score says, as a calibrated ranker's would be. It holds them at " +
+        "each score apart, so even a calibrated ranker's fit would lie outside it at about one score in ten. The " +
+        'table gives each block, with the number of its scores where the fit lies outside the band.'
     ),
     table(['Scores', 'Lines', 'Acceptable', 'Fitted share', 'Outside the band'], rows),
     wrap(
@@ -373,8 +374,9 @@ const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach
           : `, so the skill score, 1 minus the Brier score over that, is ${three(score.skill)}: above 0 beats ` +
             'that constant forecast, and below 0 does worse. ') +
         `CORP's decomposition gives a miscalibration ` +
-        `of ${three(score.miscalibration)} and a discrimination of ${three(score.discrimination)}: the Brier score ` +
-        'is the miscalibration, minus the discrimination, plus that score of always forecasting the share.'
+        `of ${three(score.miscalibration)} and a discrimination of ${three(score.discrimination)}: before rounding, ` +
+        'the Brier score is the miscalibration, minus the discrimination, plus that score of always forecasting ' +
+        'the share.'
     )
   ]
 }
@@ -453,7 +455,8 @@ const render = (
       '## Latency',
       wrap(
         'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
-          "ranker's ranking, its network trip included."
+          "ranker's ranking, its network trip included. The apple ranker's time is this Mac's, through a pipe to its " +
+          "Swift helper, not the phone's."
       ),
       latency
     ]
@@ -492,7 +495,8 @@ const render = (
           'so it has no interval.',
         '- **The row:** coverage is the share of lines where the row changes, and risk the share of those rows ' +
           'that are wrong. Always holding is right on every line with no acceptable reply.',
-        `- **Intervals:** every rate carries its 95% Wilson interval. ${capital(naming.jev)} minus embeddings in ` +
+        `- **Intervals:** every rate in the ranking's and the row's tables carries its 95% Wilson interval. ` +
+          `${capital(naming.jev)} minus embeddings in ` +
           'top 6 carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a ' +
           `committed seed, and ${naming.jev} trails only when the whole interval on all lines lies below zero; ` +
           "the subsets' intervals carry no verdict, since more intervals would make a false one likelier.",
