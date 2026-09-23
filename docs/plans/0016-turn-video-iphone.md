@@ -117,7 +117,8 @@ pass to `/wizard`. The directive's steps map to skills:
     before the person trusts the developer on the phone is expected to
     fail; after they trust it under Settings > General > VPN & Device
     Management, the same launch must succeed. Developer Mode must read as
-    on, since iOS 16 and later run no development build without it.
+    on, since "Devices running iOS 16 and above" need it "before they can
+    run" local development builds ([iPhone build notes][ios-free-build]).
 1.  **The ticket records the phone.** #80 gets the model, the product type,
     the iOS version and build, Developer Mode's state, and the profile's
     creation and expiry dates. COMPAT-4's install date belongs to the
@@ -145,6 +146,7 @@ pass to `/wizard`. The directive's steps map to skills:
 [note-sign]: /docs/research/0037-turn-video-iphone.md#xcodebuild-automatic-signing
 [note-hands]: /docs/research/0037-turn-video-iphone.md#hands-on-check
 [note-model]: /docs/research/0037-turn-video-iphone.md#the-phones-model-and-ios-version
+[ios-free-build]: /docs/research/0023-turn-ios.md#building-to-an-iphone-with-a-free-account
 
 ### Rejected alternatives
 
