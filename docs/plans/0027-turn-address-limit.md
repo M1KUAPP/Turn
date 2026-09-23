@@ -275,6 +275,21 @@ and a missed IPv6 example in the note. Kept, with reasons:
   so it's exact without it, but the transaction keeps its read and write
   in one synchronous block, as #96 chose.
 
+### The live check's results
+
+After round 1's fixes, the reviewed head was deployed as version
+`625d2d82` in place of #96's `e3ebe6b9`, and Cloudflare created the
+`Address` class ("Created: Address"). Live, 150 configuration requests
+from one address across ten check users, eight at a time, got exactly 120
+`200`s and 30 `429`s with `Retry-After: 60` within 9.59 seconds, where the
+binding had refused none of 250. The ID's 31st request still got `429`,
+and a line got Jev's answer. Configuration requests took a median of 438
+ms from this Mac before the deploy, and 475 and 509 ms in two samples
+after it, so the added call costs tens of milliseconds
+([address limit notes][note-hands-on]).
+
+[note-hands-on]: /docs/research/0050-turn-address-limit.md#hands-on-check
+
 ### Rejected alternatives
 
 - **Keeping the binding and accepting the gap:** for as long as the binding
