@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 import {
   againstBand,
+  beyondReach,
   brier,
   consistencyBand,
   fitAt,
@@ -46,6 +47,11 @@ test("takes each line's top phrase, as the row breaks ties, and whether it's acc
   expect(topPhrase(scores, 'byLine')).toEqual(
     forecasts([0.9, true], [0.7, false], [0.8, true], [0.65, false], [0, false])
   )
+  // Only the line with no acceptable reply has none among its phrases.
+  expect(beyondReach(scores)).toBe(1)
+  const onlyYes = [{ text: 'right', place: 'home', acceptable: ['yes'] }]
+  // Yes, No, and Not sure are never among the 40, so a line they alone answer is beyond reach too.
+  expect(beyondReach((await scoreLines(onlyYes, smallBank, { byLine })).lines)).toBe(1)
 })
 
 test('fits one value to each distinct score, never falling, pooling tied scores and adjacent violators', () => {

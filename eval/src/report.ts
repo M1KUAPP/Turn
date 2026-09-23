@@ -6,6 +6,7 @@ import { parseArgs } from 'node:util'
 import { sentenceEmbedding, type SentenceEmbedding } from './apple'
 import {
   againstBand,
+  beyondReach,
   brier,
   reliability,
   reliabilityPlot,
@@ -325,11 +326,17 @@ const cutOffSection = (cutOffs: Readonly<Record<string, readonly number[]>>, fol
 const decimals = (value: number) => String(Number(value.toFixed(3)))
 
 /**
+ * What the calibration section reports: the diagram's makings and its image, the Brier score, and how many lines have
+ * no acceptable phrase among their 40.
+ */
+type Calibration = { reliability: Reliability; brier: Brier; image: string; beyondReach: number }
+
+/**
  * Jev's top phrase against whether it's acceptable, on every line (EVAL-8): the reliability diagram beside the report,
  * a table of its fit's blocks with how many of each block's scores the fit leaves the band at as its text, and the
  * Brier score with its interval and CORP's decomposition.
  */
-const calibrationSection = (fit: Reliability, score: Brier, image: string, naming: Naming) => {
+const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach }: Calibration, naming: Naming) => {
   const { forecasts } = fit
   const name = capital(naming.jev)
   const right = forecasts.filter((forecast) => forecast.right).length
@@ -346,7 +353,9 @@ const calibrationSection = (fit: Reliability, score: Brier, image: string, namin
     `![Reliability of ${name}'s top phrase](${image})`,
     wrap(
       `Each line's top phrase in ${naming.jev}'s first timed ranking, the one the row would show first, against ` +
-        `whether it's acceptable, on all ${forecasts.length} lines: ${right} of them are. The line is the ` +
+        `whether it's acceptable, on all ${forecasts.length} lines: ${right} of them are. Of the ` +
+        `${forecasts.length}, ${beyondReach} have no acceptable phrase among their 40, so their top phrase is wrong ` +
+        'whatever its score. The line is the ' +
         "pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, " +
         "never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated " +
         "ranker's fit would follow the diagonal. The band holds 90% of the fits from 9,999 resamples of the lines " +
@@ -390,7 +399,7 @@ const render = (
     image: string
     naming: Naming
     apple: Apple
-    calibration: { reliability: Reliability; brier: Brier; image: string }
+    calibration: Calibration
   }
 ) => {
   const { run, file, pin, calls, curves, image, naming, apple, calibration } = details
@@ -437,7 +446,7 @@ const render = (
     ),
     bigButtonSection(scores, naming),
     ...(names.includes('jev') ? [kindSection(scores, naming)] : []),
-    calibrationSection(calibration.reliability, calibration.brier, calibration.image, naming),
+    calibrationSection(calibration, naming),
     curveSection(scores.length, curves, image),
     ...(Object.keys(cutOffs).length > 0 ? [cutOffSection(cutOffs, fold)] : []),
     [
@@ -562,7 +571,8 @@ export async function main(args: readonly string[]): Promise<void> {
     const calibration = {
       reliability: fit,
       brier: brier(fit.forecasts),
-      image: `${basename(out, '.md')}-reliability.svg`
+      image: `${basename(out, '.md')}-reliability.svg`,
+      beyondReach: beyondReach(scores.lines)
     }
     writeFileSync(join(dirname(out), calibration.image), reliabilityPlot(fit, capital(naming.jev)))
     const run = `${date}, at commit \`${hash}\`${clean ? '' : ' with uncommitted changes'}`
