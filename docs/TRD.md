@@ -1192,12 +1192,12 @@ line to the phone's own ranking, and speaking never depends on the relay.
   none (EVAL-1). For yes-or-no lines, acceptable replies may include the
   fixed buttons.
 - **New lines.** The public conversation sets are non-commercial,
-  share-alike, not redistributable, or unlicensed, so the team writes the
-  lines, before looking at the bank, in the mix real questions have: about
-  seven in ten questions yes-or-no, many of them declarative, such as
-  "You're tired?", and about a fifth of lines with no acceptable reply. A
-  second teammate labels the acceptable replies, and the script reports
-  their agreement ([evaluation notes][eval-data]).
+  share-alike, not redistributable, or unlicensed, so the lines are written
+  for Turn, by writers who haven't seen the bank, in the mix real questions
+  have: about seven in ten questions yes-or-no, many of them declarative,
+  such as "You're tired?", and about a fifth of lines with no acceptable
+  reply. A second teammate labels the acceptable replies, and the script
+  reports their agreement ([evaluation notes][eval-data]).
 - **The starter bank** comes from the app's own file, so the evaluation
   ranks the phrases a user starts with. A fresh bank has no taps, so the
   shortlist's most-tapped slots fall back to the place's phrases and the
@@ -1208,8 +1208,8 @@ line to the phone's own ranking, and speaking never depends on the relay.
   `author` is `claude-a` or `claude-b`; a third wrote the bank without
   seeing the lines, and a fourth read every phrase. Text a language model
   wrote may suit a ranker built on one, so the report and the README say
-  who wrote the lines and the bank. On that date, no teammate or clinic had
-  yet read the bank (CONTENT-5).
+  who wrote the lines and the bank. On that date, no teammate had yet read
+  the bank (CONTENT-1), and no clinic had reviewed it (CONTENT-5).
 
 [eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
