@@ -75,8 +75,12 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   if (seq < row.seq) return row
   const topic = mostLikely(topics)
   const tab = topic !== null && topics[topic] >= policy.floor ? topic : null
+  const yesNo =
+    kind.yes_no >= policy.floor &&
+    Object.entries(kind).every(([other, odds]) => other === 'yes_no' || odds < kind.yes_no)
   const fixedTopic = topic !== null && policy.fixedOnlyTopics.includes(topic)
-  const showFixed = kind.yes_no >= policy.floor || fixedTopic
+  const showFixed = yesNo || fixedTopic
+  const phrasesAllowed = !fixedTopic && (!yesNo || policy.yesNoPhrases)
   // A stable sort, so the shortlist's order breaks ties.
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
@@ -86,8 +90,8 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   }
   const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
-  if (fixedTopic) slots.fill(null, 3)
-  const usable = showFixed ? (fixedTopic ? [] : [3, 4, 5]) : [0, 1, 2, 3, 4, 5]
+  if (!phrasesAllowed) slots.fill(null, 3)
+  const usable = !showFixed ? [0, 1, 2, 3, 4, 5] : phrasesAllowed ? [3, 4, 5] : []
   const scoreAt = (i: number) => {
     const id = slots[i]
     return id === null ? 0 : (scores.get(id) ?? 0)
