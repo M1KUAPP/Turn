@@ -1,20 +1,20 @@
-# Graph Report - revenuecat-setup (2026-09-23)
+# Graph Report - revenuecat-score-rankers (2026-09-23)
 
 ## Corpus Check
 
-- 159 files · ~578,995 words
+- 177 files · ~595,258 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 12 file(s) not represented in the graph (top: (none) 7, .jsonl 2, .lock 1)
+- Unclassified: 14 file(s) not represented in the graph (top: (none) 7, .jsonl 4, .lock 1)
 
 ## Summary
 
-- 2979 nodes · 2897 edges · 216 communities (206 shown, 4 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.82)
+- 3109 nodes · 3182 edges · 224 communities (214 shown, 4 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `4fc149b6`
+- Built from commit: `641f0eca`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -223,13 +223,21 @@
 - shared/tsconfig.json
 - Tasks
 - Turn's starter content research notes
-- shortlist.test.ts
+- data.ts
 - Tasks
 - Tasks
 - Turn's shortlist and row research notes
 - Turn's reply-labeling research notes
 - Tasks
 - Turn's setup research notes
+- score.ts
+- shortlist.ts
+- Tasks
+- count.ts
+- shortlist.test.ts
+- row.ts
+- Turn's evaluation harness research notes
+- shortlist-speed.test.ts
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -246,20 +254,22 @@
 
 ## Surprising Connections (you probably didn't know these)
 
-- `sharesAWord()` --calls--> `PhraseIndex` [EXTRACTED]
-  eval/test/labels.test.ts → shared/src/shortlist.ts
-- `replay()` --calls--> `applyAnswer()` [EXTRACTED]
-  shared/test/row.test.ts → shared/src/row.ts
-- `pick()` --calls--> `PhraseIndex` [EXTRACTED]
-  shared/test/shortlist.test.ts → shared/src/shortlist.ts
-- `pick()` --calls--> `pickShortlist()` [EXTRACTED]
-  shared/test/shortlist.test.ts → shared/src/shortlist.ts
+- `main()` --indirect_call--> `rankable()` [INFERRED]
+  eval/src/count.ts → shared/src/shortlist.ts
+- `scoreLines()` --calls--> `applyAnswer()` [EXTRACTED]
+  eval/src/score.ts → shared/src/row.ts
+- `scoreLines()` --calls--> `PhraseIndex` [EXTRACTED]
+  eval/src/score.ts → shared/src/shortlist.ts
+- `scoreLines()` --calls--> `pickShortlist()` [EXTRACTED]
+  eval/src/score.ts → shared/src/shortlist.ts
+- `sharesNoWord()` --calls--> `PhraseIndex` [EXTRACTED]
+  eval/src/score.ts → shared/src/shortlist.ts
 
 ## Import Cycles
 
 - None detected.
 
-## Communities (216 total, 4 thin omitted)
+## Communities (224 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -268,8 +278,8 @@ Nodes (39): Add spacing to headings, ATX-style headings, Avoid relative paths un
 
 ### Community 1 - "package.json"
 
-Cohesion: 0.09
-Nodes (21): devDependencies, @commitlint/cli, @commitlint/config-conventional, husky, lint-staged, prettier, lint-staged, private (+13 more)
+Cohesion: 0.08
+Nodes (23): devDependencies, @commitlint/cli, @commitlint/config-conventional, husky, lint-staged, prettier, lint-staged, private (+15 more)
 
 ### Community 2 - "Prizes"
 
@@ -1256,10 +1266,10 @@ Nodes (21): Appendix: the bank's briefs, Appendix: the line writers' brief, Deci
 Cohesion: 0.22
 Nodes (8): Consent and refusal for people who can't speak, Default content in text AAC apps, Gaps, How validated pain tools ask about pain, Plain-language rules for short phrases, See also, Turn's starter content research notes, What published patient boards hold
 
-### Community 209 - "shortlist.test.ts"
+### Community 209 - "data.ts"
 
-Cohesion: 0.05
-Nodes (51): bank, Category, Labels, Line, lines, Phrase, phrases, read() (+43 more)
+Cohesion: 0.11
+Nodes (20): bank, Category, checkLabels(), labelingFrom(), Labels, Line, lines, linesFrom() (+12 more)
 
 ### Community 210 - "Tasks"
 
@@ -1291,27 +1301,67 @@ Nodes (20): Appendix: the two messages, Decisions, Design, Global constraints, O
 Cohesion: 0.22
 Nodes (8): A key in Git's history, Apple, Xcode 27, and iOS 27, Cloudflare and Wrangler 4.136.2, Gaps, Hands-on check, See also, Turn's setup research notes, TypeSafe's API and credits
 
+### Community 216 - "score.ts"
+
+Cohesion: 0.11
+Nodes (29): wrap(), commit(), groupSections(), main(), percent(), provenance(), rankers, rate() (+21 more)
+
+### Community 217 - "shortlist.ts"
+
+Cohesion: 0.14
+Nodes (19): keyword, place(), Ranker, bank, home, toRank, bank, fillerIds (+11 more)
+
+### Community 218 - "Tasks"
+
+Cohesion: 0.08
+Nodes (25): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: Agreement on the call and the pairs, Task 11: Alpha with MASI (+17 more)
+
+### Community 219 - "count.ts"
+
+Cohesion: 0.14
+Nodes (20): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+12 more)
+
+### Community 220 - "shortlist.test.ts"
+
+Cohesion: 0.23
+Nodes (11): isYesNo(), PhraseIndex, pickShortlist(), rankable(), rankOnPhone(), ids(), phrase(), pick() (+3 more)
+
+### Community 221 - "row.ts"
+
+Cohesion: 0.22
+Nodes (12): answer(), Answer, applyAnswer(), clearRow(), emptyRow, mostLikely(), phrasesInRow(), Policy (+4 more)
+
+### Community 222 - "Turn's evaluation harness research notes"
+
+Cohesion: 0.14
+Nodes (13): A test oracle for agreement, Agreement between two labelers, Chance rates, Cohen's kappa and specific agreement, Findings for the plan, Gaps, Krippendorff's alpha for two coders, MASI and NLTK (+5 more)
+
+### Community 223 - "shortlist-speed.test.ts"
+
+Cohesion: 0.47
+Nodes (5): bank, lines, taps, vocabulary, words()
+
 ## Knowledge Gaps
 
-- **2312 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2307 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2455 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2364 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2359 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2516 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Prizes` connect `Prizes` to `RevenueCat Shipaton 2026`?**
+- **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `iOS design research notes` connect `iOS design research notes` to `Typography`, `Motion and haptics`, `Color`, `Liquid Glass`, `App icon and launch screen`, `SF Symbols`, `Store and pitch assets`, `RevenueCat Paywalls styling`?**
+- **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Turn technical requirements` connect `Turn technical requirements` to `Decision pipeline`, `The iPhone app`, `Evaluation`, `Listening and speaking on the phone`, `Security and privacy`, `Data model`, `Reliability and observability`, `Purchases and entitlements`, `Stack and repository`?**
+- **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2312 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2364 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
