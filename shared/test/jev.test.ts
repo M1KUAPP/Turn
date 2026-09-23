@@ -51,6 +51,16 @@ describe('buildJevRequest', () => {
     expect(Object.keys(topic.criteria)).toEqual(['feelings', 'body-pain', 'consent'])
   })
 
+  test('puts category ids that read as whole numbers first among the topic options, as JavaScript orders keys', () => {
+    const categories = [
+      { id: 'b', name: 'B' },
+      { id: '10', name: 'Ten' },
+      { id: '2', name: 'Two' }
+    ]
+    const { topic } = buildJevRequest({ ...line, categories }, 'jev-1.13.0').questions
+    expect(Object.keys(topic.criteria)).toEqual(['2', '10', 'b', 'consent'])
+  })
+
   test('asks one Noul per candidate, c00 to c39 in the request order', () => {
     const { questions } = buildJevRequest({ ...line, candidates: forty }, 'jev-1.13.0')
     const keys = Object.keys(questions).filter((key) => key !== 'kind' && key !== 'topic')
