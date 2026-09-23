@@ -95,7 +95,7 @@ Contents:
   branch on two axes, with #40 and this plan as the spec, beside a fact
   check; `/pr` shapes the pull request's body.
 
-[run-notes]: /docs/research/0046-turn-eval-run.md
+[run-notes]: /docs/research/0047-turn-eval-run.md
 
 ## Design
 
@@ -208,8 +208,8 @@ Contents:
     when its `wrangler.jsonc` listing follows. The README is #64's.
 
 [gh-merge]: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github
-[notes-deviation]: /docs/research/0046-turn-eval-run.md#reporting-a-deviation-or-an-unwelcome-result
-[notes-relay]: /docs/research/0046-turn-eval-run.md#reading-the-relays-deployed-vars
+[notes-deviation]: /docs/research/0047-turn-eval-run.md#reporting-a-deviation-or-an-unwelcome-result
+[notes-relay]: /docs/research/0047-turn-eval-run.md#reading-the-relays-deployed-vars
 
 ### Rejected alternatives
 
@@ -248,7 +248,7 @@ Each task ends with its own commit unless it says otherwise.
 
 ### Task 1: Research note
 
-`/research` wrote `docs/research/0046-turn-eval-run.md`: preregistration's
+`/research` wrote `docs/research/0047-turn-eval-run.md`: preregistration's
 rules for a one-shot run and its deviations, reading the relay's deployed
 vars without changing them, and Apple's sentence embedding.
 
