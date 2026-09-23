@@ -1,4 +1,4 @@
-import type { LineRequest } from '@turn/shared/relay'
+import { limits, type LineRequest } from '@turn/shared/relay'
 
 /** A lowercase version 4 UUID, as `crypto.randomUUID()` makes. */
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
@@ -21,10 +21,22 @@ export function readUser(headers: Headers): string | null {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
-/** Whether a value is a list of records, each with a text id and a text in `field`. */
-const isList = (value: unknown, field: string) =>
+/** A JSON media type, with or without parameters such as the charset. */
+const json = /^application\/json\s*(;|$)/i
+
+/**
+ * Whether a value is a text of `min` to `max` characters, counted as Unicode code points, as SQLite's `length()` counts
+ * them in the phone's checks, so the relay never refuses a text the phone stored.
+ */
+const isText = (value: unknown, min: number, max: number) =>
+  typeof value === 'string' && value.length >= min && [...value].length <= max
+
+/** Whether a value is a list of at most `max` records with unique ids of 1 to 64 characters, each passing `check`. */
+const isList = (value: unknown, max: number, check: (item: Record<string, unknown>) => boolean) =>
   Array.isArray(value) &&
-  value.every((item) => isRecord(item) && typeof item.id === 'string' && typeof item[field] === 'string')
+  value.length <= max &&
+  value.every((item) => isRecord(item) && isText(item.id, 1, limits.id) && check(item)) &&
+  new Set(value.map((item) => item.id)).size === value.length
 
 function isLineRequest(body: unknown): body is LineRequest {
   if (!isRecord(body)) return false
@@ -35,19 +47,41 @@ function isLineRequest(body: unknown): body is LineRequest {
     typeof seq === 'number' &&
     Number.isSafeInteger(seq) &&
     seq >= 0 &&
-    typeof line === 'string' &&
-    typeof place === 'string' &&
-    isList(categories, 'name') &&
-    isList(candidates, 'text') &&
+    isText(line, 1, limits.line) &&
+    isText(place, 0, limits.name) &&
+    isList(categories, limits.categories, ({ id, name }) => isText(name, 1, limits.name) && id !== 'consent') &&
+    isList(candidates, limits.candidates, ({ text }) => isText(text, 1, limits.text)) &&
     (refresh === undefined || typeof refresh === 'boolean')
   )
 }
 
-/** The line a request asks about, when its body is one, or null. */
+/** The body as text, or null past 16 KB, read no further than that whatever `Content-Length` says (SEC-2). */
+async function readText(request: Request): Promise<string | null> {
+  if (Number(request.headers.get('Content-Length')) > limits.bytes) return null
+  if (!request.body) return ''
+  const reader = request.body.getReader()
+  const decoder = new TextDecoder()
+  let text = ''
+  let size = 0
+  for (let chunk = await reader.read(); !chunk.done; chunk = await reader.read()) {
+    size += chunk.value.byteLength
+    if (size > limits.bytes) {
+      await reader.cancel()
+      return null
+    }
+    text += decoder.decode(chunk.value, { stream: true })
+  }
+  return text + decoder.decode()
+}
+
+/** The line a request asks about, when its body is JSON within every limit (SEC-2), or null. */
 export async function readLine(request: Request): Promise<LineRequest | null> {
+  if (!json.test(request.headers.get('Content-Type') ?? '')) return null
+  const text = await readText(request)
+  if (text === null) return null
   let body: unknown
   try {
-    body = await request.json()
+    body = JSON.parse(text)
   } catch {
     return null
   }
