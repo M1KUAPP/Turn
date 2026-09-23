@@ -48,6 +48,37 @@ export function workersAi(env: Env = process.env): Embed {
   })
 }
 
+/** Workers AI's instruction-tuned embedding model, which the report names (EVAL-6). */
+export const qwenModel = '@cf/qwen/qwen3-embedding-0.6b'
+
+/** The TRD's instruction for qwen3, under which it embeds a partner's line as a query (EVAL-8). */
+export const qwenInstruction = 'Given what a conversation partner just said, retrieve the reply that answers it'
+
+/** The most queries or documents qwen3's schema takes in one request. */
+const qwenBatchSize = 32
+
+/**
+ * Workers AI's REST API for `qwen3-embedding-0.6b`: lines as queries under the TRD's instruction, which Workers AI
+ * formats as Qwen's card does, and phrases as documents, which take none. One request can't hold both, and each holds
+ * at most 32 texts; an answer that holds anything but one 1,024-number vector for each text throws.
+ */
+export function qwen(env: Env = process.env): { queries: Embed; documents: Embed } {
+  const run = runModel(qwenModel, env)
+  const embed = (body: (batch: readonly string[]) => object) =>
+    batched(qwenBatchSize, async (batch) => {
+      // Every field is optional and checked here.
+      const vectors = vectorsIn(batch.length, 1024, (await run(body(batch))) as Vectors)
+      if (!vectors) {
+        throw new Error(`Workers AI's answer holds no 1024-number vector for each of ${batch.length} texts`)
+      }
+      return vectors
+    })
+  return {
+    queries: embed((queries) => ({ queries, instruction: qwenInstruction })),
+    documents: embed((documents) => ({ documents }))
+  }
+}
+
 /** The cosine of the angle between two vectors: their dot product over both lengths. */
 export function cosine(a: readonly number[], b: readonly number[]): number {
   let dot = 0
@@ -62,17 +93,22 @@ export function cosine(a: readonly number[], b: readonly number[]): number {
 }
 
 /**
- * Workers AI's embeddings as a ranker: each shortlisted phrase scores its cosine with the line, in the shortlist's
- * order, with no query prefix. The line and any phrase it hasn't seen go in one request, and a phrase's vector is kept
- * for the rest of the run, as a store of the bank's vectors would keep it. It has no question kind of its own, so it
- * takes the phone's yes-or-no rule, and since a cosine isn't a probability it never brings a big button: its cut-off
- * for holding comes from cross-validation instead.
+ * An embedding model as a ranker: each shortlisted phrase scores its cosine with the line, in the shortlist's order.
+ * The line and any phrase it hasn't seen go in one request, with no query prefix, unless the model embeds the line as a
+ * query of its own, when the line goes alone and the phrases apart. A phrase's vector is kept for the rest of the run,
+ * as a store of the bank's vectors would keep it. It has no question kind of its own, so it takes the phone's
+ * yes-or-no rule, and since a cosine isn't a probability it never brings a big button: its cut-off for holding comes
+ * from cross-validation instead.
  */
-export function embeddings(embed: Embed): Ranker {
+export function embeddings(embed: Embed, query: Embed = embed): Ranker {
   const known = new Map<string, number[]>()
   return async (line, shortlist) => {
     const unseen = shortlist.filter((phrase) => !known.has(phrase.id))
-    const [lineVector, ...vectors] = await embed([line, ...unseen.map((phrase) => phrase.text)])
+    const texts = unseen.map((phrase) => phrase.text)
+    const [lineVector, ...vectors] =
+      query === embed
+        ? await embed([line, ...texts])
+        : [...(await query([line])), ...(texts.length > 0 ? await embed(texts) : [])]
     unseen.forEach((phrase, i) => known.set(phrase.id, vectors[i]))
     const scores = new Map<string, number>()
     for (const phrase of shortlist) {
