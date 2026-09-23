@@ -123,14 +123,14 @@ Contents:
   your Worker at a point in time" ([cf-versions]).
 - **The commands.** `deployments status`: "View the current state of your
   production"; `deployments list`: "Displays the 10 most recent
-  deployments of your Worker"; `versions view [VERSION-ID]`: "View the
+  deployments of your Worker"; `versions view <VERSION-ID>`: "View the
   details of a specific version of your Worker". Each takes `--name` and
   `--json`, "Display output as JSON" ([wrangler-cmds]).
 - **What `deployments status` prints.** Wrangler's source prints the
-  deployment's Created, Author, Source, Message, and each version's
-  percentage and ID, with a comment "explicitly not outputting Deployment
-  ID"; with `--json` it prints the latest deployment object. It prints no
-  bindings ([wrangler-src-status]).
+  deployment's Created, Author, Source, and Message, and each version's
+  percentage, ID, Created, Tag, and Message, with a comment "explicitly not
+  outputting Deployment ID"; with `--json` it prints the latest deployment
+  object. It prints no bindings ([wrangler-src-status]).
 - **What `versions view` prints.** With `--json`, the API's version object
   as is. Without it: Version ID, Created, Author, Source, Tag, Message,
   handlers and compatibility settings, then "Secrets:" with only each
@@ -163,7 +163,7 @@ Contents:
   the run's frozen values, printing no `secret_text` entry. Neither
   command changes the Worker; a token needs only `Workers Scripts Read`.
 
-[cf-versions]: https://developers.cloudflare.com/workers/configuration/versions-and-deployments/
+[cf-versions]: https://developers.cloudflare.com/workers/versions-and-deployments/
 [wrangler-cmds]: https://developers.cloudflare.com/workers/wrangler/commands/workers/
 [cf-secrets]: https://developers.cloudflare.com/workers/configuration/secrets/
 [cf-api-deployments]: https://developers.cloudflare.com/api/resources/workers/subresources/scripts/subresources/deployments/methods/list/
