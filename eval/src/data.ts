@@ -15,17 +15,27 @@ export type Line = {
   acceptable: string[]
 }
 
+/** One line's acceptable replies in the second labeling, which only the labelers' agreement reads. */
+export type Labels = Pick<Line, 'id' | 'labeler' | 'acceptable'>
+
 export type Phrase = { id: string; text: string; fixed: boolean; places: string[] }
 export type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
 export type StarterBank = { categories: Category[]; places: { id: string; name: string }[] }
 
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), 'utf8')
 
-/** The 80 partner lines in `eval/lines.jsonl`, one JSON object per row. */
-export const lines: Line[] = read('../lines.jsonl')
-  .trim()
-  .split('\n')
-  .map((row) => JSON.parse(row))
+/** Reads a JSON Lines file, one object per row. */
+const readRows = (path: string) =>
+  read(path)
+    .trim()
+    .split('\n')
+    .map((row) => JSON.parse(row))
+
+/** The 80 partner lines in `eval/lines.jsonl`, with the first labeling. */
+export const lines: Line[] = readRows('../lines.jsonl')
+
+/** The second labeling in `eval/second-labeling.jsonl`, in the lines' order. */
+export const secondLabeling: Labels[] = readRows('../second-labeling.jsonl')
 
 /** The starter bank, from the app's own file. */
 export const bank: StarterBank = JSON.parse(read('../../app/src/content/starter-bank.json'))
