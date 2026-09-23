@@ -156,9 +156,10 @@ directive's steps map to skills:
 1.  **The plugin is 1.2.2, not 1.2.1.** Plugin 1.2.1 depends on Wrangler
     4.136.1 exactly, so the TRD's pins would install two Wranglers; 1.2.2,
     published on September 22, 2026, depends on 4.136.2 exactly
-    ([versions][note-versions]). The TRD's table and testing section change
-    in the relay's commit. Vitest is pinned to 4.1.11, since npm's `latest`
-    is 5.0.1, outside the plugin's `^4.1.0` peer range.
+    ([versions][note-versions]). The TRD's table changes in the relay's
+    commit, and its testing section points at the table, so each version is
+    stated once. Vitest is pinned to 4.1.11, since npm's `latest` is 5.0.1,
+    outside the plugin's `^4.1.0` peer range.
 1.  **Local secrets stay out of Git.** `.gitignore` gains `.dev.vars*` and
     `!.dev.vars.example` beside its `.env*` rules, as Cloudflare advises
     ([local secrets][note-secrets]), and `worker/.dev.vars.example` names
@@ -451,10 +452,10 @@ In `.gitignore`, add `.wrangler/` and `worker-configuration.d.ts`.
 - [ ] **Step 4: Run it and see it pass.** The gate, then
       `git status --short` lists neither `.wrangler/` nor the generated
       types.
-- [ ] **Step 5: Update the TRD.** The plugin's row says 1.2.2, keeping
-      its column's width, and the testing section says 1.2.2 with Vitest
-      4.1.11, and why, citing the note, whose link moves to the end of the
-      TRD, since two sections now use it.
+- [ ] **Step 5: Update the TRD.** The plugin's row says 1.2.2 with
+      Vitest 4.1.11 and why, citing the note, and the testing section points
+      at the table instead of repeating its versions. The note's link moves
+      to the end of the TRD, since two sections use it.
 - [ ] **Step 6: Commit**
 
 ```shell

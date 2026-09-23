@@ -128,26 +128,26 @@ The path of one partner line:
 
 ### Versions on September 22, 2026
 
-| Part                            | Version                | Notes                                                                    |
-| ------------------------------- | ---------------------- | ------------------------------------------------------------------------ |
-| Expo SDK                        | 57.0.23 or later       | `ios.enableSceneSupport` on for the iOS 27 SDK ([Expo notes][tech-expo]) |
-| React Native                    | 0.86.3                 | pinned by the SDK's template ([RevenueCat notes][rc-expo])               |
-| Xcode and iOS SDK               | Xcode 27, iOS 27 SDK   | on macOS Tahoe 26.6 or later                                             |
-| iOS deployment target           | 26                     | `SpeechTranscriber`'s first release (COMPAT-1)                           |
-| `react-native-purchases`, `-ui` | 10.10.1                | Test Store and Paywalls, on purchases-ios 5.90.1                         |
-| `expo-secure-store`             | 57.0.4                 | the user's ID in the Keychain                                            |
-| `expo-speech`                   | 57.0.3                 | speech with a chosen voice                                               |
-| `expo-speech-recognition`       | 57.1.0                 | the last fallback recognizer                                             |
-| `expo-sqlite`                   | 57.0.3                 | the phrase bank                                                          |
-| `react-native-reanimated`       | 4.5.1                  | the design's fades, with `react-native-worklets` 0.10.1, as SDK 57 pins  |
-| `minisearch`                    | 7.2.0                  | BM25+ keyword ranking in the shared code                                 |
-| `create-expo-module`            | 57.0.1                 | scaffolds the two local modules                                          |
-| `@typesafe-ai/sdk`              | 0.6.0                  | in the relay and the evaluation; runs under workerd                      |
-| Jev                             | `jev-1.13.0`           | the only model on September 22, 2026                                     |
-| Wrangler                        | 4.136.2                | needs Node.js 22 or later; `compatibility_date` `2026-09-22`             |
-| `@cloudflare/vitest-plugin`     | 1.2.2, with Vitest 4.1 | the relay's tests; pins Wrangler 4.136.2 ([workspace notes][ws-notes])   |
-| TypeScript                      | 6.0.3                  | `tsc` everywhere; Expo SDK 57's pin ([workspace notes][ws-notes])        |
-| `@revenuecat/cli`               | 0.1.3                  | headless Test Store purchases for the relay's tests                      |
+| Part                            | Version                   | Notes                                                                    |
+| ------------------------------- | ------------------------- | ------------------------------------------------------------------------ |
+| Expo SDK                        | 57.0.23 or later          | `ios.enableSceneSupport` on for the iOS 27 SDK ([Expo notes][tech-expo]) |
+| React Native                    | 0.86.3                    | pinned by the SDK's template ([RevenueCat notes][rc-expo])               |
+| Xcode and iOS SDK               | Xcode 27, iOS 27 SDK      | on macOS Tahoe 26.6 or later                                             |
+| iOS deployment target           | 26                        | `SpeechTranscriber`'s first release (COMPAT-1)                           |
+| `react-native-purchases`, `-ui` | 10.10.1                   | Test Store and Paywalls, on purchases-ios 5.90.1                         |
+| `expo-secure-store`             | 57.0.4                    | the user's ID in the Keychain                                            |
+| `expo-speech`                   | 57.0.3                    | speech with a chosen voice                                               |
+| `expo-speech-recognition`       | 57.1.0                    | the last fallback recognizer                                             |
+| `expo-sqlite`                   | 57.0.3                    | the phrase bank                                                          |
+| `react-native-reanimated`       | 4.5.1                     | the design's fades, with `react-native-worklets` 0.10.1, as SDK 57 pins  |
+| `minisearch`                    | 7.2.0                     | BM25+ keyword ranking in the shared code                                 |
+| `create-expo-module`            | 57.0.1                    | scaffolds the two local modules                                          |
+| `@typesafe-ai/sdk`              | 0.6.0                     | in the relay and the evaluation; runs under workerd                      |
+| Jev                             | `jev-1.13.0`              | the only model on September 22, 2026                                     |
+| Wrangler                        | 4.136.2                   | needs Node.js 22 or later; `compatibility_date` `2026-09-22`             |
+| `@cloudflare/vitest-plugin`     | 1.2.2, with Vitest 4.1.11 | the relay's tests; pins Wrangler 4.136.2 ([workspace notes][ws-notes])   |
+| TypeScript                      | 6.0.3                     | `tsc` everywhere; Expo SDK 57's pin ([workspace notes][ws-notes])        |
+| `@revenuecat/cli`               | 0.1.3                     | headless Test Store purchases for the relay's tests                      |
 
 The iPhone build notes have the dates and licenses of the Expo libraries
 and MiniSearch, all MIT ([iPhone build notes][ios-libs]), and the iOS design
@@ -1284,13 +1284,12 @@ big button on a yes-or-no, pain, or consent line (EVAL-5).
 
 ## Testing
 
-The shared code and the relay are tested with Vitest 4.1.11, the relay's
-tests running inside the Workers runtime through `@cloudflare/vitest-plugin`
-1.2.2, the release that depends on the relay's Wrangler, 4.136.2, where 1.2.1
-would bring a second Wrangler ([workspace notes][ws-notes]); the Cloudflare
-notes cover its setup ([Cloudflare notes][cf-notes]). The app's screens and
-the Swift modules are checked on devices, by the checklist below, not with UI
-tests, in the first version.
+The shared code and the relay are tested with Vitest, the relay's tests
+running inside the Workers runtime through `@cloudflare/vitest-plugin`, at
+the [versions above](#versions-on-september-22-2026)
+([Cloudflare notes][cf-notes]). The app's screens and the Swift modules are
+checked on devices, by the checklist below, not with UI tests, in the first
+version.
 
 - **Unit tests,** for the shared code: the shortlist, BM25, the tag map, the
   request builder, the row's rules against recorded answers (ROW-3 to
