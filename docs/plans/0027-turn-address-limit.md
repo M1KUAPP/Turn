@@ -247,6 +247,34 @@ with `/tdd`, runs the full suite at the end, and closes with
 [note-rows]: /docs/research/0050-turn-address-limit.md#local-measurement
 [note-quotas]: /docs/research/0050-turn-address-limit.md#the-free-plans-quotas
 
+### Review round 1
+
+One `/code-review` round found 8 Standards, 4 Spec, and 8 fact-check
+problems; the decisions above now hold its fixes. It found no defect in the
+code, but four mutations no test caught: a window of 1 or 30 seconds,
+failing open when the address's object throws, keying the count on
+`X-Forwarded-For`, and Simulator requests skipping it. It also found that
+the decision's reasons left out the rows one address can still spend and a
+shared address's price, that the TRD's inventory and this plan's storage
+read as shorter-lived than they are, and stale figures, a wrong placement,
+and a missed IPv6 example in the note. Kept, with reasons:
+
+- **An `addressFor()` beside `deviceFor()`:** the address's object has one
+  caller.
+- **`minute` in both `minute-count.ts` and `device.ts`, and the count
+  beside `Budget.take()`:** the user's object also times its cached no by
+  `minute`, and the budget's window is a UTC day, as #96's second round
+  kept.
+- **The address's SEC-2 test's own loop, and the salt in the name test:**
+  that loop sends lines that fail their checks, not configuration
+  requests, and the literal shows exactly what's hashed.
+- **`Device.admit()`:** it names the ID's 30 for its two callers.
+- **A test that a refused request writes no row:** that's a cost, which
+  the Worker's `fetch` doesn't show; the local measurement checks it.
+- **`transactionSync()`, which no test needs:** the count has no `await`,
+  so it's exact without it, but the transaction keeps its read and write
+  in one synchronous block, as #96 chose.
+
 ### Rejected alternatives
 
 - **Keeping the binding and accepting the gap:** for as long as the binding
