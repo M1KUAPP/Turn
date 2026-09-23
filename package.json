@@ -6,6 +6,7 @@
     "eval"
   ],
   "scripts": {
+    "eval": "bun eval/src/report.ts",
     "graph": "graphify update .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
