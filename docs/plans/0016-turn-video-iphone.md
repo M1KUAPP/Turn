@@ -73,7 +73,7 @@ Contents:
 pass to `/wizard`. The directive's steps map to skills:
 
 - **`/research`:** one background agent, capped at 10 minutes, wrote
-  [the video iPhone notes][note] in under four, and the session adds its
+  [the video iPhone notes][note] in under four, and the session added its
   hands-on check.
 - **`/implement`:** there's no code, so no `/tdd` slice; each criterion has
   a shell check with its expected output, under
