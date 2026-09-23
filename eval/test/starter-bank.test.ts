@@ -31,7 +31,7 @@ test('follows the starter-bank format', () => {
   expect(new Set(lowered).size).toBe(lowered.length)
   const placeIds = bank.places.map((place) => place.id)
   for (const { id, places } of phrases) {
-    expect(placeIds, id).toEqual(expect.arrayContaining(places))
+    for (const place of places) expect(place, id).toBeOneOf(placeIds)
     expect(new Set(places).size, id).toBe(places.length)
   }
 })
