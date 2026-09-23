@@ -1,4 +1,4 @@
-import type { Config, LineAnswer, LineRequest } from '@turn/shared/relay'
+import { limits, type Config, type LineAnswer, type LineRequest } from '@turn/shared/relay'
 import { applyAnswer, emptyRow, phrasesInRow, type Answer, type Row } from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, rankOnPhone } from '@turn/shared/shortlist'
 import { randomUUID } from 'node:crypto'
@@ -75,7 +75,9 @@ export async function replay(
     let failure: string | undefined = config.jevOn ? undefined : 'jev_off'
     let ms: Replayed['ms']
     if (config.jevOn) {
-      const request: LineRequest = { lineId: randomUUID(), seq, ...jevLine(line.text, line.place, shortlist) }
+      // The app sends a line's last 300 characters, counted as the relay counts them (LISTEN-6).
+      const text = [...line.text].slice(-limits.line).join('')
+      const request: LineRequest = { lineId: randomUUID(), seq, ...jevLine(text, line.place, shortlist) }
       const started = performance.now()
       const timedOut = (error: unknown) => error instanceof Error && error.name === 'TimeoutError'
       try {
