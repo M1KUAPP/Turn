@@ -1,20 +1,5 @@
-import { readFileSync } from 'node:fs'
 import { expect, test } from 'vitest'
-
-type Line = {
-  id: string
-  author: string
-  text: string
-  kind: string
-  place: string
-  topic: string
-  concerns: string[]
-}
-
-const lines: Line[] = readFileSync(new URL('../lines.jsonl', import.meta.url), 'utf8')
-  .trim()
-  .split('\n')
-  .map((row) => JSON.parse(row))
+import { lines, type Line } from '../src/data'
 
 const count = (keep: (line: Line) => boolean) => lines.filter(keep).length
 
