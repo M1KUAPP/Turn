@@ -274,8 +274,13 @@ const curveSection = (count: number, curves: readonly (readonly [string, readonl
 }
 
 /** Each fold's cut-off for the embeddings ranker, which holds a line when no phrase's cosine reaches it. */
-const cutOffSection = (cutOffs: readonly number[]) => {
-  const values = cutOffs.map((cutOff) => (cutOff === Infinity ? 'none, holding every line' : cutOff.toFixed(3)))
+const cutOffSection = (cutOffs: readonly number[], fold: readonly number[]) => {
+  const values = cutOffs.map((cutOff, held) => {
+    const count = fold.filter((f) => f === held).length
+    if (count === 0) return 'no lines to score'
+    const value = cutOff === Infinity ? 'none, holding every line,' : cutOff.toFixed(3)
+    return `${value} for ${count} ${count === 1 ? 'line' : 'lines'}`
+  })
   return [
     "## The embeddings ranker's cut-offs",
     wrap(
@@ -298,7 +303,7 @@ const slug = (heading: string) =>
 /** The report for the lines, in Markdown, from their scores with the app's own shortlist, rankers, and row rules. */
 const render = (
   labeled: readonly Line[],
-  { lines: scores, timings, cutOffs }: Scores<Line>,
+  { lines: scores, timings, fold, cutOffs }: Scores<Line>,
   about: {
     run: string
     file: string
@@ -401,7 +406,7 @@ const render = (
       ...bigButtonSection(scores, naming),
       ...(names.includes('jev') ? kindSection(scores, naming) : []),
       ...curveSection(scores.length, curves, image),
-      ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings) : []),
+      ...(cutOffs.embeddings ? cutOffSection(cutOffs.embeddings, fold) : []),
       '## Latency',
       wrap(
         'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +

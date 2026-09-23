@@ -41,12 +41,13 @@ export type LineScore<Line extends ScoredLine> = {
 export type Count = { k: number; n: number }
 
 /**
- * Every line's score, each step's timings in milliseconds (the shortlist's and each ranker's), and, for a ranker with a
- * cross-validated cut-off, each fold's.
+ * Every line's score, each step's timings in milliseconds (the shortlist's and each ranker's), each line's fold, and,
+ * for a ranker with a cross-validated cut-off, each fold's.
  */
 export type Scores<Line extends ScoredLine> = {
   lines: LineScore<Line>[]
   timings: { shortlist: number[]; rankers: Record<string, number[]> }
+  fold: number[]
   cutOffs: Record<string, number[]>
 }
 
@@ -166,6 +167,7 @@ export async function scoreLines<Line extends ScoredLine>(
     return { line, shortlist: shortlist.map((phrase) => phrase.id), rankers: Object.fromEntries(byRanker) }
   })
   return {
+    fold,
     cutOffs: chosen,
     lines: scored,
     timings: {
