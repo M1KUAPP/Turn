@@ -233,14 +233,16 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     `secrets.required` with all three secrets, so a deploy checks the full
     set now, though only #30 uses `RC_SECRET_KEY`; and the vars
     `JEV_MODEL`, `JEV_ON`, `FREE_LINES`, `TYPESAFE_NAMED`, and `POLICY`.
-    The committed `worker/.dev.vars.example` already names the three
-    secrets.
+    `wrangler types` runs with `--strict-vars=false`, so a var's type is its
+    kind, such as `string`, not the value it holds today. The committed
+    `worker/.dev.vars.example` already names the three secrets.
 1.  **Tests** run in the Workers pool, which shares one isolate with the
     Worker and its objects:
     - A setup file makes every `fetch` a test didn't mock reject, since the
       spike's unmocked test reached the real API, and the key in a
       developer's shell environment is loaded into the pool unless
-      `vitest.config.ts` overrides it, which it does.
+      `vitest.config.ts` overrides it, which it does. It also quiets the
+      relay's log lines, which the log test reads from the same spy.
     - Each test stands in for Jev with `vi.spyOn(globalThis, 'fetch')`,
       building every `Response` inside the mock, and reads the log lines
       with `vi.spyOn(console, 'log')`.
@@ -379,16 +381,17 @@ code blocks, and was committed as `docs(research): add notes on the relay`.
 ### Task 6: The relay's packages and configuration
 
 **Files:** modify `worker/package.json`, `bun.lock`,
-`worker/wrangler.jsonc`, and `worker/vitest.config.ts`; create
-`worker/test/setup.ts`.
+`worker/wrangler.jsonc`, `worker/vitest.config.ts`, and
+`worker/test/index.test.ts`; create `worker/test/setup.ts`.
 
 - [ ] **Step 1: Add** `@typesafe-ai/sdk` 0.6.0 and `@turn/shared` as
-      dependencies, the configuration from the design, the test secrets in
-      `miniflare.bindings`, and the setup file that rejects unmocked
-      `fetch` calls.
+      dependencies, the configuration from the design but for the object's
+      binding, which Task 8 adds with the class it names, the test secrets
+      in `miniflare.bindings`, and the setup file that rejects unmocked
+      `fetch` calls, with a test that fails without it.
 - [ ] **Step 2: Check** that `bun run typecheck` generates the vars and the
       three secrets into `Env`, and that the existing tests pass; commit as
-      `build(relay): configure the Worker, its object, and its tests`.
+      `build(relay): configure the Worker and its tests`.
 
 ### Task 7: The configuration route
 
@@ -408,13 +411,17 @@ code blocks, and was committed as `docs(research): add notes on the relay`.
 ### Task 8: Answering a line
 
 **Files:** create `worker/src/device.ts` and `worker/test/lines.test.ts`;
-modify `worker/src/index.ts`.
+modify `worker/src/index.ts`, `worker/src/request.ts`,
+`worker/wrangler.jsonc`, and `worker/test/helpers.ts`.
 
 - [ ] **Step 1: Write the failing tests,** with Jev mocked: a valid line
       gets `200` with the scores by candidate id, the kind, the topic, the
-      policy, `freeLinesLeft` 20, and both timings; a changed `POLICY`
-      changes the next answer's policy (ROW-8); and `JEV_ON` false gets
-      `503 jev_off` with no call to Jev (STATE-3).
+      policy, `freeLinesLeft` 20, and both timings; the object is reached
+      by the salted hash with `locationHint: 'wnam'`; a changed `POLICY`
+      changes the next answer's policy (ROW-8); `JEV_ON` false gets
+      `503 jev_off` with no call to Jev (STATE-3); and a body that isn't a
+      line, such as bad JSON or a field of the wrong type, gets
+      `400 invalid_request`.
 - [ ] **Step 2: See them fail,** write the object and the route, see them
       pass, run the gate, and commit as
       `feat(relay): answer a partner line with Jev's scores`.
@@ -424,10 +431,11 @@ modify `worker/src/index.ts`.
 **Files:** modify `worker/src/request.ts` and `worker/test/lines.test.ts`.
 
 - [ ] **Step 1: Write the failing tests:** each field one past its limit,
-      a body over 16 KB with and without a length, a wrong content type,
-      bad JSON, a wrong type, a repeated id, and a `consent` category each
-      get `400 invalid_request` with no call to Jev (SEC-2); each field at
-      its limit, with emoji counted as one character each, gets `200`.
+      an empty line, name, text, or id, a body over 16 KB with and without
+      a length, a length over 16 KB before reading, a wrong or missing
+      content type, a repeated id, and a `consent` category each get
+      `400 invalid_request` with no call to Jev (SEC-2); each field at its
+      limit, with emoji counted as one character each, gets `200`.
 - [ ] **Step 2: See them fail,** write the checks, see them pass, run the
       gate, and commit as
       `feat(relay): refuse a line over its limits before any call`.
