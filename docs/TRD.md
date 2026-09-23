@@ -633,9 +633,10 @@ on answer(a)
 - **One line at a time.** A new line aborts the request in flight with an
   `AbortController`, and an answer for an older sequence number is dropped
   (ROW-7).
-- **The phone waits 3 seconds** for the relay, and the relay gives Jev 2.5
-  seconds in all, with at most one retry of 1.5 seconds and no wait for a
-  server's `Retry-After`, since a later answer would arrive too late to help
+- **The phone waits 3 seconds** for the relay, and the relay gives each
+  line 2.5 seconds in all, RevenueCat's check included, and Jev what's left
+  of them, with at most one retry of 1.5 seconds and no wait for a server's
+  `Retry-After`, since a later answer would arrive too late to help
   (STATE-2).
 - **After a failure,** the phone ranks that line itself. After two failures
   among the last three lines, the app shows "Listen mode is degraded" until
