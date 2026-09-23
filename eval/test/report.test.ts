@@ -190,6 +190,8 @@ test('says so in a whole sentence when a group has no lines', async () => {
         'of its answers.'
     )
   )
+  // One line fills one fold, so four have no lines, and the report says so rather than give their cut-offs.
+  expect(one.replace(/\s+/g, ' ').match(/no lines to score/g)).toHaveLength(4)
   const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
   for (const line of empty.split('\n').filter((line) => !line.startsWith('|'))) {
     expect(line.length, line).toBeLessThanOrEqual(80)
@@ -256,7 +258,15 @@ test("gives EVAL-4's verdict on all lines alone, and each subset's interval with
 test("lists the embeddings ranker's five cut-offs, each chosen on the other folds", () => {
   const cutOffs = section("## The embeddings ranker's cut-offs")
   expect(cutOffs).toMatch(prose('Folds 1 to 5:'))
-  expect(cutOffs.match(/\d\.\d{3}|none, holding every line/g)).toHaveLength(5)
+  // The fixture's 8 lines make folds of 2, 2, 2, 1, and 1.
+  const folds = cutOffs.replace(/\s+/g, ' ').match(/(\d\.\d{3}|none, holding every line,) for \d lines?/g) ?? []
+  expect(folds.map((each) => each.split(' for ')[1]).toSorted()).toEqual([
+    '1 line',
+    '1 line',
+    '2 lines',
+    '2 lines',
+    '2 lines'
+  ])
   expect(report).toContain("1.  [The embeddings ranker's cut-offs](#the-embeddings-rankers-cut-offs)")
 })
 
