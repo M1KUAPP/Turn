@@ -92,3 +92,20 @@ export function pickShortlist(line: string, index: PhraseIndex, { bank, row, pla
   take(idsOf(byTaps), Infinity)
   return [...picked.values()]
 }
+
+/** The forms of "do", "be", and "have", the modal verbs, and their negatives, which open a yes-or-no question. */
+const yesNoOpeners: ReadonlySet<string> = new Set(
+  `
+  do does did don't doesn't didn't am is are was were isn't aren't wasn't weren't have has had haven't hasn't hadn't
+  can could may might must shall should will would
+  can't cannot couldn't mightn't mustn't shan't shouldn't won't wouldn't
+  `
+    .trim()
+    .split(/\s+/)
+)
+
+/** Whether the phone counts a line as a yes-or-no question: it starts with one of the openers above. */
+export function isYesNo(line: string): boolean {
+  const first = /^\W*([a-z]+(?:'[a-z]+)?)/.exec(line.toLowerCase().replaceAll('’', "'"))
+  return first !== null && yesNoOpeners.has(first[1])
+}

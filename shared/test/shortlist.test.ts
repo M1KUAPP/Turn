@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { pickShortlist, PhraseIndex, type Context, type Phrase } from '../src/shortlist'
+import { isYesNo, pickShortlist, PhraseIndex, type Context, type Phrase } from '../src/shortlist'
 
 const phrase = (id: string, text: string, places: string[] = []): Phrase => ({ id, text, places })
 
@@ -142,4 +142,20 @@ describe('pickShortlist', () => {
     expect(pick('Some water?', { bank })).not.toContain('late')
     expect(pick('Some water?', { bank, taps: new Map([['late', 3]]) }).slice(0, 2)).toEqual(['water', 'late'])
   })
+})
+
+describe('isYesNo', () => {
+  test.each([
+    'Do you want some water?',
+    'Can you hear me?',
+    'Is the new nurse here?',
+    'Are you tired?',
+    'Don’t you want it?',
+    "Won't you sit down?"
+  ])('counts "%s"', (line) => expect(isYesNo(line)).toBe(true))
+
+  test.each(["It's cold out today.", "You're tired?", 'How was physio today?', 'Water?', ''])(
+    'doesn\'t count "%s"',
+    (line) => expect(isYesNo(line)).toBe(false)
+  )
 })
