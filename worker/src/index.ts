@@ -52,8 +52,8 @@ const codes = {
 
 /**
  * Records how a request ended, and answers with that error's code and nothing else (SEC-4). A request over a rate limit
- * is told to wait 60 seconds, the longest period a binding can have, since the binding doesn't say when its window
- * ends (SEC-3).
+ * is told to wait 60 seconds: a whole clock minute for the ID's count, and the longest period the address's binding can
+ * have, since it doesn't say when its window ends (SEC-3).
  */
 function refuse(log: LogFacts, outcome: keyof typeof codes) {
   log.outcome = outcome
@@ -81,7 +81,7 @@ const termsFor = (env: Env, freeLines: number, dailyCalls: number, { build }: Us
   dailyCalls
 })
 
-/** Asks the user's object to count a line that passed its checks and the limits, and to ask Jev. */
+/** Asks the user's object to count a line that passed its checks and the address's limit, and to ask Jev. */
 async function answerLine(line: LineRequest, env: Env, log: LogFacts, user: User, hash: string): Promise<Response> {
   const { freeLines, dailyCalls, ...config } = readConfig(env)
   if (!config.jevOn) return refuse(log, 'off')
@@ -107,20 +107,19 @@ async function answerLine(line: LineRequest, env: Env, log: LogFacts, user: User
 }
 
 /**
- * Whether a request is within its ID's 30 a minute, which the user's object counts exactly, and then its address's 120,
- * through the rate limiting binding, a looser backstop for IDs minted on one address (SEC-3). A request its ID's own
- * limit refuses doesn't count against the address, which a mobile network may share. Cloudflare sets
- * `CF-Connecting-IP` on requests from clients; any request without one shares one count.
+ * Whether a request is within its address's 120 a minute, through the rate limiting binding: a loose backstop for IDs
+ * minted on one address, which keeps a flood from their objects once it holds (SEC-3). Cloudflare sets
+ * `CF-Connecting-IP` on requests from clients, and its edge won't take one from a client; any request without one
+ * shares one count. Each ID's 30 are counted by its object, in the call that serves the request.
  */
-async function withinLimits(request: Request, env: Env, hash: string) {
-  if (!(await deviceFor(env, hash).admit())) return false
+async function withinAddressLimit(request: Request, env: Env) {
   const address = request.headers.get('CF-Connecting-IP') ?? ''
   return (await env.ADDRESS_LIMITER.limit({ key: address })).success
 }
 
 /**
  * Finds the route, then checks the headers every request carries and a line's body before any count or call (SEC-2),
- * then the rate limits, before the line or the configuration.
+ * then the address's limit, before the user's object counts the request and serves the line or the configuration.
  */
 async function route(request: Request, env: Env, log: LogFacts): Promise<Response> {
   const { pathname } = new URL(request.url)
@@ -134,12 +133,13 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
   const line = isLine ? await readLine(request) : undefined
   if (line === null) return refuse(log, 'invalid')
   if (line) log.seq = line.seq
-  if (!(await withinLimits(request, env, hash))) return refuse(log, 'limited')
+  if (!(await withinAddressLimit(request, env))) return refuse(log, 'limited')
   if (line) return answerLine(line, env, log, user, hash)
   const { freeLines, dailyCalls, ...config } = readConfig(env)
-  const freeLinesLeft = await deviceFor(env, hash).freeLinesLeft(termsFor(env, freeLines, dailyCalls, user))
+  const reply = await deviceFor(env, hash).config(termsFor(env, freeLines, dailyCalls, user))
+  if ('outcome' in reply) return refuse(log, reply.outcome)
   log.outcome = 'config'
-  return Response.json({ ...config, freeLinesLeft } satisfies Config)
+  return Response.json({ ...config, freeLinesLeft: reply.freeLinesLeft } satisfies Config)
 }
 
 export default {

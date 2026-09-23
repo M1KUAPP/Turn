@@ -1,4 +1,5 @@
 import type { LineRequest } from '@turn/shared/relay'
+import { runInDurableObject } from 'cloudflare:test'
 import { env } from 'cloudflare:workers'
 import { expect, vi } from 'vitest'
 import type { Item } from '../src/entitlement'
@@ -82,9 +83,18 @@ export const lineFor = (
 /** Posts a line to the Worker's handler as the app would, with some vars changed. */
 export const postLine = (body: unknown, changes: Parameters<typeof send>[1] = {}) => send(lineFor(body), changes)
 
-/** Posts a new line as the app would, from these headers, with some vars changed. */
-export const postLineFrom = (sent: Record<string, string>, changes: Parameters<typeof send>[1] = {}) =>
-  send(lineFor(lineRequest(), { ...sent, 'Content-Type': 'application/json' }), changes)
+/** Posts a line as the app would, a new one unless one is given, from these headers, with some vars changed. */
+export const postLineFrom = (
+  sent: Record<string, string>,
+  changes: Parameters<typeof send>[1] = {},
+  body: LineRequest = lineRequest()
+) => send(lineFor(body, { ...sent, 'Content-Type': 'application/json' }), changes)
+
+/** The line IDs a user's object holds as free lines, for the test's user unless another is given. */
+export const claimedLines = async (id = user) =>
+  runInDurableObject(env.DEVICE.getByName(`user-${await userHash(id)}`), (_, state) =>
+    state.storage.sql.exec<{ line_id: string }>('SELECT line_id FROM free_lines').toArray()
+  )
 
 /** Checks that a request gets 400 invalid_request before it reaches the user's object or Jev (SEC-2). */
 export async function expectRefused(request: Request) {
