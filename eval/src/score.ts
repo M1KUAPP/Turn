@@ -26,6 +26,9 @@ export const outcomes = [
 ] as const
 export type Outcome = (typeof outcomes)[number]
 
+/** The outcomes that are right: the row showed an acceptable reply, or held on a line with none. */
+const rightOutcomes: ReadonlySet<Outcome> = new Set(['right big button', 'right row', 'right hold'])
+
 /**
  * One line, scored: its shortlist's ids and, per ranker, its ranking, its order over the phrases it scored above 0,
  * the row the rules made of it, and what the user would see, all from the first timed pass; and the rows of every
@@ -144,7 +147,7 @@ export async function scoreLines<Line extends ScoredLine>(
         acceptable: new Set(line.acceptable)
       }))
       const right = ({ ranking, acceptable }: (typeof items)[number], cutOff: number) =>
-        outcomeOf(rowFor(cut(ranking, cutOff)), acceptable).startsWith('right')
+        rightOutcomes.has(outcomeOf(rowFor(cut(ranking, cutOff)), acceptable))
       return [name, crossValidate(items, fold, ({ ranking }) => topSix(ranking), right)]
     })
   )
@@ -184,11 +187,21 @@ const tally = (seen: readonly Outcome[]) => {
   return counts
 }
 
-/** The lines a ranking counts, those with an acceptable phrase besides the fixed buttons, which no ranker orders. */
+/**
+ * The lines a ranking counts, those with an acceptable phrase besides the fixed buttons, which no ranker orders, each
+ * with where each ranker's order first holds one of those phrases, from 0, or -1 for nowhere.
+ */
 const withPhrases = <Line extends ScoredLine>(scores: readonly LineScore<Line>[]) =>
   scores
     .map((score) => ({ ...score, phrases: new Set(score.line.acceptable.filter((id) => !fixedButtons.includes(id))) }))
     .filter(({ phrases }) => phrases.size > 0)
+    .map((score) => ({
+      ...score,
+      firstHit: (name: string) => score.rankers[name].order.findIndex((id) => score.phrases.has(id))
+    }))
+
+/** Whether a first hit, from 0, is among the first six. */
+const inTopSix = (hit: number) => hit >= 0 && hit < 6
 
 /**
  * Sums up a group of scored lines. The ranking counts only lines with an acceptable phrase besides the fixed buttons,
@@ -209,7 +222,7 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
     alwaysHold: tally(scores.map(({ line }) => (line.acceptable.length === 0 ? 'right hold' : 'missed reply'))),
     rankers: Object.fromEntries(
       names.map((name) => {
-        const firstHit = ranked.map(({ rankers, phrases }) => rankers[name].order.findIndex((id) => phrases.has(id)))
+        const firstHit = ranked.map((score) => score.firstHit(name))
         const seen = tally(scores.map(({ rankers }) => rankers[name].outcome))
         const wrong = seen['wrong big button'] + seen['wrong row']
         const changed = wrong + seen['right big button'] + seen['right row']
@@ -217,7 +230,7 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
           name,
           {
             top1: { k: firstHit.filter((i) => i === 0).length, n: ranked.length },
-            top6: { k: firstHit.filter((i) => i >= 0 && i < 6).length, n: ranked.length },
+            top6: { k: firstHit.filter(inTopSix).length, n: ranked.length },
             meanReciprocalRank: mean(firstHit.map((i) => (i < 0 ? 0 : 1 / (i + 1)))),
             outcomes: seen,
             coverage: { k: changed, n: scores.length },
@@ -305,8 +318,7 @@ export function topSixGap<Line extends ScoredLine>(
   b: string
 ): { difference: number; low: number; high: number; verdict: Verdict } | null {
   const ranked = withPhrases(scores)
-  const hits = (name: string) =>
-    ranked.map(({ rankers, phrases }) => (rankers[name].order.slice(0, 6).some((id) => phrases.has(id)) ? 1 : 0))
+  const hits = (name: string) => ranked.map((score) => (inTopSix(score.firstHit(name)) ? 1 : 0))
   const gap = pairedBootstrap(hits(a), hits(b))
   if (gap === null) return null
   return { ...gap, verdict: gap.high < 0 ? 'trails' : gap.low > 0 ? 'leads' : 'no clear difference' }
