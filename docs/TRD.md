@@ -95,12 +95,13 @@ What each part owns:
   the voices `expo-speech` can use.
 - **The relay** is the only public API, at its `workers.dev` address, and
   runs with `"placement": { "region": "aws:us-west-2" }`, next to Jev. It
-  checks headers, applies the rate limits, checks a line's lengths, serves
-  the configuration, and passes each line to the user's Durable Object.
-- **The user's Durable Object** counts free lines, keeps the `listen`
-  entitlement it has confirmed, builds the Jev request, and calls Jev. It's
-  created with `locationHint: "wnam"`, so a line crosses an ocean at most
-  once, from the phone to the relay ([services notes][svc-placement]).
+  checks headers and lengths, applies the rate limits, serves the
+  configuration, and passes each line to the user's Durable Object.
+- **The user's Durable Object** counts the user's requests each minute and
+  their free lines, keeps the `listen` entitlement it has confirmed, builds
+  the Jev request, and calls Jev. It's created with `locationHint: "wnam"`,
+  so a line crosses an ocean at most once, from the phone to the relay
+  ([services notes][svc-placement]).
 - **The budget's Durable Object,** `jev-calls`, is one for the whole
   relay. It counts the UTC day's calls to Jev, retries included, which each
   user's object takes one at a time before every attempt, and refuses them
@@ -118,8 +119,9 @@ The path of one partner line:
     app gives it the next sequence number and cancels any request in flight.
 2.  The app tags names in the line and the shortlist, picks the 40
     candidates, and sends `POST /v1/lines`.
-3.  The relay checks the headers, applies the ID's and the address's rate
-    limits, checks the line, and passes it to `user-<hash>`.
+3.  The relay checks the request, has `user-<hash>` count it against the
+    ID's 30 a minute, applies the address's limit, and passes the line to
+    `user-<hash>`.
 4.  The object claims a free line or, past them, checks the entitlement; it
     answers `402` if neither allows the line. Otherwise it calls Jev within
     2.5 seconds, taking each attempt from the day's budget in `jev-calls`.
