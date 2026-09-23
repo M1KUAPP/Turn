@@ -18,3 +18,6 @@ export const smallBank: Phrase[] = [
 
 /** The strip's first phrase, which no ranker ranks. */
 export const waitImTyping: Phrase = { id: 'wait-im-typing', text: "Wait, I'm typing", places: [], strip: true }
+
+/** The kinds of question a ranking gives when its ranker calls none: every kind at 0. */
+export const noKind = { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 }

@@ -90,10 +90,12 @@ test('counts slot changes: steady slots, a phrase that beats the lowest by the m
     const ids = request.candidates.map(({ id }) => id)
     if (request.seq === 1)
       six = Object.fromEntries(ids.slice(10, 16).map((id, i) => [id, [0.8, 0.78, 0.76, 0.74, 0.72, 0.62][i]]))
-    const [a, , , , , f] = Object.keys(six)
+    const [first, , , , , sixth] = Object.keys(six)
     fresh ||= ids.find((id) => !(id in six)) ?? ''
     // Line 2 shifts the six by less than the margin and brings a phrase 0.07 above the lowest; line 3 one 0.18 above.
-    const scores = [six, { ...six, [a]: 0.81, [f]: 0.63, [fresh]: 0.7 }, { ...six, [fresh]: 0.8 }, {}][request.seq - 1]
+    const scores = [six, { ...six, [first]: 0.81, [sixth]: 0.63, [fresh]: 0.7 }, { ...six, [fresh]: 0.8 }, {}][
+      request.seq - 1
+    ]
     return answered(request, scores)
   })
   const { replayed } = await replay(lines('One', 'Two', 'Three', 'Four'), relay)
