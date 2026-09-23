@@ -272,6 +272,18 @@ linked. It is committed as
 - [ ] **Step 3: Send back near-duplicates and wrong kinds** (decision 4),
       then check the file again.
 
+The writer took about 15 minutes, and a script confirmed that its prompt
+was its brief, word for word. Its file passed `check_new_lines.py`, and
+every line's words fit its kind. Five lines tested the same situation as
+one of the 80: a cake order, shop staff sorting out who works when, a
+parent telling a child off, a shoe size, and a question about the user's
+dog. They went back with the message after
+[the writer's brief](#appendix-the-writers-brief), and in about three
+minutes their replacements, about limes, a delivery, a kids' game, a
+guitar, and a new apartment, passed the checks. The 20 lines hold 7
+either-or, 8 open, and 5 not a question, five at each place, with 7 on
+pain or health.
+
 ### Task 4: The labelers
 
 - [ ] **Step 1: Build both briefs** with `make_brief.py`, from the rules in
@@ -286,6 +298,25 @@ linked. It is committed as
 - [ ] **Step 4: Compare** each labeler with `claude-c` and `claude-d` on
       the 80 lines, and give the result here.
 
+The labelers took about 14 and 13 minutes, and a script confirmed that
+each one's prompt was its brief, word for word. Both files passed
+`check_labels.py`, so neither went back. `claude-h`'s reply also
+summarized its calls, which nothing here uses. What they found:
+
+- **The new lines.** `claude-g` left 12 of the 20 with no acceptable
+  reply and `claude-h` 10, and they agree on some or none for 16 of the
+  20 (kappa 0.60).
+- **The 80.** `claude-g` left 8 with none, as `claude-c` did, but only 5
+  are the same lines; `claude-h` left 12, against `claude-d`'s 7, and 6
+  are the same.
+- **Agreement with the first labelers,** from `bun run eval:count` on
+  each pair's files: some or none agrees on 74 and 73 of the 80 lines
+  (kappa 0.58 and 0.59), against 79 between `claude-c` and `claude-d`;
+  over line and phrase pairs, positive agreement is 0.87 and 0.89,
+  against 0.88; and alpha with the MASI distance is 0.58 for both,
+  against 0.65. The new labelers pick replies as the first ones did, but
+  which borderline lines have none depends on the labeler.
+
 ### Task 5: The new lines in the data
 
 **Files:** modify `eval/lines.jsonl` and `eval/second-labeling.jsonl`.
@@ -298,8 +329,19 @@ linked. It is committed as
 
   ```shell
   git add eval/lines.jsonl eval/second-labeling.jsonl
-  git commit -m "feat(eval): replace lines with new ones that have no reply"
+  git commit -m "feat(eval): replace 12 lines with new ones that have no reply"
   ```
+
+The rule took 12 new lines and skipped no candidate. In order, `line-81`
+to `line-92` replaced `line-04`, `line-57`, `line-25`, `line-35`,
+`line-41`, `line-59`, `line-65`, `line-33`, `line-01`, `line-58`,
+`line-61`, and `line-72`. `claude-g` gave 8 of the 12 no reply and 4 a
+reply (`line-84`, `line-85`, `line-86`, and `line-89`), so the scored
+labeling reached 16 with `line-92`, and `line-93` to `line-100` stayed
+out. Every EVAL-1 quota is met: 16 lines with none, 37 yes-or-no, 30 on
+pain or health, 10 on consent, and 49 that share no word. Over the 80,
+the labelers' agreement is kappa 0.84 on some or none, positive
+agreement 0.87 over the pairs, and alpha 0.64.
 
 ### Task 6: The floor's check
 
@@ -308,7 +350,8 @@ linked. It is committed as
 - [ ] **Step 1: Assert the floor** in place of the `test.todo` and its
       comment: at least 16 lines have no acceptable reply (EVAL-1).
 - [ ] **Step 2: See it fail on the old lines,** 8 against 16, by running it
-      against `main`'s two files, then pass on the new ones.
+      against `main`'s two files, then pass on the new ones. It failed
+      with "expected 8 to be greater than or equal to 16".
 - [ ] **Step 3: Run the gate,** then commit:
 
   ```shell
@@ -458,6 +501,21 @@ Give each line a `topic`: 1 to 3 lowercase words, letters and single spaces only
 
 Report back in under 100 words: the file's path and the counts by kind, place, and concern. Don't paste the lines.
 ````
+
+After its file passed the checks, the writer got one more message
+([Task 3](#task-3-the-writer)):
+
+```text
+Thanks. Five of your lines test the same situation as lines already in the evaluation set, which would test the same thing twice. Please replace these five with new lines in different situations, keeping each one's id, place, kind, and concerns exactly:
+
+- line-87 (shop, open, no concerns): an existing line is "And what name are we putting on the cake?"
+- line-91 (shop, not_a_question, no concerns): an existing line is "We need another cashier up front, the line's getting long."
+- line-92 (out, not_a_question, no concerns): an existing line is "Don't touch the cake yet, sweetie, we're doing candles first, go tell your brother it's almost time."
+- line-95 (shop, open, no concerns): an existing line is "Did you want to try the nine, or the nine and a half?"
+- line-100 (out, open, no concerns): an existing line is "Aw, what a sweet dog. What breed is she?"
+
+So avoid cake orders, shop staff talking about who's working when, parents telling a child off, shoe sizes, and questions about the user's pet. Same rules as before: read no other file, write only in your folder, rerun your check script, and reply in under 60 words with the counts, without pasting the lines.
+```
 
 ## Appendix: the labelers' brief
 
