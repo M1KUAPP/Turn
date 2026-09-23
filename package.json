@@ -1,9 +1,15 @@
 {
+  "private": true,
+  "workspaces": [
+    "shared"
+  ],
   "scripts": {
     "graph": "graphify update .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "bun run --filter '*' test",
+    "typecheck": "bun run --filter '*' typecheck"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
