@@ -50,8 +50,8 @@ test('commits a second labeling of every line beside the first, by another label
   expect(secondLabeling.map((labels) => labels.id)).toEqual(lines.map((line) => line.id))
   for (const [i, line] of lines.entries()) {
     const labels = secondLabeling[i]
-    expect(labels?.labeler, line.id).toMatch(/\S/)
-    expect(labels?.labeler, line.id).not.toBe(line.labeler)
-    expectRepliesFollowRules(line, labels?.acceptable ?? [])
+    expect(labels.labeler, line.id).toMatch(/\S/)
+    expect(labels.labeler, line.id).not.toBe(line.labeler)
+    expectRepliesFollowRules(line, labels.acceptable)
   }
 })
