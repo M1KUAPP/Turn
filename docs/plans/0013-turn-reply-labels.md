@@ -354,7 +354,7 @@ and `eval/test/labels.test.ts`.
 - [ ] **Step 1: Say how the lines were labeled.** In
       [the evaluation data][trd-eval-data], name the two fields and the
       second file, say that no labeling lists a strip phrase, define a line
-      with no shared content word as decision 7 does, and add to the bullet
+      with no shared content word as decision 8 does, and add to the bullet
       on who wrote the files that `claude-c` and `claude-d` labeled the
       replies, that the report and the README say so, and that no teammate
       had labeled a line.
