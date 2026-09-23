@@ -48,7 +48,12 @@ line numbers.
   - The signing team, only with 2 or more identities: without a TTY the
     CLI takes the first one (see the next section).
   - A busy port: "Use port 8082 instead?" (`utils/port.js:155-159`).
-    Without a TTY it warns and returns no port (165-167).
+    Without a TTY it warns, returns no port (165-167), and logs
+    "› Skipping dev server" (194), so the run starts no Metro of its own
+    (`run/resolveBundlerProps.js:26`).
+  - A malformed `ios/` from an earlier prebuild: "would you like to clear
+    the project files and reinitialize them?" Without a TTY it clears them
+    and warns instead (`prebuild/clearNativeFolder.js:193-204`).
   - A locked phone: "Cannot launch ... Unlock <device name> to
     continue..." Without a TTY it throws instead
     (`run/ios/appleDevice/installOnDeviceAsync.js:138-147`).
@@ -68,9 +73,9 @@ line numbers.
   - "› Auto signing app using team(s): <team ID>"
     (`run/ios/codeSigning/configureCodeSigning.js:88`).
   - "› Signing and building iOS app with: <certificate common name>"
-    (`configureCodeSigning.js:103`). The source's own sample
-    lines have the form "Apple Development: <email> (<ID>)"
-    (`run/ios/codeSigning/Security.js:81-86`).
+    (`configureCodeSigning.js:103`). One of the source's four sample
+    lines has the form "Apple Development: <email> (<ID>)", and the other
+    three carry a person's name (`run/ios/codeSigning/Security.js:81-86`).
   - The locked-phone messages carry the device name
     (`installOnDeviceAsync.js:142, 147`).
   - "› Installing <binary path>" shows the DerivedData path
@@ -82,8 +87,8 @@ line numbers.
 ## Code signing and xcodebuild arguments
 
 - **When signing is skipped.** If every target already has a
-  `DEVELOPMENT_TEAM`, or every target has a provisioning profile, the CLI
-  logs the teams and returns `null`
+  `DEVELOPMENT_TEAM`, the CLI logs the teams (88) and returns `null`; if
+  every target has a provisioning profile, it returns `null` with no log
   (`configureCodeSigning.js:68-99`,
   `run/ios/codeSigning/xcodeCodeSigning.js:49-53`).
 - **Finding identities.** It runs
