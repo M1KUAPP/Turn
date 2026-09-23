@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "eval": "bun eval/src/report.ts",
+    "eval:count": "bun eval/src/count.ts",
     "graph": "graphify update .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
