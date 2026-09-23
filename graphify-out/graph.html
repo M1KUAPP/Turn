@@ -253,7 +253,7 @@
         </div>
         <div id="legend"></div>
       </div>
-      <div id="stats">3345 nodes &middot; 3540 edges &middot; 243 communities</div>
+      <div id="stats">3370 nodes &middot; 3564 edges &middot; 243 communities</div>
     </div>
     <script>
       const RAW_NODES = [
@@ -388,19 +388,6 @@
           degree: 4
         },
         {
-          id: 'shared_src_row_kind',
-          label: 'Kind',
-          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
-          size: 11.6,
-          font: { size: 0, color: '#ffffff' },
-          title: 'Kind',
-          community: 204,
-          community_name: 'src/index.ts',
-          source_file: 'shared/src/row.ts',
-          file_type: 'code',
-          degree: 3
-        },
-        {
           id: 'shared_src_row_policy',
           label: 'Policy',
           color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
@@ -531,6 +518,19 @@
           degree: 1
         },
         {
+          id: 'shared_src_row_kind',
+          label: 'Kind',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Kind',
+          community: 209,
+          community_name: 'data.ts',
+          source_file: 'shared/src/row.ts',
+          file_type: 'code',
+          degree: 3
+        },
+        {
           id: 'eval_src_score_count',
           label: 'Count',
           color: { background: '#B07AA1', border: '#B07AA1', highlight: { background: '#ffffff', border: '#B07AA1' } },
@@ -629,7 +629,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'Ranker',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/src/rankers.ts',
           file_type: 'code',
           degree: 3
@@ -642,23 +642,10 @@
           font: { size: 0, color: '#ffffff' },
           title: 'Ranking',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'shared/src/row.ts',
           file_type: 'code',
           degree: 6
-        },
-        {
-          id: 'shared_src_shortlist_context',
-          label: 'Context',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 12.1,
-          font: { size: 0, color: '#ffffff' },
-          title: 'Context',
-          community: 217,
-          community_name: 'shortlist.ts',
-          source_file: 'shared/src/shortlist.ts',
-          file_type: 'code',
-          degree: 4
         },
         {
           id: 'shared_src_shortlist_phrase',
@@ -668,10 +655,62 @@
           font: { size: 12, color: '#ffffff' },
           title: 'Phrase',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 9
+        },
+        {
+          id: 'eval_src_agreement_agreement',
+          label: 'Agreement',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Agreement',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 1
+        },
+        {
+          id: 'eval_src_agreement_table',
+          label: 'Table',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Table',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 1
+        },
+        {
+          id: 'eval_src_agreement_unit',
+          label: 'Unit',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Unit',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 1
+        },
+        {
+          id: 'shared_src_shortlist_context',
+          label: 'Context',
+          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
+          size: 12.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Context',
+          community: 220,
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/shortlist.ts',
+          file_type: 'code',
+          degree: 4
         },
         {
           id: 'shared_src_shortlist_phraseindex',
@@ -681,7 +720,7 @@
           font: { size: 12, color: '#ffffff' },
           title: 'PhraseIndex',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 11
@@ -761,45 +800,6 @@
           community: 237,
           community_name: 'withBoardSplash.ts',
           source_file: 'app/plugins/withBoardSplash.ts',
-          file_type: 'code',
-          degree: 1
-        },
-        {
-          id: 'eval_src_agreement_agreement',
-          label: 'Agreement',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 10.5,
-          font: { size: 0, color: '#ffffff' },
-          title: 'Agreement',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
-          file_type: 'code',
-          degree: 1
-        },
-        {
-          id: 'eval_src_agreement_table',
-          label: 'Table',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 10.5,
-          font: { size: 0, color: '#ffffff' },
-          title: 'Table',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
-          file_type: 'code',
-          degree: 1
-        },
-        {
-          id: 'eval_src_agreement_unit',
-          label: 'Unit',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 10.5,
-          font: { size: 0, color: '#ffffff' },
-          title: 'Unit',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
           file_type: 'code',
           degree: 1
         },
@@ -1105,12 +1105,12 @@
         {
           id: 'worker_test_config_test_getconfig',
           label: 'getConfig()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 11.0,
           font: { size: 0, color: '#ffffff' },
           title: 'getConfig()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/config.test.ts',
           file_type: 'code',
           degree: 2
@@ -1118,12 +1118,12 @@
         {
           id: 'worker_test_helpers_expecterror',
           label: 'expectError()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 12.6,
           font: { size: 0, color: '#ffffff' },
           title: 'expectError()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 5
@@ -1131,12 +1131,12 @@
         {
           id: 'worker_test_helpers_expectrefused',
           label: 'expectRefused()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 12.1,
           font: { size: 0, color: '#ffffff' },
           title: 'expectRefused()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 4
@@ -1144,12 +1144,12 @@
         {
           id: 'worker_test_helpers_jevanswer',
           label: 'jevAnswer()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 12.1,
           font: { size: 0, color: '#ffffff' },
           title: 'jevAnswer()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 4
@@ -1157,12 +1157,12 @@
         {
           id: 'worker_test_helpers_jeverror',
           label: 'jevError()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 11.6,
           font: { size: 0, color: '#ffffff' },
           title: 'jevError()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 3
@@ -1170,12 +1170,12 @@
         {
           id: 'worker_test_helpers_linefor',
           label: 'lineFor()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 11.6,
           font: { size: 0, color: '#ffffff' },
           title: 'lineFor()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 3
@@ -1183,12 +1183,12 @@
         {
           id: 'worker_test_helpers_linerequest',
           label: 'lineRequest()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 12.1,
           font: { size: 0, color: '#ffffff' },
           title: 'lineRequest()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 4
@@ -1196,12 +1196,12 @@
         {
           id: 'worker_test_helpers_mockjev',
           label: 'mockJev()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 12.1,
           font: { size: 0, color: '#ffffff' },
           title: 'mockJev()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 4
@@ -1209,12 +1209,12 @@
         {
           id: 'worker_test_helpers_postline',
           label: 'postLine()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 13.1,
           font: { size: 0, color: '#ffffff' },
           title: 'postLine()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 6
@@ -1222,12 +1222,12 @@
         {
           id: 'worker_test_helpers_send',
           label: 'send()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 13.6,
           font: { size: 0, color: '#ffffff' },
           title: 'send()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 7
@@ -1235,12 +1235,12 @@
         {
           id: 'worker_test_helpers_sha256',
           label: 'sha256()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 11.6,
           font: { size: 0, color: '#ffffff' },
           title: 'sha256()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/helpers.ts',
           file_type: 'code',
           degree: 3
@@ -1248,12 +1248,12 @@
         {
           id: 'worker_test_lines_test_start',
           label: 'start()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
           title: 'start()',
-          community: 207,
-          community_name: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
           source_file: 'worker/test/lines.test.ts',
           file_type: 'code',
           degree: 1
@@ -1610,6 +1610,19 @@
           degree: 4
         },
         {
+          id: 'eval_src_stats_mean',
+          label: 'mean()',
+          color: { background: '#B07AA1', border: '#B07AA1', highlight: { background: '#ffffff', border: '#B07AA1' } },
+          size: 12.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'mean()',
+          community: 216,
+          community_name: 'score.ts',
+          source_file: 'eval/src/stats.ts',
+          file_type: 'code',
+          degree: 5
+        },
+        {
           id: 'eval_src_stats_percentile',
           label: 'percentile()',
           color: { background: '#B07AA1', border: '#B07AA1', highlight: { background: '#ffffff', border: '#B07AA1' } },
@@ -1695,7 +1708,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'place()',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/src/rankers.ts',
           file_type: 'code',
           degree: 5
@@ -1708,7 +1721,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'run()',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 3
@@ -1721,23 +1734,75 @@
           font: { size: 0, color: '#ffffff' },
           title: 'scoring()',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 1
         },
         {
-          id: 'shared_src_shortlist_processterm',
-          label: 'processTerm()',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 10.5,
+          id: 'eval_src_agreement_agreementof',
+          label: 'agreementOf()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.0,
           font: { size: 0, color: '#ffffff' },
-          title: 'processTerm()',
-          community: 217,
-          community_name: 'shortlist.ts',
-          source_file: 'shared/src/shortlist.ts',
+          title: 'agreementOf()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
           file_type: 'code',
-          degree: 1
+          degree: 2
+        },
+        {
+          id: 'eval_src_agreement_alphaof',
+          label: 'alphaOf()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 12.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'alphaOf()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 4
+        },
+        {
+          id: 'eval_src_agreement_comparelabelings',
+          label: 'compareLabelings()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 13.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'compareLabelings()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 6
+        },
+        {
+          id: 'eval_src_agreement_masidistance',
+          label: 'masiDistance()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'masiDistance()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 3
+        },
+        {
+          id: 'eval_src_agreement_tableof',
+          label: 'tableOf()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'tableOf()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 3
         },
         {
           id: 'eval_src_count_main',
@@ -1790,6 +1855,32 @@
           source_file: 'eval/src/prose.ts',
           file_type: 'code',
           degree: 6
+        },
+        {
+          id: 'eval_test_agreement_test_candidates',
+          label: 'candidates()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'candidates()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/test/agreement.test.ts',
+          file_type: 'code',
+          degree: 2
+        },
+        {
+          id: 'eval_test_agreement_test_units',
+          label: 'units()',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'units()',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/test/agreement.test.ts',
+          file_type: 'code',
+          degree: 2
         },
         {
           id: 'eval_test_count_test_fixture',
@@ -1857,19 +1948,6 @@
           degree: 3
         },
         {
-          id: 'shared_src_shortlist_rankable',
-          label: 'rankable()',
-          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
-          size: 13.1,
-          font: { size: 0, color: '#ffffff' },
-          title: 'rankable()',
-          community: 219,
-          community_name: 'count.ts',
-          source_file: 'shared/src/shortlist.ts',
-          file_type: 'code',
-          degree: 6
-        },
-        {
           id: 'eval_src_score_sharesnoword',
           label: 'sharesNoWord()',
           color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
@@ -1877,7 +1955,7 @@
           font: { size: 12, color: '#ffffff' },
           title: 'sharesNoWord()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'eval/src/score.ts',
           file_type: 'code',
           degree: 10
@@ -1890,7 +1968,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'isYesNo()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 3
@@ -1903,7 +1981,7 @@
           font: { size: 0, color: '#ffffff' },
           title: '.match()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 4
@@ -1916,7 +1994,7 @@
           font: { size: 0, color: '#ffffff' },
           title: '.update()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 5
@@ -1929,10 +2007,36 @@
           font: { size: 12, color: '#ffffff' },
           title: 'pickShortlist()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 9
+        },
+        {
+          id: 'shared_src_shortlist_processterm',
+          label: 'processTerm()',
+          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'processTerm()',
+          community: 220,
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/shortlist.ts',
+          file_type: 'code',
+          degree: 1
+        },
+        {
+          id: 'shared_src_shortlist_rankable',
+          label: 'rankable()',
+          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
+          size: 13.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'rankable()',
+          community: 220,
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/shortlist.ts',
+          file_type: 'code',
+          degree: 6
         },
         {
           id: 'shared_src_shortlist_rankonphone',
@@ -1942,23 +2046,10 @@
           font: { size: 12, color: '#ffffff' },
           title: 'rankOnPhone()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 9
-        },
-        {
-          id: 'shared_test_shortlist_speed_test_words',
-          label: 'words()',
-          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
-          size: 11.6,
-          font: { size: 0, color: '#ffffff' },
-          title: 'words()',
-          community: 220,
-          community_name: 'shortlist.test.ts',
-          source_file: 'shared/test/shortlist-speed.test.ts',
-          file_type: 'code',
-          degree: 3
         },
         {
           id: 'shared_test_shortlist_test_ids',
@@ -1968,7 +2059,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'ids()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 2
@@ -1981,7 +2072,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'numbered()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 1
@@ -1994,7 +2085,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'phrase()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 3
@@ -2007,7 +2098,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'pick()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 4
@@ -2020,7 +2111,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'plain()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 2
@@ -2033,7 +2124,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'range()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 1
@@ -2046,7 +2137,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'water()',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 3
@@ -2299,108 +2390,17 @@
           degree: 2
         },
         {
-          id: 'eval_src_agreement_agreementof',
-          label: 'agreementOf()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'agreementOf()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
-          file_type: 'code',
-          degree: 2
-        },
-        {
-          id: 'eval_src_agreement_alphaof',
-          label: 'alphaOf()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 12.1,
-          font: { size: 0, color: '#ffffff' },
-          title: 'alphaOf()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
-          file_type: 'code',
-          degree: 4
-        },
-        {
-          id: 'eval_src_agreement_comparelabelings',
-          label: 'compareLabelings()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 13.1,
-          font: { size: 0, color: '#ffffff' },
-          title: 'compareLabelings()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
-          file_type: 'code',
-          degree: 6
-        },
-        {
-          id: 'eval_src_agreement_masidistance',
-          label: 'masiDistance()',
+          id: 'shared_test_shortlist_speed_test_words',
+          label: 'words()',
           color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
           size: 11.6,
           font: { size: 0, color: '#ffffff' },
-          title: 'masiDistance()',
+          title: 'words()',
           community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
+          community_name: 'shortlist-speed.test.ts',
+          source_file: 'shared/test/shortlist-speed.test.ts',
           file_type: 'code',
           degree: 3
-        },
-        {
-          id: 'eval_src_agreement_tableof',
-          label: 'tableOf()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 11.6,
-          font: { size: 0, color: '#ffffff' },
-          title: 'tableOf()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
-          file_type: 'code',
-          degree: 3
-        },
-        {
-          id: 'eval_src_stats_mean',
-          label: 'mean()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 12.6,
-          font: { size: 0, color: '#ffffff' },
-          title: 'mean()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/stats.ts',
-          file_type: 'code',
-          degree: 5
-        },
-        {
-          id: 'eval_test_agreement_test_candidates',
-          label: 'candidates()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'candidates()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/test/agreement.test.ts',
-          file_type: 'code',
-          degree: 2
-        },
-        {
-          id: 'eval_test_agreement_test_units',
-          label: 'units()',
-          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'units()',
-          community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/test/agreement.test.ts',
-          file_type: 'code',
-          degree: 2
         },
         {
           id: 'docs_references_markdown_style',
@@ -17886,6 +17886,19 @@
           degree: 2
         },
         {
+          id: 'ref_typesafe_ai_sdk',
+          label: '@typesafe-ai/sdk',
+          color: { background: '#B07AA1', border: '#B07AA1', highlight: { background: '#ffffff', border: '#B07AA1' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: '@typesafe-ai/sdk',
+          community: 196,
+          community_name: 'worker/package.json',
+          source_file: 'worker/package.json',
+          file_type: 'concept',
+          degree: 2
+        },
+        {
           id: 'ref_wrangler',
           label: 'wrangler',
           color: { background: '#B07AA1', border: '#B07AA1', highlight: { background: '#ffffff', border: '#B07AA1' } },
@@ -20046,17 +20059,108 @@
           degree: 1
         },
         {
-          id: 'ref_typesafe_ai_sdk',
-          label: '@typesafe-ai/sdk',
+          id: 'worker_test_config_test',
+          label: 'worker/test/config.test.ts',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 13.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'worker/test/config.test.ts',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/config.test.ts',
+          file_type: 'code',
+          degree: 7
+        },
+        {
+          id: 'worker_test_helpers',
+          label: 'helpers.ts',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 20.3,
+          font: { size: 12, color: '#ffffff' },
+          title: 'helpers.ts',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/helpers.ts',
+          file_type: 'code',
+          degree: 20
+        },
+        {
+          id: 'worker_test_helpers_headers',
+          label: 'headers',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 12.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'headers',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/helpers.ts',
+          file_type: 'code',
+          degree: 4
+        },
+        {
+          id: 'worker_test_helpers_user',
+          label: 'user',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 11.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'user',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/helpers.ts',
+          file_type: 'code',
+          degree: 3
+        },
+        {
+          id: 'worker_test_index_test',
+          label: 'index.test.ts',
           color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
           size: 11.0,
           font: { size: 0, color: '#ffffff' },
-          title: '@typesafe-ai/sdk',
+          title: 'index.test.ts',
           community: 204,
           community_name: 'src/index.ts',
-          source_file: 'worker/package.json',
-          file_type: 'concept',
+          source_file: 'worker/test/index.test.ts',
+          file_type: 'code',
           degree: 2
+        },
+        {
+          id: 'worker_test_jev_request_test',
+          label: 'jev-request.test.ts',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 12.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'jev-request.test.ts',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/jev-request.test.ts',
+          file_type: 'code',
+          degree: 5
+        },
+        {
+          id: 'worker_test_lines_test',
+          label: 'worker/test/lines.test.ts',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 18.3,
+          font: { size: 12, color: '#ffffff' },
+          title: 'worker/test/lines.test.ts',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/lines.test.ts',
+          file_type: 'code',
+          degree: 16
+        },
+        {
+          id: 'worker_test_logs_test',
+          label: 'logs.test.ts',
+          color: { background: '#59A14F', border: '#59A14F', highlight: { background: '#ffffff', border: '#59A14F' } },
+          size: 15.2,
+          font: { size: 12, color: '#ffffff' },
+          title: 'logs.test.ts',
+          community: 204,
+          community_name: 'src/index.ts',
+          source_file: 'worker/test/logs.test.ts',
+          file_type: 'code',
+          degree: 10
         },
         {
           id: 'docs_plans_0011_turn_starter_content',
@@ -20358,108 +20462,225 @@
           degree: 0
         },
         {
-          id: 'worker_test_config_test',
-          label: 'worker/test/config.test.ts',
+          id: 'docs_plans_0020_turn_debug_iphone',
+          label: '0020-turn-debug-iphone.md',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 13.6,
+          size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'worker/test/config.test.ts',
+          title: '0020-turn-debug-iphone.md',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/config.test.ts',
-          file_type: 'code',
-          degree: 7
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
-          id: 'worker_test_helpers',
-          label: 'helpers.ts',
+          id: 'docs_plans_0020_turn_debug_iphone_decisions',
+          label: 'Decisions',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 20.3,
-          font: { size: 12, color: '#ffffff' },
-          title: 'helpers.ts',
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Decisions',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/helpers.ts',
-          file_type: 'code',
-          degree: 20
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
-          id: 'worker_test_helpers_headers',
-          label: 'headers',
+          id: 'docs_plans_0020_turn_debug_iphone_design',
+          label: 'Design',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
           size: 12.1,
           font: { size: 0, color: '#ffffff' },
-          title: 'headers',
+          title: 'Design',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/helpers.ts',
-          file_type: 'code',
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
           degree: 4
         },
         {
-          id: 'worker_test_helpers_user',
-          label: 'user',
+          id: 'docs_plans_0020_turn_debug_iphone_global_constraints',
+          label: 'Global constraints',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 11.6,
+          size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'user',
+          title: 'Global constraints',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/helpers.ts',
-          file_type: 'code',
-          degree: 3
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
-          id: 'worker_test_index_test',
-          label: 'index.test.ts',
+          id: 'docs_plans_0020_turn_debug_iphone_out_of_scope',
+          label: 'Out of scope',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 11.0,
+          size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'index.test.ts',
+          title: 'Out of scope',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/index.test.ts',
-          file_type: 'code',
-          degree: 2
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
-          id: 'worker_test_jev_request_test',
-          label: 'jev-request.test.ts',
+          id: 'docs_plans_0020_turn_debug_iphone_rejected_alternatives',
+          label: 'Rejected alternatives',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 12.6,
+          size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'jev-request.test.ts',
+          title: 'Rejected alternatives',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/jev-request.test.ts',
-          file_type: 'code',
-          degree: 5
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
-          id: 'worker_test_lines_test',
-          label: 'worker/test/lines.test.ts',
+          id: 'docs_plans_0020_turn_debug_iphone_skills',
+          label: 'Skills',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 18.3,
-          font: { size: 12, color: '#ffffff' },
-          title: 'worker/test/lines.test.ts',
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Skills',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/lines.test.ts',
-          file_type: 'code',
-          degree: 16
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
-          id: 'worker_test_logs_test',
-          label: 'logs.test.ts',
+          id: 'docs_plans_0020_turn_debug_iphone_task_1_research_note',
+          label: 'Task 1: Research note',
           color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 15.2,
-          font: { size: 12, color: '#ffffff' },
-          title: 'logs.test.ts',
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 1: Research note',
           community: 207,
-          community_name: 'helpers.ts',
-          source_file: 'worker/test/logs.test.ts',
-          file_type: 'code',
-          degree: 10
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_task_2_this_plan',
+          label: 'Task 2: This plan',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 2: This plan',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_task_3_the_clean_checkout_and_cocoapods',
+          label: 'Task 3: The clean checkout and CocoaPods',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 3: The clean checkout and CocoaPods',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_task_4_build_install_and_launch',
+          label: 'Task 4: Build, install, and launch',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 4: Build, install, and launch',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_task_5_light_and_dark',
+          label: 'Task 5: Light and dark',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 5: Light and dark',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_task_6_the_records',
+          label: 'Task 6: The records',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 6: The records',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_task_7_graph_pull_request_review_and_merge',
+          label: 'Task 7: Graph, pull request, review, and merge',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Task 7: Graph, pull request, review, and merge',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'Tasks',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 14.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Tasks',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 8
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
+          label: "Turn's Debug iPhone build implementation plan",
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 13.1,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Turn&#x27;s Debug iPhone build implementation plan',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 6
+        },
+        {
+          id: 'docs_plans_0020_turn_debug_iphone_verification_gate',
+          label: 'Verification gate',
+          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Verification gate',
+          community: 207,
+          community_name: 'Tasks',
+          source_file: 'docs/plans/0020-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
         },
         {
           id: 'docs_research_0032_turn_starter_content',
@@ -22211,7 +22432,7 @@
           font: { size: 12, color: '#ffffff' },
           title: 'rankers.ts',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/src/rankers.ts',
           file_type: 'code',
           degree: 14
@@ -22224,7 +22445,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'keyword',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/src/rankers.ts',
           file_type: 'code',
           degree: 4
@@ -22237,7 +22458,7 @@
           font: { size: 12, color: '#ffffff' },
           title: 'rankers.test.ts',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/rankers.test.ts',
           file_type: 'code',
           degree: 21
@@ -22250,7 +22471,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'bank',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/rankers.test.ts',
           file_type: 'code',
           degree: 1
@@ -22263,7 +22484,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'home',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/rankers.test.ts',
           file_type: 'code',
           degree: 1
@@ -22276,7 +22497,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'toRank',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/rankers.test.ts',
           file_type: 'code',
           degree: 1
@@ -22289,7 +22510,7 @@
           font: { size: 12, color: '#ffffff' },
           title: 'score.test.ts',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 21
@@ -22302,7 +22523,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'bank',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 1
@@ -22315,7 +22536,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'fillerIds',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 1
@@ -22328,7 +22549,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'fillers',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 1
@@ -22341,7 +22562,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'lines',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 1
@@ -22354,7 +22575,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'none',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/score.test.ts',
           file_type: 'code',
           degree: 1
@@ -22367,7 +22588,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'small-bank.ts',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/small-bank.ts',
           file_type: 'code',
           degree: 6
@@ -22380,7 +22601,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'smallBank',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/small-bank.ts',
           file_type: 'code',
           degree: 3
@@ -22393,62 +22614,10 @@
           font: { size: 0, color: '#ffffff' },
           title: 'waitImTyping',
           community: 217,
-          community_name: 'shortlist.ts',
+          community_name: 'rankers.test.ts',
           source_file: 'eval/test/small-bank.ts',
           file_type: 'code',
           degree: 3
-        },
-        {
-          id: 'shared_src_common_words',
-          label: 'common-words.ts',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'common-words.ts',
-          community: 217,
-          community_name: 'shortlist.ts',
-          source_file: 'shared/src/common-words.ts',
-          file_type: 'code',
-          degree: 2
-        },
-        {
-          id: 'shared_src_common_words_commonwords',
-          label: 'commonWords',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'commonWords',
-          community: 217,
-          community_name: 'shortlist.ts',
-          source_file: 'shared/src/common-words.ts',
-          file_type: 'code',
-          degree: 2
-        },
-        {
-          id: 'shared_src_shortlist',
-          label: 'shortlist.ts',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 21.9,
-          font: { size: 12, color: '#ffffff' },
-          title: 'shortlist.ts',
-          community: 217,
-          community_name: 'shortlist.ts',
-          source_file: 'shared/src/shortlist.ts',
-          file_type: 'code',
-          degree: 23
-        },
-        {
-          id: 'shared_src_shortlist_yesnoopeners',
-          label: 'yesNoOpeners',
-          color: { background: '#FF9DA7', border: '#FF9DA7', highlight: { background: '#ffffff', border: '#FF9DA7' } },
-          size: 10.5,
-          font: { size: 0, color: '#ffffff' },
-          title: 'yesNoOpeners',
-          community: 217,
-          community_name: 'shortlist.ts',
-          source_file: 'shared/src/shortlist.ts',
-          file_type: 'code',
-          degree: 1
         },
         {
           id: 'docs_plans_0014_turn_eval_harness',
@@ -22789,6 +22958,19 @@
           degree: 1
         },
         {
+          id: 'eval_src_agreement',
+          label: 'agreement.ts',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 16.2,
+          font: { size: 12, color: '#ffffff' },
+          title: 'agreement.ts',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/src/agreement.ts',
+          file_type: 'code',
+          degree: 12
+        },
+        {
           id: 'eval_src_count',
           label: 'count.ts',
           color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
@@ -22811,6 +22993,19 @@
           community: 219,
           community_name: 'count.ts',
           source_file: 'eval/src/prose.ts',
+          file_type: 'code',
+          degree: 5
+        },
+        {
+          id: 'eval_test_agreement_test',
+          label: 'agreement.test.ts',
+          color: { background: '#BAB0AC', border: '#BAB0AC', highlight: { background: '#ffffff', border: '#BAB0AC' } },
+          size: 12.6,
+          font: { size: 0, color: '#ffffff' },
+          title: 'agreement.test.ts',
+          community: 219,
+          community_name: 'count.ts',
+          source_file: 'eval/test/agreement.test.ts',
           file_type: 'code',
           degree: 5
         },
@@ -23023,67 +23218,54 @@
           degree: 1
         },
         {
-          id: 'shared_test_shortlist_speed_test',
-          label: 'shortlist-speed.test.ts',
+          id: 'shared_src_common_words',
+          label: 'common-words.ts',
           color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
-          size: 14.7,
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'common-words.ts',
+          community: 220,
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/common-words.ts',
+          file_type: 'code',
+          degree: 2
+        },
+        {
+          id: 'shared_src_common_words_commonwords',
+          label: 'commonWords',
+          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'commonWords',
+          community: 220,
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/common-words.ts',
+          file_type: 'code',
+          degree: 2
+        },
+        {
+          id: 'shared_src_shortlist',
+          label: 'shortlist.ts',
+          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
+          size: 21.9,
           font: { size: 12, color: '#ffffff' },
-          title: 'shortlist-speed.test.ts',
+          title: 'shortlist.ts',
           community: 220,
-          community_name: 'shortlist.test.ts',
-          source_file: 'shared/test/shortlist-speed.test.ts',
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
-          degree: 9
+          degree: 23
         },
         {
-          id: 'shared_test_shortlist_speed_test_bank',
-          label: 'bank',
-          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'bank',
-          community: 220,
-          community_name: 'shortlist.test.ts',
-          source_file: 'shared/test/shortlist-speed.test.ts',
-          file_type: 'code',
-          degree: 2
-        },
-        {
-          id: 'shared_test_shortlist_speed_test_lines',
-          label: 'lines',
-          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
-          size: 11.0,
-          font: { size: 0, color: '#ffffff' },
-          title: 'lines',
-          community: 220,
-          community_name: 'shortlist.test.ts',
-          source_file: 'shared/test/shortlist-speed.test.ts',
-          file_type: 'code',
-          degree: 2
-        },
-        {
-          id: 'shared_test_shortlist_speed_test_taps',
-          label: 'taps',
+          id: 'shared_src_shortlist_yesnoopeners',
+          label: 'yesNoOpeners',
           color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'taps',
+          title: 'yesNoOpeners',
           community: 220,
-          community_name: 'shortlist.test.ts',
-          source_file: 'shared/test/shortlist-speed.test.ts',
-          file_type: 'code',
-          degree: 1
-        },
-        {
-          id: 'shared_test_shortlist_speed_test_vocabulary',
-          label: 'vocabulary',
-          color: { background: '#4E79A7', border: '#4E79A7', highlight: { background: '#ffffff', border: '#4E79A7' } },
-          size: 10.5,
-          font: { size: 0, color: '#ffffff' },
-          title: 'vocabulary',
-          community: 220,
-          community_name: 'shortlist.test.ts',
-          source_file: 'shared/test/shortlist-speed.test.ts',
+          community_name: 'shortlist.ts',
+          source_file: 'shared/src/shortlist.ts',
           file_type: 'code',
           degree: 1
         },
@@ -23095,7 +23277,7 @@
           font: { size: 12, color: '#ffffff' },
           title: 'shortlist.test.ts',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 20
@@ -23108,7 +23290,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'w',
           community: 220,
-          community_name: 'shortlist.test.ts',
+          community_name: 'shortlist.ts',
           source_file: 'shared/test/shortlist.test.ts',
           file_type: 'code',
           degree: 2
@@ -24921,79 +25103,171 @@
           degree: 1
         },
         {
-          id: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w',
-          label: 'query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
+          id: 'docs_research_0045_turn_debug_iphone',
+          label: '0045-turn-debug-iphone.md',
           color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
+          title: '0045-turn-debug-iphone.md',
           community: 233,
-          community_name:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          source_file:
-            'graphify-out/memory/query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
           file_type: 'document',
           degree: 1
         },
         {
-          id: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_answer',
-          label: 'Answer',
+          id: 'docs_research_0045_turn_debug_iphone_appearance_and_screenshots',
+          label: 'Appearance and screenshots',
           color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'Answer',
+          title: 'Appearance and screenshots',
           community: 233,
-          community_name:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          source_file:
-            'graphify-out/memory/query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
           file_type: 'document',
           degree: 1
         },
         {
-          id: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_outcome',
-          label: 'Outcome',
+          id: 'docs_research_0045_turn_debug_iphone_cocoapods_when_pod_is_missing',
+          label: 'CocoaPods when pod is missing',
           color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'Outcome',
+          title: 'CocoaPods when pod is missing',
           community: 233,
-          community_name:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          source_file:
-            'graphify-out/memory/query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
           file_type: 'document',
           degree: 1
         },
         {
-          id: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_q_take_a_look_at_my_hackathon_project_and_tell_me_what_is_this_project_about_what_are_we_going_to_do',
-          label:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
-          size: 12.1,
-          font: { size: 0, color: '#ffffff' },
-          title:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          community: 233,
-          community_name:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          source_file:
-            'graphify-out/memory/query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
-          file_type: 'document',
-          degree: 4
-        },
-        {
-          id: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_source_nodes',
-          label: 'Source Nodes',
+          id: 'docs_research_0045_turn_debug_iphone_code_signing_and_xcodebuild_arguments',
+          label: 'Code signing and xcodebuild arguments',
           color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
           size: 10.5,
           font: { size: 0, color: '#ffffff' },
-          title: 'Source Nodes',
+          title: 'Code signing and xcodebuild arguments',
           community: 233,
-          community_name:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          source_file:
-            'graphify-out/memory/query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project__and_tell_me_w.md',
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_gaps',
+          label: 'Gaps',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Gaps',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_hands_on_check',
+          label: 'Hands-on check',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Hands-on check',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_how_the_debug_app_finds_metro',
+          label: 'How the Debug app finds Metro',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'How the Debug app finds Metro',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_install_and_launch_on_ios_17_and_later',
+          label: 'Install and launch on iOS 17 and later',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Install and launch on iOS 17 and later',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_see_also',
+          label: 'See also',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'See also',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_the_build_kind_variable',
+          label: 'The build kind variable',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'The build kind variable',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_the_run_command_on_a_device',
+          label: 'The run command on a device',
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'The run command on a device',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 1
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: "Turn's Debug iPhone build research notes",
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 16.2,
+          font: { size: 12, color: '#ffffff' },
+          title: 'Turn&#x27;s Debug iPhone build research notes',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
+          file_type: 'document',
+          degree: 12
+        },
+        {
+          id: 'docs_research_0045_turn_debug_iphone_turn_s_entitlements',
+          label: "Turn's entitlements",
+          color: { background: '#76B7B2', border: '#76B7B2', highlight: { background: '#ffffff', border: '#76B7B2' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'Turn&#x27;s entitlements',
+          community: 233,
+          community_name: "Turn's Debug iPhone build research notes",
+          source_file: 'docs/research/0045-turn-debug-iphone.md',
           file_type: 'document',
           degree: 1
         },
@@ -25005,7 +25279,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'app.config.ts',
           community: 235,
-          community_name: 'config.test.ts',
+          community_name: 'app/test/config.test.ts',
           source_file: 'app/app.config.ts',
           file_type: 'code',
           degree: 1
@@ -25018,7 +25292,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'app/test/config.test.ts',
           community: 235,
-          community_name: 'config.test.ts',
+          community_name: 'app/test/config.test.ts',
           source_file: 'app/test/config.test.ts',
           file_type: 'code',
           degree: 2
@@ -25031,7 +25305,7 @@
           font: { size: 0, color: '#ffffff' },
           title: 'context',
           community: 235,
-          community_name: 'config.test.ts',
+          community_name: 'app/test/config.test.ts',
           source_file: 'app/test/config.test.ts',
           file_type: 'code',
           degree: 1
@@ -25089,30 +25363,69 @@
           degree: 2
         },
         {
-          id: 'eval_src_agreement',
-          label: 'agreement.ts',
+          id: 'shared_test_shortlist_speed_test',
+          label: 'shortlist-speed.test.ts',
           color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 16.2,
+          size: 14.7,
           font: { size: 12, color: '#ffffff' },
-          title: 'agreement.ts',
+          title: 'shortlist-speed.test.ts',
           community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/src/agreement.ts',
+          community_name: 'shortlist-speed.test.ts',
+          source_file: 'shared/test/shortlist-speed.test.ts',
           file_type: 'code',
-          degree: 12
+          degree: 9
         },
         {
-          id: 'eval_test_agreement_test',
-          label: 'agreement.test.ts',
+          id: 'shared_test_shortlist_speed_test_bank',
+          label: 'bank',
           color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
-          size: 12.6,
+          size: 11.0,
           font: { size: 0, color: '#ffffff' },
-          title: 'agreement.test.ts',
+          title: 'bank',
           community: 238,
-          community_name: 'agreement.ts',
-          source_file: 'eval/test/agreement.test.ts',
+          community_name: 'shortlist-speed.test.ts',
+          source_file: 'shared/test/shortlist-speed.test.ts',
           file_type: 'code',
-          degree: 5
+          degree: 2
+        },
+        {
+          id: 'shared_test_shortlist_speed_test_lines',
+          label: 'lines',
+          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
+          size: 11.0,
+          font: { size: 0, color: '#ffffff' },
+          title: 'lines',
+          community: 238,
+          community_name: 'shortlist-speed.test.ts',
+          source_file: 'shared/test/shortlist-speed.test.ts',
+          file_type: 'code',
+          degree: 2
+        },
+        {
+          id: 'shared_test_shortlist_speed_test_taps',
+          label: 'taps',
+          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'taps',
+          community: 238,
+          community_name: 'shortlist-speed.test.ts',
+          source_file: 'shared/test/shortlist-speed.test.ts',
+          file_type: 'code',
+          degree: 1
+        },
+        {
+          id: 'shared_test_shortlist_speed_test_vocabulary',
+          label: 'vocabulary',
+          color: { background: '#9C755F', border: '#9C755F', highlight: { background: '#ffffff', border: '#9C755F' } },
+          size: 10.5,
+          font: { size: 0, color: '#ffffff' },
+          title: 'vocabulary',
+          community: 238,
+          community_name: 'shortlist-speed.test.ts',
+          source_file: 'shared/test/shortlist-speed.test.ts',
+          file_type: 'code',
+          degree: 1
         },
         {
           id: 'docs_research_0037_turn_video_iphone',
@@ -43980,36 +44293,6 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_src_row_kind',
-          to: 'eval_src_data',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_row_kind',
-          to: 'shared_src_jev',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_row_kind',
-          to: 'shared_src_row',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
           from: 'shared_src_row_policy',
           to: 'shared_src_relay',
           label: 'imports',
@@ -44200,6 +44483,36 @@
           confidence: 'EXTRACTED'
         },
         {
+          from: 'shared_src_row_kind',
+          to: 'eval_src_data',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_row_kind',
+          to: 'shared_src_jev',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_row_kind',
+          to: 'shared_src_row',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
           from: 'eval_src_score_count',
           to: 'eval_src_report',
           label: 'imports',
@@ -44380,46 +44693,6 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_src_shortlist_context',
-          to: 'eval_src_rankers',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist_context',
-          to: 'eval_test_rankers_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist_context',
-          to: 'shared_test_shortlist_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist_context',
-          to: 'shared_src_shortlist',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
           from: 'shared_src_shortlist_phrase',
           to: 'eval_src_data',
           label: 'imports',
@@ -44501,6 +44774,76 @@
         },
         {
           from: 'shared_src_shortlist_phrase',
+          to: 'shared_src_shortlist',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_agreement',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_table',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_unit',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_context',
+          to: 'eval_src_rankers',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_context',
+          to: 'eval_test_rankers_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_context',
+          to: 'shared_test_shortlist_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_context',
           to: 'shared_src_shortlist',
           label: 'contains',
           title: 'contains [EXTRACTED]',
@@ -44742,36 +45085,6 @@
         {
           from: 'app_plugins_withboardsplash_storyboard',
           to: 'app_plugins_withboardsplash',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_agreement',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_table',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_unit',
-          to: 'eval_src_agreement',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -46610,6 +46923,46 @@
           confidence: 'EXTRACTED'
         },
         {
+          from: 'eval_src_stats_mean',
+          to: 'eval_src_agreement_alphaof',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_stats_mean',
+          to: 'eval_src_agreement',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_stats_mean',
+          to: 'eval_src_score',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_stats_mean',
+          to: 'eval_src_stats',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
           from: 'eval_src_stats_percentile',
           to: 'eval_src_report',
           label: 'imports',
@@ -46780,8 +47133,128 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_src_shortlist_processterm',
-          to: 'shared_src_shortlist',
+          from: 'eval_src_agreement_agreementof',
+          to: 'eval_src_agreement_tableof',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_agreementof',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_alphaof',
+          to: 'eval_src_agreement_masidistance',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_alphaof',
+          to: 'eval_src_agreement_comparelabelings',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_alphaof',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_comparelabelings',
+          to: 'eval_src_agreement_tableof',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_comparelabelings',
+          to: 'eval_src_count_main',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_comparelabelings',
+          to: 'eval_src_count',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_comparelabelings',
+          to: 'eval_test_agreement_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_comparelabelings',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_masidistance',
+          to: 'eval_test_agreement_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_masidistance',
+          to: 'eval_src_agreement',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement_tableof',
+          to: 'eval_src_agreement',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -46792,16 +47265,6 @@
         {
           from: 'eval_src_count_main',
           to: 'eval_src_score_sharesnoword',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_count_main',
-          to: 'eval_src_agreement_comparelabelings',
           label: 'calls',
           title: 'calls [EXTRACTED]',
           dashes: false,
@@ -46940,6 +47403,36 @@
           confidence: 'EXTRACTED'
         },
         {
+          from: 'eval_test_agreement_test_candidates',
+          to: 'eval_test_agreement_test_units',
+          label: 'calls',
+          title: 'calls [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_test_agreement_test_candidates',
+          to: 'eval_test_agreement_test',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_test_agreement_test_units',
+          to: 'eval_test_agreement_test',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
           from: 'eval_test_count_test_fixture',
           to: 'eval_test_count_test_onfixture',
           label: 'calls',
@@ -47018,56 +47511,6 @@
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist_rankable',
-          to: 'eval_src_count',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist_rankable',
-          to: 'shared_src_shortlist',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist_rankable',
-          to: 'eval_test_rankers_test',
-          label: 'indirect_call',
-          title: 'indirect_call [INFERRED]',
-          dashes: true,
-          width: 1,
-          color: { opacity: 0.35 },
-          confidence: 'INFERRED'
-        },
-        {
-          from: 'shared_src_shortlist_rankable',
-          to: 'shared_src_shortlist_phraseindex_update',
-          label: 'indirect_call',
-          title: 'indirect_call [INFERRED]',
-          dashes: true,
-          width: 1,
-          color: { opacity: 0.35 },
-          confidence: 'INFERRED'
-        },
-        {
-          from: 'shared_src_shortlist_rankable',
-          to: 'shared_src_shortlist_pickshortlist',
-          label: 'indirect_call',
-          title: 'indirect_call [INFERRED]',
-          dashes: true,
-          width: 1,
-          color: { opacity: 0.35 },
-          confidence: 'INFERRED'
         },
         {
           from: 'eval_src_score_sharesnoword',
@@ -47210,6 +47653,16 @@
           confidence: 'EXTRACTED'
         },
         {
+          from: 'shared_src_shortlist_phraseindex_update',
+          to: 'shared_src_shortlist_rankable',
+          label: 'indirect_call',
+          title: 'indirect_call [INFERRED]',
+          dashes: true,
+          width: 1,
+          color: { opacity: 0.35 },
+          confidence: 'INFERRED'
+        },
+        {
           from: 'shared_src_shortlist_pickshortlist',
           to: 'shared_test_shortlist_test_pick',
           label: 'calls',
@@ -47258,6 +47711,56 @@
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_pickshortlist',
+          to: 'shared_src_shortlist_rankable',
+          label: 'indirect_call',
+          title: 'indirect_call [INFERRED]',
+          dashes: true,
+          width: 1,
+          color: { opacity: 0.35 },
+          confidence: 'INFERRED'
+        },
+        {
+          from: 'shared_src_shortlist_processterm',
+          to: 'shared_src_shortlist',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_rankable',
+          to: 'eval_src_count',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_rankable',
+          to: 'shared_src_shortlist',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist_rankable',
+          to: 'eval_test_rankers_test',
+          label: 'indirect_call',
+          title: 'indirect_call [INFERRED]',
+          dashes: true,
+          width: 1,
+          color: { opacity: 0.35 },
+          confidence: 'INFERRED'
         },
         {
           from: 'shared_src_shortlist_rankonphone',
@@ -47312,36 +47815,6 @@
         {
           from: 'shared_src_shortlist_rankonphone',
           to: 'shared_src_shortlist',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_test_shortlist_speed_test_words',
-          to: 'shared_test_shortlist_speed_test_bank',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_test_shortlist_speed_test_words',
-          to: 'shared_test_shortlist_speed_test_lines',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_test_shortlist_speed_test_words',
-          to: 'shared_test_shortlist_speed_test',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -47860,8 +48333,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'eval_src_agreement_agreementof',
-          to: 'eval_src_agreement_tableof',
+          from: 'shared_test_shortlist_speed_test_words',
+          to: 'shared_test_shortlist_speed_test_bank',
           label: 'calls',
           title: 'calls [EXTRACTED]',
           dashes: false,
@@ -47870,18 +48343,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'eval_src_agreement_agreementof',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_alphaof',
-          to: 'eval_src_agreement_masidistance',
+          from: 'shared_test_shortlist_speed_test_words',
+          to: 'shared_test_shortlist_speed_test_lines',
           label: 'calls',
           title: 'calls [EXTRACTED]',
           dashes: false,
@@ -47890,158 +48353,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'eval_src_agreement_alphaof',
-          to: 'eval_src_stats_mean',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_alphaof',
-          to: 'eval_src_agreement_comparelabelings',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_alphaof',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_comparelabelings',
-          to: 'eval_src_agreement_tableof',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_comparelabelings',
-          to: 'eval_src_count',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_comparelabelings',
-          to: 'eval_test_agreement_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_comparelabelings',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_masidistance',
-          to: 'eval_test_agreement_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_masidistance',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_agreement_tableof',
-          to: 'eval_src_agreement',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_stats_mean',
-          to: 'eval_src_agreement',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_stats_mean',
-          to: 'eval_src_score',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_src_stats_mean',
-          to: 'eval_src_stats',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_test_agreement_test_candidates',
-          to: 'eval_test_agreement_test_units',
-          label: 'calls',
-          title: 'calls [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_test_agreement_test_candidates',
-          to: 'eval_test_agreement_test',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'eval_test_agreement_test_units',
-          to: 'eval_test_agreement_test',
+          from: 'shared_test_shortlist_speed_test_words',
+          to: 'shared_test_shortlist_speed_test',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -59570,6 +59883,16 @@
           confidence: 'EXTRACTED'
         },
         {
+          from: 'ref_typesafe_ai_sdk',
+          to: 'worker_src_device',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
           from: 'shared_package',
           to: 'ref_minisearch',
           label: 'imports',
@@ -61160,16 +61483,6 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_src_device',
-          to: 'ref_typesafe_ai_sdk',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
           from: 'worker_src_index',
           to: 'worker_src_request',
           label: 'imports_from',
@@ -61214,6 +61527,166 @@
           to: 'worker_src_request_builds',
           label: 'contains',
           title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_config_test',
+          to: 'shared_src_row_startingpolicy',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_config_test',
+          to: 'worker_test_helpers_headers',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_config_test',
+          to: 'shared_src_row',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_config_test',
+          to: 'worker_test_helpers',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers',
+          to: 'worker_test_index_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers',
+          to: 'worker_test_jev_request_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers',
+          to: 'worker_test_lines_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers',
+          to: 'worker_test_logs_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers',
+          to: 'worker_test_helpers_headers',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers',
+          to: 'worker_test_helpers_user',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers_headers',
+          to: 'worker_test_lines_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers_headers',
+          to: 'worker_test_logs_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers_user',
+          to: 'worker_test_lines_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_helpers_user',
+          to: 'worker_test_logs_test',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_lines_test',
+          to: 'shared_src_row_startingpolicy',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'worker_test_lines_test',
+          to: 'shared_src_row',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
@@ -61430,88 +61903,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_config_test',
-          to: 'shared_src_row_startingpolicy',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_config_test',
-          to: 'worker_test_helpers_headers',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_config_test',
-          to: 'shared_src_row',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_config_test',
-          to: 'worker_test_helpers',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_helpers',
-          to: 'worker_test_index_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_helpers',
-          to: 'worker_test_jev_request_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_helpers',
-          to: 'worker_test_lines_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_helpers',
-          to: 'worker_test_logs_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'worker_test_helpers',
-          to: 'worker_test_helpers_headers',
+          from: 'docs_plans_0020_turn_debug_iphone',
+          to: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -61520,8 +61913,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_helpers',
-          to: 'worker_test_helpers_user',
+          from: 'docs_plans_0020_turn_debug_iphone_decisions',
+          to: 'docs_plans_0020_turn_debug_iphone_design',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -61530,60 +61923,140 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_helpers_headers',
-          to: 'worker_test_lines_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
+          from: 'docs_plans_0020_turn_debug_iphone_design',
+          to: 'docs_plans_0020_turn_debug_iphone_rejected_alternatives',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_helpers_headers',
-          to: 'worker_test_logs_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
+          from: 'docs_plans_0020_turn_debug_iphone_design',
+          to: 'docs_plans_0020_turn_debug_iphone_out_of_scope',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_helpers_user',
-          to: 'worker_test_lines_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
+          from: 'docs_plans_0020_turn_debug_iphone_design',
+          to: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_helpers_user',
-          to: 'worker_test_logs_test',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
+          from: 'docs_plans_0020_turn_debug_iphone_global_constraints',
+          to: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_lines_test',
-          to: 'shared_src_row_startingpolicy',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
+          from: 'docs_plans_0020_turn_debug_iphone_skills',
+          to: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'worker_test_lines_test',
-          to: 'shared_src_row',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
+          from: 'docs_plans_0020_turn_debug_iphone_task_1_research_note',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_task_2_this_plan',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_task_3_the_clean_checkout_and_cocoapods',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_task_4_build_install_and_launch',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_task_5_light_and_dark',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_task_6_the_records',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_task_7_graph_pull_request_review_and_merge',
+          to: 'docs_plans_0020_turn_debug_iphone_tasks',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_tasks',
+          to: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_plans_0020_turn_debug_iphone_turn_s_debug_iphone_build_implementation_plan',
+          to: 'docs_plans_0020_turn_debug_iphone_verification_gate',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
@@ -63470,86 +63943,6 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_src_common_words',
-          to: 'shared_src_shortlist',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_common_words',
-          to: 'shared_src_common_words_commonwords',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_common_words_commonwords',
-          to: 'shared_src_shortlist',
-          label: 'imports',
-          title: 'imports [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist',
-          to: 'eval_src_count',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist',
-          to: 'shared_src_row',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist',
-          to: 'shared_test_shortlist_speed_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist',
-          to: 'shared_test_shortlist_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
-          from: 'shared_src_shortlist',
-          to: 'shared_src_shortlist_yesnoopeners',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
-          dashes: false,
-          width: 2,
-          color: { opacity: 0.7 },
-          confidence: 'EXTRACTED'
-        },
-        {
           from: 'docs_plans_0014_turn_eval_harness',
           to: 'docs_plans_0014_turn_eval_harness_turn_s_evaluation_harness_implementation_plan',
           label: 'contains',
@@ -63800,6 +64193,26 @@
           confidence: 'EXTRACTED'
         },
         {
+          from: 'eval_src_agreement',
+          to: 'eval_src_count',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'eval_src_agreement',
+          to: 'eval_test_agreement_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
           from: 'eval_src_count',
           to: 'shared_src_row',
           label: 'imports_from',
@@ -63811,7 +64224,7 @@
         },
         {
           from: 'eval_src_count',
-          to: 'eval_src_agreement',
+          to: 'shared_src_shortlist',
           label: 'imports_from',
           title: 'imports_from [EXTRACTED]',
           dashes: false,
@@ -63980,8 +64393,18 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_test_shortlist_speed_test',
-          to: 'shared_test_shortlist_speed_test_taps',
+          from: 'shared_src_common_words',
+          to: 'shared_src_shortlist',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_common_words',
+          to: 'shared_src_common_words_commonwords',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -63990,28 +64413,48 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_test_shortlist_speed_test',
-          to: 'shared_test_shortlist_speed_test_lines',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
+          from: 'shared_src_common_words_commonwords',
+          to: 'shared_src_shortlist',
+          label: 'imports',
+          title: 'imports [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_test_shortlist_speed_test',
-          to: 'shared_test_shortlist_speed_test_vocabulary',
-          label: 'contains',
-          title: 'contains [EXTRACTED]',
+          from: 'shared_src_shortlist',
+          to: 'shared_src_row',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
           confidence: 'EXTRACTED'
         },
         {
-          from: 'shared_test_shortlist_speed_test',
-          to: 'shared_test_shortlist_speed_test_bank',
+          from: 'shared_src_shortlist',
+          to: 'shared_test_shortlist_speed_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist',
+          to: 'shared_test_shortlist_test',
+          label: 'imports_from',
+          title: 'imports_from [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_src_shortlist',
+          to: 'shared_src_shortlist_yesnoopeners',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -65530,8 +65973,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w',
-          to: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_q_take_a_look_at_my_hackathon_project_and_tell_me_what_is_this_project_about_what_are_we_going_to_do',
+          from: 'docs_research_0045_turn_debug_iphone',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -65540,8 +65983,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_answer',
-          to: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_q_take_a_look_at_my_hackathon_project_and_tell_me_what_is_this_project_about_what_are_we_going_to_do',
+          from: 'docs_research_0045_turn_debug_iphone_appearance_and_screenshots',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -65550,8 +65993,8 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_outcome',
-          to: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_q_take_a_look_at_my_hackathon_project_and_tell_me_what_is_this_project_about_what_are_we_going_to_do',
+          from: 'docs_research_0045_turn_debug_iphone_cocoapods_when_pod_is_missing',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -65560,8 +66003,88 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_q_take_a_look_at_my_hackathon_project_and_tell_me_what_is_this_project_about_what_are_we_going_to_do',
-          to: 'graphify_out_memory_query_20260922_052459_b6cb4872_take_a_look_at_my_hackathon_project_and_tell_me_w_source_nodes',
+          from: 'docs_research_0045_turn_debug_iphone_code_signing_and_xcodebuild_arguments',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_gaps',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_hands_on_check',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_how_the_debug_app_finds_metro',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_install_and_launch_on_ios_17_and_later',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_see_also',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_the_build_kind_variable',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_the_run_command_on_a_device',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'docs_research_0045_turn_debug_iphone_turn_s_debug_iphone_build_research_notes',
+          to: 'docs_research_0045_turn_debug_iphone_turn_s_entitlements',
           label: 'contains',
           title: 'contains [EXTRACTED]',
           dashes: false,
@@ -65610,10 +66133,40 @@
           confidence: 'EXTRACTED'
         },
         {
-          from: 'eval_src_agreement',
-          to: 'eval_test_agreement_test',
-          label: 'imports_from',
-          title: 'imports_from [EXTRACTED]',
+          from: 'shared_test_shortlist_speed_test',
+          to: 'shared_test_shortlist_speed_test_taps',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_test_shortlist_speed_test',
+          to: 'shared_test_shortlist_speed_test_lines',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_test_shortlist_speed_test',
+          to: 'shared_test_shortlist_speed_test_vocabulary',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
+          dashes: false,
+          width: 2,
+          color: { opacity: 0.7 },
+          confidence: 'EXTRACTED'
+        },
+        {
+          from: 'shared_test_shortlist_speed_test',
+          to: 'shared_test_shortlist_speed_test_bank',
+          label: 'contains',
+          title: 'contains [EXTRACTED]',
           dashes: false,
           width: 2,
           color: { opacity: 0.7 },
@@ -79407,7 +79960,7 @@
         { cid: 193, color: '#76B7B2', label: 'Tasks', count: 15 },
         { cid: 194, color: '#59A14F', label: 'SF Symbols for Turn', count: 3 },
         { cid: 195, color: '#EDC948', label: 'Tasks', count: 18 },
-        { cid: 196, color: '#B07AA1', label: 'worker/package.json', count: 22 },
+        { cid: 196, color: '#B07AA1', label: 'worker/package.json', count: 23 },
         { cid: 197, color: '#FF9DA7', label: 'shared/package.json', count: 16 },
         { cid: 198, color: '#9C755F', label: 'Turn&#x27;s workspace research notes', count: 12 },
         { cid: 199, color: '#BAB0AC', label: 'eval/package.json', count: 17 },
@@ -79415,23 +79968,23 @@
         { cid: 201, color: '#F28E2B', label: 'worker/tsconfig.json', count: 6 },
         { cid: 202, color: '#E15759', label: 'eval/tsconfig.json', count: 6 },
         { cid: 203, color: '#76B7B2', label: 'shared/tsconfig.json', count: 4 },
-        { cid: 204, color: '#59A14F', label: 'src/index.ts', count: 55 },
+        { cid: 204, color: '#59A14F', label: 'src/index.ts', count: 73 },
         { cid: 205, color: '#EDC948', label: 'Tasks', count: 22 },
         { cid: 206, color: '#B07AA1', label: 'smoke.test.ts', count: 1 },
-        { cid: 207, color: '#FF9DA7', label: 'helpers.ts', count: 20 },
+        { cid: 207, color: '#FF9DA7', label: 'Tasks', count: 17 },
         { cid: 208, color: '#9C755F', label: 'Turn&#x27;s starter content research notes', count: 9 },
-        { cid: 209, color: '#BAB0AC', label: 'data.ts', count: 29 },
+        { cid: 209, color: '#BAB0AC', label: 'data.ts', count: 30 },
         { cid: 210, color: '#4E79A7', label: 'Tasks', count: 20 },
         { cid: 211, color: '#F28E2B', label: 'Tasks', count: 21 },
         { cid: 212, color: '#E15759', label: 'Turn&#x27;s shortlist and row research notes', count: 10 },
         { cid: 213, color: '#76B7B2', label: 'Turn&#x27;s reply-labeling research notes', count: 9 },
         { cid: 214, color: '#59A14F', label: 'Tasks', count: 21 },
         { cid: 215, color: '#EDC948', label: 'Turn&#x27;s setup research notes', count: 9 },
-        { cid: 216, color: '#B07AA1', label: 'score.ts', count: 37 },
-        { cid: 217, color: '#FF9DA7', label: 'shortlist.ts', count: 27 },
+        { cid: 216, color: '#B07AA1', label: 'score.ts', count: 38 },
+        { cid: 217, color: '#FF9DA7', label: 'rankers.test.ts', count: 21 },
         { cid: 218, color: '#9C755F', label: 'Tasks', count: 26 },
-        { cid: 219, color: '#BAB0AC', label: 'count.ts', count: 14 },
-        { cid: 220, color: '#4E79A7', label: 'shortlist.test.ts', count: 22 },
+        { cid: 219, color: '#BAB0AC', label: 'count.ts', count: 25 },
+        { cid: 220, color: '#4E79A7', label: 'shortlist.ts', count: 23 },
         { cid: 221, color: '#F28E2B', label: 'row.ts', count: 14 },
         { cid: 222, color: '#E15759', label: 'Turn&#x27;s evaluation harness research notes', count: 14 },
         { cid: 223, color: '#76B7B2', label: 'Tasks', count: 24 },
@@ -79444,18 +79997,12 @@
         { cid: 230, color: '#4E79A7', label: 'dependencies', count: 6 },
         { cid: 231, color: '#F28E2B', label: 'devDependencies', count: 6 },
         { cid: 232, color: '#E15759', label: 'scripts', count: 5 },
-        {
-          cid: 233,
-          color: '#76B7B2',
-          label:
-            'Q: Take a look at my hackathon project, and tell me what is this project about? What are we going to do.',
-          count: 5
-        },
+        { cid: 233, color: '#76B7B2', label: 'Turn&#x27;s Debug iPhone build research notes', count: 13 },
         { cid: 234, color: '#59A14F', label: 'createAccessibilityStore', count: 4 },
-        { cid: 235, color: '#EDC948', label: 'config.test.ts', count: 3 },
+        { cid: 235, color: '#EDC948', label: 'app/test/config.test.ts', count: 3 },
         { cid: 236, color: '#B07AA1', label: 'AGENTS.md', count: 2 },
         { cid: 237, color: '#FF9DA7', label: 'withBoardSplash.ts', count: 5 },
-        { cid: 238, color: '#9C755F', label: 'agreement.ts', count: 13 },
+        { cid: 238, color: '#9C755F', label: 'shortlist-speed.test.ts', count: 6 },
         { cid: 239, color: '#BAB0AC', label: 'Turn&#x27;s video iPhone research notes', count: 9 },
         { cid: 240, color: '#4E79A7', label: 'Turn&#x27;s relay research notes', count: 9 },
         { cid: 241, color: '#F28E2B', label: 'Tasks', count: 8 },
