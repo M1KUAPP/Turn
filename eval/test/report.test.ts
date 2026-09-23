@@ -203,6 +203,8 @@ test('says so in a whole sentence when a group has no lines', async () => {
         'of its answers.'
     )
   )
+  // Its one line's top phrase is right, so always forecasting the share would be perfect.
+  expect(one).toMatch(prose('which leaves no skill score, since every line is right or none is.'))
   // One line fills one fold, so four have no lines, and the report says so rather than give their cut-offs.
   expect(one.match(/\| no lines(?= +\|)/g)).toHaveLength(16)
   const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
@@ -394,7 +396,9 @@ test("draws Jev's reliability diagram beside the report, its blocks as its text,
   expect(calibration).toMatch(prose('on all 8 lines: 3 of them are.'))
   // (3 × 0.1² + 5 × 0.9²) / 8; always 3/8 scores 3/8 × 5/8, and so does the fit, which is 3/8 on every line.
   expect(calibration).toMatch(prose('is 0.510, with a 95% bootstrap interval of'))
-  expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234.'))
+  expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234, so the'))
+  // 1 − 0.510 / 0.234375.
+  expect(calibration).toMatch(prose('skill score, 1 minus the Brier score over that, is -1.176: above 0 beats'))
   expect(calibration).toMatch(prose('a miscalibration of 0.276 and a discrimination of 0.000:'))
 })
 

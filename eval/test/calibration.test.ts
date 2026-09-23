@@ -108,6 +108,8 @@ test("gives the Brier score and CORP's decomposition, which adds up to it exactl
   expect(miscalibration).toBeCloseTo(0.12, 12)
   expect(discrimination).toBeCloseTo(0.05, 12)
   expect(miscalibration - discrimination + uncertainty).toBeCloseTo(score, 12)
+  // 1 − 0.32 / 0.25: worse than always forecasting the share of a half.
+  expect(brier(worked).skill).toBeCloseTo(-0.28, 12)
 })
 
 test("measures uncertainty from the share of lines that are right, here a quarter's", () => {
@@ -117,6 +119,19 @@ test("measures uncertainty from the share of lines that are right, here a quarte
   expect(quarter.uncertainty).toBeCloseTo(0.1875, 12)
   expect(quarter.miscalibration).toBeCloseTo(0.125, 12)
   expect(quarter.discrimination).toBeCloseTo(0.0625, 12)
+  expect(quarter.skill).toBeCloseTo(1 - 0.25 / 0.1875, 12)
+})
+
+test('gives a skill score above 0 for forecasts that beat the share, and none when every line is right', () => {
+  // Calibrated forecasts of 0.25 and 0.75 score 0.1875 against the share's 0.25.
+  const calibrated = forecasts(
+    ...[0.25, 0.25, 0.25, 0.25, 0.75, 0.75, 0.75, 0.75].map((score, i): [number, boolean] => [
+      score,
+      i === 0 || (i > 3 && i < 7)
+    ])
+  )
+  expect(brier(calibrated).skill).toBeCloseTo(0.25, 12)
+  expect(brier(forecasts([0.9, true], [0.6, true])).skill).toBeNaN()
 })
 
 test('finds no miscalibration in forecasts equal to their fit, and no discrimination in a constant fit', () => {
