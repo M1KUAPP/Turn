@@ -6,14 +6,16 @@ import {
   callsTo,
   expectError,
   freeLinesLeft,
-  headers,
   jevAnswers,
   jevError,
-  lineFor,
   lineRequest,
+  headersFor,
+  loggedAt,
   mockJev,
   postLine,
+  postLineFrom,
   send,
+  simulator,
   userHash
 } from './helpers'
 
@@ -22,16 +24,6 @@ const budget = (calls: number, changes: Parameters<typeof send>[1] = {}) => ({
   JEV_DAILY_CALLS: String(calls),
   ...changes
 })
-
-/** A line posted from a fresh app user ID, with the vars changed. */
-const postAsNewUser = (changes: Parameters<typeof send>[1]) =>
-  send(
-    lineFor(lineRequest(), { ...headers, 'X-Turn-User': crypto.randomUUID(), 'Content-Type': 'application/json' }),
-    changes
-  )
-
-/** The calls that reached Jev. */
-const jevCalls = () => callsTo('api.typesafe.ai')
 
 afterEach(() => {
   vi.useRealTimers()
@@ -42,7 +34,7 @@ describe("the day's calls to Jev (SEC-5)", () => {
     mockJev(...jevAnswers(3))
     for (let i = 0; i < 3; i++) expect((await postLine(lineRequest(), budget(3))).status).toBe(200)
     await expectError(await postLine(lineRequest(), budget(3)), 503, 'jev_unavailable')
-    expect(jevCalls()).toHaveLength(3)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(3)
   })
 
   test('count a retry as a call', async () => {
@@ -50,18 +42,18 @@ describe("the day's calls to Jev (SEC-5)", () => {
     expect((await postLine(lineRequest(), budget(3))).status).toBe(200)
     expect((await postLine(lineRequest(), budget(3))).status).toBe(200)
     await expectError(await postLine(lineRequest(), budget(3)), 503, 'jev_unavailable')
-    expect(jevCalls()).toHaveLength(3)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(3)
   })
 
   test("leave a line failed, with Jev's status and time, when the budget refuses its retry", async () => {
     mockJev(jevError(529))
     const log = vi.spyOn(console, 'log')
     await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
-    expect(jevCalls()).toHaveLength(1)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(1)
     expect(log.mock.calls).toStrictEqual([
       [
         {
-          at: expect.any(String),
+          at: loggedAt,
           user: (await userHash()).slice(0, 8),
           seq: 7,
           outcome: 'failed',
@@ -74,10 +66,12 @@ describe("the day's calls to Jev (SEC-5)", () => {
 
   test('share one budget among all users, counting exactly 3 of 5 simultaneous lines', async () => {
     mockJev(...jevAnswers(3))
-    const statuses = await Promise.all(Array.from({ length: 5 }, async () => (await postAsNewUser(budget(3))).status))
+    const statuses = await Promise.all(
+      Array.from({ length: 5 }, async () => (await postLineFrom(headersFor(), budget(3))).status)
+    )
     expect(statuses.filter((status) => status === 200)).toHaveLength(3)
     expect(statuses.filter((status) => status === 503)).toHaveLength(2)
-    expect(jevCalls()).toHaveLength(3)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(3)
   })
 
   test('start again from 0 at midnight UTC', async () => {
@@ -93,17 +87,16 @@ describe("the day's calls to Jev (SEC-5)", () => {
     mockJev(...jevAnswers(1))
     expect((await postLine(lineRequest(), budget(1))).status).toBe(200)
     await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
-    expect(jevCalls()).toHaveLength(1)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(1)
     expect(await freeLinesLeft()).toBe(19)
   })
 
   test('count a Simulator line that skips the free lines (PAY-9)', async () => {
     mockJev(...jevAnswers(1))
-    const simulator = { ...headers, 'X-Turn-Build': 'simulator', 'Content-Type': 'application/json' }
     const vars = budget(1, { SIMULATOR_UNLIMITED: 'true' })
-    expect((await send(lineFor(lineRequest(), simulator), vars)).status).toBe(200)
-    await expectError(await send(lineFor(lineRequest(), simulator), vars), 503, 'jev_unavailable')
-    expect(jevCalls()).toHaveLength(1)
+    expect((await postLineFrom(simulator, vars)).status).toBe(200)
+    await expectError(await postLineFrom(simulator, vars), 503, 'jev_unavailable')
+    expect(callsTo('api.typesafe.ai')).toHaveLength(1)
   })
 
   test("end a line within its 2.5 seconds while the budget's object is slow (STATE-2)", async () => {
@@ -115,7 +108,7 @@ describe("the day's calls to Jev (SEC-5)", () => {
     const started = Date.now()
     await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
     expect(Date.now() - started).toBeLessThan(2900)
-    expect(jevCalls()).toHaveLength(0)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(0)
     // The object's slow answers finish before the next test resets it.
     await scheduler.wait(1000)
   }, 10_000)
@@ -142,7 +135,7 @@ describe("the day's calls to Jev (SEC-5)", () => {
     expect(log.mock.calls).toStrictEqual([
       [
         {
-          at: expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/),
+          at: loggedAt,
           user: (await userHash()).slice(0, 8),
           seq: 7,
           outcome: 'spent',

@@ -9,13 +9,14 @@ import {
   jevAnswer,
   jevAnswers,
   jevError,
-  lineFor,
   lineRequest,
   listen,
   mockJev,
   mockRevenueCat,
   postLine,
+  postLineFrom,
   send,
+  simulator,
   unknownCustomer,
   userHash
 } from './helpers'
@@ -113,9 +114,7 @@ describe('the free lines (PAY-1)', () => {
 })
 
 describe('the Simulator switch (PAY-9)', () => {
-  const simulator = { ...headers, 'X-Turn-Build': 'simulator' }
-  const fromSimulator = (changes: Parameters<typeof send>[1]) =>
-    send(lineFor(lineRequest(), { ...simulator, 'Content-Type': 'application/json' }), changes)
+  const fromSimulator = (changes: Parameters<typeof send>[1]) => postLineFrom(simulator, changes)
 
   test("lets a simulator request skip the count while it's on, with no count shown", async () => {
     mockJev(...jevAnswers(25))

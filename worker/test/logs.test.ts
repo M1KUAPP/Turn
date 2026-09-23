@@ -6,6 +6,7 @@ import {
   jevAnswers,
   jevError,
   lineRequest,
+  loggedAt,
   mockJev,
   mockRevenueCat,
   postLine,
@@ -16,7 +17,7 @@ import {
 } from './helpers'
 
 describe('the log', () => {
-  const at = expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/)
+  const at = loggedAt
   const ms = expect.any(Number)
 
   test('holds one line per request and no text (METRIC-1, PRIV-2)', async () => {
