@@ -51,10 +51,11 @@ Contents:
   the build's install date."
 - **No identifier leaves this Mac.** The phone's name, UDID, and serial
   number, the team ID, the Apple Account's email, and the Personal Team's
-  name, which is a person's name, go into no file, commit, or comment.
-  Commands read them into variables, and logs are redacted before anyone
-  reads them. Only the model, the product type, the iOS version and build,
-  and dates are recorded.
+  name, which is a person's name, go into no tracked file, commit, or
+  comment. Commands read them into variables, and the build's log is
+  redacted before it's kept; the scratch JSON and profile files that hold
+  them stay in the session's scratchpad. Only the model, the product type,
+  the iOS version and build, and dates are recorded.
 - **A person's steps stay a person's.** Connecting the phone, trusting the
   Mac, turning on Developer Mode, and trusting the developer are steps on
   the phone. The session asks for each when it reaches it, does everything
