@@ -8,9 +8,9 @@ import { main, rate } from '../src/report'
 const fixture = fileURLToPath(new URL('fixture/lines.jsonl', import.meta.url))
 let report = ''
 
-beforeAll(() => {
+beforeAll(async () => {
   const out = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'results.md')
-  main(['--lines', fixture, '--out', out])
+  await main(['--lines', fixture, '--out', out])
   report = readFileSync(out, 'utf8')
 })
 
@@ -154,19 +154,19 @@ test("wraps its prose at 80 columns, as the repo's Markdown style asks", () => {
   for (const line of lines) expect(line.length, line).toBeLessThanOrEqual(80)
 })
 
-test('stops before scoring a line whose labels name a phrase the bank lacks', () => {
+test('stops before scoring a line whose labels name a phrase the bank lacks', async () => {
   const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
   const bad = join(dir, 'lines.jsonl')
   const [first] = readFileSync(fixture, 'utf8').split('\n')
   writeFileSync(bad, first.replace('water-please', 'water-plz'))
-  expect(() => main(['--lines', bad, '--out', join(dir, 'results.md')])).toThrow('fixture-1 lists water-plz')
+  await expect(main(['--lines', bad, '--out', join(dir, 'results.md')])).rejects.toThrow('fixture-1 lists water-plz')
 })
 
-test('says so in a whole sentence when a group has no lines', () => {
+test('says so in a whole sentence when a group has no lines', async () => {
   const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
   const [water] = readFileSync(fixture, 'utf8').split('\n')
   writeFileSync(join(dir, 'lines.jsonl'), water)
-  main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
+  await main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
   const one = readFileSync(join(dir, 'results.md'), 'utf8')
   expect(one).toMatch(prose('There are no lines about pain or asking for consent, which EVAL-5 names.'))
   expect(one).toMatch(

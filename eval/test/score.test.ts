@@ -36,8 +36,8 @@ const none = {
 }
 const run = () => scoreLines(lines, bank, { place, keyword })
 
-test("picks each line's shortlist of 40 from a fresh bank at the line's place", () => {
-  const [water, physio] = run().lines
+test("picks each line's shortlist of 40 from a fresh bank at the line's place", async () => {
+  const [water, physio] = (await run()).lines
   expect(water.shortlist).toEqual([
     'water-please',
     ...['good-morning', 'im-cold', 'good-night', 'more-please', 'im-full', 'im-tired'],
@@ -51,8 +51,8 @@ test("picks each line's shortlist of 40 from a fresh bank at the line's place", 
   ])
 })
 
-test('scores each ranker by what the user would see', () => {
-  const seen = run().lines.map(({ line, rankers }) => [line.id, rankers.place.outcome, rankers.keyword.outcome])
+test('scores each ranker by what the user would see', async () => {
+  const seen = (await run()).lines.map(({ line, rankers }) => [line.id, rankers.place.outcome, rankers.keyword.outcome])
   expect(seen).toEqual([
     ['water', 'right row', 'right row'],
     ['physio', 'wrong row', 'missed reply'],
@@ -71,20 +71,20 @@ const scoring =
     onPhone: false
   })
 
-test('orders each ranking by score, keeping its own order among ties', () => {
+test('orders each ranking by score, keeping its own order among ties', async () => {
   const unsorted = scoring(() => [
     ['im-cold', 0.2],
     ['water-please', 0.7],
     ['thank-you', 0.2]
   ])
-  const [water] = scoreLines(lines, bank, { unsorted, place }).lines
+  const [water] = (await scoreLines(lines, bank, { unsorted, place })).lines
   expect(water.rankers.unsorted.order).toEqual(['water-please', 'im-cold', 'thank-you'])
   expect(water.rankers.place.order.slice(0, 3)).toEqual(['good-morning', 'water-please', 'im-cold'])
 })
 
-test('scores a big button right only when its phrase is acceptable, and counts it in coverage and risk', () => {
+test('scores a big button right only when its phrase is acceptable, and counts it in coverage and risk', async () => {
   const sure = scoring((shortlist) => [[shortlist[0].id, 0.9]])
-  const scored = scoreLines(lines, bank, { sure }).lines
+  const scored = (await scoreLines(lines, bank, { sure })).lines
   expect(scored.map(({ rankers }) => rankers.sure.outcome)).toEqual([
     'right big button',
     'wrong big button',
@@ -99,8 +99,8 @@ test('scores a big button right only when its phrase is acceptable, and counts i
   ])
 })
 
-test('sums up the ranking over lines with an acceptable phrase besides the fixed buttons, and the row over all', () => {
-  const summary = summarize(run().lines)
+test('sums up the ranking over lines with an acceptable phrase besides the fixed buttons, and the row over all', async () => {
+  const summary = summarize((await run()).lines)
   expect(summary.lines).toBe(5)
   expect(summary.recall).toEqual({ k: 1, n: 2 })
   expect(summary.chance.top1).toBeCloseTo(1 / 80, 12)
@@ -125,10 +125,10 @@ test('sums up the ranking over lines with an acceptable phrase besides the fixed
   })
 })
 
-test("works out chance over each line's own shortlist, however long", () => {
+test("works out chance over each line's own shortlist, however long", async () => {
   const small = bank.filter((phrase) => ['thank-you', 'excuse-me', 'im-cold', 'im-tired'].includes(phrase.id))
   const { chance } = summarize(
-    scoreLines([{ text: 'Are you cold?', place: 'home', acceptable: ['im-cold'] }], small, {}).lines
+    (await scoreLines([{ text: 'Are you cold?', place: 'home', acceptable: ['im-cold'] }], small, {})).lines
   )
   expect(chance.top1).toBeCloseTo(1 / 4, 12)
   expect(chance.top6).toBe(1)
@@ -136,7 +136,7 @@ test("works out chance over each line's own shortlist, however long", () => {
   expect(chance.meanReciprocalRank).toBeCloseTo(25 / 48, 12)
 })
 
-test('times the shortlist and each ranker three times per line, leaving out a warm-up pass', () => {
+test('times the shortlist and each ranker three times per line, leaving out a warm-up pass', async () => {
   let calls = 0
   const slowAtFirst: Ranker = (line, shortlist, index, context) => {
     // 5 ms a line in the first pass only, as code that must be compiled first is slow.
@@ -144,7 +144,7 @@ test('times the shortlist and each ranker three times per line, leaving out a wa
     while (performance.now() < until);
     return keyword(line, shortlist, index, context)
   }
-  const { timings } = scoreLines(lines, bank, { place, slowAtFirst })
+  const { timings } = await scoreLines(lines, bank, { place, slowAtFirst })
   expect(calls).toBe(4 * lines.length)
   expect(timings.shortlist).toHaveLength(3 * lines.length)
   expect(timings.rankers.place).toHaveLength(3 * lines.length)
@@ -170,11 +170,13 @@ test('finds the lines that share no word with a reply besides the fixed buttons,
   expect(noWord('Nice weather today.', [])).toBe(false)
 })
 
-test("ranks only the phrases a ranker scores above 0, so keyword gets no credit for the place's phrases", () => {
-  const [weather] = scoreLines([{ text: 'Nice weather today.', place: 'home', acceptable: ['good-morning'] }], bank, {
-    place,
-    keyword
-  }).lines
+test("ranks only the phrases a ranker scores above 0, so keyword gets no credit for the place's phrases", async () => {
+  const [weather] = (
+    await scoreLines([{ text: 'Nice weather today.', place: 'home', acceptable: ['good-morning'] }], bank, {
+      place,
+      keyword
+    })
+  ).lines
   expect(weather.rankers.keyword.order).toEqual([])
   expect(weather.rankers.place.order).toEqual([
     'good-morning',
@@ -189,5 +191,33 @@ test("ranks only the phrases a ranker scores above 0, so keyword gets no credit 
   expect([rankers.keyword.top6, rankers.place.top1]).toEqual([
     { k: 0, n: 1 },
     { k: 1, n: 1 }
+  ])
+})
+
+test('waits for each ranking before the next, so one request is in flight, and scores the first timed pass', async () => {
+  let inFlight = 0
+  let most = 0
+  let calls = 0
+  const later: Ranker = async (line, shortlist, index, context) => {
+    inFlight += 1
+    most = Math.max(most, inFlight)
+    calls += 1
+    await new Promise((resolve) => setTimeout(resolve, 5))
+    inFlight -= 1
+    // Two rankers over the lines: the first timed pass ranks by keyword, and the warm-up and the later passes by place.
+    const firstTimed = calls > 2 * lines.length && calls <= 4 * lines.length
+    return (firstTimed ? keyword : place)(line, shortlist, index, context)
+  }
+  const { lines: scored, timings } = await scoreLines(lines, bank, { later, again: later })
+  expect(most).toBe(1)
+  expect(timings.rankers.later).toHaveLength(3 * lines.length)
+  // A 5 ms wait, counted in the ranking's time; timers may fire a little early against the clock.
+  for (const ms of timings.rankers.later) expect(ms).toBeGreaterThanOrEqual(3)
+  expect(scored.map(({ rankers }) => rankers.later.outcome)).toEqual([
+    'right row',
+    'missed reply',
+    'right hold',
+    'right row',
+    'wrong row'
   ])
 })
