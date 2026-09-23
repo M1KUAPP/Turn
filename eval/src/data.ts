@@ -1,6 +1,8 @@
 import type { Kind } from '@turn/shared/row'
 import type { Phrase as ShortlistPhrase } from '@turn/shared/shortlist'
 import { readFileSync } from 'node:fs'
+import { relative, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 /** A partner line, as its writer wrote it and its first labeler labeled it (EVAL-1). */
 export type Line = {
@@ -25,6 +27,7 @@ type Category = { id: string; name: string; fixed: boolean; phrases: Phrase[] }
 type StarterBank = { categories: Category[]; places: { id: string; name: string }[] }
 
 const here = (path: string) => new URL(path, import.meta.url)
+const root = fileURLToPath(here('../../'))
 
 /** Reads a JSON Lines file, one object per row, from a URL or a path from the working directory. */
 export const readRows = (file: URL | string) =>
@@ -59,4 +62,14 @@ export function checkLabels(labeled: readonly { id: string; acceptable?: readonl
     const unknown = acceptable.find((reply) => !ids.has(reply))
     if (unknown !== undefined) throw new Error(`${id} lists ${unknown}, which the starter bank doesn't hold`)
   }
+}
+
+/**
+ * The labeled lines a command reads: the file its `--lines` names, or else the 80 in `eval/lines.jsonl`, checked
+ * against the bank, with the file's path from the repository's root.
+ */
+export function linesFrom(path: string | undefined): { lines: Line[]; file: string } {
+  const found: Line[] = path === undefined ? lines : readRows(path)
+  checkLabels(found, bank)
+  return { lines: found, file: path === undefined ? 'eval/lines.jsonl' : relative(root, resolve(path)) }
 }

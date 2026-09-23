@@ -1,9 +1,8 @@
 import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
-import { relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { bank, checkLabels, lines, phrasesOf, readRows, type Line } from './data'
+import { bank, linesFrom, phrasesOf, type Line } from './data'
 import { keyword, place } from './rankers'
 import { outcomes, scoreLines, sharesNoWord, summarize, type Count, type LineScore } from './score'
 import { percentile, wilson } from './stats'
@@ -211,9 +210,7 @@ const commit = () => {
  */
 export function main(args: readonly string[]) {
   const { values } = parseArgs({ args: [...args], options: { lines: { type: 'string' }, out: { type: 'string' } } })
-  const scored: Line[] = values.lines === undefined ? lines : readRows(values.lines)
-  checkLabels(scored, bank)
-  const file = values.lines === undefined ? 'eval/lines.jsonl' : relative(root, resolve(values.lines))
+  const { lines: scored, file } = linesFrom(values.lines)
   const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date())
   const out = values.out ?? fileURLToPath(new URL('../results.md', import.meta.url))
   writeFileSync(out, render(scored, { run: `${date}, at commit ${commit()}`, file }))
