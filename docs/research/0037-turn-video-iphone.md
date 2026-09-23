@@ -210,12 +210,13 @@ attached.
   the user". After the person trusted the developer under Settings >
   General > VPN & Device Management, the same launch succeeded at 10:10:20,
   and the app kept running.
-- Synthesis: Apple registered `com.m1ku.turn` for the Personal Team at the
-  first build with a phone, and the profile lasts past the September 28
-  shoot. The phone is an iPhone 15 Pro Max, one of the "iPhone 15 Pro
-  models" that the iOS 27 guide lists for Personal Voice
-  ([Personal Voice devices][pv-devices]). Pick a phone out of the list only
-  after its tunnel connects.
+- Synthesis: Apple had registered `com.m1ku.turn` for the Personal Team by
+  the first successful build to the phone, and the profile lasts past the
+  September 28 shoot. The build with no phone attached may have registered
+  it earlier; nothing it printed says. The phone is an iPhone 15 Pro Max,
+  one of the "iPhone 15 Pro models" that the iOS 27 guide lists for
+  Personal Voice ([Personal Voice devices][pv-devices]). Pick a phone out
+  of the list only after its tunnel connects.
 
 [pv-devices]: /docs/research/0023-turn-ios.md#personal-voice-devices-and-the-simulator
 
