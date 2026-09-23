@@ -193,7 +193,7 @@ const sensitive = (line: Line) =>
 const bigButtonSection = (scores: readonly LineScore<Line>[], naming: Naming) => {
   const shown = bigButtons(scores.filter(({ line }) => sensitive(line)))
   const text = (id: string) => phrases.find((phrase) => phrase.id === id)?.text ?? id
-  const which = 'a line its writer marked yes-or-no, or on one about pain or consent'
+  const which = 'a line its writer marked yes-or-no, or on one about pain or consent, in any of its answers'
   if (shown.length === 0) {
     return ['## Big buttons on yes-or-no, pain, and consent lines', wrap(`No ranker showed a big button on ${which}.`)]
   }
@@ -202,13 +202,14 @@ const bigButtonSection = (scores: readonly LineScore<Line>[], naming: Naming) =>
     '## Big buttons on yes-or-no, pain, and consent lines',
     wrap(`Every big button a ranker showed on ${which} (EVAL-5): ${shown.length}, ${wrong} of them wrong.`),
     table(
-      ['Ranker', 'Line', 'The partner said', 'Big button', 'Right or wrong'],
-      shown.map(({ ranker, line, phrase, right }) => [
+      ['Ranker', 'Line', 'The partner said', 'Big button', 'Right or wrong', 'Answers'],
+      shown.map(({ ranker, line, phrase, right, answers }) => [
         naming.ranker(ranker),
         line.id,
         cell(line.text),
         cell(text(phrase)),
-        right ? 'right' : 'wrong'
+        right ? 'right' : 'wrong',
+        `${answers.k} of ${answers.n}`
       ])
     )
   ]
@@ -377,7 +378,7 @@ const render = (
           'carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed ' +
           `seed, and ${naming.jev} trails only when the whole interval lies below zero.`,
         `- **${naming.Jev}'s answers** vary a little from call to call, so each line is scored from the first of ` +
-          'the three timed passes.'
+          'the three timed passes, and the big buttons come from all four answers, the warm-up included.'
       ]
         .map((item) => wrap(item, '  '))
         .join('\n'),

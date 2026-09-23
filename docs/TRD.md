@@ -1444,7 +1444,8 @@ line to the phone's own ranking, and speaking never depends on the relay.
   against Jev, and a call that still fails stops the command.
 - **Jev's answers vary.** Three calls for one line scored its top phrase
   0.65, 0.71, and 0.70, so each line is scored from the first of the three
-  timed passes.
+  timed passes, and a big button in any of the four answers a ranker gave
+  the line is listed.
 
 [eval-baselines]: /docs/research/0025-turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
 [eval-services]: /docs/research/0042-turn-eval-services.md
@@ -1555,18 +1556,18 @@ bun run replay --lines eval/replay.jsonl --relay http://localhost:8787
 ### The report
 
 `bun run eval` scores the rankers on the lines in `eval/lines.jsonl`, or the
-file `--lines` names, and writes `eval/results.md`, or the file `--out`
-names: the date and the commit; who wrote and labeled the lines and who
-wrote the bank; for all lines and each subset, one row per ranker for the
-ranking, each rate with its interval, and one for the row, with the six
-outcomes as counts and coverage and risk with their intervals; and each
-step's latency. The README copies the table (EVAL-6). Once a ranker calls a
-model, the report also names the model pin (EVAL-6) and lists every big
-button on a yes-or-no, pain, or consent line (EVAL-5); `place` and
-`keyword` call no model and show no big button, and `embeddings` shows none.
-It also names the models Jev answered as and Workers AI's, gives Jev minus
-embeddings in top 6 with its paired interval (EVAL-4), Jev's question kind,
-and the embeddings ranker's five cut-offs, and plots every ranker's
+file `--lines` names, and writes `eval/results.md`, or the file `--out` names:
+the date and the commit; who wrote and labeled the lines and who wrote the bank;
+for all lines and each subset, one row per ranker for the ranking, each rate
+with its interval, and one for the row, with the six outcomes as counts and
+coverage and risk with their intervals; and each step's latency. The README
+copies the table (EVAL-6). Once a ranker calls a model, the report also names
+the model pin (EVAL-6) and lists every big button on a yes-or-no, pain, or
+consent line, in any of the four answers each ranker gave the line (EVAL-5);
+`place` and `keyword` call no model and show no big button, and `embeddings`
+shows none. It also names the models Jev answered as and Workers AI's, gives Jev
+minus embeddings in top 6 with its paired interval (EVAL-4), Jev's question
+kind, and the embeddings ranker's five cut-offs, and plots every ranker's
 risk-coverage curve.
 
 - **Naming off.** `--unnamed` calls Jev the hosted decision model and gives
