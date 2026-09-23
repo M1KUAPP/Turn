@@ -43,8 +43,9 @@ deploys with. What the counts mean:
   `unverified` when RevenueCat's check failed with no cached yes, and
   `internal`.
 - **Other outcomes** are the configuration (`config`), lines refused before
-  any call (`invalid`, `duplicate`), lines while Jev is off (`off`), and
-  anything else the relay logs.
+  any call (`invalid`, `duplicate`), requests over a rate limit (`limited`),
+  lines while Jev is off (`off`), lines past the day's calls to Jev
+  (`spent`), and anything else the relay logs.
 - **Latency** is over answered lines only, in all and in Jev, taken by
   nearest rank: the smallest time with at least half, or 95%, of the lines
   at or below it.
