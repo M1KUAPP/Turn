@@ -2,8 +2,8 @@
 const minute = 60_000
 
 /** Creates an object's count of its requests in the current clock minute: one row, which a new minute starts again. */
-export function createMinuteCount(sql: SqlStorage) {
-  sql.exec(
+export function createMinuteCount(storage: DurableObjectStorage) {
+  storage.sql.exec(
     'CREATE TABLE IF NOT EXISTS requests (id INTEGER PRIMARY KEY CHECK (id = 1), minute INTEGER NOT NULL, ' +
       'count INTEGER NOT NULL)'
   )
