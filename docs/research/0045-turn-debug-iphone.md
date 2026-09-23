@@ -279,8 +279,13 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   (`start/doctor/apple/XcodeDeveloperDiskImagePrerequisite.js:89-103`).
   Xcode 27 has no such folder on this Mac; its images are in
   `/Library/Developer/DeveloperDiskImages/iOS_DDI`.
-- **The devicectl fallback.** Only an `APPLE_DEVICE_USBMUXD` error, "No
-  devices found" or "No device found (udid: ...)", switches to
+- **The launch fallback.** `launchApp` tries `debugserver` over usbmux and
+  falls back to `devicectl` on any error: "iOS 17 introduces a new protocol
+  called RemoteXPC. This is not yet implemented, so we fallback to
+  devicectl." It logs the switch only at debug level
+  (`AppleDevice.js:299-317`).
+- **The install fallback.** Only an `APPLE_DEVICE_USBMUXD` error, "No
+  devices found" or "No device found (udid: ...)", switches the install to
   `devicectl` (`installOnDeviceAsync.js:123-131`,
   `run/ios/appleDevice/client/UsbmuxdClient.js:106-116`). That path runs
   `xcrun devicectl device install app --device <id> <app>`
@@ -296,10 +301,12 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
 - **An untrusted developer.** The CLI has no message of its own for it; the
   launch error is iOS's, as quoted in the [video iPhone
   notes][hands-on-0037].
-- Synthesis: the usbmux path may fail at the disk image step on iOS 27,
-  though it didn't in the [hands-on check](#hands-on-check). If the build
-  succeeds and the install fails, install and launch the built `.app` with
-  devicectl as #80 did, and keep Metro running with `bunx expo start`.
+- Synthesis: the usbmux install may fail at the disk image step on iOS 27,
+  though it didn't in the [hands-on check](#hands-on-check). The launch
+  there likely goes through `devicectl`, and the default log can't show
+  which. If the build succeeds and the install fails, install and launch
+  the built `.app` with devicectl as #80 did, and keep Metro running with
+  `bunx expo start`.
 
 [hands-on-0037]: /docs/research/0037-turn-video-iphone.md#hands-on-check
 
@@ -373,9 +380,10 @@ it was kept.
   and the checkout's `git status --short` stayed empty.
 - **Install and launch.** Expo's own usbmux install on iOS 27.0 printed
   "✔ Complete 100%" and "› Logs for your project will appear below.", and
-  Turn was running by a screenshot at 12:54:15, so the `devicectl` fallback
-  wasn't needed. The `.app` holds `ip.txt` with the Mac's Wi-Fi address and
-  no `main.jsbundle`.
+  Turn was running by a screenshot at 12:54:15. The log doesn't show
+  whether Expo launched it over usbmux or through its `devicectl` fallback.
+  The `.app` holds `ip.txt` with the Mac's Wi-Fi address and no
+  `main.jsbundle`.
 - **Local Network.** That screenshot showed iOS's alert, "Allow “Turn” to
   find devices on local networks?", over React Native's red "No script URL
   provided" screen. The alert closed at 12:54:53, and a `devicectl`
