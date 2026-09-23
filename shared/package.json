@@ -1,0 +1,16 @@
+{
+  "name": "@turn/shared",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
+  }
+}
