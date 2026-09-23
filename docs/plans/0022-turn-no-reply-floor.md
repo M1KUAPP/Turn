@@ -109,10 +109,10 @@ Contents:
     neither labeler wrote a line. The names skip `claude-e`, which an
     abandoned attempt at #76 used. The TRD and the report say who wrote and
     labeled the new lines.
-1.  **A writer blind to the bank and the lines.** `claude-f` gets one
-    self-contained brief ([appendix](#appendix-the-writers-brief)) and
-    reads nothing else. It's plan 0011's writers' brief, changed where #77
-    needs it:
+1.  **A writer blind to the bank.** `claude-f` gets one self-contained
+    brief ([appendix](#appendix-the-writers-brief)) and reads nothing else,
+    so of the 80 lines it sees only those decision 4 quotes back. It's plan
+    0011's writers' brief, changed where #77 needs it:
     - 20 lines, all meant to have no stored reply, five at each place in a
       fixed rotation, so any first few are spread over the places;
     - no yes-or-no lines, since Yes and No answer them;
@@ -126,7 +126,8 @@ Contents:
     lists of lines that work and lines that don't from what the first
     labelings accepted. They name kinds of reply most phrase banks hold
     (thanks, an apology, agreement, a greeting, asking to hear more) and no
-    phrase but the rules' own "I don't know".
+    phrase but the rules' own "I don't know"; the rules also name the fixed
+    buttons, Yes, No, and Not sure.
 
 1.  **Near-duplicates and wrong kinds go back.** Two instances of one model
     share habits (plan 0011). Before either labeler starts, the session
@@ -283,6 +284,12 @@ minutes their replacements, about limes, a delivery, a kids' game, a
 guitar, and a new apartment, passed the checks. The 20 lines hold 7
 either-or, 8 open, and 5 not a question, five at each place, with 7 on
 pain or health.
+
+Four of the five lines the message quoted, `line-30`, `line-62`, `line-66`,
+and `line-78`, are among `claude-c`'s 8 with none. So the writer saw them,
+as situations to avoid rather than as examples, though the rejected
+alternatives had meant to keep them from it, and `line-87`, `line-91`, and
+`line-92`, written after the message, are in the data.
 
 ### Task 4: The labelers
 
