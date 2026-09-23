@@ -135,9 +135,12 @@ pass to `/wizard`. The directive's steps map to skills:
     day. If Apple refuses it, the session picks another under the same
     rules, lowercase and reverse-DNS, before any build or Devpost names it,
     and changes the TRD with it.
-1.  **Closing.** #80's body ticks both boxes, and a comment gives the
-    evidence; #22 gets the model and iOS version for its iPhone check; and
-    the pull request closes #80, which unblocks #22.
+1.  **Closing.** A comment on #80 gives the evidence, and then its body
+    ticks both boxes. #22 gets what its iPhone check needs: the model and
+    iOS version, the Personal Team that holds `com.m1ku.turn` and its
+    profile's expiry, the throwaway app its first install replaces, and
+    why to build from the same Mac and team. The pull request then closes
+    #80, which unblocks #22.
 
 [note-sign]: /docs/research/0037-turn-video-iphone.md#xcodebuild-automatic-signing
 [note-hands]: /docs/research/0037-turn-video-iphone.md#hands-on-check
@@ -261,8 +264,6 @@ It passed the docs gate and was committed as
 - [ ] **Step 2: Edit** [build configuration][trd-build] to say Apple
       registered the bundle ID, run the docs gate, and commit as
       `docs(trd): say Apple registered the bundle ID`.
-- [ ] **Step 3: Tick** #80's boxes, comment on #80 with the evidence, and
-      comment on #22 with the phone's model and iOS version.
 
 ### Task 7: Graph, pull request, review, and merge
 
@@ -271,8 +272,12 @@ It passed the docs gate and was committed as
 1.  Push the branch and open the pull request with the `/pr` template, with
     "Closes #80".
 1.  Run one `/code-review` round against `main`, with issue #80 and this
-    plan as the spec, plus a fact-check agent; post it as a PR comment, fix
-    what it confirms in one commit per fix, and post a resolution comment.
+    plan as the spec, plus a fact-check agent, reviewing the tickets' drafts
+    too; post it as a PR comment, fix what it confirms in one commit per
+    fix, and post a resolution comment.
+1.  Comment on #80 with the evidence, then tick its boxes, and comment on
+    #22, as [Decisions](#decisions) says. The comments link this plan and
+    the notes on `main`, which answer once the next step merges them.
 1.  Rebase-merge the pull request, delete the branch on the remote and
     locally, remove the worktree, and check that #80 closed with both boxes
     ticked.
