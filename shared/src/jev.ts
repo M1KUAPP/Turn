@@ -54,7 +54,9 @@ export function buildJevRequest({ line, place, categories, candidates }: JevLine
   }
 }
 
-const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null
+/** Whether a value is a JSON object: not null, and not a list. */
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
 
 /** A probability from Jev's answer, which must be a number from 0 to 1. */
 const probability = (value: unknown, key: string): number => {
