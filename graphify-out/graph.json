@@ -4,6 +4,58 @@
   "graph": {},
   "nodes": [
     {
+      "id": "eval_test_starter_bank_test_category",
+      "label": "Category",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "category",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "eval_test_starter_bank_test_phrase",
+      "label": "Phrase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "phrase",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "eval_test_starter_bank_test_starterbank",
+      "label": "StarterBank",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "starterbank",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "eval_test_lines_test_line",
+      "label": "Line",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "lines.test.ts",
+      "file_type": "code",
+      "norm_label": "line",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L4"
+    },
+    {
       "id": "worker_src_index_fetch",
       "label": "fetch()",
       "_callable": true,
@@ -14,6 +66,30 @@
       "norm_label": "fetch()",
       "source_file": "worker/src/index.ts",
       "source_location": "L2"
+    },
+    {
+      "id": "eval_test_starter_bank_test_texts",
+      "label": "texts()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "texts()",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L13"
+    },
+    {
+      "id": "eval_test_lines_test_count",
+      "label": "count()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "lines.test.ts",
+      "file_type": "code",
+      "norm_label": "count()",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L19"
     },
     {
       "id": "docs_references_markdown_style",
@@ -3015,7 +3091,7 @@
       "node_kind": "heading",
       "norm_label": "environments and release",
       "source_file": "docs/TRD.md",
-      "source_location": "L1321"
+      "source_location": "L1330"
     },
     {
       "id": "docs_trd_open_technical_questions",
@@ -3027,7 +3103,7 @@
       "node_kind": "heading",
       "norm_label": "open technical questions",
       "source_file": "docs/TRD.md",
-      "source_location": "L1402"
+      "source_location": "L1411"
     },
     {
       "id": "docs_trd_overview",
@@ -3063,7 +3139,7 @@
       "node_kind": "heading",
       "norm_label": "requirements traceability",
       "source_file": "docs/TRD.md",
-      "source_location": "L1359"
+      "source_location": "L1368"
     },
     {
       "id": "docs_trd_see_also",
@@ -3075,7 +3151,7 @@
       "node_kind": "heading",
       "norm_label": "see also",
       "source_file": "docs/TRD.md",
-      "source_location": "L1444"
+      "source_location": "L1453"
     },
     {
       "id": "docs_trd_system_architecture",
@@ -3099,7 +3175,7 @@
       "node_kind": "heading",
       "norm_label": "testing",
       "source_file": "docs/TRD.md",
-      "source_location": "L1285"
+      "source_location": "L1294"
     },
     {
       "id": "docs_trd_turn_technical_requirements",
@@ -11182,7 +11258,7 @@
       "node_kind": "heading",
       "norm_label": "metrics, intervals, and thresholds",
       "source_file": "docs/TRD.md",
-      "source_location": "L1230"
+      "source_location": "L1239"
     },
     {
       "id": "docs_trd_the_evaluation_data",
@@ -11206,7 +11282,7 @@
       "node_kind": "heading",
       "norm_label": "the rankers",
       "source_file": "docs/TRD.md",
-      "source_location": "L1208"
+      "source_location": "L1217"
     },
     {
       "id": "docs_trd_the_replay_script",
@@ -11218,7 +11294,7 @@
       "node_kind": "heading",
       "norm_label": "the replay script",
       "source_file": "docs/TRD.md",
-      "source_location": "L1272"
+      "source_location": "L1281"
     },
     {
       "id": "docs_trd_the_report",
@@ -11230,7 +11306,7 @@
       "node_kind": "heading",
       "norm_label": "the report",
       "source_file": "docs/TRD.md",
-      "source_location": "L1278"
+      "source_location": "L1287"
     },
     {
       "id": "docs_trd_listening_and_speaking_on_the_phone",
@@ -14557,6 +14633,17 @@
       "source_location": "L9"
     },
     {
+      "id": "eval_package_devdependencies_types_node",
+      "label": "@types/node",
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "eval/package.json",
+      "file_type": "code",
+      "norm_label": "@types/node",
+      "source_file": "eval/package.json",
+      "source_location": "L10"
+    },
+    {
       "id": "eval_package_devdependencies_typescript",
       "label": "typescript",
       "_origin": "ast",
@@ -14565,7 +14652,7 @@
       "file_type": "code",
       "norm_label": "typescript",
       "source_file": "eval/package.json",
-      "source_location": "L10"
+      "source_location": "L11"
     },
     {
       "id": "eval_package_devdependencies_vitest",
@@ -14576,7 +14663,7 @@
       "file_type": "code",
       "norm_label": "vitest",
       "source_file": "eval/package.json",
-      "source_location": "L11"
+      "source_location": "L12"
     },
     {
       "id": "eval_package_name",
@@ -14653,7 +14740,7 @@
       "file_type": "concept",
       "norm_label": "typescript",
       "source_file": "eval/package.json",
-      "source_location": "L10"
+      "source_location": "L11"
     },
     {
       "id": "eval_package_json_ref_vitest",
@@ -14664,7 +14751,18 @@
       "file_type": "concept",
       "norm_label": "vitest",
       "source_file": "eval/package.json",
-      "source_location": "L11"
+      "source_location": "L12"
+    },
+    {
+      "id": "ref_types_node",
+      "label": "@types/node",
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "eval/package.json",
+      "file_type": "concept",
+      "norm_label": "@types/node",
+      "source_file": "eval/package.json",
+      "source_location": "L10"
     },
     {
       "id": "docs_sources_devpost_com_revenuecat_shipaton_2026_1st_place_best_app_for_galaxy_samsung_galaxy",
@@ -15756,6 +15854,28 @@
       "source_location": "L1"
     },
     {
+      "id": "eval_tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "_origin": "ast",
+      "community": 202,
+      "community_name": "eval/tsconfig.json",
+      "file_type": "code",
+      "norm_label": "compileroptions",
+      "source_file": "eval/tsconfig.json",
+      "source_location": "L3"
+    },
+    {
+      "id": "eval_tsconfig_compileroptions_types",
+      "label": "types",
+      "_origin": "ast",
+      "community": 202,
+      "community_name": "eval/tsconfig.json",
+      "file_type": "code",
+      "norm_label": "types",
+      "source_file": "eval/tsconfig.json",
+      "source_location": "L3"
+    },
+    {
       "id": "eval_tsconfig_extends",
       "label": "extends",
       "_origin": "ast",
@@ -15775,7 +15895,7 @@
       "file_type": "code",
       "norm_label": "include",
       "source_file": "eval/tsconfig.json",
-      "source_location": "L3"
+      "source_location": "L4"
     },
     {
       "id": "eval_tsconfig_json_ref_tsconfig_base_json",
@@ -15844,24 +15964,265 @@
       "source_location": "L1"
     },
     {
-      "id": "eval_test_smoke_test",
-      "label": "eval/test/smoke.test.ts",
+      "id": "docs_plans_0011_turn_starter_content",
+      "label": "0011-turn-starter-content.md",
       "_origin": "ast",
       "community": 205,
-      "community_name": "eval/test/smoke.test.ts",
-      "file_type": "code",
-      "norm_label": "eval/test/smoke.test.ts",
-      "source_file": "eval/test/smoke.test.ts",
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0011-turn-starter-content.md",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
       "source_location": "L1"
     },
     {
+      "id": "docs_plans_0011_turn_starter_content_appendix_the_line_writers_brief",
+      "label": "Appendix: the line writers' brief",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "appendix: the line writers' brief",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L374"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_decisions",
+      "label": "Decisions",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "decisions",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L112"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_design",
+      "label": "Design",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "design",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L110"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_global_constraints",
+      "label": "Global constraints",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "global constraints",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L45"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_out_of_scope",
+      "label": "Out of scope",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "out of scope",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L205"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_rejected_alternatives",
+      "label": "Rejected alternatives",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "rejected alternatives",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L192"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_skills",
+      "label": "Skills",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "skills",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L94"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_10_review_and_merge",
+      "label": "Task 10: Review and merge",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 10: review and merge",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L362"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_1_research_note",
+      "label": "Task 1: Research note",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 1: research note",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L239"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_2_this_plan",
+      "label": "Task 2: This plan",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 2: this plan",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L248"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_3_the_checks_failing",
+      "label": "Task 3: The checks, failing",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 3: the checks, failing",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L257"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_4_the_writers",
+      "label": "Task 4: The writers",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 4: the writers",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_5_the_lines",
+      "label": "Task 5: The lines",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 5: the lines",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L298"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_6_the_bank",
+      "label": "Task 6: The bank",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 6: the bank",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_7_the_read_through",
+      "label": "Task 7: The read-through",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 7: the read-through",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L321"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_8_the_trd",
+      "label": "Task 8: The TRD",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 8: the trd",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L336"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_task_9_the_graph",
+      "label": "Task 9: The graph",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 9: the graph",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L352"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_tasks",
+      "label": "Tasks",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "tasks",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L232"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "label": "Turn's starter content implementation plan",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's starter content implementation plan",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0011_turn_starter_content_verification_gate",
+      "label": "Verification gate",
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "Tasks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verification gate",
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L212"
+    },
+    {
       "id": "shared_test_smoke_test",
-      "label": "shared/test/smoke.test.ts",
+      "label": "smoke.test.ts",
       "_origin": "ast",
       "community": 206,
       "community_name": "shared/test/smoke.test.ts",
       "file_type": "code",
-      "norm_label": "shared/test/smoke.test.ts",
+      "norm_label": "smoke.test.ts",
       "source_file": "shared/test/smoke.test.ts",
       "source_location": "L1"
     },
@@ -15875,6 +16236,147 @@
       "norm_label": "index.test.ts",
       "source_file": "worker/test/index.test.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content",
+      "label": "0032-turn-starter-content.md",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0032-turn-starter-content.md",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_consent_and_refusal_for_people_who_can_t_speak",
+      "label": "Consent and refusal for people who can't speak",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "consent and refusal for people who can't speak",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L65"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_default_content_in_text_aac_apps",
+      "label": "Default content in text AAC apps",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "default content in text aac apps",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_gaps",
+      "label": "Gaps",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "gaps",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L161"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_how_validated_pain_tools_ask_about_pain",
+      "label": "How validated pain tools ask about pain",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "how validated pain tools ask about pain",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_plain_language_rules_for_short_phrases",
+      "label": "Plain-language rules for short phrases",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "plain-language rules for short phrases",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L130"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_see_also",
+      "label": "See also",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "see also",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L182"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "label": "Turn's starter content research notes",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "turn's starter content research notes",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_research_0032_turn_starter_content_what_published_patient_boards_hold",
+      "label": "What published patient boards hold",
+      "_origin": "ast",
+      "community": 208,
+      "community_name": "Turn's starter content research notes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what published patient boards hold",
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "eval_test_starter_bank_test",
+      "label": "starter-bank.test.ts",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "starter-bank.test.ts",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_starter_bank_test_bank",
+      "label": "bank",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "bank",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "eval_test_starter_bank_test_phrases",
+      "label": "phrases",
+      "_origin": "ast",
+      "community": 209,
+      "community_name": "starter-bank.test.ts",
+      "file_type": "code",
+      "norm_label": "phrases",
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L11"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_how_to_win_shipyard",
@@ -16047,6 +16549,28 @@
       "norm_label": "time to set sail",
       "source_file": "docs/sources/www.shipathon.com/[]-blog-how-to-win-shipyard.md",
       "source_location": "L231"
+    },
+    {
+      "id": "eval_test_lines_test",
+      "label": "lines.test.ts",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "lines.test.ts",
+      "file_type": "code",
+      "norm_label": "lines.test.ts",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "eval_test_lines_test_lines",
+      "label": "lines",
+      "_origin": "ast",
+      "community": 210,
+      "community_name": "lines.test.ts",
+      "file_type": "code",
+      "norm_label": "lines",
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L14"
     },
     {
       "id": "docs_sources_www_shipathon_com_blog_shipaton_2025",
@@ -33526,7 +34050,7 @@
     },
     {
       "source": "eval_package",
-      "target": "eval_package_json_ref_typescript",
+      "target": "ref_types_node",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -33538,7 +34062,7 @@
     },
     {
       "source": "eval_package",
-      "target": "eval_package_json_ref_vitest",
+      "target": "eval_package_json_ref_typescript",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -33546,6 +34070,18 @@
       "context": "import",
       "source_file": "eval/package.json",
       "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_package",
+      "target": "eval_package_json_ref_vitest",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "eval/package.json",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -39663,6 +40199,226 @@
       "confidence_score": 1.0,
       "source_file": "docs/plans/0010-turn-workspace.md",
       "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content",
+      "target": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_design",
+      "target": "docs_plans_0011_turn_starter_content_decisions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_design",
+      "target": "docs_plans_0011_turn_starter_content_rejected_alternatives",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_design",
+      "target": "docs_plans_0011_turn_starter_content_out_of_scope",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_1_research_note",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L239",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_2_this_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L248",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_3_the_checks_failing",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_4_the_writers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_5_the_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_6_the_bank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_7_the_read_through",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L321",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_8_the_trd",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_9_the_graph",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L352",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_tasks",
+      "target": "docs_plans_0011_turn_starter_content_task_10_review_and_merge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "target": "docs_plans_0011_turn_starter_content_design",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "target": "docs_plans_0011_turn_starter_content_verification_gate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "target": "docs_plans_0011_turn_starter_content_tasks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L232",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "target": "docs_plans_0011_turn_starter_content_appendix_the_line_writers_brief",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L374",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "target": "docs_plans_0011_turn_starter_content_global_constraints",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0011_turn_starter_content_turn_s_starter_content_implementation_plan",
+      "target": "docs_plans_0011_turn_starter_content_skills",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0011-turn-starter-content.md",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -52954,6 +53710,94 @@
       "weight": 1.0
     },
     {
+      "source": "docs_research_0032_turn_starter_content",
+      "target": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_plain_language_rules_for_short_phrases",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_gaps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L161",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_what_published_patient_boards_hold",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_see_also",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L182",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_how_validated_pain_tools_ask_about_pain",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_consent_and_refusal_for_people_who_can_t_speak",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_research_0032_turn_starter_content_turn_s_starter_content_research_notes",
+      "target": "docs_research_0032_turn_starter_content_default_content_in_text_aac_apps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/research/0032-turn-starter-content.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
       "source": "docs_sources_devpost_com_revenuecat_shipaton_2026",
       "target": "docs_sources_devpost_com_revenuecat_shipaton_2026_revenuecat_shipaton_2026",
       "relation": "contains",
@@ -61321,7 +62165,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1208",
+      "source_location": "L1217",
       "weight": 1.0
     },
     {
@@ -61332,7 +62176,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1230",
+      "source_location": "L1239",
       "weight": 1.0
     },
     {
@@ -61343,7 +62187,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1272",
+      "source_location": "L1281",
       "weight": 1.0
     },
     {
@@ -61354,7 +62198,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1278",
+      "source_location": "L1287",
       "weight": 1.0
     },
     {
@@ -61640,7 +62484,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1285",
+      "source_location": "L1294",
       "weight": 1.0
     },
     {
@@ -61651,7 +62495,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1321",
+      "source_location": "L1330",
       "weight": 1.0
     },
     {
@@ -61662,7 +62506,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1359",
+      "source_location": "L1368",
       "weight": 1.0
     },
     {
@@ -61673,7 +62517,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1402",
+      "source_location": "L1411",
       "weight": 1.0
     },
     {
@@ -61684,7 +62528,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/TRD.md",
-      "source_location": "L1444",
+      "source_location": "L1453",
       "weight": 1.0
     },
     {
@@ -61832,7 +62676,7 @@
     },
     {
       "source": "eval_package_devdependencies",
-      "target": "eval_package_devdependencies_typescript",
+      "target": "eval_package_devdependencies_types_node",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -61843,13 +62687,24 @@
     },
     {
       "source": "eval_package_devdependencies",
-      "target": "eval_package_devdependencies_vitest",
+      "target": "eval_package_devdependencies_typescript",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "eval/package.json",
       "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_package_devdependencies",
+      "target": "eval_package_devdependencies_vitest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/package.json",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -61875,6 +62730,105 @@
       "weight": 1.0
     },
     {
+      "source": "eval_test_lines_test",
+      "target": "eval_test_lines_test_lines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_lines_test",
+      "target": "eval_test_lines_test_count",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_lines_test",
+      "target": "eval_test_lines_test_line",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/lines.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_test_starter_bank_test_phrases",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_test_starter_bank_test_category",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_test_starter_bank_test_texts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_test_starter_bank_test_phrase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_test_starter_bank_test_starterbank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_test_starter_bank_test",
+      "target": "eval_test_starter_bank_test_bank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/test/starter-bank.test.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
       "source": "eval_tsconfig",
       "target": "eval_tsconfig_extends",
       "relation": "contains",
@@ -61887,7 +62841,29 @@
     },
     {
       "source": "eval_tsconfig",
+      "target": "eval_tsconfig_compileroptions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_tsconfig",
       "target": "eval_tsconfig_include",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "eval/tsconfig.json",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "eval_tsconfig_compileroptions",
+      "target": "eval_tsconfig_compileroptions_types",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -62580,5 +63556,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "04c6b7fffa9ae7e44dc735dd79e47820c32af582"
+  "built_at_commit": "dd24eccd4110772e9bc0c04a513bf69b34734130"
 }
