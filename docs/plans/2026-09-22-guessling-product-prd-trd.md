@@ -441,7 +441,7 @@ git add docs/research/apple-requirements.md
 git commit -m "docs(research): add notes on Apple's requirements for Guessling"
 git add docs/research/daily-puzzles.md
 git commit -m "docs(research): add notes on daily puzzle conventions"
-git add docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md
+git add docs/plans/2026-09-22-guessling-product-prd-trd.md
 git commit -m "docs(plan): plan the product, PRD, and TRD documents"
 ```
 
@@ -953,7 +953,7 @@ git checkout main && git pull --ff-only
 ## Appendix: check scripts
 
 `fact_scan.py` and `check_links.py` are unchanged from the
-[idea plan's appendix](/docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts).
+[idea plan's appendix](/docs/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts).
 `check_md.py` changes in one place: it skips nested `Contents:` entries for
 H3 headings, which the style guide's own `Contents:` list uses and the four
 new notes follow, and still compares the top-level entries with the H2s.

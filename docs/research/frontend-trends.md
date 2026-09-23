@@ -71,7 +71,7 @@ Contents:
 - **Tested, not only read.** Version 0.4.0 of Google's `@google/design.md` CLI
   was run on sample files in a scratch folder outside this repo, and the samples
   also went through the `check_md.py` of the plans'
-  [verification gate](/docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md#verification-gate).
+  [verification gate](/docs/plans/2026-09-22-guessling-product-prd-trd.md#verification-gate).
 
 ## The DESIGN.md convention
 
@@ -388,7 +388,7 @@ Contents:
   and the CLI's contrast check can guard the 4.5:1 floor the TRD already sets.
 
 [gdm-config]: https://github.com/google-labs-code/design.md/blob/main/packages/cli/src/linter/spec-config.yaml
-[plan-gate]: /docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md#verification-gate
+[plan-gate]: /docs/plans/2026-09-22-guessling-product-prd-trd.md#verification-gate
 
 ## AI UI generators in September 2026
 
