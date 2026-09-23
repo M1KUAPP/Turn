@@ -40,6 +40,7 @@ Contents:
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
 1.  [What changed while building](#what-changed-while-building)
+1.  [Review, round 1](#review-round-1)
 
 [rankers-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/36
 [replay-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/37
@@ -160,9 +161,10 @@ Contents:
     right big button, row, or hold), ties going to the higher. The fold's
     lines are then scored at it, so every reported outcome is out of fold,
     and the report lists the five cut-offs. Plain accuracy rather than balanced
-    accuracy, scikit-learn's default: the lines follow a real
-    conversation's mix, about a fifth with no reply, and balanced accuracy
-    would weigh the 8 lines with none as much as the 72 with one.
+    accuracy, scikit-learn's default: the lines are meant to follow a real
+    conversation's mix, about a fifth with no reply (EVAL-1's 16 of 80,
+    though only 8 today), and balanced accuracy would weigh those few as
+    much as all the lines with a reply.
 1.  **The Jev ranker** turns the app's shortlist into the relay's request:
     the line as written, the place's name from the bank, the grid's
     categories (the bank's, without the strip's, which the grid doesn't
@@ -447,5 +449,40 @@ timeout, and with Jev off; a stop at `402`; and the printed table.
     changes on 8 lines, one hold. Through the team's relay: all 10 answered,
     Jev 142 to 217 ms, 26 slot changes on 8 lines, one hold.
 
+## Review, round 1
+
+Three reviewers (Standards, Spec, and a fact-check and bug hunt) found 14,
+9, and 19 problems ([the review][review-90]). What changed:
+
+- **The cut-off** tries each line's six highest cosines, since it also hides
+  a line's lower phrases; trying only the top one missed better cut-offs.
+- **Big buttons** come from all four answers a ranker gave a line, the
+  warm-up's included, with how many showed each, since Jev's answers vary.
+- **EVAL-4's verdict** is given on all lines alone; the subsets show their
+  intervals without one. The PRD's EVAL-4 now names "leads" too.
+- **The EVAL-2 guard** refuses any file holding one of the 80 lines' texts,
+  so a copy, a link, or a differently cased path can't slip past.
+- **With `--unnamed`,** a model shows only its version's numbers, and one
+  call reads "1 call". The header no longer gives Jev's input tokens.
+- **The report** wraps its Lines line, says how many lines each fold scored,
+  builds its contents from its sections, and says the fixed buttons still
+  show below the embeddings cut-off on a yes-or-no line.
+- **The replay** raises the row's number before each answer (ROW-7), cuts a
+  line to its last 300 characters (LISTEN-6), names an answer out of shape,
+  and says how to replay past a new user's 20 free lines.
+- **Tests** check the phone's fallback policy, and the refactors share the
+  first hit, name the right outcomes, a `Curve`, a `Called` kind, and an
+  `AtCutOff`, fold two case-only names into one, and share the tests' empty
+  kinds.
+- **The notes** quote BAAI, PractRand, xoshiro's site, and Cloudflare's 1010
+  page whole, fix a link and a cost, correct the cut-off's candidates and
+  scikit-learn's error, and nest two code blocks in their list items.
+- **Kept:** the ten sample lines stand in for recorded ones until the replay
+  test records its own, which #37's closing comment says; the phone's
+  rankings count in the replay's totals, since they are what the user would
+  see; and the report's builders keep their explicit parameters, since a
+  bundle would serve two call sites.
+
+[review-90]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/90#issuecomment-5795733811
 [services-notes]: /docs/research/0042-turn-eval-services.md
 [stats-notes]: /docs/research/0043-turn-eval-statistics.md
