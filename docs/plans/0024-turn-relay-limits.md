@@ -5,10 +5,12 @@ ID to 30 requests a minute and each address to 120, answering `429` with
 `Retry-After`, and stops calling Jev after 10,000 calls in a UTC day,
 answering `jev_unavailable` until midnight UTC.
 
-**Architecture:** Once a request's headers pass, the Worker asks two
-Rate Limiting bindings, `USER_LIMITER` keyed by the ID's hash and then
-`ADDRESS_LIMITER` keyed by `CF-Connecting-IP`, before it reads a line's
-body or reaches any object. A new `Budget` Durable Object, one for the
+**Architecture:** Once a request's headers and a line's body pass, the
+user's `Device` object counts the request against the ID's 30 a minute,
+and then the Worker asks the `ADDRESS_LIMITER` binding, keyed by
+`CF-Connecting-IP`, before the configuration or the line. The ID's count
+began as a second binding, which the live check found too loose. A new
+`Budget` Durable Object, one for the
 whole relay, keeps the UTC day's count of calls to Jev. The user's `Device`
 object gives the TypeSafe client a `fetch` that takes each attempt,
 retries included, from that count, and a refused attempt ends the line as
@@ -122,34 +124,38 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 
 ### Decisions
 
-1.  **The limits come right after the headers.** In `route()`, once
-    `readUser` passes and the ID is hashed, the Worker asks `USER_LIMITER`
-    with the whole hash as the key and, only if that passes,
-    `ADDRESS_LIMITER` with the address. A request over either gets
-    `429 rate_limited` before a line's body is read or any object is
-    reached, so it costs no object request, no body read, and no call.
-    Invalid headers still get `400` first, since there's no ID to count,
-    and reach no object either.
-1.  **The ID's limit, then the address's.** A request the user's own limit
+1.  **A line's checks, then the limits.** In `route()`, once `readUser`
+    passes and the ID is hashed, a line's body is read and checked
+    (SEC-2), then the user's object counts the request, and then the
+    address's binding. A request over either gets `429 rate_limited`
+    before the configuration, a free line's claim, or any call. Invalid
+    headers or lines get `400` first and count against nothing, as the TRD
+    had it.
+1.  **The ID's count, then the address's.** A request the user's own count
     refuses doesn't count against the address, so one user past 30 can't
     use up the 120 that others on a shared mobile address rely on. IDs
-    minted on one address each pass their own limit and meet the address's
+    minted on one address each pass their own count and meet the address's
     after 120.
-1.  **The bindings as the TRD has them.** `USER_LIMITER`, namespace
-    `"1001"`, with `"simple": { "limit": 30, "period": 60 }`, and
-    `ADDRESS_LIMITER`, namespace `"1002"`, with a limit of 120, in
-    `worker/wrangler.jsonc`. The namespaces differ, since bindings that
-    share one share counts ([relay limits notes][note-sim]).
-1.  **The address as Cloudflare gives it.** The key is `CF-Connecting-IP`,
-    unhashed, which Cloudflare sets on requests from clients and which the
-    relay stores and logs nowhere. A request without it shares the key `""`.
+1.  **The ID's count lives in the user's object.** `Device.admit()` keeps a
+    `requests` table of one row, the clock minute and its count, and in
+    one `transactionSync()` writes the count plus one below 30, or refuses
+    and writes nothing. It began as a `USER_LIMITER` binding, until the
+    live check found that one ID's first 73 requests in a minute passed it,
+    so the ticket's fallback took its place.
+1.  **The address's binding.** `ADDRESS_LIMITER`, namespace `"1002"`, with
+    `"simple": { "limit": 120, "period": 60 }`, in `worker/wrangler.jsonc`.
+    Its key is `CF-Connecting-IP`, unhashed, which the relay stores and
+    logs nowhere, and which Cloudflare's edge refuses from a client. A
+    request without it shares the key `""`. Live, it held back none of 250
+    requests in 18 seconds, so against a burst the daily budget is what
+    caps Jev's calls.
 1.  **`Retry-After: 60`.** The binding answers only `success`, so the relay
-    can't know when a window ends; the whole period is enough however the
+    can't know when its window ends; the whole period is enough however the
     windows are aligned ([relay limits notes][note-retry]), and 60 seconds,
     the longest period a binding can have, stays enough if the period
-    changes to 10. The body stays
-    `{ "error": "rate_limited" }` (SEC-4). The log's outcome is `limited`,
-    with the user's prefix and no `seq`, since the body is never read.
+    changes to 10. The object's count gets the same value, so both limits
+    answer alike. The body stays `{ "error": "rate_limited" }` (SEC-4). The
+    log's outcome is `limited`, with the user's prefix and a line's `seq`.
 1.  **One object keeps the day's count.** `Budget`, a SQLite Durable
     Object reached with `getByName('jev-calls', { locationHint: 'wnam' })`,
     creates one table in its constructor:
@@ -196,13 +202,14 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     bound that" becomes present tense. The replay script sends every line
     as one Simulator user, so a request that would be its 30th in 60
     seconds waits until it isn't.
-1.  **The tests.** The limits' tests use the configured bindings with a
-    fresh ID per test and an address of their own, and wait for the next
-    minute when fewer than 5 seconds of this one are left, since every
-    window rolls over on the minute. The other tests keep the shared ID
-    and send no address: each stays under 30 requests an ID and 120 in
-    all, and `reset()` clears the counts after it
-    ([relay limits notes][note-sim]). The budget's tests lower
+1.  **The tests.** The ID's tests set `Date` with `vi.setSystemTime`, which
+    the user's object follows, so a minute's count is certain. The
+    address's tests use the configured binding with a fresh ID per test
+    and an address of their own, and wait for the next minute when fewer
+    than 5 seconds of this one are left, since its windows roll over on the
+    minute. The other tests keep the shared ID and send no address: each
+    stays under 30 requests an ID and 120 in all, and `reset()` clears the
+    counts after it ([relay limits notes][note-sim]). The budget's tests lower
     `JEV_DAILY_CALLS` through `send`, and one moves `Date` past midnight
     UTC with `vi.setSystemTime`, which reaches the objects, while the
     limiter keeps real time. A spy on `Budget.prototype.take`, which the
@@ -233,14 +240,15 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     the Free plan, and whether the 31st request gets `429`, is recorded on
     #35 and in the note's hands-on check. If the binding isn't available on
     Free, the user's object counts requests itself, as the ticket says, in
-    new commits before the merge.
+    new commits before the merge. What it found, and what changed, is under
+    [the live check's results](#the-live-checks-results).
 
-1.  **The TRD.** The architecture's order, the storage's `Budget` table,
-    the Relay API's `429` and `503` rows, the configuration table and
-    `wrangler.jsonc`, the committed file's bullet, the limits' rate and
-    budget bullets, the log's outcomes, the Simulator sentence, and the
-    relay's tests (SEC-5), and the replay's pace, each section in its own
-    commit.
+1.  **The TRD.** The architecture's order, the storage's `Budget` and
+    `requests` tables, the Relay API's `429` and `503` rows, the
+    configuration table and `wrangler.jsonc`, the committed file's bullet,
+    the limits' rate and budget bullets, the log's outcomes, the Simulator
+    sentence, the relay's tests (SEC-5), the replay's pace, and the open
+    question the live check answered, each section in its own commit.
 
 [note-sim]: /docs/research/0046-turn-relay-limits.md#the-local-simulation
 [note-retry]: /docs/research/0046-turn-relay-limits.md#retry-after-for-a-429
@@ -264,17 +272,35 @@ limit, and that one test passed without the budget. Kept, with reasons:
 - **The Free plan's answer:** the live check gives it, after the review, on
   #35, in the note, and in the TRD.
 
+### The live check's results
+
+The first deploy, at `1bbeaa5`, put both bindings on the team's account.
+They refused, but loosely: 40 requests from one ID in 15 seconds all got
+`200`, and a burst of 150 from another got its first `429` at request 74,
+27 seconds in. Requests that set their own `CF-Connecting-IP` got `403`
+from Cloudflare's edge, and a line got its answer through the `Budget`
+object ([relay limits notes][note-live]). So, as the ticket's fallback
+says, the user's object took over the ID's count, in one new commit with
+its tests. After the second deploy, at `debfef7`, the 31st of 40 requests
+from one ID got `429`, and a line got its answer. The address's binding
+answered all 250 of a burst within 18 seconds. The account's plan
+couldn't be read with Wrangler's login.
+
+[note-live]: /docs/research/0046-turn-relay-limits.md#hands-on-check
+
 ### Rejected alternatives
 
-- **Counting requests in the user's object** (the ticket's fallback):
-  exact, but every request, limited or not, would cost an object request
-  and a row written, and it can't limit an address.
+- **The binding for the ID:** live, one ID's first 73 requests in a minute
+  passed it, where SEC-3 allows 30.
+- **The binding in front of the object's count:** it would spare a flood's
+  object requests only after half a minute, and a flood uses up the
+  Worker's own 100,000 a day as fast.
 - **The seconds to the next minute as `Retry-After`:** they fit the local
   simulation's windows, but production's alignment is undocumented.
 - **A `Retry-After` to midnight UTC on a spent budget:** SEC-5 has it
   answer as a busy Jev does, which sends none.
-- **The limits after a line's body:** they'd read up to 16 KB of a request
-  that's refused anyway.
+- **The limits before a line's body:** an invalid line would use the ID's
+  minute, and the `400` tests couldn't show that it reaches no object.
 - **Checking the budget once in the Worker:** it misses the SDK's retry,
   which SEC-5 counts.
 - **Reserving two calls per line:** with a budget of 3, the 2nd line would
@@ -291,8 +317,9 @@ limit, and that one test passed without the budget. Kept, with reasons:
   would hide it from no one.
 - **Counting `spent` among the failures:** it's the budget working, not
   something broken, as the README defines failures.
-- **Standing in for the limiters in the other tests:** the committed
-  bindings can run in every test, since `reset()` clears their counts.
+- **Standing in for the limits in the other tests:** the committed binding
+  and the object's count can run in every test, since `reset()` clears
+  their counts.
 - **One row per day:** only the current day's count is ever read.
 
 ### Out of scope
