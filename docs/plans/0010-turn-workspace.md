@@ -249,10 +249,10 @@ line count of a generated file), and was committed as
 
 - [ ] **Step 1: Run the docs gate, then commit**
 
-```shell
-git add docs/plans/0010-turn-workspace.md
-git commit -m "docs(plan): add the plan for the workspace"
-```
+  ```shell
+  git add docs/plans/0010-turn-workspace.md
+  git commit -m "docs(plan): add the plan for the workspace"
+  ```
 
 ### Task 3: Prettier and the source captures
 
@@ -262,10 +262,10 @@ git commit -m "docs(plan): add the plan for the workspace"
       then `bun run lint` passes.
 - [ ] **Step 3: Commit**
 
-```shell
-git add .prettierignore docs/plans/0010-turn-workspace.md
-git commit -m "chore: keep prettier off the source captures"
-```
+  ```shell
+  git add .prettierignore docs/plans/0010-turn-workspace.md
+  git commit -m "chore: keep prettier off the source captures"
+  ```
 
 ### Task 4: The workspace and the shared package
 
@@ -275,67 +275,67 @@ git commit -m "chore: keep prettier off the source captures"
 
 - [ ] **Step 1: Write the failing smoke test** in `shared/test/smoke.test.ts`:
 
-```ts
-import { expect, test } from 'vitest'
+  ```ts
+  import { expect, test } from 'vitest'
 
-test('Vitest runs TypeScript in this package', () => {
-  const answer: number = 6 * 7
-  expect(answer).toBe(42)
-})
-```
+  test('Vitest runs TypeScript in this package', () => {
+    const answer: number = 6 * 7
+    expect(answer).toBe(42)
+  })
+  ```
 
 - [ ] **Step 2: Run it and see it fail.** `bun run test` exits 1: the root
       has no `test` script yet.
 - [ ] **Step 3: Add the workspace.** In the root `package.json`, add
       `"private": true`, `"workspaces": ["shared"]`, and two scripts:
 
-```json
-{
-  "test": "bun run --filter '*' test",
-  "typecheck": "bun run --filter '*' typecheck"
-}
-```
-
-`tsconfig.base.json`:
-
-```json
-{
-  "compilerOptions": {
-    "target": "es2024",
-    "lib": ["es2024"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "types": [],
-    "strict": true,
-    "noEmit": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true
+  ```json
+  {
+    "test": "bun run --filter '*' test",
+    "typecheck": "bun run --filter '*' typecheck"
   }
-}
-```
+  ```
 
-`shared/package.json`, and a `shared/tsconfig.json` that extends
-`../tsconfig.base.json` and includes `src` and `test`:
+  `tsconfig.base.json`:
 
-```json
-{
-  "name": "@turn/shared",
-  "private": true,
-  "type": "module",
-  "exports": {
-    "./*": "./src/*.ts"
-  },
-  "scripts": {
-    "test": "vitest run",
-    "typecheck": "tsc"
-  },
-  "devDependencies": {
-    "typescript": "6.0.3",
-    "vitest": "4.1.11"
+  ```json
+  {
+    "compilerOptions": {
+      "target": "es2024",
+      "lib": ["es2024"],
+      "module": "esnext",
+      "moduleResolution": "bundler",
+      "types": [],
+      "strict": true,
+      "noEmit": true,
+      "isolatedModules": true,
+      "verbatimModuleSyntax": true,
+      "skipLibCheck": true
+    }
   }
-}
-```
+  ```
+
+  `shared/package.json`, and a `shared/tsconfig.json` that extends
+  `../tsconfig.base.json` and includes `src` and `test`:
+
+  ```json
+  {
+    "name": "@turn/shared",
+    "private": true,
+    "type": "module",
+    "exports": {
+      "./*": "./src/*.ts"
+    },
+    "scripts": {
+      "test": "vitest run",
+      "typecheck": "tsc"
+    },
+    "devDependencies": {
+      "typescript": "6.0.3",
+      "vitest": "4.1.11"
+    }
+  }
+  ```
 
 - [ ] **Step 4: Run it and see it pass.** `bun install`, then the
       [verification gate](#verification-gate).
@@ -347,10 +347,10 @@ test('Vitest runs TypeScript in this package', () => {
       [the versions table][trd-stack], add TypeScript 6.0.3.
 - [ ] **Step 6: Commit**
 
-```shell
-git add package.json bun.lock tsconfig.base.json shared docs/TRD.md
-git commit -m "build: add the bun workspace and the shared package"
-```
+  ```shell
+  git add package.json bun.lock tsconfig.base.json shared docs/TRD.md
+  git commit -m "build: add the bun workspace and the shared package"
+  ```
 
 ### Task 5: The evaluation's package
 
@@ -368,10 +368,10 @@ git commit -m "build: add the bun workspace and the shared package"
       `bun run test` reports `@turn/eval`.
 - [ ] **Step 4: Commit**
 
-```shell
-git add package.json bun.lock eval
-git commit -m "build(eval): add the evaluation's package"
-```
+  ```shell
+  git add package.json bun.lock eval
+  git commit -m "build(eval): add the evaluation's package"
+  ```
 
 ### Task 6: The relay's package
 
@@ -382,19 +382,19 @@ git commit -m "build(eval): add the evaluation's package"
 
 - [ ] **Step 1: Write the failing test** in `worker/test/index.test.ts`:
 
-```ts
-import { exports } from 'cloudflare:workers'
-import { expect, test } from 'vitest'
+  ```ts
+  import { exports } from 'cloudflare:workers'
+  import { expect, test } from 'vitest'
 
-test('runs inside the Workers runtime', () => {
-  expect(navigator.userAgent).toBe('Cloudflare-Workers')
-})
+  test('runs inside the Workers runtime', () => {
+    expect(navigator.userAgent).toBe('Cloudflare-Workers')
+  })
 
-test('answers a request', async () => {
-  const response = await exports.default.fetch('https://relay.test/')
-  expect(response.status).toBe(404)
-})
-```
+  test('answers a request', async () => {
+    const response = await exports.default.fetch('https://relay.test/')
+    expect(response.status).toBe(404)
+  })
+  ```
 
 - [ ] **Step 2: Add the package without the plugin's config, and see it
       fail.** `worker/package.json` is named `@turn/relay`, with
@@ -405,49 +405,49 @@ test('answers a request', async () => {
       `bun run test` fails with "Cannot find package 'cloudflare:workers'".
 - [ ] **Step 3: Add the Worker and the plugin.** `worker/wrangler.jsonc`:
 
-```jsonc
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "turn-relay",
-  "main": "src/index.ts",
-  "compatibility_date": "2026-09-22"
-}
-```
-
-`worker/src/index.ts`:
-
-```ts
-export default {
-  fetch() {
-    return new Response(null, { status: 404 })
+  ```jsonc
+  {
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "turn-relay",
+    "main": "src/index.ts",
+    "compatibility_date": "2026-09-22"
   }
-} satisfies ExportedHandler<Env>
-```
+  ```
 
-`worker/vitest.config.ts`:
+  `worker/src/index.ts`:
 
-```ts
-import { cloudflareTest } from '@cloudflare/vitest-plugin'
-import { defineConfig } from 'vitest/config'
+  ```ts
+  export default {
+    fetch() {
+      return new Response(null, { status: 404 })
+    }
+  } satisfies ExportedHandler<Env>
+  ```
 
-export default defineConfig({
-  plugins: [cloudflareTest({ wrangler: { configPath: './wrangler.jsonc' } })]
-})
-```
+  `worker/vitest.config.ts`:
 
-`worker/tsconfig.json`:
+  ```ts
+  import { cloudflareTest } from '@cloudflare/vitest-plugin'
+  import { defineConfig } from 'vitest/config'
 
-```json
-{
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["./worker-configuration.d.ts", "@cloudflare/vitest-plugin/types"]
-  },
-  "include": ["src", "test", "vitest.config.ts"]
-}
-```
+  export default defineConfig({
+    plugins: [cloudflareTest({ wrangler: { configPath: './wrangler.jsonc' } })]
+  })
+  ```
 
-In `.gitignore`, add `.wrangler/` and `worker-configuration.d.ts`.
+  `worker/tsconfig.json`:
+
+  ```json
+  {
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+      "types": ["./worker-configuration.d.ts", "@cloudflare/vitest-plugin/types"]
+    },
+    "include": ["src", "test", "vitest.config.ts"]
+  }
+  ```
+
+  In `.gitignore`, add `.wrangler/` and `worker-configuration.d.ts`.
 
 - [ ] **Step 4: Run it and see it pass.** The gate, then
       `git status --short` lists neither `.wrangler/` nor the generated
@@ -458,10 +458,10 @@ In `.gitignore`, add `.wrangler/` and `worker-configuration.d.ts`.
       to the end of the TRD, since two sections use it.
 - [ ] **Step 6: Commit**
 
-```shell
-git add package.json bun.lock .gitignore worker docs/TRD.md
-git commit -m "build(relay): add the relay's package, tested in the workers runtime"
-```
+  ```shell
+  git add package.json bun.lock .gitignore worker docs/TRD.md
+  git commit -m "build(relay): add the relay's package, tested in the workers runtime"
+  ```
 
 ### Task 7: Local secrets
 
@@ -469,15 +469,15 @@ git commit -m "build(relay): add the relay's package, tested in the workers runt
       `!.env.example`, add `.dev.vars*` and `!.dev.vars.example`.
 - [ ] **Step 2: Name them** in `worker/.dev.vars.example`:
 
-```text
-# Copy to .dev.vars, which Git ignores, and fill in your own values.
-# TypeSafe's API key, for calling Jev.
-TYPESAFE_API_KEY=
-# RevenueCat's secret API key, for the v2 entitlement check.
-RC_SECRET_KEY=
-# Hashes app user IDs: any long random string, such as `openssl rand -hex 32`.
-ID_SALT=
-```
+  ```text
+  # Copy to .dev.vars, which Git ignores, and fill in your own values.
+  # TypeSafe's API key, for calling Jev.
+  TYPESAFE_API_KEY=
+  # RevenueCat's secret API key, for the v2 entitlement check.
+  RC_SECRET_KEY=
+  # Hashes app user IDs: any long random string, such as `openssl rand -hex 32`.
+  ID_SALT=
+  ```
 
 - [ ] **Step 3: Check it.** With a throwaway `worker/.dev.vars`,
       `git check-ignore -v worker/.dev.vars` names the rule,
@@ -485,10 +485,10 @@ ID_SALT=
       gate passes; then delete the throwaway file.
 - [ ] **Step 4: Commit**
 
-```shell
-git add .gitignore worker/.dev.vars.example
-git commit -m "build(relay): keep local secrets out of git and name them in an example"
-```
+  ```shell
+  git add .gitignore worker/.dev.vars.example
+  git commit -m "build(relay): keep local secrets out of git and name them in an example"
+  ```
 
 ### Task 8: Graph, pull request, review, and merge
 
