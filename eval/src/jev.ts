@@ -16,7 +16,7 @@ export function relayModel(): string {
   return model
 }
 
-/** The grid's categories, which a line's topic is chosen from: the bank's, but the strip's, which the grid doesn't show. */
+/** The grid's categories, which a line's topic is chosen from: all the bank's but the strip's, which the grid hides. */
 const categories = bank.categories.filter(({ id }) => id !== 'strip').map(({ id, name }) => ({ id, name }))
 
 /**

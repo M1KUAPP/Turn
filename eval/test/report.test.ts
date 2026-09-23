@@ -219,8 +219,11 @@ test("names Jev's pin, what Jev answered as, and Workers AI's model (EVAL-6)", (
 test("gives Jev minus embeddings in top 6 with its paired interval, matching the table's counts (EVAL-4)", () => {
   const ranking = section('### Ranking on all lines')
   const hits = (ranker: string) => Number(cells(ranking, ranker)?.[1].split(' ')[0])
-  const gap =
-    /Jev minus embeddings in top 6: ([+-]?[\d.]+) points, with a 95% paired\s+interval\s+of\s+(-?[\d.]+)\s+to\s+(-?[\d.]+),\s+so\s+([^.]+)\./
+  const number = '(-?[+]?[\\d.]+)'
+  const gap = new RegExp(
+    `Jev minus embeddings in top 6: ${number} points, with a 95% paired\\s+interval\\s+of\\s+${number}\\s+to\\s+` +
+      `${number},\\s+so\\s+([^.]+)\\.`
+  )
   const [, difference, low, high, verdict] = gap.exec(ranking) ?? []
   expect(Number(difference)).toBeCloseTo(((hits('jev') - hits('embeddings')) / 6) * 100, 1)
   expect(Number(low)).toBeLessThanOrEqual(Number(difference))
