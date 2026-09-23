@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { pageSize, readLogs } from '../scripts/telemetry'
+import { dayRange, pageSize, readLogs } from '../scripts/telemetry'
 import { mockCloudflare } from './helpers'
 
 const access = { account: 'account-test', token: 'test-logs-token' }
@@ -98,5 +98,26 @@ describe("reading the relay's logs", () => {
       Response.json({ success: false, errors: [{ code: 10000, message: 'Authentication error' }] }, { status: 403 })
     )
     await expect(readLogs(access, 0, 1)).rejects.toThrow('The telemetry query answered 403: Authentication error')
+  })
+})
+
+describe("a day's range", () => {
+  const noon = Date.parse('2026-09-23T12:00:00.000Z')
+  const midnight = (day: string) => Date.parse(`${day}T00:00:00.000Z`)
+
+  test('is yesterday, whole, unless a day is named', () => {
+    expect(dayRange(undefined, noon)).toEqual({
+      day: '2026-09-22',
+      from: midnight('2026-09-22'),
+      to: midnight('2026-09-23')
+    })
+  })
+
+  test('ends now for today', () => {
+    expect(dayRange('2026-09-23', noon)).toEqual({ day: '2026-09-23', from: midnight('2026-09-23'), to: noon })
+  })
+
+  test.each(['2026-02-30', '2026-9-23', '2026-09-24', 'yesterday', ''])('is null for %j', (day) => {
+    expect(dayRange(day, noon)).toBeNull()
   })
 })
