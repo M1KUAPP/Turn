@@ -1156,10 +1156,12 @@ ran under Wrangler 4.136.2:
     `"false"`.
   - `POLICY` holds only the values that differ from `startingPolicy` in
     `@turn/shared/row`: JSON in `wrangler.jsonc`, or a string from
-    `wrangler deploy --var` or the dashboard.
-  - An unknown key or a value of the wrong type in `POLICY`, or a
-    `FREE_LINES` that isn't a whole number, answers `500 internal`, so a
-    mistake shows at the next request.
+    `wrangler deploy --var` or the dashboard. With no `POLICY` at all, the
+    starting policy holds.
+  - An unknown key, a value of the wrong type, or a number outside 0 to 1
+    in `POLICY`, a `FREE_LINES` that isn't a whole number, or no
+    `JEV_MODEL`, with which the SDK would pick a model of its own, answers
+    `500 internal`, so a mistake shows at the next request.
   - A var changed in the dashboard lasts until the next `wrangler deploy`,
     which puts back `wrangler.jsonc`'s values.
 - **The Test Store key** is the only RevenueCat key the app carries, and it
