@@ -12,21 +12,23 @@ export class Budget extends DurableObject<Env> {
   }
 
   /**
-   * Takes one of the day's `limit` calls, or none once they're all taken: whether the call may go to Jev. It reads and
-   * writes with no `await` between, so simultaneous calls can't take the same one.
+   * Takes one of the day's `limit` calls, or none once they're all taken: whether the call may go to Jev. It runs in
+   * one transaction, with no `await`, so simultaneous calls can't take the same one.
    */
   take(limit: number): boolean {
-    const { sql } = this.ctx.storage
-    const day = new Date().toISOString().slice(0, 10)
-    const row = sql.exec<{ day: string; count: number }>('SELECT day, count FROM calls').toArray()[0]
-    const count = row?.day === day ? row.count : 0
-    if (count >= limit) return false
-    sql.exec(
-      'INSERT INTO calls (id, day, count) VALUES (1, ?, ?) ' +
-        'ON CONFLICT (id) DO UPDATE SET day = excluded.day, count = excluded.count',
-      day,
-      count + 1
-    )
-    return true
+    return this.ctx.storage.transactionSync(() => {
+      const { sql } = this.ctx.storage
+      const day = new Date().toISOString().slice(0, 10)
+      const row = sql.exec<{ day: string; count: number }>('SELECT day, count FROM calls').toArray()[0]
+      const count = row?.day === day ? row.count : 0
+      if (count >= limit) return false
+      sql.exec(
+        'INSERT INTO calls (id, day, count) VALUES (1, ?, ?) ' +
+          'ON CONFLICT (id) DO UPDATE SET day = excluded.day, count = excluded.count',
+        day,
+        count + 1
+      )
+      return true
+    })
   }
 }
