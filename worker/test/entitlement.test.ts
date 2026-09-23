@@ -7,6 +7,7 @@ import {
   callsTo,
   expectError,
   freeLinesLeft,
+  hang,
   jevAnswers,
   lineRequest,
   listen,
@@ -212,6 +213,18 @@ describe('lines past the free lines (PAY-7)', () => {
     await expectError(await failing, 503, 'jev_unavailable')
     expect((await postLine(lineRequest(), paid)).status).toBe(200)
     expect(callsTo('api.revenuecat.com')).toHaveLength(3)
+  })
+
+  test("give Jev what's left of the line's 2.5 seconds after RevenueCat's check (STATE-2)", async () => {
+    mockRevenueCat(async () => {
+      await scheduler.wait(400)
+      return activeEntitlements(listen)()
+    })
+    mockJev(hang, hang)
+    const started = Date.now()
+    await expectError(await postLine(lineRequest(), paid), 503, 'jev_unavailable')
+    expect(Date.now() - started).toBeGreaterThanOrEqual(2500)
+    expect(Date.now() - started).toBeLessThan(2700)
   })
 
   test('answer from a yes older than a day when RevenueCat fails', async () => {
