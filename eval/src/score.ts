@@ -88,8 +88,11 @@ const time = async <T>(samples: number[], work: () => T | Promise<T>): Promise<T
 /** The row the rules make of one line's ranking, from an empty row, with their starting policy. */
 const rowFor = (ranking: Ranking): Row => applyAnswer(emptyRow, { ...ranking, seq, policy: startingPolicy })
 
-/** A ranking's top score, which a cut-off compares. */
-const top = (ranking: Ranking) => Math.max(...ranking.scores.values())
+/**
+ * A ranking's six highest scores: a cut-off between two of them changes which phrases the row shows, and one elsewhere
+ * changes nothing, since the row shows at most six.
+ */
+const topSix = (ranking: Ranking) => [...ranking.scores.values()].sort((a, b) => b - a).slice(0, 6)
 
 /**
  * Scores each line alone, as the app would from an empty row, with the line's place and a fresh bank's lack of taps:
@@ -99,7 +102,8 @@ const top = (ranking: Ranking) => Math.max(...ranking.scores.values())
  * connection; the lines are scored from the first of the three.
  *
  * A ranker with a cut-off is scored out of fold: five folds, stratified on whether a line has an acceptable reply, and
- * each fold's lines at the cut-off that made the most of the other four folds' lines right (EVAL-2).
+ * each fold's lines at the cut-off, of the other four folds' lines' six highest scores, that made the most of those
+ * lines right (EVAL-2).
  */
 export async function scoreLines<Line extends ScoredLine>(
   lines: readonly Line[],
@@ -139,7 +143,7 @@ export async function scoreLines<Line extends ScoredLine>(
       }))
       const right = ({ ranking, acceptable }: (typeof items)[number], cutOff: number) =>
         outcomeOf(rowFor(cut(ranking, cutOff)), acceptable).startsWith('right')
-      return [name, crossValidate(items, fold, ({ ranking }) => top(ranking), right)]
+      return [name, crossValidate(items, fold, ({ ranking }) => topSix(ranking), right)]
     })
   )
   const scored = ranked.map(({ line, shortlist, rankings }, i): LineScore<Line> => {
