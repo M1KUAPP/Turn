@@ -115,10 +115,11 @@ research note weighs the options, and this plan picks one.
     are done. The three later plans have no such note.
 1.  **`docs/agents/issue-tracker.md` says where plans live.** It says
     "Issues and specs for this repo live as GitHub issues", and every agent
-    loads it through `AGENTS.md`. One sentence adds that a change's plan is
-    committed on its branch as `docs/plans/YYYY-MM-DD-<topic>.md`, where
-    `/code-review` takes it as the spec, while specs from `/to-spec` still
-    go to GitHub issues.
+    loads it through `AGENTS.md`. A short paragraph adds that a change's plan
+    file is committed on its branch as `docs/plans/YYYY-MM-DD-<topic>.md` and
+    passed to `/code-review` by path, since `/code-review` finds a spec file
+    on its own only when the name matches the branch, while specs from
+    `/to-spec`, tickets, and wayfinder maps stay in GitHub issues.
 
 [note-mp]: /docs/research/plan-storage.md#where-mattpocockskills-puts-documents
 [note-cr]: /docs/research/plan-storage.md#how-code-review-finds-a-spec
@@ -280,13 +281,15 @@ git commit -m "docs(plans): date the notes that name superpowers' skills"
 
 ### Task 5: Where plans live
 
-- [ ] **Step 1: Add the sentence to `docs/agents/issue-tracker.md`**
+- [ ] **Step 1: Add the paragraph to `docs/agents/issue-tracker.md`**
 
-After "Use the `gh` CLI for all operations.", as its own paragraph:
+After "Use the `gh` CLI for all operations.":
 
 ```markdown
-Plans are the exception: a change's plan is committed on its branch as
-`docs/plans/YYYY-MM-DD-<topic>.md`, and `/code-review` takes it as the spec.
+Plan files are the exception: when a change has one, it's committed on the
+change's branch as `docs/plans/YYYY-MM-DD-<topic>.md`, and its path is passed
+to `/code-review` as the spec. Specs from `/to-spec`, tickets, and wayfinder
+maps stay in GitHub issues.
 ```
 
 - [ ] **Step 2: Run the gate, then commit**
