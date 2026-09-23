@@ -1,5 +1,5 @@
 import { isYesNo } from '@turn/shared/shortlist'
-import type { Ranker } from './rankers'
+import type { CutOff, Ranker } from './rankers'
 
 /** Workers AI's embedding model, which the report names (EVAL-6). */
 export const embeddingModel = '@cf/baai/bge-base-en-v1.5'
@@ -94,3 +94,12 @@ export function embeddings(embed: Embed): Ranker {
     }
   }
 }
+
+/**
+ * The embeddings' ranking at a cut-off: the phrases whose cosine reaches it score 1 and the rest 0, best first, as the
+ * keyword ranker scores the phrases that share a word; a stable sort keeps the shortlist's order among ties.
+ */
+export const atCutOff: CutOff = (ranking, cutOff) => ({
+  ...ranking,
+  scores: new Map([...ranking.scores].sort(([, a], [, b]) => b - a).map(([id, score]) => [id, score >= cutOff ? 1 : 0]))
+})
