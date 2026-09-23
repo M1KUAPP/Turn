@@ -9,9 +9,12 @@ import { fakeServices } from './services'
 const fixture = fileURLToPath(new URL('fixture/lines.jsonl', import.meta.url))
 let report = ''
 
+let outDir = ''
+
 beforeAll(async () => {
   fakeServices()
-  const out = join(mkdtempSync(join(tmpdir(), 'turn-eval-')), 'results.md')
+  outDir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
+  const out = join(outDir, 'results.md')
   await main(['--lines', fixture, '--out', out])
   report = readFileSync(out, 'utf8')
 })
@@ -185,7 +188,9 @@ test('says so in a whole sentence when a group has no lines', async () => {
     prose('No ranker showed a big button on a line its writer marked yes-or-no, or on one about pain or consent.')
   )
   const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
-  for (const line of empty.split('\n')) expect(line.length, line).toBeLessThanOrEqual(80)
+  for (const line of empty.split('\n').filter((line) => !line.startsWith('|'))) {
+    expect(line.length, line).toBeLessThanOrEqual(80)
+  }
 })
 
 test("says how the app picks each shortlist, and what that leaves of the line in the place ranker's order", () => {
@@ -270,4 +275,13 @@ test("gives Jev's question kind against its writer's, as accuracy and a confusio
   expect(cells(kind, 'Either or')).toEqual(['1', '0', '0', '0', '0'])
   expect(cells(kind, 'Open')).toEqual(['0', '0', '2', '0', '0'])
   expect(cells(kind, 'Not a question')).toEqual(['0', '0', '2', '0', '0'])
+})
+
+test("plots every ranker's risk against its coverage beside the report, with a table as its text", async () => {
+  const curves = section('## Risk and coverage')
+  expect(curves).toContain('![Risk against coverage for each ranker](results-risk-coverage.svg)')
+  expect(readFileSync(join(outDir, 'results-risk-coverage.svg'), 'utf8').match(/<polyline /g)).toHaveLength(4)
+  // place covers every line at once, 7 of its 8 rows wrong, as the row's table says.
+  expect(cells(curves, 'place')).toEqual(Array(5).fill('88% at 100%'))
+  for (const ranker of ['keyword', 'embeddings', 'jev']) expect(cells(curves, ranker), ranker).toHaveLength(5)
 })
