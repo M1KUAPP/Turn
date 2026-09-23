@@ -355,7 +355,7 @@ Read from `worker/node_modules/wrangler/config-schema.json` (`SCHEMA`) and
   whether an object is created in western North America can't be seen from
   outside.
 
-[plan]: /docs/plans/0016-turn-relay.md
+[plan]: /docs/plans/0017-turn-relay.md
 
 ## See also
 

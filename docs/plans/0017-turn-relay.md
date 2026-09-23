@@ -126,7 +126,7 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
 - **`/code-review`:** one round, on its Standards and Spec axes, with issue
   #24 and this plan as the spec.
 
-[note]: /docs/research/0037-turn-relay.md
+[note]: /docs/research/0038-turn-relay.md
 
 ## Design
 
@@ -302,9 +302,9 @@ at agreed seams with `/tdd`, runs the full suite at the end, and closes with
     set in code and the failures, an answer out of shape among them; and
     "Tag, then cut" has the app keep a request within 16 KB.
 
-[note-sdk]: /docs/research/0037-turn-relay.md#the-sdks-client-and-call
-[note-logs]: /docs/research/0037-turn-relay.md#workers-logs
-[note-wrangler]: /docs/research/0037-turn-relay.md#wranglers-config-and-deploy
+[note-sdk]: /docs/research/0038-turn-relay.md#the-sdks-client-and-call
+[note-logs]: /docs/research/0038-turn-relay.md#workers-logs
+[note-wrangler]: /docs/research/0038-turn-relay.md#wranglers-config-and-deploy
 
 ### Rejected alternatives
 
@@ -363,7 +363,7 @@ its prompt doesn't name or runs git.
 
 ### Task 1: Research note
 
-A background agent wrote `docs/research/0037-turn-relay.md` in about six
+A background agent wrote `docs/research/0038-turn-relay.md` in about six
 minutes. It passed the docs gate once its long type signatures moved into
 code blocks, and was committed as `docs(research): add notes on the relay`.
 
