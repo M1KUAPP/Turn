@@ -10,9 +10,9 @@ import {
   mockRevenueCat,
   postLine,
   send,
-  sha256,
   unknownCustomer,
-  user
+  user,
+  userHash
 } from './helpers'
 
 describe('the log', () => {
@@ -40,7 +40,7 @@ describe('the log', () => {
     ]
     for (const request of session) await request()
 
-    const prefix = (await sha256(`test-salt${user}`)).slice(0, 8)
+    const prefix = (await userHash()).slice(0, 8)
     expect(log.mock.calls).toStrictEqual([
       [{ at, user: prefix, outcome: 'config', ms: { total: ms } }],
       [
@@ -77,7 +77,7 @@ describe('the log', () => {
     const sent = [first, first, lineRequest(), lineRequest({ refresh: true })]
     for (const body of sent) await postLine(body, { FREE_LINES: '1' })
 
-    const prefix = (await sha256(`test-salt${user}`)).slice(0, 8)
+    const prefix = (await userHash()).slice(0, 8)
     expect(log.mock.calls.slice(1)).toStrictEqual([
       [{ at, user: prefix, seq: 7, outcome: 'duplicate', ms: { total: ms } }],
       [{ at, user: prefix, seq: 7, outcome: 'paywall', ms: { total: ms } }],
