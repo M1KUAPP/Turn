@@ -37,11 +37,11 @@ export function chanceHit(n: number, g: number, k: number): number {
  * the sum over r of P(R = r)/r, where P(R = 1) = g/n and each next rank's share follows from the last.
  */
 export function chanceReciprocalRank(n: number, g: number): number {
-  let mean = 0
+  let expected = 0
   let atRank = g / n
   for (let r = 1; r <= n - g + 1 && atRank > 0; r++) {
-    mean += atRank / r
+    expected += atRank / r
     atRank *= (n - r - g + 1) / (n - r)
   }
-  return mean
+  return expected
 }

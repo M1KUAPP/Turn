@@ -7,7 +7,7 @@ import { listOf } from './prose'
 import { sharesNoWord } from './score'
 
 /** Three decimals, so a negative agreement of 0.996 doesn't print as a perfect 1.00. */
-const three = (value: number) => value.toFixed(3)
+const rounded = (value: number) => value.toFixed(3)
 const names = (labelers: readonly string[]) => listOf([...new Set(labelers)])
 
 /**
@@ -52,13 +52,13 @@ export function main(args: readonly string[]): number {
         `${names(second.map(({ labeler }) => labeler))}'s:`,
       `- Some replies or none, on ${lines.length} lines: both some on ${noneOrSome.a}, only the first on ` +
         `${noneOrSome.b}, only the second on ${noneOrSome.c}, and both none on ${noneOrSome.d}; agreement ` +
-        `${three(noneOrSome.percent)}, Cohen's kappa ${three(noneOrSome.kappa)}, positive agreement ` +
-        `${three(noneOrSome.positive)}, and negative agreement ${three(noneOrSome.negative)}.`,
+        `${rounded(noneOrSome.percent)}, Cohen's kappa ${rounded(noneOrSome.kappa)}, positive agreement ` +
+        `${rounded(noneOrSome.positive)}, and negative agreement ${rounded(noneOrSome.negative)}.`,
       `- Each line and candidate phrase, on ${pairs.a + pairs.b + pairs.c + pairs.d} pairs: both on ${pairs.a}, ` +
         `only the first on ${pairs.b}, only the second on ${pairs.c}, and neither on ${pairs.d}; positive agreement ` +
-        `${three(pairs.positive)}, and negative agreement ${three(pairs.negative)} and Cohen's kappa ${three(pairs.kappa)}, ` +
+        `${rounded(pairs.positive)}, and negative agreement ${rounded(pairs.negative)} and Cohen's kappa ${rounded(pairs.kappa)}, ` +
         "which move with the pairs' count.",
-      `- Krippendorff's alpha with the MASI distance over each line's replies: ${three(alpha)}.`
+      `- Krippendorff's alpha with the MASI distance over each line's replies: ${rounded(alpha)}.`
     ].join('\n')
   )
   return quotas.every(({ met }) => met) ? 0 : 1
