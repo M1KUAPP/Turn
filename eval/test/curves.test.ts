@@ -50,10 +50,16 @@ test('draws each curve as a line through its points in an SVG, with a title, a d
   expect(svg).toContain('<title>Risk against coverage for each ranker</title>')
   expect(svg).toContain('as its threshold falls: jev, a&lt;b.</desc>')
   // Coverage 50% sits halfway across the plot, 64 + 276, and risk 25% a quarter of the way up, 24 + 240.
-  expect(svg).toContain('<polyline points="340.0,264.0" fill="none" stroke="#E69F00" stroke-width="2"/>')
-  expect(svg).toContain('<circle cx="340.0" cy="264.0" r="3" fill="#E69F00"/>')
-  // In order of coverage, whatever order the points came in.
-  expect(svg).toContain('<polyline points="202.0,344.0 616.0,184.0" fill="none" stroke="#56B4E9" stroke-width="2"/>')
+  expect(svg).toContain(
+    '<polyline points="340.0,264.0" fill="none" stroke="#E69F00" stroke-width="2" stroke-dasharray="none"/>'
+  )
+  // The first curve's rings are the widest, so the next curve's points don't hide them.
+  expect(svg).toContain('<circle cx="340.0" cy="264.0" r="5" fill="none" stroke="#E69F00" stroke-width="2"/>')
+  // In order of coverage, whatever order the points came in, and dashed.
+  expect(svg).toContain(
+    '<polyline points="202.0,344.0 616.0,184.0" fill="none" stroke="#56B4E9" stroke-width="2" stroke-dasharray="8 4"/>'
+  )
+  expect(svg).toContain('<circle cx="202.0" cy="344.0" r="3" fill="none" stroke="#56B4E9" stroke-width="2"/>')
   expect(svg).toMatch(/<text [^>]*>jev<\/text>/)
   expect(svg).toMatch(/<text [^>]*>a&lt;b<\/text>/)
   expect(svg.trimEnd().endsWith('</svg>')).toBe(true)
