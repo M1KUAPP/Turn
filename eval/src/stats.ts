@@ -80,14 +80,22 @@ export function below(n: number, next: () => number): number {
   return x % n
 }
 
-/**
-/** How many times the paired bootstrap resamples the items: SciPy's default count. */
-const resamples = 9999
+/** How many times a bootstrap resamples the items: SciPy's default count. */
+export const resamples = 9999
 
 /**
- * The paired bootstrap's 95% interval for the mean of a − b over the same items: 9,999 resamples of the items, each
- * the same for both, and the 2.5th and 97.5th percentiles of their means. When no item splits a and b, every
- * resample gives the same mean, and so does the interval. Null for no items.
+ * The percentile bootstrap's 95% interval for a statistic of n items: 9,999 resamples of the items' indices, each n
+ * drawn with replacement from the committed seed, and the 2.5th and 97.5th percentiles of the statistic over them.
+ */
+export function bootstrap(n: number, statistic: (sample: readonly number[]) => number): { low: number; high: number } {
+  const next = seeded()
+  const values = Array.from({ length: resamples }, () => statistic(Array.from({ length: n }, () => below(n, next))))
+  return { low: percentile(values, 2.5), high: percentile(values, 97.5) }
+}
+
+/**
+ * The paired bootstrap's 95% interval for the mean of a − b over the same items, each resample the same for both.
+ * When no item splits a and b, every resample gives the same mean, and so does the interval. Null for no items.
  */
 export function pairedBootstrap(
   a: readonly number[],
@@ -96,11 +104,7 @@ export function pairedBootstrap(
   const n = a.length
   if (n === 0) return null
   const gaps = a.map((value, i) => value - b[i])
-  const next = seeded()
-  const means = Array.from({ length: resamples }, () => {
-    let sum = 0
-    for (let i = 0; i < n; i++) sum += gaps[below(n, next)]
-    return sum / n
-  })
-  return { difference: mean(gaps), low: percentile(means, 2.5), high: percentile(means, 97.5) }
+  // Summed in the order drawn, so the means are the ones a running sum over the draws gave.
+  const interval = bootstrap(n, (sample) => sample.reduce((sum, i) => sum + gaps[i], 0) / n)
+  return { difference: mean(gaps), ...interval }
 }
