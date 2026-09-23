@@ -227,7 +227,8 @@ export class Device extends DurableObject<Env> {
     let attempted = false
     let status: number | undefined
     const jev = this.jev(async (input, init) => {
-      // The attempt's own time bounds its wait for the budget too, so a slow answer can't hold the line (STATE-2).
+      // The attempt's own time bounds its wait for the budget too, so a slow answer can't hold the line (STATE-2). A
+      // call the budget counts after the attempt gave up is never sent, which only spends the day's calls sooner.
       if (!(await unlessAborted(calls.take(dailyCalls), init?.signal))) {
         spent.abort()
         throw new Error("The day's calls to Jev are spent")
