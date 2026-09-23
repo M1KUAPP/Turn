@@ -179,8 +179,8 @@ git grep -n 'git add docs/superpower[s]/' -- '*.md'
 git grep -n 'superpower[s]:' -- docs
 ```
 
-[idea-appendix]: /docs/superpowers/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
-[check-md-change]: /docs/superpowers/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
+[idea-appendix]: /docs/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
+[check-md-change]: /docs/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
 
 ## Tasks
 
