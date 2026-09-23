@@ -1,20 +1,20 @@
-# Graph Report - revenuecat (2026-09-23)
+# Graph Report - revenuecat-shortlist-row (2026-09-23)
 
 ## Corpus Check
 
-- 145 files · ~555,410 words
+- 153 files · ~567,085 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 10 file(s) not represented in the graph (top: (none) 6, .lock 1, .jsonl 1)
+- Unclassified: 11 file(s) not represented in the graph (top: (none) 7, .lock 1, .jsonl 1)
 
 ## Summary
 
-- 2826 nodes · 2688 edges · 211 communities (200 shown, 5 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 2909 nodes · 2811 edges · 213 communities (202 shown, 5 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `959353d7`
+- Built from commit: `a8c54c36`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -223,8 +223,10 @@
 - shared/tsconfig.json
 - Tasks
 - Turn's starter content research notes
-- starter-bank.test.ts
+- shortlist.test.ts
 - lines.test.ts
+- Tasks
+- Turn's shortlist and row research notes
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -241,13 +243,18 @@
 
 ## Surprising Connections (you probably didn't know these)
 
-- None detected - all connections are within the same source files.
+- `replay()` --calls--> `applyAnswer()` [EXTRACTED]
+  shared/test/row.test.ts → shared/src/row.ts
+- `pick()` --calls--> `PhraseIndex` [EXTRACTED]
+  shared/test/shortlist.test.ts → shared/src/shortlist.ts
+- `pick()` --calls--> `pickShortlist()` [EXTRACTED]
+  shared/test/shortlist.test.ts → shared/src/shortlist.ts
 
 ## Import Cycles
 
 - None detected.
 
-## Communities (211 total, 5 thin omitted)
+## Communities (213 total, 5 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1201,8 +1208,8 @@ Nodes (15): @cloudflare/vitest-plugin, wrangler, devDependencies, @cloudflare/vi
 
 ### Community 197 - "shared/package.json"
 
-Cohesion: 0.15
-Nodes (12): devDependencies, typescript, vitest, exports, typescript, vitest, name, private (+4 more)
+Cohesion: 0.12
+Nodes (15): minisearch, dependencies, minisearch, devDependencies, typescript, vitest, exports, typescript (+7 more)
 
 ### Community 198 - "Turn's workspace research notes"
 
@@ -1211,8 +1218,8 @@ Nodes (11): Bun workspaces, Gaps, Hands-on check, One TypeScript source package 
 
 ### Community 199 - "eval/package.json"
 
-Cohesion: 0.14
-Nodes (13): devDependencies, @types/node, typescript, vitest, typescript, vitest, name, private (+5 more)
+Cohesion: 0.12
+Nodes (16): dependencies, @turn/shared, devDependencies, @types/node, typescript, vitest, typescript, vitest (+8 more)
 
 ### Community 200 - "compilerOptions"
 
@@ -1244,29 +1251,39 @@ Nodes (21): Appendix: the bank's briefs, Appendix: the line writers' brief, Deci
 Cohesion: 0.22
 Nodes (8): Consent and refusal for people who can't speak, Default content in text AAC apps, Gaps, How validated pain tools ask about pain, Plain-language rules for short phrases, See also, Turn's starter content research notes, What published patient boards hold
 
-### Community 209 - "starter-bank.test.ts"
+### Community 209 - "shortlist.test.ts"
 
-Cohesion: 0.25
-Nodes (7): bank, Category, categoryById(), Phrase, phrases, phraseTexts(), StarterBank
+Cohesion: 0.06
+Nodes (41): bank, Category, categoryById(), Phrase, phrases, phraseTexts(), StarterBank, commonWords (+33 more)
+
+### Community 211 - "Tasks"
+
+Cohesion: 0.10
+Nodes (20): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: The TRD, Task 11: Graph, pull request, review, and merge (+12 more)
+
+### Community 212 - "Turn's shortlist and row research notes"
+
+Cohesion: 0.20
+Nodes (9): Common-word lists, Curly apostrophes, Gaps, Hands-on check, MiniSearch 7.2.0, See also, Timing tests in Vitest 4.1, Turn's shortlist and row research notes (+1 more)
 
 ## Knowledge Gaps
 
-- **2233 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2228 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2365 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2267 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2262 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2405 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Google Play review`, `Store listing and discoverability`, `Apple App Store review`, `Retention and push notifications`, `Demo video and write-up`, `Samsung Galaxy Store review`, `Monetization and paywall benchmarks`?**
+- **Why does `Turn technical requirements` connect `Turn technical requirements` to `Decision pipeline`, `The iPhone app`, `Evaluation`, `Listening and speaking on the phone`, `Security and privacy`, `Data model`, `Reliability and observability`, `Purchases and entitlements`, `Stack and repository`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Shipaton 2026 research notes` connect `Shipaton 2026 research notes` to `Eligibility rules`, `Prize categories and prize structure`, `Resources, perks, and programs`, `Past editions and winners`, `Submission requirements`, `Judging process and criteria`, `Winning playbook`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Jev research notes` connect `Jev research notes` to `What teams can build with Jev`, `Integration effort and limitations`, `How Jev is used`, `Pricing, limits, and terms`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2233 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2267 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
