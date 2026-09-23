@@ -151,7 +151,7 @@ would need eight issues, not one.
 ## How /code-review finds a spec
 
 The repo's copy matches upstream. Step 2, "Identify the spec source", reads
-([code-review][local-code-review]):
+([code-review](/.agents/skills/code-review/SKILL.md)):
 
 ```markdown
 Look for the originating spec, in this order:
@@ -165,8 +165,6 @@ Look for the originating spec, in this order:
 Synthesis: any folder under `docs/` qualifies for step 3, so the choice of
 subfolder does not change what `/code-review` can find; the file name has to
 match the branch name or feature.
-
-[local-code-review]: /.agents/skills/code-review/SKILL.md
 
 ## Conventions for design records in a repo
 
