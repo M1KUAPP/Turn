@@ -135,7 +135,8 @@ export class Device extends DurableObject<Env> {
     }
     const reply = await this.ask(line)
     if (reply.outcome !== 'answered') {
-      this.ctx.storage.sql.exec('DELETE FROM free_lines WHERE line_id = ?', line.lineId)
+      // Only a free line's own claim: a paid copy of the same line ID may be failing while another copy holds one.
+      if (claim === 'free') this.ctx.storage.sql.exec('DELETE FROM free_lines WHERE line_id = ?', line.lineId)
       return reply
     }
     return { ...reply, freeLinesLeft: this.freeLinesLeft(terms) }
