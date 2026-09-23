@@ -1383,17 +1383,20 @@ line to the phone's own ranking, and speaking never depends on the relay.
   lines, and a fourth read every phrase. Two more, `claude-c` and
   `claude-d`, then labeled every line's replies, each alone and from a
   brief that set no quota ([the labelers' brief][labels-brief]). Their
-  labels left too few lines with no reply, so `claude-f`, which saw neither
-  the bank nor the lines, wrote 20 more lines meant to have none
-  ([the writer's brief][writer-brief]), and `claude-g` and `claude-h`
-  labeled them among the 80 by the same rules; 12 of them replaced lines
-  with a reply. `claude-c`'s labeling, with `claude-g`'s for the new lines,
-  is the one the evaluation scores. Text a language model wrote or labeled
-  may suit a ranker built on one, and two labelings by one model show
-  consistency rather than correctness, so the report and the README say
-  who wrote the lines and the bank and who labeled the replies. On that
-  date, no teammate had yet read the bank (CONTENT-1) or labeled a line
-  (EVAL-1), and no clinic had reviewed the bank (CONTENT-5).
+  labels left too few lines with no reply, so `claude-f` wrote 20 more lines
+  meant to have none from a brief that showed no list of the bank's
+  phrases, only the labeling rules, which name the fixed buttons and
+  "I don't know" ([the new lines' brief][writer-brief]); of the 80 lines,
+  it saw only the five that its first draft repeated, quoted back as
+  situations to avoid. `claude-g` and `claude-h` labeled the new lines
+  among the 80 by the same rules; 12 of them replaced lines with a reply.
+  `claude-c`'s labeling, with `claude-g`'s for the new lines, is the one
+  the evaluation scores. Text a language model wrote or labeled may suit a
+  ranker built on one, and two labelings by one model show consistency
+  rather than correctness, so the report and the README say who wrote the
+  lines and the bank and who labeled the replies. On that date, no
+  teammate had yet read the bank (CONTENT-1) or labeled a line (EVAL-1),
+  and no clinic had reviewed the bank (CONTENT-5).
 
 [eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
