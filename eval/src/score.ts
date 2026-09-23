@@ -9,7 +9,7 @@ import {
 } from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, type Phrase } from '@turn/shared/shortlist'
 import { crossValidate, folds } from './cut-off'
-import type { CutOff, Ranker } from './rankers'
+import type { AtCutOff, Ranker } from './rankers'
 import { chanceHit, chanceReciprocalRank, mean, pairedBootstrap } from './stats'
 
 /** What scoring reads from a labeled partner line: the ids of every acceptable reply, or none. */
@@ -114,7 +114,7 @@ export async function scoreLines<Line extends ScoredLine>(
   lines: readonly Line[],
   bank: readonly Phrase[],
   rankers: Readonly<Record<string, Ranker>>,
-  cutOffs: Readonly<Record<string, CutOff>> = {}
+  atCutOffs: Readonly<Record<string, AtCutOff>> = {}
 ): Promise<Scores<Line>> {
   const index = new PhraseIndex()
   const names = Object.keys(rankers)
@@ -141,7 +141,7 @@ export async function scoreLines<Line extends ScoredLine>(
   const { ranked } = passes[0]
   const fold = folds(lines, (line) => line.acceptable.length > 0)
   const chosen = Object.fromEntries(
-    Object.entries(cutOffs).map(([name, cut]) => {
+    Object.entries(atCutOffs).map(([name, cut]) => {
       const items = ranked.map(({ line, rankings }) => ({
         ranking: rankings[name],
         acceptable: new Set(line.acceptable)
@@ -161,7 +161,7 @@ export async function scoreLines<Line extends ScoredLine>(
         .filter(([, score]) => score > 0)
         .sort(([, a], [, b]) => b - a)
         .map(([id]) => id)
-      const cut = cutOffs[name]
+      const cut = atCutOffs[name]
       const rowOf = (answer: Ranking) => rowFor(cut ? cut(answer, chosen[name][fold[i]]) : answer)
       const rows = [warmUp, ...passes].map((each) => rowOf(each.ranked[i].rankings[name]))
       const row = rowOf(ranking)
@@ -246,7 +246,10 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
 export const kinds: readonly Kind[] = ['yes_no', 'either_or', 'open', 'not_a_question']
 
 /** A ranking's most likely kind of question, or a tie when two or more share the top. */
-const likeliest = (kind: Readonly<Record<Kind, number>>): Kind | 'tie' => {
+/** The kind a ranker called a line: its most likely, or a tie when two or more share the top. */
+type Called = Kind | 'tie'
+
+const likeliest = (kind: Readonly<Record<Kind, number>>): Called => {
   const top = Math.max(...kinds.map((option) => kind[option]))
   const at = kinds.filter((option) => kind[option] === top)
   return at.length === 1 ? at[0] : 'tie'
@@ -259,10 +262,10 @@ const likeliest = (kind: Readonly<Record<Kind, number>>): Kind | 'tie' => {
 export function kindMatrix<Line extends ScoredLine & { kind: Kind }>(
   scores: readonly LineScore<Line>[],
   ranker: string
-): { counts: Record<Kind, Record<Kind | 'tie', number>>; right: Count } {
+): { counts: Record<Kind, Record<Called, number>>; right: Count } {
   const counts = Object.fromEntries(
     kinds.map((kind) => [kind, Object.fromEntries([...kinds, 'tie'].map((called) => [called, 0]))])
-  ) as Record<Kind, Record<Kind | 'tie', number>>
+  ) as Record<Kind, Record<Called, number>>
   let right = 0
   for (const { line, rankers } of scores) {
     const called = likeliest(rankers[ranker].ranking.kind)

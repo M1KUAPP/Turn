@@ -3,7 +3,7 @@ import { writeFileSync } from 'node:fs'
 import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { plot, riskCoverage, type Point } from './curves'
+import { plot, riskCoverage, type Curve, type Point } from './curves'
 import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
@@ -246,7 +246,7 @@ const kindSection = (scores: readonly LineScore<Line>[], naming: Naming) => {
  * Each ranker's risk-coverage curve: the plot, and as its text, each ranker's risk at the first point that covers at
  * least each share of the lines.
  */
-const curveSection = (count: number, curves: readonly (readonly [string, readonly Point[]])[], image: string) => {
+const curveSection = (count: number, curves: readonly Curve[], image: string) => {
   const shares = [0.2, 0.4, 0.6, 0.8, 1]
   // A little slack, since 4 of 5 lines is a hair under 0.8 in floating point.
   const at = (points: readonly Point[], share: number) => points.find(({ coverage }) => coverage >= share - 1e-9)
@@ -310,7 +310,7 @@ const render = (
     file: string
     pin: string
     calls: readonly JevCall[]
-    curves: readonly (readonly [string, readonly Point[]])[]
+    curves: readonly Curve[]
     image: string
     naming: Naming
   }
