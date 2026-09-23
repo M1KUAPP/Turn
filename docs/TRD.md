@@ -1289,7 +1289,9 @@ ran under Wrangler 4.136.2:
     ([relay limits notes][limits-live]). The objects' counts are exact, at
     one more object request for every request and one more row for every
     counted one, which [the Free plan's budget](#the-relays-storage)
-    allows; #98 chose them for the address too.
+    allows; #98 chose them for the address too. Live, the address's count
+    held a burst of 150 requests to 120, and its call added tens of
+    milliseconds to a request ([address limit notes][addr-live]).
   - **Where:** once a request's headers and a line's lengths pass. The
     address's count comes first, before any user's object, so at most 120
     requests a minute from IDs minted on one address reach their objects;
@@ -1336,6 +1338,7 @@ ran under Wrangler 4.136.2:
 [svc-ratelimit]: /docs/research/0024-turn-services.md#the-rate-limiting-binding-for-turn
 [svc-abuse]: /docs/research/0024-turn-services.md#limiting-abuse-of-the-free-lines
 [limits-live]: /docs/research/0046-turn-relay-limits.md#hands-on-check
+[addr-live]: /docs/research/0050-turn-address-limit.md#hands-on-check
 [limits-sdk]: /docs/research/0046-turn-relay-limits.md#the-sdks-attempts
 
 ### Data inventory
