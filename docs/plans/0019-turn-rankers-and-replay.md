@@ -39,6 +39,7 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+1.  [What changed while building](#what-changed-while-building)
 
 [rankers-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/36
 [replay-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/37
@@ -135,11 +136,13 @@ Contents:
     - Each request holds at most 100 texts and always sends `cls`, since
       the default `mean` makes vectors that don't compare; the answer must
       say `success`, `cls`, and a shape of one 768-number row per text.
-    - The bank's rankable phrases are embedded once, in two requests, and
-      each line when it's ranked. Cosine divides by both norms; the spike's
-      vectors had norms of 0.9996 to 1.0003. No query prefix: BGE's card
-      says leaving it out costs little, and a prefixed run would be another
-      ranker.
+    - Each line goes in one request with the phrases of its shortlist the
+      ranker hasn't seen, and a phrase's vector is kept for the run, as a
+      store of the bank's vectors would keep it; after the warm-up pass,
+      each request holds the line alone. Cosine divides by both norms; the
+      spike's vectors had norms of 0.9996 to 1.0003. No query prefix: BGE's
+      card says leaving it out costs little, and a prefixed run would be
+      another ranker.
     - The ranking: the kind from the phone's `isYesNo`, since it has none of
       its own; no topic; the cosines in the shortlist's order; and
       `onPhone: true`, so it never brings a big button, since a cosine isn't
@@ -181,8 +184,9 @@ Contents:
     the fixed buttons, each line's top-6 hit for Jev and for embeddings;
     9,999 resamples of line indices, the same for both, SciPy's default;
     and the 2.5th and 97.5th percentiles of the differences, by type 7.
-    `xoshiro128**` 1.1 draws the indices from a committed nonzero seed, by
-    Lemire's rejection rather than a bare modulo. When no line splits the
+    `xoshiro128**` 1.1 draws the indices from a committed nonzero seed, a
+    draw past the last whole multiple of the count drawn again rather than
+    kept with a bare modulo. When no line splits the
     two rankers, every resample gives the same difference, and the
     interval is that value. Jev "trails" when the interval lies wholly
     below zero and "leads" when wholly above; otherwise there's "no clear
@@ -323,7 +327,7 @@ tests await, and one checks that two slow rankers never overlap.
 
 ```ts
 export function seeded(): () => number // xoshiro128** 1.1, 32-bit outputs
-export function below(n: number, next: () => number): number // Lemire's rejection
+export function below(n: number, next: () => number): number // by rejection
 export function pairedBootstrap(
   a: readonly number[],
   b: readonly number[]
@@ -417,6 +421,31 @@ timeout, and with Jev off; a stop at `402`; and the printed table.
 - The replay against `wrangler dev` with the key from the shell, and
   against the team's relay.
 - `graphify update .`, committed as its own chore.
+
+## What changed while building
+
+- **Phrases embedded when first shortlisted,** not the whole bank up front:
+  the ranker then needs no bank, and the cache ensures every shortlisted
+  phrase has its vector.
+- **Rejection by the last whole multiple,** the statistics notes' code,
+  rather than Lemire's multiply-and-shift; both leave no bias.
+- **A seventh-place check** joined the top-6 gap's test and the curves'
+  test after a mutation to seven phrases survived each.
+- **The plot's rings and dashes.** The live run's keyword point sat on Jev's
+  line and vanished, so each curve has its own dashes, its points are rings
+  a little smaller than the curve's before, and Jev is black.
+- **Table helpers in `prose.ts`,** since the replay prints a table too.
+- **Live checks on September 23, 2026,** all on the fixture's 8 lines or
+  the replay's sample:
+  - `bun run eval` took about 22 seconds: 32 Jev calls, all answered as
+    `jev-1.13.0` with a median of 2,147 input tokens, Jev right on the kind
+    of all 8 lines, and five cut-offs (four of 0.807 and one that held
+    every line). Median latency: embeddings 195 ms, Jev 361 ms.
+  - `--unnamed`: neither the report nor the plot holds "jev" or "TypeSafe".
+  - The replay through `wrangler dev`, the key from the shell and made-up
+    local values for the other two secrets: all 10 lines answered, 27 slot
+    changes on 8 lines, one hold. Through the team's relay: all 10 answered,
+    Jev 142 to 217 ms, 26 slot changes on 8 lines, one hold.
 
 [services-notes]: /docs/research/0042-turn-eval-services.md
 [stats-notes]: /docs/research/0043-turn-eval-statistics.md
