@@ -1235,10 +1235,20 @@ monitoring, and "Jev is not trained on customer requests or responses"
 
 ### Logs and counts
 
-- **One log line per request** from the relay: the time, the first 8
-  characters of the ID's hash, the sequence number, the outcome (`answered`,
-  `paywall`, `limited`, `failed`, or `off`), and the milliseconds in Jev and
-  in all; never a line, phrase, place, or category (METRIC-1, PRIV-2).
+- **One log line per request** from the relay, never a line, phrase,
+  place, category, ID, line ID, or error message (METRIC-1, PRIV-2). The
+  Worker writes it as one object, whose keys Workers Logs indexes as
+  fields ([relay notes][relay-logs]), each only once it's known:
+  - `at`, the time;
+  - `user`, the first 8 characters of the ID's hash;
+  - `seq`, the sequence number;
+  - `outcome`: `answered`, `paywall`, `limited`, `failed`, or `off` for a
+    line; `credits` for a line Jev refused with a `402`; `invalid`,
+    `not_found`, or `internal` for a request refused with that error; and
+    `config` for the configuration;
+  - `ms`, with the milliseconds in all as `total` and in Jev as `jev`;
+  - `model` and `inputTokens`, as Jev reports them;
+  - `jevStatus`, the status a failed call to Jev returned.
 - **What else is logged.** The relay turns off automatic invocation logs,
   which hold each request's details, and leaves tracing off: from October
   1, 2026, traces count against the same quota, and a trace of the
@@ -1251,6 +1261,7 @@ monitoring, and "Jev is not trained on customer requests or responses"
   a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
+[relay-logs]: /docs/research/0037-turn-relay.md#workers-logs
 
 ### Service life
 
