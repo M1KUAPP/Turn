@@ -186,8 +186,8 @@ git grep -n 'git add docs/superpower[s]/' -- '*.md'
 git grep -n 'superpower[s]:' -- docs
 ```
 
-[idea-appendix]: /docs/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
-[check-md-change]: /docs/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts
+[idea-appendix]: /docs/plans/0003-shipaton-2026-idea.md#appendix-check-scripts
+[check-md-change]: /docs/plans/0004-guessling-product-prd-trd.md#appendix-check-scripts
 
 ## Tasks
 
@@ -208,7 +208,7 @@ as `docs(research): add notes on where plans and specs live`.
 - [ ] **Step 1: Run the gate, then commit**
 
 ```shell
-git add docs/plans/2026-09-23-plan-storage.md
+git add docs/plans/0009-plan-storage.md
 git commit -m "docs(plan): add the plan for moving plans out of docs/superpowers"
 ```
 

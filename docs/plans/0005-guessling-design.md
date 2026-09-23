@@ -343,7 +343,7 @@ git add docs/research/ios-design.md
 git commit -m "docs(research): add notes on designing for iOS 26 with Expo"
 git add docs/research/game-design.md
 git commit -m "docs(research): add notes on puzzle game and character design"
-git add docs/plans/2026-09-22-guessling-design.md
+git add docs/plans/0005-guessling-design.md
 git commit -m "docs(plan): plan the design document"
 ```
 
@@ -835,7 +835,7 @@ git checkout main && git pull --ff-only
 ## Appendix: check scripts
 
 `check_md.py`, `fact_scan.py`, and `check_links.py` are unchanged from the
-[product plan's appendix](/docs/plans/2026-09-22-guessling-product-prd-trd.md#appendix-check-scripts).
+[product plan's appendix](/docs/plans/0004-guessling-product-prd-trd.md#appendix-check-scripts).
 This plan adds two scripts.
 
 `check_contrast.py` checks the Colors section:

@@ -274,7 +274,7 @@ failing test first:
 check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" || echo "MISSING: $p"; done; }
 ```
 
-[idea-appendix]: /docs/plans/2026-09-22-shipaton-2026-idea.md#appendix-check-scripts
+[idea-appendix]: /docs/plans/0003-shipaton-2026-idea.md#appendix-check-scripts
 
 ## Tasks
 
@@ -311,7 +311,7 @@ git commit -m "docs(research): add notes on Jev's patterns"
 - [ ] **Step 1: Run the gate, then commit**
 
 ```shell
-git add docs/plans/2026-09-22-next-gen-idea.md
+git add docs/plans/0006-next-gen-idea.md
 git commit -m "docs(plan): add the Next Gen idea plan"
 ```
 

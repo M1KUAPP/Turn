@@ -567,7 +567,7 @@ Rebase merging keeps the atomic commits and the linear history of `main`.
 ## Appendix: check scripts
 
 The scripts from the
-[brief plan's appendix](/docs/plans/2026-09-21-shipaton-2026-brief.md#appendix-check-scripts),
+[brief plan's appendix](/docs/plans/0001-shipaton-2026-brief.md#appendix-check-scripts),
 with changes: `check_md.py` also checks the anchor in a link to another
 Markdown file and where each reference definition sits, and `fact_scan.py`
 takes the corpus directories as arguments. `check_links.py` is new.

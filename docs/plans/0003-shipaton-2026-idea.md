@@ -860,7 +860,7 @@ Rebase merging keeps the atomic commits and the linear history of `main`.
 ## Appendix: check scripts
 
 The scripts from the
-[context plan's appendix](/docs/plans/2026-09-21-shipaton-2026-context.md#appendix-check-scripts),
+[context plan's appendix](/docs/plans/0002-shipaton-2026-context.md#appendix-check-scripts),
 with two changes: `fact_scan.py` no longer counts the scanned file as
 its own evidence, and `check_md.py` flags placeholders only as whole
 words.
