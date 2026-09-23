@@ -179,3 +179,25 @@ test('finds the lines that share no word with a reply besides the fixed buttons,
   expect(noWord('Are you cold?', ['yes', 'no'])).toBe(false)
   expect(noWord('Nice weather today.', [])).toBe(false)
 })
+
+test("ranks only the phrases a ranker scores above 0, so keyword gets no credit for the place's phrases", () => {
+  const [weather] = scoreLines([{ text: 'Nice weather today.', place: 'home', acceptable: ['good-morning'] }], bank, {
+    place,
+    keyword
+  }).lines
+  expect(weather.rankers.keyword.order).toEqual([])
+  expect(weather.rankers.place.order).toEqual([
+    'good-morning',
+    'water-please',
+    'im-cold',
+    'good-night',
+    'more-please',
+    'im-full',
+    'im-tired'
+  ])
+  const { rankers } = summarize([weather])
+  expect([rankers.keyword.top6, rankers.place.top1]).toEqual([
+    { k: 0, n: 1 },
+    { k: 1, n: 1 }
+  ])
+})

@@ -164,6 +164,7 @@ const render = (scored: readonly Line[], { run, file }: { run: string; file: str
       ),
       [
         '- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. ' +
+          'A ranker ranks only the phrases it scores above 0, so keyword ranks none on a line that shares no word. ' +
           'Chance is a random order of the same phrases. The mean reciprocal rank is a mean of ranks, not a rate, ' +
           'so it has no interval.',
         '- **The row:** coverage is the share of lines where the row changes, and risk the share of those rows ' +
