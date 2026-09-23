@@ -38,7 +38,7 @@ const plotWidth = size.width - size.left - size.right
 const plotHeight = size.height - size.top - size.bottom
 
 /** Okabe and Ito's colors, which people with each common kind of color blindness can tell apart. */
-const colors = ['#E69F00', '#56B4E9', '#009E73', '#000000', '#D55E00', '#CC79A7']
+const colors = ['#E69F00', '#56B4E9', '#009E73', '#000000', '#D55E00', '#CC79A7', '#0072B2']
 
 /** A dash pattern for each curve, so a curve drawn over another lets it show through. */
 const dashes = ['none', '8 4', '2 3', '12 4 2 4']

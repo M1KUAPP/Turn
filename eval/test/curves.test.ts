@@ -65,6 +65,14 @@ test('draws each curve as a line through its points in an SVG, with a title, a d
   expect(svg.trimEnd().endsWith('</svg>')).toBe(true)
 })
 
+test('gives each of seven curves a color of its own', () => {
+  const names = ['place', 'keyword', 'embeddings', 'jev', 'reranker', 'qwen3', 'apple']
+  const seven = plot(names.map((name) => [name, [{ threshold: 0.5, coverage: 0.5, risk: 0.5 }]] as const))
+  const strokes = [...seven.matchAll(/<polyline [^>]*stroke="(#[0-9A-F]{6})"/g)].map(([, color]) => color)
+  expect(strokes).toHaveLength(7)
+  expect(new Set(strokes).size).toBe(7)
+})
+
 test('counts a line right only when an acceptable phrase is among its first six', async () => {
   // On "crowded", six phrases score above "Water, please", which comes seventh; "low" adds a threshold of 0.5.
   const crowded: Ranker = (line, shortlist) => ({
