@@ -1,7 +1,7 @@
 import { startingPolicy } from '@turn/shared/row'
 import { env } from 'cloudflare:workers'
 import { describe, expect, test, vi } from 'vitest'
-import { expectError, jevAnswer, lineRequest, mockJev, postLine, user } from './helpers'
+import { expectError, headers, jevAnswer, lineRequest, mockJev, postLine, send, user } from './helpers'
 
 /** The hex SHA-256 of the text, worked out apart from the relay's own code. */
 async function sha256(text: string) {
@@ -67,5 +67,66 @@ describe('POST /v1/lines', () => {
     const jev = mockJev()
     await expectError(await postLine(body), 400, 'invalid_request')
     expect(jev).not.toHaveBeenCalled()
+  })
+})
+
+describe("a line's limits (SEC-2)", () => {
+  /** A request's body with a field of 17,000 characters, which the relay would otherwise ignore. */
+  const oversized = JSON.stringify({ ...lineRequest(), padding: 'x'.repeat(17_000) })
+  const post = (body: string, sent: Record<string, string>) =>
+    send(new Request('https://relay.test/v1/lines', { method: 'POST', headers: { ...headers, ...sent }, body }))
+  const categories = (count: number) =>
+    Array.from({ length: count }, (_, i) => ({ id: `c${i}`, name: `Category ${i}` }))
+  const candidates = (count: number) => Array.from({ length: count }, (_, i) => ({ id: `p${i}`, text: `Phrase ${i}` }))
+
+  test.each([
+    ['a line of 301 characters', lineRequest({ line: 'a'.repeat(301) })],
+    ['an empty line', lineRequest({ line: '' })],
+    ["a place's name of 41 characters", lineRequest({ place: 'a'.repeat(41) })],
+    ['13 categories', lineRequest({ categories: categories(13) })],
+    ["a category's name of 41 characters", lineRequest({ categories: [{ id: 'food', name: 'a'.repeat(41) }] })],
+    ['a category with an empty name', lineRequest({ categories: [{ id: 'food', name: '' }] })],
+    ['41 candidates', lineRequest({ candidates: candidates(41) })],
+    ["a candidate's text of 201 characters", lineRequest({ candidates: [{ id: 'long', text: 'a'.repeat(201) }] })],
+    ['a candidate with an empty text', lineRequest({ candidates: [{ id: 'empty', text: '' }] })],
+    ['an id of 65 characters', lineRequest({ categories: [{ id: 'a'.repeat(65), name: 'Food' }] })],
+    ['an empty id', lineRequest({ candidates: [{ id: '', text: 'Yes' }] })],
+    ['a category id twice', lineRequest({ categories: [...categories(2), { id: 'c0', name: 'Again' }] })],
+    ['a candidate id twice', lineRequest({ candidates: [...candidates(2), { id: 'p1', text: 'Again' }] })],
+    ['a category named by the fixed consent option', lineRequest({ categories: [{ id: 'consent', name: 'Consent' }] })]
+  ])('refuses %s with 400 invalid_request and no call to Jev', async (_, body) => {
+    const jev = mockJev()
+    await expectError(await postLine(body), 400, 'invalid_request')
+    expect(jev).not.toHaveBeenCalled()
+  })
+
+  test.each([
+    ['a body over 16 KB', oversized, { 'Content-Type': 'application/json' }],
+    ['a body over 16 KB that says so', oversized, { 'Content-Type': 'application/json', 'Content-Length': '17200' }],
+    [
+      'a length over 16 KB, before reading',
+      JSON.stringify(lineRequest()),
+      { 'Content-Type': 'application/json', 'Content-Length': '16385' }
+    ],
+    ['a body sent as text', JSON.stringify(lineRequest()), { 'Content-Type': 'text/plain' }],
+    ['a body with no type', JSON.stringify(lineRequest()), {}]
+  ])('refuses %s with 400 invalid_request and no call to Jev', async (_, body, sent) => {
+    const jev = mockJev()
+    await expectError(await post(body, sent), 400, 'invalid_request')
+    expect(jev).not.toHaveBeenCalled()
+  })
+
+  test('answers a line at every limit, counting each emoji as one character', async () => {
+    const full = lineRequest({
+      line: '😀'.repeat(300),
+      place: 'a'.repeat(40),
+      categories: categories(12).map((category) => ({ ...category, name: 'n'.repeat(40) })),
+      candidates: candidates(40).map((candidate, i) => ({ id: `${i}`.padStart(64, 'p'), text: 't'.repeat(200) }))
+    })
+    const topic = Object.fromEntries([...full.categories.map(({ id }) => [id, 0.05]), ['consent', 0.4]])
+    mockJev(() => Response.json(jevAnswer(Array(40).fill(0.5), topic)))
+    const response = await post(JSON.stringify(full), { 'Content-Type': 'application/json; charset=utf-8' })
+    expect(response.status).toBe(200)
+    expect(Object.keys(((await response.json()) as { scores: object }).scores)).toHaveLength(40)
   })
 })
