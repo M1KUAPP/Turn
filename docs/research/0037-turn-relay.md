@@ -35,9 +35,12 @@ Read from the npm tarball ([sdk-tgz]), `dist/index.d.mts` (types) and
   logging" (`index.d.mts:193-194`). The code never calls `logger.warn` or
   `logger.error`; `info` logs attempt summaries and `debug` logs each request
   body (`index.mjs:596-599`), so the user's line would reach the log at `debug`.
-- **Environment fallback.** Every option left out is read from
-  `process.env` when `process` exists (`index.mjs:65-70`), and an explicit
-  `logLevel` wins over `TYPESAFE_LOG_LEVEL` (`index.mjs:444-449`). Workers
+- **Environment fallback.** Four options left out are read from
+  `process.env` when `process` exists: `apiKey` from `TYPESAFE_API_KEY`,
+  `baseURL` from `TYPESAFE_BASE_URL`, `defaultModel` from
+  `TYPESAFE_DEFAULT_MODEL`, and `logLevel` from `TYPESAFE_LOG_LEVEL`
+  (`index.mjs:54-70`); an explicit `logLevel` wins over the variable
+  (`index.mjs:444-449`). Workers
   fill `process.env` with "any environment variables, secrets, or version
   metadata" when `nodejs_compat_populate_process_env` is on, "enabled by
   default for compatibility dates on or after 2025-04-01" ([cf-process]).
@@ -122,10 +125,10 @@ Read from the npm tarball ([sdk-tgz]), `dist/index.d.mts` (types) and
 - Synthesis: the relay can pass `{ type: 'choice', instructions, criteria }`
   and `{ type: 'noul', instructions }` inline, since the `const` type
   parameter keeps `type` literal; a question built apart from the call needs
-  `satisfies ChoiceQuestion` or `as const`. It must still pass every option
-  in code, since a Worker secret named `TYPESAFE_API_KEY` or a var named
-  `TYPESAFE_LOG_LEVEL` would otherwise be read from `process.env`. It must
-  validate `answers` itself. A contract snapshot of the parsed body is safer
+  `satisfies ChoiceQuestion` or `as const`. It must set those four options
+  in code, since a var named `TYPESAFE_BASE_URL`, for one, would otherwise
+  send every call and the key to another host. It must validate `answers`
+  itself. A contract snapshot of the parsed body is safer
   than one of the raw string, whose key order follows the object's.
 
 [sdk-tgz]: https://registry.npmjs.org/@typesafe-ai/sdk/-/sdk-0.6.0.tgz
@@ -190,7 +193,9 @@ the root `node_modules/.bun/`.
   `waitOnExecutionContext`, and a few others, but no `fetchMock`
   (`PKG/dist/worker/lib/cloudflare/test.mjs:3`). The migration guide says
   "To mock outbound requests, use `@msw/cloudflare`" ([cf-vi-migrate];
-  [cf-vi-outbound]).
+  [cf-vi-outbound]). It left `@cloudflare/vitest-pool-workers` in 0.13.0,
+  published on March 13, 2026, before the plugin's 1.0.0 on August 20,
+  2026 ([npm-pool]).
 - **One isolate.** The default export "runs in the same isolate/context as
   tests, so any global mocks will apply to it too"
   (`PKG/types/cloudflare-test.d.ts:8-10`), and the Durable Object wrapper
@@ -199,9 +204,10 @@ the root `node_modules/.bun/`.
 - **`SELF` and `env` are deprecated.** "Instead, use
   `import { exports } from "cloudflare:workers"` and `exports.default.fetch()`",
   and `import { env } from "cloudflare:workers"`
-  (`PKG/types/cloudflare-test.d.ts:1-12`). A changed `env` reaches only a
-  handler called directly, `worker.fetch(request, { ...env, X }, ctx)`
-  ([cf-vi-apis]); a Durable Object still gets the binding `env`
+  (`PKG/types/cloudflare-test.d.ts:1-12`). The test APIs page calls the
+  default export directly, as `worker.fetch(request, env, ctx)`
+  ([cf-vi-apis]), so a test can pass a changed `env`, which reaches only the
+  Worker's own code; a Durable Object still gets the binding `env`
   (`test-internal.mjs:540`).
 - **Snapshots.** The pool sets `snapshotEnvironment = "cloudflare:snapshot"`
   (`PKG/dist/pool/index.mjs:64858`), whose environment reads, writes, and
@@ -212,9 +218,11 @@ the root `node_modules/.bun/`.
   and merges its `miniflare` option on top, "`miniflare` values taking
   precedence" (`PKG/dist/pool/index.mjs:64571-64603`; [cf-vi-config]), so
   `miniflare.bindings` adds or overrides single keys. Wrangler loads
-  `.dev.vars`, falls back to `.env`, and with `secrets` declared keeps only
-  the required names (`WR:185522-185575`); a string var becomes
-  `plain_text` and anything else `json` (`WR:185577`).
+  `.dev.vars`, or else `.env` and, with `secrets` declared, the shell's
+  environment, and keeps the required names and the names that are already
+  vars, so a shell's `JEV_ON` overrides the committed one
+  (`WR:185522-185575`); a string var becomes `plain_text` and anything else
+  `json` (`WR:185577`).
 - **A missing `.dev.vars` doesn't fail tests.** Wrangler only warns:
   "Missing required secrets: ... Add them to .dev.vars, .env, or set as
   environment variables." (`WR:185562-185568`)
@@ -222,9 +230,10 @@ the root `node_modules/.bun/`.
   the Miniflare options use `exports` to wire Durable Objects
   (`WR:369604-369640`) and don't read `placement` or `observability`.
 - Synthesis: `vi.spyOn(globalThis, 'fetch')` and `vi.spyOn(console, 'log')`
-  both reach the Durable Object, since it shares the test's isolate; the
-  pool logs through its own saved `globalThis.__console`
-  (`PKG/dist/worker/index.mjs:725`), so the spy sees only the relay's lines.
+  both reach the Durable Object, since it shares the test's isolate. The
+  pool's `globalThis.__console` is `console` itself
+  (`PKG/dist/worker/index.mjs:725`), but it calls only `.warn` and `.error`
+  on it, so a spy on `.log` sees only the relay's lines.
   Build each mocked `Response` inside `mockImplementation`, not once up
   front, since the runtime refuses I/O objects shared across Durable
   Objects (`test-internal.mjs:317`). Tests get the key from
@@ -235,6 +244,7 @@ the root `node_modules/.bun/`.
 [cf-vi-outbound]: https://developers.cloudflare.com/workers/testing/vitest-integration/mock-outbound-requests/
 [cf-vi-apis]: https://developers.cloudflare.com/workers/testing/vitest-integration/test-apis/
 [cf-vi-config]: https://developers.cloudflare.com/workers/testing/vitest-integration/configuration/
+[npm-pool]: https://www.npmjs.com/package/@cloudflare/vitest-pool-workers?activeTab=versions
 
 ## Wrangler's config and deploy
 
@@ -245,7 +255,8 @@ Read from `worker/node_modules/wrangler/config-schema.json` (`SCHEMA`) and
   with `"required": ["region"]` (`SCHEMA:261-333`). Wrangler checks only that
   `region` is a non-empty string (`WR:20762-20875`) and sends it as is
   (`WR:169525-169546`), so `"aws:us-west-2"` passes locally and the API judges
-  it.
+  it. Cloudflare's placement page lists `aws:us-west-2` among its examples
+  ([relay notes][svc-placement]).
 - **`exports` replaces `migrations`.** "The configuration of Durable Objects
   via `exports` is mutually exclusive with `migrations`" (`SCHEMA:115-120`),
   and having both is an error (`WR:22726-22731`). An export needs `type` and
@@ -260,7 +271,7 @@ Read from `worker/node_modules/wrangler/config-schema.json` (`SCHEMA`) and
   local dev validation with warnings", and "is not automatically inherited
   from the top level environment" (`SCHEMA:415-429`).
 - **`vars`.** Each value is `string | Json`, and `Json` allows numbers,
-  booleans, `null`, arrays, and objects (`SCHEMA:397, 5787-5812`).
+  booleans, `null`, arrays, and objects (`SCHEMA:399-410, 5787-5812`).
 - **`wrangler types`.** Each required secret is typed `string`
   (`WR:203013-203024, 203119-203122`). Vars are strict by default
   (`WR:202766`): the type is the literal `JSON.stringify(value)`, so `true`
@@ -297,6 +308,8 @@ Read from `worker/node_modules/wrangler/config-schema.json` (`SCHEMA`) and
   exists, so the first deploy passes the key with `--secrets-file`. A test
   that the check works can't use `--dry-run`.
 
+[svc-placement]: /docs/research/0024-turn-services.md#placement-near-typesafe-and-revenuecat
+
 ## Workers Logs
 
 - **What an invocation log is.** "Each Workers invocation returns a single
@@ -326,10 +339,10 @@ Read from `worker/node_modules/wrangler/config-schema.json` (`SCHEMA`) and
 
 ## Gaps
 
-- **Nothing was run.** No test ran in the Workers pool in this pass: not
-  the SDK against a spied `fetch`, not a `console.log` spy inside a Durable
-  Object, and none of `toMatchSnapshot`, `toMatchInlineSnapshot`, or
-  `toMatchFileSnapshot`. The findings above come from reading source.
+- **Nothing was run for this note.** Its findings come from reading
+  source. A spike afterwards ran the SDK against a spied `fetch`, a spy on
+  `console.log` reaching a Durable Object, and `toMatchFileSnapshot` in the
+  pool, and all three worked ([relay plan][plan]).
 - **`@msw/cloudflare`.** The docs' replacement for `fetchMock` wasn't
   checked for its version or for reaching a Durable Object's `fetch`.
 - **`console.log` without invocation logs.** The docs class `console.log`
@@ -337,10 +350,12 @@ Read from `worker/node_modules/wrangler/config-schema.json` (`SCHEMA`) and
   `invocation_logs: false`; nothing was deployed to see.
 - **JSON strings in Workers Logs.** Whether `console.log(JSON.stringify(x))`
   is parsed into fields is undocumented.
-- **Region names.** Wrangler accepts any `region` string; whether
-  `aws:us-west-2` is a region the API takes wasn't checked.
-- **`getByName` at 2026-09-22.** The option is in workerd's types, but whether a
-  compatibility date gates it wasn't confirmed, and `wrangler types` wasn't run.
+- **`locationHint` in production.** The spike's `wrangler types` gave
+  `getByName(name, options?)` its options at this compatibility date, but
+  whether an object is created in western North America can't be seen from
+  outside.
+
+[plan]: /docs/plans/0016-turn-relay.md
 
 ## See also
 
