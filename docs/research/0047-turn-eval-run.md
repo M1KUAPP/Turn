@@ -24,8 +24,9 @@ Contents:
   run: preregistration is "committing to analytic steps without advance
   knowledge of the research outcomes" ([nosek-2018]).
 - **Record the conditions.** Synthesis: the report's header carries the
-  date, the pin, and the commit, and the TRD says where each threshold came
-  from, as NeurIPS asks for "how they were chosen" ([neurips]).
+  date, the pin, and the commit, and the TRD says where 0.6 and 0.85 came
+  from, as NeurIPS asks for "how they were chosen" ([neurips]); no document
+  gives the 0.15 margin a source.
 - **Run once.** Synthesis: no re-run after any result is seen; COS: "Once a
   researcher begins to slightly change the way to test the hypothesis, the
   work should be considered exploratory." ([cos-prereg])
