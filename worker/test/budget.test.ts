@@ -93,6 +93,7 @@ describe("the day's calls to Jev (SEC-5)", () => {
     mockJev(...jevAnswers(1))
     expect((await postLine(lineRequest(), budget(1))).status).toBe(200)
     await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
+    expect(jevCalls()).toHaveLength(1)
     expect(await freeLinesLeft()).toBe(19)
   })
 
