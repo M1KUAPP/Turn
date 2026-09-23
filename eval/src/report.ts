@@ -4,7 +4,15 @@ import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { sentenceEmbedding, type SentenceEmbedding } from './apple'
-import { brier, reliability, reliabilityPlot, topPhrase, type Brier, type Reliability } from './calibration'
+import {
+  againstBand,
+  brier,
+  reliability,
+  reliabilityPlot,
+  topPhrase,
+  type Brier,
+  type Reliability
+} from './calibration'
 import { plot, riskCoverage, type Curve, type Point } from './curves'
 import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, qwen, qwenInstruction, qwenModel, workersAi } from './embeddings'
@@ -318,24 +326,20 @@ const decimals = (value: number) => String(Number(value.toFixed(3)))
 
 /**
  * Jev's top phrase against whether it's acceptable, on every line (EVAL-8): the reliability diagram beside the report,
- * a table of its fit's blocks with the band's range across each as its text, and the Brier score with its interval
- * and CORP's decomposition.
+ * a table of its fit's blocks with how many of each block's scores the fit leaves the band at as its text, and the
+ * Brier score with its interval and CORP's decomposition.
  */
-const calibrationSection = ({ forecasts, blocks, band }: Reliability, score: Brier, image: string, naming: Naming) => {
+const calibrationSection = (fit: Reliability, score: Brier, image: string, naming: Naming) => {
+  const { forecasts } = fit
   const name = capital(naming.jev)
   const right = forecasts.filter((forecast) => forecast.right).length
-  const rows = blocks.map(({ low, high, lines, right, value }) => {
-    const across = band.filter(({ score }) => score >= low && score <= high)
-    const lowest = Math.min(...across.map((bounds) => bounds.low))
-    const highest = Math.max(...across.map((bounds) => bounds.high))
-    return [
-      low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
-      String(lines),
-      String(right),
-      value.toFixed(2),
-      `${lowest.toFixed(2)} to ${highest.toFixed(2)}`
-    ]
-  })
+  const rows = againstBand(fit).map(({ low, high, lines, right, value, scores, outside }) => [
+    low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
+    String(lines),
+    String(right),
+    value.toFixed(2),
+    `${outside} of ${scores} ${scores === 1 ? 'score' : 'scores'}`
+  ])
   const three = (value: number) => value.toFixed(3)
   return [
     `## ${name}'s calibration`,
@@ -347,9 +351,9 @@ const calibrationSection = ({ forecasts, blocks, band }: Reliability, score: Bri
         "never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated " +
         "ranker's fit would follow the diagonal. The band holds 90% of the fits from 9,999 resamples of the lines " +
         'with each outcome drawn as its score says, as a calibrated ranker would; the table gives each block, with ' +
-        "the band's range across its scores."
+        'the number of its scores where the fit lies outside the band.'
     ),
-    table(['Scores', 'Lines', 'Acceptable', 'Fitted share', '90% band'], rows),
+    table(['Scores', 'Lines', 'Acceptable', 'Fitted share', 'Outside the band'], rows),
     wrap(
       `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
         `one that isn't, is ${three(score.score)}, with a 95% bootstrap interval of ${three(score.low)} to ` +

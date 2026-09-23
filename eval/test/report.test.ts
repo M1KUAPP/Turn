@@ -389,8 +389,8 @@ test("draws Jev's reliability diagram beside the report, its blocks as its text,
   )
   // Every line shares a word with some phrase, which the stand-in scores 0.9, so every top score is 0.9: right on
   // fixture-1, 3, and 6, and wrong on the other five. Eight lines drawn at 0.9 as if calibrated put the fit's 5th and
-  // 95th percentiles at 6 and 8 of 8.
-  expect(cells(calibration, '0.9')).toEqual(['8', '3', '0.38', '0.75 to 1.00'])
+  // 95th percentiles at 6 and 8 of 8, so 3 of 8 lies outside the band at its one score.
+  expect(cells(calibration, '0.9')).toEqual(['8', '3', '0.38', '1 of 1 score'])
   expect(calibration).toMatch(prose('on all 8 lines: 3 of them are.'))
   // (3 × 0.1² + 5 × 0.9²) / 8; always 3/8 scores 3/8 × 5/8, and so does the fit, which is 3/8 on every line.
   expect(calibration).toMatch(prose('is 0.510, with a 95% bootstrap interval of'))
