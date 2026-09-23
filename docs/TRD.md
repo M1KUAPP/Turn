@@ -275,15 +275,20 @@ CREATE TABLE entitlement (
   free line; and at 20 rows the line needs the entitlement. In the services
   notes' local test, this claim counted exactly 20 of 25 simultaneous lines for
   one device, and ten copies of one line ID once ([services notes][svc-count]).
-  If Jev fails, the object deletes the row, so only answered lines count
-  (PAY-1).
+  If Jev fails, the object deletes that line's own row, so only answered
+  lines count (PAY-1); a paid copy of the same line ID never deletes a free
+  copy's claim.
 - **The entitlement row** caches RevenueCat's answer: a yes for 24 hours,
   since `listen` is a one-time purchase, and a no for 1 minute. It records
   when a line with `refresh` last skipped a cached no, but only once
-  RevenueCat answered that line's check, so a check that fails caches
-  nothing and doesn't use up the purchase's refresh.
+  RevenueCat answered that line's check. A check that fails caches nothing,
+  doesn't use up the purchase's refresh, and leaves the no it skipped
+  stale, so the next line asks again. Of two checks that finish out of
+  order, the one that started later stays.
 - **The free lines left** are `FREE_LINES` less the rows, never below 0,
-  or null once the row holds a yes.
+  or null once the row holds a yes. A free line with `refresh` asks
+  RevenueCat alongside Jev, so a purchase made with free lines left shows
+  as null too.
 - **The name.** The Worker reaches the object with `getByName()` on the
   SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
   so a stored record can't be traced back to an ID without the salt.
