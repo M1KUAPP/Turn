@@ -21,12 +21,14 @@ Contents:
   this note quotes no board. See [Gaps](#gaps).
 - **Already covered.** ASHA's display types, core and fringe vocabulary, and
   the strip's messages are in the AAC practice notes, under
-  [how prestored messages are organized](/docs/research/0022-aac-practice.md#how-prestored-messages-are-organized)
-  and
-  [quick-fire, turn-holding, and repair messages](/docs/research/0022-aac-practice.md#quick-fire-turn-holding-and-repair-messages).
+  [how prestored messages are organized][aac-organized] and
+  [quick-fire, turn-holding, and repair messages][aac-quick-fire].
 - Synthesis: until a board is read, the needs, pain, body, and care
   categories rest on CONTENT-1 and on the pain and rights sources below, not
   on any board's layout.
+
+[aac-organized]: /docs/research/0022-aac-practice.md#how-prestored-messages-are-organized
+[aac-quick-fire]: /docs/research/0022-aac-practice.md#quick-fire-turn-holding-and-repair-messages
 
 ## How validated pain tools ask about pain
 
