@@ -1,9 +1,10 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect, test, vi } from 'vitest'
 import { main } from '../src/count'
+import { readRows } from '../src/data'
 
 const fixture = (name: string) => fileURLToPath(new URL(`fixture/${name}`, import.meta.url))
 
@@ -85,13 +86,7 @@ test('exits 0 when every quota is met, and holds the lines to exactly 80', () =>
 })
 
 test('stops at a line the second labeling lacks', () => {
-  const partial = jsonl(
-    readFileSync(fixture('second-labeling.jsonl'), 'utf8')
-      .trim()
-      .split('\n')
-      .slice(0, 7)
-      .map((row) => JSON.parse(row))
-  )
+  const partial = jsonl(readRows(fixture('second-labeling.jsonl')).slice(0, 7))
   expect(() => run(['--lines', fixture('lines.jsonl'), '--second', partial])).toThrow(
     'fixture-8 has no second labeling'
   )

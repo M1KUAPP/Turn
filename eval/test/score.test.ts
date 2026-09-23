@@ -2,6 +2,7 @@ import type { Phrase } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
 import { keyword, place, type Ranker } from '../src/rankers'
 import { scoreLines, sharesNoWord, summarize } from '../src/score'
+import { smallBank, waitImTyping } from './small-bank'
 
 const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
   id: `filler-${i + 1}`,
@@ -10,22 +11,11 @@ const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
 }))
 // 41 phrases the row can rank, so a shortlist of 40 leaves one out: "It went well", last in the grid.
 const bank: Phrase[] = [
-  { id: 'yes', text: 'Yes', places: [], fixed: true },
-  { id: 'no', text: 'No', places: [], fixed: true },
-  { id: 'not-sure', text: 'Not sure', places: [], fixed: true },
-  { id: 'thank-you', text: 'Thank you', places: [] },
-  { id: 'good-morning', text: 'Good morning', places: ['home'] },
-  { id: 'water-please', text: 'Water, please', places: ['home'] },
-  { id: 'excuse-me', text: 'Excuse me', places: ['shop'] },
-  { id: 'im-cold', text: "I'm cold", places: ['home'] },
-  { id: 'good-night', text: 'Good night', places: ['home'] },
-  { id: 'more-please', text: 'More, please', places: ['home'] },
-  { id: 'im-full', text: "I'm full", places: ['home'] },
-  { id: 'im-tired', text: "I'm tired", places: ['home'] },
+  ...smallBank,
   { id: 'how-much-is-this', text: 'How much is this?', places: ['shop'] },
   ...fillers,
   { id: 'it-went-well', text: 'It went well', places: [] },
-  { id: 'wait-im-typing', text: "Wait, I'm typing", places: [], strip: true }
+  waitImTyping
 ]
 const lines = [
   { id: 'water', text: 'Do you want some water?', place: 'home', acceptable: ['yes', 'no', 'water-please'] },
