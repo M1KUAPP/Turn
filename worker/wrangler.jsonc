@@ -18,6 +18,9 @@
     "JEV_ON": "true",
     "TYPESAFE_NAMED": "false",
     "FREE_LINES": "20",
+    // RevenueCat's project and the object ID of its `listen` entitlement, for the check past the free lines (PAY-7).
+    "RC_PROJECT_ID": "proj9f033172",
+    "RC_ENTITLEMENT_ID": "entl6b65cc982a",
     // Only the values that differ from the starting policy in @turn/shared/row (ROW-8).
     "POLICY": {}
   }
