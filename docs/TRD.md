@@ -1138,10 +1138,21 @@ ran under Wrangler 4.136.2:
 
 ### Validation and abuse limits
 
-- **Headers:** `X-Turn-User` must be a lowercase version 4 UUID, and
-  `X-Turn-Build` `device` or `simulator`; anything else gets `400`.
+- **Headers:** `X-Turn-User` must be a lowercase version 4 UUID,
+  `X-Turn-Version` 1 to 32 visible ASCII characters, `X-Turn-Build`
+  `device` or `simulator`, and a line's `Content-Type` `application/json`,
+  with or without parameters such as the charset; anything else gets
+  `400`.
 - **Lengths:** as in [Relay API](#relay-api), checked before any count or
-  call (SEC-2).
+  call (SEC-2). The relay reads no more than 16 KB of a body, whatever its
+  `Content-Length` says. A line and each name and text need at least one
+  character, and a place may be empty. Characters are Unicode code points,
+  as SQLite's `length()` counts them in the phone's checks, so the relay
+  never refuses a text the phone stored.
+- **Fields:** `lineId` is a lowercase version 4 UUID and `seq` a whole
+  number from 0; category and candidate ids hold 1 to 64 characters and
+  are unique in their list; and no category is `consent`, the topic option
+  every line has.
 - **Rate:** 30 requests a minute per ID hash, through Cloudflare's rate
   limiting binding with a 60-second period, and 120 a minute per address as
   a backstop only, since mobile networks share addresses (SEC-3). The
