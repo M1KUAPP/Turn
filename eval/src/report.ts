@@ -3,6 +3,7 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { linesFrom, phrases, root, type Line } from './data'
+import { listOf, wrap } from './prose'
 import { keyword, place } from './rankers'
 import { outcomes, scoreLines, sharesNoWord, summarize, type Count, type LineScore } from './score'
 import { percentile, wilson } from './stats'
@@ -28,23 +29,6 @@ const table = (header: readonly string[], rows: readonly (readonly string[])[]) 
   const line = (cells: readonly string[]) => `| ${cells.map((cell, i) => cell.padEnd(widths[i])).join(' | ')} |`
   return [line(header), line(widths.map((width) => '-'.repeat(width))), ...rows.map(line)].join('\n')
 }
-
-/** Fills prose to 80 columns, as the repo's Markdown style asks, indenting the lines after the first. */
-const wrap = (text: string, indent = '') => {
-  const filled: string[] = []
-  let line = ''
-  for (const word of text.split(' ')) {
-    if (line !== '' && line.length + 1 + word.length > 80) {
-      filled.push(line)
-      line = indent + word
-    } else line = line === '' ? word : `${line} ${word}`
-  }
-  return [...filled, line].join('\n')
-}
-
-/** Joins names as prose: "a", "a and b", or "a, b, and c". */
-const listOf = (items: readonly string[]) =>
-  items.length < 3 ? items.join(' and ') : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`
 
 /** Who wrote and labeled the lines, counted from the file, then who made the 80 lines and the bank, as the TRD says. */
 const provenance = (scored: readonly Line[]) => {
