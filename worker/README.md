@@ -9,6 +9,7 @@ them, and writes one log line per request with no text. The TRD's
 Contents:
 
 1.  [Daily counts from the logs](#daily-counts-from-the-logs)
+1.  [The credit alert](#the-credit-alert)
 1.  [See also](#see-also)
 
 ## Daily counts from the logs
@@ -67,6 +68,43 @@ Latency of answered lines, in milliseconds:
 
 Jev's input tokens: 21504
 ```
+
+## The credit alert
+
+TypeSafe publishes no balance to read and no low-balance alert, so a
+[scheduled workflow](/.github/workflows/credit-alert.yml) reads the relay's
+logs instead (AVAIL-2). It runs every 3 hours at minute 17, in UTC, and on
+demand from the Actions tab or `gh workflow run`.
+
+- **When it fires:** when a line in its window ran out of Jev's credits
+  (`credits`), or when the window's estimated spend passes the level. The
+  spend is the answered lines' input tokens at `jev-1.13.0`'s $0.042 a
+  million.
+- **The window:** the last 24 hours, or since the last alert issue was
+  closed, if that's later.
+- **The level:** the repository variable `JEV_ALERT_DOLLARS`, or $0.50 when
+  it's unset, about 12 million input tokens, far above a day of judging. A
+  run started by hand can set its own.
+- **Who receives it:** the workflow opens "Jev's credits need attention",
+  labeled `credit-alert`, and assigns kymil4, WhiteAvocad0, and
+  AlaskanTuna, the repository's collaborators, whom GitHub notifies by
+  their own settings. While that issue is open it opens no other, so close
+  it once the credits are topped up.
+- **What it can't see:** with no balance to read, a slow drain shows only
+  when a line runs out. A run that fails, such as with an expired token,
+  emails only whoever last edited the schedule.
+- **Secrets:** `TURN_CF_LOGS_TOKEN` and `TURN_CF_ACCOUNT_ID`, the same
+  values as for `bun run logs`, in the repository's Actions secrets.
+
+To see it fire, lower the level after a day with any answered line, then
+close the issue it opens:
+
+```shell
+gh workflow run credit-alert.yml -f level=0
+```
+
+`bun scripts/credits.ts --level 0` in `worker/` runs the same check from the
+shell and prints the issue's body instead of opening it.
 
 ## See also
 
