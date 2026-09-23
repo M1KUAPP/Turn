@@ -39,9 +39,10 @@ line numbers.
   device UDID or name matching" (141). The usbmuxd UDID is the device's
   `SerialNumber` (`run/ios/appleDevice/AppleDevice.js:167`).
 - **A bare `--device`.** It opens a picker (`resolveDevice.js:131`).
-- **No TTY.** Expo is interactive only when "!env.CI &&
-  process.stdout.isTTY" (`utils/interactive.js:13-14`). Otherwise a prompt
-  throws `CommandError('NON_INTERACTIVE', ...)` (`utils/prompts.js:67-76`).
+- **No TTY.** Expo is interactive only when its logs aren't reduced, `CI`
+  isn't set, and stdout is a TTY (`utils/interactive.js:13-15`). Otherwise
+  a prompt throws `CommandError('NON_INTERACTIVE', ...)`
+  (`utils/prompts.js:67-76`).
 - **Prompts that can appear.**
   - The device picker, with a bare `--device`: it errors without a TTY.
   - The signing team, only with 2 or more identities: without a TTY the
@@ -55,8 +56,10 @@ line numbers.
     changes `package.json` (`prebuild/prebuildAsync.js:156-159`).
   - None for CocoaPods: the install is non-interactive (see
     [CocoaPods](#cocoapods-when-pod-is-missing)).
-- **Metro and staying alive.** A Debug build defaults to `Debug`
-  (`run/ios/options/resolveOptions.js:33`) and starts the dev server (57).
+- **Metro and staying alive.** The configuration defaults to `Debug`
+  (`run/ios/options/resolveOptions.js:33`). The dev server starts once its
+  port resolves (`run/resolveBundlerProps.js:15-33`), or always with an
+  explicit `--configuration Debug` (`resolveOptions.js:57`).
   After the launch it logs "Logs for your project will appear below" and
   keeps running; only with the bundler off does it call `manager.stopAsync()`
   (`runIosAsync.js:257-261`, `run/hints.js:42-43`).
@@ -157,7 +160,7 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
 
 - **`ip.txt`.** `scripts/react-native-xcode.sh` "Enables iOS devices to get
   the IP address of the machine running Metro" when the configuration is
-  Debug and the platform isn't a simulator (lines 14-16). It takes the first
+  Debug and the platform isn't a simulator (lines 15-16). It takes the first
   address from `ipconfig getifaddr en0` through `en8`, else from `ifconfig`
   (17-25), and writes `echo "$IP" > "$DEST/ip.txt"` into the `.app` (13,
   27). This runs before the "SKIP_BUNDLING enabled; skipping." exit (30-33).
@@ -169,20 +172,22 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
   `prebuild/resolveLocalTemplate.js:63-64`), and downloads one from npm only
   if that fails (`prebuild/resolveTemplate.js:102-107`).
 - **`bundleURL`.** The template's `AppDelegate.swift` returns this in
-  Debug, and `main.jsbundle` in Release
-  ([template AppDelegate][template-appdelegate], lines 60-66):
+  Debug, and `main.jsbundle` in Release (lines 62-67 in the installed
+  `template.tgz`; [template AppDelegate][template-appdelegate]):
 
   ```swift
   RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: ".expo/.virtual-metro-entry")
   ```
 
 - **Picking the host.** `React/Base/RCTBundleURLProvider.mm` uses port
-  `RCT_METRO_PORT`, 8081 by default (line 20). `guessPackagerHost` reads
-  `ip.txt`, then `host = ipGuess ?: @"localhost"`, and returns it only if
+  `RCT_METRO_PORT` (line 20), which `React/Base/RCTDefines.h` sets to 8081
+  by default (111-112). `guessPackagerHost` reads `ip.txt`, then
+  `host = ipGuess ?: @"localhost"`, and returns it only if
   `isPackagerRunning` (206-222). That check requests `/status`, expects
-  `packager-status:running`, and times out after 6 seconds (34, 90-135). A
-  saved `RCT_jsLocation` is tried first (259). With no host it falls back to
-  `main.jsbundle` (323-332), which a Debug build lacks.
+  `packager-status:running`, and times out after 6 seconds plus a 2-second
+  grace (34-35, 90-135). A saved `RCT_jsLocation` is tried first (30,
+  267-272). With no host it falls back (288-290) to `main.jsbundle`
+  (328-331), which a Debug build lacks.
 - **Without Metro.** `React/Base/RCTJavaScriptLoader.mm` shows "No script
   URL provided. Make sure the packager is running or you have embedded a JS
   bundle in your application bundle." (112), or "Could not connect to
