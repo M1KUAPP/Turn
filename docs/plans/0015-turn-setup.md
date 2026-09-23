@@ -108,12 +108,14 @@ pass to `/wizard`. The directive's steps map to skills:
     `RC_SECRET_KEY`:
 
     ```shell
-    printf '%s' "$TYPESAFE_API_KEY" |
+    printf '%s' "${TYPESAFE_API_KEY:?}" |
       bunx wrangler secret put TYPESAFE_API_KEY --name turn-relay
     ```
 
     Wrangler reads the value from the pipe because standard input isn't a
-    terminal ([Cloudflare notes][note-cf]). The key's other copy stays in
+    terminal ([Cloudflare notes][note-cf]), and sends whatever the pipe
+    holds, so `:?` stops the command when the variable is unset or empty
+    instead of uploading an empty secret. The key's other copy stays in
     `~/.zshrc`, outside every repository.
 
 1.  **No `worker/.dev.vars`.** The relay's tests mock Jev, and #28 calls it
