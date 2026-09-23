@@ -57,6 +57,10 @@ describe('GET /v1/config', () => {
     await expectError(await getConfig({ FREE_LINES: freeLines }), 500, 'internal')
   })
 
+  test.each(['many', '', '-1', '2.5', undefined])('answers 500 internal for JEV_DAILY_CALLS %j', async (calls) => {
+    await expectError(await getConfig({ JEV_DAILY_CALLS: calls }), 500, 'internal')
+  })
+
   test.each([
     ['no user', { 'X-Turn-User': '' }],
     ['an uppercase user', { 'X-Turn-User': '5F0E7A8E-3C2B-4D1A-9B6E-2F4C8D0A1B3C' }],
