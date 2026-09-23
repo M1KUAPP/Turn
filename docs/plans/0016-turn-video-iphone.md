@@ -240,7 +240,8 @@ It passed the docs gate and was committed as
 
 ### Task 4: The build
 
-- [ ] **Step 1: Build** with `build_device.sh` for the phone.
+- [ ] **Step 1: Build** with the `xcodebuild` command under
+      [Verification gate](#verification-gate).
 - [ ] **Step 2: Check** the profile's dates and device count, and the
       signing identity.
 
