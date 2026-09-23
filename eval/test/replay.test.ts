@@ -171,6 +171,17 @@ test('has the phone rank every line when Jev is off, sending none to the relay',
   expect(spy.mock.calls.map(([url]) => String(url))).toEqual([`${relay}/v1/config`])
 })
 
+test("ranks on the phone with the configuration's policy, not the starting one", async () => {
+  // A policy that gives yes-or-no lines only the fixed buttons, where the starting one adds "Water, please".
+  fakeRelay((request) => answered(request), {
+    ...config,
+    jevOn: false,
+    policy: { ...startingPolicy, yesNoPhrases: false }
+  })
+  const { replayed } = await replay(lines('Do you want some water?'), relay)
+  expect(replayed[0].row.slots).toEqual([...fixedButtons, null, null, null])
+})
+
 test('stops at a 402, where the app would open the paywall', async () => {
   fakeRelay((request) => (request.seq === 2 ? Response.json({ error: 'paywall' }, { status: 402 }) : answered(request)))
   const { replayed, stopped } = await replay(lines('One', 'Two', 'Three'), relay)
