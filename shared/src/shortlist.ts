@@ -101,10 +101,15 @@ export function pickShortlist(line: string, index: PhraseIndex, { bank, row, pla
   return [...picked.values()]
 }
 
-/** The forms of "do", "be", and "have", the modal verbs, and their negatives, which open a yes-or-no question. */
+/**
+ * Every form of "do", "be", and "have", the modal verbs, and their negatives, which open a yes-or-no question; the
+ * participles open elliptical ones, such as "Been waiting long?".
+ */
 const yesNoOpeners: ReadonlySet<string> = new Set(
   `
-  do does did don't doesn't didn't am is are was were isn't aren't wasn't weren't have has had haven't hasn't hadn't
+  do does did doing done don't doesn't didn't
+  be am is are was were being been isn't aren't wasn't weren't
+  have has had having haven't hasn't hadn't
   can could may might must shall should will would
   can't cannot couldn't mightn't mustn't shan't shouldn't won't wouldn't
   `
