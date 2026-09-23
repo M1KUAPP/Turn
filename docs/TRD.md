@@ -1600,16 +1600,23 @@ see ([evaluation notes][eval-scoring]):
   report writes the plot as an SVG beside itself, with a table as its text.
 - **Calibration (EVAL-8).** Each line's top phrase in Jev's first timed
   ranking, the first of its order, which breaks ties as the row does, is
-  scored against whether it's acceptable, on every line. The report draws
-  CORP's reliability diagram: the pool-adjacent-violators fit, one value for
-  each distinct score and never falling as the score rises, beside the
-  diagonal, with a 90% consistency band from 9,999 resamples of the lines,
-  each outcome redrawn as its score says, as `reliabilitydiag` draws one for
-  small samples. It needs no bins, so there's no bin count or rule for ties
-  to choose. The Brier score comes with a 95% percentile bootstrap interval
-  over the lines and CORP's decomposition into miscalibration,
-  discrimination, and the score of always forecasting the share acceptable
-  ([calibration notes][eval-calibration]).
+  scored against whether it's acceptable, on every line. The report says how
+  many lines have no acceptable phrase among their 40, since their top
+  phrase is wrong whatever its score.
+  - **The diagram** is CORP's reliability diagram: the pool-adjacent-violators
+    fit, one value for each distinct score and never falling as the score
+    rises, beside the diagonal. It needs no bins, so there's no bin count or
+    rule for ties to choose.
+  - **The band** holds 90% of the fits from 9,999 resamples of the lines,
+    each outcome redrawn as its score says, as `reliabilitydiag` draws one
+    for small samples. It holds them at each score apart, so even a
+    calibrated ranker's fit lies outside it at about one score in ten, and
+    the table counts, for each block of the fit, the scores where it does.
+  - **The Brier score** comes with a 95% percentile bootstrap interval over
+    the lines, a skill score against always forecasting the share
+    acceptable, and CORP's decomposition into miscalibration,
+    discrimination, and that constant forecast's score
+    ([calibration notes][eval-calibration]).
 - **Latency:** each ranker's own work and network trip at the median, the
   95th percentile, and the maximum, by Hyndman and Fan's type 7, NumPy's
   default ([harness notes][harness-percentiles]), over at least three passes
@@ -1727,9 +1734,12 @@ version.
 - **A contract test** keeps a snapshot of the Jev request, and a manual
   smoke test sends one line to Jev with the team's key.
 - **Evaluation tests,** in Node: the rankers, the cut-off, the interval, the
-  curves, the report, and the replay, with Workers AI, Jev, and the relay
-  stood in for behind a `fetch` spy that fails any call a test doesn't stand
-  in for, and with made-up keys.
+  calibration, the curves, the report, and the replay, with Workers AI, Jev,
+  and the relay stood in for behind a `fetch` spy that fails any call a test
+  doesn't stand in for, and with made-up keys. A Node script stands in for
+  the Swift helper, and on a Mac one test runs the real helper on made-up
+  sentences. The band is checked against an exact count of every resample of
+  five lines.
 - **Device checks,** on the video's iPhone: transcription and line ends
   (LISTEN-1, LISTEN-2), Turn not hearing itself (LISTEN-3), the background
   and interruptions (LISTEN-7, LISTEN-10), Personal Voice (VOICE-2), the
