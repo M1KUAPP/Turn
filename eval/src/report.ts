@@ -354,7 +354,7 @@ const render = (
       "# Turn's evaluation",
       [
         `- **Run:** ${run}.`,
-        `- **Lines:** the ${labeled.length} in \`${file}\`.`,
+        wrap(`- **Lines:** the ${labeled.length} in \`${file}\`.`, '  '),
         "- **Bank:** the app's own, `app/src/content/starter-bank.json`.",
         wrap(models(pin, calls, naming), '  ')
       ].join('\n'),
