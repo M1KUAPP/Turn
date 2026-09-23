@@ -176,12 +176,12 @@ export class Device extends DurableObject<Env> {
   }
 
   /**
-   * Asks Jev about one line within the budget, the milliseconds left of the line's 2.5 seconds (STATE-2). Each attempt,
+   * Asks Jev about one line within `msLeft`, the milliseconds left of the line's 2.5 seconds (STATE-2). Each attempt,
    * the SDK's retry included, first takes one of the day's calls (SEC-5); once none is left, the line is `spent`, and
    * aborting the call stops the SDK from retrying. Any other failure, an answer out of shape included, is `failed`,
    * except a 402, which is how running out of credits most likely shows (AVAIL-2).
    */
-  private async ask(line: JevLine, budget: number, dailyCalls: number): Promise<JevReply> {
+  private async ask(line: JevLine, msLeft: number, dailyCalls: number): Promise<JevReply> {
     const started = Date.now()
     const calls = this.env.BUDGET.getByName('jev-calls', { locationHint: 'wnam' })
     const spent = new AbortController()
@@ -193,7 +193,7 @@ export class Device extends DurableObject<Env> {
     })
     try {
       const result = await jev.systemOne(buildJevRequest(line, this.env.JEV_MODEL), {
-        signal: AbortSignal.any([AbortSignal.timeout(budget), spent.signal])
+        signal: AbortSignal.any([AbortSignal.timeout(msLeft), spent.signal])
       })
       const { kind, topic, scores } = readJevAnswer(result.answers, line)
       return {
