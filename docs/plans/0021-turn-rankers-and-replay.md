@@ -309,7 +309,7 @@ bun run lint
 
 ### Task 2: This plan
 
-**Files:** create `docs/plans/0019-turn-rankers-and-replay.md`.
+**Files:** create `docs/plans/0021-turn-rankers-and-replay.md`.
 
 ### Task 3: Rankers that answer later
 
