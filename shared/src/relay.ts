@@ -28,8 +28,8 @@ export type Config = {
   jevOn: boolean
   /** Whether the permission step, the consent card, and the privacy notice name TypeSafe (CONSENT-7). */
   typesafeNamed: boolean
-  /** 20 for a new user (PAY-1). */
-  freeLinesLeft: number
+  /** The free lines this user has left: 20 for a new user (PAY-1). */
+  freeLinesLeft: number | null
   policy: Policy
 }
 

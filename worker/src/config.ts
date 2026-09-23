@@ -30,10 +30,11 @@ function readPolicy(value: unknown): Policy {
 }
 
 /**
- * The configuration, read from the vars at every request, so changing one needs no app build (ROW-8, CONSENT-7). It
- * throws without `JEV_MODEL`, since the SDK would then pick a model of its own (SEC-2).
+ * The configuration, read from the vars at every request, so changing one needs no app build (ROW-8, CONSENT-7), with
+ * the free lines a new user gets, which the user's object replaces with their own. It throws without `JEV_MODEL`, since
+ * the SDK would then pick a model of its own (SEC-2).
  */
-export function readConfig(env: Env): Config {
+export function readConfig(env: Env): Config & { freeLinesLeft: number } {
   if (!env.JEV_MODEL) throw new Error('JEV_MODEL is unset')
   if (!/^\d+$/.test(String(env.FREE_LINES))) throw new Error('FREE_LINES is not a whole number')
   return {
