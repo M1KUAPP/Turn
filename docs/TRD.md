@@ -1276,28 +1276,32 @@ ran under Wrangler 4.136.2:
   number from 0; category and candidate ids hold 1 to 64 characters and
   are unique in their list; and no category is `consent`, the topic option
   every line has.
-- **Rate:** 30 requests a minute per ID, which the user's Durable Object
-  counts in each clock minute, and 120 a minute per address, through
-  Cloudflare's rate limiting binding with a 60-second period, as a backstop
+- **Rate:** 30 requests a minute per ID and 120 per address, each counted
+  exactly in each clock minute by a Durable Object: the user's object
+  counts the ID's, and the address's object the address's, a backstop
   only, since mobile networks share addresses (SEC-3).
-  - **Why the object counts the ID's.** The binding counts per Cloudflare
-    location and is "permissive, eventually consistent"
+  - **Why objects count both.** Cloudflare's rate limiting binding counts
+    per location and is "permissive, eventually consistent"
     ([services notes][svc-ratelimit]). It deployed and refused on the
     team's account, but loosely: one ID's first 73 requests in a minute
-    passed before its first `429`, 27 seconds in
-    ([relay limits notes][limits-live]). The object's count is exact. The
-    address keeps the binding, which let 250 requests from one address
-    through in 18 seconds, so against a burst the daily budget is what
-    caps Jev's calls; #98 decides whether to count addresses exactly.
+    passed before its first `429`, 27 seconds in, and all 250 of a burst
+    from one address passed in 18 seconds
+    ([relay limits notes][limits-live]). The objects' counts are exact, at
+    one more object request for every request and one more row for every
+    counted one, which [the Free plan's budget](#the-relays-storage)
+    allows; #98 chose them for the address too.
   - **Where:** once a request's headers and a line's lengths pass. The
-    address's limit comes first, before any object, so once it holds, a
-    flood from IDs minted on one address reaches none of their objects;
+    address's count comes first, before any user's object, so at most 120
+    requests a minute from IDs minted on one address reach their objects;
     then the user's object counts the request as the first step of serving
     it. The address is `CF-Connecting-IP`, which Cloudflare's edge won't
-    take from a client.
-  - **The answer:** `429 rate_limited` with `Retry-After: 60`: a whole clock
-    minute for the ID's count, and the longest period the address's binding
-    can have, since it reports only whether a call passed.
+    take from a client, and it names its object only through its salted
+    hash; requests without one share one count.
+  - **The answer:** `429 rate_limited` with `Retry-After: 60`: both counts
+    start again when their clock minute ends, which is never further off.
+  - **What it doesn't hold:** a sender with many addresses, such as one
+    IPv6 client moving through its /64, meets a new count at each, so the
+    daily budget is what caps such a flood's calls to Jev.
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
   lines nor `listen` guards Jev's credits. One more Durable Object counts Jev
