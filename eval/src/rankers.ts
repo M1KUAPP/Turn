@@ -1,18 +1,26 @@
 import type { Ranking } from '@turn/shared/row'
 import { rankOnPhone, type Context, type Phrase, type PhraseIndex } from '@turn/shared/shortlist'
 
-/** Orders a line's shortlist, as the phone's own ranking does, for the row's rules to turn into a row. */
-export type Ranker = (line: string, shortlist: readonly Phrase[], index: PhraseIndex, context: Context) => Ranking
+/**
+ * Orders a line's shortlist, as the phone's own ranking does, for the row's rules to turn into a row. A ranker that
+ * calls a model answers later.
+ */
+export type Ranker = (
+  line: string,
+  shortlist: readonly Phrase[],
+  index: PhraseIndex,
+  context: Context
+) => Ranking | Promise<Ranking>
 
 /** The phone's own ranking: phrases sharing a word with the line score 1, and a line with none holds (STATE-1). */
-export const keyword: Ranker = rankOnPhone
+export const keyword = rankOnPhone satisfies Ranker
 
 /**
  * The place's phrases alone, with no use of the line: they score 1 and the rest of the shortlist 0, each group in the
  * bank's order. Like the phone's own ranking it never brings a big button, and with no kind it never brings the fixed
  * buttons either.
  */
-export const place: Ranker = (_line, shortlist, _index, { bank, place }) => {
+export const place = ((_line, shortlist, _index, { bank, place }): Ranking => {
   const shortlisted = new Set(shortlist.map((phrase) => phrase.id))
   const ordered = bank.filter((phrase) => shortlisted.has(phrase.id))
   const atPlace = (phrase: Phrase) => phrase.places.includes(place)
@@ -25,4 +33,4 @@ export const place: Ranker = (_line, shortlist, _index, { bank, place }) => {
     ]),
     onPhone: true
   }
-}
+}) satisfies Ranker
