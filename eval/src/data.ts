@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 
-/** A partner line, as its writer wrote it (EVAL-1). */
+/** A partner line, as its writer wrote it and its first labeler labeled it (EVAL-1). */
 export type Line = {
   id: string
   author: string
@@ -9,6 +9,10 @@ export type Line = {
   place: string
   topic: string
   concerns: string[]
+  /** Who listed the line's acceptable replies. */
+  labeler: string
+  /** The starter-bank ids of every acceptable reply, in the bank's order, or none. */
+  acceptable: string[]
 }
 
 export type Phrase = { id: string; text: string; fixed: boolean; places: string[] }
