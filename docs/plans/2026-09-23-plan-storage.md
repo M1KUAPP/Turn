@@ -56,8 +56,9 @@ Contents:
   stated.
 - Conventional Commits: lowercase subject, header of at most 100 characters,
   body lines of at most 100 characters, no attribution lines.
-- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or
-  `.claude/`; they hold unrelated local changes.
+- Stage explicit paths only, each a file or a folder the task names, never
+  `-A` or `.`. Never stage `skills-lock.json`, `.agents/`, or `.claude/`;
+  they hold unrelated local changes.
 
 ## Skills
 
@@ -93,9 +94,9 @@ research note weighs the options, and this plan picks one.
       archived Guessling design link the check scripts in two plans'
       appendices, a research note links one plan's verification gate, and
       later plans build on earlier plans' scripts. In the repo, those links
-      stay relative, graphify indexes the plans, and `git log --follow` keeps
-      their history, the way ADRs, RFCs, KEPs, and PEPs keep finished
-      records ([design records in a repo][note-conv]).
+      keep working as root paths, graphify indexes the plans, and
+      `git log --follow` keeps their history, the way ADRs, RFCs, KEPs, and
+      PEPs keep finished records ([design records in a repo][note-conv]).
     - `docs/plans/` names what the files are, since each title ends
       "implementation plan", and the directive's "plan" step, without a
       tool's name. It's also where superpowers kept plans until v5.0.0 moved
@@ -127,6 +128,9 @@ research note weighs the options, and this plan picks one.
 
 ### Rejected alternatives
 
+The research note lists [the facts for and against each option][note-options];
+these are the reasons this plan turns the others down.
+
 - **GitHub issues**, where `/to-spec`, `/to-tickets`, and `/wayfinder`
   publish: the links to the plans would leave the repo, graphify and
   `git log` would lose them, their unticked steps would show as open tasks
@@ -143,6 +147,8 @@ research note weighs the options, and this plan picks one.
   tracker is GitHub.
 - **Leaving the folder:** no link would break, but the path would keep
   naming a skill set the repo removed.
+
+[note-options]: /docs/research/plan-storage.md#what-this-means-for-the-repos-plans
 
 ### Out of scope
 
