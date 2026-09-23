@@ -2,19 +2,19 @@
 
 ## Corpus Check
 
-- 125 files · ~535,317 words
+- 127 files · ~538,781 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 6, .lock 1)
 
 ## Summary
 
-- 2646 nodes · 2525 edges · 193 communities (186 shown, 4 thin omitted)
+- 2672 nodes · 2549 edges · 195 communities (188 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `dc6cca1c`
+- Built from commit: `0c1e4542`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -134,7 +134,7 @@
 - AI UI generators in September 2026
 - motionsites.ai research notes
 - Game and character design research notes
-- Tasks
+- Design
 - Turn design
 - Motion and haptics
 - Liquid Glass
@@ -177,7 +177,7 @@
 - Turn's relay and services research notes
 - Turn's iPhone build research notes
 - Functional requirements
-- Design
+- Tasks
 - Guessling product
 - Decision pipeline
 - The iPhone app
@@ -210,13 +210,15 @@
 - Color for Turn
 - Words on screen
 - SF Symbols for Turn
+- Tasks
+- Plan and spec storage research notes
 
 ## God Nodes (most connected - your core abstractions)
 
 1. `Prizes` - 58 edges
 2. `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` - 44 edges
-3. `Shipaton assets` - 23 edges
-4. `Tasks` - 23 edges
+3. `Tasks` - 23 edges
+4. `Shipaton assets` - 23 edges
 5. `Tasks` - 22 edges
 6. `Guessling design` - 21 edges
 7. `Tasks` - 21 edges
@@ -232,7 +234,7 @@
 
 - None detected.
 
-## Communities (193 total, 4 thin omitted)
+## Communities (195 total, 4 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -616,8 +618,8 @@ Nodes (20): App review timing, At a glance, Build fast, Eligibility, Grow after 
 
 ### Community 82 - "Tasks"
 
-Cohesion: 0.13
-Nodes (14): Appendix: check scripts, Design, Global constraints, Shipaton 2026 brief implementation plan, Task 1: Frame, at a glance, and key dates, Task 2: Eligibility and submission checklist, Task 3: Judging process and prizes, Task 4: Rules to watch, resources, and perks (+6 more)
+Cohesion: 0.05
+Nodes (36): Appendix: check scripts, Assumptions, Decisions the documents record, Design, Global constraints, Guessling product, PRD, and TRD implementation plan, Rejected alternatives, Requirement format and IDs (+28 more)
 
 ### Community 83 - "Resources, perks, and programs"
 
@@ -641,8 +643,8 @@ Nodes (26): Apple App Store review essentials, Categories new in 2026, Categorie
 
 ### Community 87 - "Tasks"
 
-Cohesion: 0.12
-Nodes (15): Appendix: check scripts, Design, Global constraints, Shipaton 2026 context implementation plan, Task 1: Frame, official rules, and see also, Task 2: Past winners, Task 3: What wins each category, Task 4: Monetization and store review (+7 more)
+Cohesion: 0.06
+Nodes (33): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Guessling design implementation plan, Rejected alternatives, Sections of the design document (+25 more)
 
 ### Community 88 - "Apple App Store review"
 
@@ -756,8 +758,8 @@ Nodes (40): Accessibility Nutrition Labels, Age assurance laws in US states, Age
 
 ### Community 110 - "Tasks"
 
-Cohesion: 0.05
-Nodes (36): Appendix: check scripts, Assumptions, Decisions the documents record, Design, Global constraints, Guessling product, PRD, and TRD implementation plan, Rejected alternatives, Requirement format and IDs (+28 more)
+Cohesion: 0.07
+Nodes (29): Assumptions, Design, Global constraints, Next Gen idea implementation plan, Rejected alternatives, Rubric, Sections of the idea, Skills (+21 more)
 
 ### Community 111 - "Turn product requirements"
 
@@ -789,10 +791,10 @@ Nodes (36): AI builders the prompts target, Appendix: analysis script, Backgroun
 Cohesion: 0.06
 Nodes (35): AI-assisted art and the rules, Akinator's genie, Anticipation, squash and stretch, and holds, Apple News+ puzzles, Apple on color and feedback, Brilliant, Finch, and Headspace, Character-led apps, Color-blind-safe feedback (+27 more)
 
-### Community 117 - "Tasks"
+### Community 117 - "Design"
 
-Cohesion: 0.06
-Nodes (33): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Guessling design implementation plan, Rejected alternatives, Sections of the design document (+25 more)
+Cohesion: 0.08
+Nodes (24): Assumptions, Decisions the documents record, Design, Global constraints, Rejected alternatives, Requirement format and IDs, Sections of the PRD, Sections of the product document (+16 more)
 
 ### Community 118 - "Turn design"
 
@@ -916,8 +918,8 @@ Nodes (35): Android sideloading and developer verification, Apple capabilities o
 
 ### Community 142 - "Tasks"
 
-Cohesion: 0.07
-Nodes (29): Assumptions, Design, Global constraints, Next Gen idea implementation plan, Rejected alternatives, Rubric, Sections of the idea, Skills (+21 more)
+Cohesion: 0.10
+Nodes (20): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Rejected alternatives, Sections of the design document, Skills (+12 more)
 
 ### Community 143 - "Next Gen ideation log"
 
@@ -999,10 +1001,10 @@ Nodes (38): A phrase ranker in TypeScript, A steady row in React Native, Asking 
 Cohesion: 0.06
 Nodes (31): Accessibility, Analytics requirements, App Store listing and review, Asking a question, Availability, Compatibility, Dependencies and assumptions, Functional requirements (+23 more)
 
-### Community 160 - "Design"
+### Community 160 - "Tasks"
 
-Cohesion: 0.08
-Nodes (24): Assumptions, Decisions the documents record, Design, Global constraints, Rejected alternatives, Requirement format and IDs, Sections of the PRD, Sections of the product document (+16 more)
+Cohesion: 0.12
+Nodes (15): Appendix: check scripts, Design, Global constraints, Shipaton 2026 context implementation plan, Task 1: Frame, official rules, and see also, Task 2: Past winners, Task 3: What wins each category, Task 4: Monetization and store review (+7 more)
 
 ### Community 161 - "Guessling product"
 
@@ -1061,8 +1063,8 @@ Nodes (34): A one-page website, Accessibility guidance on the site, Accessibilit
 
 ### Community 172 - "Tasks"
 
-Cohesion: 0.10
-Nodes (20): Appendix: check scripts, Assumptions, Decisions the document records, Design, Global constraints, Rejected alternatives, Sections of the design document, Skills (+12 more)
+Cohesion: 0.12
+Nodes (15): Decisions, Design, Global constraints, Out of scope, Plan storage implementation plan, Rejected alternatives, Skills, Task 1: Research note (+7 more)
 
 ### Community 173 - "Guessling design"
 
@@ -1164,24 +1166,34 @@ Nodes (3): Strings the PRD leaves open, Tone, Words on screen
 Cohesion: 0.67
 Nodes (3): SF Symbols for Turn, Symbols for speaking, listening, and answering, The SF Symbols release for iOS 27
 
+### Community 193 - "Tasks"
+
+Cohesion: 0.13
+Nodes (14): Appendix: check scripts, Design, Global constraints, Shipaton 2026 brief implementation plan, Task 1: Frame, at a glance, and key dates, Task 2: Eligibility and submission checklist, Task 3: Judging process and prizes, Task 4: Rules to watch, resources, and perks (+6 more)
+
+### Community 194 - "Plan and spec storage research notes"
+
+Cohesion: 0.20
+Nodes (9): Conventions for design records in a repo, Gaps, GitHub issue size limits, How /code-review finds a spec, Plan and spec storage research notes, See also, What this means for the repo's plans, Where mattpocock/skills puts documents (+1 more)
+
 ## Knowledge Gaps
 
-- **2099 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2094 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2217 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2119 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2114 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2239 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `iOS design research notes` connect `iOS design research notes` to `RevenueCat Paywalls styling`, `App icon and launch screen`, `SF Symbols`, `Motion and haptics`, `Liquid Glass`, `Typography`, `Color`, `Store and pitch assets`?**
+- **Why does `Best practices for a new subscription app` connect `Best practices for a new subscription app` to `Demo video and write-up`, `Samsung Galaxy Store review`, `Apple App Store review`, `Monetization and paywall benchmarks`, `Google Play review`, `Store listing and discoverability`, `Retention and push notifications`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Layout`, `Components`, `Screens`, `Words on screen`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Guessling design` connect `Guessling design` to `Components`, `Screens`, `Guidance for coding agents`, `The Guessling`, `Colors`, `App icon and store assets`, `Motion`, `Overview`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2099 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2119 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
