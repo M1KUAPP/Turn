@@ -397,9 +397,15 @@ it was kept.
 - **Light and dark.** `devicectl` set light, dark, and light again, and
   `device info appearance` read each back before the screenshots at
   12:57:53, 12:57:57, and 12:58:02. Each was 1290 by 2796 pixels in sRGB
-  IEC61966-2.1. In the middle 80% of the height, 100% of the sampled pixels
-  were within 2 of `#F2F2F7`, `#000000`, and `#F2F2F7` in turn, and the
-  status bar was drawn. The phone's own dark style was set back afterward.
+  IEC61966-2.1, with the status bar drawn. Below the status bar, rows 167
+  to 2795, none of each shot's 3,391,410 pixels differed from `#F2F2F7`,
+  `#000000`, and `#F2F2F7` in turn by more than 2 on any channel, so no
+  LogBox banner or error band showed. The phone's own dark style was set
+  back afterward.
+- **The sampler.** The session's script converted each shot to sRGB with
+  `sips --matchTo` and read its pixels with Python's standard library, not
+  the Swift script above. The same check fails the error screen at 12:55:43,
+  where 876,060 of those pixels differ from `#000000`.
 - **No error.** After the launch, Metro's log held only the bundle line, and
   Turn was still running after the last screenshot.
 - **A locked phone.** A screenshot at 12:46, before the person unlocked the
