@@ -50,9 +50,9 @@ Contents:
   - "Home, Clinic, Shop, and Out each have at least ten phrases (CONTENT-2)"
   - "The Quick category, the strip's five, and the `body-pain` category are
     present and marked fixed as the data model sets (BANK-5, SPEAK-7)"
-  - "It holds the phrases the checks name: "It was hard" tied to Clinic,
-    "Water, please" tied to Home, a food category with the id `food`, and a
-    phrase with "tired""
+  - "It holds the phrases the checks name: 'It was hard' tied to Clinic,
+    'Water, please' tied to Home, a food category with the id `food`, and a
+    phrase with 'tired'"
   - "A teammate other than the writer reads every phrase and signs off here"
 - **#19's acceptance criteria,** verbatim:
   - "80 lines with every field above, each written before its writer saw the
