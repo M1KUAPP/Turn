@@ -38,6 +38,7 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+1.  [What changed while building](#what-changed-while-building)
 1.  [Appendix: the run's script](#appendix-the-runs-script)
 
 [extras-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/45
@@ -470,6 +471,63 @@ on a new branch before reading them.
 Record the run in this plan and the TRD, open the pull request closing #45,
 review it, merge it, tick #45's box with the evidence, and note the second
 report on #64.
+
+## What changed while building
+
+- **Tests in their own files.** `runModel`'s tests went into
+  `eval/test/workers-ai.test.ts`. Its missing-key message now names Workers
+  AI rather than the embeddings ranker, since three rankers share it, so
+  one expected message in `embeddings.test.ts` changed.
+- **Two made-up vectors, not one with a length.** Giving `fakeVector` a
+  second parameter broke `texts.map(fakeVector)`, which passes the index as
+  the second argument, so `fakeQwenVector` makes qwen3's 1,024 numbers apart.
+- **`svg.ts` holds the page too.** Beside `tag`, it wraps a plot's elements
+  in the document with its title, description, and white page, which both
+  plots share; the risk-coverage plot's output stayed the same byte for byte.
+- **`close` waits.** Apple's `close` ends the helper's input and resolves
+  once it exits, and `main` awaits it in a `finally`.
+- **A seventh color.** Six colors served four curves; the seventh ranker
+  would have taken the first's orange, so Okabe and Ito's blue follows them.
+- **Graded stand-in scores.** The stand-in reranker scored 0.9 or 0.01, so
+  every fold held every line; it now scores a made-up cosine over 1,000, as
+  small as the probe's scores, so the report's test sees a cut-off such as
+  0.000612 printed to three significant figures.
+- **"The 80 lines once"** in the TRD became "The 80 lines from a clean
+  tree", since #45 scores them a second time.
+- **Mutations.** Every new rule was mutated once. Survivors got tests: bge's
+  second `shape` number, the reranker's count of scores, the order of the
+  helper's vectors, the band's level, a share right other than a half, the
+  floor's rule apart from the grid line under it, the band's outline, qwen3
+  taking each line as a query in the report's run, the cut-offs' figures,
+  and the band's range in the table. One survivor is equivalent: the report
+  prints the helper's revision, which can only be the pin.
+- **A gate piped into `tail`** let a 121-column Swift line into a commit,
+  which was amended before any push; the gate now runs unpiped, its exit
+  code checked.
+
+### The live check on the fixture
+
+On September 24, 2026, at `817f443`, `bun run eval` scored the fixture's 8
+lines with the real services and the Swift helper in 1 minute 42 seconds:
+
+- **Models:** all 32 of Jev's calls answered as `jev-1.13.0`, and the
+  models line named Workers AI's three, qwen3's instruction, and Apple's
+  embedding at revision 1, of 512 numbers, on macOS 27.0 (build 26A428).
+- **Ranking:** every ranker had 4 of 6 lines' replies in its top 6 but
+  place, with 1, and apple, with 3; in top 1, embeddings and qwen3 had 4,
+  keyword and the reranker 3, Jev 2, and apple none.
+- **Calibration:** Jev's top phrase was acceptable on 2 of 8 lines. Its fit
+  pooled 0.47 to 0.78 (4 lines, none right), 0.95 to 0.96 (3 lines, 1
+  right), and 0.97 (1 line, right). The Brier score was 0.457, with an
+  interval of 0.220 to 0.684, against 0.188 for always forecasting the
+  share, with a miscalibration of 0.373 and a discrimination of 0.104.
+- **Cut-offs:** 0.807 for embeddings, 0.924 for the reranker, and 0.758 for
+  qwen3 in four folds, and holding every line in the fifth; apple held
+  every line in every fold.
+- **Latency,** at the median: embeddings 149 ms, Jev 373 ms, the reranker
+  394 ms, qwen3 1,076 ms (4,019 ms at the 95th percentile), and apple 9 ms.
+- **Naming off:** with `--unnamed`, neither the report nor either plot held
+  "jev" or "TypeSafe".
 
 ## Appendix: the run's script
 
