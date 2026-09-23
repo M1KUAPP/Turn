@@ -1,4 +1,4 @@
-# Turn's video iPhone notes
+# Turn's video iPhone research notes
 
 How a Mac with Xcode 27.0 (27A266a) and a free Personal Team builds an app
 with bundle ID `com.m1ku.turn` to a USB iPhone from the command line, read
