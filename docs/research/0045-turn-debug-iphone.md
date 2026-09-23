@@ -401,8 +401,7 @@ it was kept.
 - **No error.** After the launch, Metro's log held only the bundle line, and
   Turn was still running after the last screenshot.
 - **A locked phone.** A screenshot at 12:46, before the person unlocked the
-  phone, was entirely `#000000` with no status bar, and
-  `device info lockState` read `"passcodeRequired": true` at 12:51.
+  phone, was entirely `#000000` with no status bar.
 - Synthesis: Turn's Debug build installs and runs on the video iPhone under
   the free Personal Team, and #80's profile covers it through September 30.
   A phone's first launch meets the Local Network alert and the red screen;
