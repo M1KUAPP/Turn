@@ -198,8 +198,11 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
 - **Info.plist.** Neither `NSLocalNetworkUsageDescription` nor
   `NSBonjourServices` is in the template's `Info.plist`, in
   `@expo/config-plugins` 57.0.9, in `@expo/prebuild-config` 57.0.16, or in
-  the introspected config. The introspected `NSAppTransportSecurity` has
-  `NSAllowsArbitraryLoads: true`, so plain `http` to a LAN IP loads.
+  the introspected config. The template's `NSAppTransportSecurity` sets
+  `NSAllowsArbitraryLoads` to false and `NSAllowsLocalNetworking` to true,
+  so plain `http` to a LAN IP loads. The introspected config shows
+  `NSAllowsArbitraryLoads: true` instead, but the built app in the
+  [hands-on check](#hands-on-check) carries the template's values.
 - Synthesis: the phone must reach the Mac's LAN IP on port 8081, so both
   need the same Wi-Fi or LAN; no source says the cable carries Metro. Expect
   the Local Network alert on the first launch, with iOS's default text. The
@@ -387,7 +390,9 @@ it was kept.
   Turn was running by a screenshot at 12:54:15. The log doesn't show
   whether Expo launched it over usbmux or through its `devicectl` fallback.
   The `.app` holds `ip.txt` with the Mac's Wi-Fi address and no
-  `main.jsbundle`.
+  `main.jsbundle`. Its `Info.plist` sets `NSAllowsLocalNetworking` to true
+  and `NSAllowsArbitraryLoads` to false, with no
+  `NSLocalNetworkUsageDescription` or `NSBonjourServices`.
 - **Local Network.** That screenshot showed iOS's alert, "Allow “Turn” to
   find devices on local networks?", over React Native's error screen: black,
   with a red band reading "No script URL provided". The alert closed at
