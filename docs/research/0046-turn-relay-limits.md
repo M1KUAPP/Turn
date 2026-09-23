@@ -3,8 +3,8 @@
 How the relay can limit each app user ID and address, and cap Jev calls per
 UTC day, from Cloudflare's docs pages and changelog, the cloudflare-docs and
 workers-sdk repos, RFCs 6585 and 9110, the installed `@typesafe-ai/sdk`
-0.6.0, Miniflare, and test plugin, and a local test, read for issue #35 on
-September 23, 2026. Judgment starts with "Synthesis:".
+0.6.0, Miniflare, and test plugin, a local test, and two live checks, read
+for issue #35 on September 23, 2026. Judgment starts with "Synthesis:".
 
 Contents:
 
@@ -15,6 +15,7 @@ Contents:
 1.  [Durable Object requests and rows](#durable-object-requests-and-rows)
 1.  [The SDK's attempts](#the-sdks-attempts)
 1.  [The local simulation](#the-local-simulation)
+1.  [Hands-on check](#hands-on-check)
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 
@@ -263,18 +264,61 @@ Paths are under `node_modules/.bun/`, in `miniflare@5.20260921.0-alpha`
   rolls over on the minute. The other tests stay within 30 requests per ID
   and clear their counts through `reset()`.
 
+## Hands-on check
+
+Run on September 23, 2026, against `turn-relay` on the team's Cloudflare
+account, from one machine, with fresh random app user IDs. Times are UTC.
+
+- **The deploy.** `wrangler deploy` of the branch at `1bbeaa5` accepted
+  both `ratelimits` bindings, listed as "Rate Limit", and created the
+  `Budget` object ("Created: Budget"), as version `67d894ef`.
+- **The account's plan.** Wrangler's login can't read it:
+  `GET /accounts/{account_id}/subscriptions` and `GET /user/subscriptions`
+  answer `403` with code 10000, and the Workers account settings hold only
+  `"default_usage_model": "standard"`. The relay's docs place the account
+  on Workers Free.
+- **The binding, per ID.** 40 configuration requests from one ID, from
+  15:52:00 to 15:52:14, all got `200`. A burst of 150 from another ID,
+  from 15:55:00, got its first `429 rate_limited`, with `Retry-After: 60`,
+  at request 74, 26.95 seconds in. Answers then alternated between `200`
+  and `429` until 44.58 seconds, and the 24 requests from 45.04 seconds on
+  were all refused: 93 of the 150 were answered. All of them reached
+  Cloudflare at one edge location, going by their `CF-Ray` headers.
+- **A client's own address.** 125 requests that each set a made-up
+  `CF-Connecting-IP` from 203.0.113.0/24 got `403` from Cloudflare's edge,
+  with a 17-byte text body instead of the relay's JSON, so none reached the
+  Worker.
+- **The budget.** A line from a fresh ID got `200` with its answer, through
+  the new `Budget` object.
+- **The exact count.** With the ID's count moved into the user's object,
+  at `debfef7`, deployed as version `843ade31`, 40 requests from one ID,
+  from 16:08:00 to 16:08:20, got 30 `200`s, then 10
+  `429 rate_limited`s, each with `Retry-After: 60`. A line from a fresh ID
+  at 16:11:01 got `200`.
+- **The binding, per address.** From the machine's own address, 150
+  requests across six IDs, from 16:09:00 to 16:10:11, all got `200`. So did
+  250 more, eight at a time across ten IDs, all answered within the first
+  18.32 seconds of one clock minute, against the binding's 120.
+- Synthesis: the binding works on the team's account but counts loosely
+  for its first half minute or more, so SEC-3's 30 needs the user's object
+  to count them, which it does exactly. The address's binding held back
+  none of 250 in 18 seconds, so against a burst it's no backstop, and the
+  day's budget still caps Jev's calls. A forged address never reaches the
+  relay.
+
 ## Gaps
 
-- **The Free plan.** No page says whether the binding works on Workers
-  Free; only a deploy on the Free account, not run here, can settle it.
+- **The Free plan.** The binding deploys and refuses on the team's
+  account, whose plan Wrangler's login can't read; no page says whether
+  the binding works on Workers Free.
 - **Production counting.** Fixed windows and uncounted refusals come from
   Miniflare's emulator and its comments, whose `ratelimit.h` and
-  `counts.rs` are on Cloudflare's internal GitLab; how fast counts converge
-  isn't stated.
-- **The address header.** Whether Cloudflare replaces a client-sent
-  `CF-Connecting-IP` on a request to a Worker, how it writes an IPv6
-  address, and whether Pseudo IPv4 applies to a `workers.dev` address
-  weren't found; the "Restoring original visitor IPs" page wasn't read.
+  `counts.rs` are on Cloudflare's internal GitLab. The hands-on check
+  measured the binding's lag, not its cause, and not how long a flood from
+  one address takes to meet it.
+- **The address header.** Cloudflare's edge refuses a client that sets
+  `CF-Connecting-IP`; how it writes an IPv6 address, and whether Pseudo
+  IPv4 applies to a `workers.dev` address, weren't found.
 - **Stub calls as subrequests.** Whether a call from one object to another
   counts against the caller's subrequest limits isn't said.
 - **Index rows.** Whether an upsert on a table keyed by a text primary key
