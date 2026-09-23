@@ -210,9 +210,10 @@ attached.
   10:08:56. A launch at 10:09:06 failed with CoreDeviceError 10002: "Unable
   to launch com.m1ku.turn because it has an invalid code signature,
   inadequate entitlements or its profile has not been explicitly trusted by
-  the user". After the person trusted the developer under Settings >
-  General > VPN & Device Management, the same launch succeeded at 10:10:20,
-  and the app kept running.
+  the user". The person was then asked to trust the developer under
+  Settings > General > VPN & Device Management, as #80's steps say, and
+  the same launch, retried every 10 seconds, succeeded at 10:10:20; the app
+  kept running.
 - Synthesis: Apple had registered `com.m1ku.turn` for the Personal Team by
   the first successful build to the phone, and the profile lasts past the
   September 28 shoot. The build with no phone attached may have registered
