@@ -430,30 +430,40 @@ category names, and the place's name together (LISTEN-5):
 
 ### The shortlist
 
-The phone picks 40 candidates, never the fixed buttons, in this order,
-without duplicates (ROW-2):
+The phone picks 40 candidates, never the fixed buttons or the strip's
+phrases, in this order, without duplicates (ROW-2, SPEAK-7):
 
-1.  The phrases now in the row, up to six, so each gets a new score.
+1.  The phrases now in the row, so each gets a new score: the big button's,
+    if one shows, then up to six in the slots under it.
 2.  Up to 24 phrases by keyword ranking over the line as heard, before any
     tags: MiniSearch's BM25+ with its defaults (k 1.2, b 0.7, d 0.5), on
-    lowercased words with a list of common words dropped, since MiniSearch
-    applies none itself; only phrases that share a word count
-    ([iPhone build notes][ios-ranker]).
+    lowercased words with common words dropped, since MiniSearch applies
+    none itself. The common words are NLTK's English list without its
+    contractions, whose fragments it holds, plus "please"; only phrases
+    that share a word count ([iPhone build notes][ios-ranker];
+    [shortlist notes][sl-words]).
 3.  Up to 8 of the user's most-tapped phrases of the last 30 days.
 4.  Up to 8 of the place's phrases, most-tapped first.
 5.  The rest by taps over the last 30 days, then by the grid's order, until
     there are 40.
+
+Within a step, the grid's order breaks ties.
 
 If the evaluation finds Jev trailing (EVAL-4), step 2 ranks by Apple's
 sentence embedding instead of keywords, as the idea plans: the iPhone build
 notes' test scanned 2,000 stored vectors in 2.3 ms on a Mac
 ([iPhone build notes][ios-embed]).
 
-At 2,000 phrases, the BM25 index is built once at launch and updated on each
-edit, so a shortlist takes at most 50 milliseconds (PERF-4, BANK-7).
+At 2,000 phrases, the BM25 index is built once at launch and follows each
+edit, so a shortlist takes at most 50 milliseconds (PERF-4, BANK-7). An
+edited or deleted phrase is removed by the text it was indexed with, since
+MiniSearch's `discard` can score a match below 0
+([shortlist notes][sl-minisearch]).
 
 [ios-ranker]: /docs/research/0023-turn-ios.md#a-phrase-ranker-in-typescript
 [ios-embed]: /docs/research/0023-turn-ios.md#sentence-embeddings-for-a-shortlist
+[sl-words]: /docs/research/0033-turn-shortlist-and-row.md#common-word-lists
+[sl-minisearch]: /docs/research/0033-turn-shortlist-and-row.md#minisearch-720
 
 ### The Jev request
 
@@ -545,34 +555,45 @@ on answer(a)
   fixedTopic = topic is in P.fixedOnlyTopics
   showFixed = yesNo or fixedTopic                                  # ROW-4
   phrasesAllowed = not fixedTopic and (not yesNo or P.yesNoPhrases)
-  fresh = candidates scoring P.floor or more, highest first
+  fresh = candidates scoring P.floor or more, highest first,
+          ties in the shortlist's order
   if not showFixed and fresh is empty:
     keep the row as it is                                          # ROW-3
   else if not showFixed and fresh[0] > P.bigAbove
-          and topic is not in P.noBigTopics:
+          and topic is not in P.noBigTopics
+          and the phone didn't rank the line:                      # STATE-1
     show fresh[0] as the big button and remember it                # ROW-3
   else:
-    if the row was a big button: put its phrase in the first free slot
-      if it still scores P.floor or more                           # ROW-5
     if showFixed:
       slots 1-3 = Yes, No, Not sure                                # ROW-4
       if phrasesAllowed: usable = slots 4-6
       else: empty slots 4-6; usable = none                         # EVAL-5
     else: empty the slots the fixed buttons held; usable = all six
     each shown phrase takes its new score; below P.floor, it's stale
+    if the row was a big button, and its phrase isn't shown but still
+      scores P.floor or more: it takes the first empty usable slot,
+      or else the lowest-scoring stale one                         # ROW-5
     for each fresh phrase not shown, highest first:
       if a usable slot is empty: take the first one
       else if a usable slot is stale: take the lowest-scoring stale one
       else if it beats the lowest shown by P.margin: take that slot  # ROW-5
       else: stop
-  mark the topic's tab if it scores P.floor or more                # ROW-9
+  mark the topic's tab if it scores P.floor or more, else none     # ROW-9
   if the row changed: render; announce the number of replies       # A11Y-2
 ```
 
 - **Stale phrases stay visible** until a new phrase needs their slot, so a
-  line with little to say doesn't blank the row.
+  line with little to say doesn't blank the row. A shown phrase the answer
+  doesn't score counts as 0.
 - **The big button** fills the row's fixed area; the six slots underneath
-  keep their phrases for the next answer (ROW-1).
+  keep their phrases for the next answer (ROW-1). Its phrase goes back in
+  after the fixed buttons take their slots, so Yes can't cover it.
+- **The fixed buttons** hold their slots by their phrase ids, `yes`, `no`,
+  and `not-sure`, so the app speaks and counts them like any phrase.
+- **Ties** go by the shortlist's order, so the app gives the rules each
+  answer's scores in that order; the relay's JSON object can't carry it.
+- **Clearing** empties the slots, forgets the big button's phrase, and
+  unmarks the tab, but keeps the newest line's number (ROW-10).
 - **Nothing speaks** in these rules; only a tap does (ROW-6).
 
 ### Timeouts, sequence numbers, and fallbacks
@@ -594,7 +615,8 @@ Offline, after a failure, with Jev off, or while the under-18 switch is on,
 the phone ranks the line with the shortlist's BM25 (STATE-1, CONSENT-6):
 
 - Phrases sharing a word with the line, other than common words, score 1 and
-  the others 0; the place's phrases, then taps, break ties.
+  the others 0; the place's phrases, then taps, then the keyword ranking,
+  break ties.
 - A line that starts with a form of "do", "be", "have", or a modal verb,
   such as "Do you" or "Can you", counts as a yes-or-no question.
 - The row's rules then run as above, with no big button, so steady slots
