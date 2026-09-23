@@ -365,7 +365,7 @@ Thank you,
 
 ### The organizers' question
 
-In the official Shipaton Discord, or to `shipaton@revenuecat.com`:
+In the official Shipaton Discord, as #14 asks:
 
 ```text
 Hi! Our team saved copies of the Shipaton pages we researched (59 pages of
