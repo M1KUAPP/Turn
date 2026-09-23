@@ -7,7 +7,7 @@ export type Entitlement = 'yes' | 'no' | 'unknown'
 type Settings = Pick<Env, 'RC_SECRET_KEY' | 'RC_PROJECT_ID' | 'RC_ENTITLEMENT_ID'>
 
 /** An item of the active entitlements list, in the spec's shape: the entitlement's object ID, and when it expires. */
-type Item = { entitlement_id: string; expires_at: number | null }
+export type Item = { entitlement_id: string; expires_at: number | null }
 
 const isItem = (item: unknown): item is Item =>
   isRecord(item) &&

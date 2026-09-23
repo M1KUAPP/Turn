@@ -25,7 +25,7 @@ describe('the free lines (PAY-1)', () => {
     mockRevenueCat(unknownCustomer)
     await expectError(await postLine(lineRequest()), 402, 'paywall')
     expect(await freeLinesLeft()).toBe(0)
-    expect(await freeLinesLeft({ ...headers, 'X-Turn-User': '7c1d9e2a-4b3f-4e5a-8c6d-0f1e2d3c4b5a' })).toBe(20)
+    expect(await freeLinesLeft({}, { ...headers, 'X-Turn-User': '7c1d9e2a-4b3f-4e5a-8c6d-0f1e2d3c4b5a' })).toBe(20)
   })
 
   test('count exactly 20 of 25 simultaneous lines from one ID', async () => {
@@ -68,8 +68,7 @@ describe('the free lines (PAY-1)', () => {
   test('show none left, not fewer, once FREE_LINES is lowered below the lines used', async () => {
     mockJev(...jevAnswers(3))
     for (let i = 0; i < 3; i++) await postLine(lineRequest())
-    const response = await send(new Request('https://relay.test/v1/config', { headers }), { FREE_LINES: '2' })
-    expect(await response.json()).toMatchObject({ freeLinesLeft: 0 })
+    expect(await freeLinesLeft({ FREE_LINES: '2' })).toBe(0)
   })
 })
 
@@ -85,8 +84,8 @@ describe('the Simulator switch (PAY-9)', () => {
       expect(response.status).toBe(200)
       expect(await leftAfter(response)).toBeNull()
     }
-    expect(await freeLinesLeft(simulator, { SIMULATOR_UNLIMITED: 'true' })).toBeNull()
-    expect(await freeLinesLeft(headers, { SIMULATOR_UNLIMITED: 'true' })).toBe(20)
+    expect(await freeLinesLeft({ SIMULATOR_UNLIMITED: 'true' }, simulator)).toBeNull()
+    expect(await freeLinesLeft({ SIMULATOR_UNLIMITED: 'true' })).toBe(20)
   })
 
   test("counts a device request while it's on", async () => {
@@ -97,6 +96,6 @@ describe('the Simulator switch (PAY-9)', () => {
   test.each(['false', 'yes', undefined])('counts a simulator request while it is %j', async (value) => {
     mockJev(...jevAnswers(1))
     expect(await leftAfter(await fromSimulator({ SIMULATOR_UNLIMITED: value }))).toBe(19)
-    expect(await freeLinesLeft(simulator, { SIMULATOR_UNLIMITED: value })).toBe(19)
+    expect(await freeLinesLeft({ SIMULATOR_UNLIMITED: value }, simulator)).toBe(19)
   })
 })

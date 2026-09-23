@@ -1,10 +1,7 @@
 import { startingPolicy } from '@turn/shared/row'
 import { exports } from 'cloudflare:workers'
 import { describe, expect, test } from 'vitest'
-import { expectError, headers, send } from './helpers'
-
-const getConfig = (changes: Parameters<typeof send>[1] = {}, sent: Record<string, string> = headers) =>
-  send(new Request('https://relay.test/v1/config', { headers: sent }), changes)
+import { expectError, getConfig, headers, send } from './helpers'
 
 describe('GET /v1/config', () => {
   test('returns the switches, the free lines, and the starting policy', async () => {

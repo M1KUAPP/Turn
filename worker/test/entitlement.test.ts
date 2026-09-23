@@ -3,46 +3,25 @@ import { env } from 'cloudflare:workers'
 import { describe, expect, test, vi } from 'vitest'
 import { checkEntitlement } from '../src/entitlement'
 import {
+  activeEntitlements,
+  callsTo,
   expectError,
   freeLinesLeft,
   jevAnswers,
   lineRequest,
+  listen,
   mockJev,
   mockRevenueCat,
   postLine,
-  sha256,
+  rcError,
   unknownCustomer,
-  user
+  user,
+  userHash
 } from './helpers'
-
-/** An item of RevenueCat's list of the user's active entitlements. */
-type Item = { entitlement_id: string; expires_at: number | null }
-
-/** `listen`, bought once, which never expires. */
-const listen: Item = { entitlement_id: env.RC_ENTITLEMENT_ID, expires_at: null }
-
-/** RevenueCat's list of the user's active entitlements, in the spec's shape. */
-const activeEntitlements =
-  (...items: Item[]) =>
-  () =>
-    Response.json({
-      object: 'list',
-      items: items.map((item) => ({ object: 'customer.active_entitlement', ...item })),
-      next_page: null,
-      url: `/v2/projects/${env.RC_PROJECT_ID}/customers/${user}/active_entitlements`
-    })
-
-/** RevenueCat's error body, with its status. */
-const rcError = (status: number, type: string) => () =>
-  Response.json({ object: 'error', type, message: 'Something went wrong', retryable: status >= 500 }, { status })
-
-/** The calls that reached RevenueCat's API. */
-const revenueCatCalls = () =>
-  vi.mocked(globalThis.fetch).mock.calls.filter(([input]) => String(input).startsWith('https://api.revenuecat.com/'))
 
 /** Makes RevenueCat's last answer, and any refresh, older by `ms` in the test user's object. */
 async function age(ms: number) {
-  const stub = env.DEVICE.getByName(`user-${await sha256(`test-salt${user}`)}`)
+  const stub = env.DEVICE.getByName(`user-${await userHash()}`)
   await runInDurableObject(stub, (_, state) => {
     state.storage.sql.exec(
       'UPDATE entitlement SET checked_at = checked_at - ?, refreshed_at = refreshed_at - ?',
@@ -59,7 +38,7 @@ describe("RevenueCat's answer (PAY-7)", () => {
   test("asks for the user's active entitlements with the relay's key", async () => {
     mockRevenueCat(activeEntitlements(listen))
     expect(await checkEntitlement(env, user)).toBe('yes')
-    const [[input, init]] = revenueCatCalls()
+    const [[input, init]] = callsTo('api.revenuecat.com')
     expect(String(input)).toBe(
       `https://api.revenuecat.com/v2/projects/${env.RC_PROJECT_ID}/customers/${user}/active_entitlements`
     )
@@ -125,7 +104,7 @@ describe("RevenueCat's answer (PAY-7)", () => {
     'reads an unset %s as unknown, without asking',
     async (name) => {
       expect(await checkEntitlement({ ...env, [name]: '' }, user)).toBe('unknown')
-      expect(revenueCatCalls()).toHaveLength(0)
+      expect(callsTo('api.revenuecat.com')).toHaveLength(0)
     }
   )
 })
@@ -148,10 +127,10 @@ describe('lines past the free lines (PAY-7)', () => {
     await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
     await age(59_000)
     await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
-    expect(revenueCatCalls()).toHaveLength(1)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(1)
     await age(2000)
     expect((await postLine(lineRequest(), paid)).status).toBe(200)
-    expect(revenueCatCalls()).toHaveLength(2)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(2)
   })
 
   test('keep a yes for a day, then ask again', async () => {
@@ -160,10 +139,10 @@ describe('lines past the free lines (PAY-7)', () => {
     expect((await postLine(lineRequest(), paid)).status).toBe(200)
     await age(24 * 60 * 60_000 - 1000)
     expect((await postLine(lineRequest(), paid)).status).toBe(200)
-    expect(revenueCatCalls()).toHaveLength(1)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(1)
     await age(2000)
     await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
-    expect(revenueCatCalls()).toHaveLength(2)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(2)
   })
 
   test('let a line with refresh skip a fresh no once a minute (PAY-4)', async () => {
@@ -172,20 +151,19 @@ describe('lines past the free lines (PAY-7)', () => {
     await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
     await expectError(await postLine(lineRequest({ refresh: true }), paid), 402, 'paywall')
     await expectError(await postLine(lineRequest({ refresh: true }), paid), 402, 'paywall')
-    expect(revenueCatCalls()).toHaveLength(2)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(2)
     await age(61_000)
     await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
     expect((await postLine(lineRequest({ refresh: true }), paid)).status).toBe(200)
-    expect(revenueCatCalls()).toHaveLength(4)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(4)
   })
 
   test('answer 503 jev_unavailable, never 402, when RevenueCat fails and no yes is cached', async () => {
-    const jev = mockJev()
     mockRevenueCat(rcError(503, 'server_error'), activeEntitlements(), rcError(500, 'server_error'))
     await expectError(await postLine(lineRequest(), paid), 503, 'jev_unavailable')
     await expectError(await postLine(lineRequest(), paid), 402, 'paywall')
     await expectError(await postLine(lineRequest({ refresh: true }), paid), 503, 'jev_unavailable')
-    expect(jev.mock.calls.filter(([input]) => String(input).startsWith('https://api.typesafe.ai/'))).toHaveLength(0)
+    expect(callsTo('api.typesafe.ai')).toHaveLength(0)
   })
 
   test("keep a failed refresh's skip for the next line with refresh", async () => {
@@ -204,12 +182,12 @@ describe('lines past the free lines (PAY-7)', () => {
     const response = await postLine(lineRequest(), paid)
     expect(response.status).toBe(200)
     expect(await response.json()).toMatchObject({ freeLinesLeft: null })
-    expect(revenueCatCalls()).toHaveLength(2)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(2)
   })
 
   test("don't ask RevenueCat about a free line", async () => {
     mockJev(...jevAnswers(1))
     expect((await postLine(lineRequest({ refresh: true }))).status).toBe(200)
-    expect(revenueCatCalls()).toHaveLength(0)
+    expect(callsTo('api.revenuecat.com')).toHaveLength(0)
   })
 })
