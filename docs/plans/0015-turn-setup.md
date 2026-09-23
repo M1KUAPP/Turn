@@ -369,7 +369,7 @@ In the official Shipaton Discord, or to `shipaton@revenuecat.com`:
 
 ```text
 Hi! Our team saved copies of the Shipaton pages we researched (59 pages of
-shipathon.com, the Devpost overview, and one YouTube page) as Markdown in
+shipaton.com, the Devpost overview, and one YouTube page) as Markdown in
 our repository's docs/sources folder, each with a link back to its page.
 We plan to make the repository public for judging. May those copies stay in
 the public repository, or should we remove them and keep only the links?
