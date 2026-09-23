@@ -81,14 +81,17 @@ export function below(n: number, next: () => number): number {
 }
 
 /**
+/** How many times the paired bootstrap resamples the items: SciPy's default count. */
+const resamples = 9999
+
+/**
  * The paired bootstrap's 95% interval for the mean of a − b over the same items: 9,999 resamples of the items, each
- * the same for both, SciPy's default count, and the 2.5th and 97.5th percentiles of their means. When no item splits
- * a and b, every resample gives the same mean, and so does the interval. Null for no items.
+ * the same for both, and the 2.5th and 97.5th percentiles of their means. When no item splits a and b, every
+ * resample gives the same mean, and so does the interval. Null for no items.
  */
 export function pairedBootstrap(
   a: readonly number[],
-  b: readonly number[],
-  resamples = 9999
+  b: readonly number[]
 ): { difference: number; low: number; high: number } | null {
   const n = a.length
   if (n === 0) return null
