@@ -4,7 +4,10 @@ import { expect, vi } from 'vitest'
 import type { Item } from '../src/entitlement'
 import worker from '../src/index'
 
-/** An app user's ID, a lowercase version 4 UUID. */
+/**
+ * An app user's ID, a lowercase version 4 UUID, which most tests share. Each such test stays under the ID's 30 requests
+ * a minute (SEC-3), and one that needs more sends some as other users.
+ */
 export const user = '5f0e7a8e-3c2b-4d1a-9b6e-2f4c8d0a1b3c'
 
 /** The headers every request from the app carries. */
