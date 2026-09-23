@@ -1,4 +1,4 @@
-import { parseArgs } from 'node:util'
+import { readFlags } from './flags'
 import { formatSummary, summarize } from './summary'
 import { accessFrom, accessMissing, dayRange, messageOf, readLogs } from './telemetry'
 
@@ -8,10 +8,10 @@ import { accessFrom, accessMissing, dayRange, messageOf, readLogs } from './tele
  * `TURN_CF_LOGS_TOKEN`, never from the command line.
  */
 export async function main(args: readonly string[], env: Record<string, string | undefined>): Promise<number> {
-  const { values } = parseArgs({ args: [...args], options: { day: { type: 'string' } } })
-  const range = dayRange(values.day, Date.now())
+  const flags = readFlags(args, ['day'])
+  const range = flags && dayRange(flags.day, Date.now())
   if (!range) {
-    console.error(`--day takes a day that has begun, such as 2026-09-23, not ${values.day}`)
+    console.error('bun run logs takes only --day, and a day that has begun, such as 2026-09-23.')
     return 2
   }
   const access = accessFrom(env)
