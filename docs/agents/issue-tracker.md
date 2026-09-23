@@ -3,8 +3,10 @@
 Issues and specs for this repo live as GitHub issues in
 `RevenueCat-M1KU/RevenueCat`. Use the `gh` CLI for all operations.
 
-Plans are the exception: a change's plan is committed on its branch as
-`docs/plans/YYYY-MM-DD-<topic>.md`, and `/code-review` takes it as the spec.
+Plan files are the exception: when a change has one, it's committed on the
+change's branch as `docs/plans/YYYY-MM-DD-<topic>.md`, and its path is passed
+to `/code-review` as the spec. Specs from `/to-spec`, tickets, and wayfinder
+maps stay in GitHub issues.
 
 Contents:
 
