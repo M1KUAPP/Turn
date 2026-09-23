@@ -1,0 +1,80 @@
+{"id":"line-01","author":"claude-a","text":"Let's get your socks on. Want a hand with them?","kind":"yes_no","place":"home","topic":"dressing","concerns":["consent"]}
+{"id":"line-02","author":"claude-a","text":"Your legs are cramping up again?","kind":"yes_no","place":"home","topic":"leg cramps","concerns":["pain","health"]}
+{"id":"line-03","author":"claude-a","text":"Soup or grilled cheese for lunch?","kind":"either_or","place":"home","topic":"lunch","concerns":[]}
+{"id":"line-04","author":"claude-a","text":"I can't find the checkbook anywhere. Where'd you stash it?","kind":"open","place":"home","topic":"checkbook","concerns":[]}
+{"id":"line-05","author":"claude-a","text":"Let me get your blood pressure before we start, alright?","kind":"yes_no","place":"home","topic":"blood pressure","concerns":["health","consent"]}
+{"id":"line-06","author":"claude-a","text":"Kind of stuffy in here, isn't it?","kind":"yes_no","place":"home","topic":"stuffy room","concerns":[]}
+{"id":"line-07","author":"claude-a","text":"Can I show you the volcano I made for school?","kind":"yes_no","place":"home","topic":"school project","concerns":[]}
+{"id":"line-08","author":"claude-a","text":"Huh. Says here they're finally fixing that bridge by the river.","kind":"not_a_question","place":"home","topic":"local news","concerns":[]}
+{"id":"line-09","author":"claude-a","text":"Made too much banana bread again, so I brought you two a loaf.","kind":"not_a_question","place":"home","topic":"banana bread","concerns":[]}
+{"id":"line-10","author":"claude-a","text":"You already took your morning pills, right?","kind":"yes_no","place":"home","topic":"morning pills","concerns":["health"]}
+{"id":"line-11","author":"claude-a","text":"And you're still on the same insurance?","kind":"yes_no","place":"clinic","topic":"insurance","concerns":[]}
+{"id":"line-12","author":"claude-a","text":"Any more falls since we last saw you?","kind":"yes_no","place":"clinic","topic":"falls","concerns":["health"]}
+{"id":"line-13","author":"claude-a","text":"How's the breathing been at night?","kind":"open","place":"clinic","topic":"breathing","concerns":["health"]}
+{"id":"line-14","author":"claude-a","text":"They're really running behind today, huh?","kind":"yes_no","place":"clinic","topic":"waiting room","concerns":[]}
+{"id":"line-15","author":"claude-a","text":"Good news, your blood work all came back normal.","kind":"not_a_question","place":"clinic","topic":"blood work","concerns":["health"]}
+{"id":"line-16","author":"claude-a","text":"Since the drooling's gotten worse, I'd like to bump up that medicine a bit and see if it helps. You okay with that?","kind":"yes_no","place":"clinic","topic":"drooling","concerns":["health","consent"]}
+{"id":"line-17","author":"claude-a","text":"I'll lift your arm nice and slow. Let me know if it hurts, okay?","kind":"yes_no","place":"clinic","topic":"range of motion","concerns":["pain","health","consent"]}
+{"id":"line-18","author":"claude-a","text":"So thin liquids are still making you cough?","kind":"yes_no","place":"clinic","topic":"swallowing","concerns":["health"]}
+{"id":"line-19","author":"claude-a","text":"Would mornings or afternoons work better for your next visit?","kind":"either_or","place":"clinic","topic":"next appointment","concerns":[]}
+{"id":"line-20","author":"claude-a","text":"When did you first notice trouble with buttons and zippers?","kind":"open","place":"clinic","topic":"hand weakness","concerns":["health"]}
+{"id":"line-21","author":"claude-a","text":"Find everything you were looking for?","kind":"yes_no","place":"shop","topic":"finding items","concerns":[]}
+{"id":"line-22","author":"claude-a","text":"Just the one bag, or do you want two?","kind":"either_or","place":"shop","topic":"bagging","concerns":[]}
+{"id":"line-23","author":"claude-a","text":"How much of the ham can I get you?","kind":"open","place":"shop","topic":"deli order","concerns":[]}
+{"id":"line-24","author":"claude-a","text":"Heads up, these might make you a little queasy if you don't eat first.","kind":"not_a_question","place":"shop","topic":"side effects","concerns":["health"]}
+{"id":"line-25","author":"claude-a","text":"You've been on this prescription before, haven't you?","kind":"yes_no","place":"shop","topic":"prescription","concerns":["health"]}
+{"id":"line-26","author":"claude-a","text":"Mind if I grab that off the top shelf for you?","kind":"yes_no","place":"shop","topic":"top shelf","concerns":["consent"]}
+{"id":"line-27","author":"claude-a","text":"Price check on register three, please.","kind":"not_a_question","place":"shop","topic":"price check","concerns":[]}
+{"id":"line-28","author":"claude-a","text":"Sorry, you're in line, aren't you?","kind":"yes_no","place":"shop","topic":"checkout line","concerns":[]}
+{"id":"line-29","author":"claude-a","text":"Do you have one of our rewards cards?","kind":"yes_no","place":"shop","topic":"rewards card","concerns":[]}
+{"id":"line-30","author":"claude-a","text":"And what name are we putting on the cake?","kind":"open","place":"shop","topic":"cake order","concerns":[]}
+{"id":"line-31","author":"claude-a","text":"Line's huge. Should I just order for both of us?","kind":"yes_no","place":"out","topic":"ordering","concerns":["consent"]}
+{"id":"line-32","author":"claude-a","text":"Booth, or would you rather sit by the window?","kind":"either_or","place":"out","topic":"seating","concerns":[]}
+{"id":"line-33","author":"claude-a","text":"This bus is never on time, I swear.","kind":"not_a_question","place":"out","topic":"late bus","concerns":[]}
+{"id":"line-34","author":"claude-a","text":"Okay, everybody, food's ready! Grab a plate, and kids, let the grown-ups go first this time.","kind":"not_a_question","place":"out","topic":"party food","concerns":[]}
+{"id":"line-35","author":"claude-a","text":"Couldn't ask for a nicer day, could we?","kind":"yes_no","place":"out","topic":"weather","concerns":[]}
+{"id":"line-36","author":"claude-a","text":"These steps get slippery. Okay if I hold on to your elbow?","kind":"yes_no","place":"out","topic":"steps","concerns":["consent"]}
+{"id":"line-37","author":"claude-a","text":"Aw, what a sweet dog. What breed is she?","kind":"open","place":"out","topic":"dog","concerns":[]}
+{"id":"line-38","author":"claude-a","text":"It's been ages! How've you been?","kind":"open","place":"out","topic":"catching up","concerns":[]}
+{"id":"line-39","author":"claude-a","text":"That hip's bothering you after all that sitting, huh?","kind":"yes_no","place":"out","topic":"hip pain","concerns":["pain","health"]}
+{"id":"line-40","author":"claude-a","text":"Those new sleeping pills are helping, then?","kind":"yes_no","place":"out","topic":"sleeping pills","concerns":["health"]}
+{"id":"line-41","author":"claude-b","text":"I'm going to put your compression socks on now, okay?","kind":"yes_no","place":"home","topic":"compression socks","concerns":["health","consent"]}
+{"id":"line-42","author":"claude-b","text":"Are those hand exercises getting any easier?","kind":"yes_no","place":"home","topic":"hand exercises","concerns":["health"]}
+{"id":"line-43","author":"claude-b","text":"Want me to call the pharmacy about your refill?","kind":"yes_no","place":"home","topic":"prescription refill","concerns":["health","consent"]}
+{"id":"line-44","author":"claude-b","text":"Still haven't put up that shelf, huh?","kind":"yes_no","place":"home","topic":"shelf","concerns":[]}
+{"id":"line-45","author":"claude-b","text":"Juice with your lunch, or just water?","kind":"either_or","place":"home","topic":"drinks","concerns":[]}
+{"id":"line-46","author":"claude-b","text":"What was that show you kept telling me I had to watch?","kind":"open","place":"home","topic":"tv show","concerns":[]}
+{"id":"line-47","author":"claude-b","text":"Hey, I'm in the middle of something, let me call you back in twenty minutes.","kind":"not_a_question","place":"home","topic":"phone call","concerns":[]}
+{"id":"line-48","author":"claude-b","text":"I grabbed your packages off the porch so they wouldn't get soaked, they're on the kitchen counter by the mail.","kind":"not_a_question","place":"home","topic":"packages","concerns":[]}
+{"id":"line-49","author":"claude-b","text":"So the dizziness is back when you stand up?","kind":"yes_no","place":"home","topic":"dizziness","concerns":["health"]}
+{"id":"line-50","author":"claude-b","text":"You heard they're tearing down the old bakery on the corner?","kind":"yes_no","place":"home","topic":"neighborhood","concerns":[]}
+{"id":"line-51","author":"claude-b","text":"Mind if I take your arm and stretch it out a bit?","kind":"yes_no","place":"clinic","topic":"arm stretch","concerns":["health","consent"]}
+{"id":"line-52","author":"claude-b","text":"That afternoon tiredness hasn't let up at all?","kind":"yes_no","place":"clinic","topic":"fatigue","concerns":["health"]}
+{"id":"line-53","author":"claude-b","text":"Okay, where's the pain worst right now?","kind":"open","place":"clinic","topic":"pain location","concerns":["pain"]}
+{"id":"line-54","author":"claude-b","text":"Your voice sounds so much clearer, you've been practicing, haven't you?","kind":"yes_no","place":"clinic","topic":"speech practice","concerns":["health"]}
+{"id":"line-55","author":"claude-b","text":"Which foods are the hardest to swallow these days?","kind":"open","place":"clinic","topic":"swallowing","concerns":["health"]}
+{"id":"line-56","author":"claude-b","text":"Should we call you with the results, or send a text?","kind":"either_or","place":"clinic","topic":"test results","concerns":["health"]}
+{"id":"line-57","author":"claude-b","text":"Anyone saving this seat?","kind":"yes_no","place":"clinic","topic":"seat","concerns":[]}
+{"id":"line-58","author":"claude-b","text":"Ugh, the printer's jammed again, it does this every single morning.","kind":"not_a_question","place":"clinic","topic":"printer","concerns":[]}
+{"id":"line-59","author":"claude-b","text":"So you're fine with us sending your records over to the new neurologist?","kind":"yes_no","place":"clinic","topic":"medical records","concerns":["health","consent"]}
+{"id":"line-60","author":"claude-b","text":"Oh no, you got caught in that downpour?","kind":"yes_no","place":"clinic","topic":"rain","concerns":[]}
+{"id":"line-61","author":"claude-b","text":"Excuse me, is this the end of the line?","kind":"yes_no","place":"shop","topic":"waiting in line","concerns":[]}
+{"id":"line-62","author":"claude-b","text":"Did you want to try the nine, or the nine and a half?","kind":"either_or","place":"shop","topic":"shoe size","concerns":[]}
+{"id":"line-63","author":"claude-b","text":"The new glasses are helping with the double vision, right?","kind":"yes_no","place":"shop","topic":"double vision","concerns":["health"]}
+{"id":"line-64","author":"claude-b","text":"Would it be easier if I got the card out of your wallet for you?","kind":"yes_no","place":"shop","topic":"payment","concerns":["consent"]}
+{"id":"line-65","author":"claude-b","text":"How long does the extension cord need to be?","kind":"open","place":"shop","topic":"extension cord","concerns":[]}
+{"id":"line-66","author":"claude-b","text":"We need another cashier up front, the line's getting long.","kind":"not_a_question","place":"shop","topic":"extra cashier","concerns":[]}
+{"id":"line-67","author":"claude-b","text":"That'll be everything for you today?","kind":"yes_no","place":"shop","topic":"checkout","concerns":[]}
+{"id":"line-68","author":"claude-b","text":"Oh hey, I haven't seen you in here in ages!","kind":"not_a_question","place":"shop","topic":"greeting","concerns":[]}
+{"id":"line-69","author":"claude-b","text":"Whoa, did you hurt your hand?","kind":"yes_no","place":"shop","topic":"hand injury","concerns":["pain"]}
+{"id":"line-70","author":"claude-b","text":"Insurance only covers the generic version, so I'll switch you to that, alright?","kind":"yes_no","place":"shop","topic":"generic medicine","concerns":["health","consent"]}
+{"id":"line-71","author":"claude-b","text":"Hi, what can I make for you?","kind":"open","place":"out","topic":"cafe order","concerns":[]}
+{"id":"line-72","author":"claude-b","text":"Do you want me to just tell the waiter what you're having?","kind":"yes_no","place":"out","topic":"ordering food","concerns":["consent"]}
+{"id":"line-73","author":"claude-b","text":"Those ducks know exactly who's got the bread, don't they?","kind":"yes_no","place":"out","topic":"ducks","concerns":[]}
+{"id":"line-74","author":"claude-b","text":"Are you ready to head home, or do you want to stay a bit longer?","kind":"either_or","place":"out","topic":"going home","concerns":[]}
+{"id":"line-75","author":"claude-b","text":"How much are we cutting off this time?","kind":"open","place":"out","topic":"haircut","concerns":[]}
+{"id":"line-76","author":"claude-b","text":"Do you know if the twelve runs on Sundays?","kind":"yes_no","place":"out","topic":"bus schedule","concerns":[]}
+{"id":"line-77","author":"claude-b","text":"Where'd you get that jacket?","kind":"open","place":"out","topic":"jacket","concerns":[]}
+{"id":"line-78","author":"claude-b","text":"Don't touch the cake yet, sweetie, we're doing candles first, go tell your brother it's almost time.","kind":"not_a_question","place":"out","topic":"birthday cake","concerns":[]}
+{"id":"line-79","author":"claude-b","text":"Your shoulder's still giving you grief, huh?","kind":"yes_no","place":"out","topic":"shoulder pain","concerns":["pain"]}
+{"id":"line-80","author":"claude-b","text":"You remember my husband's sister, right?","kind":"yes_no","place":"out","topic":"family","concerns":[]}
