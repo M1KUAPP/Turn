@@ -36,6 +36,7 @@ Contents:
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
 1.  [Appendix: the line writers' brief](#appendix-the-line-writers-brief)
+1.  [Appendix: the bank's briefs](#appendix-the-banks-briefs)
 
 [bank-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/18
 [lines-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/19
@@ -487,5 +488,205 @@ Give each line a `topic`: 1 to 3 lowercase words, letters and single spaces only
 
 Report back in under 100 words: the file's path, the counts by kind, place, and concern, and how many lines you meant to have no stored reply. Don't paste the lines.
 ````
+
+After the files were written, the line writers got two more messages.
+`claude-b` got this one, which showed it seven of `claude-a`'s lines
+([Task 4](#task-4-the-writers)):
+
+```text
+Thanks. The other writer, working separately, happened to write lines very close to seven of yours, which would test the same thing twice. Please replace these seven of yours with new lines on different topics and situations, keeping each one's id, place, kind, and concerns exactly, and keeping it declarative or tagged if it was:
+
+- line-41 (home, yes_no, health+consent): theirs was "Let me get your blood pressure before we start, alright?"
+- line-52 (clinic, yes_no, health): theirs was "Any more falls since we last saw you?"
+- line-55 (clinic, open, health): theirs was "When did you first notice trouble with buttons and zippers?"
+- line-59 (clinic, yes_no, health+consent): theirs was "I'd like to bump up that medicine a bit and see if it helps. You okay with that?"
+- line-62 (shop, either_or, no concerns): theirs was "How much of the ham can I get you?"
+- line-63 (shop, yes_no, health): theirs was "You've been on this prescription before, haven't you?"
+- line-73 (out, yes_no, no concerns): theirs was "Couldn't ask for a nicer day, could we?"
+
+So avoid blood pressure, falls, "when did you first notice", dose changes, deli amounts, prior prescriptions, and the weather. Same rules as before: read no other file, write only in your folder, rerun your check.py, and reply in under 60 words with the counts, without pasting the lines.
+```
+
+Both got this one, and named the lines that the
+[lines' mix](#decisions) decision counts:
+
+```text
+One question about your lines.jsonl: which ids did you mean to have no stored reply? Reply with the ids only, comma-separated. Read nothing else.
+```
+
+## Appendix: the bank's briefs
+
+Everything the bank's writer and the reader were told is below, word for
+word. The bank's writer got this brief as its whole prompt, written before
+any writer started:
+
+````text
+You are the writer of Turn's starter bank: the 140 to 160 phrases a new user of Turn starts with. Turn is an iPhone app for adults who can't speak; they tap a saved phrase and the phone speaks it. Work in the repository at /Users/yk/Projects/hackathon.repository/revenuecat.repository/revenuecat.
+
+## Rules
+
+- Before grepping or reading any repo file, run `graphify query "<question>"` in the repo root (a hook enforces this).
+- Read only the sources listed below. Never read `eval/lines.jsonl`, anything in `docs/plans/`, or anything under `/private/tmp`: other writers are writing the evaluation's partner lines, and they and you must stay independent of each other.
+- Write only `app/src/content/starter-bank.json` (create its folders). Don't edit any other file, including the tests. No git, no GitHub. Never send any personal identifier to any service.
+
+## Sources
+
+- `docs/PRD.md`: "The speaking grid" (SPEAK-1 to SPEAK-7), "The phrase bank" (BANK-1 to BANK-10), "Places", and "Content requirements" (CONTENT-1, CONTENT-2, CONTENT-5).
+- `docs/TRD.md`: "The phone's database".
+- `docs/research/0032-turn-starter-content.md`: pain tools, the right to refuse, text AAC apps' starter sets, and plain language.
+- `docs/research/0022-aac-practice.md`: "How prestored messages are organized", "Quick-fire, turn-holding, and repair messages", and "Adults with motor speech impairments".
+- `eval/test/starter-bank.test.ts`: the check your file must pass.
+
+## The users
+
+Adults who can't speak or can't be understood, for example with ALS, after a stroke with dysarthria, or after a laryngectomy. They understand everything and have their own views. They talk with family, friends, carers, clinicians, shop staff, and strangers, at Home, Clinic, Shop, and Out. Each will edit these phrases into their own words (BANK-10), so write phrases worth keeping: an adult's own voice in the first person, warm and direct, sometimes wry; never childish, never clinical jargon. A clinic will review the bank later (CONTENT-5).
+
+## The format, exactly
+
+```json
+{
+  "categories": [
+    {
+      "id": "quick",
+      "name": "Quick",
+      "fixed": true,
+      "phrases": [
+        { "id": "yes", "text": "Yes", "fixed": true, "places": [] }
+      ]
+    }
+  ],
+  "places": [
+    { "id": "home", "name": "Home" },
+    { "id": "clinic", "name": "Clinic" },
+    { "id": "shop", "name": "Shop" },
+    { "id": "out", "name": "Out" }
+  ]
+}
+```
+
+- `categories` in grid order, then `places`: exactly these four, in this order.
+- Every category and every phrase has every key shown; `fixed` is a boolean; `places` lists place ids, or is empty.
+- Write it with 2-space indentation, one phrase object per line.
+
+## Fixed by the spec: copy exactly
+
+- **First category:** id `quick`, name "Quick", fixed true, exactly these five phrases in order, with no places: "Yes" (`yes`, fixed true), "No" (`no`, fixed true), "Not sure" (`not-sure`, fixed true), "I don't know" (`i-dont-know`, fixed false), "I have something to say" (`i-have-something-to-say`, fixed false).
+- **Last category:** id `strip`, name "Conversation strip", fixed true, exactly SPEAK-7's five in order, each fixed false (the user may reword them) and with no places: "Wait, I'm typing" (`wait-im-typing`), "Sorry, say that again" (`sorry-say-that-again`), "And you?" (`and-you`), "I use this app to talk. Please give me time." (`i-use-this-app-to-talk`), "Something's wrong" (`somethings-wrong`). The grid never shows this category and the ranking never offers it, so don't repeat these phrases elsewhere.
+- **Body and pain:** id `body-pain`, name "Body and pain", fixed true.
+- **Food and drink:** id `food`, name "Food and drink", fixed false, holding "Water, please" tied to `home`.
+- **"It was hard"** tied to `clinic`, in whichever category fits.
+- **At least one phrase with the word "tired",** such as "I'm tired".
+- **No other category or phrase is fixed.**
+
+## Your choices
+
+- **Ten categories in all:** Quick, then eight content categories (two of them `body-pain` and `food`), then the strip. A starting point you may change: Chat, Feelings, Body and pain, Care and help, Food and drink, Health, People, Out and about. Put the ones a user reaches for most right after Quick. Names are 1 to 3 plain words (at most 40 characters); ids are kebab-case.
+- **140 to 160 phrases in all,** aiming for 150, counting Quick's and the strip's ten. Each content category holds 12 to 22.
+- **Places:** tie a phrase to a place when it mostly belongs there; many phrases stay general, with no places, and a phrase may have several. Home, Clinic, Shop, and Out each need at least 10 phrases; aim for 15 to 25 each.
+- **Cover** (CONTENT-1, ASHA's medical-care vocabulary, and the research note): greetings, thanks, and small talk; questions back to the partner; feelings and opinions; needs and asking for help; body and pain: whether it hurts, how bad in plain words (mild, bad, very bad; or a number the user can type), where, what it feels like, since when, and what it stops them doing; refusing and agreeing to care: stop, wait, not now, go ahead, ask me first, explain it again, what are you going to do; food and drink, including trouble swallowing; health, appointments, medicines, sleep, and therapy; family and friends; shopping, paying, and getting around; and a little humor.
+- **Wording:** plain US English; one idea per phrase, in the active voice; everyday words ("help", "stop", "hurt"), not clinical ones; most phrases under 40 characters, none over 120; sentence case; straight apostrophes ('), never curly ones; no period after a one-sentence statement ("Water, please"), a "?" after a question, and full punctuation when a phrase has two sentences. No personal names at all (the user adds their own), no real person, no brands, no profanity. No two phrases the same, ignoring case.
+- **Ids:** kebab-case slugs of the text: lowercase letters, digits, and hyphens, apostrophes dropped ("I'm tired" becomes `im-tired`), unique across every category and phrase, at most 40 characters (shorten long ones sensibly).
+
+## Check
+
+From `eval/`, run `bun run test test/starter-bank.test.ts` until it passes. Then read the whole file once, top to bottom, as a user would, and fix anything clumsy, repetitive, or missing.
+
+Report back in under 150 words: the path, your ten categories with their phrase counts, the phrase count per place, and anything you weren't sure about. Don't paste the file.
+````
+
+The reader got this brief, written before this session read any line. Its
+paragraph on the spec's fixed items was added when it was sent, after the
+session had read the lines:
+
+```text
+You are the second reader of Turn's starter bank. Another agent wrote it; you wrote none of it. Turn is an iPhone app for adults who can't speak (for example with ALS, after a stroke, or after a laryngectomy): they tap a saved phrase and the phone speaks it, at Home, Clinic, Shop, or Out. The bank is the 140 to 160 phrases every new user starts with, before they edit them into their own words. Your read stands in for issue #18's criterion "A teammate other than the writer reads every phrase and signs off here", so read every phrase.
+
+## Rules
+
+- Before grepping or reading any repo file, run `graphify query "<question>"` in the repo root, /Users/yk/Projects/hackathon.repository/revenuecat.repository/revenuecat (a hook enforces this).
+- Read `app/src/content/starter-bank.json` in full, and for the requirements `docs/PRD.md` ("The speaking grid", "The phrase bank", "Places", "Content requirements") and `docs/research/0032-turn-starter-content.md`. Never read `eval/lines.jsonl`, `docs/plans/`, or anything under `/private/tmp`: the evaluation's partner lines must not shape the bank.
+- Don't edit any file. No git, no GitHub. Never send any personal identifier to any service.
+
+## Read for
+
+1. **CONTENT-1:** plain US English (spelling and words), at most 120 characters, no real person named; the Quick category, the strip's five, and phrases for pain, where it hurts, and refusing or agreeing to care are all there.
+2. **Plain language:** one idea per phrase, active voice, everyday words rather than clinical ones.
+3. **Voice:** an adult's own first-person voice, warm and direct; nothing childish, patronizing, or that a user would be embarrassed to say aloud; nothing that assumes a gender, a family shape, a religion, a diet, or a budget.
+4. **Safety:** can the user stop care, refuse, agree, ask what's happening, say how bad the pain is and where, ask for help, and get attention? Name anything missing.
+5. **Places:** each tie makes sense, and phrases that belong at a place are tied to it.
+6. **Duplicates:** two phrases that say the same thing, or one that repeats the strip's or Quick's.
+7. **Mechanics:** clumsy or ambiguous wording, US spelling, the punctuation rule (no period after a one-sentence statement, a "?" after a question, full punctuation when a phrase has two sentences), straight apostrophes, and ids that don't match their text.
+
+Keep in mind the spec's fixed items, which must not change: Quick's five phrases and their ids; the strip's five and their ids; the ids `body-pain` and `food`; "Water, please" tied to Home; "It was hard" tied to Clinic; a phrase with "tired"; 140 to 160 phrases in 9 to 11 categories; at least 10 phrases per place.
+
+## Report
+
+Under 500 words, in three parts:
+
+1. **Must fix:** each issue with the phrase's id, what's wrong, and the exact replacement text (or "delete", or a new phrase with its category, id, and places).
+2. **Could fix:** the same format, for improvements that aren't required.
+3. **Sign-off:** one sentence saying whether you'd sign off on the bank once the must-fix items are done.
+```
+
+The bank's writer then got this message, followed by the reader's first
+report, unchanged:
+
+```text
+A second reader, who wrote none of the bank, read every phrase. Its report follows, unchanged. Apply all four must-fix items, and each could-fix item you agree with (skip any you don't, and say why). Keep 140 to 160 phrases, every item the spec fixes, unique slug ids, and the file's format. Same rules as before: never read eval/lines.jsonl, docs/plans/, or anything under /private/tmp; write only app/src/content/starter-bank.json; rerun `bun run test test/starter-bank.test.ts` from eval/ until it passes. Reply in under 150 words with what you changed and skipped, and the new counts per category and place.
+```
+
+```text
+The bank passes every spec check, but it has four safety gaps. I'd sign off once they're fixed.
+
+**1. Must fix**
+
+- **`my-arm-hurts` and `my-leg-hurts`** (new; Body and pain; no places): "My arm hurts" and "My leg hurts". All five pain sites are head, neck or trunk. To report limb pain, such as shoulder pain after a stroke or leg cramps with ALS, the user has to type.
+- **`whats-happening`** (new; Care and help; no places): "What's happening?" The existing `what-are-you-going-to-do` asks only about the partner's next step. No phrase asks about what is going on around the user.
+- **`please-come-here`** (new; Care and help; Home): "Please come here". No phrase calls someone over. `excuse-me` is tied only to Shop and Out.
+- **Order of the urgent phrases** (no text change): `im-having-trouble-breathing` and `please-call-911` are 21st and 22nd of 22 in Body and pain, and `stop-please` is 14th of 21 in Care. They're probably off the first screen, and BANK-4 keeps the starter order until the user changes it.
+  - Move the breathing and 911 pair to the top of Body and pain.
+  - Move `stop-please`, `no-i-dont-want-that`, `yes-go-ahead` and `please-wait` to the top of Care.
+
+With these, the bank has 157 phrases.
+
+**2. Could fix**
+
+- **`ill-rate-my-pain-from-0-to-10`** becomes "I'll type my pain from 0 to 10" (`ill-type-my-pain-from-0-to-10`). "Rate" doesn't tell the partner to wait for a typed number.
+- **`the-pain-is-gone`** (new; Body and pain; no places): "The pain is gone". No phrase says the pain has stopped after treatment, and the research note suggested a "No pain" phrase.
+- **`please-explain-that-again`** becomes "I don't understand" (`i-dont-understand`, Clinic). The bank has no "I don't understand", and "explain that again" sounds too much like the strip's "say that again".
+- **`im-fine-just-slow`** becomes "I'm fine, just taking my time" (`im-fine-just-taking-my-time`). A listener can take "slow" as a comment on the user's mind.
+- **`im-a-little-grumpy-today`** becomes "I'm in a bad mood" (`im-in-a-bad-mood`). "A little grumpy today" is how a carer describes a patient.
+- **`im-full`** (new; Food and drink; Home): "I'm full". It pairs with "More, please" and tells whoever is feeding the user to stop.
+- **Place ties:**
+  - Add Clinic to `i-need-to-use-the-bathroom`, `can-we-take-a-break` and `excuse-me`.
+  - Add Shop and Out to `please-talk-to-me-not-about-me`, since clerks often speak to the companion instead.
+  - Add Home to `ask-me-before-you-touch-me`.
+
+With all of these as well, the bank has 159 phrases.
+
+**3. Sign-off**
+
+I'd sign off once the four must-fix items are in, because every fixed item holds, the counts and mechanics pass, no tie is wrong, nothing is duplicated, and nothing is childish or assumes a gender, family shape, religion or budget.
+
+- **Counts:** 153 phrases in 10 categories; 21 at Home, 25 at Clinic, 16 at Shop and 22 at Out.
+- **Mechanics:** the longest phrase is 44 characters, and the bank uses US spelling, straight apostrophes and the punctuation rule throughout. Every id matches its text, except the strip's fixed `i-use-this-app-to-talk`.
+- **Duplicates:** `im-not-finished` and `please-wait` do different jobs from the strip's "Wait, I'm typing".
+- **Diet:** `coffee-please` is the only phrase that assumes a diet, and it's fine as an example to edit.
+
+I read the bank, the four PRD sections, research note 0032, and for context PRD ROW-3 and the TRD's shortlist section. I didn't open anything under `eval/`, `docs/plans/` or `/private/tmp`, and I edited no files.
+```
+
+When it asked whether to keep four of its phrases in other categories to
+stay under 22 a category, a limit its brief had set, it got this:
+
+```text
+Lift the cap: the 22-phrase limit was only guidance, and symptoms belong in the fixed Body and pain category. Move "I feel sick", "I feel dizzy", and "The pain keeps me awake" back to Body and pain, and "Please call the nurse" back to Care and help, each where it reads best, keeping the urgent phrases at the top of both categories. Same rules as before; rerun the check and reply in under 60 words with the counts per category and place.
+```
+
+The reader got this before it signed off:
+
+```text
+The bank's writer applied your report: all four must-fix items and every could-fix item. To keep symptoms in the fixed safety category, Body and pain now holds 25 and Care and help 23; there are 159 phrases. Please reread app/src/content/starter-bank.json in full, under the same rules as before (never read eval/lines.jsonl, docs/plans/, or anything under /private/tmp; edit nothing), and reply in under 150 words: anything still wrong, then a one-paragraph sign-off, if you give it, suitable for posting on issue #18 as an agent's read.
+```
 
 [trd-eval-data]: /docs/TRD.md#the-evaluation-data
