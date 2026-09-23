@@ -1504,12 +1504,17 @@ version.
 - **Debug builds only.** A Release build with a Test Store key crashes at
   launch, so every build the team ships uses the Debug configuration
   ([services notes][svc-key]).
-- **The device build:** `npx expo run:ios --device` from a Mac with Xcode
-  27, signed by a free Personal Team, with Developer Mode on and the
-  certificate trusted on the phone. For timings and the video, Metro serves
-  production JavaScript with `npx expo start --no-dev --minify`. Free
-  profiles expire after seven days, so the video's build is installed on or
-  after September 22 (COMPAT-4) ([iPhone build notes][ios-free-build]).
+- **The device build:** from `app/` on a Mac with Xcode 27,
+  `EXPO_PUBLIC_BUILD_KIND=device bunx expo run:ios --device`, signed by a
+  free Personal Team, with Developer Mode on and the certificate trusted on
+  the phone. The Debug app loads its bundle from Metro over the Mac's
+  Wi-Fi, so the phone joins that network and allows Turn under Local
+  Network; Turn's Debug build first ran on the video iPhone this way on
+  September 23 ([Debug iPhone notes][debug-iphone]). For timings and the
+  video, Metro serves production JavaScript with
+  `npx expo start --no-dev --minify`. Free profiles expire after seven
+  days, so the video's build is installed on or after September 22
+  (COMPAT-4) ([iPhone build notes][ios-free-build]).
 - **The Simulator build:** `xcodebuild` in the Debug configuration for the
   `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the
   JavaScript bundle embedded so it runs without Metro. That a Debug build
@@ -1528,6 +1533,7 @@ version.
   on (RELEASE-1 to RELEASE-5).
 
 [ios-free-build]: /docs/research/0023-turn-ios.md#building-to-an-iphone-with-a-free-account
+[debug-iphone]: /docs/research/0045-turn-debug-iphone.md#hands-on-check
 
 ## Requirements traceability
 
