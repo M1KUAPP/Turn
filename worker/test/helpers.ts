@@ -48,16 +48,27 @@ export const lineRequest = (changes: Partial<LineRequest> = {}): LineRequest => 
   ...changes
 })
 
-/** Posts a line to the Worker's handler as JSON, with some vars changed. */
-export const postLine = (body: unknown, changes: Parameters<typeof send>[1] = {}) =>
-  send(
-    new Request('https://relay.test/v1/lines', {
-      method: 'POST',
-      headers: { ...headers, 'Content-Type': 'application/json' },
-      body: typeof body === 'string' ? body : JSON.stringify(body)
-    }),
-    changes
-  )
+/** A line posted as the app posts it, as JSON, or with the headers given instead. */
+export const lineFor = (
+  body: unknown,
+  sent: Record<string, string> = { ...headers, 'Content-Type': 'application/json' }
+) =>
+  new Request('https://relay.test/v1/lines', {
+    method: 'POST',
+    headers: sent,
+    body: typeof body === 'string' ? body : JSON.stringify(body)
+  })
+
+/** Posts a line to the Worker's handler as the app would, with some vars changed. */
+export const postLine = (body: unknown, changes: Parameters<typeof send>[1] = {}) => send(lineFor(body), changes)
+
+/** Checks that a request gets 400 invalid_request before it reaches the user's object or Jev (SEC-2). */
+export async function expectRefused(request: Request) {
+  const getByName = vi.fn()
+  await expectError(await send(request, { DEVICE: { getByName } }), 400, 'invalid_request')
+  expect(getByName).not.toHaveBeenCalled()
+  expect(vi.mocked(globalThis.fetch)).not.toHaveBeenCalled()
+}
 
 /** Jev's answer: an open question, about feelings unless the topic says otherwise, scoring the candidates in order. */
 export const jevAnswer = (
