@@ -72,11 +72,14 @@ Contents:
 +---------------+---------------+            +---------------v---------------+     +-----------+
                 |                            | Durable Object user-<hash>    |---->| Jev       |
                 | purchases, paywall         | free lines, entitlement cache |     | (TypeSafe)|
-                v                            +---------------+---------------+     +-----------+
-+-------------------------------+                            |
-| RevenueCat (Test Store,       |<---------------------------+
-| Paywalls, entitlements)       |   REST API v2: active entitlements
-+-------------------------------+
+                v                            +---------------+-----------+---+     +-----------+
++-------------------------------+                            |           |
+| RevenueCat (Test Store,       |<---------------------------+           | before each call
+| Paywalls, entitlements)       |   REST API v2: active entitlements     |
++-------------------------------+                            +-----------v-------------------+
+                                                             | Durable Object jev-calls      |
+                                                             | the day's calls to Jev        |
+                                                             +-------------------------------+
 ```
 
 What each part owns:
@@ -92,12 +95,16 @@ What each part owns:
   the voices `expo-speech` can use.
 - **The relay** is the only public API, at its `workers.dev` address, and
   runs with `"placement": { "region": "aws:us-west-2" }`, next to Jev. It
-  checks headers and lengths, applies the rate limits, serves the
-  configuration, and passes each line to the user's Durable Object.
+  checks headers, applies the rate limits, checks a line's lengths, serves
+  the configuration, and passes each line to the user's Durable Object.
 - **The user's Durable Object** counts free lines, keeps the `listen`
   entitlement it has confirmed, builds the Jev request, and calls Jev. It's
   created with `locationHint: "wnam"`, so a line crosses an ocean at most
   once, from the phone to the relay ([services notes][svc-placement]).
+- **The budget's Durable Object,** `jev-calls`, is one for the whole
+  relay. It counts the UTC day's calls to Jev, retries included, which each
+  user's object takes one at a time before every attempt, and refuses them
+  past `JEV_DAILY_CALLS` until midnight UTC (SEC-5).
 - **Jev** answers the kind of question, the topic, and one Noul, Jev's
   yes-or-no question with a probability, per candidate.
 - **RevenueCat** runs the Test Store purchase, the paywall, and the
@@ -111,13 +118,14 @@ The path of one partner line:
     app gives it the next sequence number and cancels any request in flight.
 2.  The app tags names in the line and the shortlist, picks the 40
     candidates, and sends `POST /v1/lines`.
-3.  The relay checks the request, applies the user's limit, and passes it to
-    `user-<hash>`.
+3.  The relay checks the headers, applies the ID's and the address's rate
+    limits, checks the line, and passes it to `user-<hash>`.
 4.  The object claims a free line or, past them, checks the entitlement; it
-    answers `402` if neither allows the line. Otherwise it calls Jev, within
-    2.5 seconds.
-5.  If Jev fails, the object releases the claim; otherwise it returns the
-    probabilities, the policy, and the free lines left.
+    answers `402` if neither allows the line. Otherwise it calls Jev within
+    2.5 seconds, taking each attempt from the day's budget in `jev-calls`.
+5.  If Jev fails or the day's budget is spent, the object releases the
+    claim; otherwise it returns the probabilities, the policy, and the free
+    lines left.
 6.  The app drops the answer if a newer line exists, applies the
     [row's rules](#from-probabilities-to-the-row), and renders the row.
 7.  The user taps a reply; `expo-speech` speaks it while listening pauses.
