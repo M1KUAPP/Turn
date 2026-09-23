@@ -155,6 +155,9 @@ test('reports the yes-or-no, pain and consent, and no-shared-word lines apart', 
 
 test('gives the latency of the shortlist and each ranker at the median, the 95th percentile, and the maximum', () => {
   const latency = section('## Latency')
+  expect(latency).toMatch(
+    prose("The apple ranker's time is this Mac's, through a pipe to its Swift helper, not the phone's.")
+  )
   for (const step of ['shortlist', 'place', 'keyword']) {
     const [median, p95, max] = (cells(latency, step) ?? []).map(Number)
     expect(median, step).toBeGreaterThanOrEqual(0)
@@ -402,7 +405,8 @@ test("draws Jev's reliability diagram beside the report, its blocks as its text,
   expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234, so the'))
   // 1 − 0.510 / 0.234375.
   expect(calibration).toMatch(prose('skill score, 1 minus the Brier score over that, is -1.176: above 0 beats'))
-  expect(calibration).toMatch(prose('a miscalibration of 0.276 and a discrimination of 0.000:'))
+  expect(calibration).toMatch(prose('a miscalibration of 0.276 and a discrimination of 0.000: before rounding,'))
+  expect(calibration).toMatch(prose("so even a calibrated ranker's fit would lie outside it at about one score in ten"))
 })
 
 test("sends each line to qwen3 as a query under the TRD's instruction, and the phrases as documents", () => {
