@@ -58,7 +58,7 @@ the [TRD](/docs/TRD.md#build-configuration), and the
       renders in light `#F2F2F7` and dark `#000000`.
 - [x] Build and launch Turn Debug on the physical video iPhone under the free
       Personal Team. #80 verified signing with a throwaway app on a teammate's
-      Mac; no physical iPhone is paired with this Mac. #88 ran it on the Mac
-      paired with the phone on September 23, and the empty home renders in
-      light `#F2F2F7` and dark `#000000`.
+      Mac; no physical iPhone is paired with this Mac. #88 ran it on #80's
+      Mac on September 23, and the empty home renders in light `#F2F2F7` and
+      dark `#000000`.
 - [x] Update #22 with the verified code result and remaining device checks.
