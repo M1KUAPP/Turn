@@ -167,7 +167,10 @@ directive's steps map to skills:
     value and a comment on its use from the TRD's table. `.gitignore` also
     gains `.wrangler/`, where Wrangler keeps its local state.
     `secrets.required` waits for the relay's ticket, whose criterion is that
-    a deploy without the secrets fails.
+    a deploy without the secrets fails. Until then, `wrangler types` adds
+    whatever a local `worker/.dev.vars` holds to `Env`, so the generated
+    types can differ between machines; `secrets.required` makes them the
+    same everywhere, and no code reads `Env` before it lands.
 1.  **The hooks don't change.** They call `bunx lint-staged` and
     `bunx commitlint` at the root, where those tools stay root dependencies,
     and each commit's output shows them run.
