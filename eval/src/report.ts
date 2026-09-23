@@ -328,6 +328,19 @@ const decimals = (value: number) => String(Number(value.toFixed(3)))
  */
 type Calibration = { reliability: Reliability; brier: Brier; image: string; beyondReach: number }
 
+/** The reliability diagram's text: a row for each block of the fit, with the number of its scores outside the band. */
+export const calibrationTable = (fit: Reliability): string =>
+  table(
+    ['Scores', 'Lines', 'Acceptable', 'Fitted share', 'Outside the band'],
+    againstBand(fit).map(({ low, high, lines, right, value, scores, outside }) => [
+      low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
+      String(lines),
+      String(right),
+      value.toFixed(2),
+      `${outside} of ${scores} ${scores === 1 ? 'score' : 'scores'}`
+    ])
+  )
+
 /**
  * Jev's top phrase against whether it's acceptable, on every line (EVAL-8): the reliability diagram beside the report,
  * a table of its fit's blocks with how many of each block's scores the fit leaves the band at as its text, and the
@@ -336,13 +349,6 @@ type Calibration = { reliability: Reliability; brier: Brier; image: string; beyo
 const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach }: Calibration, naming: Naming) => {
   const { forecasts } = fit
   const right = forecasts.filter((forecast) => forecast.right).length
-  const rows = againstBand(fit).map(({ low, high, lines, right, value, scores, outside }) => [
-    low === high ? decimals(low) : `${decimals(low)} to ${decimals(high)}`,
-    String(lines),
-    String(right),
-    value.toFixed(2),
-    `${outside} of ${scores} ${scores === 1 ? 'score' : 'scores'}`
-  ])
   const three = (value: number) => value.toFixed(3)
   return [
     `## ${capital(naming.jev)}'s calibration`,
@@ -359,7 +365,7 @@ const calibrationSection = ({ reliability: fit, brier: score, image, beyondReach
         "each score apart, so even a calibrated ranker's fit would lie outside it at about one score in ten. The " +
         'table gives each block, with the number of its scores where the fit lies outside the band.'
     ),
-    table(['Scores', 'Lines', 'Acceptable', 'Fitted share', 'Outside the band'], rows),
+    calibrationTable(fit),
     wrap(
       `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
         `one that isn't, is ${three(score.score)}, with a 95% bootstrap interval of ${three(score.low)} to ` +
