@@ -34,9 +34,22 @@ test('chooses the cut-off that makes the most items right, a tie going to the hi
   ]
   const right = (item: (typeof items)[number], cutOff: number) => item.value >= cutOff === item.good
   // At 0.8, four are right; at 0.6, four too; the higher wins.
-  expect(chooseCutOff(items, (item) => item.value, right)).toBe(0.8)
-  expect(chooseCutOff(items.slice(2, 3), (item) => item.value, right)).toBe(Infinity)
-  expect(chooseCutOff([], (item: (typeof items)[number]) => item.value, right)).toBe(Infinity)
+  expect(chooseCutOff(items, (item) => [item.value], right)).toBe(0.8)
+  expect(chooseCutOff(items.slice(2, 3), (item) => [item.value], right)).toBe(Infinity)
+  expect(chooseCutOff([], (item: (typeof items)[number]) => [item.value], right)).toBe(Infinity)
+})
+
+test("tries a line's lower scores too, since a cut-off below its top brings more of its phrases", () => {
+  // The first line's top phrase is wrong and its second, at 0.9, right; the second line has no reply. Only its top
+  // scores would offer 0.95, which hides the right phrase, and 0.85, which covers the line with none.
+  const items = [
+    { scores: [0.95, 0.9], acceptable: 0.9 },
+    { scores: [0.85], acceptable: null }
+  ]
+  const right = ({ scores, acceptable }: (typeof items)[number], cutOff: number) =>
+    acceptable === null ? scores[0] < cutOff : scores.some((score) => score >= cutOff && score === acceptable)
+  expect(chooseCutOff(items, (item) => item.scores, right)).toBe(0.9)
+  expect(chooseCutOff(items, (item) => item.scores.slice(0, 1), right)).toBe(Infinity)
 })
 
 test("chooses each fold's cut-off on the other folds alone", () => {
@@ -44,7 +57,7 @@ test("chooses each fold's cut-off on the other folds alone", () => {
   // that holds 0.7 can't, and chooses the lowest value above it.
   const items = [0.9, 0.8, 0.7, 0.6, 0.5]
   const right = (value: number, cutOff: number) => value >= cutOff === value >= 0.7
-  expect(crossValidate(items, [0, 1, 2, 3, 4], (value) => value, right)).toEqual([0.7, 0.7, 0.8, 0.7, 0.7])
+  expect(crossValidate(items, [0, 1, 2, 3, 4], (value) => [value], right)).toEqual([0.7, 0.7, 0.8, 0.7, 0.7])
 })
 
 test('gives the phrases whose cosine reaches the cut-off 1 and the rest 0, best first, ties in their own order', () => {
@@ -125,5 +138,33 @@ test('counts a right hold as right, so holding every line can win', async () => 
   expect(scored.map(({ rankers }) => rankers.byValue.outcome)).toEqual([
     ...Array(6).fill('right hold'),
     ...Array(4).fill('missed reply')
+  ])
+})
+
+test("scores each line at a cut-off chosen from the other folds' lines' six highest scores", async () => {
+  // Five lines whose top phrase is wrong and whose second, at 0.9, is right, and five with no reply whose top is 0.85:
+  // only a cut-off of 0.9, a second score, gets all of them right.
+  const lines = ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B'].map((kind, i) => ({
+    text: `${kind}${i}`,
+    place: 'home',
+    acceptable: kind === 'A' ? ['water-please'] : []
+  }))
+  const scored: Record<string, number> = { 'good-night': 0.95, 'water-please': 0.9 }
+  const secondRight: Ranker = (text, shortlist) => ({
+    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    topic: {},
+    scores: new Map(
+      shortlist.map((phrase) => [
+        phrase.id,
+        text.startsWith('A') ? (scored[phrase.id] ?? 0.1) : phrase.id === 'good-night' ? 0.85 : 0.1
+      ])
+    ),
+    onPhone: true
+  })
+  const { lines: scores, cutOffs } = await scoreLines(lines, smallBank, { secondRight }, { secondRight: atCutOff })
+  expect(cutOffs.secondRight).toEqual([0.9, 0.9, 0.9, 0.9, 0.9])
+  expect(scores.map(({ rankers }) => rankers.secondRight.outcome)).toEqual([
+    ...Array(5).fill('right row'),
+    ...Array(5).fill('right hold')
   ])
 })

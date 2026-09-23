@@ -1502,8 +1502,10 @@ see ([evaluation notes][eval-scoring]):
   risk-coverage curve is plotted.
 - **The cut-off.** One seeded shuffle, then the lines with an acceptable
   reply and those with none are each dealt into five folds. Each fold's
-  cut-off is the one of the other four folds' top cosines, or one above them
-  all, that makes the most of their lines right, a tie going to the higher.
+  cut-off is the one of the six highest cosines of each of the other four
+  folds' lines, or one above them all, that makes the most of those lines
+  right, a tie going to the higher; a cut-off between two of a line's six
+  changes which of its phrases show, and one elsewhere changes nothing.
   At a cut-off, the phrases that reach it score 1 and the rest 0, so the row
   holds a line whose top phrase falls short.
 - **The curves.** At each distinct top score, a line is covered when its top

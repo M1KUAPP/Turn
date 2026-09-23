@@ -22,15 +22,15 @@ export function folds<T>(items: readonly T[], classOf: (item: T) => unknown, cou
 }
 
 /**
- * The cut-off that makes the most items right, from each item's own value and one above them all, which holds every
- * item; a tie goes to the higher cut-off.
+ * The cut-off that makes the most items right, from the values the items offer, the only points where one can change,
+ * and one above them all, which holds every item; a tie goes to the higher cut-off.
  */
 export function chooseCutOff<T>(
   items: readonly T[],
-  value: (item: T) => number,
+  values: (item: T) => readonly number[],
   right: (item: T, cutOff: number) => boolean
 ): number {
-  const candidates = [Infinity, ...new Set(items.map(value))].toSorted((a, b) => b - a)
+  const candidates = [Infinity, ...new Set(items.flatMap(values))].toSorted((a, b) => b - a)
   let best = Infinity
   let most = -1
   for (const cutOff of candidates) {
@@ -47,14 +47,14 @@ export function chooseCutOff<T>(
 export function crossValidate<T>(
   items: readonly T[],
   fold: readonly number[],
-  value: (item: T) => number,
+  values: (item: T) => readonly number[],
   right: (item: T, cutOff: number) => boolean,
   count = 5
 ): number[] {
   return Array.from({ length: count }, (_, held) =>
     chooseCutOff(
       items.filter((_, i) => fold[i] !== held),
-      value,
+      values,
       right
     )
   )

@@ -278,8 +278,9 @@ const cutOffSection = (cutOffs: readonly number[]) => {
     "## The embeddings ranker's cut-offs",
     wrap(
       'The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable ' +
-        "reply. Each fold's lines were scored at the cut-off that made the most of the other four folds' lines " +
-        'right, a tie going to the higher, and a line holds when no phrase reaches its cut-off. Folds 1 to 5: ' +
+        "reply. Each fold's lines were scored at the cut-off, of the six highest cosines of each of the other four " +
+        "folds' lines, that made the most of those lines right, a tie going to the higher, and a line holds when no " +
+        'phrase reaches its cut-off. Folds 1 to 5: ' +
         `${listOf(values)}.`
     )
   ]
