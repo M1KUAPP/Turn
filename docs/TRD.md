@@ -300,6 +300,22 @@ CREATE TABLE entitlement (
 - **The name.** The Worker reaches the object with `getByName()` on the
   SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
   so a stored record can't be traced back to an ID without the salt.
+- **The day's calls.** The budget's object, `jev-calls`, keeps one more
+  table, with one row:
+
+  ```sql
+  CREATE TABLE calls (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    day TEXT NOT NULL,                        -- the UTC date, such as 2026-09-23
+    count INTEGER NOT NULL                    -- that day's calls to Jev, retries included
+  );
+  ```
+
+  Each attempt to Jev first takes a call. Below `JEV_DAILY_CALLS` on the
+  current UTC day, the object writes the count plus one; otherwise it
+  refuses the attempt and writes nothing. A new day starts again from 0,
+  so the budget comes back at midnight UTC (SEC-5).
+
 - **The Free plan's budget.** Each new free line writes 2 rows in the
   device's object and 1 in the daily budget's, so the Free plan's 100,000
   rows a day cover about 1,600 devices spending all 20 lines in one day.
