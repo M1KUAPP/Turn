@@ -3,6 +3,7 @@ import { requestsPerMinute, type LineAnswer, type LineRequest } from '@turn/shar
 import { APIError, TypeSafeClient, type Fetch } from '@typesafe-ai/sdk'
 import { DurableObject } from 'cloudflare:workers'
 import { checkEntitlement, type Entitlement } from './entitlement'
+import { countInMinute, createMinuteCount } from './minute-count'
 
 /**
  * How a call to Jev ended: its answer, with the model and tokens it reports, how it failed, with its status, or that
@@ -74,10 +75,7 @@ export class Device extends DurableObject<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env)
     // The user's requests in the current clock minute, which a new minute starts again from 0 (SEC-3).
-    ctx.storage.sql.exec(
-      'CREATE TABLE IF NOT EXISTS requests (id INTEGER PRIMARY KEY CHECK (id = 1), minute INTEGER NOT NULL, ' +
-        'count INTEGER NOT NULL)'
-    )
+    createMinuteCount(ctx.storage.sql)
     // The ID of each free line claimed, which is deleted if Jev fails, so only answered lines count (PAY-1).
     ctx.storage.sql.exec('CREATE TABLE IF NOT EXISTS free_lines (line_id TEXT PRIMARY KEY, at INTEGER NOT NULL)')
     // RevenueCat's last answer, and when a line with `refresh` last skipped a cached no (PAY-4, PAY-7).
@@ -89,23 +87,10 @@ export class Device extends DurableObject<Env> {
 
   /**
    * Counts one more of the user's requests in the current clock minute, or none once 30 are counted there: whether this
-   * one may go on (SEC-3). It runs in one transaction, with no `await`, so simultaneous requests can't share the last.
+   * one may go on (SEC-3).
    */
   private admit(): boolean {
-    return this.ctx.storage.transactionSync(() => {
-      const { sql } = this.ctx.storage
-      const thisMinute = Math.floor(Date.now() / minute)
-      const row = sql.exec<{ minute: number; count: number }>('SELECT minute, count FROM requests').toArray()[0]
-      const count = row?.minute === thisMinute ? row.count : 0
-      if (count >= requestsPerMinute) return false
-      sql.exec(
-        'INSERT INTO requests (id, minute, count) VALUES (1, ?, ?) ' +
-          'ON CONFLICT (id) DO UPDATE SET minute = excluded.minute, count = excluded.count',
-        thisMinute,
-        count + 1
-      )
-      return true
-    })
+    return countInMinute(this.ctx.storage, requestsPerMinute)
   }
 
   /** How many free lines are claimed, counting any whose call to Jev is still under way. */
