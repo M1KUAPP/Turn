@@ -23,14 +23,14 @@ Synthesis: every item below is this note's own reading of the sections it
 links to. None of it picks one of the three options.
 
 - **Other benchmarks fixed the share by construction, not by labeling.**
-  DSTC7 Track 1 removed the right response from a random 20% of test cases;
-  SQuAD 2.0's writers saw the paragraph and were told to write questions
-  "impossible to answer based on the paragraph alone", then others answered
-  the dev and test questions to check them. Turn's writers were blind to the
-  bank, so "no reply" was left to the labelers, which is where the universal
-  replies got in. For option 1: new blind lines may meet the same labelers'
-  leniency. For option 2: a rule aimed at universal replies targets the cause
-  seen. (See
+  DSTC7 Track 1 replaced the right response in a random 20% of its
+  no-answer subtask's examples; SQuAD 2.0's writers saw the paragraph and
+  were told to write questions "impossible to answer based on the paragraph
+  alone", then others answered the dev and test questions to check them.
+  Turn's writers were blind to the bank, so "no reply" was left to the
+  labelers, which is where the universal replies got in. For option 1: new
+  blind lines may meet the same labelers' leniency. For option 2: a rule
+  aimed at universal replies targets the cause seen. (See
   [deliberately written no-answer items](#deliberately-written-no-answer-items).)
 - **Batch mix moves thresholds.** Scholer et al. found people who first saw
   only non-relevant documents then gave "significantly higher average
@@ -62,14 +62,16 @@ links to. None of it picks one of the three options.
   indicate that none of the proposed utterances is correct"; the subtask
   with no-answer cases has "100 candidates, including 0-1 correct options"
   ([DSTC7 overview][dstc7-overview]).
-- **DSTC7 Track 1, how the share was set.** "For the test data... twenty
-  percent of cases are selected at random to have no correct utterance"
+- **DSTC7 Track 1, how the share was set.** "For the data where sometimes
+  the pool does not contain the correct utterance, twenty percent of cases
+  are selected at random to have no correct utterance"
   ([DSTC7 overview][dstc7-overview]). The track's own paper, Gunasekara et
-  al. ([DSTC7 Track 1 paper][dstc7-track1]), was fetched but its PDF couldn't
-  be read here, so its wording is Not found.
+  al.: "For subtask 4 (no correct option sometimes), twenty percent of
+  examples were randomly sampled and the correct utterance was replaced with
+  an additional incorrect one" ([DSTC7 Track 1 paper][dstc7-track1]).
 - Synthesis: in DSTC7 no one wrote a no-answer item. The designers set the
   share (20%) and picked the cases at random, and "no answer" meant the one
-  known right response was taken out, so there was nothing to label.
+  known right response was swapped out, so there was nothing to label.
 - **SQuAD 2.0, what writers were told.** "For each paragraph in the article,
   workers were asked to pose up to five questions that were impossible to
   answer based on the paragraph alone, while referencing entities in the
@@ -232,8 +234,6 @@ links to. None of it picks one of the three options.
 
 ## Gaps
 
-- DSTC7 Track 1's own paper couldn't be read; its quotes come from the DSTC7
-  overview, through ar5iv's rendering and a summarizing fetch.
 - SQuAD 2.0 was read through ar5iv; how dev and test reached about half
   unanswerable is Not found.
 - Only Scholer et al.'s abstract was read, not the effect sizes, and whether
