@@ -1,8 +1,24 @@
 import type { LineRequest } from '@turn/shared/relay'
 import { describe, expect, test, vi } from 'vitest'
-import { headers, jevAnswer, jevError, lineRequest, mockJev, postLine, send, sha256, user } from './helpers'
+import {
+  headers,
+  jevAnswer,
+  jevAnswers,
+  jevError,
+  lineRequest,
+  mockJev,
+  mockRevenueCat,
+  postLine,
+  send,
+  sha256,
+  unknownCustomer,
+  user
+} from './helpers'
 
 describe('the log', () => {
+  const at = expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/)
+  const ms = expect.any(Number)
+
   test('holds one line per request and no text (METRIC-1, PRIV-2)', async () => {
     const log = vi.spyOn(console, 'log')
     const others = (['error', 'warn', 'info', 'debug'] as const).map((name) => vi.spyOn(console, name))
@@ -24,8 +40,6 @@ describe('the log', () => {
     ]
     for (const request of session) await request()
 
-    const at = expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/)
-    const ms = expect.any(Number)
     const prefix = (await sha256(`test-salt${user}`)).slice(0, 8)
     expect(log.mock.calls).toStrictEqual([
       [{ at, user: prefix, outcome: 'config', ms: { total: ms } }],
@@ -53,5 +67,24 @@ describe('the log', () => {
     }
     expect(written).not.toContain(user)
     for (const other of others) expect(other).not.toHaveBeenCalled()
+  })
+
+  test('holds a duplicate, a paywall, and an unverified line, each with no time in Jev and no text', async () => {
+    const log = vi.spyOn(console, 'log')
+    mockJev(...jevAnswers(1))
+    mockRevenueCat(unknownCustomer, () => new Response('Internal Server Error', { status: 500 }))
+    const first = lineRequest()
+    const sent = [first, first, lineRequest(), lineRequest({ refresh: true })]
+    for (const body of sent) await postLine(body, { FREE_LINES: '1' })
+
+    const prefix = (await sha256(`test-salt${user}`)).slice(0, 8)
+    expect(log.mock.calls.slice(1)).toStrictEqual([
+      [{ at, user: prefix, seq: 7, outcome: 'duplicate', ms: { total: ms } }],
+      [{ at, user: prefix, seq: 7, outcome: 'paywall', ms: { total: ms } }],
+      [{ at, user: prefix, seq: 7, outcome: 'unverified', ms: { total: ms } }]
+    ])
+    const written = JSON.stringify(log.mock.calls)
+    for (const { line, lineId } of sent) for (const text of [line, lineId]) expect(written).not.toContain(text)
+    expect(written).not.toContain(user)
   })
 })
