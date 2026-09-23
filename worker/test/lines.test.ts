@@ -1,0 +1,236 @@
+import { startingPolicy } from '@turn/shared/row'
+import { env } from 'cloudflare:workers'
+import { describe, expect, test, vi } from 'vitest'
+import {
+  expectError,
+  expectRefused,
+  headers,
+  jevAnswer,
+  jevError,
+  lineFor,
+  lineRequest,
+  mockJev,
+  postLine,
+  send,
+  sha256,
+  user
+} from './helpers'
+
+describe('POST /v1/lines', () => {
+  test("answers with Jev's scores by candidate id, the kind, the topic, the policy, and the free lines", async () => {
+    const jev = mockJev(() => Response.json(jevAnswer([0.9, 0.4, 0.7])))
+    const response = await postLine(lineRequest())
+    expect(response.status).toBe(200)
+    const answer = await response.json()
+    expect(answer).toEqual({
+      seq: 7,
+      kind: { yes_no: 0.1, either_or: 0.1, open: 0.7, not_a_question: 0.1 },
+      topic: { feelings: 0.8, 'body-pain': 0.15, consent: 0.05 },
+      scores: { hard: 0.9, well: 0.4, tired: 0.7 },
+      policy: startingPolicy,
+      freeLinesLeft: 20,
+      ms: { jev: expect.any(Number), total: expect.any(Number) }
+    })
+    expect(jev).toHaveBeenCalledOnce()
+  })
+
+  test('times the call to Jev and the whole request', async () => {
+    vi.mocked(globalThis.fetch).mockImplementationOnce(async () => {
+      await scheduler.wait(50)
+      return Response.json(jevAnswer())
+    })
+    const { ms } = (await (await postLine(lineRequest())).json()) as { ms: { jev: number; total: number } }
+    expect(ms.jev).toBeGreaterThanOrEqual(50)
+    expect(ms.total).toBeGreaterThanOrEqual(ms.jev)
+  })
+
+  test('reads a body whose chunks split a character', async () => {
+    const jev = mockJev(() => Response.json(jevAnswer()))
+    const bytes = new TextEncoder().encode(JSON.stringify(lineRequest({ line: 'Tea ☕ or coffee?' })))
+    const split = bytes.indexOf(0xe2) + 1
+    const body = new ReadableStream({
+      start(controller) {
+        controller.enqueue(bytes.slice(0, split))
+        controller.enqueue(bytes.slice(split))
+        controller.close()
+      }
+    })
+    const request = new Request('https://relay.test/v1/lines', {
+      method: 'POST',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body
+    })
+    expect((await send(request)).status).toBe(200)
+    expect(JSON.parse(String(jev.mock.calls[0][1]?.body)).state.partner_line).toBe('Tea ☕ or coffee?')
+  })
+
+  test("reaches the user's object by the salted hash of their ID, in western North America", async () => {
+    mockJev(() => Response.json(jevAnswer()))
+    const getByName = vi.fn((name: string, options?: DurableObjectNamespaceGetDurableObjectOptions) =>
+      env.DEVICE.getByName(name, options)
+    )
+    await postLine(lineRequest(), { DEVICE: { getByName } })
+    expect(getByName).toHaveBeenCalledExactlyOnceWith(`user-${await sha256(`test-salt${user}`)}`, {
+      locationHint: 'wnam'
+    })
+  })
+
+  test('follows a changed policy in the next answer, with no app build (ROW-8)', async () => {
+    mockJev(() => Response.json(jevAnswer()))
+    const response = await postLine(lineRequest(), { POLICY: { floor: 0.7, fixedOnlyTopics: ['consent'] } })
+    expect(await response.json()).toMatchObject({
+      policy: { ...startingPolicy, floor: 0.7, fixedOnlyTopics: ['consent'] }
+    })
+  })
+
+  test('answers 503 jev_off, reaching neither the object nor Jev, while the switch is off (STATE-3)', async () => {
+    const getByName = vi.fn()
+    await expectError(await postLine(lineRequest(), { JEV_ON: 'false', DEVICE: { getByName } }), 503, 'jev_off')
+    expect(getByName).not.toHaveBeenCalled()
+    expect(vi.mocked(globalThis.fetch)).not.toHaveBeenCalled()
+  })
+
+  test.each(['', undefined])('answers 500 internal with no call to Jev when JEV_MODEL is %j (SEC-2)', async (model) => {
+    const jev = mockJev()
+    await expectError(await postLine(lineRequest(), { JEV_MODEL: model }), 500, 'internal')
+    expect(jev).not.toHaveBeenCalled()
+  })
+
+  test.each([
+    ['JSON that does not parse', '{"seq": 7,'],
+    ['a list', '[]'],
+    ['a line id that is no UUID', lineRequest({ lineId: 'line-1' })],
+    ['a negative sequence number', lineRequest({ seq: -1 })],
+    ['a fractional sequence number', lineRequest({ seq: 1.5 })],
+    ['a line that is no text', { ...lineRequest(), line: 42 }],
+    ['no place', { ...lineRequest(), place: undefined }],
+    ['a category with no name', lineRequest({ categories: [{ id: 'food' }] as never })],
+    ['a candidate whose id is a number', lineRequest({ candidates: [{ id: 1, text: 'Yes' }] as never })],
+    ['a refresh that is text', { ...lineRequest(), refresh: 'true' }]
+  ])('refuses %s with 400 invalid_request, reaching neither the object nor Jev', async (_, body) => {
+    await expectRefused(lineFor(body))
+  })
+})
+
+describe("a line's limits (SEC-2)", () => {
+  /** A request's body with a field of 17,000 characters, which the relay would otherwise ignore. */
+  const oversized = JSON.stringify({ ...lineRequest(), padding: 'x'.repeat(17_000) })
+  const categories = (count: number) =>
+    Array.from({ length: count }, (_, i) => ({ id: `c${i}`, name: `Category ${i}` }))
+  const candidates = (count: number) => Array.from({ length: count }, (_, i) => ({ id: `p${i}`, text: `Phrase ${i}` }))
+
+  test.each([
+    ['a line of 301 characters', lineRequest({ line: 'a'.repeat(301) })],
+    ['an empty line', lineRequest({ line: '' })],
+    ["a place's name of 41 characters", lineRequest({ place: 'a'.repeat(41) })],
+    ['13 categories', lineRequest({ categories: categories(13) })],
+    ["a category's name of 41 characters", lineRequest({ categories: [{ id: 'food', name: 'a'.repeat(41) }] })],
+    ['a category with an empty name', lineRequest({ categories: [{ id: 'food', name: '' }] })],
+    ['41 candidates', lineRequest({ candidates: candidates(41) })],
+    ["a candidate's text of 201 characters", lineRequest({ candidates: [{ id: 'long', text: 'a'.repeat(201) }] })],
+    ['a candidate with an empty text', lineRequest({ candidates: [{ id: 'empty', text: '' }] })],
+    ['an id of 65 characters', lineRequest({ categories: [{ id: 'a'.repeat(65), name: 'Food' }] })],
+    ['an empty id', lineRequest({ candidates: [{ id: '', text: 'Yes' }] })],
+    ['a category id twice', lineRequest({ categories: [...categories(2), { id: 'c0', name: 'Again' }] })],
+    ['a candidate id twice', lineRequest({ candidates: [...candidates(2), { id: 'p1', text: 'Again' }] })],
+    ['a category named by the fixed consent option', lineRequest({ categories: [{ id: 'consent', name: 'Consent' }] })]
+  ])('refuses %s with 400 invalid_request, reaching neither the object nor Jev', async (_, body) => {
+    await expectRefused(lineFor(body))
+  })
+
+  test.each([
+    ['a body over 16 KB', oversized, { 'Content-Type': 'application/json' }],
+    ['a body over 16 KB that says so', oversized, { 'Content-Type': 'application/json', 'Content-Length': '17200' }],
+    [
+      'a length over 16 KB, before reading',
+      JSON.stringify(lineRequest()),
+      { 'Content-Type': 'application/json', 'Content-Length': '16385' }
+    ],
+    ['a body sent as text', JSON.stringify(lineRequest()), { 'Content-Type': 'text/plain' }],
+    ['a body with no type', JSON.stringify(lineRequest()), {}]
+  ])('refuses %s with 400 invalid_request, reaching neither the object nor Jev', async (_, body, sent) => {
+    await expectRefused(lineFor(body, { ...headers, ...sent }))
+  })
+
+  test('answers a line at every limit, counting each emoji as one character', async () => {
+    const full = lineRequest({
+      line: '😀'.repeat(300),
+      place: 'a'.repeat(40),
+      categories: categories(12).map((category) => ({ ...category, name: 'n'.repeat(40) })),
+      candidates: candidates(40).map((candidate, i) => ({ id: `${i}`.padStart(64, 'p'), text: 't'.repeat(200) }))
+    })
+    const topic = Object.fromEntries([...full.categories.map(({ id }) => [id, 0.05]), ['consent', 0.4]])
+    mockJev(() => Response.json(jevAnswer(Array(40).fill(0.5), topic)))
+    const response = await send(lineFor(full, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }))
+    expect(response.status).toBe(200)
+    expect(Object.keys(((await response.json()) as { scores: object }).scores)).toHaveLength(40)
+  })
+})
+
+describe("Jev's failures", () => {
+  test.each([
+    ['busy', 529],
+    ['rate-limited', 429],
+    ['failing', 500]
+  ])('answers 503 jev_unavailable, with the code alone, when Jev is %s after one retry (SEC-4)', async (_, status) => {
+    const jev = mockJev(jevError(status), jevError(status))
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test.each([
+    ['refuses the key', 401],
+    ['is out of credits', 402]
+  ])(
+    'answers 503 jev_unavailable, with the code alone, when Jev %s, without a retry (SEC-4, AVAIL-2)',
+    async (_, status) => {
+      const jev = mockJev(jevError(status))
+      await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+      expect(jev).toHaveBeenCalledOnce()
+    }
+  )
+
+  test('answers 503 jev_unavailable when an answer is missing a candidate', async () => {
+    const answer = jevAnswer()
+    delete (answer.answers as Record<string, unknown>).c01
+    mockJev(() => Response.json(answer))
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+  })
+
+  test('answers after one retry when Jev fails once', async () => {
+    const jev = mockJev(jevError(500), () => Response.json(jevAnswer()))
+    expect((await postLine(lineRequest())).status).toBe(200)
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test('retries a hung first attempt after its 1.5 seconds, within the budget', async () => {
+    const jev = vi
+      .mocked(globalThis.fetch)
+      .mockImplementationOnce(
+        (_, init) =>
+          new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal?.reason)))
+      )
+      .mockImplementationOnce(async () => Response.json(jevAnswer()))
+    expect((await postLine(lineRequest())).status).toBe(200)
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test("retries at once, without waiting for Jev's Retry-After", async () => {
+    const busy = () => Response.json({ detail: 'Slow down' }, { status: 429, headers: { 'Retry-After': '5' } })
+    const jev = mockJev(busy, () => Response.json(jevAnswer()))
+    const started = Date.now()
+    expect((await postLine(lineRequest())).status).toBe(200)
+    expect(Date.now() - started).toBeLessThan(2500)
+    expect(jev).toHaveBeenCalledTimes(2)
+  })
+
+  test("gives up on a hung call within the phone's 3 seconds (STATE-2)", async () => {
+    vi.mocked(globalThis.fetch).mockImplementation(
+      (_, init) =>
+        new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal?.reason)))
+    )
+    const started = Date.now()
+    await expectError(await postLine(lineRequest()), 503, 'jev_unavailable')
+    expect(Date.now() - started).toBeLessThan(3000)
+  })
+})
