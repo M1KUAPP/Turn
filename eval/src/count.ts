@@ -3,11 +3,12 @@ import { rankable } from '@turn/shared/shortlist'
 import { parseArgs } from 'node:util'
 import { compareLabelings } from './agreement'
 import { labelingFrom, linesFrom, phrases, type Line } from './data'
+import { listOf } from './prose'
 import { sharesNoWord } from './score'
 
 /** Three decimals, so a negative agreement of 0.996 doesn't print as a perfect 1.00. */
 const three = (value: number) => value.toFixed(3)
-const names = (labelers: readonly string[]) => [...new Set(labelers)].join(' and ')
+const names = (labelers: readonly string[]) => listOf([...new Set(labelers)])
 
 /**
  * `bun run eval:count`: checks EVAL-1's quotas on the labeled lines in `eval/lines.jsonl`, or the file `--lines`
