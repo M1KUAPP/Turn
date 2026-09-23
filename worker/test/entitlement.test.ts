@@ -74,6 +74,7 @@ describe("RevenueCat's answer (PAY-7)", () => {
     ['a body that is no JSON', () => new Response('<html>Bad gateway</html>', { status: 200 })],
     ["a list with a server error's status", () => Response.json({ object: 'list', items: [listen] }, { status: 500 })],
     ['a list whose items are no list', () => Response.json({ object: 'list', items: {} })],
+    ['a body with items but no list', () => Response.json({ items: [] })],
     ['an item out of shape', () => Response.json({ object: 'list', items: [{ entitlement_id: 7, expires_at: null }] })],
     [
       'an expiry out of shape',
