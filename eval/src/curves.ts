@@ -1,6 +1,6 @@
 import type { Ranking } from '@turn/shared/row'
 import type { LineScore, ScoredLine } from './score'
-import { svg, tag } from './svg'
+import { grid, svg, tag } from './svg'
 
 /** One point of a ranker's risk-coverage curve: at a threshold, the share of lines covered, and of those, wrong. */
 export type Point = { threshold: number; coverage: number; risk: number }
@@ -54,12 +54,13 @@ const y = (risk: number) => (size.top + (1 - risk) * plotHeight).toFixed(1)
  */
 export function plot(curves: readonly Curve[]): string {
   const ticks = [0, 0.2, 0.4, 0.6, 0.8, 1]
-  const grid = ticks.flatMap((tick) => [
-    tag('line', { x1: x(tick), y1: y(0), x2: x(tick), y2: y(1), stroke: '#e5e7eb' }),
-    tag('line', { x1: x(0), y1: y(tick), x2: x(1), y2: y(tick), stroke: '#e5e7eb' }),
-    tag('text', { x: x(tick), y: size.top + plotHeight + 18, 'text-anchor': 'middle' }, `${tick * 100}%`),
-    tag('text', { x: size.left - 8, y: y(tick), 'text-anchor': 'end', 'dominant-baseline': 'middle' }, `${tick * 100}%`)
-  ])
+  const lines = grid(ticks, {
+    x,
+    y,
+    bottom: size.top + plotHeight + 18,
+    left: size.left - 8,
+    label: (tick) => `${tick * 100}%`
+  })
   const legendX = size.width - size.right - 150
   const drawn = curves.flatMap(([name, points], i) => {
     const pen = { stroke: colors[i % colors.length], 'stroke-width': 2, 'stroke-dasharray': dashes[i % dashes.length] }
@@ -89,7 +90,7 @@ export function plot(curves: readonly Curve[]): string {
         `threshold falls: ${names}.`
     },
     [
-      ...grid,
+      ...lines,
       tag(
         'text',
         { x: x(0.5), y: size.height - 12, 'text-anchor': 'middle' },
