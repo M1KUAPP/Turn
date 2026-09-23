@@ -1,0 +1,123 @@
+import { runInDurableObject } from 'cloudflare:test'
+import { env } from 'cloudflare:workers'
+import { afterEach, describe, expect, test, vi } from 'vitest'
+import {
+  callsTo,
+  expectError,
+  freeLinesLeft,
+  headers,
+  jevAnswers,
+  jevError,
+  lineFor,
+  lineRequest,
+  mockJev,
+  postLine,
+  send,
+  userHash
+} from './helpers'
+
+/** The vars with the day's calls to Jev lowered to this many, and any other changes. */
+const budget = (calls: number, changes: Parameters<typeof send>[1] = {}) => ({
+  JEV_DAILY_CALLS: String(calls),
+  ...changes
+})
+
+/** A line posted from a fresh app user ID, with the vars changed. */
+const postAsNewUser = (changes: Parameters<typeof send>[1]) =>
+  send(
+    lineFor(lineRequest(), { ...headers, 'X-Turn-User': crypto.randomUUID(), 'Content-Type': 'application/json' }),
+    changes
+  )
+
+/** The calls that reached Jev. */
+const jevCalls = () => callsTo('api.typesafe.ai')
+
+afterEach(() => {
+  vi.useRealTimers()
+})
+
+describe("the day's calls to Jev (SEC-5)", () => {
+  test('answer 3 lines at a budget of 3, and give the 4th 503 jev_unavailable with no call to Jev', async () => {
+    mockJev(...jevAnswers(3))
+    for (let i = 0; i < 3; i++) expect((await postLine(lineRequest(), budget(3))).status).toBe(200)
+    await expectError(await postLine(lineRequest(), budget(3)), 503, 'jev_unavailable')
+    expect(jevCalls()).toHaveLength(3)
+  })
+
+  test('count a retry as a call', async () => {
+    mockJev(jevError(529), ...jevAnswers(2))
+    expect((await postLine(lineRequest(), budget(3))).status).toBe(200)
+    expect((await postLine(lineRequest(), budget(3))).status).toBe(200)
+    await expectError(await postLine(lineRequest(), budget(3)), 503, 'jev_unavailable')
+    expect(jevCalls()).toHaveLength(3)
+  })
+
+  test('end a line whose retry the budget refuses, with no second call', async () => {
+    mockJev(jevError(529))
+    await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
+    expect(jevCalls()).toHaveLength(1)
+  })
+
+  test('share one budget among all users, counting exactly 3 of 5 simultaneous lines', async () => {
+    mockJev(...jevAnswers(3))
+    const statuses = await Promise.all(Array.from({ length: 5 }, async () => (await postAsNewUser(budget(3))).status))
+    expect(statuses.filter((status) => status === 200)).toHaveLength(3)
+    expect(statuses.filter((status) => status === 503)).toHaveLength(2)
+    expect(jevCalls()).toHaveLength(3)
+  })
+
+  test('start again from 0 at midnight UTC', async () => {
+    mockJev(...jevAnswers(2))
+    vi.setSystemTime(new Date('2026-10-01T23:59:59.000Z'))
+    expect((await postLine(lineRequest(), budget(1))).status).toBe(200)
+    await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
+    vi.setSystemTime(new Date('2026-10-02T00:00:00.000Z'))
+    expect((await postLine(lineRequest(), budget(1))).status).toBe(200)
+  })
+
+  test("keep a refused line's free line (PAY-1)", async () => {
+    mockJev(...jevAnswers(1))
+    expect((await postLine(lineRequest(), budget(1))).status).toBe(200)
+    await expectError(await postLine(lineRequest(), budget(1)), 503, 'jev_unavailable')
+    expect(await freeLinesLeft()).toBe(19)
+  })
+
+  test('count a Simulator line that skips the free lines (PAY-9)', async () => {
+    mockJev(...jevAnswers(1))
+    const simulator = { ...headers, 'X-Turn-Build': 'simulator', 'Content-Type': 'application/json' }
+    const vars = budget(1, { SIMULATOR_UNLIMITED: 'true' })
+    expect((await send(lineFor(lineRequest(), simulator), vars)).status).toBe(200)
+    await expectError(await send(lineFor(lineRequest(), simulator), vars), 503, 'jev_unavailable')
+    expect(jevCalls()).toHaveLength(1)
+  })
+
+  test("keep the day's count in one row of the relay's one budget object", async () => {
+    mockJev(...jevAnswers(2))
+    for (let i = 0; i < 2; i++) await postLine(lineRequest())
+    const rows = await runInDurableObject(env.BUDGET.getByName('jev-calls'), (_, state) =>
+      state.storage.sql.exec('SELECT id, day, count FROM calls').toArray()
+    )
+    expect(rows).toEqual([{ id: 1, day: new Date().toISOString().slice(0, 10), count: 2 }])
+  })
+
+  test('log a refused line as spent, with no text', async () => {
+    mockJev(...jevAnswers(1))
+    await postLine(lineRequest(), budget(1))
+    const log = vi.spyOn(console, 'log')
+    log.mockClear()
+    const line = lineRequest()
+    await postLine(line, budget(1))
+    expect(log.mock.calls).toStrictEqual([
+      [
+        {
+          at: expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/),
+          user: (await userHash()).slice(0, 8),
+          seq: 7,
+          outcome: 'spent',
+          ms: { total: expect.any(Number), jev: expect.any(Number) }
+        }
+      ]
+    ])
+    expect(JSON.stringify(log.mock.calls)).not.toContain(line.lineId)
+  })
+})
