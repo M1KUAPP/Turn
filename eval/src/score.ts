@@ -1,4 +1,12 @@
-import { applyAnswer, emptyRow, fixedButtons, startingPolicy, type Ranking, type Row } from '@turn/shared/row'
+import {
+  applyAnswer,
+  emptyRow,
+  fixedButtons,
+  startingPolicy,
+  type Kind,
+  type Ranking,
+  type Row
+} from '@turn/shared/row'
 import { PhraseIndex, pickShortlist, type Phrase } from '@turn/shared/shortlist'
 import { crossValidate, folds } from './cut-off'
 import type { CutOff, Ranker } from './rankers'
@@ -210,6 +218,36 @@ export function summarize<Line extends ScoredLine>(scores: readonly LineScore<Li
       })
     )
   }
+}
+
+/** The kinds of question, in the TRD's order. */
+export const kinds: readonly Kind[] = ['yes_no', 'either_or', 'open', 'not_a_question']
+
+/** A ranking's most likely kind of question, or a tie when two or more share the top. */
+const likeliest = (kind: Readonly<Record<Kind, number>>): Kind | 'tie' => {
+  const top = Math.max(...kinds.map((option) => kind[option]))
+  const at = kinds.filter((option) => kind[option] === top)
+  return at.length === 1 ? at[0] : 'tie'
+}
+
+/**
+ * How a ranker's most likely kind of question compares with its writer's: counts by the writer's kind, then the
+ * ranker's, a tie between kinds counting apart, and how many it got right.
+ */
+export function kindMatrix<Line extends ScoredLine & { kind: Kind }>(
+  scores: readonly LineScore<Line>[],
+  ranker: string
+): { counts: Record<Kind, Record<Kind | 'tie', number>>; right: Count } {
+  const counts = Object.fromEntries(
+    kinds.map((kind) => [kind, Object.fromEntries([...kinds, 'tie'].map((called) => [called, 0]))])
+  ) as Record<Kind, Record<Kind | 'tie', number>>
+  let right = 0
+  for (const { line, rankers } of scores) {
+    const called = likeliest(rankers[ranker].ranking.kind)
+    counts[line.kind][called] += 1
+    if (called === line.kind) right += 1
+  }
+  return { counts, right: { k: right, n: scores.length } }
 }
 
 /** A big button a ranker showed: the line, its phrase, and whether the phrase is acceptable. */

@@ -257,3 +257,14 @@ test("escapes a pipe in a line's text, so the big buttons' table keeps its colum
   await main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
   expect(readFileSync(join(dir, 'results.md'), 'utf8')).toContain('| Where does it hurt \\| the most? |')
 })
+
+test("gives Jev's question kind against its writer's, as accuracy and a confusion matrix", () => {
+  const kind = section('## The question kind')
+  // The stand-in calls a line yes-or-no when the phone would and open otherwise: right on the three yes-or-no lines
+  // and the two open ones, but "Do you want to pay by card or cash?" isn't yes-or-no, and neither statement is open.
+  expect(kind).toMatch(prose(`on all 8 lines: right on ${rate({ k: 5, n: 8 })}.`))
+  expect(cells(kind, 'Yes or no')).toEqual(['3', '0', '0', '0', '0'])
+  expect(cells(kind, 'Either or')).toEqual(['1', '0', '0', '0', '0'])
+  expect(cells(kind, 'Open')).toEqual(['0', '0', '2', '0', '0'])
+  expect(cells(kind, 'Not a question')).toEqual(['0', '0', '2', '0', '0'])
+})
