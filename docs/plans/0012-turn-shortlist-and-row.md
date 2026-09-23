@@ -445,8 +445,10 @@ One commit per rule, each red first, then green, then the gate:
     `feat(shared): clear the row and list its phrases`.
 1.  **The policy (ROW-8).** The same answers under a higher big-button bar,
     a lower floor, a wider margin, no phrases beside the fixed buttons, and
-    other topic lists give other rows. Commit
-    `test(shared): check that new policy values change the row`.
+    other topic lists give other rows, and under a floor of 0.3 a line is
+    yes-or-no only when that kind is the most likely. The last two needed
+    code, so the commit is
+    `feat(shared): follow every value of the answer's policy`.
 
 ### Task 8: The phone's own ranking
 

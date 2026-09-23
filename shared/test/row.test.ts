@@ -120,6 +120,36 @@ describe('applyAnswer', () => {
   })
 })
 
+describe('the policy each answer carries (ROW-8)', () => {
+  const with_ = (policy: Partial<typeof startingPolicy>) => ({ policy: { ...startingPolicy, ...policy } })
+
+  test('moves the big-button bar, the floor, and the margin', () => {
+    expect(replay(answer(1, { water: 0.9 }, with_({ bigAbove: 0.95 })))).toMatchObject({ big: null })
+    expect(replay(answer(1, { water: 0.5 }, with_({ floor: 0.4 }))).slots[0]).toBe('water')
+    const six = answer(1, { a: 0.8, b: 0.75, c: 0.7, d: 0.7, e: 0.65, f: 0.62 })
+    const next = { g: 0.8, a: 0.8, b: 0.75, c: 0.7, d: 0.7, e: 0.65, f: 0.62 }
+    expect(replay(six, answer(2, next, with_({ margin: 0.2 }))).slots).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
+  })
+
+  test('can keep phrases from beside the fixed buttons', () => {
+    const row = replay(answer(1, { water: 0.7 }, { kind: yesNo, ...with_({ yesNoPhrases: false }) }))
+    expect(row.slots).toEqual(['yes', 'no', 'not-sure', null, null, null])
+  })
+
+  test('changes which topics never get a big button and which get only the fixed buttons', () => {
+    const pain = { topic: { 'body-pain': 0.9, food: 0.1 } }
+    expect(replay(answer(1, { water: 0.9 }, { ...pain, ...with_({ noBigTopics: [] }) })).big).toBe('water')
+    const food = replay(answer(1, { water: 0.9 }, with_({ fixedOnlyTopics: ['food'] })))
+    expect(food).toMatchObject({ big: null, slots: ['yes', 'no', 'not-sure', null, null, null] })
+  })
+
+  test('counts a line as yes-or-no only when that kind is the most likely, even under a low floor', () => {
+    const kind = { yes_no: 0.35, either_or: 0.05, open: 0.55, not_a_question: 0.05 }
+    const row = replay(answer(1, { water: 0.7 }, { kind, ...with_({ floor: 0.3 }) }))
+    expect(row.slots).toEqual(['water', null, null, null, null, null])
+  })
+})
+
 describe('clearRow', () => {
   test('empties the six slots and forgets the remembered big phrase (ROW-10)', () => {
     const cleared = clearRow(replay(answer(1, { a: 0.7, b: 0.7 }), answer(2, { w: 0.9 })))
