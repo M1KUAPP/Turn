@@ -15,7 +15,7 @@ export type Phrase = {
 }
 
 /** The fixed buttons and the strip's phrases are never ranked (ROW-2, SPEAK-7). */
-const rankable = (phrase: Phrase) => !phrase.fixed && !phrase.strip
+export const rankable = (phrase: Phrase) => !phrase.fixed && !phrase.strip
 
 const processTerm = (term: string) => {
   const word = term.toLowerCase()
