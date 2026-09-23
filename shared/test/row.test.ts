@@ -76,4 +76,35 @@ describe('applyAnswer', () => {
     const row = replay(answer(1, { water: 0.7, tea: 0.7 }, { kind: yesNo }), answer(2, { juice: 0.7 }))
     expect(row.slots).toEqual(['juice', null, null, 'water', 'tea', null])
   })
+
+  describe('keeps shown phrases in their slots (ROW-5)', () => {
+    const six = answer(1, { a: 0.8, b: 0.75, c: 0.7, d: 0.7, e: 0.65, f: 0.62 })
+
+    test('moves nothing for a shift smaller than the margin', () => {
+      const row = replay(six, answer(2, { f: 0.78, e: 0.76, g: 0.75, c: 0.66, d: 0.66, b: 0.64, a: 0.62 }))
+      expect(row.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
+    })
+
+    test('lets a phrase that beats the lowest shown by the margin take only its slot', () => {
+      const row = replay(six, answer(2, { g: 0.8, a: 0.8, b: 0.75, c: 0.7, d: 0.7, e: 0.65, f: 0.62 }))
+      expect(row.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'g'])
+    })
+
+    test('keeps stale phrases until a phrase needs their slot, then the lowest-scoring goes', () => {
+      // Just below the floor, so only the stale rule, not the margin, frees their slots.
+      const stale = { a: 0.7, b: 0.55, c: 0.7, d: 0.5, e: 0.7, f: 0.7 }
+      const kept = replay(six, answer(2, stale))
+      expect(kept.slots).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
+      const row = replay(six, answer(2, stale), answer(3, { ...stale, g: 0.61 }))
+      expect(row.slots).toEqual(['a', 'b', 'c', 'g', 'e', 'f'])
+    })
+
+    test("brings the big button's phrase back into a free slot first, over the slots it covered", () => {
+      const all = { a: 0.7, b: 0.7, c: 0.7, d: 0.7, e: 0.7, f: 0.7 }
+      const afterBig = (w: number) =>
+        replay(answer(1, all), answer(2, { w: 0.9 }), answer(3, { x: 0.75, ...all, b: 0.55, w }))
+      expect(afterBig(0.65)).toMatchObject({ big: null, slots: ['a', 'w', 'c', 'd', 'e', 'f'] })
+      expect(afterBig(0.5)).toMatchObject({ big: null, slots: ['a', 'x', 'c', 'd', 'e', 'f'] })
+    })
+  })
 })

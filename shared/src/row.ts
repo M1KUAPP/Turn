@@ -79,6 +79,7 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   // A stable sort, so the shortlist's order breaks ties.
   const fresh = [...scores].filter(([, score]) => score >= policy.floor).sort(([, a], [, b]) => b - a)
   const top = fresh[0]
+  if (!showFixed && !top) return { ...row, seq }
   if (!showFixed && top && top[1] > policy.bigAbove && !(topic !== null && policy.noBigTopics.includes(topic))) {
     return { ...row, seq, big: top[0] }
   }
@@ -86,11 +87,33 @@ export function applyAnswer(row: Row, { seq, kind, topic: topics, scores, policy
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
   if (fixedTopic) slots.fill(null, 3)
   const usable = showFixed ? (fixedTopic ? [] : [3, 4, 5]) : [0, 1, 2, 3, 4, 5]
-  for (const [id] of fresh) {
-    if (slots.includes(id)) continue
-    const empty = usable.find((i) => slots[i] === null)
-    if (empty === undefined) break
-    slots[empty] = id
+  const scoreAt = (i: number) => {
+    const id = slots[i]
+    return id === null ? 0 : (scores.get(id) ?? 0)
   }
-  return { ...row, seq, slots }
+  /** The lowest-scoring of the slots, the first of any tie. */
+  const lowest = (indices: number[]) =>
+    indices.reduce<number | undefined>(
+      (low, i) => (low === undefined || scoreAt(i) < scoreAt(low) ? i : low),
+      undefined
+    )
+  /** The first empty slot, or else the lowest-scoring stale one: a shown phrase now below the floor. */
+  const free = () => usable.find((i) => slots[i] === null) ?? lowest(usable.filter((i) => scoreAt(i) < policy.floor))
+  // After a big button, its phrase takes a free slot first if it still reaches the floor.
+  if (row.big !== null && !slots.includes(row.big) && (scores.get(row.big) ?? 0) >= policy.floor) {
+    const slot = free()
+    if (slot !== undefined) slots[slot] = row.big
+  }
+  for (const [id, score] of fresh) {
+    if (slots.includes(id)) continue
+    const slot = free()
+    if (slot !== undefined) {
+      slots[slot] = id
+      continue
+    }
+    const low = lowest(usable)
+    if (low === undefined || score - scoreAt(low) < policy.margin) break
+    slots[low] = id
+  }
+  return { ...row, seq, big: null, slots }
 }
