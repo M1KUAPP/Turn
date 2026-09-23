@@ -7,9 +7,10 @@ const access = { account: 'account-test', token: 'test-logs-token' }
 /** A Workers Logs event whose payload is one of the relay's lines, or anything else given. */
 const event = (
   id: string,
-  source: unknown = { outcome: 'answered', ms: { total: 900, jev: 700 }, inputTokens: 512 }
+  source: unknown = { outcome: 'answered', ms: { total: 900, jev: 700 }, inputTokens: 512 },
+  requestId = `request-${id}`
 ) => ({
-  $metadata: { id, service: 'turn-relay' },
+  $metadata: { id, requestId, service: 'turn-relay' },
   source,
   timestamp: 1790121600000,
   dataset: 'cloudflare-workers'
@@ -86,6 +87,15 @@ describe("reading the relay's logs", () => {
     const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
     expect(lines).toHaveLength(1)
     expect(matched).toBe(5)
+  })
+
+  test('keeps events of different requests that share an ID, as ones logged in the same millisecond do', async () => {
+    const duplicate = { outcome: 'duplicate', ms: { total: 8 } }
+    mockCloudflare(
+      page([event('e1', duplicate, 'r1'), event('e1', duplicate, 'r2'), event('e1', duplicate, 'r3')]),
+      total(3)
+    )
+    expect((await readLogs(access, { from: 0, to: 1 })).lines).toHaveLength(3)
   })
 
   test('throws, without asking again, when a full page brings no event it has not seen', async () => {
