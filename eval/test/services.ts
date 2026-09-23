@@ -33,7 +33,7 @@ export const fakeSentenceEmbedding = async (): Promise<SentenceEmbedding> => ({
   embed: async (texts) => texts.map((text) => madeUpVector(text, 512)),
   revision: 1,
   dimension: 512,
-  system: 'Version 27.0 (Build 26A428)',
+  system: '27.0 (Build 26A428)',
   close: async () => {}
 })
 

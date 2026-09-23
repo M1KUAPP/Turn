@@ -35,7 +35,7 @@ const standIn = (
     })`
 ]
 
-const named = { revision: 1, dimension: 4, system: 'Version 27.0 (Build 26A428)' }
+const named = { revision: 1, dimension: 4, system: '27.0 (Build 26A428)' }
 
 /** A new folder for a stand-in to record in. */
 const folder = () => mkdtempSync(join(tmpdir(), 'turn-helper-'))
@@ -126,7 +126,7 @@ test.runIf(process.platform === 'darwin')(
     const embedding = await sentenceEmbedding()
     expect(embedding.revision).toBe(appleRevision)
     expect(embedding.dimension).toBe(512)
-    expect(embedding.system).toMatch(/^Version \d+/)
+    expect(embedding.system).toMatch(/^\d+\.\d+(\.\d+)? \(Build \w+\)$/)
     const [tea, cup, bus] = await embedding.embed([
       'Do you want some tea?',
       'Would you like a cup of tea?',
