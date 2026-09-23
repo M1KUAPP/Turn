@@ -72,6 +72,7 @@ export type Outcome =
   | 'unverified'
   | 'invalid'
   | 'not_found'
+  | 'limited'
   | 'off'
   | 'failed'
   | 'credits'
