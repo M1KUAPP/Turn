@@ -158,9 +158,9 @@ describe("an address's limit (SEC-3)", () => {
   })
 
   test('counts exactly 120 of 150 simultaneous requests from one address', async () => {
-    const users = Array.from({ length: 10 }, () => from('203.0.113.15'))
+    const senders = Array.from({ length: 10 }, () => from('203.0.113.15'))
     const statuses = await Promise.all(
-      users.flatMap((sent) => Array.from({ length: 15 }, async () => (await getConfig({}, sent)).status))
+      senders.flatMap((sent) => Array.from({ length: 15 }, async () => (await getConfig({}, sent)).status))
     )
     expect(statuses.filter((status) => status === 200)).toHaveLength(120)
     expect(statuses.filter((status) => status === 429)).toHaveLength(30)
