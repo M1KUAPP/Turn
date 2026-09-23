@@ -18,7 +18,8 @@ evaluated settings.
 
 **Tech Stack:** Bun, Vitest 4.1.11, and TypeScript 6.0.3 in `@turn/eval`;
 TypeSafe's SDK 0.6.0 for Jev and Workers AI's REST API for embeddings;
-Wrangler 4 for the relay's read-only check; the `gh` CLI.
+Wrangler 4 for the relay's check, which changes no configuration; the `gh`
+CLI.
 
 **Spec:** Issue #40, under the spec in [issue #13][spec]; the PRD's
 [evaluation requirements][prd-eval] and [release criteria][prd-release]; the
@@ -353,7 +354,8 @@ commit, and record here what each rule found.
 ### Task 10: RELEASE-2's check
 
 Decision 11's reads, with the second appendix's script, which prints only
-the three vars, the switches, and the policy.
+the checked values: the served switches and policy, the serving version's
+ID, share, and creation time, and its `JEV_MODEL`, `JEV_ON`, and `POLICY`.
 
 - **Done** during the run, at 14:36 UTC, and after it, at 14:43 UTC, with
   the same answers. `GET /v1/config` served `jevOn` true, `typesafeNamed`
@@ -361,6 +363,10 @@ the three vars, the switches, and the policy.
   UTC, served all traffic, with `JEV_MODEL` `jev-1.13.0`, `JEV_ON` `"true"`,
   and `POLICY` `{}`, as `main`'s `worker/wrangler.jsonc` has them. No deploy
   was needed.
+- **Each of those two checks** made a new user's object on the relay, as
+  any first request does, since each asked as a fresh random user; the
+  review found it. The script now asks as one fixed check user, and a
+  third check with it, at 15:22 UTC, gave the same answers.
 
 ### Task 11: Pull request and review
 
@@ -396,30 +402,39 @@ bun run eval "$@"
 
 `relay-check.zsh`, run as
 `zsh -ic 'zsh relay-check.zsh <worktree> <relay address>'` for decision 11.
-The address stays out of the repository, and the script prints no account
-ID, email, author, or secret:
+The address stays out of the repository. The script changes no
+configuration, but its request makes the check user's object on the relay
+the first time, as any first request does, and it prints no account ID,
+email, author, or secret:
 
 ```zsh
 #!/bin/zsh
-# RELEASE-2's read-only check: what the team's relay serves, and the vars of the version serving its traffic.
-# Usage: zsh -ic 'zsh relay-check.zsh <worktree> <relay address>'. Prints only the checked values: no account ID,
-# email, author, or secret.
+# RELEASE-2's check: what the team's relay serves, and the vars of the
+# version serving its traffic. It changes no configuration; its request
+# makes the check user's object on the relay the first time, as any first
+# request does. It prints only the checked values: no account ID, email,
+# author, or secret.
 setopt err_exit pipe_fail no_unset
 cd "${1:?}/worker"
 relay="${2:?}"
 export CLOUDFLARE_ACCOUNT_ID="${TURN_CF_ACCOUNT_ID:?}"
-user="$(uuidgen | tr 'A-Z' 'a-z')"
-print '# GET /v1/config, as a new user of the device build'
+# One user for every check, so checks share one object.
+user='00000000-0000-4000-8000-000000000040'
+print '# GET /v1/config, as the check user of the device build'
 curl -sS --fail-with-body -A 'turn-release-check' \
-  -H "X-Turn-User: $user" -H 'X-Turn-Version: 1.0.0' -H 'X-Turn-Build: device' \
-  "$relay/v1/config" | jq -c '{jevOn, typesafeNamed, policy}'
+  -H "X-Turn-User: $user" -H 'X-Turn-Version: 1.0.0' \
+  -H 'X-Turn-Build: device' "$relay/v1/config" |
+  jq -c '{jevOn, typesafeNamed, policy}'
 print '# The deployment serving traffic: each version and its share'
 deployment="$(bunx wrangler deployments status --json 2>/dev/null)"
-print -r -- "$deployment" | jq -c '[.versions[] | {version_id, percentage}]'
-version="$(print -r -- "$deployment" | jq -r '.versions | max_by(.percentage) | .version_id')"
-print '# That version: its created time, and its JEV_MODEL, JEV_ON, and POLICY'
+print -r -- "$deployment" |
+  jq -c '[.versions[] | {version_id, percentage}]'
+version="$(print -r -- "$deployment" |
+  jq -er '.versions | max_by(.percentage) | .version_id')"
+print '# That version: its creation time, JEV_MODEL, JEV_ON, and POLICY'
 view="$(bunx wrangler versions view "$version" --json 2>/dev/null)"
 print -r -- "$view" | jq -c '{created: .metadata.created_on}'
-print -r -- "$view" | jq -c '[.resources.bindings[] | select(.name == "JEV_MODEL" or .name == "JEV_ON" or .name == "POLICY")
+print -r -- "$view" | jq -c '[.resources.bindings[]
+  | select(.name == "JEV_MODEL" or .name == "JEV_ON" or .name == "POLICY")
   | {name, type, value: (.text // .json)}]'
 ```
