@@ -225,9 +225,24 @@ describe('lines past the free lines (PAY-7)', () => {
     expect(callsTo('api.revenuecat.com')).toHaveLength(2)
   })
 
-  test("don't ask RevenueCat about a free line", async () => {
-    mockJev(...jevAnswers(1))
-    expect((await postLine(lineRequest({ refresh: true }))).status).toBe(200)
+  test('ask RevenueCat about a free line only when it carries refresh, and show null once it says yes (PAY-4)', async () => {
+    mockRevenueCat(activeEntitlements(listen))
+    mockJev(...jevAnswers(2))
+    expect(await (await postLine(lineRequest())).json()).toMatchObject({ freeLinesLeft: 19 })
     expect(callsTo('api.revenuecat.com')).toHaveLength(0)
+    expect(await (await postLine(lineRequest({ refresh: true }))).json()).toMatchObject({ freeLinesLeft: null })
+    expect(callsTo('api.revenuecat.com')).toHaveLength(1)
+    expect(await freeLinesLeft()).toBeNull()
+  })
+
+  test.each([
+    ['says no', activeEntitlements()],
+    ['fails', rcError(503, 'server_error')]
+  ])('answer a free line with refresh and keep its count when RevenueCat %s', async (_, reply) => {
+    mockRevenueCat(reply)
+    mockJev(...jevAnswers(1))
+    const response = await postLine(lineRequest({ refresh: true }))
+    expect(response.status).toBe(200)
+    expect(await response.json()).toMatchObject({ freeLinesLeft: 19 })
   })
 })
