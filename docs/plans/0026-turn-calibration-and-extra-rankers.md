@@ -59,9 +59,9 @@ Contents:
   run each number comes from." For Apple's embedding: "pin a revision with
   `sentenceEmbedding(for:revision:)`, log its `revision` and `dimension`,
   and call `vector(for:)` from one thread."
-- **Jev's settings don't change.** `eval/test/frozen.test.ts` passes
-  unchanged at every commit, so the second run asks Jev what the first asked
-  (EVAL-2).
+- **Jev's settings don't change.** `eval/test/frozen.test.ts`'s checks pass
+  unchanged at every commit, and the file gains only a stand-in for Apple's
+  helper, so the second run asks Jev what the first asked (EVAL-2).
 - **The 80 lines once more, once.** Only the second run, at a commit on
   `main` that holds this plan, scores `eval/lines.jsonl`. No test, check,
   review, or live check scores the 80 lines or sends one of them anywhere;
@@ -165,7 +165,7 @@ Contents:
       revision, the dimension, and the system's version, then answers each
       line of standard input, a JSON array of texts, with a line holding
       their vectors, all from one thread. A text with no vector ends it
-      with a message, and so does the end of standard input.
+      with a message, and the end of standard input ends it quietly.
     - `apple.ts` pins revision 1, which this Mac has, refuses any other in
       the first line, and checks that each answer holds one vector of the
       dimension's length for each text. Its `close` ends standard input.
@@ -223,13 +223,19 @@ Contents:
     the share of lines that are right; `MCB`, the Brier score minus that of
     the PAV values; and `DSC`, `UNC` minus that of the PAV values, so that
     `BS = MCB - DSC + UNC`. `MCB` replaces the binned calibration error.
+    The skill score, `1 - BS / UNC`, says whether the forecasts beat that
+    constant forecast, which note 0049 recommends.
 1.  **The plot and its text.** The report writes `<out>-reliability.svg`
     beside itself: the diagonal, the band shaded, the PAV line through a dot
     at each distinct score, rules at 0.6 and 0.85, and a bar for each
     distinct score's count of lines below. Its text is a table with a row
-    for each PAV block (its scores, lines, acceptable lines, recalibrated
-    value, and the band's range at its scores), then a sentence with the
-    Brier score, its interval, `UNC`, `MCB`, and `DSC`.
+    for each PAV block: its scores, lines, acceptable lines, recalibrated
+    value, and how many of its scores the fit lies outside the band at,
+    since the band holds 90% at each score apart. A sentence then gives the
+    Brier score, its interval, `UNC`, the skill score, `MCB`, and `DSC`.
+    Before the table, the section counts the lines with no acceptable
+    phrase among their 40, whose top phrase is wrong whatever its score, as
+    note 0049 asks for the lines with no reply.
 1.  **The report** scores seven rankers, in this order: place, keyword,
     embeddings, jev, reranker, qwen3, and apple. Every table, the latency,
     the curves, and the big buttons take the new three as they are.
@@ -282,8 +288,8 @@ Contents:
 - **A compiled helper started for each line:** see decision 4.
 - **Rescaling cosines to `(1 + cos) / 2`:** see decision 6.
 - **An interval for the skill score or for `MCB` and `DSC`:** the band
-  already shows the diagram's uncertainty, and the skill score follows from
-  the Brier score and `UNC`.
+  already shows the diagram's uncertainty, and the Brier score's interval
+  shows the rest.
 - **Top-label calibration,** which conditions on the phrase: each phrase
   would need many lines of its own.
 
@@ -503,13 +509,15 @@ report on #64.
   0.000612 printed to three significant figures.
 - **"The 80 lines once"** in the TRD became "The 80 lines from a clean
   tree", since #45 scores them a second time.
-- **Mutations.** Every new rule was mutated once. Nine survivors got tests:
-  bge's second `shape` number, the order of the helper's vectors, the band's
-  level, a share right other than a half, the floor's rule apart from the
-  grid line under it, the band's outline, qwen3 taking each line as a query
-  in the report's run, the cut-offs' figures, and the band's range in the
-  table. One survivor is equivalent: the report prints the helper's
-  revision, which can only be the pin.
+- **Mutations.** Most new rules were mutated once while building. Nine
+  survivors got tests: bge's second `shape` number, the order of the
+  helper's vectors, the band's level, a share right other than a half, the
+  floor's rule apart from the grid line under it, the band's outline, qwen3
+  taking each line as a query in the report's run, the cut-offs' figures,
+  and the band's range in the table. One survivor is equivalent: the report
+  prints the helper's revision, which can only be the pin. The review's
+  fact-check then mutated rules left untried, and its survivors got tests
+  too (see the review's record).
 - **A gate piped into `tail`** let a 121-column Swift line into a commit,
   which was amended before any push; the gate now runs unpiped, its exit
   code checked.
