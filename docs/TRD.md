@@ -319,13 +319,15 @@ carries these headers:
 starts: whether Jev is on, whether the texts name TypeSafe (CONSENT-7), the
 free lines this user has left, and the current policy. The Worker asks the
 user's Durable Object for the free lines left, so they survive a relaunch
-(PAY-1, PAY-2).
+(PAY-1, PAY-2). They're null once the user is entitled, and for a request
+that skips the count, as the Simulator build's do while
+`SIMULATOR_UNLIMITED` is on (PAY-9); each answer carries the same.
 
 ```ts
 type Config = {
   jevOn: boolean
   typesafeNamed: boolean
-  freeLinesLeft: number // 20 for a new user
+  freeLinesLeft: number | null // 20 for a new user; null once entitled
   policy: Policy
 }
 ```
@@ -373,7 +375,7 @@ Errors return `{ "error": "<code>" }`:
 | 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
 | 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
 | 503    | `jev_off`         | the configuration turns Jev off (STATE-3)      | ranks on the phone; degraded notice |
-| 503    | `jev_unavailable` | Jev timed out or failed                        | ranks on the phone (STATE-2)        |
+| 503    | `jev_unavailable` | Jev or RevenueCat's check timed out or failed  | ranks on the phone (STATE-2)        |
 | 500    | `internal`        | anything else                                  | ranks on the phone                  |
 
 The body may hold at most 16 KB, and a request that breaks any limit above
