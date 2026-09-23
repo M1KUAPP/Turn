@@ -23,10 +23,10 @@ Contents:
 - **The binding's page.** Nothing on it names a Cloudflare plan. It says
   "Last updated Apr 23, 2026", and its only plan words are about a Worker's
   own customers: "Different rate limits for different types of customers or
-  users (ex: free vs. paid)" ([page][cf-ratelimit]).
+  users (ex: free vs. paid)" ([binding page][cf-ratelimit]).
 - **The page's source.** Its frontmatter has no plan field, only
   `pcx_content_type`, `title`, `description`, and `products` (`workers`),
-  and it imports no partial ([source][cf-rl-src]).
+  and it imports no partial ([page source][cf-rl-src]).
 - **The GA post.** "The `ratelimit` binding is now stable and recommended
   for all production workloads." It names no plan
   ([changelog][cf-ratelimit-ga]).
@@ -50,17 +50,17 @@ Contents:
   "1500 requests - calls to limit() increment this", which leaves open
   whether a refused call counts. Another says "Limit: the number of tokens
   allowed within a given period in a single Cloudflare location"
-  ([source][cf-rl-src]).
+  ([page source][cf-rl-src]).
 - **Only `success` comes back.** The samples destructure only `success`,
   and the Monitoring section speaks of when "`limit()` returns
   `{ success: false }`". No reset time, remaining count, or window start
-  appears on the page ([page][cf-ratelimit]).
+  appears on the page ([binding page][cf-ratelimit]).
 - **The emulator's result.** Miniflare's client types it as
   `{ success: boolean }`, which "should be kept in sync with
   `RatelimitResult`" in an internal `ratelimit.h`. It takes `limit` and
   `period` beside `key` and throws "bad rate limit options" for any other
   field ([Miniflare client][mf-client]), where the docs name only "the
-  `key` field" ([page][cf-ratelimit]).
+  `key` field" ([binding page][cf-ratelimit]).
 - **Fixed windows on the wall clock, locally.** The emulator's object takes
   `Math.floor(Date.now() / (period * 1000))` as the window, and "Windows
   are aligned to the wall clock, so every key sharing a period rolls over
@@ -76,7 +76,7 @@ Contents:
   that your Worker runs in, and updated asynchronously in the background by
   communicating with a backing store that is within the same Cloudflare
   location." Requests count "Very quickly, but not immediately", with no
-  figure given ([page][cf-ratelimit]).
+  figure given ([binding page][cf-ratelimit]).
 - **Limits on the binding.** None found on namespaces, keys, or `limit`,
   beyond the settings the [Cloudflare notes][cf-ratelimit-notes] quote.
 - Synthesis: expect fixed 60-second windows that start on the minute, as a
@@ -107,7 +107,7 @@ Contents:
   in seconds." ([RFC 9110][rfc9110])
 - **Cloudflare's sample.** The binding page answers a refused call with a
   text body and `{ status: 429 }` only, with no `Retry-After`, and gives no
-  guidance on one ([page][cf-ratelimit]).
+  guidance on one ([binding page][cf-ratelimit]).
 - Synthesis: send delay-seconds, which needs no clock agreement with the
   phone. For a 429, `60 - (now % 60)` with `now` in whole seconds matches
   fixed windows, and `60` is the safe bound if they turn out otherwise.
