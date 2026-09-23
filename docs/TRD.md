@@ -240,6 +240,11 @@ CREATE TABLE setting (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 - **The conversation strip's** five phrases live in their own fixed
   category, which the grid doesn't show and the shortlist never uses
   (SPEAK-7); their text can change, their positions can't.
+- **The starter bank's ids** are how the app finds its fixed parts: the
+  strip's category is `strip`, the fixed buttons are `yes`, `no`, and
+  `not-sure` in `quick`, and the body-and-pain category is `body-pain`. Its
+  ten categories, the strip's among them, leave room under BANK-2's 12 for
+  Typed and at least one more.
 - **Starter phrases** carry a `reviewed` flag, set when the user keeps,
   edits, or reviews them (BANK-10).
 - **Settings** hold the voice and its rate, the place, the user's permission
