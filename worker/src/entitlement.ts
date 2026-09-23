@@ -31,7 +31,7 @@ export async function checkEntitlement(settings: Settings, user: string): Promis
     })
     const body: unknown = await response.json()
     if (response.status === 404) return isRecord(body) && body.type === 'resource_missing' ? 'no' : 'unknown'
-    const items: unknown = isRecord(body) ? body.items : undefined
+    const items: unknown = isRecord(body) && body.object === 'list' ? body.items : undefined
     if (!response.ok || !Array.isArray(items) || !items.every(isItem)) return 'unknown'
     const now = Date.now()
     const active = items.some(
