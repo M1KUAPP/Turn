@@ -34,7 +34,10 @@ const plotWidth = size.width - size.left - size.right
 const plotHeight = size.height - size.top - size.bottom
 
 /** Okabe and Ito's colors, which people with each common kind of color blindness can tell apart. */
-const colors = ['#E69F00', '#56B4E9', '#009E73', '#D55E00', '#0072B2', '#CC79A7']
+const colors = ['#E69F00', '#56B4E9', '#009E73', '#000000', '#D55E00', '#CC79A7']
+
+/** A dash pattern for each curve, so a curve drawn over another lets it show through. */
+const dashes = ['none', '8 4', '2 3', '12 4 2 4']
 
 /** A share's place on the plot, in pixels to one decimal. */
 const x = (coverage: number) => (size.left + coverage * plotWidth).toFixed(1)
@@ -50,8 +53,9 @@ const tag = (name: string, attributes: Record<string, string | number>, text?: s
 }
 
 /**
- * Every ranker's risk-coverage curve as an SVG: coverage across, risk up, each from 0% to 100%, one colored line and
- * its points for each ranker, and a legend. A curve of one point shows as that point.
+ * Every ranker's risk-coverage curve as an SVG: coverage across, risk up, each from 0% to 100%, a line with its own
+ * color and dashes and its points for each ranker, and a legend. A curve of one point shows as that point, and each
+ * curve's points are rings a little smaller than the curve's before, so a point two curves share shows both.
  */
 export function plot(curves: readonly (readonly [string, readonly Point[]])[]): string {
   const ticks = [0, 0.2, 0.4, 0.6, 0.8, 1]
@@ -63,18 +67,20 @@ export function plot(curves: readonly (readonly [string, readonly Point[]])[]): 
   ])
   const legendX = size.width - size.right - 150
   const drawn = curves.flatMap(([name, points], i) => {
-    const color = colors[i % colors.length]
+    const pen = { stroke: colors[i % colors.length], 'stroke-width': 2, 'stroke-dasharray': dashes[i % dashes.length] }
     const byCoverage = points.toSorted((a, b) => a.coverage - b.coverage)
+    const r = 3 + 2 * (curves.length - 1 - i)
     const legendY = size.top + 16 + i * 20
     return [
       tag('polyline', {
         points: byCoverage.map(({ coverage, risk }) => `${x(coverage)},${y(risk)}`).join(' '),
         fill: 'none',
-        stroke: color,
-        'stroke-width': 2
+        ...pen
       }),
-      ...byCoverage.map(({ coverage, risk }) => tag('circle', { cx: x(coverage), cy: y(risk), r: 3, fill: color })),
-      tag('line', { x1: legendX, y1: legendY, x2: legendX + 24, y2: legendY, stroke: color, 'stroke-width': 2 }),
+      ...byCoverage.map(({ coverage, risk }) =>
+        tag('circle', { cx: x(coverage), cy: y(risk), r, fill: 'none', stroke: pen.stroke, 'stroke-width': 2 })
+      ),
+      tag('line', { x1: legendX, y1: legendY, x2: legendX + 24, y2: legendY, ...pen }),
       tag('text', { x: legendX + 32, y: legendY, 'dominant-baseline': 'middle' }, name)
     ]
   })
