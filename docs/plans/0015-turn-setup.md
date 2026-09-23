@@ -303,8 +303,8 @@ count, and was committed as
 - [ ] **Step 1: Tick** #14's first, fourth, and fifth boxes and #16's first
       and second, and point every unticked box to its follow-up.
 - [ ] **Step 2: Comment** on #14 and #16 with the evidence, on #22 with the
-      bundle ID, the relay's address, and the iPhone's follow-up, and on #24
-      with the secrets `turn-relay` holds.
+      bundle ID, where to read the relay's address, and the iPhone's
+      follow-up, and on #24 with the secrets `turn-relay` holds.
 
 ### Task 8: Graph, pull request, review, and merge
 
