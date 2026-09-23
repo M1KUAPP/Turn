@@ -45,9 +45,22 @@ export function fakeJevAnswer({ model, state, questions }: JevRequest) {
 }
 
 /**
+ * A made-up answer from Workers AI's reranker: each context 0.9 when it shares a word with the query, else 0.01, best
+ * first, as the live probe's answer came.
+ */
+export function fakeRerank({ query, contexts }: { query: string; contexts: { text: string }[] }) {
+  const line = words(query)
+  const scored = contexts.map(({ text }, id) => ({ id, score: [...words(text)].some((w) => line.has(w)) ? 0.9 : 0.01 }))
+  return scored.toSorted((a, b) => b.score - a.score)
+}
+
+/** Workers AI's endpoint for a model, as the tests' made-up account reaches it. */
+const workersAi = (model: string) => `https://api.cloudflare.com/client/v4/accounts/test-account/ai/run/${model}`
+
+/**
  * Stands in for Workers AI and Jev behind the `fetch` spy that `test/setup.ts` makes: Workers AI embeds each text with
- * `fakeVector`, pooled as asked, and Jev answers with `fakeJevAnswer`, as the model `modelFor` names for the call, if
- * it names one. Returns the spy, whose calls a test can read.
+ * `fakeVector`, pooled as asked, and reranks with `fakeRerank`, and Jev answers with `fakeJevAnswer`, as the model
+ * `modelFor` names for the call, if it names one. Returns the spy, whose calls a test can read.
  */
 export function fakeServices(modelFor: (call: number) => string | undefined = () => undefined) {
   let jevCalls = 0
@@ -55,10 +68,11 @@ export function fakeServices(modelFor: (call: number) => string | undefined = ()
   spy.mockImplementation(async (input, init) => {
     const url = String(input)
     const body = JSON.parse(String(init?.body))
-    if (url.startsWith('https://api.cloudflare.com/client/v4/accounts/test-account/ai/run/')) {
-      const result = { shape: [body.text.length, 768], data: body.text.map(fakeVector), pooling: body.pooling }
-      return Response.json({ success: true, errors: [], messages: [], result })
+    const success = (result: object) => Response.json({ success: true, errors: [], messages: [], result })
+    if (url === workersAi('@cf/baai/bge-base-en-v1.5')) {
+      return success({ shape: [body.text.length, 768], data: body.text.map(fakeVector), pooling: body.pooling })
     }
+    if (url === workersAi('@cf/baai/bge-reranker-base')) return success({ response: fakeRerank(body) })
     if (url === 'https://api.typesafe.ai/v1/systemone') {
       const answer = fakeJevAnswer(body)
       return Response.json({ ...answer, model: modelFor(jevCalls++) ?? answer.model })

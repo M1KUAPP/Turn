@@ -1,5 +1,5 @@
 import type { Ranking } from '@turn/shared/row'
-import { rankOnPhone, type Context, type Phrase, type PhraseIndex } from '@turn/shared/shortlist'
+import { isYesNo, rankOnPhone, type Context, type Phrase, type PhraseIndex } from '@turn/shared/shortlist'
 
 /**
  * Orders a line's shortlist, as the phone's own ranking does, for the row's rules to turn into a row. A ranker that
@@ -17,6 +17,14 @@ export type Ranker = (
  * cross-validation sets (EVAL-2).
  */
 export type AtCutOff = (ranking: Ranking, cutOff: number) => Ranking
+
+/** The phone's yes-or-no rule as a kind of question, for a ranker that calls no kind of its own. */
+export const phoneKind = (line: string): Ranking['kind'] => ({
+  yes_no: isYesNo(line) ? 1 : 0,
+  either_or: 0,
+  open: 0,
+  not_a_question: 0
+})
 
 /** The phone's own ranking: phrases sharing a word with the line score 1, and a line with none holds (STATE-1). */
 export const keyword = rankOnPhone satisfies Ranker
