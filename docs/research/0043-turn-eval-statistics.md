@@ -64,8 +64,9 @@ Contents:
   sizes differ "by at most one sample" ([skf]). The source counts each
   fold's share "using round robin over the sorted y" ([skf-src]).
 - **Few "none" lines.** The source raises "n_splits=%d cannot be greater
-  than the number of members in each class." and warns "The least populated
-  class in y has only %d members, which is less than n_splits=%d."
+  than the number of members in each class." only when every class has
+  fewer members than folds; when only the smallest does, it warns "The least
+  populated class in y has only %d members, which is less than n_splits=%d."
   ([skf-src])
 - **The tuner.** `TunedThresholdClassifierCV` defaults to
   `scoring="balanced_accuracy"`, to `thresholds=100`, "The number of
@@ -88,19 +89,21 @@ Synthesis for Turn's 80 lines:
 
 - Five folds of 16 have equal sizes, and the six outcomes are counts, which
   decompose over lines; pool counts, then compute coverage and risk once.
-- The candidates are the training folds' distinct top cosine scores plus
-  "never hold": a cut-off between two adjacent scores behaves the same, so
-  100 evenly spaced values add nothing. Hold when the top score is below the
-  cut-off.
-- With fewer than five "none" lines, some fold has none; refuse, as
-  scikit-learn warns. Report the five cut-offs beside the pooled result.
+- A cut-off both decides which lines hold and hides a covered line's
+  phrases below it, so the candidates are the six highest cosines of each
+  training line, the most a row can show, plus "never hold": a cut-off
+  between two adjacent candidates behaves the same, so 100 evenly spaced
+  values add nothing. Hold when the top score is below the cut-off.
+- With fewer than five "none" lines, some fold has none, which scikit-learn
+  only warns about. Report each fold's cut-off and count of lines beside the
+  pooled result.
 - The objective, over the four outcomes a hold decision changes:
 
-```text
-reply side = right rows on reply lines / reply lines
-none side  = right holds / none lines
-objective  = (reply side + none side) / 2      ties: the higher cut-off
-```
+  ```text
+  reply side = right rows on reply lines / reply lines
+  none side  = right holds / none lines
+  objective  = (reply side + none side) / 2      ties: the higher cut-off
+  ```
 
 A wrong row and a missed reply cost the same here; if the team weighs a
 wrong row more, commit the weights before the run.
@@ -142,11 +145,13 @@ Synthesis:
   32-bit all-purpose, rock-solid generators", with 128 bits of state; "The
   state must be seeded so that it is not everywhere zero." ([xoshiro-c]) The
   site: "All 32-bit generators pass all tests we are aware of, with the
-  exception of linearity tests ... for `xoshiro128+`", and "We suggest to use
-  SplitMix64 to initialize the state" ([xoshiro]).
+  exception of linearity tests (binary rank and linear complexity) for
+  `xoshiro128+` and `xoroshiro64*`", and "We suggest to use SplitMix64 to
+  initialize the state" ([xoshiro]).
 - **sfc32.** PractRand's notes give it 16 bytes of state, a minimum cycle of
   "2**32", and: "The sfc* RNGs are the fastest of the recommended RNGs and
-  one of the smallest. The 32 and 64 bit variants have no known drawbacks."
+  one of the smallest. The 32 and 64 bit variants have no known drawbacks,
+  though the 16 bit variant is considered inadequate for parallel uses."
   ([practrand])
 - **Unbiased indices.** Lemire: "We need functions to convert such random
   words to random integers in an interval ([0,s)) without introducing
@@ -192,10 +197,10 @@ Geifman and El-Yaniv's coverage, risk, and curve ([geifman-2017]).
   the pair (f,g) computed over Vn", where "Θ be the set of all κ values of
   points in Vn" ([geifman-2019]):
 
-```text
-AURC(κ, f | Vn)   = (1/n) · Σ over θ in Θ of r̂(f, g_θ | Vn)
-E-AURC(κ, f | Vn) = AURC(κ, f | Vn) − AURC(κ*, f | Vn)
-```
+  ```text
+  AURC(κ, f | Vn)   = (1/n) · Σ over θ in Θ of r̂(f, g_θ | Vn)
+  E-AURC(κ, f | Vn) = AURC(κ, f | Vn) − AURC(κ*, f | Vn)
+  ```
 
 - **Excess area.** "E-AURC is a unitless measure in [0,1], and the optimal κ
   will have E-AURC =0" ([geifman-2019]).
@@ -271,8 +276,9 @@ row even when no line has it.
 
 - Efron and Tibshirani's own advice on how many resamples a percentile or
   BCa interval needs: the 1986 paper was paywalled and the book unread.
-- How Geifman et al. 2019 "deal with duplicate values": the later passage
-  wasn't reached, so the tie rule above is this note's own.
+- How to "deal with duplicate values": Geifman et al. 2019 promise to note
+  it later but never come back to it, so the tie rule above is this note's
+  own.
 - mulberry32 has no primary source found; it isn't recommended here.
 - GitHub's Mermaid version, so whether `xychart` and its legend draw there;
   check with an `info` diagram.
