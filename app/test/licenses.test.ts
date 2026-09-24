@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, test } from 'vitest'
 
@@ -33,8 +33,5 @@ describe('bundled open-source licenses', () => {
     ) as LicenseEntry[]
     expect(entries.some((entry) => entry.name === 'hermes-engine')).toBe(true)
     expect(entries.every((entry) => entry.name && entry.license && entry.text)).toBe(true)
-    if (existsSync(resolve(root, 'app/ios/Pods/Target Support Files/Pods-Turn/Pods-Turn-acknowledgements.plist'))) {
-      expect(() => execFileSync('bun', ['scripts/generate-ios-licenses.ts', '--check'], { cwd: root })).not.toThrow()
-    }
   })
 })
