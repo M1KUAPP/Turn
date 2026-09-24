@@ -285,6 +285,18 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={item.text}
+          accessibilityActions={[
+            { name: 'edit', label: 'Edit' },
+            { name: 'move', label: 'Move' }
+          ]}
+          onAccessibilityAction={(event) => {
+            if (event.nativeEvent.actionName === 'edit' || event.nativeEvent.actionName === 'move') {
+              router.push({
+                pathname: '/bank/[category]',
+                params: { category: item.category_id, editPhraseId: item.id }
+              })
+            }
+          }}
           onPress={() => {
             void speech.speak(item.text, item.id)
           }}
@@ -325,6 +337,18 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={phrase.text}
+        accessibilityActions={[
+          { name: 'edit', label: 'Edit' },
+          { name: 'move', label: 'Move' }
+        ]}
+        onAccessibilityAction={(event) => {
+          if (event.nativeEvent.actionName === 'edit' || event.nativeEvent.actionName === 'move') {
+            router.push({
+              pathname: '/bank/[category]',
+              params: { category: phrase.category_id, editPhraseId: phrase.id }
+            })
+          }
+        }}
         onPress={() => {
           void speech.speak(phrase.text, phrase.id)
         }}
