@@ -1,4 +1,5 @@
 export type Category = { id: string; name: string; position: number; fixed: number }
+export type Place = { id: string; name: string; position: number }
 export type Phrase = {
   id: string
   category_id: string
@@ -120,6 +121,25 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       return db.getAllAsync<Category>(
         "SELECT id, name, position, fixed FROM category WHERE id != 'strip' ORDER BY position, id"
       )
+    },
+    places() {
+      return db.getAllAsync<Place>('SELECT id, name, position FROM place ORDER BY position, id')
+    },
+    async selectedPlace() {
+      const place = await db.getFirstAsync<Place>(
+        "SELECT id, name, position FROM place ORDER BY id = (SELECT value FROM setting WHERE key = 'selected_place') DESC, position, id LIMIT 1"
+      )
+      if (!place) throw new Error('No places available')
+      return place
+    },
+    async choosePlace(id: string) {
+      const place = await db.getFirstAsync<Place>('SELECT id, name, position FROM place WHERE id = ?', id)
+      if (!place) throw new Error('Unknown place')
+      await db.runAsync(
+        "INSERT INTO setting (key, value) VALUES ('selected_place', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value",
+        id
+      )
+      notify()
     },
     phrases(categoryId: string) {
       return db.getAllAsync<Phrase>(
