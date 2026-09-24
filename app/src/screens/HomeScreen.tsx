@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import {
   ActionSheetIOS,
@@ -26,6 +27,7 @@ type Props = {
 }
 
 export default function HomeScreen({ bank, speech, boldText }: Props) {
+  const router = useRouter()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [strip, setStrip] = useState<Phrase[]>([])
@@ -128,7 +130,10 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
   }
 
   const choosePlace = () => {
-    if (!places.length) return
+    if (!places.length) {
+      router.push('/settings/places')
+      return
+    }
     ActionSheetIOS.showActionSheetWithOptions(
       { options: [...places.map((place) => place.name), 'Cancel'], cancelButtonIndex: places.length },
       (index) => {
@@ -407,14 +412,12 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Settings"
-            accessibilityState={{ disabled: true }}
-            disabled
+            onPress={() => router.push('/settings')}
             style={{
               width: 44,
               height: oneControlColumn ? controlHeight : 44,
               alignItems: 'center',
-              justifyContent: 'center',
-              opacity: 0.45
+              justifyContent: 'center'
             }}
           >
             <SymbolView name="gearshape" size={22} tintColor={colors.ink} accessible={false} />
