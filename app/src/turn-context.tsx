@@ -10,6 +10,7 @@ import { nativeAccessibilitySource } from './accessibility/native'
 import { createAccessibilityStore } from './accessibility/store'
 import { createBankStore } from './bank/store'
 import starterBank from './content/starter-bank.json'
+import { createTypedListenSession } from './listen/typed-session'
 import { createNamingStore, refreshNaming } from './relay/naming'
 import { createSpeechController } from './speech/controller'
 
@@ -18,6 +19,7 @@ const accessibilityStore = createAccessibilityStore(nativeAccessibilitySource)
 type Ready = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
+  listen: ReturnType<typeof createTypedListenSession>
   typesafeNamed: boolean
 }
 
@@ -37,6 +39,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let active = true
+    let listen: ReturnType<typeof createTypedListenSession> | null = null
     async function start() {
       const db = await SQLite.openDatabaseAsync('turn.db')
       const bank = createBankStore(db, starterBank)
@@ -47,7 +50,12 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       const speech = createSpeechController({ speak: Speech.speak, stop: Speech.stop }, (id) => {
         void bank.recordTap(id)
       })
-      setReady({ bank, speech, typesafeNamed })
+      listen = createTypedListenSession(bank)
+      await listen.ready
+      if (!active) {
+        return
+      }
+      setReady({ bank, speech, listen, typesafeNamed })
       const extra = Constants.expoConfig?.extra
       const relayUrl = typeof extra?.relayUrl === 'string' ? extra.relayUrl : ''
       if (relayUrl) {
@@ -69,6 +77,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
     })
     return () => {
       active = false
+      listen?.dispose()
     }
   }, [])
 
