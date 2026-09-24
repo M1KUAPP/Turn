@@ -1,20 +1,20 @@
-# Graph Report - RevenueCat-issue-33 (2026-09-24)
+# Graph Report - RevenueCat-issue-38 (2026-09-24)
 
 ## Corpus Check
 
-- 288 files · ~737,474 words
+- 290 files · ~739,461 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 16 file(s) not represented in the graph (top: (none) 7, .jsonl 5, .example 2)
 
 ## Summary
 
-- 4065 nodes · 4904 edges · 278 communities (264 shown, 7 thin omitted)
+- 4074 nodes · 4924 edges · 280 communities (266 shown, 7 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 25 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `45e54f0a`
+- Built from commit: `0fbb67c2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -242,7 +242,7 @@
 - Tasks
 - theme.test.ts
 - App.tsx
-- native.ts
+- react-native
 - shortlist.ts
 - Tasks
 - app/tsconfig.json
@@ -291,6 +291,8 @@
 - Turn home bands implementation plan
 - shortlist-speed.test.ts
 - Budget
+- bank/store.ts
+- Typed composer implementation plan
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -322,7 +324,7 @@
 
 - None detected.
 
-## Communities (278 total, 7 thin omitted)
+## Communities (280 total, 7 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -826,7 +828,7 @@ Nodes (18): Assumptions and open questions, At a glance, Build plan, Categories 
 
 ### Community 106 - "Turn technical requirements"
 
-Cohesion: 0.20
+Cohesion: 0.22
 Nodes (9): Environments and release, Open technical questions, Overview, Relay API, Requirements traceability, See also, System architecture, Testing (+1 more)
 
 ### Community 107 - "Next Gen ideation log"
@@ -1406,15 +1408,15 @@ Nodes (23): Decisions, Design, Global constraints, Out of scope, Rejected altern
 
 ### Community 224 - "theme.test.ts"
 
-Cohesion: 0.15
-Nodes (17): ColorName, colors, colorValues, scaledTextStyle(), textStyle(), typography, Props, TurnText() (+9 more)
+Cohesion: 0.14
+Nodes (19): ColorName, colorValues, scaledTextStyle(), textStyle(), typography, Props, TurnText(), Props (+11 more)
 
 ### Community 225 - "App.tsx"
 
 Cohesion: 0.10
-Nodes (21): accessibilityStore, Ready, nativeModulesDir, expo, autolinking, @types/node, typescript, vitest (+13 more)
+Nodes (20): accessibilityStore, Ready, nativeModulesDir, expo, autolinking, @types/node, typescript, vitest (+12 more)
 
-### Community 226 - "native.ts"
+### Community 226 - "react-native"
 
 Cohesion: 0.19
 Nodes (12): nativeAccessibilitySource, AccessibilityPreferences, AccessibilitySource, createAccessibilityStore(), apply(), publish(), subscribe(), defaults (+4 more)
@@ -1621,8 +1623,8 @@ Nodes (7): Any, fail(), send(), Foundation, NaturalLanguage, Never, String
 
 ### Community 272 - "HomeScreen.tsx"
 
-Cohesion: 0.16
-Nodes (14): BankDatabase, Category, localDay(), Phrase, Place, StarterBank, homeLayout(), pageOffset() (+6 more)
+Cohesion: 0.32
+Nodes (8): colors, homeLayout(), pageOffset(), HomeScreen(), Props, Props, Reply, ReplyRow()
 
 ### Community 273 - "agreement.ts"
 
@@ -1644,10 +1646,20 @@ Nodes (4): Task 1: Persist the chosen place and read the strip, Task 2: Lay out 
 Cohesion: 0.47
 Nodes (5): bank, lines, taps, vocabulary, words()
 
+### Community 278 - "bank/store.ts"
+
+Cohesion: 0.24
+Nodes (7): BankDatabase, Category, localDay(), Phrase, Place, StarterBank, databases
+
+### Community 279 - "Typed composer implementation plan"
+
+Cohesion: 0.29
+Nodes (5): Task 1: Store typed phrases and find prefix matches, Task 2: Speak text that is not saved, Task 3: Composer and row behavior, Task 4: Handoff, Typed composer implementation plan
+
 ## Knowledge Gaps
 
-- **2839 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2834 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3050 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2844 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2839 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3054 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -1656,12 +1668,12 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `startingPolicy` connect `replay.ts` to `calibration.ts`, `shortlist.ts`, `helpers.ts`, `shared/src/jev.ts`, `score.ts`, `embeddings.ts`, `src/index.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Turn home bands implementation plan`, `Layout`, `Components`, `Screens`, `Words on screen`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **Why does `Ranking` connect `shortlist.ts` to `calibration.ts`, `shared/src/jev.ts`, `score.ts`, `src/index.ts`, `replay.ts`?**
   _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `scoreLines()` connect `score.ts` to `calibration.ts`, `shortlist.ts`, `replay.ts`, `report.ts`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2839 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2844 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
