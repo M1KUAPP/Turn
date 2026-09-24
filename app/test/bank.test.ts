@@ -110,4 +110,120 @@ describe('bank store', () => {
       vi.unstubAllGlobals()
     }
   })
+
+  test('saves typed phrases with trimming, deduplication, length limits, and bank order', async () => {
+    const store = createBankStore(database(), starterBank, () => new Date(2026, 8, 23))
+    await store.initialize()
+
+    let changeCount = 0
+    store.subscribe(() => {
+      changeCount++
+    })
+
+    // Returns null for empty or whitespace-only text
+    expect(await store.saveTypedPhrase('')).toBeNull()
+    expect(await store.saveTypedPhrase('   ')).toBeNull()
+    expect(changeCount).toBe(0)
+
+    // Returns null for text longer than 200 characters after trimming
+    const text200 = 'a'.repeat(200)
+    const text201 = 'a'.repeat(201)
+    expect(await store.saveTypedPhrase(text201)).toBeNull()
+    expect(await store.saveTypedPhrase(`  ${text201}  `)).toBeNull()
+    expect(changeCount).toBe(0)
+
+    // Saves valid 200-character phrase and creates Typed category lazily
+    const categoriesBefore = await store.categories()
+    expect(categoriesBefore.some((c) => c.id === 'typed')).toBe(false)
+
+    const saved200 = await store.saveTypedPhrase(`  ${text200}  `)
+    expect(saved200).not.toBeNull()
+    expect(saved200?.text).toBe(text200)
+    expect(saved200?.category_id).toBe('typed')
+    expect(saved200?.position).toBe(0)
+    expect(saved200?.id).toBeTruthy()
+    expect(changeCount).toBe(1)
+
+    const categoriesAfter = await store.categories()
+    const typedCategory = categoriesAfter.find((c) => c.id === 'typed')
+    expect(typedCategory).toBeDefined()
+    expect(typedCategory?.name).toBe('Typed')
+
+    // Appends subsequent phrases in bank order with unique ids
+    const savedSecond = await store.saveTypedPhrase('A unique second phrase')
+    expect(savedSecond).not.toBeNull()
+    expect(savedSecond?.category_id).toBe('typed')
+    expect(savedSecond?.position).toBe(1)
+    expect(savedSecond?.id).not.toBe(saved200?.id)
+    expect(changeCount).toBe(2)
+
+    const typedPhrases = await store.phrases('typed')
+    expect(typedPhrases.map((p) => p.text)).toEqual([text200, 'A unique second phrase'])
+
+    // Deduplicates across the whole bank after trimming and ignoring case
+    // 1. Existing starter bank phrase ('Yes' in Quick)
+    const duplicateYes = await store.saveTypedPhrase('   yEs   ')
+    expect(duplicateYes?.id).toBe('yes')
+    expect(duplicateYes?.category_id).toBe('quick')
+    expect(changeCount).toBe(2)
+
+    // 2. Existing strip phrase ("Wait, I'm typing")
+    const duplicateStrip = await store.saveTypedPhrase("  wait, i'm typing  ")
+    expect(duplicateStrip?.id).toBe('wait-im-typing')
+    expect(duplicateStrip?.category_id).toBe('strip')
+    expect(changeCount).toBe(2)
+
+    // 3. Existing typed phrase ('A unique second phrase')
+    const duplicateTyped = await store.saveTypedPhrase('a UNIQUE second phrase')
+    expect(duplicateTyped?.id).toBe(savedSecond?.id)
+    expect(changeCount).toBe(2)
+  })
+
+  test('matches phrases by word prefix with current place priority, bank order ties, strip excluded, max 6', async () => {
+    const store = createBankStore(database(), starterBank, () => new Date(2026, 8, 23))
+    await store.initialize()
+
+    // Empty or whitespace-only input returns empty array
+    expect(await store.typeMatches('', 'home')).toEqual([])
+    expect(await store.typeMatches('   ', 'home')).toEqual([])
+
+    // At Home, typing "wa" matches phrases whose words begin with "wa"
+    // "Wait, I'm typing" in strip must be excluded.
+    // "Water, please" (tied to Home) should come first.
+    const homeMatches = await store.typeMatches('wa', 'home')
+    expect(homeMatches).toHaveLength(6)
+    expect(homeMatches.some((p) => p.category_id === 'strip')).toBe(false)
+    expect(homeMatches.some((p) => p.text === "Wait, I'm typing")).toBe(false)
+    expect(homeMatches[0].text).toBe('Water, please')
+
+    // At Clinic, "Water, please" is not tied to clinic, so phrases tied to clinic come first
+    const clinicMatches = await store.typeMatches('wa', 'clinic')
+    expect(clinicMatches).toHaveLength(6)
+    expect(clinicMatches.some((p) => p.category_id === 'strip')).toBe(false)
+    expect(['It was hard', 'How long is the wait?', "I'm waiting for my ride"]).toContain(clinicMatches[0].text)
+
+    // Without place, bank order breaks ties
+    const noPlaceMatches = await store.typeMatches('wa', null)
+    expect(noPlaceMatches).toHaveLength(6)
+    expect(noPlaceMatches.some((p) => p.category_id === 'strip')).toBe(false)
+    // First non-strip "wa" phrase in bank order is "No, I don't want that" from 'care'
+    expect(noPlaceMatches[0].text).toBe("No, I don't want that")
+
+    // Multi-word input: current typed word is the last word
+    const multiWordMatches = await store.typeMatches('I want wa', 'home')
+    expect(multiWordMatches.map((p) => p.id)).toEqual(homeMatches.map((p) => p.id))
+
+    // Matching words in the middle of a phrase
+    const pleaseMatches = await store.typeMatches('ple', 'home')
+    expect(pleaseMatches.some((p) => p.text === 'Water, please')).toBe(true)
+
+    // Substring in middle of word does not match
+    const noSubstrings = await store.typeMatches('ter', 'home')
+    expect(noSubstrings.some((p) => p.text === 'Water, please')).toBe(false)
+
+    // Matches saved typed phrases as well
+    await store.saveTypedPhrase('Waffles for breakfast')
+    const matchesWithTyped = await store.typeMatches('waf', 'home')
+    expect(matchesWithTyped.some((p) => p.text === 'Waffles for breakfast')).toBe(true)
+  })
 })

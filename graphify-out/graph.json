@@ -459,6 +459,19 @@
       "source_location": "L5"
     },
     {
+      "id": "app_src_screens_typedcomposer_props",
+      "label": "Props",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 224,
+      "community_name": "theme.test.ts",
+      "file_type": "code",
+      "norm_label": "props",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L7"
+    },
+    {
       "id": "app_app_ready",
       "label": "Ready",
       "_callable": true,
@@ -478,7 +491,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "accessibilitypreferences",
       "source_file": "app/src/accessibility/store.ts",
@@ -491,7 +504,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "accessibilitysource",
       "source_file": "app/src/accessibility/store.ts",
@@ -1083,71 +1096,6 @@
       "source_location": "L6"
     },
     {
-      "id": "app_src_bank_store_bankdatabase",
-      "label": "BankDatabase",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "bankdatabase",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L23"
-    },
-    {
-      "id": "app_src_bank_store_category",
-      "label": "Category",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "category",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_src_bank_store_phrase",
-      "label": "Phrase",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "phrase",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "app_src_bank_store_place",
-      "label": "Place",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "place",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L2"
-    },
-    {
-      "id": "app_src_bank_store_starterbank",
-      "label": "StarterBank",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "starterbank",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L13"
-    },
-    {
       "id": "app_src_screens_homescreen_props",
       "label": "Props",
       "_callable": true,
@@ -1158,7 +1106,7 @@
       "file_type": "code",
       "norm_label": "props",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L12"
+      "source_location": "L22"
     },
     {
       "id": "app_src_screens_replyrow_props",
@@ -1237,6 +1185,71 @@
       "norm_label": "budget",
       "source_file": "worker/src/budget.ts",
       "source_location": "L4"
+    },
+    {
+      "id": "app_src_bank_store_bankdatabase",
+      "label": "BankDatabase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "bankdatabase",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_src_bank_store_category",
+      "label": "Category",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "category",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_src_bank_store_phrase",
+      "label": "Phrase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "phrase",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "app_src_bank_store_place",
+      "label": "Place",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "place",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L2"
+    },
+    {
+      "id": "app_src_bank_store_starterbank",
+      "label": "StarterBank",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "starterbank",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L13"
     },
     {
       "id": "eval_src_data_checklabels",
@@ -2655,6 +2668,18 @@
       "source_location": "L11"
     },
     {
+      "id": "app_src_screens_typedcomposer_typedcomposer",
+      "label": "TypedComposer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 224,
+      "community_name": "theme.test.ts",
+      "file_type": "code",
+      "norm_label": "typedcomposer()",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L18"
+    },
+    {
       "id": "app_test_theme_test_contrast",
       "label": "contrast()",
       "_callable": true,
@@ -2684,7 +2709,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "readpreferences()",
       "source_file": "app/src/accessibility/native.ts",
@@ -2696,7 +2721,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "createaccessibilitystore()",
       "source_file": "app/src/accessibility/store.ts",
@@ -2708,7 +2733,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "apply()",
       "source_file": "app/src/accessibility/store.ts",
@@ -2720,7 +2745,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "publish()",
       "source_file": "app/src/accessibility/store.ts",
@@ -2732,7 +2757,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "subscribe()",
       "source_file": "app/src/accessibility/store.ts",
@@ -4721,18 +4746,6 @@
       "source_location": "L16"
     },
     {
-      "id": "app_src_bank_store_localday",
-      "label": "localDay()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "localday()",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L59"
-    },
-    {
       "id": "app_src_screens_home_layout_homelayout",
       "label": "homeLayout()",
       "_callable": true,
@@ -4766,7 +4779,7 @@
       "file_type": "code",
       "norm_label": "homescreen()",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L18"
+      "source_location": "L28"
     },
     {
       "id": "app_src_screens_replyrow_replyrow",
@@ -4778,19 +4791,7 @@
       "file_type": "code",
       "norm_label": "replyrow()",
       "source_file": "app/src/screens/ReplyRow.tsx",
-      "source_location": "L17"
-    },
-    {
-      "id": "app_test_bank_test_database",
-      "label": "database()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "database()",
-      "source_file": "app/test/bank.test.ts",
-      "source_location": "L8"
+      "source_location": "L18"
     },
     {
       "id": "eval_src_agreement_agreementof",
@@ -4899,6 +4900,30 @@
       "norm_label": ".take()",
       "source_file": "worker/src/budget.ts",
       "source_location": "L18"
+    },
+    {
+      "id": "app_src_bank_store_localday",
+      "label": "localDay()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "localday()",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L59"
+    },
+    {
+      "id": "app_test_bank_test_database",
+      "label": "database()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "database()",
+      "source_file": "app/test/bank.test.ts",
+      "source_location": "L8"
     },
     {
       "id": "docs_references_markdown_style",
@@ -7910,18 +7935,6 @@
       "norm_label": "what the app does",
       "source_file": "docs/IDEA.md",
       "source_location": "L94"
-    },
-    {
-      "id": "docs_trd",
-      "label": "TRD.md",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "Turn technical requirements",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "trd.md",
-      "source_file": "docs/TRD.md",
-      "source_location": "L1"
     },
     {
       "id": "docs_trd_environments_and_release",
@@ -25006,17 +25019,6 @@
       "source_location": "L1"
     },
     {
-      "id": "app_src_constants_theme_colors",
-      "label": "colors",
-      "_origin": "ast",
-      "community": 224,
-      "community_name": "theme.test.ts",
-      "file_type": "code",
-      "norm_label": "colors",
-      "source_file": "app/src/constants/theme.ts",
-      "source_location": "L25"
-    },
-    {
       "id": "app_src_constants_theme_colorvalues",
       "label": "colorValues",
       "_origin": "ast",
@@ -25047,6 +25049,17 @@
       "file_type": "code",
       "norm_label": "turntext.tsx",
       "source_file": "app/src/screens/TurnText.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_src_screens_typedcomposer",
+      "label": "TypedComposer.tsx",
+      "_origin": "ast",
+      "community": 224,
+      "community_name": "theme.test.ts",
+      "file_type": "code",
+      "norm_label": "typedcomposer.tsx",
+      "source_file": "app/src/screens/TypedComposer.tsx",
       "source_location": "L1"
     },
     {
@@ -25114,6 +25127,17 @@
       "norm_label": "yamlblocks",
       "source_file": "app/test/theme.test.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "ref_expo_symbols",
+      "label": "expo-symbols",
+      "_origin": "ast",
+      "community": 224,
+      "community_name": "theme.test.ts",
+      "file_type": "concept",
+      "norm_label": "expo-symbols",
+      "source_file": "app/package.json",
+      "source_location": "L24"
     },
     {
       "id": "ref_react",
@@ -25358,17 +25382,6 @@
       "source_location": "L23"
     },
     {
-      "id": "ref_expo_symbols",
-      "label": "expo-symbols",
-      "_origin": "ast",
-      "community": 225,
-      "community_name": "App.tsx",
-      "file_type": "concept",
-      "norm_label": "expo-symbols",
-      "source_file": "app/package.json",
-      "source_location": "L24"
-    },
-    {
       "id": "ref_react_native_safe_area_context",
       "label": "react-native-safe-area-context",
       "_origin": "ast",
@@ -25395,7 +25408,7 @@
       "label": "native.ts",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "native.ts",
       "source_file": "app/src/accessibility/native.ts",
@@ -25406,7 +25419,7 @@
       "label": "nativeAccessibilitySource",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "nativeaccessibilitysource",
       "source_file": "app/src/accessibility/native.ts",
@@ -25417,7 +25430,7 @@
       "label": "accessibility/store.ts",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "accessibility/store.ts",
       "source_file": "app/src/accessibility/store.ts",
@@ -25428,7 +25441,7 @@
       "label": "defaults",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "defaults",
       "source_file": "app/src/accessibility/store.ts",
@@ -25439,7 +25452,7 @@
       "label": "keys",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "keys",
       "source_file": "app/src/accessibility/store.ts",
@@ -25450,7 +25463,7 @@
       "label": "accessibility-native.test.ts",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "accessibility-native.test.ts",
       "source_file": "app/test/accessibility-native.test.ts",
@@ -25461,7 +25474,7 @@
       "label": "awaitedPreferences",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "awaitedpreferences",
       "source_file": "app/test/accessibility-native.test.ts",
@@ -25472,7 +25485,7 @@
       "label": "accessibility-store.test.ts",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "accessibility-store.test.ts",
       "source_file": "app/test/accessibility-store.test.ts",
@@ -25483,7 +25496,7 @@
       "label": "initial",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "code",
       "norm_label": "initial",
       "source_file": "app/test/accessibility-store.test.ts",
@@ -25494,7 +25507,7 @@
       "label": "react-native",
       "_origin": "ast",
       "community": 226,
-      "community_name": "native.ts",
+      "community_name": "react-native",
       "file_type": "concept",
       "norm_label": "react-native",
       "source_file": "app/package.json",
@@ -31983,15 +31996,15 @@
       "source_location": ""
     },
     {
-      "id": "app_src_bank_store",
-      "label": "bank/store.ts",
+      "id": "app_src_constants_theme_colors",
+      "label": "colors",
       "_origin": "ast",
       "community": 272,
       "community_name": "HomeScreen.tsx",
       "file_type": "code",
-      "norm_label": "bank/store.ts",
-      "source_file": "app/src/bank/store.ts",
-      "source_location": "L1"
+      "norm_label": "colors",
+      "source_file": "app/src/constants/theme.ts",
+      "source_location": "L25"
     },
     {
       "id": "app_src_screens_home_layout",
@@ -32025,28 +32038,6 @@
       "norm_label": "replyrow.tsx",
       "source_file": "app/src/screens/ReplyRow.tsx",
       "source_location": "L1"
-    },
-    {
-      "id": "app_test_bank_test",
-      "label": "bank.test.ts",
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "bank.test.ts",
-      "source_file": "app/test/bank.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_test_bank_test_databases",
-      "label": "databases",
-      "_origin": "ast",
-      "community": 272,
-      "community_name": "HomeScreen.tsx",
-      "file_type": "code",
-      "norm_label": "databases",
-      "source_file": "app/test/bank.test.ts",
-      "source_location": "L6"
     },
     {
       "id": "app_test_home_layout_test",
@@ -32265,6 +32256,123 @@
       "file_type": "code",
       "norm_label": "budget.ts",
       "source_file": "worker/src/budget.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_src_bank_store",
+      "label": "bank/store.ts",
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "bank/store.ts",
+      "source_file": "app/src/bank/store.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_test_bank_test",
+      "label": "bank.test.ts",
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "bank.test.ts",
+      "source_file": "app/test/bank.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_test_bank_test_databases",
+      "label": "databases",
+      "_origin": "ast",
+      "community": 278,
+      "community_name": "bank/store.ts",
+      "file_type": "code",
+      "norm_label": "databases",
+      "source_file": "app/test/bank.test.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "docs_plans_0029_turn_typed_composer",
+      "label": "0029-turn-typed-composer.md",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "0029-turn-typed-composer.md",
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_plans_0029_turn_typed_composer_task_1_store_typed_phrases_and_find_prefix_matches",
+      "label": "Task 1: Store typed phrases and find prefix matches",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 1: store typed phrases and find prefix matches",
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "docs_plans_0029_turn_typed_composer_task_2_speak_text_that_is_not_saved",
+      "label": "Task 2: Speak text that is not saved",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 2: speak text that is not saved",
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "docs_plans_0029_turn_typed_composer_task_3_composer_and_row_behavior",
+      "label": "Task 3: Composer and row behavior",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 3: composer and row behavior",
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "docs_plans_0029_turn_typed_composer_task_4_handoff",
+      "label": "Task 4: Handoff",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 4: handoff",
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
+      "label": "Typed composer implementation plan",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "typed composer implementation plan",
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_trd",
+      "label": "TRD.md",
+      "_origin": "ast",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "trd.md",
+      "source_file": "docs/TRD.md",
       "source_location": "L1"
     },
     {
@@ -48869,18 +48977,6 @@
     },
     {
       "source": "app_src_screens_homescreen_homescreen",
-      "target": "app_src_screens_home_layout_homelayout",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L32",
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen_homescreen",
       "target": "app_src_screens_home_layout_pageoffset",
       "relation": "calls",
       "_origin": "ast",
@@ -48888,7 +48984,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L84",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen_homescreen",
+      "target": "app_src_screens_home_layout_homelayout",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -48901,6 +49009,18 @@
       "context": "call",
       "source_file": "app/src/screens/TurnText.tsx",
       "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer_typedcomposer",
+      "target": "app_src_constants_theme_scaledtextstyle",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -53106,18 +53226,6 @@
     },
     {
       "source": "app_src_screens_homescreen",
-      "target": "app_src_screens_turntext_turntext",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L10",
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
       "target": "app_src_bank_store_category",
       "relation": "imports",
       "_origin": "ast",
@@ -53125,7 +53233,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -53137,7 +53245,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -53149,7 +53257,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -53161,7 +53269,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -53173,7 +53281,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L6",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -53185,7 +53293,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L7",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -53197,7 +53305,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L8",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -53209,7 +53317,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L8",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -53221,7 +53329,31 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L9",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_screens_turntext_turntext",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_screens_typedcomposer_typedcomposer",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -53282,6 +53414,42 @@
       "context": "import",
       "source_file": "app/src/screens/TurnText.tsx",
       "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_constants_theme_colors",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_constants_theme_scaledtextstyle",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_screens_turntext_turntext",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -59827,6 +59995,80 @@
     },
     {
       "source": "app_src_screens_homescreen",
+      "target": "ref_react_native_safe_area_context",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_bank_store",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L14",
+      "type_only": true,
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_constants_theme",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_speech_controller",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L16",
+      "type_only": true,
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_screens_home_layout",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
+      "target": "app_src_screens_replyrow",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
       "target": "app_src_screens_turntext",
       "relation": "imports_from",
       "_origin": "ast",
@@ -59834,7 +60076,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L10",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -59851,6 +60093,18 @@
     },
     {
       "source": "app_src_screens_homescreen",
+      "target": "app_src_screens_typedcomposer",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/HomeScreen.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_homescreen",
       "target": "ref_react_native",
       "relation": "imports_from",
       "_origin": "ast",
@@ -59859,80 +60113,6 @@
       "context": "import",
       "source_file": "app/src/screens/HomeScreen.tsx",
       "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
-      "target": "ref_react_native_safe_area_context",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L4",
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
-      "target": "app_src_bank_store",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L5",
-      "type_only": true,
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
-      "target": "app_src_constants_theme",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
-      "target": "app_src_speech_controller",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L7",
-      "type_only": true,
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
-      "target": "app_src_screens_home_layout",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "app_src_screens_homescreen",
-      "target": "app_src_screens_replyrow",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -60019,6 +60199,66 @@
       "context": "import",
       "source_file": "app/src/screens/TurnText.tsx",
       "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "ref_expo_symbols",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "ref_react_native",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_constants_theme",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_screens_turntext",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -63172,7 +63412,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L12",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -63183,7 +63423,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L18",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -63194,7 +63434,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/ReplyRow.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -63239,6 +63479,28 @@
       "confidence_score": 1.0,
       "source_file": "app/src/screens/TurnText.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_screens_typedcomposer_typedcomposer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "app_src_screens_typedcomposer",
+      "target": "app_src_screens_typedcomposer_props",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/src/screens/TypedComposer.tsx",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -73139,6 +73401,61 @@
       "confidence_score": 1.0,
       "source_file": "docs/plans/0028-turn-home-bands.md",
       "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0029_turn_typed_composer",
+      "target": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
+      "target": "docs_plans_0029_turn_typed_composer_task_1_store_typed_phrases_and_find_prefix_matches",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
+      "target": "docs_plans_0029_turn_typed_composer_task_2_speak_text_that_is_not_saved",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
+      "target": "docs_plans_0029_turn_typed_composer_task_3_composer_and_row_behavior",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
+      "target": "docs_plans_0029_turn_typed_composer_task_4_handoff",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -103575,6 +103892,28 @@
       "weight": 1.0
     },
     {
+      "source": "docs_plans_0029_turn_typed_composer",
+      "target": "docs_design",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_plans_0029_turn_typed_composer",
+      "target": "docs_trd",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/plans/0029-turn-typed-composer.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
       "source": "docs_research_0007_ideation",
       "target": "docs_research_0008_idea_evidence",
       "relation": "references",
@@ -103898,5 +104237,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "45e54f0a214a20ec3936e32321bb5a8c41b2bee2"
+  "built_at_commit": "0fbb67c24a6ff7403e5fa10484afb209a63af935"
 }
