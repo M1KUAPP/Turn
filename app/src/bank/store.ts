@@ -1,4 +1,5 @@
 export type Category = { id: string; name: string; position: number; fixed: number }
+export type Place = { id: string; name: string; position: number }
 export type Phrase = {
   id: string
   category_id: string
@@ -121,6 +122,25 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         "SELECT id, name, position, fixed FROM category WHERE id != 'strip' ORDER BY position, id"
       )
     },
+    places() {
+      return db.getAllAsync<Place>('SELECT id, name, position FROM place ORDER BY position, id')
+    },
+    async selectedPlace() {
+      const place = await db.getFirstAsync<Place>(
+        "SELECT id, name, position FROM place ORDER BY id = (SELECT value FROM setting WHERE key = 'selected_place') DESC, position, id LIMIT 1"
+      )
+      if (!place) throw new Error('No places available')
+      return place
+    },
+    async choosePlace(id: string) {
+      const place = await db.getFirstAsync<Place>('SELECT id, name, position FROM place WHERE id = ?', id)
+      if (!place) throw new Error('Unknown place')
+      await db.runAsync(
+        "INSERT INTO setting (key, value) VALUES ('selected_place', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value",
+        id
+      )
+      notify()
+    },
     phrases(categoryId: string) {
       return db.getAllAsync<Phrase>(
         categoryId === 'all'
@@ -147,6 +167,150 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
     async updatePhraseText(phraseId: string, text: string) {
       await db.runAsync('UPDATE phrase SET text = ?, reviewed = 1 WHERE id = ?', text, phraseId)
       notify()
+    },
+    async saveTypedPhrase(text: string): Promise<Phrase | null> {
+      const trimmed = text.trim()
+      if (trimmed.length < 1 || trimmed.length > 200) {
+        return null
+      }
+
+      let notifyNeeded = false
+      let result: Phrase | null = null
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        // Compare duplicate phrase text across the whole bank after trimming and ignoring case
+        const existing = await tx.getFirstAsync<Phrase>(
+          `SELECT p.* FROM phrase p
+           JOIN category c ON c.id = p.category_id
+           WHERE LOWER(TRIM(p.text)) = LOWER(?)
+           ORDER BY c.position, p.position, p.id
+           LIMIT 1`,
+          trimmed
+        )
+        if (existing) {
+          result = existing
+          return
+        }
+
+        const allPhrases = await tx.getAllAsync<Phrase>(
+          `SELECT p.* FROM phrase p
+           JOIN category c ON c.id = p.category_id
+           ORDER BY c.position, p.position, p.id`
+        )
+        const normalized = trimmed.toLowerCase()
+        const jsMatch = allPhrases.find((p) => p.text.trim().toLowerCase() === normalized)
+        if (jsMatch) {
+          result = jsMatch
+          return
+        }
+
+        // Create the Typed category lazily on first insertion
+        const existingCategory = await tx.getFirstAsync<{ id: string }>("SELECT id FROM category WHERE id = 'typed'")
+        if (!existingCategory) {
+          const maxCat = await tx.getFirstAsync<{ max_pos: number | null }>(
+            'SELECT MAX(position) AS max_pos FROM category'
+          )
+          const catPosition = (maxCat?.max_pos ?? -1) + 1
+          await tx.runAsync(
+            'INSERT INTO category (id, name, position, fixed) VALUES (?, ?, ?, ?)',
+            'typed',
+            'Typed',
+            catPosition,
+            0
+          )
+        }
+
+        const maxPos = await tx.getFirstAsync<{ max_pos: number | null }>(
+          "SELECT MAX(position) AS max_pos FROM phrase WHERE category_id = 'typed'"
+        )
+        const position = (maxPos?.max_pos ?? -1) + 1
+        const id =
+          typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+            ? crypto.randomUUID()
+            : `typed-${now().getTime()}-${Math.random().toString(36).slice(2, 9)}`
+        const createdAt = now().getTime()
+
+        await tx.runAsync(
+          'INSERT INTO phrase (id, category_id, text, position, fixed, reviewed, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+          id,
+          'typed',
+          trimmed,
+          position,
+          0,
+          1,
+          createdAt
+        )
+
+        result = {
+          id,
+          category_id: 'typed',
+          text: trimmed,
+          position,
+          fixed: 0,
+          reviewed: 1,
+          created_at: createdAt
+        }
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+
+      return result
+    },
+    async typeMatches(input: string, placeId?: string | null): Promise<Phrase[]> {
+      const trimmed = input.trim()
+      if (!trimmed) return []
+
+      const words = trimmed.match(/[\p{L}\p{N}']+/gu)
+      if (!words || words.length === 0) return []
+
+      const currentWord = words[words.length - 1].toLowerCase()
+      if (!currentWord) return []
+
+      const normalizedCurrent = currentWord.replace(/['’]/g, '')
+
+      type CandidateRow = Phrase & { place_match: number }
+      const rows = await db.getAllAsync<CandidateRow>(
+        `SELECT p.id, p.category_id, p.text, p.position, p.fixed, p.reviewed, p.created_at,
+           EXISTS(
+             SELECT 1 FROM phrase_place pp
+             WHERE pp.phrase_id = p.id AND pp.place_id = ?
+           ) AS place_match
+         FROM phrase p
+         JOIN category c ON c.id = p.category_id
+         WHERE c.id != 'strip'
+         ORDER BY place_match DESC, c.position, p.position, p.id`,
+        placeId ?? ''
+      )
+
+      const matches: Phrase[] = []
+      for (const row of rows) {
+        const phraseWords = row.text.match(/[\p{L}\p{N}']+/gu) || []
+        const hasPrefixMatch = phraseWords.some((w) => {
+          const lower = w.toLowerCase()
+          return (
+            lower.startsWith(currentWord) ||
+            (normalizedCurrent.length > 0 && lower.replace(/['’]/g, '').startsWith(normalizedCurrent))
+          )
+        })
+
+        if (hasPrefixMatch) {
+          matches.push({
+            id: row.id,
+            category_id: row.category_id,
+            text: row.text,
+            position: row.position,
+            fixed: row.fixed,
+            reviewed: row.reviewed,
+            created_at: row.created_at
+          })
+          if (matches.length === 6) break
+        }
+      }
+
+      return matches
     },
     async seedDebugPhrases() {
       if (!__DEV__) return
