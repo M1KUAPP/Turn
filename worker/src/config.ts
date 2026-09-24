@@ -3,7 +3,7 @@ import { startingPolicy, type Policy } from '@turn/shared/row'
 import { isRecord } from './request'
 
 /** Whether a switch is on: only `true` is, so a typo turns it off. */
-const isOn = (value: unknown) => String(value) === 'true'
+export const isOn = (value: unknown) => String(value) === 'true'
 
 /** Whether a value can take the place of one of the policy's, whose starting value sets its type. */
 const fits = (given: unknown, start: Policy[keyof Policy]) => {
@@ -29,17 +29,25 @@ function readPolicy(value: unknown): Policy {
   return { ...startingPolicy, ...changes }
 }
 
+/** A var that must be a whole number, which throws otherwise, so a mistake shows at the next request. */
+function wholeNumber(env: Env, name: 'FREE_LINES' | 'JEV_DAILY_CALLS') {
+  const value = String(env[name])
+  if (!/^\d+$/.test(value)) throw new Error(`${name} is not a whole number`)
+  return Number(value)
+}
+
 /**
- * The configuration, read from the vars at every request, so changing one needs no app build (ROW-8, CONSENT-7). It
- * throws without `JEV_MODEL`, since the SDK would then pick a model of its own (SEC-2).
+ * The configuration but the user's own free lines, read from the vars at every request, so changing one needs no app
+ * build (ROW-8, CONSENT-7), with the free lines each user gets and the calls to Jev all users share in a UTC day
+ * (SEC-5). It throws without `JEV_MODEL`, since the SDK would then pick a model of its own (SEC-2).
  */
-export function readConfig(env: Env): Config {
+export function readConfig(env: Env): Omit<Config, 'freeLinesLeft'> & { freeLines: number; dailyCalls: number } {
   if (!env.JEV_MODEL) throw new Error('JEV_MODEL is unset')
-  if (!/^\d+$/.test(String(env.FREE_LINES))) throw new Error('FREE_LINES is not a whole number')
   return {
     jevOn: isOn(env.JEV_ON),
     typesafeNamed: isOn(env.TYPESAFE_NAMED),
-    freeLinesLeft: Number(env.FREE_LINES),
+    freeLines: wholeNumber(env, 'FREE_LINES'),
+    dailyCalls: wholeNumber(env, 'JEV_DAILY_CALLS'),
     policy: readPolicy(env.POLICY)
   }
 }

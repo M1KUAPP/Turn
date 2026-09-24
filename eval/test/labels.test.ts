@@ -26,9 +26,9 @@ test("lists each line's acceptable replies by bank id, labeled by someone other 
   }
 })
 
-// The first labeling leaves fewer lines with no acceptable reply than EVAL-1's 16, and neither the lines nor the labels
-// change to close the gap (plan 0013, decision 11), so this quota waits for the team's answer in #77.
-test.todo('has at least 16 lines with no acceptable reply (EVAL-1)')
+test('has at least 16 lines with no acceptable reply (EVAL-1)', () => {
+  expect(lines.filter((line) => line.acceptable.length === 0).length).toBeGreaterThanOrEqual(16)
+})
 
 test('has at least 10 lines that share no content word with any acceptable reply (EVAL-1)', () => {
   expect(lines.filter((line) => sharesNoWord(line, phrases)).length).toBeGreaterThanOrEqual(10)

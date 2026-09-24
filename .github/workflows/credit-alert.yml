@@ -1,0 +1,59 @@
+# Reads the relay's logs every 3 hours and opens an issue for the team when Jev's credits run out or go fast
+# (AVAIL-2). worker/README.md describes the rule, the level, and who receives it.
+name: Credit alert
+
+on:
+  schedule:
+    # Minute 17, since the start of an hour is when GitHub's queue is busiest.
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      level:
+        description: "Dollars of Jev's spend in the window that fire the alert; JEV_ALERT_DOLLARS, or the script's, when empty"
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: credit-alert
+
+jobs:
+  alert:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.4.2
+      - name: Read the relay's logs, and open an issue if the alert fires
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          LEVEL: ${{ inputs.level || vars.JEV_ALERT_DOLLARS }}
+          TURN_CF_ACCOUNT_ID: ${{ secrets.TURN_CF_ACCOUNT_ID }}
+          TURN_CF_LOGS_TOKEN: ${{ secrets.TURN_CF_LOGS_TOKEN }}
+        run: |
+          # On its own line, so a failed gh fails the step instead of reading as an open issue.
+          open=$(gh issue list --label credit-alert --state open --json number --jq length)
+          if [ "$open" != 0 ]; then
+            echo "An alert issue is open, so the alert waits until the team closes it."
+            exit 0
+          fi
+          since=$(gh issue list --label credit-alert --state closed --limit 50 --json closedAt \
+            --jq 'map(.closedAt) | max // empty')
+          bun worker/scripts/credits.ts ${LEVEL:+--level "$LEVEL"} ${since:+--since "$since"} --out alert.md
+          if [ -f alert.md ]; then
+            gh label create credit-alert --color D93F0B \
+              --description 'Opened by the credit alert workflow' 2> /dev/null || true
+            # Without the assignees if one can't be assigned, so the alert still opens.
+            gh issue create --title "Jev's credits need attention" --label credit-alert --body-file alert.md \
+              --assignee kymil4,WhiteAvocad0,AlaskanTuna ||
+              gh issue create --title "Jev's credits need attention" --label credit-alert --body-file alert.md
+          fi

@@ -12,8 +12,7 @@ import {
   mockJev,
   postLine,
   send,
-  sha256,
-  user
+  userHash
 } from './helpers'
 
 describe('POST /v1/lines', () => {
@@ -28,7 +27,7 @@ describe('POST /v1/lines', () => {
       topic: { feelings: 0.8, 'body-pain': 0.15, consent: 0.05 },
       scores: { hard: 0.9, well: 0.4, tired: 0.7 },
       policy: startingPolicy,
-      freeLinesLeft: 20,
+      freeLinesLeft: 19,
       ms: { jev: expect.any(Number), total: expect.any(Number) }
     })
     expect(jev).toHaveBeenCalledOnce()
@@ -70,7 +69,7 @@ describe('POST /v1/lines', () => {
       env.DEVICE.getByName(name, options)
     )
     await postLine(lineRequest(), { DEVICE: { getByName } })
-    expect(getByName).toHaveBeenCalledExactlyOnceWith(`user-${await sha256(`test-salt${user}`)}`, {
+    expect(getByName).toHaveBeenCalledExactlyOnceWith(`user-${await userHash()}`, {
       locationHint: 'wnam'
     })
   })
