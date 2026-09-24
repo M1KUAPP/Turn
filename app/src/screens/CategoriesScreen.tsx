@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import type { Category } from '../bank/store'
-import { colors, scaledTextStyle } from '../constants/theme'
+import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
 import TurnText from './TurnText'
 
@@ -21,7 +21,7 @@ type Editor = { id: string | null; name: string }
 
 export default function CategoriesScreen() {
   const router = useRouter()
-  const { ready, boldText, fontScale } = useTurn()
+  const { ready, boldText } = useTurn()
   const bank = ready?.bank
   const [categories, setCategories] = useState<Category[]>([])
   const [editor, setEditor] = useState<Editor | null>(null)
@@ -155,7 +155,8 @@ export default function CategoriesScreen() {
             >
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={`${category.name}, category. Open`}
+                accessibilityLabel={category.name}
+                accessibilityHint="Opens this category's phrases."
                 accessibilityActions={actions}
                 onAccessibilityAction={(event) => {
                   if (event.nativeEvent.actionName === 'open') router.push(`/bank/${category.id}`)
@@ -197,7 +198,7 @@ export default function CategoriesScreen() {
                     <Pressable
                       key={label}
                       accessibilityRole="button"
-                      accessibilityLabel={`${label} ${category.name}`}
+                      accessibilityLabel={label}
                       onPress={action}
                       style={({ pressed }) => ({
                         minHeight: 44,
@@ -232,7 +233,7 @@ export default function CategoriesScreen() {
           </TurnText>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Conversation strip. Open phrases"
+            accessibilityHint="Opens its phrases."
             onPress={() => router.push('/bank/strip')}
             style={({ pressed }) => ({
               minHeight: 52,
@@ -259,7 +260,7 @@ export default function CategoriesScreen() {
         </View>
 
         {error && !editor && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['no-edge'] }}>
+          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
           </TurnText>
         )}
@@ -276,13 +277,18 @@ export default function CategoriesScreen() {
           style={({ pressed }) => ({
             minHeight: 52,
             borderRadius: 26,
-            backgroundColor: pressed ? colors['accent-pressed'] : colors.accent,
+            borderWidth: atCategoryLimit ? 2 : 0,
+            borderColor: colors.edge,
+            backgroundColor: atCategoryLimit ? colors.surface : pressed ? colors['accent-pressed'] : colors.accent,
             alignItems: 'center',
-            justifyContent: 'center',
-            opacity: atCategoryLimit ? 0.45 : 1
+            justifyContent: 'center'
           })}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ color: colors['on-accent'] }}>
+          <TurnText
+            kind="headline"
+            boldText={boldText}
+            style={{ color: atCategoryLimit ? colors['ink-secondary'] : colors['on-accent'] }}
+          >
             Add category
           </TurnText>
         </Pressable>
@@ -324,7 +330,7 @@ export default function CategoriesScreen() {
               </TurnText>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="Save category"
+                accessibilityLabel="Save"
                 accessibilityState={{ disabled: !editor?.name.trim() || saving }}
                 disabled={!editor?.name.trim() || saving}
                 onPress={() => void save()}
@@ -332,11 +338,14 @@ export default function CategoriesScreen() {
                   minWidth: 44,
                   minHeight: 44,
                   alignItems: 'flex-end',
-                  justifyContent: 'center',
-                  opacity: !editor?.name.trim() || saving ? 0.45 : 1
+                  justifyContent: 'center'
                 }}
               >
-                <TurnText kind="body" boldText={boldText} style={{ color: colors.accent }}>
+                <TurnText
+                  kind="body"
+                  boldText={boldText}
+                  style={{ color: !editor?.name.trim() || saving ? colors['ink-secondary'] : colors.accent }}
+                >
                   Save
                 </TurnText>
               </Pressable>
@@ -344,7 +353,6 @@ export default function CategoriesScreen() {
             <TextInput
               autoFocus
               accessibilityLabel="Category name"
-              allowFontScaling={false}
               maxLength={40}
               value={editor?.name ?? ''}
               onChangeText={(name) =>
@@ -354,7 +362,7 @@ export default function CategoriesScreen() {
               placeholderTextColor={colors['ink-secondary']}
               selectionColor={colors.accent}
               style={{
-                ...scaledTextStyle('body', boldText, fontScale),
+                ...textStyle('body', boldText),
                 minHeight: 52,
                 padding: 12,
                 borderWidth: 2,
@@ -370,7 +378,7 @@ export default function CategoriesScreen() {
               </TurnText>
             )}
             {error && (
-              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['no-edge'] }}>
+              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                 {error}
               </TurnText>
             )}
