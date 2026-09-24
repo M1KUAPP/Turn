@@ -25,6 +25,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-status-bar',
     'expo-sqlite',
     'expo-audio',
+    'expo-secure-store',
     ['expo-build-properties', { ios: { enableSceneSupport: true } }],
     ['./plugins/withBoardSplash', { backgroundColor: '#F2F2F7' }],
     ['expo-splash-screen', { backgroundColor: '#F2F2F7', dark: { backgroundColor: '#000000' } }]
