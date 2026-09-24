@@ -1,10 +1,7 @@
 import { startingPolicy } from '@turn/shared/row'
 import { exports } from 'cloudflare:workers'
 import { describe, expect, test } from 'vitest'
-import { expectError, headers, send } from './helpers'
-
-const getConfig = (changes: Parameters<typeof send>[1] = {}, sent: Record<string, string> = headers) =>
-  send(new Request('https://relay.test/v1/config', { headers: sent }), changes)
+import { expectError, getConfig, headers, send } from './helpers'
 
 describe('GET /v1/config', () => {
   test('returns the switches, the free lines, and the starting policy', async () => {
@@ -58,6 +55,10 @@ describe('GET /v1/config', () => {
 
   test.each(['twenty', '', '-1', '2.5'])('answers 500 internal for FREE_LINES %j', async (freeLines) => {
     await expectError(await getConfig({ FREE_LINES: freeLines }), 500, 'internal')
+  })
+
+  test.each(['many', '', '-1', '2.5', undefined])('answers 500 internal for JEV_DAILY_CALLS %j', async (calls) => {
+    await expectError(await getConfig({ JEV_DAILY_CALLS: calls }), 500, 'internal')
   })
 
   test.each([

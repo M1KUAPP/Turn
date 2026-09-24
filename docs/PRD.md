@@ -515,13 +515,13 @@ says how each is built.
   and yes-or-no, pain and consent, and no-shared-word lines are also reported
   apart. Check: run it and read the table.
 - **EVAL-4, Must.** Jev "trails" embeddings only when a paired bootstrap
-  interval for the difference in top-6 accuracy lies wholly below zero;
-  otherwise the README says there's no clear difference. When Jev trails,
-  the script also scores Jev re-ranking the 40 phrases nearest by Apple's
-  sentence embeddings, computed on a Mac as the phone would, since the phone
-  builds the shortlist; if that does better, the phone's shortlist switches
-  to those embeddings, and the README reports both, as the idea's
-  [risks][idea-risks] say. Check: the table shows the interval.
+  interval for the difference in top-6 accuracy lies wholly below zero, and
+  "leads" only when it lies wholly above; otherwise the README says there's no
+  clear difference. When Jev trails, the script also scores Jev re-ranking the
+  40 phrases nearest by Apple's sentence embeddings, computed on a Mac as the
+  phone would, since the phone builds the shortlist; if that does better, the
+  phone's shortlist switches to those embeddings, and the README reports both,
+  as the idea's [risks][idea-risks] say. Check: the table shows the interval.
 - **EVAL-5, Must.** No big button is wrong on a yes-or-no, pain, or consent
   line. If one is, the relay's configuration gives those lines only the
   fixed buttons and the grid. Check: the script lists every big button on

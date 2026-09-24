@@ -1,8 +1,8 @@
 import type { Phrase } from '@turn/shared/shortlist'
 import { expect, test } from 'vitest'
 import { keyword, place, type Ranker } from '../src/rankers'
-import { scoreLines, sharesNoWord, summarize } from '../src/score'
-import { smallBank, waitImTyping } from './small-bank'
+import { bigButtons, kindMatrix, scoreLines, sharesNoWord, summarize, topSixGap } from '../src/score'
+import { noKind, smallBank, waitImTyping } from './small-bank'
 
 const fillers: Phrase[] = Array.from({ length: 30 }, (_, i) => ({
   id: `filler-${i + 1}`,
@@ -36,8 +36,8 @@ const none = {
 }
 const run = () => scoreLines(lines, bank, { place, keyword })
 
-test("picks each line's shortlist of 40 from a fresh bank at the line's place", () => {
-  const [water, physio] = run().lines
+test("picks each line's shortlist of 40 from a fresh bank at the line's place", async () => {
+  const [water, physio] = (await run()).lines
   expect(water.shortlist).toEqual([
     'water-please',
     ...['good-morning', 'im-cold', 'good-night', 'more-please', 'im-full', 'im-tired'],
@@ -51,8 +51,8 @@ test("picks each line's shortlist of 40 from a fresh bank at the line's place", 
   ])
 })
 
-test('scores each ranker by what the user would see', () => {
-  const seen = run().lines.map(({ line, rankers }) => [line.id, rankers.place.outcome, rankers.keyword.outcome])
+test('scores each ranker by what the user would see', async () => {
+  const seen = (await run()).lines.map(({ line, rankers }) => [line.id, rankers.place.outcome, rankers.keyword.outcome])
   expect(seen).toEqual([
     ['water', 'right row', 'right row'],
     ['physio', 'wrong row', 'missed reply'],
@@ -65,26 +65,26 @@ test('scores each ranker by what the user would see', () => {
 const scoring =
   (scores: (shortlist: readonly Phrase[]) => [string, number][]): Ranker =>
   (_line, shortlist) => ({
-    kind: { yes_no: 0, either_or: 0, open: 0, not_a_question: 0 },
+    kind: noKind,
     topic: {},
     scores: new Map(scores(shortlist)),
     onPhone: false
   })
 
-test('orders each ranking by score, keeping its own order among ties', () => {
+test('orders each ranking by score, keeping its own order among ties', async () => {
   const unsorted = scoring(() => [
     ['im-cold', 0.2],
     ['water-please', 0.7],
     ['thank-you', 0.2]
   ])
-  const [water] = scoreLines(lines, bank, { unsorted, place }).lines
+  const [water] = (await scoreLines(lines, bank, { unsorted, place })).lines
   expect(water.rankers.unsorted.order).toEqual(['water-please', 'im-cold', 'thank-you'])
   expect(water.rankers.place.order.slice(0, 3)).toEqual(['good-morning', 'water-please', 'im-cold'])
 })
 
-test('scores a big button right only when its phrase is acceptable, and counts it in coverage and risk', () => {
+test('scores a big button right only when its phrase is acceptable, and counts it in coverage and risk', async () => {
   const sure = scoring((shortlist) => [[shortlist[0].id, 0.9]])
-  const scored = scoreLines(lines, bank, { sure }).lines
+  const scored = (await scoreLines(lines, bank, { sure })).lines
   expect(scored.map(({ rankers }) => rankers.sure.outcome)).toEqual([
     'right big button',
     'wrong big button',
@@ -99,8 +99,8 @@ test('scores a big button right only when its phrase is acceptable, and counts i
   ])
 })
 
-test('sums up the ranking over lines with an acceptable phrase besides the fixed buttons, and the row over all', () => {
-  const summary = summarize(run().lines)
+test('sums up the ranking over lines with a phrase besides the fixed buttons, and the row over all lines', async () => {
+  const summary = summarize((await run()).lines)
   expect(summary.lines).toBe(5)
   expect(summary.recall).toEqual({ k: 1, n: 2 })
   expect(summary.chance.top1).toBeCloseTo(1 / 80, 12)
@@ -125,10 +125,10 @@ test('sums up the ranking over lines with an acceptable phrase besides the fixed
   })
 })
 
-test("works out chance over each line's own shortlist, however long", () => {
+test("works out chance over each line's own shortlist, however long", async () => {
   const small = bank.filter((phrase) => ['thank-you', 'excuse-me', 'im-cold', 'im-tired'].includes(phrase.id))
   const { chance } = summarize(
-    scoreLines([{ text: 'Are you cold?', place: 'home', acceptable: ['im-cold'] }], small, {}).lines
+    (await scoreLines([{ text: 'Are you cold?', place: 'home', acceptable: ['im-cold'] }], small, {})).lines
   )
   expect(chance.top1).toBeCloseTo(1 / 4, 12)
   expect(chance.top6).toBe(1)
@@ -136,7 +136,7 @@ test("works out chance over each line's own shortlist, however long", () => {
   expect(chance.meanReciprocalRank).toBeCloseTo(25 / 48, 12)
 })
 
-test('times the shortlist and each ranker three times per line, leaving out a warm-up pass', () => {
+test('times the shortlist and each ranker three times per line, leaving out a warm-up pass', async () => {
   let calls = 0
   const slowAtFirst: Ranker = (line, shortlist, index, context) => {
     // 5 ms a line in the first pass only, as code that must be compiled first is slow.
@@ -144,7 +144,7 @@ test('times the shortlist and each ranker three times per line, leaving out a wa
     while (performance.now() < until);
     return keyword(line, shortlist, index, context)
   }
-  const { timings } = scoreLines(lines, bank, { place, slowAtFirst })
+  const { timings } = await scoreLines(lines, bank, { place, slowAtFirst })
   expect(calls).toBe(4 * lines.length)
   expect(timings.shortlist).toHaveLength(3 * lines.length)
   expect(timings.rankers.place).toHaveLength(3 * lines.length)
@@ -170,11 +170,13 @@ test('finds the lines that share no word with a reply besides the fixed buttons,
   expect(noWord('Nice weather today.', [])).toBe(false)
 })
 
-test("ranks only the phrases a ranker scores above 0, so keyword gets no credit for the place's phrases", () => {
-  const [weather] = scoreLines([{ text: 'Nice weather today.', place: 'home', acceptable: ['good-morning'] }], bank, {
-    place,
-    keyword
-  }).lines
+test("ranks only the phrases a ranker scores above 0, so keyword gets no credit for the place's phrases", async () => {
+  const [weather] = (
+    await scoreLines([{ text: 'Nice weather today.', place: 'home', acceptable: ['good-morning'] }], bank, {
+      place,
+      keyword
+    })
+  ).lines
   expect(weather.rankers.keyword.order).toEqual([])
   expect(weather.rankers.place.order).toEqual([
     'good-morning',
@@ -190,4 +192,132 @@ test("ranks only the phrases a ranker scores above 0, so keyword gets no credit 
     { k: 0, n: 1 },
     { k: 1, n: 1 }
   ])
+})
+
+test('waits for each ranking before the next, one request in flight, and scores the first timed pass', async () => {
+  let inFlight = 0
+  let most = 0
+  let calls = 0
+  const later: Ranker = async (line, shortlist, index, context) => {
+    inFlight += 1
+    most = Math.max(most, inFlight)
+    calls += 1
+    await new Promise((resolve) => setTimeout(resolve, 5))
+    inFlight -= 1
+    // Two rankers over the lines: the first timed pass ranks by keyword, and the warm-up and the later passes by place.
+    const firstTimed = calls > 2 * lines.length && calls <= 4 * lines.length
+    return (firstTimed ? keyword : place)(line, shortlist, index, context)
+  }
+  const { lines: scored, timings } = await scoreLines(lines, bank, { later, again: later })
+  expect(most).toBe(1)
+  expect(timings.rankers.later).toHaveLength(3 * lines.length)
+  // A 5 ms wait, counted in the ranking's time; timers may fire a little early against the clock.
+  for (const ms of timings.rankers.later) expect(ms).toBeGreaterThanOrEqual(3)
+  expect(scored.map(({ rankers }) => rankers.later.outcome)).toEqual([
+    'right row',
+    'missed reply',
+    'right hold',
+    'right row',
+    'wrong row'
+  ])
+})
+
+test("gives the paired interval of one ranker's top 6 minus another's, trailing only when wholly below 0", async () => {
+  const firstPhrase =
+    (acceptable: string): Ranker =>
+    (_line, shortlist) => ({
+      kind: noKind,
+      topic: {},
+      scores: new Map(shortlist.map((phrase) => [phrase.id, phrase.id === acceptable ? 0.9 : 0.1])),
+      onPhone: false
+    })
+  // Twenty lines whose one acceptable phrase only `right` puts first; `wrong` puts another phrase first and it last.
+  const many = Array.from({ length: 20 }, (_, i) => ({ text: `Line ${i}`, place: 'home', acceptable: ['good-night'] }))
+  const last: Ranker = (_line, shortlist) => ({
+    kind: noKind,
+    topic: {},
+    scores: new Map(shortlist.map((phrase, i) => [phrase.id, phrase.id === 'good-night' ? 0.01 : 1 - i / 100])),
+    onPhone: false
+  })
+  // And one that puts it seventh, just past the six.
+  const seventh: Ranker = (_line, shortlist) => {
+    const others = shortlist.filter((phrase) => phrase.id !== 'good-night')
+    return {
+      kind: noKind,
+      topic: {},
+      scores: new Map([...others.map((phrase, i) => [phrase.id, 0.9 - i / 100] as const), ['good-night', 0.845]]),
+      onPhone: false
+    }
+  }
+  const { lines: scored } = await scoreLines(many, bank, { right: firstPhrase('good-night'), wrong: last, seventh })
+  expect(topSixGap(scored, 'wrong', 'right')).toEqual({ difference: -1, low: -1, high: -1, verdict: 'trails' })
+  expect(scored[0].rankers.seventh.order.indexOf('good-night')).toBe(6)
+  expect(topSixGap(scored, 'seventh', 'right')?.verdict).toBe('trails')
+  expect(topSixGap(scored, 'right', 'wrong')).toEqual({ difference: 1, low: 1, high: 1, verdict: 'leads' })
+  expect(topSixGap(scored, 'right', 'right')).toEqual({
+    difference: 0,
+    low: 0,
+    high: 0,
+    verdict: 'no clear difference'
+  })
+  // Lines with no acceptable phrase besides the fixed buttons don't count.
+  const { lines: fixedOnly } = await scoreLines([lines[3]], bank, { right: firstPhrase('good-night') })
+  expect(topSixGap(fixedOnly, 'right', 'right')).toBeNull()
+})
+
+test('lists every big button with its ranker, line, and phrase, and whether the phrase is acceptable', async () => {
+  const sure = scoring((shortlist) => [[shortlist[0].id, 0.9]])
+  const { lines: scored } = await scoreLines(lines, bank, { sure, keyword })
+  // The first shortlisted phrase: the one sharing a word, else the place's first.
+  expect(bigButtons(scored).map(({ ranker, line, phrase, right }) => [ranker, line.id, phrase, right])).toEqual([
+    ['sure', 'water', 'water-please', true],
+    ['sure', 'physio', 'excuse-me', false],
+    ['sure', 'weather', 'good-morning', false],
+    ['sure', 'cold', 'im-cold', false],
+    ['sure', 'costs', 'how-much-is-this', false]
+  ])
+  // It gave the same answer all four times: the warm-up and three timed passes.
+  for (const { answers } of bigButtons(scored)) expect(answers).toEqual({ k: 4, n: 4 })
+})
+
+test('lists a big button any answer showed, even when the scored answer showed none', async () => {
+  // A ranker whose second answer, the first timed pass's, brings no big button; its other three do.
+  let calls = 0
+  const wavering: Ranker = (_line, shortlist) => ({
+    kind: noKind,
+    topic: {},
+    scores: new Map([[shortlist[0].id, calls++ === 1 ? 0.7 : 0.9]]),
+    onPhone: false
+  })
+  const { lines: scored } = await scoreLines(lines.slice(0, 1), bank, { wavering })
+  expect(scored[0].rankers.wavering.row.big).toBeNull()
+  expect(bigButtons(scored)).toMatchObject([{ ranker: 'wavering', phrase: 'water-please', answers: { k: 3, n: 4 } }])
+})
+
+test("counts a ranker's most likely kind of question against its writer's, a tie apart", async () => {
+  const kinded = [
+    { text: 'Do you want some water?', place: 'home', kind: 'yes_no' as const, acceptable: [] },
+    { text: 'Tea or coffee?', place: 'home', kind: 'either_or' as const, acceptable: [] },
+    { text: 'How was physio?', place: 'home', kind: 'open' as const, acceptable: [] },
+    { text: 'Nice weather today.', place: 'home', kind: 'not_a_question' as const, acceptable: [] }
+  ]
+  // Yes-or-no for "Do", a tie for "Tea", and open for the rest.
+  const guess: Ranker = (line) => ({
+    kind: {
+      yes_no: line.startsWith('Do') ? 0.8 : 0,
+      either_or: line.startsWith('Tea') ? 0.5 : 0,
+      open: line.startsWith('Tea') ? 0.5 : line.startsWith('Do') ? 0.2 : 0.9,
+      not_a_question: 0
+    },
+    topic: {},
+    scores: new Map(),
+    onPhone: false
+  })
+  const { lines: scored } = await scoreLines(kinded, bank, { guess })
+  const { counts, right } = kindMatrix(scored, 'guess')
+  expect(right).toEqual({ k: 2, n: 4 })
+  expect(counts.yes_no).toEqual({ yes_no: 1, either_or: 0, open: 0, not_a_question: 0, tie: 0 })
+  expect(counts.either_or).toEqual({ yes_no: 0, either_or: 0, open: 0, not_a_question: 0, tie: 1 })
+  expect(counts.open).toEqual({ yes_no: 0, either_or: 0, open: 1, not_a_question: 0, tie: 0 })
+  expect(counts.not_a_question).toEqual({ yes_no: 0, either_or: 0, open: 1, not_a_question: 0, tie: 0 })
 })

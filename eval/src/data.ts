@@ -40,6 +40,15 @@ export const readRows = (file: URL | string) =>
 /** The 80 partner lines in `eval/lines.jsonl`, with the first labeling. */
 export const lines: Line[] = readRows(here('../lines.jsonl'))
 
+/**
+ * Whether any of these lines is one of the 80 in `eval/lines.jsonl`, by its text, whatever file holds it: a copy, a
+ * link, or the same file under another name.
+ */
+export function amongTheEighty(labeled: readonly { text: string }[]): boolean {
+  const texts = new Set(lines.map(({ text }) => text))
+  return labeled.some(({ text }) => texts.has(text))
+}
+
 /** The second labeling in `eval/second-labeling.jsonl`, in the lines' order. */
 export const secondLabeling: Labels[] = readRows(here('../second-labeling.jsonl'))
 
