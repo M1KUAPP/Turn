@@ -33,6 +33,8 @@ export default function RootLayout() {
           <Stack.Screen name="settings/voice" options={{ title: 'Voice' }} />
           <Stack.Screen name="settings/privacy" options={{ title: 'Privacy notice' }} />
           <Stack.Screen name="settings/licenses" options={{ title: 'Open-source licenses' }} />
+          <Stack.Screen name="bank/index" options={{ title: 'Phrase bank' }} />
+          <Stack.Screen name="bank/[category]" options={{ title: 'Phrases' }} />
         </Stack>
       </TurnProvider>
     </SafeAreaProvider>
