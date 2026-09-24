@@ -40,6 +40,6 @@
 ## Task 4: Handoff
 
 - [x] Run `rtk graphify update .`, format generated files, and run workspace tests, typecheck, lint, and an iOS build.
-- [ ] Commit and push a PR stacked on `feat/27-speak-grid`, which remains open against `main`. Close #39 only after the acceptance checks pass.
+- [x] Commit and push a PR stacked on `feat/27-speak-grid`, which remains open against `main`. Close #39 only after the acceptance checks pass.
 
 The iOS 27 simulator build installed and launched, and Expo Router bundled the three routes. Hands-on UI checks remain open because the desktop computer-use service could not connect during this session.
