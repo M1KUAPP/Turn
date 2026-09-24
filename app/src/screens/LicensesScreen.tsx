@@ -73,7 +73,6 @@ export default function LicensesScreen() {
           return (
             <Pressable
               accessibilityRole={item.text ? 'button' : 'text'}
-              accessibilityLabel={`${item.name}${item.version ? `, version ${item.version}` : ''}, ${item.license}`}
               accessibilityHint={item.text ? 'Shows the license text' : undefined}
               accessibilityState={item.text ? { expanded: open } : undefined}
               disabled={!item.text}
