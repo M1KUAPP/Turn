@@ -14,13 +14,16 @@ import { rebuildGazetteer } from './listen/gazetteer'
 import { createTypedListenSession } from './listen/typed-session'
 import { createNamingStore, refreshNaming } from './relay/naming'
 import { createSpeechController } from './speech/controller'
+import { createVoiceSettings } from './speech/voice-settings'
 import { turnListen } from '../../modules/turn-listen/src'
+import { turnVoice } from '../../modules/turn-voice/src'
 
 const accessibilityStore = createAccessibilityStore(nativeAccessibilitySource)
 
 type Ready = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
+  voiceSettings: ReturnType<typeof createVoiceSettings>
   listen: ReturnType<typeof createTypedListenSession>
   nameTagger: typeof turnListen
   typesafeNamed: boolean
@@ -44,6 +47,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
     let active = true
     let listen: ReturnType<typeof createTypedListenSession> | null = null
     let unsubscribeGazetteer: (() => void) | null = null
+    let unsubscribeVoiceChanges: (() => void) | null = null
     async function start() {
       const db = await SQLite.openDatabaseAsync('turn.db')
       const bank = createBankStore(db, starterBank)
@@ -51,16 +55,32 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       if (!active) return
       const naming = createNamingStore(db)
       const typesafeNamed = await naming.read()
-      const speech = createSpeechController({ speak: Speech.speak, stop: Speech.stop }, (id) => {
-        void bank.recordTap(id)
+      const voiceSettings = createVoiceSettings({
+        setting: bank.setting,
+        setSetting: bank.setSetting,
+        availableVoices: Speech.getAvailableVoicesAsync,
+        requestPersonalVoice: turnVoice.requestPersonalVoice,
+        personalVoice: turnVoice.personalVoice
       })
+      await voiceSettings.refresh()
+      if (!active) return
+      unsubscribeVoiceChanges = turnVoice.onVoicesChanged(() => {
+        void voiceSettings.refresh().catch(() => {})
+      })
+      const speech = createSpeechController(
+        { speak: Speech.speak, stop: Speech.stop },
+        (id) => {
+          void bank.recordTap(id)
+        },
+        { voice: () => voiceSettings.selected().identifier, rate: () => voiceSettings.rate() }
+      )
       listen = createTypedListenSession(bank)
       await listen.ready
       if (!active) {
         return
       }
       const nameTagger = turnListen
-      setReady({ bank, speech, listen, nameTagger, typesafeNamed })
+      setReady({ bank, speech, voiceSettings, listen, nameTagger, typesafeNamed })
       if (nameTagger) {
         const rebuild = () => {
           void Promise.all([bank.phrases('all'), bank.places()])
@@ -96,6 +116,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
     return () => {
       active = false
       unsubscribeGazetteer?.()
+      unsubscribeVoiceChanges?.()
       listen?.dispose()
     }
   }, [])

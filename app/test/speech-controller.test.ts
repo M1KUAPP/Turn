@@ -8,9 +8,13 @@ function fixture() {
       onStart: () => void
       onDone: () => void
       onStopped: () => void
+      rate?: number
+      voice?: string
     }
   }> = []
   let stops = 0
+  let voice: string | null = null
+  let rate = 1
   const counts: string[] = []
   const controller = createSpeechController(
     {
@@ -23,12 +27,19 @@ function fixture() {
     },
     (id) => {
       counts.push(id)
-    }
+    },
+    { voice: () => voice, rate: () => rate }
   )
   return {
     controller,
     utterances,
     counts,
+    setVoice(next: string | null) {
+      voice = next
+    },
+    setRate(next: number) {
+      rate = next
+    },
     get stops() {
       return stops
     }
@@ -136,5 +147,54 @@ describe('speech controller', () => {
     releaseStop?.()
     await Promise.all([stopping, second])
     expect(heard).toEqual(['One', 'Two'])
+  })
+
+  test('uses the current voice and rate for phrases, typed words, and Repeat', async () => {
+    const app = fixture()
+    app.setVoice('voice-one')
+    app.setRate(0.75)
+
+    await app.controller.speak('Yes', 'yes')
+    expect(app.utterances[0].options).toMatchObject({ voice: 'voice-one', rate: 0.75 })
+
+    app.setVoice('voice-two')
+    app.setRate(1.25)
+    await app.controller.speak('I need more time')
+    expect(app.utterances[1].options).toMatchObject({ voice: 'voice-two', rate: 1.25 })
+
+    app.setVoice('voice-three')
+    app.setRate(1.5)
+    await app.controller.repeat()
+    expect(app.utterances[2].options).toMatchObject({ voice: 'voice-three', rate: 1.5 })
+    expect(app.utterances[2].text).toBe('I need more time')
+  })
+
+  test('previews an override after stopping speech without recording a tap or replacing Repeat', async () => {
+    const app = fixture()
+    app.setVoice('chosen-voice')
+    app.setRate(1.25)
+    await app.controller.speak('Water, please')
+    await app.controller.preview('Hello. This is how I sound.', 'preview-voice')
+
+    expect(app.stops).toBe(1)
+    expect(app.utterances[1]).toMatchObject({
+      text: 'Hello. This is how I sound.',
+      options: { voice: 'preview-voice', rate: 1.25 }
+    })
+    app.utterances[1].options.onStart()
+    expect(app.counts).toEqual([])
+
+    await app.controller.repeat()
+    expect(app.utterances[2].text).toBe('Water, please')
+    expect(app.utterances[2].options).toMatchObject({ voice: 'chosen-voice', rate: 1.25 })
+  })
+
+  test('a default voice preview omits the voice identifier', async () => {
+    const app = fixture()
+    app.setVoice('chosen-voice')
+
+    await app.controller.preview('Hello. This is how I sound.', null)
+
+    expect(app.utterances[0].options).not.toHaveProperty('voice')
   })
 })
