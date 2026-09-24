@@ -38,7 +38,7 @@
 - [x] Add a test that the bundled manifest covers each installed app dependency and has a license for each entry. Run it red before generating the manifest.
 - [x] Generate the manifest. Register a native Open-source licenses route with a searchable list and readable license details.
 - [x] Re-run the generator and confirm the check reports no changes; verify the licenses screen reads only bundled data.
-- [x] Bundle CocoaPods' generated native library acknowledgements and check them against the installed iOS project when it is available.
+- [x] Bundle CocoaPods' generated native library acknowledgements and check them against the fresh iOS build used for this issue. Other checkouts may contain older ignored `app/ios` folders, so the automated test verifies the committed inventory without comparing it to those folders.
 
 ## Task 4: Verify and hand off
 
