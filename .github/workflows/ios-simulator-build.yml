@@ -64,13 +64,15 @@ jobs:
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -n 200
       # Expo's bundling phase sets SKIP_BUNDLING in every Debug build, which FORCE_BUNDLING can't override, so the
-      # bundle is embedded here, where the app falls back to it when Metro isn't running.
+      # bundle is embedded here, from the entry the phase would use. Whether the Debug app runs from it without
+      # Metro is the Simulator check's question (#50).
       - name: Embed the JavaScript bundle
         working-directory: app
         shell: bash
         run: |
-          app=ios/build/Build/Products/Debug-iphonesimulator/Turn.app
-          bunx expo export:embed --platform ios --dev false --entry-file index.ts \
+          app="$PWD/ios/build/Build/Products/Debug-iphonesimulator/Turn.app"
+          entry="$(node -e "require('expo/scripts/resolveAppEntry')" "$PWD" ios absolute | tail -n 1)"
+          bunx expo export:embed --platform ios --dev false --entry-file "$entry" \
             --bundle-output "$app/main.jsbundle" --assets-dest "$app"
           test -s "$app/main.jsbundle"
       - name: Zip Turn.app
