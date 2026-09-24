@@ -43,7 +43,7 @@
 ## Task 4: Verify and hand off
 
 - [x] Run focused tests, workspace tests, typecheck, lint, an iOS export and build, and `rtk graphify update .`.
-- [ ] Push this branch and open a PR stacked on `feat/27-speak-grid`.
+- [x] Push this branch and open [PR #107](https://github.com/RevenueCat-M1KU/RevenueCat/pull/107) stacked on `feat/27-speak-grid`.
 - [x] Create [#106](https://github.com/RevenueCat-M1KU/RevenueCat/issues/106) for public contact details and teammate wording review. Close #44 after merge as the owner requested; #106 remains a release gate.
 
 The configured workspace suite passed 543 tests; typecheck, lint, an iOS export, and an iOS 27 simulator build passed. The simulator installed and launched Turn. A system deep-link confirmation prevented automated screenshot verification of the new routes. The bundled inventory lists 554 installed app dependency packages and 12 iOS native libraries, with a license expression for each and full license text where available.
