@@ -43,4 +43,4 @@
 - [ ] Check the issue's typed-line scenarios in the Simulator. The computer-use connection failed before it could interact with the screen.
 - [ ] Run the physical iPhone VoiceOver announcement check.
 - [x] Run `rtk graphify update .` and format the generated graph files.
-- [ ] Push the branch and open a PR against `feat/27-speak-grid`.
+- [x] Push the branch and open [PR #109](https://github.com/RevenueCat-M1KU/RevenueCat/pull/109) against `feat/27-speak-grid`.
