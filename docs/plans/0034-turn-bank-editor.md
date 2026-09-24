@@ -52,22 +52,22 @@ category list, so `/bank` fills that gap with the Places screen's pattern.
 
 **Files:** `app/src/bank/store.ts`, `app/test/bank.test.ts`.
 
-- [ ] Write failing tests for `addCategory(name): Promise<Category>`,
+- [x] Write failing tests for `addCategory(name): Promise<Category>`,
       `renameCategory(id, name): Promise<void>`,
       `moveCategory(id, direction: -1 | 1): Promise<void>`, and
       `deleteCategory(id, destinationId?: string): Promise<void>`, covering every
       category rule above: the 12 with and without Typed, the 13th refused, 41
       characters refused, Quick first, the fixed categories' refusals, and a
       non-empty delete without a destination refused.
-- [ ] Implement them with SQLite transactions, mirroring the place methods.
-- [ ] Run `rtk bun run --cwd app test -- bank.test.ts` and
+- [x] Implement them with SQLite transactions, mirroring the place methods.
+- [x] Run `rtk bun run --cwd app test -- bank.test.ts` and
       `rtk bun run --cwd app typecheck`.
 
 ## Task 2: Phrase operations and Undo
 
 **Files:** `app/src/bank/store.ts`, `app/test/bank.test.ts`.
 
-- [ ] Write failing tests for `addPhrase(categoryId, text, placeIds)`,
+- [x] Write failing tests for `addPhrase(categoryId, text, placeIds)`,
       `editPhrase(id, { text?, categoryId?, placeIds? })`,
       `movePhrase(id, direction: -1 | 1)`, `phrasePlaces(id)`,
       `deletePhrase(id)`, `undoDelete(): Promise<Phrase | null>`, and
@@ -75,9 +75,9 @@ category list, so `/bank` fills that gap with the Places screen's pattern.
       (recreate the store on the same database, as the place tests do), a staged
       phrase missing from `phrases()` and `rankingData()`, and Undo after other
       edits.
-- [ ] Reuse or replace `updatePhraseText`; don't leave two ways to reword.
-- [ ] Implement them; keep staged deletions in the store's memory.
-- [ ] Run the same two commands.
+- [x] Reuse or replace `updatePhraseText`; don't leave two ways to reword.
+- [x] Implement them; keep staged deletions in the store's memory.
+- [x] Run the same two commands.
 
 ## Task 3: Screens and entry points
 
@@ -86,24 +86,24 @@ category list, so `/bank` fills that gap with the Places screen's pattern.
 `app/src/screens/PhraseBankScreen.tsx`, `app/src/screens/SettingsScreen.tsx`,
 `app/src/screens/HomeScreen.tsx`.
 
-- [ ] Register both routes in the native stack. Settings' disabled "Phrase
+- [x] Register both routes in the native stack. Settings' disabled "Phrase
       bank" row opens `/bank`.
-- [ ] `CategoriesScreen` mirrors `PlacesScreen`: the categories in grid order
+- [x] `CategoriesScreen` mirrors `PlacesScreen`: the categories in grid order
       with Move up and Move down, named accessibility actions, a sheet with
       `maxLength={40}` to add and rename, and a system alert to delete. Deleting
       a category that holds phrases asks where they go, listing the other
       categories. Refused actions aren't offered. The strip shows last, apart,
       as a row that opens its phrases.
-- [ ] `PhraseBankScreen` shows the category's phrases in `body`, wrapped,
+- [x] `PhraseBankScreen` shows the category's phrases in `body`, wrapped,
       with their places under them in `subheadline`, and "Starter" on starter
       phrases nobody has reviewed. Edit mode shows 44-point Move up and Move
       down; Edit, Move, and Delete are named accessibility actions. The sheet
       holds the phrase field (`maxLength={200}`, counting down near the end),
       its category, and its places. The Undo bar stays at the bottom while any
       deletion is staged; leaving the screen commits them.
-- [ ] Home's phrase buttons get Edit and Move as named accessibility actions,
+- [x] Home's phrase buttons get Edit and Move as named accessibility actions,
       never long presses; both open the phrase's sheet in its category's editor.
-- [ ] Read `docs/DESIGN.md`'s rules that do not bend and its tokens, as
+- [x] Read `docs/DESIGN.md`'s rules that do not bend and its tokens, as
       `app/src/screens/AGENTS.md` asks.
 
 ## Task 4: Handoff
