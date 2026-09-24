@@ -32,4 +32,4 @@
 - [x] Build and inspect on an iOS 27 Simulator at normal and AX5 text sizes; record the physical iPhone Switch Control check that remains.
 - [x] Refresh Graphify, commit, push, and open [PR #103](https://github.com/RevenueCat-M1KU/RevenueCat/pull/103) against `feat/27-speak-grid` until #91 merges. Keep #33 open for the physical Switch Control check.
 
-The physical iPhone Switch Control order check remains for #33 after the PR is reviewed.
+The issue owner completed the physical iPhone Switch Control check on September 24, 2026, and #33 is closed.
