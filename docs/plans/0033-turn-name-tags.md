@@ -22,11 +22,11 @@ device criteria, like the home screen's row preview.
 Native, Vitest.
 
 **Spec:** [Issue #34](https://github.com/RevenueCat-M1KU/RevenueCat/issues/34),
-[names as tags](../TRD.md#names-as-tags),
-[the turn-listen module](../TRD.md#the-turn-listen-module),
-[the repository layout](../TRD.md#repository-layout),
-[iPhone notes on NLTagger](../research/0023-turn-ios.md#swapping-names-for-tags-with-nltagger),
-[iPhone notes on local modules](../research/0023-turn-ios.md#two-local-swift-modules-in-expo).
+[names as tags](/docs/TRD.md#names-as-tags),
+[the turn-listen module](/docs/TRD.md#the-turn-listen-module),
+[the repository layout](/docs/TRD.md#repository-layout),
+[iPhone notes on NLTagger](/docs/research/0023-turn-ios.md#swapping-names-for-tags-with-nltagger),
+[iPhone notes on local modules](/docs/research/0023-turn-ios.md#two-local-swift-modules-in-expo).
 
 ## Rules
 
@@ -51,29 +51,29 @@ Native, Vitest.
 
 **Files:** `shared/src/shortlist.ts`, `shared/test/shortlist.test.ts`.
 
-- [ ] Write a failing test: `pickShortlist(line, index, context, 50)` returns
+- [x] Write a failing test: `pickShortlist(line, index, context, 50)` returns
       up to 50 phrases, and its first 40 equal `pickShortlist(line, index,
 context)`'s.
-- [ ] Add the optional `size = 40` parameter; callers stay unchanged.
-- [ ] Run `rtk bun run --cwd shared test -- shortlist.test.ts` and
+- [x] Add the optional `size = 40` parameter; callers stay unchanged.
+- [x] Run `rtk bun run --cwd shared test -- shortlist.test.ts` and
       `rtk bun run typecheck`.
 
 ## Task 2: Tagging and cutting
 
 **Files:** `app/src/listen/tags.ts`, `app/test/tags.test.ts`.
 
-- [ ] Write failing tests with a fake finder for each rule above and each
+- [x] Write failing tests with a fake finder for each rule above and each
       acceptance criterion that code can show: "Did Anna call?" and "Anna is my
       sister" both carry `[PERSON 1]` and no "Anna" (LISTEN-5); a 400-character
       typed line keeps its last 300 after tagging (LISTEN-6); a candidate pushed
       over 200 by a tag is swapped for a spare; the place's name is tagged
       (PLACE-3); a request of 40 two-byte candidates drops some to fit; and no
       surrogate pair is ever split.
-- [ ] Implement `tagRequest(input, findNames)`, taking the line, the place's
+- [x] Implement `tagRequest(input, findNames)`, taking the line, the place's
       name, the categories, the shortlist, and the spares, and returning the
       tagged line, place, categories, and candidates; and
       `fitRequest(request: LineRequest): LineRequest`.
-- [ ] Run `rtk bun run --cwd app test -- tags.test.ts` and
+- [x] Run `rtk bun run --cwd app test -- tags.test.ts` and
       `rtk bun run --cwd app typecheck`.
 
 ## Task 3: The turn-listen module's name finder
@@ -82,36 +82,36 @@ context)`'s.
 `app/src/listen/gazetteer.ts`, `app/test/gazetteer.test.ts`,
 `app/src/turn-context.tsx`.
 
-- [ ] Set `expo.autolinking.nativeModulesDir` to `../modules`, as the TRD
+- [x] Set `expo.autolinking.nativeModulesDir` to `../modules`, as the TRD
       says. Scaffold `modules/turn-listen` with
       `bunx create-expo-module@latest --local` if it runs without prompts;
       otherwise write the files the iPhone notes list, by hand.
-- [ ] In Swift, `findNames(texts: [String]) -> [[Span]]` makes one `NLTagger`
+- [x] In Swift, `findNames(texts: [String]) -> [[Span]]` makes one `NLTagger`
       per call with the `nameType` scheme and the `joinNames`,
       `omitPunctuation`, and `omitWhitespace` options, maps each range with
       `NSRange(range, in: text)`, and returns only `personalName`, `placeName`,
       and `organizationName`. `setGazetteer(person, place, org)` builds an
       `NLGazetteer` for English, kept behind a lock and applied to each tagger.
       No numbering, replacing, or cutting in Swift.
-- [ ] `modules/turn-listen/src/` exports typed wrappers through
+- [x] `modules/turn-listen/src/` exports typed wrappers through
       `requireOptionalNativeModule`, so the app runs without the module.
-- [ ] Write failing tests, then `rebuildGazetteer(bank, finder)`: find the
+- [x] Write failing tests, then `rebuildGazetteer(bank, finder)`: find the
       names in every phrase and place, and set them as the gazetteer. Rebuilds
       run one at a time, and a change during one runs once more after it.
-- [ ] Rebuild on load and after each bank change in the provider, only when
+- [x] Rebuild on load and after each bank change in the provider, only when
       the module is present.
-- [ ] Run the app's tests and typecheck.
+- [x] Run the app's tests and typecheck.
 
 ## Task 4: The device self-check
 
 **Files:** `app/src/listen/tag-checks.ts`, `app/test/tag-checks.test.ts`,
 `app/src/screens/SettingsScreen.tsx`.
 
-- [ ] `runTagChecks(finder)` runs the acceptance criteria's examples,
+- [x] `runTagChecks(finder)` runs the acceptance criteria's examples,
       including the lowercased line after setting a gazetteer from "Anna is my
       sister", and returns a pass or fail with the tagged text for each. It
       passes with the fake finder in a test.
-- [ ] A `__DEV__`-only Settings row, "Check name tags", runs it with the
+- [x] A `__DEV__`-only Settings row, "Check name tags", runs it with the
       module and shows the results in an alert, then rebuilds the bank's
       gazetteer.
 
