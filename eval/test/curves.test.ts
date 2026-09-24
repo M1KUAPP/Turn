@@ -46,7 +46,7 @@ test('draws each curve as a line through its points in an SVG, with a title, a d
       ]
     ]
   ])
-  expect(svg).toMatch(/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 640 400"/)
+  expect(svg).toMatch(/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 900 400"/)
   expect(svg).toContain('<title>Risk against coverage for each ranker</title>')
   expect(svg).toContain('as its threshold falls: jev, a&lt;b.</desc>')
   // Coverage 50% sits halfway across the plot, 64 + 276, and risk 25% a quarter of the way up, 24 + 240.
@@ -71,6 +71,25 @@ test('gives each of seven curves a color of its own', () => {
   const strokes = [...seven.matchAll(/<polyline [^>]*stroke="(#[0-9A-F]{6})"/g)].map(([, color]) => color)
   expect(strokes).toHaveLength(7)
   expect(new Set(strokes).size).toBe(7)
+})
+
+test('keeps all seven legend entries outside the plot area', () => {
+  const names = ['place', 'keyword', 'embeddings', 'hosted decision model', 'reranker', 'qwen3', 'apple']
+  const seven = plot(names.map((name) => [name, [{ threshold: 0.5, coverage: 1, risk: 0.5 }]] as const))
+  const legendLines = [
+    ...seven.matchAll(
+      /<line x1="([\d.]+)" y1="[\d.]+" x2="([\d.]+)" y2="[\d.]+" stroke="#[0-9A-F]{6}" stroke-width="2" stroke-dasharray="[^"]+"\/>/g
+    )
+  ]
+  const legendLabels = [...seven.matchAll(/<text x="([\d.]+)" y="[\d.]+" dominant-baseline="middle">([^<]+)<\/text>/g)]
+
+  expect(legendLines).toHaveLength(7)
+  expect(legendLabels.map(([, , name]) => name)).toEqual(names)
+  for (const [, start, end] of legendLines) {
+    expect(Number(start)).toBeGreaterThan(616) // The plot's rightmost x coordinate.
+    expect(Number(end)).toBeGreaterThan(616)
+  }
+  for (const [, start] of legendLabels) expect(Number(start)).toBeGreaterThan(616)
 })
 
 test('counts a line right only when an acceptable phrase is among its first six', async () => {

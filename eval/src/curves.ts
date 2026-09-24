@@ -34,6 +34,7 @@ export function riskCoverage<Line extends ScoredLine>(scores: readonly LineScore
 
 /** The plot's size and margins, in pixels. */
 const size = { width: 640, height: 400, left: 64, right: 24, top: 24, bottom: 56 }
+const canvasWidth = size.width + 260
 const plotWidth = size.width - size.left - size.right
 const plotHeight = size.height - size.top - size.bottom
 
@@ -61,7 +62,7 @@ export function plot(curves: readonly Curve[]): string {
     left: size.left - 8,
     label: (tick) => `${tick * 100}%`
   })
-  const legendX = size.width - size.right - 150
+  const legendX = size.width + 24
   const drawn = curves.flatMap(([name, points], i) => {
     const pen = { stroke: colors[i % colors.length], 'stroke-width': 2, 'stroke-dasharray': dashes[i % dashes.length] }
     const byCoverage = points.toSorted((a, b) => a.coverage - b.coverage)
@@ -84,6 +85,7 @@ export function plot(curves: readonly Curve[]): string {
   return svg(
     {
       ...size,
+      width: canvasWidth,
       title: 'Risk against coverage for each ranker',
       description:
         'For each ranker, the share of rows that are wrong against the share of lines where the row changes, as its ' +
