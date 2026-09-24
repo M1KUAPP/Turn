@@ -24,8 +24,8 @@ export default function SettingsScreen() {
     {
       title: 'About',
       rows: [
-        { label: 'Privacy notice' },
-        { label: 'Open-source licenses' },
+        { label: 'Privacy notice', open: () => router.push('/settings/privacy') },
+        { label: 'Open-source licenses', open: () => router.push('/settings/licenses') },
         { label: 'Version', value: Application.nativeApplicationVersion ?? '—' },
         { label: 'Relay status' }
       ]
