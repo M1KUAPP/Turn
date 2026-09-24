@@ -60,31 +60,31 @@ Expo Router, SQLite, Vitest.
 **Files:** `app/src/bank/store.ts`, `app/test/bank.test.ts`,
 `app/src/speech/voice-settings.ts`, `app/test/voice-settings.test.ts`.
 
-- [ ] Write failing tests with fakes for each rule above: the list's order,
+- [x] Write failing tests with fakes for each rule above: the list's order,
       filter, and deduplication; the five rates; the default; each
       permission answer and its note; the fallback; and a choice surviving a
       new store on the same database.
-- [ ] Add `setting(key): Promise<string | null>` and
+- [x] Add `setting(key): Promise<string | null>` and
       `setSetting(key, value: string | null): Promise<void>` to the store.
-- [ ] Implement `createVoiceSettings(ports)` with `voices()`, `selected()`,
+- [x] Implement `createVoiceSettings(ports)` with `voices()`, `selected()`,
       `rate()`, `chooseVoice(id | null)`, `chooseRate(step)`,
       `choosePersonalVoice()`, `refresh()`, and `subscribe(listener)`.
-- [ ] Run `rtk bun run --cwd app test -- voice-settings.test.ts` and
+- [x] Run `rtk bun run --cwd app test -- voice-settings.test.ts` and
       `rtk bun run --cwd app typecheck`.
 
 ## Task 2: The turn-voice module
 
 **Files:** `modules/turn-voice/**`.
 
-- [ ] Mirror `modules/turn-listen`'s files. The podspec targets iOS 17, so
+- [x] Mirror `modules/turn-listen`'s files. The podspec targets iOS 17, so
       the Personal Voice calls need no availability checks.
-- [ ] In Swift, with the TRD's API exactly: `requestPersonalVoice()` awaits
+- [x] In Swift, with the TRD's API exactly: `requestPersonalVoice()` awaits
       `AVSpeechSynthesizer.requestPersonalVoiceAuthorization()` and returns
       the status's name; `personalVoice()` returns the first voice with the
       `isPersonalVoice` trait only when authorized and
       `AVSpeechSynthesisVoice(identifier:)` resolves it, else `null`; and
       `onVoicesChanged` fires on `availableVoicesDidChangeNotification`.
-- [ ] `src/` exports typed wrappers through `requireOptionalNativeModule`;
+- [x] `src/` exports typed wrappers through `requireOptionalNativeModule`;
       a missing module answers `unsupported` and `null`.
 
 ## Task 3: Speaking with the voice and rate
@@ -92,13 +92,13 @@ Expo Router, SQLite, Vitest.
 **Files:** `app/src/speech/controller.ts`,
 `app/test/speech-controller.test.ts`, `app/src/turn-context.tsx`.
 
-- [ ] Write failing tests: every phrase, Repeat, and preview carry the
+- [x] Write failing tests: every phrase, Repeat, and preview carry the
       current voice and rate; a preview overrides the voice, counts no tap,
       and stops speech first.
-- [ ] Pass `voice` (omitted for the default) and `rate` to `Speech.speak`
+- [x] Pass `voice` (omitted for the default) and `rate` to `Speech.speak`
       in the provider, which also creates the voice settings and refreshes
       them on `onVoicesChanged`.
-- [ ] Run the controller's tests and the app's typecheck.
+- [x] Run the controller's tests and the app's typecheck.
 
 ## Task 4: Settings
 
@@ -106,11 +106,11 @@ Expo Router, SQLite, Vitest.
 `app/src/screens/VoiceScreen.tsx`, `app/src/app/settings/voice.tsx`,
 `app/src/app/_layout.tsx`.
 
-- [ ] The Voice row shows the chosen voice's name and opens
+- [x] The Voice row shows the chosen voice's name and opens
       `/settings/voice`: the list, a check on the chosen voice, and a
       Preview button on each row. The five rate rows and the Personal Voice
       row live in Settings' Voice group, with the note under the group.
-- [ ] Mirror `PlacesScreen`; follow `docs/DESIGN.md`'s rules that do not
+- [x] Mirror `PlacesScreen`; follow `docs/DESIGN.md`'s rules that do not
       bend: no opacity on text, no `allowFontScaling={false}`, names equal
       to the visible text, 44-point targets, no drags or long presses.
 
