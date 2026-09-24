@@ -26,7 +26,7 @@
 - [x] Install the Expo SDK 57-compatible Router and Application packages; move app initialization into a provider shared by all routes.
 - [x] Register Home, Settings, and Places in a native stack. Home has no navigation header; the Settings control opens Settings in one tap, and native Back returns home.
 - [x] Render Settings' grouped rows in the design's order, with disabled placeholders for tickets that have not landed. Places opens its editor; About shows the installed app version.
-- [ ] Verify Home still loads its bank and speech after navigation, and the place picker reads updated names and order from bank notifications.
+- [x] Verify Home still loads its bank and speech after navigation, and the place picker reads updated names and order from bank notifications. The project owner confirmed the hands-on check on 2026-09-24.
 
 ## Task 3: Places screen
 
@@ -35,11 +35,11 @@
 - [x] Show each place in bank order with 44-point Move up and Move down buttons and named accessibility actions on the row; disable impossible moves.
 - [x] Add and rename through a sheet with `TextInput maxLength={40}`, Save and Cancel; trim on save and show validation errors.
 - [x] Confirm deletion with a system alert. Permit deleting the last place; Home offers the Places screen when the picker has none.
-- [ ] Check add, rename, move, delete, the 13th-place and 41st-character limits, and version display in the iOS Simulator at normal and large text sizes.
+- [x] Check add, rename, move, delete, the 13th-place and 41st-character limits, and version display in the iOS Simulator at normal and large text sizes. The project owner confirmed the hands-on check on 2026-09-24.
 
 ## Task 4: Handoff
 
 - [x] Run `rtk graphify update .`, format generated files, and run workspace tests, typecheck, lint, and an iOS build.
 - [x] Commit and push a PR stacked on `feat/27-speak-grid`, which remains open against `main`. Close #39 only after the acceptance checks pass.
 
-The iOS 27 simulator build installed and launched, and Expo Router bundled the three routes. Hands-on UI checks remain open because the desktop computer-use service could not connect during this session.
+The iOS 27 simulator build installed and launched, and Expo Router bundled the three routes. The desktop computer-use service could not connect during implementation; the project owner subsequently confirmed the hands-on UI checks on 2026-09-24.
