@@ -23,12 +23,13 @@
 - [x] Run the layout test and confirm it fails for the missing model.
 - [x] Implement the layout model and render the top bar, caption, five strip buttons, fixed reply row, tabs, grid, and bottom bar. Keep the row and strip before the grid in accessibility order. Use native iOS place selection.
 - [x] Make strip taps use the existing speech controller; keep Type, Settings, and Listen visible pending their own issues. Make Up and Down page the active vertical list.
+- [x] Add a development-only row preview and check empty, six-slot, and big-button states in the simulator.
 - [x] Run app tests and typecheck.
 
 ## Task 3: Verify and hand off
 
 - [x] Check formatting, full workspace tests, and typechecks.
 - [x] Build and inspect on an iOS 27 Simulator at normal and AX5 text sizes; record the physical iPhone Switch Control check that remains.
-- [ ] Refresh Graphify, commit, push, and open a PR against `feat/27-speak-grid` until #91 merges. Keep #33 open for the physical Switch Control check.
+- [x] Refresh Graphify, commit, push, and open [PR #103](https://github.com/RevenueCat-M1KU/RevenueCat/pull/103) against `feat/27-speak-grid` until #91 merges. Keep #33 open for the physical Switch Control check.
 
 The physical iPhone Switch Control order check remains for #33 after the PR is reviewed.

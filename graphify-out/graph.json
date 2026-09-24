@@ -32187,7 +32187,7 @@
       "node_kind": "heading",
       "norm_label": "task 3: verify and hand off",
       "source_file": "docs/plans/0028-turn-home-bands.md",
-      "source_location": "L28"
+      "source_location": "L29"
     },
     {
       "id": "docs_plans_0028_turn_home_bands_turn_home_bands_implementation_plan",
@@ -48876,7 +48876,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -48888,7 +48888,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L83",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -73138,7 +73138,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/plans/0028-turn-home-bands.md",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -103898,5 +103898,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "512d2bbcd6fd28eef1990dbdcc442d2160c51da5"
+  "built_at_commit": "45e54f0a214a20ec3936e32321bb5a8c41b2bee2"
 }
