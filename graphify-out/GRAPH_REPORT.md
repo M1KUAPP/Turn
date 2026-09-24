@@ -1,20 +1,20 @@
-# Graph Report - RevenueCat-issue-38 (2026-09-24)
+# Graph Report - RevenueCat-issue-39 (2026-09-24)
 
 ## Corpus Check
 
-- 290 files · ~739,461 words
+- 296 files · ~742,523 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 16 file(s) not represented in the graph (top: (none) 7, .jsonl 5, .example 2)
 
 ## Summary
 
-- 4074 nodes · 4924 edges · 280 communities (266 shown, 7 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 25 edges (avg confidence: 0.85)
+- 4106 nodes · 4986 edges · 279 communities (265 shown, 7 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 24 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `0fbb67c2`
+- Built from commit: `6d3f0995`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -235,20 +235,20 @@
 - Turn's evaluation
 - score.ts
 - Tasks
-- embeddings.ts
-- src/index.ts
-- replay.ts
+- services.ts
+- index.ts
+- row.ts
 - Turn's evaluation harness research notes
 - Tasks
-- theme.test.ts
-- App.tsx
+- theme.ts
+- app/package.json
 - react-native
 - shortlist.ts
 - Tasks
 - app/tsconfig.json
 - dependencies
 - devDependencies
-- scripts
+- embeddings.ts
 - Turn's Debug iPhone build research notes
 - device.ts
 - app/test/config.test.ts
@@ -281,17 +281,16 @@
 - Tasks
 - Turn's relay limits research notes
 - request.ts
-- createSpeechController
+- turn-context.tsx
 - Calibrating Jev's top phrase for Turn's evaluation
 - Three more rankers for Turn's evaluation
 - sentence-embedding.swift
 - HomeScreen.tsx
-- agreement.ts
+- replay.ts
 - Turn speaking grid
-- Turn home bands implementation plan
-- shortlist-speed.test.ts
-- Budget
-- bank/store.ts
+- Settings and places implementation plan
+- Device
+- theme.test.ts
 - Typed composer implementation plan
 
 ## God Nodes (most connected - your core abstractions)
@@ -311,20 +310,20 @@
 
 - `main()` --indirect_call--> `rankable()` [INFERRED]
   eval/src/count.ts → shared/src/shortlist.ts
-- `scoreLines()` --calls--> `PhraseIndex` [EXTRACTED]
-  eval/src/score.ts → shared/src/shortlist.ts
-- `scoreLines()` --calls--> `pickShortlist()` [EXTRACTED]
-  eval/src/score.ts → shared/src/shortlist.ts
 - `answer()` --calls--> `applyAnswer()` [EXTRACTED]
   eval/test/rankers.test.ts → shared/src/row.ts
-- `fakeRelay()` --indirect_call--> `fetch()` [INFERRED]
-  eval/test/replay.test.ts → worker/src/index.ts
+- `phoneKind()` --calls--> `isYesNo()` [EXTRACTED]
+  eval/src/rankers.ts → shared/src/shortlist.ts
+- `replay()` --calls--> `applyAnswer()` [EXTRACTED]
+  eval/src/replay.ts → shared/src/row.ts
+- `replay()` --calls--> `phrasesInRow()` [EXTRACTED]
+  eval/src/replay.ts → shared/src/row.ts
 
 ## Import Cycles
 
 - None detected.
 
-## Communities (280 total, 7 thin omitted)
+## Communities (279 total, 7 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1333,8 +1332,8 @@ Nodes (8): Consent and refusal for people who can't speak, Default content in te
 
 ### Community 209 - "data.ts"
 
-Cohesion: 0.10
-Nodes (23): Category, checkLabels(), labelingFrom(), Labels, Line, lines, linesFrom(), Phrase (+15 more)
+Cohesion: 0.08
+Nodes (36): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+28 more)
 
 ### Community 210 - "Tasks"
 
@@ -1374,27 +1373,27 @@ Nodes (20): All lines, Big buttons on yes-or-no, pain, and consent lines, Latenc
 ### Community 217 - "score.ts"
 
 Cohesion: 0.09
-Nodes (38): chooseCutOff(), crossValidate(), folds(), BigButton, Called, Count, inTopSix(), kindMatrix() (+30 more)
+Nodes (41): chooseCutOff(), crossValidate(), foldCount, folds(), BigButton, Called, Count, inTopSix() (+33 more)
 
 ### Community 218 - "Tasks"
 
 Cohesion: 0.08
 Nodes (25): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: Agreement on the call and the pairs, Task 11: Alpha with MASI (+17 more)
 
-### Community 219 - "embeddings.ts"
+### Community 219 - "services.ts"
 
-Cohesion: 0.07
-Nodes (38): appleRevision, helper, sentenceEmbedding, atCutOff(), batched(), cosine(), Embed, embeddingModel (+30 more)
+Cohesion: 0.13
+Nodes (16): appleRevision, helper, sentenceEmbedding, Embed, named, fixture, qwenBodies, endpoint() (+8 more)
 
-### Community 220 - "src/index.ts"
+### Community 220 - "index.ts"
 
-Cohesion: 0.12
-Nodes (28): config, fakeRelay(), Candidate, Category, Config, ErrorCode, limits, LineAnswer (+20 more)
+Cohesion: 0.20
+Nodes (19): fakeRelay(), fits(), isOn(), readConfig(), readPolicy(), wholeNumber(), answerLine(), codes (+11 more)
 
-### Community 221 - "replay.ts"
+### Community 221 - "row.ts"
 
 Cohesion: 0.09
-Nodes (34): compareLabelings(), main(), names(), rounded(), headers(), isAnswer(), RecordedLine, replay() (+26 more)
+Nodes (29): sharesNoWord(), home, shortlist, home, shortlist, Answer, applyAnswer(), clearRow() (+21 more)
 
 ### Community 222 - "Turn's evaluation harness research notes"
 
@@ -1406,15 +1405,15 @@ Nodes (13): A test oracle for agreement, Agreement between two labelers, Chance 
 Cohesion: 0.08
 Nodes (23): Decisions, Design, Global constraints, Out of scope, Rejected alternatives, Skills, Task 10: Jev's failures, Task 11: The log line (+15 more)
 
-### Community 224 - "theme.test.ts"
+### Community 224 - "theme.ts"
 
 Cohesion: 0.14
-Nodes (19): ColorName, colorValues, scaledTextStyle(), textStyle(), typography, Props, TurnText(), Props (+11 more)
+Nodes (21): HomeRoute(), ColorName, colors, colorValues, scaledTextStyle(), textStyle(), typography, Editor (+13 more)
 
-### Community 225 - "App.tsx"
+### Community 225 - "app/package.json"
 
-Cohesion: 0.10
-Nodes (20): accessibilityStore, Ready, nativeModulesDir, expo, autolinking, @types/node, typescript, vitest (+12 more)
+Cohesion: 0.08
+Nodes (23): nativeModulesDir, expo, autolinking, @types/node, typescript, vitest, main, name (+15 more)
 
 ### Community 226 - "react-native"
 
@@ -1423,8 +1422,8 @@ Nodes (12): nativeAccessibilitySource, AccessibilityPreferences, AccessibilitySo
 
 ### Community 227 - "shortlist.ts"
 
-Cohesion: 0.12
-Nodes (22): keyword, place, Ranker, lines, scored, labeled, bank, home (+14 more)
+Cohesion: 0.11
+Nodes (25): keyword, place, Ranker, lines, scored, labeled, answer(), bank (+17 more)
 
 ### Community 228 - "Tasks"
 
@@ -1438,18 +1437,18 @@ Nodes (6): compilerOptions, strict, types, extends, include, expo/tsconfig.base
 
 ### Community 230 - "dependencies"
 
-Cohesion: 0.18
-Nodes (11): dependencies, expo, expo-audio, expo-build-properties, expo-speech, expo-splash-screen, expo-sqlite, expo-symbols (+3 more)
+Cohesion: 0.12
+Nodes (17): dependencies, expo, expo-application, expo-audio, expo-build-properties, expo-constants, expo-linking, expo-router (+9 more)
 
 ### Community 231 - "devDependencies"
 
 Cohesion: 0.33
 Nodes (6): devDependencies, @types/node, @types/react, typescript, vitest, yaml
 
-### Community 232 - "scripts"
+### Community 232 - "embeddings.ts"
 
-Cohesion: 0.40
-Nodes (5): scripts, ios, start, test, typecheck
+Cohesion: 0.15
+Nodes (19): atCutOff(), batched(), cosine(), embeddingModel, embeddings(), qwen(), qwenInstruction, qwenModel (+11 more)
 
 ### Community 233 - "Turn's Debug iPhone build research notes"
 
@@ -1458,8 +1457,8 @@ Nodes (12): Appearance and screenshots, CocoaPods when pod is missing, Code sign
 
 ### Community 234 - "device.ts"
 
-Cohesion: 0.14
-Nodes (10): Address, Cached, Device, JevReply, LineReply, Terms, unlessAborted(), Entitlement (+2 more)
+Cohesion: 0.21
+Nodes (8): LineAnswer, Address, Cached, JevReply, LineReply, Terms, countInMinute(), createMinuteCount()
 
 ### Community 237 - "withBoardSplash.ts"
 
@@ -1469,7 +1468,7 @@ Nodes (3): setBoardSplash(), Storyboard, withBoardSplash()
 ### Community 238 - "summary.ts"
 
 Cohesion: 0.08
-Nodes (40): alertWindow(), assess(), dollars(), Finding, fires(), formatAlert(), main(), readFlags() (+32 more)
+Nodes (41): Outcome, alertWindow(), assess(), dollars(), Finding, fires(), formatAlert(), main() (+33 more)
 
 ### Community 239 - "Turn's video iPhone research notes"
 
@@ -1488,8 +1487,8 @@ Nodes (7): Global constraints, Task 1: Expo package and configuration, Task 2: T
 
 ### Community 242 - "helpers.ts"
 
-Cohesion: 0.12
-Nodes (39): LineRequest, age(), paid, activeEntitlements(), callsTo(), claimedLines(), expectError(), expectRefused() (+31 more)
+Cohesion: 0.11
+Nodes (39): Budget, age(), paid, activeEntitlements(), callsTo(), claimedLines(), expectError(), expectRefused() (+31 more)
 
 ### Community 243 - "shared/src/jev.ts"
 
@@ -1548,8 +1547,8 @@ Nodes (8): A judge's threshold and the batch it sees, Deliberately written no-an
 
 ### Community 254 - "report.ts"
 
-Cohesion: 0.14
-Nodes (34): againstBand, foldCount, capital(), cell(), listOf(), table(), wrap(), main() (+26 more)
+Cohesion: 0.17
+Nodes (28): capital(), listOf(), table(), wrap(), Apple, bigButtonSection(), Calibration, calibrationSection() (+20 more)
 
 ### Community 255 - "Tasks"
 
@@ -1558,8 +1557,8 @@ Nodes (27): Decisions, Design, Global constraints, Out of scope, Rejected altern
 
 ### Community 256 - "calibration.ts"
 
-Cohesion: 0.10
-Nodes (37): across(), beyondReach(), Block, Bounds, brier, byScore(), consistencyBand(), fitAt() (+29 more)
+Cohesion: 0.11
+Nodes (37): across(), againstBand, beyondReach(), Block, Bounds, brier, byScore(), consistencyBand() (+29 more)
 
 ### Community 257 - "Cut-offs, paired intervals, and risk-coverage curves for Turn's evaluation"
 
@@ -1599,12 +1598,12 @@ Nodes (11): CF-Connecting-IP and IPv6, Durable Object requests and rows, Gaps, H
 ### Community 267 - "request.ts"
 
 Cohesion: 0.26
-Nodes (12): checkEntitlement(), isItem(), Item, Settings, builds, isLineRequest(), isList(), isRecord() (+4 more)
+Nodes (12): checkEntitlement(), Entitlement, isItem(), Item, Settings, builds, isLineRequest(), isList() (+4 more)
 
-### Community 268 - "createSpeechController"
+### Community 268 - "turn-context.tsx"
 
-Cohesion: 0.31
-Nodes (8): App(), start(), createBankStore(), createSpeechController(), speak(), SpeechPort, SpeechState, fixture()
+Cohesion: 0.16
+Nodes (15): createBankStore(), createSpeechController(), speak(), SpeechPort, SpeechState, accessibilityStore, Ready, TurnContext (+7 more)
 
 ### Community 269 - "Calibrating Jev's top phrase for Turn's evaluation"
 
@@ -1623,33 +1622,28 @@ Nodes (7): Any, fail(), send(), Foundation, NaturalLanguage, Never, String
 
 ### Community 272 - "HomeScreen.tsx"
 
-Cohesion: 0.32
-Nodes (8): colors, homeLayout(), pageOffset(), HomeScreen(), Props, Props, Reply, ReplyRow()
+Cohesion: 0.16
+Nodes (14): BankDatabase, Category, localDay(), Phrase, Place, StarterBank, homeLayout(), pageOffset() (+6 more)
 
-### Community 273 - "agreement.ts"
+### Community 273 - "replay.ts"
 
-Cohesion: 0.25
-Nodes (9): Agreement, agreementOf(), alphaOf(), masiDistance(), Table, tableOf(), Unit, candidates() (+1 more)
+Cohesion: 0.15
+Nodes (18): cell(), headers(), isAnswer(), main(), RecordedLine, render(), replay(), Replayed (+10 more)
 
 ### Community 274 - "Turn speaking grid"
 
 Cohesion: 0.50
 Nodes (3): Design, Steps, Turn speaking grid
 
-### Community 275 - "Turn home bands implementation plan"
+### Community 275 - "Settings and places implementation plan"
 
-Cohesion: 0.33
-Nodes (4): Task 1: Persist the chosen place and read the strip, Task 2: Lay out the home bands, Task 3: Verify and hand off, Turn home bands implementation plan
+Cohesion: 0.17
+Nodes (9): Task 1: Persist the chosen place and read the strip, Task 2: Lay out the home bands, Task 3: Verify and hand off, Turn home bands implementation plan, Settings and places implementation plan, Task 1: Place storage, Task 2: Native Settings navigation, Task 3: Places screen (+1 more)
 
-### Community 276 - "shortlist-speed.test.ts"
+### Community 277 - "theme.test.ts"
 
-Cohesion: 0.47
-Nodes (5): bank, lines, taps, vocabulary, words()
-
-### Community 278 - "bank/store.ts"
-
-Cohesion: 0.24
-Nodes (7): BankDatabase, Category, localDay(), Phrase, Place, StarterBank, databases
+Cohesion: 0.25
+Nodes (8): appearances, contrast(), design, designColors, designTypography, luminance(), yamlBlocks, yaml
 
 ### Community 279 - "Typed composer implementation plan"
 
@@ -1658,25 +1652,25 @@ Nodes (5): Task 1: Store typed phrases and find prefix matches, Task 2: Speak te
 
 ## Knowledge Gaps
 
-- **2844 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2839 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3054 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **2863 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2858 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3076 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `startingPolicy` connect `replay.ts` to `calibration.ts`, `shortlist.ts`, `helpers.ts`, `shared/src/jev.ts`, `score.ts`, `embeddings.ts`, `src/index.ts`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Turn design` connect `Turn design` to `Colors`, `App icon and pitch assets`, `Guidance for coding agents`, `Overview`, `Turn home bands implementation plan`, `Layout`, `Components`, `Screens`, `Words on screen`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `Ranking` connect `shortlist.ts` to `calibration.ts`, `shared/src/jev.ts`, `score.ts`, `src/index.ts`, `replay.ts`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `LineRequest` connect `replay.ts` to `device.ts`, `request.ts`, `helpers.ts`, `shared/src/jev.ts`, `Device`, `index.ts`?**
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **Why does `minisearch` connect `shared/package.json` to `shortlist.ts`?**
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `$schema`, `printWidth`, `singleQuote` to the rest of the system?**
-  _2844 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2863 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Markdown style guide` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `Prizes` be split into smaller, more focused modules?**
   _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
+- **Should `Shipaton Sale: Deals, Discounts, and Free Tools for Builders` be split into smaller, more focused modules?**
+  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._

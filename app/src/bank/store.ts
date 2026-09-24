@@ -126,11 +126,9 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       return db.getAllAsync<Place>('SELECT id, name, position FROM place ORDER BY position, id')
     },
     async selectedPlace() {
-      const place = await db.getFirstAsync<Place>(
+      return db.getFirstAsync<Place>(
         "SELECT id, name, position FROM place ORDER BY id = (SELECT value FROM setting WHERE key = 'selected_place') DESC, position, id LIMIT 1"
       )
-      if (!place) throw new Error('No places available')
-      return place
     },
     async choosePlace(id: string) {
       const place = await db.getFirstAsync<Place>('SELECT id, name, position FROM place WHERE id = ?', id)
@@ -140,6 +138,100 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         id
       )
       notify()
+    },
+    async addPlace(name: string): Promise<Place> {
+      const trimmed = name.trim()
+      if (trimmed.length < 1) throw new Error('Name is required')
+      if (trimmed.length > 40) throw new Error('Name is too long')
+
+      let result!: Place
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const count = await tx.getFirstAsync<{ count: number }>('SELECT COUNT(*) AS count FROM place')
+        if ((count?.count ?? 0) >= 12) throw new Error('Too many places')
+        const maxPos = await tx.getFirstAsync<{ max_pos: number | null }>('SELECT MAX(position) AS max_pos FROM place')
+        const position = (maxPos?.max_pos ?? -1) + 1
+        const id =
+          typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+            ? crypto.randomUUID()
+            : `place-${now().getTime()}-${Math.random().toString(36).slice(2, 9)}`
+        await tx.runAsync('INSERT INTO place (id, name, position) VALUES (?, ?, ?)', id, trimmed, position)
+        result = { id, name: trimmed, position }
+      })
+
+      notify()
+
+      return result
+    },
+    async renamePlace(id: string, name: string): Promise<void> {
+      const trimmed = name.trim()
+      if (trimmed.length < 1) throw new Error('Name is required')
+      if (trimmed.length > 40) throw new Error('Name is too long')
+
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const place = await tx.getFirstAsync<{ id: string; name: string }>(
+          'SELECT id, name FROM place WHERE id = ?',
+          id
+        )
+        if (!place) throw new Error('Unknown place')
+        if (place.name === trimmed) return
+        await tx.runAsync('UPDATE place SET name = ? WHERE id = ?', trimmed, id)
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+    },
+    async movePlace(id: string, direction: -1 | 1): Promise<void> {
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const rows = await tx.getAllAsync<{ id: string; position: number }>(
+          'SELECT id, position FROM place ORDER BY position, id'
+        )
+        const index = rows.findIndex((row) => row.id === id)
+        if (index === -1) throw new Error('Unknown place')
+        const neighbor = rows[index + direction]
+        if (!neighbor || rows[index].position === neighbor.position) return
+        await tx.runAsync('UPDATE place SET position = ? WHERE id = ?', neighbor.position, id)
+        await tx.runAsync('UPDATE place SET position = ? WHERE id = ?', rows[index].position, neighbor.id)
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+    },
+    async deletePlace(id: string): Promise<void> {
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const place = await tx.getFirstAsync<{ id: string }>('SELECT id FROM place WHERE id = ?', id)
+        if (!place) throw new Error('Unknown place')
+        await tx.runAsync('DELETE FROM place WHERE id = ?', id)
+        const selected = await tx.getFirstAsync<{ value: string }>(
+          "SELECT value FROM setting WHERE key = 'selected_place'"
+        )
+        if (selected?.value === id) {
+          const first = await tx.getFirstAsync<{ id: string }>('SELECT id FROM place ORDER BY position, id LIMIT 1')
+          if (first) {
+            await tx.runAsync(
+              "INSERT INTO setting (key, value) VALUES ('selected_place', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value",
+              first.id
+            )
+          } else {
+            await tx.runAsync("DELETE FROM setting WHERE key = 'selected_place'")
+          }
+        }
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
     },
     phrases(categoryId: string) {
       return db.getAllAsync<Phrase>(
