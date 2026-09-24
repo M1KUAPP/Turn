@@ -1,11 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { AccessibilityInfo, Animated, Pressable, View } from 'react-native'
-import { colors } from '../constants/theme'
+import { colors, typography } from '../constants/theme'
 import type { homeLayout } from './home-layout'
 import TurnText from './TurnText'
 
 type Reply = { id: string; text: string }
+
+const phraseColorTokens = {
+  yes: { fill: 'yes-fill', edge: 'yes-edge' },
+  no: { fill: 'no-fill', edge: 'no-edge' },
+  'not-sure': { fill: 'unsure-fill', edge: 'unsure-edge' }
+} as const
+
+export function phraseColorTokensForId(id: string) {
+  return phraseColorTokens[id as keyof typeof phraseColorTokens] ?? null
+}
 
 type Props = {
   layout: ReturnType<typeof homeLayout>
@@ -62,7 +72,7 @@ function ReplySlot({
     return () => opacity.stopAnimation()
   }, [reply?.id, reply?.text, reduceMotion, opacity, pressed])
 
-  const tone = shown?.id === 'yes' ? 'yes' : shown?.id === 'no' ? 'no' : shown?.id === 'not-sure' ? 'unsure' : null
+  const tokens = shown ? phraseColorTokensForId(shown.id) : null
   const length = shown?.text.length ?? 0
   const textKind =
     length > Math.floor(width / 3)
@@ -94,10 +104,10 @@ function ReplySlot({
             height,
             justifyContent: 'center',
             borderWidth: 2,
-            borderColor: tone ? colors[`${tone}-edge`] : colors.edge,
+            borderColor: tokens ? colors[tokens.edge] : colors.edge,
             borderRadius: 12,
             padding: short ? 10 : 12,
-            backgroundColor: pressed ? colors['surface-pressed'] : tone ? colors[`${tone}-fill`] : colors.surface
+            backgroundColor: pressed ? colors['surface-pressed'] : tokens ? colors[tokens.fill] : colors.surface
           })}
         >
           <TurnText
@@ -171,6 +181,9 @@ export default function ReplyRow({
             kind="title1-emphasized"
             boldText={boldText}
             numberOfLines={4}
+            ellipsizeMode="tail"
+            adjustsFontSizeToFit
+            minimumFontScale={typography['title3-emphasized'].fontSize / typography['title1-emphasized'].fontSize}
             style={{ color: colors['on-accent'] }}
           >
             {bigButton.text}
