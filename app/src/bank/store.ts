@@ -645,9 +645,6 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       )
       return row?.count ?? 0
     },
-    async updatePhraseText(phraseId: string, text: string) {
-      await this.editPhrase(phraseId, { text })
-    },
     async saveTypedPhrase(text: string): Promise<Phrase | null> {
       const trimmed = text.trim()
       if (trimmed.length < 1 || trimmed.length > 200) {

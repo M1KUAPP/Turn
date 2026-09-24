@@ -107,7 +107,7 @@ describe('bank store', () => {
     const unsubscribe = store.subscribe(() => {
       changes++
     })
-    await store.updatePhraseText('i-dont-know', 'Certainly')
+    await store.editPhrase('i-dont-know', { text: 'Certainly' })
     await store.recordTap('i-dont-know')
     expect(changes).toBe(1)
     expect((await store.phrases('quick')).map((phrase) => phrase.id)).toEqual(before)
@@ -131,7 +131,7 @@ describe('bank store', () => {
     expect(first.bank.find((phrase) => phrase.id === 'yes')?.fixed).toBe(true)
     expect(first.taps.get('it-was-hard')).toBe(2)
 
-    await store.updatePhraseText('it-was-hard', 'Physio was hard')
+    await store.editPhrase('it-was-hard', { text: 'Physio was hard' })
     const typed = await store.saveTypedPhrase('The new nurse is kind')
     const next = await store.rankingData()
     expect(next.bank.find((phrase) => phrase.id === 'it-was-hard')?.text).toBe('Physio was hard')
