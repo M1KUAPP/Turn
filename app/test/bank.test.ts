@@ -37,6 +37,21 @@ afterEach(() => {
 })
 
 describe('bank store', () => {
+  test('remembers the chosen place across launches and rejects unknown places', async () => {
+    const db = database()
+    const first = createBankStore(db, starterBank)
+    await first.initialize()
+    expect((await first.places()).map((place) => place.name)).toEqual(['Home', 'Clinic', 'Shop', 'Out'])
+    expect((await first.selectedPlace()).name).toBe('Home')
+
+    await first.choosePlace('clinic')
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect((await next.selectedPlace()).name).toBe('Clinic')
+    await expect(next.choosePlace('missing')).rejects.toThrow('Unknown place')
+    expect((await next.selectedPlace()).name).toBe('Clinic')
+  })
+
   test('seeds only once and reads Quick first with the strip excluded', async () => {
     const db = database()
     const store = createBankStore(db, starterBank, () => new Date(2026, 8, 23))
