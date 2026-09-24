@@ -4,6 +4,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'Turn',
   slug: 'turn',
+  scheme: 'turn',
   version: '0.1.0',
   platforms: ['ios'],
   orientation: 'portrait',
@@ -20,6 +21,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     }
   },
   plugins: [
+    'expo-router',
+    'expo-status-bar',
     'expo-sqlite',
     'expo-audio',
     ['expo-build-properties', { ios: { enableSceneSupport: true } }],
