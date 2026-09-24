@@ -36,6 +36,21 @@ function fixture() {
 }
 
 describe('speech controller', () => {
+  test('speaks and repeats unsaved typed text without recording a phrase tap', async () => {
+    const app = fixture()
+    await app.controller.speak('A long typed sentence')
+    expect(app.controller.getSnapshot().activePhraseId).toBeNull()
+    app.utterances[0].options.onStart()
+    expect(app.counts).toEqual([])
+    await app.controller.repeat()
+    expect(app.utterances.map((utterance) => utterance.text)).toEqual([
+      'A long typed sentence',
+      'A long typed sentence'
+    ])
+    app.utterances[1].options.onStart()
+    expect(app.counts).toEqual([])
+  })
+
   test('identifies only the phrase currently speaking', async () => {
     const app = fixture()
     await app.controller.speak('Yes', 'yes')

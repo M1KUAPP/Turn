@@ -11,10 +11,11 @@ type Props = {
   boldText: boolean
   slots?: readonly (Reply | null)[]
   bigButton?: Reply | null
+  emptyNote?: string
   onSpeak: (reply: Reply) => void
 }
 
-export default function ReplyRow({ layout, width, boldText, slots = [], bigButton, onSpeak }: Props) {
+export default function ReplyRow({ layout, width, boldText, slots = [], bigButton, emptyNote, onSpeak }: Props) {
   const slotWidth = layout.rowColumns === 2 ? (width - 32 - layout.rowGap) / 2 : width - 32
   const empty = !bigButton && slots.every((reply) => !reply)
 
@@ -89,7 +90,7 @@ export default function ReplyRow({ layout, width, boldText, slots = [], bigButto
             width: layout.rowColumns === 2 ? width - 40 : slotWidth - 8
           }}
         >
-          Replies to your partner appear here.
+          {emptyNote ?? 'Replies to your partner appear here.'}
         </TurnText>
       )}
     </View>
