@@ -30,6 +30,6 @@
 ## Task 4: Handoff
 
 - [x] Refresh Graphify; run formatting, tests, typechecks, and an iOS build.
-- [ ] Commit and push a stacked PR against `feat/33-home-screen`. Leave #38 open until review and any device checks pass.
+- [x] Commit and push a stacked PR against `feat/33-home-screen`. Leave #38 open until review and any device checks pass.
 
 The iOS 27 simulator build launched successfully. Hands-on keyboard, speech, and Airplane Mode checks remain open because the desktop UI control service could not connect during this session.
