@@ -1,0 +1,159 @@
+import { describe, expect, test, vi } from 'vitest'
+import { dayRange, pageSize, readLogs } from '../scripts/telemetry'
+import { mockCloudflare } from './helpers'
+
+const access = { account: 'account-test', token: 'test-logs-token' }
+
+/** A Workers Logs event whose payload is one of the relay's lines, or anything else given. */
+const event = (
+  id: string,
+  source: unknown = { outcome: 'answered', ms: { total: 900, jev: 700 }, inputTokens: 512 },
+  requestId = `request-${id}`
+) => ({
+  $metadata: { id, requestId, service: 'turn-relay' },
+  source,
+  timestamp: 1790121600000,
+  dataset: 'cloudflare-workers'
+})
+
+/** A page of the query's events, whose own count, as the live API's, is how many it holds. */
+const page = (events: unknown[]) => () =>
+  Response.json({ success: true, errors: [], result: { events: { events, count: events.length } } })
+
+/** The count calculation's answer: how many events the range holds in all. */
+const total = (count: number) => () =>
+  Response.json({
+    success: true,
+    errors: [],
+    result: { calculations: [{ alias: 'events', calculation: 'count', aggregates: [{ value: count, count }] }] }
+  })
+
+/** The bodies the script posted to the query API. */
+const bodies = () => vi.mocked(globalThis.fetch).mock.calls.map(([, init]) => JSON.parse(String(init?.body)))
+
+describe("reading the relay's logs", () => {
+  test("asks for the relay's events in the range, 2,000 at a time, then for their count, as dry runs", async () => {
+    mockCloudflare(page([event('e1')]), total(1))
+    const { lines, matched } = await readLogs(access, { from: 1790035200000, to: 1790121600000 })
+    const [[input, init]] = vi.mocked(globalThis.fetch).mock.calls
+    expect(String(input)).toBe(
+      'https://api.cloudflare.com/client/v4/accounts/account-test/workers/observability/telemetry/query'
+    )
+    expect(init?.method).toBe('POST')
+    expect(new Headers(init?.headers).get('Authorization')).toBe('Bearer test-logs-token')
+    expect(new Headers(init?.headers).get('Content-Type')).toBe('application/json')
+    expect(bodies()).toEqual([
+      {
+        queryId: 'turn-relay-logs',
+        timeframe: { from: 1790035200000, to: 1790121600000 },
+        view: 'events',
+        limit: 2000,
+        dry: true,
+        parameters: {
+          filters: [{ key: '$metadata.service', operation: 'eq', type: 'string', value: 'turn-relay' }]
+        }
+      },
+      {
+        queryId: 'turn-relay-logs',
+        timeframe: { from: 1790035200000, to: 1790121600000 },
+        view: 'calculations',
+        dry: true,
+        parameters: {
+          filters: [{ key: '$metadata.service', operation: 'eq', type: 'string', value: 'turn-relay' }],
+          calculations: [{ operator: 'count', alias: 'events' }]
+        }
+      }
+    ])
+    expect(lines).toEqual([{ outcome: 'answered', ms: { total: 900, jev: 700 }, inputTokens: 512 }])
+    expect(matched).toBe(1)
+  })
+
+  test("pages on from the last event's ID until a page comes back short", async () => {
+    const full = Array.from({ length: pageSize }, (_, i) => event(`a${i}`))
+    mockCloudflare(page(full), page([event('b0'), event('b1'), event('b2')]), total(pageSize + 3))
+    const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
+    expect(lines).toHaveLength(pageSize + 3)
+    expect(matched).toBe(pageSize + 3)
+    const [first, second] = bodies()
+    expect(first.offset).toBeUndefined()
+    expect(second).toMatchObject({ offset: `a${pageSize - 1}`, offsetDirection: 'next' })
+  })
+
+  test("keeps only the relay's lines, each event once, and takes the total from the count", async () => {
+    mockCloudflare(
+      page([event('e1'), event('e2', 'Worker started'), event('e3', { message: 'no outcome' }), event('e1')]),
+      total(5)
+    )
+    const { lines, matched } = await readLogs(access, { from: 0, to: 1 })
+    expect(lines).toHaveLength(1)
+    expect(matched).toBe(5)
+  })
+
+  test('keeps events of different requests that share an ID, as ones logged in the same millisecond do', async () => {
+    const duplicate = { outcome: 'duplicate', ms: { total: 8 } }
+    mockCloudflare(
+      page([event('e1', duplicate, 'r1'), event('e1', duplicate, 'r2'), event('e1', duplicate, 'r3')]),
+      total(3)
+    )
+    expect((await readLogs(access, { from: 0, to: 1 })).lines).toHaveLength(3)
+  })
+
+  test('throws, without asking again, when a full page brings no event it has not seen', async () => {
+    const full = page(Array.from({ length: pageSize }, (_, i) => event(`a${i}`)))
+    mockCloudflare(full, full, full)
+    await expect(readLogs(access, { from: 0, to: 1 })).rejects.toThrow('The telemetry query repeated a page')
+    expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledTimes(2)
+  })
+
+  test.each([
+    [
+      'refuses the token',
+      () =>
+        Response.json({ success: false, errors: [{ code: 10000, message: 'Authentication error' }] }, { status: 403 })
+    ],
+    ['fails', () => new Response('Internal Server Error', { status: 500 })],
+    ['answers out of shape', () => Response.json({ success: true, result: { events: {} } })],
+    ['answers with no JSON', () => new Response('<html>', { status: 200 })],
+    ['answers a count out of shape', [page([]), () => Response.json({ success: true, result: { calculations: [] } })]],
+    [
+      'answers a full page it could not page on from',
+      page([...Array.from({ length: pageSize - 1 }, (_, i) => event(`a${i}`)), { source: { outcome: 'config' } }])
+    ]
+  ])('throws, without the token, when the API %s', async (_, replies) => {
+    mockCloudflare(...[replies].flat())
+    const error = await readLogs(access, { from: 0, to: 1 }).catch((error: unknown) => error)
+    expect(error).toBeInstanceOf(Error)
+    expect(String(error)).toMatch(/telemetry query/)
+    expect(String(error)).not.toContain('test-logs-token')
+  })
+
+  test("names the API's own error with its status", async () => {
+    mockCloudflare(() =>
+      Response.json({ success: false, errors: [{ code: 10000, message: 'Authentication error' }] }, { status: 403 })
+    )
+    await expect(readLogs(access, { from: 0, to: 1 })).rejects.toThrow(
+      'The telemetry query answered 403: Authentication error'
+    )
+  })
+})
+
+describe("a day's range", () => {
+  const noon = Date.parse('2026-09-23T12:00:00.000Z')
+  const midnight = (day: string) => Date.parse(`${day}T00:00:00.000Z`)
+
+  test('is yesterday, whole, unless a day is named', () => {
+    expect(dayRange(undefined, noon)).toEqual({
+      day: '2026-09-22',
+      from: midnight('2026-09-22'),
+      to: midnight('2026-09-23')
+    })
+  })
+
+  test('ends now for today', () => {
+    expect(dayRange('2026-09-23', noon)).toEqual({ day: '2026-09-23', from: midnight('2026-09-23'), to: noon })
+  })
+
+  test.each(['2026-02-30', '2026-9-23', '2026-09-24', 'yesterday', ''])('is null for %j', (day) => {
+    expect(dayRange(day, noon)).toBeNull()
+  })
+})

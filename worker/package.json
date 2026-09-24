@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "logs": "bun scripts/logs.ts",
     "test": "vitest run",
-    "typecheck": "wrangler types --strict-vars=false && tsc"
+    "typecheck": "wrangler types --strict-vars=false && tsc && tsc -p scripts"
   },
   "dependencies": {
     "@turn/shared": "workspace:*",
@@ -12,6 +13,7 @@
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "1.2.2",
+    "@types/node": "26.6.1",
     "typescript": "6.0.3",
     "vitest": "4.1.11",
     "wrangler": "4.136.2"

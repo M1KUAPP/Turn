@@ -16,6 +16,9 @@ export const limits = {
   bytes: 16 * 1024
 }
 
+/** The requests one app user may send the relay in a clock minute, which their object counts (SEC-3). */
+export const requestsPerMinute = 30
+
 /** A category the line's topic may be: its id in the phone's bank, described by the name the user gave it. */
 export type Category = { id: string; name: string }
 
@@ -28,8 +31,8 @@ export type Config = {
   jevOn: boolean
   /** Whether the permission step, the consent card, and the privacy notice name TypeSafe (CONSENT-7). */
   typesafeNamed: boolean
-  /** 20 for a new user (PAY-1). */
-  freeLinesLeft: number
+  /** The free lines this user has left: 20 for a new user (PAY-1). */
+  freeLinesLeft: number | null
   policy: Policy
 }
 
@@ -62,6 +65,22 @@ export type LineAnswer = Pick<Ranking, 'kind' | 'topic'> & {
   /** Milliseconds spent in Jev and in all. */
   ms: { jev: number; total: number }
 }
+
+/** How a request ended, in the relay's log line (METRIC-1), which the log scripts count. */
+export type Outcome =
+  | 'config'
+  | 'answered'
+  | 'paywall'
+  | 'duplicate'
+  | 'unverified'
+  | 'invalid'
+  | 'not_found'
+  | 'limited'
+  | 'off'
+  | 'failed'
+  | 'credits'
+  | 'spent'
+  | 'internal'
 
 /** The code in every error's body, `{ "error": code }`, which carries nothing else (SEC-4). */
 export type ErrorCode =

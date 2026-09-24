@@ -62,21 +62,24 @@ Contents:
 ## System architecture
 
 ```text
-+-------------------------------+   HTTPS    +-------------------------------+
-| iPhone app (Expo, TypeScript) |----------->| Worker: turn-relay            |
-| grid, row rules, bank (SQLite)|  /v1/lines | validate, rate-limit, config  |
-| turn-listen: SpeechTranscriber|<-----------| /v1/config                    |
++-------------------------------+   HTTPS    +-------------------------------+     +-------------------------------+
+| iPhone app (Expo, TypeScript) |----------->| Worker: turn-relay            |---->| Durable Object address-<hash> |
+| grid, row rules, bank (SQLite)|  /v1/lines | validate, rate-limit, config  |     | the address's requests        |
+| turn-listen: SpeechTranscriber|<-----------| /v1/config                    |     +-------------------------------+
 |   and name tagging            |            +---------------+---------------+
 | turn-voice: Personal Voice    |                            | one object per user,
 | expo-speech, RevenueCat SDK   |                            | in western North America
 +---------------+---------------+            +---------------v---------------+     +-----------+
                 |                            | Durable Object user-<hash>    |---->| Jev       |
-                | purchases, paywall         | free lines, entitlement cache |     | (TypeSafe)|
-                v                            +---------------+---------------+     +-----------+
-+-------------------------------+                            |
-| RevenueCat (Test Store,       |<---------------------------+
-| Paywalls, entitlements)       |   REST API v2: active entitlements
-+-------------------------------+
+                | purchases, paywall         | requests, free lines, listen  |     | (TypeSafe)|
+                v                            +---------------+-----------+---+     +-----------+
++-------------------------------+                            |           |
+| RevenueCat (Test Store,       |<---------------------------+           | before each call
+| Paywalls, entitlements)       |   REST API v2: active entitlements     |
++-------------------------------+                            +-----------v-------------------+
+                                                             | Durable Object jev-calls      |
+                                                             | the day's calls to Jev        |
+                                                             +-------------------------------+
 ```
 
 What each part owns:
@@ -94,10 +97,18 @@ What each part owns:
   runs with `"placement": { "region": "aws:us-west-2" }`, next to Jev. It
   checks headers and lengths, applies the rate limits, serves the
   configuration, and passes each line to the user's Durable Object.
-- **The user's Durable Object** counts free lines, keeps the `listen`
-  entitlement it has confirmed, builds the Jev request, and calls Jev. It's
-  created with `locationHint: "wnam"`, so a line crosses an ocean at most
-  once, from the phone to the relay ([services notes][svc-placement]).
+- **The address's Durable Object,** one per address, counts the address's
+  requests each minute, before any user's object, and refuses them past
+  120 (SEC-3).
+- **The user's Durable Object** counts the user's requests each minute and
+  their free lines, keeps the `listen` entitlement it has confirmed, builds
+  the Jev request, and calls Jev. It's created with `locationHint: "wnam"`,
+  so a line crosses an ocean at most once, from the phone to the relay
+  ([services notes][svc-placement]).
+- **The budget's Durable Object,** `jev-calls`, is one for the whole
+  relay. It counts the UTC day's calls to Jev, retries included, which each
+  user's object takes one at a time before every attempt, and refuses them
+  past `JEV_DAILY_CALLS` until midnight UTC (SEC-5).
 - **Jev** answers the kind of question, the topic, and one Noul, Jev's
   yes-or-no question with a probability, per candidate.
 - **RevenueCat** runs the Test Store purchase, the paywall, and the
@@ -111,13 +122,15 @@ The path of one partner line:
     app gives it the next sequence number and cancels any request in flight.
 2.  The app tags names in the line and the shortlist, picks the 40
     candidates, and sends `POST /v1/lines`.
-3.  The relay checks the request, applies the user's limit, and passes it to
-    `user-<hash>`.
+3.  The relay checks the request, counts it in `address-<hash>` against
+    the address's 120 a minute, and passes the line to `user-<hash>`, which
+    first counts it against the ID's 30 a minute.
 4.  The object claims a free line or, past them, checks the entitlement; it
-    answers `402` if neither allows the line. Otherwise it calls Jev, within
-    2.5 seconds.
-5.  If Jev fails, the object releases the claim; otherwise it returns the
-    probabilities, the policy, and the free lines left.
+    answers `402` if neither allows the line. Otherwise it calls Jev within
+    2.5 seconds, taking each attempt from the day's budget in `jev-calls`.
+5.  If Jev fails or the day's budget is spent, the object releases the
+    claim; otherwise it returns the probabilities, the policy, and the free
+    lines left.
 6.  The app drops the answer if a newer line exists, applies the
     [row's rules](#from-probabilities-to-the-row), and renders the row.
 7.  The user taps a reply; `expo-speech` speaks it while listening pauses.
@@ -256,7 +269,7 @@ CREATE TABLE setting (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 
 ### The relay's storage
 
-Each user's Durable Object, backed by SQLite, keeps two small tables and
+Each user's Durable Object, backed by SQLite, keeps three small tables and
 nothing else:
 
 ```sql
@@ -267,26 +280,73 @@ CREATE TABLE entitlement (
   checked_at INTEGER NOT NULL,
   refreshed_at INTEGER                      -- the last purchase that skipped a cached no
 );
+CREATE TABLE requests (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  minute INTEGER NOT NULL,                  -- the clock minute, as minutes since 1970
+  count INTEGER NOT NULL                    -- the user's requests in it
+);
 ```
 
+- **Counting requests.** Every request that passes its checks takes one of
+  the user's 30 a minute, inside `transactionSync()`: below 30 in the
+  current clock minute, the object writes the count plus one, and
+  otherwise the request gets `429`, and nothing is written. A new minute
+  starts again from 0 (SEC-3).
 - **Claiming a free line.** Inside `transactionSync()`, a line ID already in
   `free_lines` is a duplicate, which gets `409` and no call to Jev (SEC-6), so
   an ID can't be reused for a new line; a new ID below 20 rows is inserted as a
   free line; and at 20 rows the line needs the entitlement. In the services
   notes' local test, this claim counted exactly 20 of 25 simultaneous lines for
   one device, and ten copies of one line ID once ([services notes][svc-count]).
-  If Jev fails, the object deletes the row, so only answered lines count
-  (PAY-1).
+  If Jev fails, the object deletes that line's own row, so only answered
+  lines count (PAY-1); a paid copy of the same line ID never deletes a free
+  copy's claim.
 - **The entitlement row** caches RevenueCat's answer: a yes for 24 hours,
-  since `listen` is a one-time purchase, and a no for 1 minute.
+  since `listen` is a one-time purchase, and a no for 1 minute. It records
+  when a line with `refresh` last skipped a cached no, but only once
+  RevenueCat answered that line's check. A check that fails caches nothing,
+  doesn't use up the purchase's refresh, and leaves the no it skipped
+  stale, so the next line asks again. Of two checks that finish out of
+  order, the one that started later stays.
+- **The free lines left** are `FREE_LINES` less the rows, never below 0,
+  or null once the row holds a yes. A free line with `refresh` asks
+  RevenueCat alongside Jev, so a purchase made with free lines left shows
+  as null too.
 - **The name.** The Worker reaches the object with `getByName()` on the
   SHA-256 of the app user ID and a secret salt, with `locationHint: "wnam"`,
   so a stored record can't be traced back to an ID without the salt.
-- **The Free plan's budget.** Each new free line writes 2 rows in the
-  device's object and 1 in the daily budget's, so the Free plan's 100,000
-  rows a day cover about 1,600 devices spending all 20 lines in one day.
+- **Each address's count.** One more object per address, `address-<hash>`,
+  named by the SHA-256 of the address and the same salt, keeps a
+  `requests` table of the same shape and nothing else. It counts each
+  request from the address that passes its checks, the same way, against
+  120 a minute, before the user's object does (SEC-3).
+- **The day's calls.** The budget's object, `jev-calls`, keeps one more
+  table, with one row:
+
+  ```sql
+  CREATE TABLE calls (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    day TEXT NOT NULL,                        -- the UTC date, such as 2026-09-23
+    count INTEGER NOT NULL                    -- that day's calls to Jev, retries included
+  );
+  ```
+
+  Each attempt to Jev first takes a call. Below `JEV_DAILY_CALLS` on the
+  current UTC day, the object writes the count plus one; otherwise it
+  refuses the attempt and writes nothing. A new day starts again from 0,
+  so the budget comes back at midnight UTC (SEC-5).
+
+- **The Free plan's budget.** Each request writes 1 row in its address's
+  object and 1 in the user's for their counts, each new free line 2 more in
+  the user's and 1 in the daily budget's, and a new object 2 for each table
+  it creates ([address limit notes][addr-rows]). A device spending all 20
+  lines in one day from one address, with two configuration requests,
+  writes 112 rows, so the Free plan's 100,000 rows a day cover about 890
+  such devices; at 64 object requests each, its 100,000 requests a day
+  cover about 1,560.
 
 [svc-count]: /docs/research/0024-turn-services.md#counting-free-partner-lines-per-device
+[addr-rows]: /docs/research/0050-turn-address-limit.md#local-measurement
 
 ### What is never stored
 
@@ -314,13 +374,15 @@ carries these headers:
 starts: whether Jev is on, whether the texts name TypeSafe (CONSENT-7), the
 free lines this user has left, and the current policy. The Worker asks the
 user's Durable Object for the free lines left, so they survive a relaunch
-(PAY-1, PAY-2).
+(PAY-1, PAY-2). They're null once the user is entitled, and for a request
+that skips the count, as the Simulator build's do while
+`SIMULATOR_UNLIMITED` is on (PAY-9); each answer carries the same.
 
 ```ts
 type Config = {
   jevOn: boolean
   typesafeNamed: boolean
-  freeLinesLeft: number // 20 for a new user
+  freeLinesLeft: number | null // 20 for a new user; null once entitled
   policy: Policy
 }
 ```
@@ -366,9 +428,10 @@ Errors return `{ "error": "<code>" }`:
 | 404    | `not_found`       | a path or method the relay doesn't serve       | ranks on the phone; logs the bug    |
 | 409    | `duplicate`       | a line ID this user's free lines already hold  | ranks on the phone; logs the bug    |
 | 402    | `paywall`         | no free lines left and no `listen` entitlement | opens the paywall (PAY-2, STATE-4)  |
-| 429    | `rate_limited`    | over the user's limit, with `Retry-After`      | ranks on the phone                  |
+| 429    | `rate_limited`    | over a rate limit, with `Retry-After: 60`      | ranks on the phone                  |
 | 503    | `jev_off`         | the configuration turns Jev off (STATE-3)      | ranks on the phone; degraded notice |
-| 503    | `jev_unavailable` | Jev timed out or failed                        | ranks on the phone (STATE-2)        |
+| 503    | `jev_unavailable` | Jev or RevenueCat's check timed out or failed  | ranks on the phone (STATE-2)        |
+| 503    | `jev_unavailable` | the day's calls to Jev are spent (SEC-5)       | ranks on the phone (STATE-2)        |
 | 500    | `internal`        | anything else                                  | ranks on the phone                  |
 
 The body may hold at most 16 KB, and a request that breaks any limit above
@@ -621,9 +684,10 @@ on answer(a)
 - **One line at a time.** A new line aborts the request in flight with an
   `AbortController`, and an answer for an older sequence number is dropped
   (ROW-7).
-- **The phone waits 3 seconds** for the relay, and the relay gives Jev 2.5
-  seconds in all, with at most one retry of 1.5 seconds and no wait for a
-  server's `Retry-After`, since a later answer would arrive too late to help
+- **The phone waits 3 seconds** for the relay, and the relay gives each
+  line 2.5 seconds in all, RevenueCat's check included, and Jev what's left
+  of them, with at most one retry of 1.5 seconds and no wait for a server's
+  `Retry-After`, since a later answer would arrive too late to help
   (STATE-2).
 - **After a failure,** the phone ranks that line itself. After two failures
   among the last three lines, the app shows "Listen mode is degraded" until
@@ -852,7 +916,8 @@ Listen mode says so and offers the typed-line field.
 
 ### The relay's entitlement check
 
-The user's object checks only once the free lines are used (PAY-1, PAY-7):
+The user's object checks once the free lines are used, and on a free line
+that carries `refresh` (PAY-1, PAY-4, PAY-7):
 
 ```text
 on line(lineId, refresh)
@@ -860,15 +925,22 @@ on line(lineId, refresh)
   claim = claim(lineId)                  # free, duplicate, or paid
   if claim is duplicate: 409
   else if claim is free:
-    call Jev; if it fails: release(lineId)
+    call Jev, and with refresh ask RevenueCat alongside
+    if Jev fails: release(lineId)
   else if the cached yes is under 24 hours old: call Jev
   else if the cached no is under 1 minute old
           and not (refresh and the last refresh is over 1 minute old): 402
-  else: ask RevenueCat; cache the answer; call Jev or answer 402
+  else: ask RevenueCat within 500 ms
+    if it answers: cache the answer; call Jev or answer 402
+    else if a yes is cached, of any age: call Jev
+    else: 503, logged as unverified      # never 402
+          # a refresh that got no answer also leaves the cached no stale
 ```
 
-- **The call** uses the secret key; a `404` means RevenueCat has never seen
-  the ID, so the answer is no ([RevenueCat notes][rc-v2]):
+- **The call** uses the secret key and waits at most half a second, and
+  Jev gets what's left of the line's 2.5 seconds after it, so every line
+  stays within the phone's 3 seconds; a `404` means RevenueCat has never
+  seen the ID, so the answer is no ([RevenueCat notes][rc-v2]):
 
   ```text
   GET https://api.revenuecat.com/v2/projects/{project_id}/customers/{customer_id}/active_entitlements
@@ -878,6 +950,12 @@ on line(lineId, refresh)
   object id in the relay's configuration, since the API returns ids, not
   the `listen` lookup key, and accepts an `expires_at` that is `null` or
   still ahead.
+- **No answer is never a no.** Another status, a `404` whose `type` isn't
+  `resource_missing`, a body out of the spec's shape, such as a `200`
+  whose `object` isn't `list`, a timeout, or an
+  unset `RC_PROJECT_ID` or `RC_ENTITLEMENT_ID` is no answer
+  ([free lines notes][count-notes]), which the pseudocode above never
+  turns into a `402`.
 - **Test Store counts.** Active entitlements carry no store or
   environment, so the check can't tell a Test Store unlock from a real one;
   for Next Gen it accepts both, with Sandbox Testing Access left at
@@ -891,10 +969,12 @@ on line(lineId, refresh)
   Store can't buy in the Simulator, the relay's `SIMULATOR_UNLIMITED` switch
   skips the count for requests marked `simulator` until judging ends on
   October 13 (PAY-9). The header can be forged, which costs only Jev
-  credits, and the per-ID rate limit still applies.
+  credits, and the per-ID rate limit and the daily budget bound that; the
+  switch stays off unless the check needs it.
 
 [rc-v2]: /docs/research/0009-revenuecat-expo.md#rest-api-v2-customer-and-active-entitlements
 [svc-server]: /docs/research/0024-turn-services.md#test-store-purchases-on-the-server
+[count-notes]: /docs/research/0039-turn-free-lines.md#the-active-entitlements-endpoint
 
 ## The iPhone app
 
@@ -1083,14 +1163,18 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | ------------------------------------ | ------ | ---------------- | ------------------------------------------- |
 | `TYPESAFE_API_KEY`                   | secret | the relay        | calls Jev                                   |
 | `RC_SECRET_KEY`                      | secret | the relay        | the v2 entitlement check                    |
-| `ID_SALT`                            | secret | the relay        | hashes app user IDs                         |
+| `ID_SALT`                            | secret | the relay        | hashes app user IDs and addresses           |
 | `JEV_MODEL`                          | var    | the relay        | `jev-1.13.0`                                |
 | `JEV_ON`                             | var    | the relay        | the switch that turns Jev off (STATE-3)     |
 | `TYPESAFE_NAMED`                     | var    | the relay        | whether the texts name TypeSafe (CONSENT-7) |
 | `FREE_LINES`                         | var    | the relay        | 20 (PAY-1)                                  |
+| `JEV_DAILY_CALLS`                    | var    | the relay        | the day's calls to Jev: 10,000 (SEC-5)      |
 | `POLICY`                             | var    | the relay        | the policy's changed values (ROW-8)         |
 | `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
 | `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
+| `TURN_CF_LOGS_TOKEN`                 | secret | shells, Actions  | reads Workers Logs (METRIC-2, AVAIL-2)      |
+| `TURN_CF_ACCOUNT_ID`                 | secret | shells, Actions  | the account whose logs it reads             |
+| `JEV_ALERT_DOLLARS`                  | var    | Actions          | the credit alert's level (AVAIL-2)          |
 | Test Store public key                | public | the app's config | RevenueCat's SDK in debug builds            |
 | Relay URL                            | public | the app's config | the relay's address                         |
 
@@ -1106,25 +1190,15 @@ ran under Wrangler 4.136.2:
   "durable_objects": {
     "bindings": [
       { "name": "DEVICE", "class_name": "Device" },
+      { "name": "ADDRESS", "class_name": "Address" },
       { "name": "BUDGET", "class_name": "Budget" }
     ]
   },
   "exports": {
     "Device": { "type": "durable-object", "storage": "sqlite" },
+    "Address": { "type": "durable-object", "storage": "sqlite" },
     "Budget": { "type": "durable-object", "storage": "sqlite" }
   },
-  "ratelimits": [
-    {
-      "name": "USER_LIMITER",
-      "namespace_id": "1001",
-      "simple": { "limit": 30, "period": 60 }
-    },
-    {
-      "name": "ADDRESS_LIMITER",
-      "namespace_id": "1002",
-      "simple": { "limit": 120, "period": 60 }
-    }
-  ],
   "observability": {
     "enabled": true,
     "logs": { "invocation_logs": false },
@@ -1135,7 +1209,11 @@ ran under Wrangler 4.136.2:
     "JEV_MODEL": "jev-1.13.0",
     "JEV_ON": "true",
     "TYPESAFE_NAMED": "false",
+    "SIMULATOR_UNLIMITED": "false",
     "FREE_LINES": "20",
+    "JEV_DAILY_CALLS": "10000",
+    "RC_PROJECT_ID": "proj9f033172",
+    "RC_ENTITLEMENT_ID": "entl6b65cc982a",
     "POLICY": {}
   }
 }
@@ -1146,22 +1224,20 @@ ran under Wrangler 4.136.2:
   which Git ignores, and a committed `.dev.vars.example` names them for anyone
   who runs the relay with their own keys (SEC-1)
   ([services notes][svc-secrets]).
-- **The committed file,** `worker/wrangler.jsonc`, holds all of this but
-  `BUDGET` and `ratelimits`, which come with the rate limits and the daily
-  budget (#35).
+- **The committed file,** `worker/wrangler.jsonc`, holds all of this.
 - **Vars** are read at every request, so a change reaches the next answer
   or configuration with no app build (ROW-8, CONSENT-7):
-  - `JEV_ON` and `TYPESAFE_NAMED` are on only as `"true"`, so a typo turns
-    Jev off and leaves TypeSafe unnamed, and `TYPESAFE_NAMED` starts
-    `"false"`.
+  - `JEV_ON`, `TYPESAFE_NAMED`, and `SIMULATOR_UNLIMITED` are on only as
+    `"true"`, so a typo turns Jev off, leaves TypeSafe unnamed, and counts
+    the Simulator's lines. The last two start `"false"`.
   - `POLICY` holds only the values that differ from `startingPolicy` in
     `@turn/shared/row`: JSON in `wrangler.jsonc`, or a string from
     `wrangler deploy --var` or the dashboard. With no `POLICY` at all, the
     starting policy holds.
   - An unknown key, a value of the wrong type, or a number outside 0 to 1
-    in `POLICY`, a `FREE_LINES` that isn't a whole number, or no
-    `JEV_MODEL`, with which the SDK would pick a model of its own, answers
-    `500 internal`, so a mistake shows at the next request.
+    in `POLICY`, a `FREE_LINES` or `JEV_DAILY_CALLS` that isn't a whole
+    number, or no `JEV_MODEL`, with which the SDK would pick a model of its
+    own, answers `500 internal`, so a mistake shows at the next request.
   - A var changed in the dashboard lasts until the next `wrangler deploy`,
     which puts back `wrangler.jsonc`'s values.
 - **The Test Store key** is the only RevenueCat key the app carries, and it
@@ -1170,10 +1246,17 @@ ran under Wrangler 4.136.2:
   rotating them, while its docs say nothing; every build a judge runs
   carries the key anyway, so the team commits it for judging and rotates it
   after the winners are announced (SEC-1).
+- **The logs token** is the team's, not the relay's: an API token that can
+  query Workers Logs, which Wrangler's login can't. `bun run logs` reads it
+  and the account's ID from the shell, and the credit alert from the
+  repository's Actions secrets, where `JEV_ALERT_DOLLARS` is a variable.
+  Neither name is Wrangler's, so neither changes what it deploys with
+  ([relay logs notes][logs-notes]).
 - **No secret key** is in the repository or its history, which a secret
   scan checks before it goes public (SUBMIT-1).
 
 [svc-secrets]: /docs/research/0024-turn-services.md#secrets-and-wranglerjsonc-for-the-relay
+[logs-notes]: /docs/research/0040-turn-relay-logs.md#the-api-tokens-permission
 
 ### Validation and abuse limits
 
@@ -1193,23 +1276,70 @@ ran under Wrangler 4.136.2:
   number from 0; category and candidate ids hold 1 to 64 characters and
   are unique in their list; and no category is `consent`, the topic option
   every line has.
-- **Rate:** 30 requests a minute per ID hash, through Cloudflare's rate
-  limiting binding with a 60-second period, and 120 a minute per address as
-  a backstop only, since mobile networks share addresses (SEC-3). The
-  binding counts per Cloudflare location and is "permissive, eventually
-  consistent"; with the relay placed in one region, its counters act almost
-  like global ones ([services notes][svc-ratelimit]).
+- **Rate:** 30 requests a minute per ID and 120 per address, each counted
+  exactly in each clock minute by a Durable Object: the user's object
+  counts the ID's, and the address's object the address's, a backstop
+  only, since mobile networks share addresses (SEC-3).
+  - **Why objects count both.** Cloudflare's rate limiting binding counts
+    per location and is "permissive, eventually consistent"
+    ([services notes][svc-ratelimit]). It deployed and refused on the
+    team's account, but loosely: one ID's first 73 requests in a minute
+    passed before its first `429`, 27 seconds in, and all 250 of a burst
+    from one address passed in 18 seconds
+    ([relay limits notes][limits-live]). The objects' counts are exact, at
+    one more object request for every request and one more row for every
+    counted one, which [the Free plan's budget](#the-relays-storage)
+    allows; #98 chose them for the address too. Live, the address's count
+    held a burst of 150 requests to 120, and its call added tens of
+    milliseconds to a request ([address limit notes][addr-live]).
+  - **Where:** once a request's headers and a line's lengths pass. The
+    address's count comes first, before any user's object, so at most 120
+    requests a minute from IDs minted on one address reach their objects;
+    then the user's object counts the request as the first step of serving
+    it. The address is `CF-Connecting-IP`, which Cloudflare's edge won't
+    take from a client, and it names its object only through its salted
+    hash; requests without one share one count.
+  - **The answer:** `429 rate_limited` with `Retry-After: 60`: both counts
+    start again when their clock minute ends, which is never further off.
+  - **What it doesn't hold:** a sender with many addresses, such as one
+    IPv6 client moving through its /64, meets a new count at each, so the
+    daily budget is what caps such a flood's calls to Jev.
+  - **What one address can still spend.** At 120 requests a minute, each
+    from a new ID, one address writes 8 rows a request, 1 for its count
+    and 7 in the new user's object, or 11 if each is a line. So it spends
+    the Free plan's 100,000 rows a day in about 75 to 105 minutes, where
+    the binding's live pace, had it held nothing back, took about 11 to
+    15; then every call to an object fails with `500 internal` until
+    midnight UTC.
+  - **A shared address's price.** The address's count comes first, so one
+    sender behind a carrier's NAT can spend the address's 120 in a minute
+    alone, its own requests past 30 refused by its ID's count, while its
+    neighbours wait for the next minute.
 - **A daily budget.** Anyone can mint new IDs, since the relay's code and
   address are public and a Test Store purchase is free, so neither the free
   lines nor `listen` guards Jev's credits. One more Durable Object counts Jev
   calls per UTC day, retries included, and past 10,000, about $0.80, the relay
   answers `jev_unavailable` until midnight UTC ([services notes][svc-abuse]).
+  - **Each attempt counts.** The number is `JEV_DAILY_CALLS`. The user's
+    object gives the SDK a `fetch` that takes a call from `jev-calls` before
+    every attempt, the retry included ([relay limits notes][limits-sdk]).
+    Its wait for the budget ends with the attempt's own time, so a slow
+    answer can't hold a line past its 2.5 seconds (STATE-2); a call the
+    budget counts after its attempt gave up is never sent.
+  - **A spent budget.** A refusal aborts the call, so the SDK doesn't try
+    again. A line refused before any call ends as `spent`, with no time in
+    Jev; one whose retry is refused ends as its first attempt did, `failed`
+    with Jev's status. Either answers as a failed call does, with no
+    `Retry-After`, and keeps its free line.
 - **The switch:** `JEV_ON` set to false stops every call to Jev at once
   (STATE-3).
 - **Errors** carry only the codes above (SEC-4).
 
 [svc-ratelimit]: /docs/research/0024-turn-services.md#the-rate-limiting-binding-for-turn
 [svc-abuse]: /docs/research/0024-turn-services.md#limiting-abuse-of-the-free-lines
+[limits-live]: /docs/research/0046-turn-relay-limits.md#hands-on-check
+[addr-live]: /docs/research/0050-turn-address-limit.md#hands-on-check
+[limits-sdk]: /docs/research/0046-turn-relay-limits.md#the-sdks-attempts
 
 ### Data inventory
 
@@ -1220,6 +1350,7 @@ ran under Wrangler 4.136.2:
 | A partner line                          | the phone's memory        | the caption, at most two minutes | the relay and TypeSafe, tagged, with the place's name                            |
 | The app user ID                         | RevenueCat's SDK          | the SDK's own storage            | RevenueCat, and the relay, which stores its hash                                 |
 | Free lines used, the cached entitlement | the user's Durable Object | until the relay is deleted       | nowhere                                                                          |
+| An address's last minute's count        | the address's object      | until the relay is deleted       | nowhere                                                                          |
 | Request logs                            | Workers Logs              | 3 days on the Free plan          | Cloudflare                                                                       |
 | Purchases                               | RevenueCat                | RevenueCat's retention           | RevenueCat                                                                       |
 
@@ -1242,8 +1373,10 @@ monitoring, and "Jev is not trained on customer requests or responses"
 | Jev out of credits                          | an undocumented status, likely `402`, logged as `credits` | the same, and the credit alert (AVAIL-2)                         |
 | The daily Jev budget spent                  | `503 jev_unavailable`                                     | the same, until midnight UTC                                     |
 | Over the Free plan's 100,000 requests a day | Cloudflare's Error 1027                                   | the same; the team moves to Workers Paid, $5 a month             |
+| Over the Free plan's object limits a day    | a call to an object fails: `500 internal`                 | the same, until midnight UTC; the team moves to Workers Paid     |
+| Over the Free plan's 5 GB of stored data    | a write to an object fails: `500 internal`                | the same, until the team removes data or moves to Workers Paid   |
 | Jev turned off                              | `503 jev_off`                                             | the same, with the degraded notice (STATE-3)                     |
-| RevenueCat down, past free lines            | the check fails                                           | a cached yes still answers; otherwise `503`, never a false `402` |
+| RevenueCat down, past free lines            | the check fails; `unverified` with no yes cached          | a cached yes still answers; otherwise `503`, never a false `402` |
 | Transcription unavailable                   | `turn-listen` reports it                                  | the message, the typed field, the fallback recognizer (LISTEN-9) |
 | Personal Voice denied                       | `turn-voice` reports it                                   | the system voice, with the reason (VOICE-2)                      |
 
@@ -1256,10 +1389,13 @@ monitoring, and "Jev is not trained on customer requests or responses"
   - `at`, the time;
   - `user`, the first 8 characters of the ID's hash;
   - `seq`, the sequence number;
-  - `outcome`: `answered`, `paywall`, `limited`, `failed`, or `off` for a
-    line; `credits` for a line Jev refused with a `402`; `invalid`,
-    `not_found`, or `internal` for a request refused with that error; and
-    `config` for the configuration;
+  - `outcome`: `answered`, `paywall`, `failed`, or `off` for a line;
+    `credits` for a line Jev refused with a `402`; `spent` for a line the
+    day's budget stopped before any call; `duplicate` for a line ID already
+    used, and `unverified` for a line past the free lines whose check got no
+    answer and no cached yes; `limited` for a request over a rate limit;
+    `invalid`, `not_found`, or `internal` for a request refused with that
+    error; and `config` for the configuration;
   - `ms`, with the milliseconds in all as `total` and in Jev as `jev`;
   - `model` and `inputTokens`, as Jev reports them;
   - `jevStatus`, the status a failed call to Jev returned.
@@ -1268,14 +1404,26 @@ monitoring, and "Jev is not trained on customer requests or responses"
   1, 2026, traces count against the same quota, and a trace of the
   RevenueCat call would keep the app user ID in its URL
   ([services notes][svc-logs]).
-- **A script** in `worker/scripts/` reads a day of logs and prints the counts
-  and latencies METRIC-2 names. The Free plan keeps logs for 3 days, so the
-  team runs it daily during judging.
+- **A script,** `bun run logs` in `worker/`, reads a UTC day of logs
+  through Cloudflare's telemetry query API with an API token, since
+  Wrangler's login can't, and prints the counts and latencies METRIC-2
+  names, the latencies over answered lines by nearest rank
+  ([the relay's README][relay-readme]). The Free plan keeps logs for 3
+  days, so the team runs it daily during judging.
+- **The credit alert.** TypeSafe publishes no balance and no low-balance
+  alert ([credit alert notes][alert-notes]), so a GitHub Actions workflow
+  reads the last 24 hours of logs every 3 hours. It opens an issue assigned
+  to the team when a line ran out of credits, or when the spend it
+  estimates at $0.042 a million input tokens passes `JEV_ALERT_DOLLARS`
+  (AVAIL-2); [the README][relay-alert] names who receives it.
 - **The daily check** during judging sends one typed line to the relay from
   a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
 [relay-logs]: /docs/research/0038-turn-relay.md#workers-logs
+[relay-readme]: /worker/README.md#daily-counts-from-the-logs
+[alert-notes]: /docs/research/0041-turn-credit-alert.md#typesafes-balance-alerts-and-billing
+[relay-alert]: /worker/README.md#the-credit-alert
 
 ### Service life
 
@@ -1303,68 +1451,112 @@ line to the phone's own ranking, and speaking never depends on the relay.
   take only lines with an acceptable reply besides the fixed buttons, which
   come from the question-kind call rather than the ranking
   ([the labels' plan][labels-plan]).
-- **Too few lines with no reply.** The two labelings left 8 and 7 lines
-  with no acceptable reply, short of EVAL-1's 16, and nothing changed to
-  close the gap, so the check holds that quota as a to-do until
-  [#77][floor-issue] adds lines or changes the floor.
+- **Lines with no reply.** The first two labelings left 8 and 7 lines with
+  no acceptable reply, short of EVAL-1's 16, so [#77][floor-issue] had 20
+  new lines written to have none and labeled among the 80 by the same
+  rules. In an order fixed before any new label was read, each new line
+  replaced a line with a reply at its own place until the scored labeling
+  had 16 lines with none, which took 12 ([the floor's plan][floor-plan]).
 - **New lines.** The public conversation sets are non-commercial,
   share-alike, not redistributable, or unlicensed, so the lines are written
   for Turn, by writers who haven't seen the bank, in the mix real questions
   have: about seven in ten questions yes-or-no, many of them declarative,
   such as "You're tired?", and about a fifth of lines with no acceptable
-  reply. A second teammate labels the acceptable replies, which
-  [#76][teammate-labels] still asks for, and the script reports their
-  agreement ([evaluation notes][eval-data]).
+  reply. A second teammate labels the acceptable replies, and the script
+  reports their agreement ([evaluation notes][eval-data]).
 - **The starter bank** comes from the app's own file, so the evaluation
   ranks the phrases a user starts with. A fresh bank has no taps, so the
   shortlist's most-tapped slots fall back to the place's phrases and the
   bank's order, and the evaluation says so.
 - **Who wrote and labeled them.** At the team's direction, Claude subagents
   wrote both files on September 23, 2026. Two wrote 40 lines each from a
-  brief that showed no phrase of the bank ([the brief][lines-brief]), so
-  each line's `author` is `claude-a` or `claude-b`; a third wrote the bank
-  without seeing the lines, and a fourth read every phrase. Two more,
-  `claude-c` and `claude-d`, then labeled every line's replies, each alone
-  and from a brief that set no quota ([the labelers' brief][labels-brief]);
-  `claude-c`'s labeling is the one the evaluation scores. Text a language
-  model wrote or labeled may suit a ranker built on one, and two labelings
-  by one model show consistency rather than correctness, so the report and
-  the README say who wrote the lines and the bank and who labeled the
-  replies. On that date, no teammate had yet read the bank (CONTENT-1) or
-  labeled a line (EVAL-1), and no clinic had reviewed the bank
-  (CONTENT-5).
+  brief that showed no phrase of the bank ([the brief][lines-brief]), as
+  `claude-a` and `claude-b`; a third wrote the bank without seeing the
+  lines, and a fourth read every phrase. Two more, `claude-c` and
+  `claude-d`, then labeled every line's replies, each alone and from a
+  brief that set no quota ([the labelers' brief][labels-brief]). Their
+  labels left too few lines with no reply, so `claude-f` wrote 20 more lines
+  meant to have none from a brief that showed no list of the bank's
+  phrases, only the labeling rules, which name the fixed buttons and
+  "I don't know" ([the new lines' brief][writer-brief]); of the 80 lines,
+  it saw only the five that its first draft repeated, quoted back as
+  situations to avoid. `claude-g` and `claude-h` labeled the new lines
+  among the 80 by the same rules; 12 of them replaced lines with a reply.
+  `claude-c`'s labeling, with `claude-g`'s for the new lines, is the one
+  the evaluation scores. Text a language model wrote or labeled may suit a
+  ranker built on one, and two labelings by one model show consistency
+  rather than correctness, so the report and the README say who wrote the
+  lines and the bank and who labeled the replies. On that date, no
+  teammate had yet read the bank (CONTENT-1) or labeled a line (EVAL-1),
+  and no clinic had reviewed the bank (CONTENT-5).
 
 [eval-data]: /docs/research/0025-turn-evaluation.md#writing-turns-80-lines
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
 [labels-plan]: /docs/plans/0013-turn-reply-labels.md#decisions
 [labels-brief]: /docs/plans/0013-turn-reply-labels.md#appendix-the-labelers-brief
-[teammate-labels]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/76
 [floor-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/77
+[floor-plan]: /docs/plans/0022-turn-no-reply-floor.md#decisions
+[writer-brief]: /docs/plans/0022-turn-no-reply-floor.md#appendix-the-writers-brief
 
 ### The rankers
 
-| Ranker       | What it does                                                                                                                                        |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `place`      | the shortlist's phrases at the line's place, in the bank's order, with no use of the line; it never holds                                           |
-| `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                           |
-| `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with a cross-validated cut-off                  |
-| `jev`        | the app's shortlist, the relay's request builder, and the row's rules                                                                               |
-| `jev-rerank` | Jev over the 40 phrases nearest by Apple's sentence embedding, computed on a Mac as the phone would, run only when Jev trails `embeddings` (EVAL-4) |
+| Ranker       | What it does                                                                                                                                                                      |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `place`      | the shortlist's phrases at the line's place, in the bank's order, with no use of the line; it never holds                                                                         |
+| `keyword`    | the phone's own ranking over the line, which holds when no word is shared                                                                                                         |
+| `embeddings` | `@cf/baai/bge-base-en-v1.5` with `cls` pooling: cosine similarity between the line and each phrase, with the phone's yes-or-no rule, no big button, and a cross-validated cut-off |
+| `jev`        | the app's shortlist, the relay's request builder with the relay's pin, and the row's rules                                                                                        |
+| `reranker`   | `@cf/baai/bge-reranker-base`: the cross-encoder's score for the line and each phrase, with the phone's yes-or-no rule, no big button, and a cross-validated cut-off               |
+| `qwen3`      | `@cf/qwen/qwen3-embedding-0.6b`: cosine similarity between the line, as a query under an instruction, and each phrase, with the rest as for `embeddings`                          |
+| `apple`      | Apple's English sentence embedding, computed on a Mac as the phone would: cosine similarity between the line and each phrase, with the rest as for `embeddings`                   |
+| `jev-rerank` | Jev over the 40 phrases nearest by Apple's sentence embedding, computed on a Mac as the phone would, run only when Jev trails `embeddings` (EVAL-4)                               |
 
 - **Over the same 40.** The place's first eight phrases are always among
   the 40, so `place`'s top 1 and top 6 never depend on the line, though
   which of its later phrases make the 40 can.
-- **Extras (EVAL-8).** `bge-reranker-base` over the keyword shortlist, an
-  off-the-shelf cross-encoder; `qwen3-embedding-0.6b` with the instruction
-  "Given what a conversation partner just said, retrieve the reply that
-  answers it"; and Apple's sentence embedding, run on a Mac.
+- **The extra rankers (EVAL-8).** Each ranks the app's shortlist, as the
+  others do ([extra rankers' notes][eval-extras]).
+  - `reranker` sends the line as the query and the shortlist's phrases as
+    the contexts, one request per line, and takes each score by its
+    context's index. A probe's scores came between 0 and 1, but a cut-off
+    needs only their order.
+  - `qwen3` embeds the line as a query under the instruction "Given what a
+    conversation partner just said, retrieve the reply that answers it",
+    which Workers AI formats as Qwen's card does, and the phrases as
+    documents, 32 to a request, since one request can't hold both.
+  - `apple` runs in a Swift helper, `eval/src/sentence-embedding.swift`,
+    which the command starts once and keeps open, so each line's time is
+    its embedding's. It loads English at revision 1, pinned so a Mac with
+    another fails, answers from one thread, and names its revision,
+    dimension, and system for the report.
 - **Embeddings measure similarity.** General-purpose embeddings trailed
   reply-trained encoders by about 25 points on a response-selection
   benchmark, and Workers AI offers no reply-trained model, so a line such as
   "How was physio?" is where keyword ranking and embeddings should fail and
   Jev should earn its place ([evaluation notes][eval-baselines]).
+- **Calling Workers AI.** The embeddings, reranker, and qwen3 rankers post
+  to Workers AI's REST API with `CLOUDFLARE_ACCOUNT_ID` and
+  `CLOUDFLARE_API_TOKEN`, a token that may run Workers AI, such as the
+  Wrangler login's from `wrangler auth token --json`. Each request to bge
+  holds at most 100 texts and asks for `cls` pooling, and each phrase's
+  vector is kept for the run. With no question kind of their own, the
+  embedding rankers and the reranker take the phone's yes-or-no rule, and
+  since their scores aren't probabilities they never bring a big button
+  ([services notes][eval-services]).
+- **Calling Jev.** The Jev ranker sends the relay's request for the app's
+  shortlist, with the place's name and the grid's categories, through
+  TypeSafe's SDK with `TYPESAFE_API_KEY` and the relay's pin, `JEV_MODEL` in
+  `worker/wrangler.jsonc`. It keeps the SDK's 10-second attempts and two
+  retries, so a slow link from the evaluation's machine doesn't count
+  against Jev, and a call that still fails stops the command.
+- **Jev's answers vary.** Three calls for one line scored its top phrase
+  0.65, 0.71, and 0.70, so each line is scored from the first of the three
+  timed passes, and a big button in any of the four answers a ranker gave
+  the line is listed.
 
 [eval-baselines]: /docs/research/0025-turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
+[eval-extras]: /docs/research/0048-turn-eval-extra-rankers.md
+[eval-services]: /docs/research/0042-turn-eval-services.md
 
 ### Metrics, intervals, and thresholds
 
@@ -1392,7 +1584,9 @@ see ([evaluation notes][eval-scoring]):
 - **The shortlist's recall at 40:** the share of lines whose acceptable
   reply made the 40, since Jev can't pick a phrase the shortlist dropped.
 - **Kind:** accuracy and a confusion matrix for the question-kind Choice,
-  since a yes-or-no call brings up the fixed buttons.
+  since a yes-or-no call brings up the fixed buttons: Jev's most likely kind
+  against its writer's, whose kinds make the rows, with a tie between kinds
+  counted apart.
 - **Subsets,** each scored apart (EVAL-3): yes-or-no lines, by their
   writer's kind; pain and consent lines, whose concerns name pain or
   consent; and lines that share no word with a reply, as the evaluation data
@@ -1402,13 +1596,54 @@ see ([evaluation notes][eval-scoring]):
   still be wrong up to 7.2% of the time, by a one-sided 95% bound. Differences
   between two rankers use a paired bootstrap over lines, and 80 lines settle
   only gaps of about 15 to 18 points (EVAL-4) ([evaluation notes][eval-power]).
+- **Jev against embeddings.** Jev's top 6 minus embeddings' takes the lines
+  with an acceptable phrase besides the fixed buttons, 9,999 resamples of
+  them drawn by xoshiro128\*\* from a committed seed, and the 2.5th and 97.5th
+  percentiles. Jev trails when the whole interval lies below zero and leads
+  when it lies above; otherwise there's no clear difference
+  ([statistics notes][eval-stats]). Only the interval on all lines gives that
+  verdict: the subsets show theirs without one, since more intervals would
+  make a false "trails" likelier.
 - **Frozen settings.** Jev's 0.6 and 0.85 come from TypeSafe's routing
   example, and 80 lines are too few to refit them, so they, the margin, and
-  the question wording are committed before the first run (EVAL-2). Cosine
-  scores aren't probabilities, so the embedding ranker's cut-off comes from
-  five-fold cross-validation, reported out of fold; the keyword ranker holds
-  when no word is shared, as the phone does; and every ranker's
-  risk-coverage curve is plotted.
+  the question wording are committed before the first run (EVAL-2). Cosines
+  and the reranker's scores aren't probabilities, so the cut-offs of
+  `embeddings`, `reranker`, `qwen3`, and `apple` come from five-fold
+  cross-validation, reported out of fold; the keyword ranker holds when no
+  word is shared, as the phone does; and every ranker's risk-coverage curve
+  is plotted.
+- **The cut-off.** One seeded shuffle, then the lines with an acceptable
+  reply and those with none are each dealt into five folds. A ranker's
+  cut-off for a fold is the one of the six highest scores of each of the
+  other four folds' lines, or one above them all, that makes the most of
+  those lines right, a tie going to the higher; a cut-off between two of a
+  line's six changes which of its phrases show, and one elsewhere changes
+  nothing. At a cut-off, the phrases that reach it score 1 and the rest 0,
+  so a line whose top phrase falls short shows no phrase: the row holds,
+  unless the phone's yes-or-no rule brings the fixed buttons.
+- **The curves.** At each distinct top score, a line is covered when its top
+  phrase reaches it, and right when one of its first six phrases at or above
+  it is acceptable; the fixed buttons and the big button don't count. The
+  report writes the plot as an SVG beside itself, with a table as its text.
+- **Calibration (EVAL-8).** Each line's top phrase in Jev's first timed
+  ranking, the first of its order, which breaks ties as the row does, is
+  scored against whether it's acceptable, on every line. The report says how
+  many lines have no acceptable phrase among their 40, since their top
+  phrase is wrong whatever its score.
+  - **The diagram** is CORP's reliability diagram: the pool-adjacent-violators
+    fit, one value for each distinct score and never falling as the score
+    rises, beside the diagonal. It needs no bins, so there's no bin count or
+    rule for ties to choose.
+  - **The band** holds 90% of the fits from 9,999 resamples of the lines,
+    each outcome redrawn as its score says, as `reliabilitydiag` draws one
+    for small samples. It holds them at each score apart, so even a
+    calibrated ranker's fit lies outside it at about one score in ten, and
+    the table counts, for each block of the fit, the scores where it does.
+  - **The Brier score** comes with a 95% percentile bootstrap interval over
+    the lines, a skill score against always forecasting the share
+    acceptable, and CORP's decomposition into miscalibration,
+    discrimination, and that constant forecast's score
+    ([calibration notes][eval-calibration]).
 - **Latency:** each ranker's own work and network trip at the median, the
   95th percentile, and the maximum, by Hyndman and Fan's type 7, NumPy's
   default ([harness notes][harness-percentiles]), over at least three passes
@@ -1419,25 +1654,83 @@ see ([evaluation notes][eval-scoring]):
 [eval-power]: /docs/research/0025-turn-evaluation.md#what-80-lines-can-and-cant-detect
 [harness-chance]: /docs/research/0035-turn-eval-harness.md#chance-rates
 [harness-percentiles]: /docs/research/0035-turn-eval-harness.md#percentiles-for-latency
+[eval-stats]: /docs/research/0043-turn-eval-statistics.md
+[eval-calibration]: /docs/research/0049-turn-eval-calibration.md
 
 ### The replay script
 
 The replay script (EVAL-7) sends the replay test's lines as text, in
 conversation order, through the relay and the shared row rules, with no
-microphone, and counts slot changes per line (ROW-5).
+microphone, and counts slot changes per line (ROW-5):
+
+```shell
+bun run replay --lines eval/replay.jsonl --relay http://localhost:8787
+```
+
+- **As the app would.** It gets the configuration once, then sends each
+  line's last 300 characters as one new user's (LISTEN-6), with the next
+  sequence number, a new line ID, and a shortlist whose first phrases are
+  the row's, and each request says `X-Turn-Build: simulator`. The row's
+  number rises as each line starts, so an older line's answer is dropped
+  (ROW-7), and the row takes each answer with the policy it carries. A
+  failure, an answer out of shape, or no answer within 3 seconds has the
+  phone rank the line (STATE-2), with Jev off the phone ranks every line
+  (STATE-3), and a `402` stops the replay, where the app would open the
+  paywall (STATE-4).
+- **Past the free lines.** A new user has 20 free lines (PAY-1), so the
+  replay test's 50 lines reach a `402` unless the relay's
+  `SIMULATOR_UNLIMITED` switch is on, which lets a Simulator build's lines go
+  uncounted (PAY-9); for a local relay, `wrangler dev` takes
+  `--var SIMULATOR_UNLIMITED:true`.
+- **Within the rate limit.** The relay allows one ID 30 requests a minute
+  (SEC-3), so a request that would be the replay user's 30th in 60 seconds
+  waits until it isn't: the replay test's 50 lines wait out the rest of the
+  first minute after the first 28.
+- **What it prints:** a row for each line, with who ranked it, the big button
+  or the six slots, the slot changes, whether the row held, and the times,
+  then the totals.
+- **Where it runs:** against the relay under `wrangler dev` in `worker/`,
+  whose secrets come from `worker/.dev.vars` or, without that file, the
+  shell; and against the team's relay by its address, which stays out of the
+  repository.
+- **The lines.** Until the replay test records its lines,
+  `eval/replay.jsonl` holds ten lines of a morning at home and out, which
+  Claude wrote for this on September 23, 2026; none is among the 80.
 
 ### The report
 
 `bun run eval` scores the rankers on the lines in `eval/lines.jsonl`, or the
-file `--lines` names, and writes `eval/results.md`, or the file `--out`
-names: the date and the commit; who wrote and labeled the lines and who
-wrote the bank; for all lines and each subset, one row per ranker for the
-ranking, each rate with its interval, and one for the row, with the six
-outcomes as counts and coverage and risk with their intervals; and each
-step's latency. The README copies the table (EVAL-6). Once a ranker calls a
-model, the report also names the model pin (EVAL-6) and lists every big
-button on a yes-or-no, pain, or consent line (EVAL-5); `place` and
-`keyword` call no model and show no big button.
+file `--lines` names, and writes `eval/results.md`, or the file `--out` names:
+the date and the commit; who wrote and labeled the lines and who wrote the bank;
+for all lines and each subset, one row per ranker for the ranking, each rate
+with its interval, and one for the row, with the six outcomes as counts and
+coverage and risk with their intervals; and each step's latency. The README
+copies the table (EVAL-6). Once a ranker calls a model, the report also names
+the model pin (EVAL-6) and lists every big button on a yes-or-no, pain, or
+consent line, in any of the four answers each ranker gave the line (EVAL-5);
+`place` and `keyword` call no model and show no big button, and `embeddings`,
+`reranker`, `qwen3`, and `apple` show none. It also names the models Jev
+answered as, Workers AI's three with qwen3's instruction, and Apple's sentence
+embedding with its revision, dimension, and system; gives Jev minus embeddings
+in top 6 with its paired interval (EVAL-4), Jev's question kind, and Jev's
+calibration, with the reliability diagram as an SVG beside it (EVAL-8); lists
+the five cut-offs of each ranker that has them; and plots every ranker's
+risk-coverage curve.
+
+- **Naming off.** `--unnamed` calls Jev the hosted decision model and gives
+  its pin's version without the name, so the README can copy the table
+  while naming is off (CONSENT-7).
+- **The 80 lines from a clean tree.** The command scores any of the 80
+  lines, whatever file holds them, only from a clean working tree, so the
+  history shows Jev's settings committed before any result (EVAL-2).
+- **The two runs on the 80 lines.** The first is `eval/results.md`, at
+  `8ea25eb`, and the README's table copies it. The second is
+  `eval/results-extras.md`, at `1b3ff03`. It adds the three extra rankers and
+  Jev's calibration (EVAL-8), and its first four rankers' ranking tables match
+  the first run's. EVAL-4's verdict stays the first run's. A wrong big button
+  on a yes-or-no, pain, or consent line in either run counts against EVAL-5,
+  and the relay's configuration would then give those lines only the fixed
+  buttons and the grid.
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when
 one falls short, then the labelers' agreement
@@ -1467,12 +1760,21 @@ version.
 - **Unit tests,** for the shared code: the shortlist, BM25, the tag map, the
   request builder, the row's rules against recorded answers (ROW-3 to
   ROW-9), and the phone's own ranking (STATE-1).
-- **Relay tests,** in the Workers runtime: validation and limits (SEC-2,
-  SEC-3), the free-line count under concurrent requests (PAY-1), the
-  entitlement cache and refresh (PAY-7), and every error code, with Jev and
-  RevenueCat mocked.
+- **Relay tests,** in the Workers runtime: validation, the rate limits,
+  and the daily budget (SEC-2, SEC-3, SEC-5), the free-line count under
+  concurrent requests (PAY-1), the entitlement cache and refresh (PAY-7),
+  and every error code, with Jev and RevenueCat mocked; and the log summary
+  and the credit alert's rule (METRIC-2, AVAIL-2), with Cloudflare's API
+  mocked.
 - **A contract test** keeps a snapshot of the Jev request, and a manual
   smoke test sends one line to Jev with the team's key.
+- **Evaluation tests,** in Node: the rankers, the cut-off, the interval, the
+  calibration, the curves, the report, and the replay, with Workers AI, Jev,
+  and the relay stood in for behind a `fetch` spy that fails any call a test
+  doesn't stand in for, and with made-up keys. A Node script stands in for
+  the Swift helper, and on a Mac one test runs the real helper on made-up
+  sentences. The band is checked against an exact count of every resample of
+  five lines.
 - **Device checks,** on the video's iPhone: transcription and line ends
   (LISTEN-1, LISTEN-2), Turn not hearing itself (LISTEN-3), the background
   and interruptions (LISTEN-7, LISTEN-10), Personal Voice (VOICE-2), the
@@ -1504,12 +1806,17 @@ version.
 - **Debug builds only.** A Release build with a Test Store key crashes at
   launch, so every build the team ships uses the Debug configuration
   ([services notes][svc-key]).
-- **The device build:** `npx expo run:ios --device` from a Mac with Xcode
-  27, signed by a free Personal Team, with Developer Mode on and the
-  certificate trusted on the phone. For timings and the video, Metro serves
-  production JavaScript with `npx expo start --no-dev --minify`. Free
-  profiles expire after seven days, so the video's build is installed on or
-  after September 22 (COMPAT-4) ([iPhone build notes][ios-free-build]).
+- **The device build:** from `app/` on a Mac with Xcode 27,
+  `EXPO_PUBLIC_BUILD_KIND=device bunx expo run:ios --device`, signed by a
+  free Personal Team, with Developer Mode on and the certificate trusted on
+  the phone. The Debug app loads its bundle from Metro over the Mac's
+  Wi-Fi, so the phone joins that network and allows Turn under Local
+  Network; Turn's Debug build first ran on the video iPhone this way on
+  September 23 ([Debug iPhone notes][debug-iphone]). For timings and the
+  video, Metro serves production JavaScript with
+  `npx expo start --no-dev --minify`. Free profiles expire after seven
+  days, so the video's build is installed on or after September 22
+  (COMPAT-4) ([iPhone build notes][ios-free-build]).
 - **The Simulator build:** `xcodebuild` in the Debug configuration for the
   `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the
   JavaScript bundle embedded so it runs without Metro. That a Debug build
@@ -1528,6 +1835,7 @@ version.
   on (RELEASE-1 to RELEASE-5).
 
 [ios-free-build]: /docs/research/0023-turn-ios.md#building-to-an-iphone-with-a-free-account
+[debug-iphone]: /docs/research/0045-turn-debug-iphone.md#hands-on-check
 
 ## Requirements traceability
 
@@ -1608,9 +1916,6 @@ product and legal ones.
   boot, and nobody has checked it against the Swift module's timestamps.
   Safe default: `turn-listen` stamps each line's end, and the app logs every
   later stage on the same clock after checking the two agree on a device.
-- **The rate limiting binding on the Free plan.** Cloudflare states no price
-  or Free plan status for it. Safe default: if it isn't available, the
-  user's Durable Object counts requests per minute itself.
 
 [prd-open]: /docs/PRD.md#open-questions
 
