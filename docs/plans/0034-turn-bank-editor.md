@@ -16,10 +16,10 @@ category list, so `/bank` fills that gap with the Places screen's pattern.
 **Tech stack:** Expo SDK 57, Expo Router, React Native, SQLite, Vitest.
 
 **Spec:** [Issue #41](https://github.com/RevenueCat-M1KU/RevenueCat/issues/41),
-[the phrase bank](../PRD.md#the-phrase-bank),
-[the phone's database](../TRD.md#the-phones-database),
-[the phrase bank editor](../DESIGN.md#the-phrase-bank-editor),
-[the phrase button](../DESIGN.md#the-phrase-button).
+[the phrase bank](/docs/PRD.md#the-phrase-bank),
+[the phone's database](/docs/TRD.md#the-phones-database),
+[the phrase bank editor](/docs/DESIGN.md#the-phrase-bank-editor),
+[the phrase button](/docs/DESIGN.md#the-phrase-button).
 
 ## Rules the store enforces
 
