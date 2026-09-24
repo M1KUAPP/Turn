@@ -1,5 +1,5 @@
 # Builds Turn for the iOS Simulator the way the TRD's Simulator build does: prebuild, CocoaPods, then xcodebuild
-# in the Debug configuration with the JavaScript bundle embedded. It proves the local Swift modules compile and
+# in the Debug configuration, then the JavaScript bundle embedded. It proves the local Swift modules compile and
 # Metro can bundle, which nobody on Linux can check, and keeps the zipped Turn.app for a week.
 name: iOS Simulator build
 
@@ -55,17 +55,24 @@ jobs:
       - name: Install the pods
         working-directory: app/ios
         run: pod install
-      - name: Build for the Simulator with the bundle embedded
+      - name: Build for the Simulator
         working-directory: app/ios
         shell: bash
-        env:
-          FORCE_BUNDLING: '1'
         run: |
           set -o pipefail
           xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -n 200
-          test -f build/Build/Products/Debug-iphonesimulator/Turn.app/main.jsbundle
+      # Expo's bundling phase sets SKIP_BUNDLING in every Debug build, which FORCE_BUNDLING can't override, so the
+      # bundle is embedded here, where the app falls back to it when Metro isn't running.
+      - name: Embed the JavaScript bundle
+        working-directory: app
+        shell: bash
+        run: |
+          app=ios/build/Build/Products/Debug-iphonesimulator/Turn.app
+          bunx expo export:embed --platform ios --dev false --entry-file index.ts \
+            --bundle-output "$app/main.jsbundle" --assets-dest "$app"
+          test -s "$app/main.jsbundle"
       - name: Zip Turn.app
         working-directory: app/ios/build/Build/Products/Debug-iphonesimulator
         run: ditto -c -k --sequesterRsrc --keepParent Turn.app "$GITHUB_WORKSPACE/Turn.app.zip"
