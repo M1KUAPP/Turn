@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, Modal, Pressable, ScrollView, TextInput, View } f
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import type { Category, Phrase, Place } from '../bank/store'
-import { colors, scaledTextStyle } from '../constants/theme'
+import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
 import TurnText from './TurnText'
 
@@ -17,7 +17,7 @@ type Editor = {
 
 export default function PhraseBankScreen() {
   const navigation = useNavigation()
-  const { ready, boldText, fontScale } = useTurn()
+  const { ready, boldText } = useTurn()
   const bank = ready?.bank
   const { category: categoryParam, editPhraseId } = useLocalSearchParams<{
     category: string
@@ -122,7 +122,7 @@ export default function PhraseBankScreen() {
         : () => (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={editMode ? 'Done editing phrases' : 'Edit phrases'}
+              accessibilityLabel={editMode ? 'Done' : 'Edit'}
               onPress={() => setEditMode((prev) => !prev)}
               style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'flex-end' }}
             >
@@ -229,7 +229,6 @@ export default function PhraseBankScreen() {
             >
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={`${phrase.text}${placesText ? `, places: ${placesText}` : ''}${phrase.reviewed === 0 ? ', Starter' : ''}`}
                 accessibilityActions={actions}
                 onAccessibilityAction={(event) => {
                   if (event.nativeEvent.actionName === 'edit') void openEdit(phrase)
@@ -272,7 +271,7 @@ export default function PhraseBankScreen() {
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 }}>
                   <Pressable
                     accessibilityRole="button"
-                    accessibilityLabel={`Move up ${phrase.text}`}
+                    accessibilityLabel="Move up"
                     accessibilityState={{ disabled: !canMoveUp }}
                     disabled={!canMoveUp}
                     onPress={() => move(phrase.id, -1)}
@@ -285,18 +284,21 @@ export default function PhraseBankScreen() {
                       borderWidth: 2,
                       borderColor: colors.edge,
                       borderRadius: 22,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
-                      opacity: canMoveUp ? 1 : 0.4
+                      backgroundColor: canMoveUp && pressed ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                    <TurnText
+                      kind="subheadline-emphasized"
+                      boldText={boldText}
+                      style={{ color: canMoveUp ? colors.ink : colors['ink-secondary'] }}
+                    >
                       Move up
                     </TurnText>
                   </Pressable>
 
                   <Pressable
                     accessibilityRole="button"
-                    accessibilityLabel={`Move down ${phrase.text}`}
+                    accessibilityLabel="Move down"
                     accessibilityState={{ disabled: !canMoveDown }}
                     disabled={!canMoveDown}
                     onPress={() => move(phrase.id, 1)}
@@ -309,18 +311,21 @@ export default function PhraseBankScreen() {
                       borderWidth: 2,
                       borderColor: colors.edge,
                       borderRadius: 22,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
-                      opacity: canMoveDown ? 1 : 0.4
+                      backgroundColor: canMoveDown && pressed ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                    <TurnText
+                      kind="subheadline-emphasized"
+                      boldText={boldText}
+                      style={{ color: canMoveDown ? colors.ink : colors['ink-secondary'] }}
+                    >
                       Move down
                     </TurnText>
                   </Pressable>
 
                   <Pressable
                     accessibilityRole="button"
-                    accessibilityLabel={`Edit ${phrase.text}`}
+                    accessibilityLabel="Edit"
                     onPress={() => void openEdit(phrase)}
                     style={({ pressed }) => ({
                       minHeight: 44,
@@ -342,7 +347,7 @@ export default function PhraseBankScreen() {
                   {canDelete && (
                     <Pressable
                       accessibilityRole="button"
-                      accessibilityLabel={`Delete ${phrase.text}`}
+                      accessibilityLabel="Delete"
                       onPress={() => deletePhrase(phrase.id)}
                       style={({ pressed }) => ({
                         minHeight: 44,
@@ -356,7 +361,7 @@ export default function PhraseBankScreen() {
                         backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
                       })}
                     >
-                      <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['no-edge'] }}>
+                      <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
                         Delete
                       </TurnText>
                     </Pressable>
@@ -368,7 +373,7 @@ export default function PhraseBankScreen() {
         })}
 
         {error && !editor && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['no-edge'] }}>
+          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
           </TurnText>
         )}
@@ -426,7 +431,7 @@ export default function PhraseBankScreen() {
           </TurnText>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Undo delete"
+            accessibilityLabel="Undo"
             onPress={() => {
               void bank.undoDelete().catch((cause) => setError(String(cause)))
             }}
@@ -481,7 +486,7 @@ export default function PhraseBankScreen() {
                 </TurnText>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Save phrase"
+                  accessibilityLabel="Save"
                   accessibilityState={{ disabled: !editor?.text.trim() || saving }}
                   disabled={!editor?.text.trim() || saving}
                   onPress={() => void save()}
@@ -489,11 +494,14 @@ export default function PhraseBankScreen() {
                     minWidth: 44,
                     minHeight: 44,
                     alignItems: 'flex-end',
-                    justifyContent: 'center',
-                    opacity: !editor?.text.trim() || saving ? 0.45 : 1
+                    justifyContent: 'center'
                   }}
                 >
-                  <TurnText kind="body" boldText={boldText} style={{ color: colors.accent }}>
+                  <TurnText
+                    kind="body"
+                    boldText={boldText}
+                    style={{ color: !editor?.text.trim() || saving ? colors['ink-secondary'] : colors.accent }}
+                  >
                     Save
                   </TurnText>
                 </Pressable>
@@ -506,7 +514,6 @@ export default function PhraseBankScreen() {
                 <TextInput
                   autoFocus
                   accessibilityLabel="Phrase text"
-                  allowFontScaling={false}
                   maxLength={200}
                   multiline
                   editable={!editor?.isFixed}
@@ -518,7 +525,7 @@ export default function PhraseBankScreen() {
                   placeholderTextColor={colors['ink-secondary']}
                   selectionColor={colors.accent}
                   style={{
-                    ...scaledTextStyle('body', boldText, fontScale),
+                    ...textStyle('body', boldText),
                     minHeight: 78,
                     padding: 12,
                     borderWidth: 2,
@@ -557,7 +564,7 @@ export default function PhraseBankScreen() {
                         <Pressable
                           key={cat.id}
                           accessibilityRole="button"
-                          accessibilityLabel={`${cat.name}${selected ? ', selected' : ''}`}
+                          accessibilityLabel={cat.name}
                           accessibilityState={{ selected }}
                           onPress={() => setEditor((current) => (current ? { ...current, categoryId: cat.id } : null))}
                           style={({ pressed }) => ({
@@ -606,7 +613,7 @@ export default function PhraseBankScreen() {
                         <Pressable
                           key={place.id}
                           accessibilityRole="checkbox"
-                          accessibilityLabel={`${place.name}${selected ? ', selected' : ''}`}
+                          accessibilityLabel={place.name}
                           accessibilityState={{ selected, checked: selected }}
                           onPress={() => {
                             setEditor((current) => {
@@ -647,7 +654,7 @@ export default function PhraseBankScreen() {
               )}
 
               {error && (
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['no-edge'] }}>
+                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {error}
                 </TurnText>
               )}

@@ -196,6 +196,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace]) => {
         if (!alive) return
         setCategories(nextCategories)
+        if (!nextCategories.some((category) => category.id === categoryId)) setCategoryId('quick')
         setPhrases(nextPhrases)
         setStrip(nextStrip)
         setPlaces(nextPlaces)
@@ -337,12 +338,9 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={phrase.text}
-        accessibilityActions={[
-          { name: 'edit', label: 'Edit' },
-          { name: 'move', label: 'Move' }
-        ]}
+        accessibilityActions={[{ name: 'edit', label: 'Edit' }]}
         onAccessibilityAction={(event) => {
-          if (event.nativeEvent.actionName === 'edit' || event.nativeEvent.actionName === 'move') {
+          if (event.nativeEvent.actionName === 'edit') {
             router.push({
               pathname: '/bank/[category]',
               params: { category: phrase.category_id, editPhraseId: phrase.id }
