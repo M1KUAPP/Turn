@@ -42,14 +42,14 @@ describe('bank store', () => {
     const first = createBankStore(db, starterBank)
     await first.initialize()
     expect((await first.places()).map((place) => place.name)).toEqual(['Home', 'Clinic', 'Shop', 'Out'])
-    expect((await first.selectedPlace()).name).toBe('Home')
+    expect((await first.selectedPlace())?.name).toBe('Home')
 
     await first.choosePlace('clinic')
     const next = createBankStore(db, starterBank)
     await next.initialize()
-    expect((await next.selectedPlace()).name).toBe('Clinic')
+    expect((await next.selectedPlace())?.name).toBe('Clinic')
     await expect(next.choosePlace('missing')).rejects.toThrow('Unknown place')
-    expect((await next.selectedPlace()).name).toBe('Clinic')
+    expect((await next.selectedPlace())?.name).toBe('Clinic')
   })
 
   test('seeds only once and reads Quick first with the strip excluded', async () => {
@@ -225,5 +225,181 @@ describe('bank store', () => {
     await store.saveTypedPhrase('Waffles for breakfast')
     const matchesWithTyped = await store.typeMatches('waf', 'home')
     expect(matchesWithTyped.some((p) => p.text === 'Waffles for breakfast')).toBe(true)
+  })
+})
+
+describe('place storage', () => {
+  test('adds places with trimmed 1-40 character names, up to 12, appended in order', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank, () => new Date(2026, 8, 23))
+    await store.initialize()
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    const added = await store.addPlace('  School  ')
+    expect(added.name).toBe('School')
+    expect(added.id).toBeTruthy()
+    expect(added.position).toBe(4)
+    expect(changes).toBe(1)
+    expect((await store.places()).map((place) => place.name)).toEqual(['Home', 'Clinic', 'Shop', 'Out', 'School'])
+
+    const forty = 'n'.repeat(40)
+    await store.addPlace(`  ${forty}  `)
+    expect(changes).toBe(2)
+    expect((await store.places())[5].name).toBe(forty)
+
+    await expect(store.addPlace('')).rejects.toThrow('Name is required')
+    await expect(store.addPlace('   ')).rejects.toThrow('Name is required')
+    await expect(store.addPlace('n'.repeat(41))).rejects.toThrow('Name is too long')
+    expect(changes).toBe(2)
+
+    for (let i = 0; i < 6; i++) await store.addPlace(`Place ${i}`)
+    expect(await store.places()).toHaveLength(12)
+    expect(changes).toBe(8)
+
+    await expect(store.addPlace('A thirteenth place')).rejects.toThrow('Too many places')
+    expect(changes).toBe(8)
+    expect(await store.places()).toHaveLength(12)
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect((await next.places()).map((place) => place.name)).toEqual([
+      'Home',
+      'Clinic',
+      'Shop',
+      'Out',
+      'School',
+      forty,
+      'Place 0',
+      'Place 1',
+      'Place 2',
+      'Place 3',
+      'Place 4',
+      'Place 5'
+    ])
+  })
+
+  test('renames places with trimmed 1-40 character names and notifies only on real edits', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank, () => new Date(2026, 8, 23))
+    await store.initialize()
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    await store.renamePlace('home', '  House  ')
+    expect(changes).toBe(1)
+    expect((await store.places())[0].name).toBe('House')
+    expect((await store.selectedPlace())?.name).toBe('House')
+
+    // The same name after trimming is not a real edit
+    await store.renamePlace('home', 'House')
+    expect(changes).toBe(1)
+
+    const forty = 'a'.repeat(40)
+    await store.renamePlace('clinic', forty)
+    expect(changes).toBe(2)
+    expect((await store.places())[1].name).toBe(forty)
+
+    await expect(store.renamePlace('missing', 'Here')).rejects.toThrow('Unknown place')
+    await expect(store.renamePlace('shop', '')).rejects.toThrow('Name is required')
+    await expect(store.renamePlace('shop', 'a'.repeat(41))).rejects.toThrow('Name is too long')
+    expect(changes).toBe(2)
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect((await next.places()).map((place) => place.name)).toEqual(['House', forty, 'Shop', 'Out'])
+    expect((await next.selectedPlace())?.name).toBe('House')
+  })
+
+  test('moves places up and down, swapping with their neighbour, without notifying on impossible moves', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank, () => new Date(2026, 8, 23))
+    await store.initialize()
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    await store.movePlace('clinic', -1)
+    expect(changes).toBe(1)
+    expect((await store.places()).map((place) => place.name)).toEqual(['Clinic', 'Home', 'Shop', 'Out'])
+    expect((await store.places())[0].position).toBe(0)
+    expect((await store.places())[1].position).toBe(1)
+
+    // Moves it back down
+    await store.movePlace('clinic', 1)
+    expect(changes).toBe(2)
+    expect((await store.places()).map((place) => place.name)).toEqual(['Home', 'Clinic', 'Shop', 'Out'])
+
+    await expect(store.movePlace('missing', 1)).rejects.toThrow('Unknown place')
+    await store.movePlace('home', -1)
+    await store.movePlace('out', 1)
+    expect(changes).toBe(2)
+    expect((await store.places()).map((place) => place.name)).toEqual(['Home', 'Clinic', 'Shop', 'Out'])
+
+    await store.movePlace('shop', -1)
+    expect(changes).toBe(3)
+    expect((await store.places()).map((place) => place.name)).toEqual(['Home', 'Shop', 'Clinic', 'Out'])
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect((await next.places()).map((place) => place.name)).toEqual(['Home', 'Shop', 'Clinic', 'Out'])
+    expect((await next.selectedPlace())?.name).toBe('Home')
+  })
+
+  test('deletes places, cascades phrase joins, and falls the selection back to the first place', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank, () => new Date(2026, 8, 23))
+    await store.initialize()
+
+    const shopJoins = await db.getAllAsync<{ phrase_id: string }>(
+      "SELECT phrase_id FROM phrase_place WHERE place_id = 'shop'"
+    )
+    expect(shopJoins.length).toBeGreaterThan(0)
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    // Deleting a place that is not selected keeps the selection
+    await store.deletePlace('shop')
+    expect(changes).toBe(1)
+    expect((await store.places()).map((place) => place.id)).toEqual(['home', 'clinic', 'out'])
+    expect(
+      await db.getAllAsync<{ phrase_id: string }>('SELECT phrase_id FROM phrase_place WHERE place_id = ?', 'shop')
+    ).toEqual([])
+    expect((await store.selectedPlace())?.name).toBe('Home')
+
+    // Deleting the selected place falls back to the first remaining place
+    await store.deletePlace('home')
+    expect(changes).toBe(2)
+    expect((await store.selectedPlace())?.name).toBe('Clinic')
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect((await next.selectedPlace())?.name).toBe('Clinic')
+
+    // Deleting the last places leaves no place and no selection
+    await store.deletePlace('clinic')
+    await store.deletePlace('out')
+    expect(changes).toBe(4)
+    expect(await store.places()).toEqual([])
+    expect(await store.selectedPlace()).toBeNull()
+
+    await expect(store.deletePlace('out')).rejects.toThrow('Unknown place')
+    expect(changes).toBe(4)
+
+    const last = createBankStore(db, starterBank)
+    await last.initialize()
+    expect(await last.places()).toEqual([])
+    expect(await last.selectedPlace()).toBeNull()
   })
 })
