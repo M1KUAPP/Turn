@@ -1,11 +1,19 @@
 type SpeechPort = {
-  speak(text: string, options: { onStart: () => void; onDone: () => void; onStopped: () => void }): void
+  speak(
+    text: string,
+    options: { onStart: () => void; onDone: () => void; onStopped: () => void; rate: number; voice?: string }
+  ): void
   stop(): Promise<void>
 }
 
+type SpeechSettingsPort = { voice: () => string | null; rate: () => number }
 type SpeechState = { speaking: boolean; lastText: string | null; activePhraseId: string | null }
 
-export function createSpeechController(port: SpeechPort, recordTap: (id: string) => void) {
+export function createSpeechController(
+  port: SpeechPort,
+  recordTap: (id: string) => void,
+  settings: SpeechSettingsPort = { voice: () => null, rate: () => 1 }
+) {
   let state: SpeechState = { speaking: false, lastText: null, activePhraseId: null }
   let last: { text: string; id?: string } | null = null
   let generation = 0
@@ -24,15 +32,22 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
     return stopping
   }
 
-  async function speak(text: string, id?: string) {
+  async function speakText(
+    text: string,
+    id: string | undefined,
+    options: { previewVoice?: string | null; overrideVoice?: boolean; stopFirst?: boolean; remember?: boolean } = {}
+  ) {
     const ticket = ++generation
-    if (state.speaking || stopping) await stopNative()
+    if (options.stopFirst || state.speaking || stopping) await stopNative()
     if (ticket !== generation) return
-    last = { text, id }
+    if (options.remember !== false) last = { text, id }
     setState({ speaking: true, lastText: text, activePhraseId: id ?? null })
     let counted = false
+    const voice = options.overrideVoice ? (options.previewVoice ?? null) : settings.voice()
     try {
       port.speak(text, {
+        rate: settings.rate(),
+        ...(voice === null ? {} : { voice }),
         onStart: () => {
           if (ticket === generation && id !== undefined && !counted) {
             counted = true
@@ -52,6 +67,10 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
     }
   }
 
+  function speak(text: string, id?: string) {
+    return speakText(text, id)
+  }
+
   return {
     subscribe(listener: () => void) {
       listeners.add(listener)
@@ -61,6 +80,9 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
     },
     getSnapshot: () => state,
     speak,
+    preview(text: string, voice: string | null) {
+      return speakText(text, undefined, { previewVoice: voice, overrideVoice: true, stopFirst: true, remember: false })
+    },
     async stop() {
       ++generation
       if (state.speaking) {
@@ -69,7 +91,7 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
       }
     },
     async repeat() {
-      if (last) await speak(last.text, last.id)
+      if (last) await speakText(last.text, last.id)
     }
   }
 }
