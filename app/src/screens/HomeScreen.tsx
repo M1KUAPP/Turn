@@ -26,6 +26,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
   const [viewportHeight, setViewportHeight] = useState(1)
   const [contentHeight, setContentHeight] = useState(1)
   const [headerHeight, setHeaderHeight] = useState(0)
+  const [replyPreview, setReplyPreview] = useState(0)
   const list = useRef<FlatList<Phrase>>(null)
   const { width, height, fontScale } = useWindowDimensions()
   const layout = homeLayout(width, height, fontScale)
@@ -223,6 +224,21 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
           layout={layout}
           width={width}
           boldText={boldText}
+          slots={
+            __DEV__ && replyPreview === 1
+              ? [
+                  { id: 'yes', text: 'Yes' },
+                  { id: 'no', text: 'No' },
+                  { id: 'not-sure', text: 'Not sure' },
+                  { id: 'dont-know', text: "I don't know" },
+                  { id: 'please-wait', text: 'Please wait' },
+                  { id: 'help-me', text: 'Help me' }
+                ]
+              : undefined
+          }
+          bigButton={
+            __DEV__ && replyPreview === 2 ? { id: 'have-something-to-say', text: 'I have something to say' } : null
+          }
           onSpeak={(reply) => {
             void speech.speak(reply.text, reply.id)
           }}
@@ -403,17 +419,28 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
         showsVerticalScrollIndicator
         ListFooterComponent={
           __DEV__ ? (
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => {
-                void bank.seedDebugPhrases()
-              }}
-              style={{ alignSelf: 'center', minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
-            >
-              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                Seed 2,000 test phrases
-              </TurnText>
-            </Pressable>
+            <View style={{ alignItems: 'center' }}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => setReplyPreview((current) => (current + 1) % 3)}
+                style={{ minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
+              >
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                  Preview row: {['empty', 'six replies', 'big button'][replyPreview]}
+                </TurnText>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => {
+                  void bank.seedDebugPhrases()
+                }}
+                style={{ minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
+              >
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                  Seed 2,000 test phrases
+                </TurnText>
+              </Pressable>
+            </View>
           ) : null
         }
       />
