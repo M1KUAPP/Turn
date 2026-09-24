@@ -10,9 +10,11 @@ import { nativeAccessibilitySource } from './accessibility/native'
 import { createAccessibilityStore } from './accessibility/store'
 import { createBankStore } from './bank/store'
 import starterBank from './content/starter-bank.json'
+import { rebuildGazetteer } from './listen/gazetteer'
 import { createTypedListenSession } from './listen/typed-session'
 import { createNamingStore, refreshNaming } from './relay/naming'
 import { createSpeechController } from './speech/controller'
+import { turnListen } from '../../modules/turn-listen/src'
 
 const accessibilityStore = createAccessibilityStore(nativeAccessibilitySource)
 
@@ -20,6 +22,7 @@ type Ready = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
   listen: ReturnType<typeof createTypedListenSession>
+  nameTagger: typeof turnListen
   typesafeNamed: boolean
 }
 
@@ -40,6 +43,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true
     let listen: ReturnType<typeof createTypedListenSession> | null = null
+    let unsubscribeGazetteer: (() => void) | null = null
     async function start() {
       const db = await SQLite.openDatabaseAsync('turn.db')
       const bank = createBankStore(db, starterBank)
@@ -55,7 +59,21 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       if (!active) {
         return
       }
-      setReady({ bank, speech, listen, typesafeNamed })
+      const nameTagger = turnListen
+      setReady({ bank, speech, listen, nameTagger, typesafeNamed })
+      if (nameTagger) {
+        const rebuild = () => {
+          void Promise.all([bank.phrases('all'), bank.places()])
+            .then(([phrases, places]) => {
+              if (active) return rebuildGazetteer({ phrases, places }, nameTagger)
+            })
+            .catch(() => {
+              // A later bank edit retries the local gazetteer rebuild.
+            })
+        }
+        rebuild()
+        unsubscribeGazetteer = bank.subscribe(rebuild)
+      }
       const extra = Constants.expoConfig?.extra
       const relayUrl = typeof extra?.relayUrl === 'string' ? extra.relayUrl : ''
       if (relayUrl) {
@@ -77,6 +95,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
     })
     return () => {
       active = false
+      unsubscribeGazetteer?.()
       listen?.dispose()
     }
   }, [])
