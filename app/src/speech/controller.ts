@@ -7,7 +7,7 @@ type SpeechState = { speaking: boolean; lastText: string | null; activePhraseId:
 
 export function createSpeechController(port: SpeechPort, recordTap: (id: string) => void) {
   let state: SpeechState = { speaking: false, lastText: null, activePhraseId: null }
-  let last: { text: string; id: string } | null = null
+  let last: { text: string; id?: string } | null = null
   let generation = 0
   let stopping: Promise<void> | null = null
   const listeners = new Set<() => void>()
@@ -24,17 +24,17 @@ export function createSpeechController(port: SpeechPort, recordTap: (id: string)
     return stopping
   }
 
-  async function speak(text: string, id: string) {
+  async function speak(text: string, id?: string) {
     const ticket = ++generation
     if (state.speaking || stopping) await stopNative()
     if (ticket !== generation) return
     last = { text, id }
-    setState({ speaking: true, lastText: text, activePhraseId: id })
+    setState({ speaking: true, lastText: text, activePhraseId: id ?? null })
     let counted = false
     try {
       port.speak(text, {
         onStart: () => {
-          if (ticket === generation && !counted) {
+          if (ticket === generation && id !== undefined && !counted) {
             counted = true
             recordTap(id)
           }
