@@ -20,6 +20,7 @@ describe('iOS app configuration', () => {
     expect(config.orientation).toBe('portrait')
     expect(config.userInterfaceStyle).toBe('automatic')
     expect(config.plugins).toContainEqual(['expo-build-properties', { ios: { enableSceneSupport: true } }])
+    expect(config.plugins).toContain('expo-secure-store')
   })
 
   test('uses the design copy for permissions and a color-only launch screen', () => {
