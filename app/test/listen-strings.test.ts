@@ -11,6 +11,7 @@ describe('Listen mode copy', () => {
       stillAnswering: expect.any(Function),
       rankedOnPhone: 'Ranked on this phone',
       unavailable: "Live transcription isn't available here. Tap here to type what they say.",
+      unavailableLabel: "Live transcription isn't available here.",
       gettingModel: "Getting Apple's English speech model",
       typedLinePrompt: 'Tap here to type what they say.'
     })
