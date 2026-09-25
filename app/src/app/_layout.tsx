@@ -11,6 +11,7 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="settings/index" options={{ title: 'Settings' }} />
           <Stack.Screen name="settings/places" options={{ title: 'Places' }} />
+          <Stack.Screen name="settings/voice" options={{ title: 'Voice' }} />
           <Stack.Screen name="settings/privacy" options={{ title: 'Privacy notice' }} />
           <Stack.Screen name="settings/licenses" options={{ title: 'Open-source licenses' }} />
         </Stack>
