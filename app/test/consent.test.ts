@@ -1,0 +1,257 @@
+import { DatabaseSync } from 'node:sqlite'
+import { afterEach, describe, expect, test, vi } from 'vitest'
+import type { BankDatabase } from '../src/bank/store'
+import { createBankStore } from '../src/bank/store'
+import starterBank from '../src/content/starter-bank.json'
+import type { Config } from '@turn/shared/relay'
+import { startingPolicy } from '@turn/shared/row'
+import { createConsentController } from '../src/consent/controller'
+
+const databases: DatabaseSync[] = []
+
+function database(): BankDatabase {
+  const sqlite = new DatabaseSync(':memory:')
+  databases.push(sqlite)
+  const adapter: BankDatabase = {
+    execAsync: async (sql) => {
+      sqlite.exec(sql)
+    },
+    runAsync: async (sql, ...args) => {
+      sqlite.prepare(sql).run(...args)
+    },
+    getFirstAsync: async <T>(sql: string, ...args: (string | number)[]) =>
+      (sqlite.prepare(sql).get(...args) as T | undefined) ?? null,
+    getAllAsync: async <T>(sql: string, ...args: (string | number)[]) => sqlite.prepare(sql).all(...args) as T[],
+    withExclusiveTransactionAsync: async (work) => {
+      sqlite.exec('BEGIN IMMEDIATE')
+      try {
+        await work(adapter)
+        sqlite.exec('COMMIT')
+      } catch (error) {
+        sqlite.exec('ROLLBACK')
+        throw error
+      }
+    }
+  }
+  return adapter
+}
+
+afterEach(() => {
+  for (const db of databases.splice(0)) db.close()
+})
+
+const configValue: Config = {
+  jevOn: true,
+  typesafeNamed: false,
+  freeLinesLeft: 20,
+  policy: startingPolicy
+}
+
+function configPort(initialNamed = false, refreshNames: boolean[] = []) {
+  let named = initialNamed
+  const listeners = new Set<() => void>()
+  const value = () => ({ ...configValue, typesafeNamed: named })
+  return {
+    read: vi.fn(async () => value()),
+    refresh: vi.fn(async () => {
+      if (refreshNames.length) named = refreshNames.shift()!
+      for (const listener of listeners) listener()
+      return value()
+    }),
+    typesafeNamed: () => named,
+    subscribe(listener: () => void) {
+      listeners.add(listener)
+      return () => listeners.delete(listener)
+    }
+  }
+}
+
+async function rig(options: { db?: BankDatabase; named?: boolean; refreshNames?: boolean[] } = {}) {
+  const db = options.db ?? database()
+  const bank = createBankStore(db, starterBank, () => new Date('2026-09-25T15:30:00.000Z'))
+  await bank.initialize()
+  const config = configPort(options.named, options.refreshNames)
+  let controller: ReturnType<typeof createConsentController>
+  let active = false
+  let microphoneStarts = 0
+  let lineRequests = 0
+  let chosenVoice = 'personal-voice-id'
+  const spoken: Array<{ text: string; voice: string }> = []
+  const listen = {
+    start: vi.fn(async () => {
+      active = true
+      if (!controller.snapshot().requestsBlocked) microphoneStarts++
+    }),
+    end: vi.fn(async () => {
+      active = false
+    }),
+    blocked: vi.fn(() => false)
+  }
+  const speech = {
+    speak: vi.fn(async (text: string) => {
+      spoken.push({ text, voice: chosenVoice })
+    })
+  }
+  const navigate = vi.fn()
+  controller = createConsentController({
+    setting: bank.setting,
+    setSetting: bank.setSetting,
+    now: () => new Date('2026-09-25T15:30:00.000Z'),
+    config,
+    speech,
+    listen,
+    navigate
+  })
+  await controller.ready
+  return {
+    db,
+    bank,
+    config,
+    controller,
+    listen,
+    speech,
+    navigate,
+    spoken,
+    setChosenVoice: (voice: string) => {
+      chosenVoice = voice
+    },
+    isActive: () => active,
+    microphoneStarts: () => microphoneStarts,
+    requestLine: () => {
+      if (!controller.snapshot().requestsBlocked) lineRequests++
+    },
+    lineRequests: () => lineRequests
+  }
+}
+
+describe('consent controller', () => {
+  test('shows permission once, returns after Not now, and leaves speech available', async () => {
+    const app = await rig()
+
+    expect(await app.controller.startListen()).toBe('permission')
+    expect(app.listen.start).not.toHaveBeenCalled()
+    app.controller.notNow()
+    expect(await app.bank.setting('listen_permission')).toBeNull()
+    expect(app.isActive()).toBe(false)
+    expect(app.navigate).toHaveBeenLastCalledWith('/')
+
+    await app.controller.readAloud()
+    expect(app.speech.speak).toHaveBeenCalledOnce()
+    expect(await app.controller.startListen()).toBe('permission')
+    expect(app.config.refresh).toHaveBeenCalledTimes(2)
+  })
+
+  test('Allow stores permission and its date before opening the partner card', async () => {
+    const app = await rig()
+
+    await app.controller.allow()
+
+    expect(await app.bank.setting('listen_permission')).toBe('true')
+    expect(await app.bank.setting('listen_permission_date')).toBe('2026-09-25')
+    expect(app.navigate).toHaveBeenLastCalledWith('/consent')
+    expect(app.listen.start).not.toHaveBeenCalled()
+  })
+
+  test('shows the consent card for every allowed start and waits for the partner answer', async () => {
+    const app = await rig()
+    await app.controller.grant()
+
+    expect(await app.controller.startListen()).toBe('consent')
+    expect(app.listen.start).not.toHaveBeenCalled()
+    app.controller.partnerDeclined()
+    expect(app.isActive()).toBe(false)
+    expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(await app.controller.startListen()).toBe('consent')
+    expect(app.config.refresh).toHaveBeenCalledTimes(2)
+    expect(app.listen.start).not.toHaveBeenCalled()
+
+    await app.controller.partnerAgreed()
+    expect(app.listen.start).toHaveBeenCalledOnce()
+    expect(app.isActive()).toBe(true)
+    expect(app.navigate).toHaveBeenLastCalledWith('/')
+  })
+
+  test('They agreed without a saved permission opens the step and starts nothing', async () => {
+    const app = await rig()
+
+    await app.controller.partnerAgreed()
+
+    expect(app.listen.start).not.toHaveBeenCalled()
+    expect(app.isActive()).toBe(false)
+    expect(app.navigate).toHaveBeenLastCalledWith('/permission')
+  })
+
+  test('reads the card lead and four facts in order in the selected voice', async () => {
+    const app = await rig({ named: true })
+    app.setChosenVoice('selected-voice')
+    await app.controller.grant()
+    await app.controller.startListen()
+
+    await app.controller.readAloud()
+
+    expect(app.spoken).toEqual([
+      {
+        text: 'Can my phone listen while we talk? It turns your words into text on this phone. Your words, with any names it recognizes swapped for tags, go to TypeSafe to pick my replies from my own phrases. No audio is recorded. I can pause it at any time.',
+        voice: 'selected-voice'
+      }
+    ])
+  })
+
+  test('keeps under-18 mode across a new controller on the same database and blocks mic and line requests', async () => {
+    const db = database()
+    const first = await rig({ db })
+    await first.controller.grant()
+    await first.controller.setUnder18(true)
+
+    const next = await rig({ db })
+    expect(next.controller.snapshot().under18).toBe(true)
+    expect(next.controller.snapshot().requestsBlocked).toBe(true)
+    expect(await next.controller.startListen()).toBe('consent')
+    await next.controller.partnerAgreed()
+
+    next.requestLine()
+    expect(next.isActive()).toBe(true)
+    expect(next.microphoneStarts()).toBe(0)
+    expect(next.lineRequests()).toBe(0)
+  })
+
+  test('withdrawal ends Listen mode and blocks lines until permission is granted again', async () => {
+    const app = await rig()
+    await app.controller.grant()
+    await app.controller.startListen()
+    await app.controller.partnerAgreed()
+    expect(app.isActive()).toBe(true)
+
+    await app.controller.withdraw()
+    app.requestLine()
+    expect(app.isActive()).toBe(false)
+    expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(await app.bank.setting('listen_permission')).toBeNull()
+    expect(await app.bank.setting('listen_permission_date')).toBeNull()
+    expect(app.controller.snapshot().requestsBlocked).toBe(true)
+    expect(app.controller.snapshot().note).toBe(
+      'Listen mode is off, and nothing more leaves this phone until you allow it again.'
+    )
+    expect(app.lineRequests()).toBe(0)
+
+    await app.controller.grant()
+    app.requestLine()
+    expect(app.controller.snapshot().requestsBlocked).toBe(false)
+    expect(app.lineRequests()).toBe(1)
+  })
+
+  test('builds both texts from the configuration refreshed before each start', async () => {
+    const app = await rig({ refreshNames: [true, false] })
+    await app.controller.grant()
+
+    expect(await app.controller.startListen()).toBe('consent')
+    expect(app.controller.snapshot().typesafeNamed).toBe(true)
+    expect(app.controller.snapshot().step.paragraphs[0]).toContain('TypeSafe')
+    expect(app.controller.snapshot().card.facts[1]).toContain('TypeSafe')
+
+    expect(await app.controller.startListen()).toBe('consent')
+    expect(app.controller.snapshot().typesafeNamed).toBe(false)
+    expect(app.controller.snapshot().step.paragraphs[0]).toContain('a third-party AI service in the United States')
+    expect(app.controller.snapshot().card.facts[1]).toContain('a third-party AI service in the United States')
+  })
+})
