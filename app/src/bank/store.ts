@@ -141,6 +141,21 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       )
       notify()
     },
+    async setting(key: string): Promise<string | null> {
+      const row = await db.getFirstAsync<{ value: string }>('SELECT value FROM setting WHERE key = ?', key)
+      return row?.value ?? null
+    },
+    async setSetting(key: string, value: string | null): Promise<void> {
+      if (value === null) {
+        await db.runAsync('DELETE FROM setting WHERE key = ?', key)
+      } else {
+        await db.runAsync(
+          'INSERT INTO setting (key, value) VALUES (?, ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value',
+          key,
+          value
+        )
+      }
+    },
     async addPlace(name: string): Promise<Place> {
       const trimmed = name.trim()
       if (trimmed.length < 1) throw new Error('Name is required')

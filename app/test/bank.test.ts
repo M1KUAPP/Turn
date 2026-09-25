@@ -37,6 +37,25 @@ afterEach(() => {
 })
 
 describe('bank store', () => {
+  test('reads and writes nullable settings across store instances', async () => {
+    const db = database()
+    const first = createBankStore(db, starterBank)
+    await first.initialize()
+
+    expect(await first.setting('voice_id')).toBeNull()
+    await first.setSetting('voice_id', 'voice-1')
+    await first.setSetting('speech_rate', 'normal')
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect(await next.setting('voice_id')).toBe('voice-1')
+    expect(await next.setting('speech_rate')).toBe('normal')
+
+    await next.setSetting('voice_id', null)
+    expect(await first.setting('voice_id')).toBeNull()
+    expect(await next.setting('speech_rate')).toBe('normal')
+  })
+
   test('remembers the chosen place across launches and rejects unknown places', async () => {
     const db = database()
     const first = createBankStore(db, starterBank)
