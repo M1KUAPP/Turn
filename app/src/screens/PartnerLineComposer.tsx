@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
@@ -17,7 +16,6 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
   const lineHeight = 22 * fontScale
   const minInputHeight = Math.max(52, lineHeight + 20)
   const maxInputHeight = lineHeight * 4 + 20
-  const [inputHeight, setInputHeight] = useState(minInputHeight)
   const disabled = !text.trim()
 
   return (
@@ -29,11 +27,14 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
         paddingBottom: 4,
         borderTopWidth: 1,
         borderTopColor: colors.edge,
-        backgroundColor: colors.board
+        backgroundColor: colors.board,
+        flexShrink: 1
       }}
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+      <View
+        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, flexShrink: 0 }}
+      >
+        <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
           What did they say?
         </TurnText>
         <Pressable
@@ -56,9 +57,6 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
         selectionColor={colors.accent}
         value={text}
         onChangeText={(value) => onChangeText(value.slice(0, 500))}
-        onContentSizeChange={(event) =>
-          setInputHeight(Math.max(minInputHeight, Math.min(maxInputHeight, event.nativeEvent.contentSize.height + 16)))
-        }
         style={{
           ...textStyle('body', boldText),
           color: colors.ink,
@@ -68,12 +66,17 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           borderRadius: 12,
           paddingHorizontal: 12,
           paddingVertical: 8,
-          height: inputHeight,
+          // The field grows with its words from one line to four, then scrolls; on a short screen the content
+          // above it scrolls away first.
+          minHeight: minInputHeight,
           maxHeight: maxInputHeight,
+          flexShrink: 1,
           textAlignVertical: 'top'
         }}
       />
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+      <View
+        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexShrink: 0 }}
+      >
         <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
           {text.length >= 450 ? `${500 - text.length} characters left` : ''}
         </TurnText>
