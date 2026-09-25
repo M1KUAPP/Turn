@@ -1,0 +1,106 @@
+appId: com.m1ku.turn
+name: Phrase bank grid updates
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: 'Hi, how are you\?'
+      above: "I'm good, thanks"
+- tapOn:
+    text: Edit
+    below: 'Hi, how are you\?'
+    above: "I'm good, thanks"
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- tapOn: 'Hi, how are you\?'
+- eraseText: 30
+- inputText: My greeting
+- tapOn: Save
+- extendedWaitUntil:
+    visible: My greeting
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: "I'm good, thanks"
+      above: Good morning
+- tapOn:
+    text: Edit
+    below: "I'm good, thanks"
+    above: Good morning
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- tapOn: "I'm good, thanks"
+- eraseText: 30
+- inputText: I'm doing well
+- tapOn: Save
+- extendedWaitUntil:
+    visible: I'm doing well
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: My greeting
+    above: I'm doing well
+- assertVisible:
+    text: I'm doing well
+    above: Good morning
+- takeScreenshot: bank-4-grid-edits-in-editor
+- tapOn: Phrase bank
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Settings
+- extendedWaitUntil:
+    visible: Settings
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Back
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+    direction: DOWN
+- scrollUntilVisible:
+    element: Chat
+    direction: RIGHT
+- tapOn: Chat
+- scrollUntilVisible:
+    element: My greeting
+- assertVisible: My greeting
+- assertVisible: I'm doing well
+- takeScreenshot: bank-4-grid-updated

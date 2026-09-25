@@ -1,0 +1,48 @@
+appId: com.m1ku.turn
+name: Phrase bank character limit
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Quick
+- tapOn: Quick
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Add phrase
+- tapOn: Add phrase
+- extendedWaitUntil:
+    visible: Phrase text
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: bank-3-character-limit-form
+- tapOn: Phrase text
+- inputText: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- scrollUntilVisible:
+    element: 0 characters left
+- assertVisible: 0 characters left
+- assertVisible: '^x{200}$'
+- assertNotVisible: '^x{201}$'
+- takeScreenshot: bank-3-character-limit-boundary
+- tapOn: Save
+- scrollUntilVisible:
+    element: '^x{200}$'
+- extendedWaitUntil:
+    visible: '^x{200}$'
+    timeout: 10000
+- takeScreenshot: bank-3-character-limit-saved

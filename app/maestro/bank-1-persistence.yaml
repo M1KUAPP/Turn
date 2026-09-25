@@ -1,0 +1,78 @@
+appId: com.m1ku.turn
+name: Phrase bank persistence
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-1-persistence-categories
+- scrollUntilVisible:
+    element: Chat
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-1-persistence-chat
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: 'Hi, how are you\?'
+      above: "I'm good, thanks"
+- tapOn:
+    text: Edit
+    below: 'Hi, how are you\?'
+    above: "I'm good, thanks"
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: bank-1-persistence-edit-form
+- tapOn: 'Hi, how are you\?'
+- eraseText: 30
+- inputText: Hi from my words
+- tapOn: Save
+- extendedWaitUntil:
+    visible: Hi from my words
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Hi from my words
+    above: "I'm good, thanks"
+- takeScreenshot: bank-1-persistence-edited
+- launchApp
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Hi from my words
+- assertVisible: Hi from my words
+- takeScreenshot: bank-1-persistence-after-relaunch

@@ -1,0 +1,46 @@
+appId: com.m1ku.turn
+name: Conversation strip rewording
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Phrases always visible above the grid
+- tapOn: Phrases always visible above the grid
+- extendedWaitUntil:
+    visible: Wait, I'm typing
+    timeout: 10000
+- waitForAnimationToEnd
+- assertNotVisible: Delete
+- takeScreenshot: speak-7-strip-phrase-list
+- tapOn: Wait, I'm typing
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: speak-7-strip-edit-form
+- tapOn: Wait, I'm typing
+- eraseText: 30
+- inputText: Wait, I'm ready
+- tapOn: Save
+- extendedWaitUntil:
+    visible: Wait, I'm ready
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Wait, I'm ready
+    above: Sorry, say that again
+- assertVisible: 'And you\?'
+- takeScreenshot: speak-7-strip-reworded-in-place
