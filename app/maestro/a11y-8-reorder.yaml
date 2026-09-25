@@ -1,0 +1,78 @@
+appId: com.m1ku.turn
+name: Phrase bank reorder controls
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Move down
+      below: Care and help
+      above: Body and pain
+- takeScreenshot: a11y-8-reorder-category-controls
+- tapOn:
+    text: Move down
+    below: Care and help
+    above: Body and pain
+- assertVisible:
+    text: Body and pain
+    above: Care and help
+- takeScreenshot: a11y-8-reorder-category-moved
+- scrollUntilVisible:
+    element:
+      text: Move up
+      below: Care and help
+      above: Food and drink
+- tapOn:
+    text: Move up
+    below: Care and help
+    above: Food and drink
+- assertVisible:
+    text: Care and help
+    above: Body and pain
+- scrollUntilVisible:
+    element: Quick
+    direction: UP
+- tapOn: Quick
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Move down
+      below: "I don't know"
+      above: I have something to say
+- tapOn:
+    text: Move down
+    below: "I don't know"
+    above: I have something to say
+- assertVisible:
+    text: I have something to say
+    above: "I don't know"
+- takeScreenshot: a11y-8-reorder-phrase-moved
+- scrollUntilVisible:
+    element:
+      text: Move up
+      below: "I don't know"
+      above: Add phrase
+- tapOn:
+    text: Move up
+    below: "I don't know"
+    above: Add phrase
+- assertVisible:
+    text: "I don't know"
+    above: I have something to say
+- takeScreenshot: a11y-8-reorder-phrase-restored
