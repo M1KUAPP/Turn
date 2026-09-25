@@ -171,7 +171,8 @@ export default function SettingsScreen() {
                       </TurnText>
                     )}
                     {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
-                    {enabled && (
+                    {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
+                    {enabled && row.open && (
                       <SymbolView
                         name="chevron.right"
                         size={15}
