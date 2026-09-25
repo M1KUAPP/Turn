@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
-import { colors, scaledTextStyle } from '../constants/theme'
+import { colors, textStyle } from '../constants/theme'
 import TurnText from './TurnText'
 
 type Props = {
@@ -60,7 +60,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           setInputHeight(Math.max(minInputHeight, Math.min(maxInputHeight, event.nativeEvent.contentSize.height + 16)))
         }
         style={{
-          ...scaledTextStyle('body', boldText, fontScale),
+          ...textStyle('body', boldText),
           color: colors.ink,
           backgroundColor: colors.surface,
           borderColor: colors.edge,
@@ -90,13 +90,16 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
             borderRadius: 26,
             borderWidth: 2,
             borderColor: colors.edge,
-            backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
-            opacity: disabled ? 0.45 : 1,
+            backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface,
             alignItems: 'center',
             justifyContent: 'center'
           })}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+          <TurnText
+            kind="headline"
+            boldText={boldText}
+            style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
+          >
             Send
           </TurnText>
         </Pressable>

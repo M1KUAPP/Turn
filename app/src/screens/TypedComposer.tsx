@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
-import { colors, scaledTextStyle } from '../constants/theme'
+import { colors, textStyle } from '../constants/theme'
 import TurnText from './TurnText'
 
 type Props = {
@@ -28,6 +28,7 @@ export default function TypedComposer({
   const lineHeight = 22 * fontScale
   const minInputHeight = Math.max(52, lineHeight + 20)
   const maxInputHeight = lineHeight * 4 + 20
+  const disabled = !speaking && !text.trim()
   const [inputHeight, setInputHeight] = useState(minInputHeight)
 
   return (
@@ -70,7 +71,7 @@ export default function TypedComposer({
           setInputHeight(Math.max(minInputHeight, Math.min(maxInputHeight, event.nativeEvent.contentSize.height + 16)))
         }
         style={{
-          ...scaledTextStyle('body', boldText, fontScale),
+          ...textStyle('body', boldText),
           color: colors.ink,
           backgroundColor: colors.surface,
           borderColor: colors.edge,
@@ -90,21 +91,24 @@ export default function TypedComposer({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={speaking ? 'Stop' : 'Speak'}
-          accessibilityState={{ disabled: !speaking && !text.trim() }}
-          disabled={!speaking && !text.trim()}
+          accessibilityState={{ disabled }}
+          disabled={disabled}
           onPress={speaking ? onStop : onSpeak}
           style={({ pressed }) => ({
             minWidth: 104,
             minHeight: 52,
             paddingHorizontal: 16,
             borderRadius: 26,
-            backgroundColor: pressed ? colors['accent-pressed'] : colors.accent,
-            opacity: !speaking && !text.trim() ? 0.45 : 1,
+            backgroundColor: disabled ? colors.surface : pressed ? colors['accent-pressed'] : colors.accent,
             alignItems: 'center',
             justifyContent: 'center'
           })}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ color: colors['on-accent'] }}>
+          <TurnText
+            kind="headline"
+            boldText={boldText}
+            style={{ color: disabled ? colors['ink-secondary'] : colors['on-accent'] }}
+          >
             {speaking ? 'Stop' : 'Speak'}
           </TurnText>
         </Pressable>

@@ -126,12 +126,3 @@ export function textStyle(name: keyof typeof typography, boldText: boolean) {
     fontWeight: boldText ? token.boldTextWeight : token.fontWeight
   }
 }
-
-export function scaledTextStyle(name: keyof typeof typography, boldText: boolean, fontScale: number) {
-  const base = textStyle(name, boldText)
-  return {
-    ...base,
-    fontSize: base.fontSize * fontScale,
-    lineHeight: base.lineHeight * fontScale
-  }
-}

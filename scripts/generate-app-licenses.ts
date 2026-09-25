@@ -5,6 +5,8 @@ type PackageJson = {
   name: string
   version: string
   private?: boolean
+  os?: string[]
+  cpu?: string[]
   license?: string | { type?: string }
   licenses?: Array<{ type?: string }>
   dependencies?: Record<string, string>
@@ -62,6 +64,7 @@ function visit(directory: string) {
   if (visited.has(path)) return
   visited.add(path)
   const pkg = JSON.parse(readFileSync(join(path, 'package.json'), 'utf8')) as PackageJson
+  if (pkg.os !== undefined || pkg.cpu !== undefined) return
   const key = `${pkg.name}@${pkg.version}`
   // A private workspace package is this app's own code, not a third-party dependency to acknowledge.
   if (!(pkg.private && pkg.name === '@turn/shared')) {

@@ -18,7 +18,7 @@ import { colors } from '../constants/theme'
 import type { createTypedListenSession, TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
 import { homeLayout, pageOffset } from './home-layout'
-import ReplyRow from './ReplyRow'
+import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
 import PartnerLineComposer from './PartnerLineComposer'
 import TurnText from './TurnText'
 import TypedComposer from './TypedComposer'
@@ -120,17 +120,6 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const composerOpen = composerMode !== null
   const shownListening = touchedRow ?? listening
   const rowAnnouncement = useRef<{ signature: string; pending: string | null }>({ signature: '', pending: null })
-  const captionLabel = listening.active
-    ? [
-        listening.line ? `They said: ${listening.line}` : 'Tap here to type what they say',
-        listening.rankedOnPhone ? 'Ranked on this phone' : null,
-        listening.answeringLine ? `Still answering: ${listening.answeringLine}` : null,
-        'Type partner line'
-      ]
-        .filter(Boolean)
-        .join('. ')
-    : undefined
-
   useEffect(() => {
     const current = rowAnnouncement.current
     if (!shownListening.active) {
@@ -245,14 +234,12 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const page = (direction: -1 | 1) => {
     list.current?.scrollToOffset({
       offset: pageOffset(offset, viewportHeight, contentHeight, direction),
-      animated: true
+      animated: false
     })
   }
 
   const renderPhrase = ({ item }: { item: Phrase }) => {
-    const tone = item.id === 'yes' ? 'yes' : item.id === 'no' ? 'no' : item.id === 'not-sure' ? 'unsure' : null
-    const fill = tone ? colors[`${tone}-fill`] : colors.surface
-    const edge = tone ? colors[`${tone}-edge`] : colors.edge
+    const tokens = phraseColorTokensForId(item.id)
     return (
       <View style={{ flex: 1, maxWidth: layout.gridColumns === 2 ? (width - 44) / 2 : undefined }}>
         <Pressable
@@ -264,11 +251,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           style={({ pressed }) => ({
             flex: 1,
             minHeight: minPhraseHeight,
-            borderWidth: tone ? 3 : 2,
-            borderColor: edge,
+            borderWidth: tokens ? 3 : 2,
+            borderColor: tokens ? colors[tokens.edge] : colors.edge,
             borderRadius: 12,
             padding: 12,
-            backgroundColor: pressed ? colors['surface-pressed'] : fill,
+            backgroundColor: pressed ? colors['surface-pressed'] : tokens ? colors[tokens.fill] : colors.surface,
             justifyContent: 'center'
           })}
         >
@@ -379,7 +366,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         >
           <Pressable
             accessibilityRole={listening.active ? 'button' : undefined}
-            accessibilityLabel={captionLabel}
+            accessibilityHint={listening.active ? 'Type the partner line.' : undefined}
             disabled={!listening.active}
             onPress={() => setComposerMode('partner')}
             style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
@@ -407,7 +394,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           {listening.active && listening.row.answers > 0 && (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Clear replies"
+              accessibilityLabel="Clear"
               onPress={() => listen.clear()}
               style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
             >
@@ -565,7 +552,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           </Pressable>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`Place: ${selectedPlace?.name ?? 'Place'}`}
+            accessibilityLabel={selectedPlace?.name ?? 'Place'}
             onPress={choosePlace}
             style={({ pressed }) => ({
               minHeight: oneControlColumn ? controlHeight : 44,
@@ -597,7 +584,8 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           >
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={listening.active ? 'Mic off. Type partner lines from the caption.' : 'Listen'}
+              accessibilityLabel={listening.active ? 'Mic off' : 'Listen'}
+              accessibilityHint={listening.active ? 'Type partner lines from the caption.' : undefined}
               accessibilityState={{ disabled: listening.active }}
               disabled={listening.active}
               onPress={() => listen.start()}
@@ -611,23 +599,32 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                 borderRadius: 22,
                 borderWidth: 2,
                 borderColor: colors.edge,
-                backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+                backgroundColor: listening.active
+                  ? colors.surface
+                  : pressed
+                    ? colors['surface-pressed']
+                    : colors.surface
               })}
             >
               <SymbolView
                 name={listening.active ? 'mic.slash' : 'ear'}
                 size={18}
-                tintColor={colors.ink}
+                tintColor={listening.active ? colors['ink-secondary'] : colors.ink}
                 accessible={false}
               />
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+              <TurnText
+                kind="headline"
+                boldText={boldText}
+                style={{ color: listening.active ? colors['ink-secondary'] : colors.ink }}
+              >
                 {listening.active ? 'Mic off' : 'Listen'}
               </TurnText>
             </Pressable>
             {listening.active && (
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="End Listen mode"
+                accessibilityLabel="End"
+                accessibilityHint="Ends Listen mode."
                 onPress={() => {
                   closeComposer()
                   listen.end()
@@ -733,15 +730,23 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                     borderRadius: 22,
                     borderWidth: 2,
                     borderColor: colors.edge,
-                    backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
+                    backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface,
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    opacity: disabled ? 0.45 : 1
+                    justifyContent: 'center'
                   })}
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                    <SymbolView name={icon} size={18} tintColor={colors.ink} accessible={false} />
-                    <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+                    <SymbolView
+                      name={icon}
+                      size={18}
+                      tintColor={disabled ? colors['ink-secondary'] : colors.ink}
+                      accessible={false}
+                    />
+                    <TurnText
+                      kind="headline"
+                      boldText={boldText}
+                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
+                    >
                       {label}
                     </TurnText>
                   </View>
