@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { Pressable, ScrollView, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { VoiceOption } from '../speech/voice-settings'
 import { colors } from '../constants/theme'
@@ -11,6 +11,8 @@ const previewText = 'Hello. This is how I sound.'
 
 export default function VoiceScreen() {
   const { ready, boldText } = useTurn()
+  // From AX1 a voice's name takes its own line, with Preview under it, so no name breaks mid-word.
+  const stacked = useWindowDimensions().fontScale >= 1.786
   const voiceSettings = ready?.voiceSettings
   const [voices, setVoices] = useState<readonly VoiceOption[]>([])
   const [selectedIdentifier, setSelectedIdentifier] = useState<string | null>(null)
@@ -46,67 +48,71 @@ export default function VoiceScreen() {
           {voices.map((voice, index) => {
             const selected = voice.identifier === selectedIdentifier
             return (
-              <View
-                key={voice.identifier ?? 'system-default'}
-                style={{
-                  minHeight: 60,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 8,
-                  paddingHorizontal: 12,
-                  borderTopWidth: index === 0 ? 0 : 1,
-                  borderTopColor: colors.edge
-                }}
-              >
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel={voice.name}
-                  accessibilityState={{ selected }}
-                  onPress={() => {
-                    setNote(null)
-                    void voiceSettings?.chooseVoice(voice.identifier).catch((cause) => setNote(String(cause)))
-                  }}
-                  style={({ pressed }) => ({
-                    flex: 1,
-                    minHeight: 52,
-                    flexDirection: 'row',
-                    alignItems: 'center',
+              <Fragment key={voice.identifier ?? 'system-default'}>
+                {index > 0 && (
+                  <View style={{ height: StyleSheet.hairlineWidth, marginLeft: 12, backgroundColor: colors.edge }} />
+                )}
+                <View
+                  style={{
+                    minHeight: 60,
+                    flexDirection: stacked ? 'column' : 'row',
+                    alignItems: stacked ? 'stretch' : 'center',
                     gap: 8,
-                    paddingVertical: 8,
-                    paddingRight: 4,
-                    backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                  })}
-                >
-                  <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
-                    {voice.name}
-                  </TurnText>
-                  {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
-                </Pressable>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Preview"
-                  accessibilityHint={`Preview ${voice.name}`}
-                  onPress={() => {
-                    setNote(null)
-                    void ready.speech.preview(previewText, voice.identifier).catch((cause) => setNote(String(cause)))
-                  }}
-                  style={({ pressed }) => ({
-                    minWidth: 84,
-                    minHeight: 44,
-                    alignItems: 'center',
-                    justifyContent: 'center',
                     paddingHorizontal: 12,
-                    borderWidth: 2,
-                    borderColor: colors.edge,
-                    borderRadius: 22,
-                    backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                  })}
+                    paddingBottom: stacked ? 12 : 0
+                  }}
                 >
-                  <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.accent }}>
-                    Preview
-                  </TurnText>
-                </Pressable>
-              </View>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={voice.name}
+                    accessibilityState={{ selected }}
+                    onPress={() => {
+                      setNote(null)
+                      void voiceSettings?.chooseVoice(voice.identifier).catch((cause) => setNote(String(cause)))
+                    }}
+                    style={({ pressed }) => ({
+                      flex: stacked ? undefined : 1,
+                      minHeight: 52,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 8,
+                      paddingVertical: 8,
+                      paddingRight: 4,
+                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+                    })}
+                  >
+                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
+                      {voice.name}
+                    </TurnText>
+                    {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
+                  </Pressable>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Preview"
+                    accessibilityHint={`Preview ${voice.name}`}
+                    onPress={() => {
+                      setNote(null)
+                      void ready.speech.preview(previewText, voice.identifier).catch((cause) => setNote(String(cause)))
+                    }}
+                    style={({ pressed }) => ({
+                      alignSelf: stacked ? 'flex-start' : undefined,
+                      minWidth: 84,
+                      minHeight: 44,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      paddingHorizontal: 12,
+                      borderWidth: 2,
+                      borderColor: colors.edge,
+                      borderRadius: 22,
+                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+                    })}
+                  >
+                    <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.accent }}>
+                      Preview
+                    </TurnText>
+                  </Pressable>
+                </View>
+              </Fragment>
             )
           })}
         </View>
