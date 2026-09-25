@@ -39,6 +39,24 @@ async function createSettings(options: Parameters<typeof ports>[0] = {}) {
 }
 
 describe('voice settings', () => {
+  test('speaks with the saved voice and rate before the voice list loads', async () => {
+    const nativePorts = ports({ values: { voice_id: 'com.apple.voice.enhanced.en-US.Ava', speech_rate: 'slower' } })
+    let listed = false
+    const settings = createVoiceSettings({
+      ...nativePorts,
+      availableVoices: async () => {
+        listed = true
+        return []
+      }
+    })
+
+    await settings.loadSaved()
+
+    expect(listed).toBe(false)
+    expect(settings.selected().identifier).toBe('com.apple.voice.enhanced.en-US.Ava')
+    expect(settings.rateStep()).toBe('slower')
+  })
+
   test('lists the system default first, sorted English voices, and one resolved Personal Voice', async () => {
     const { settings } = await createSettings({
       voices: [
