@@ -523,130 +523,132 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     { label: 'Down', icon: 'chevron.down', action: () => page(1), disabled: offset >= contentHeight - viewportHeight }
   ] as const
 
-  return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={composerOpen ? 'padding' : undefined}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
-        <View
-          style={{
-            minHeight: 52,
+  const topBar = (
+    <View
+      style={{
+        minHeight: 52,
+        flexDirection: 'row',
+        flexWrap: oneControlColumn ? 'wrap' : 'nowrap',
+        alignItems: 'center',
+        gap: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 4
+      }}
+    >
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Settings"
+        onPress={() => router.push('/settings')}
+        style={{
+          width: 44,
+          height: oneControlColumn ? controlHeight : 44,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <SymbolView name="gearshape" size={22} tintColor={colors.ink} accessible={false} />
+      </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={selectedPlace?.name ?? 'Place'}
+        onPress={choosePlace}
+        style={({ pressed }) => ({
+          minHeight: oneControlColumn ? controlHeight : 44,
+          minWidth: 44,
+          flex: oneControlColumn ? undefined : 1,
+          width: oneControlColumn ? width - 84 : undefined,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 6,
+          borderRadius: 22,
+          borderWidth: 2,
+          borderColor: colors.edge,
+          backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+        })}
+      >
+        <SymbolView name="mappin.and.ellipse" size={18} tintColor={colors.ink} accessible={false} />
+        <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
+          {selectedPlace?.name ?? 'Place'}
+        </TurnText>
+      </Pressable>
+      <View
+        style={{
+          flexDirection: 'row',
+          width: oneControlColumn ? width - 32 : undefined,
+          gap: 6,
+          alignItems: 'center'
+        }}
+      >
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={listening.active ? 'Mic off' : 'Listen'}
+          accessibilityHint={listening.active ? 'Type partner lines from the caption.' : undefined}
+          accessibilityState={{ disabled: listening.active }}
+          disabled={listening.active}
+          onPress={() => listen.start()}
+          style={({ pressed }) => ({
+            minHeight: oneControlColumn ? controlHeight : 44,
+            minWidth: 44,
             flexDirection: 'row',
-            flexWrap: oneControlColumn ? 'wrap' : 'nowrap',
             alignItems: 'center',
-            gap: 8,
-            paddingHorizontal: 16,
-            paddingVertical: 4
-          }}
+            gap: 6,
+            paddingHorizontal: 12,
+            borderRadius: 22,
+            borderWidth: 2,
+            borderColor: colors.edge,
+            backgroundColor: listening.active ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
+          })}
         >
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Settings"
-            onPress={() => router.push('/settings')}
-            style={{
-              width: 44,
-              height: oneControlColumn ? controlHeight : 44,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
+          <SymbolView
+            name={listening.active ? 'mic.slash' : 'ear'}
+            size={18}
+            tintColor={listening.active ? colors['ink-secondary'] : colors.ink}
+            accessible={false}
+          />
+          <TurnText
+            kind="headline"
+            boldText={boldText}
+            style={{ color: listening.active ? colors['ink-secondary'] : colors.ink }}
           >
-            <SymbolView name="gearshape" size={22} tintColor={colors.ink} accessible={false} />
-          </Pressable>
+            {listening.active ? 'Mic off' : 'Listen'}
+          </TurnText>
+        </Pressable>
+        {listening.active && (
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={selectedPlace?.name ?? 'Place'}
-            onPress={choosePlace}
+            accessibilityLabel="End"
+            accessibilityHint="Ends Listen mode."
+            onPress={() => {
+              closeComposer()
+              listen.end()
+            }}
             style={({ pressed }) => ({
               minHeight: oneControlColumn ? controlHeight : 44,
-              minWidth: 44,
-              flex: oneControlColumn ? undefined : 1,
-              width: oneControlColumn ? width - 84 : undefined,
-              flexDirection: 'row',
+              minWidth: 52,
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 6,
               borderRadius: 22,
               borderWidth: 2,
               borderColor: colors.edge,
               backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
             })}
           >
-            <SymbolView name="mappin.and.ellipse" size={18} tintColor={colors.ink} accessible={false} />
-            <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
-              {selectedPlace?.name ?? 'Place'}
+            <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+              End
             </TurnText>
           </Pressable>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: oneControlColumn ? width - 32 : undefined,
-              gap: 6,
-              alignItems: 'center'
-            }}
-          >
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={listening.active ? 'Mic off' : 'Listen'}
-              accessibilityHint={listening.active ? 'Type partner lines from the caption.' : undefined}
-              accessibilityState={{ disabled: listening.active }}
-              disabled={listening.active}
-              onPress={() => listen.start()}
-              style={({ pressed }) => ({
-                minHeight: oneControlColumn ? controlHeight : 44,
-                minWidth: 44,
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 6,
-                paddingHorizontal: 12,
-                borderRadius: 22,
-                borderWidth: 2,
-                borderColor: colors.edge,
-                backgroundColor: listening.active
-                  ? colors.surface
-                  : pressed
-                    ? colors['surface-pressed']
-                    : colors.surface
-              })}
-            >
-              <SymbolView
-                name={listening.active ? 'mic.slash' : 'ear'}
-                size={18}
-                tintColor={listening.active ? colors['ink-secondary'] : colors.ink}
-                accessible={false}
-              />
-              <TurnText
-                kind="headline"
-                boldText={boldText}
-                style={{ color: listening.active ? colors['ink-secondary'] : colors.ink }}
-              >
-                {listening.active ? 'Mic off' : 'Listen'}
-              </TurnText>
-            </Pressable>
-            {listening.active && (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="End"
-                accessibilityHint="Ends Listen mode."
-                onPress={() => {
-                  closeComposer()
-                  listen.end()
-                }}
-                style={({ pressed }) => ({
-                  minHeight: oneControlColumn ? controlHeight : 44,
-                  minWidth: 52,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 22,
-                  borderWidth: 2,
-                  borderColor: colors.edge,
-                  backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                })}
-              >
-                <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-                  End
-                </TurnText>
-              </Pressable>
-            )}
-          </View>
-        </View>
+        )}
+      </View>
+    </View>
+  )
+
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={composerOpen ? 'padding' : undefined}>
+      <SafeAreaView
+        edges={composerOpen ? ['top', 'left', 'right'] : undefined}
+        style={{ flex: 1, backgroundColor: colors.board }}
+      >
         {composerOpen ? (
           <ScrollView
             ref={composerContent}
@@ -656,10 +658,12 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             onLayout={() => composerContent.current?.scrollToEnd({ animated: false })}
             onContentSizeChange={() => composerContent.current?.scrollToEnd({ animated: false })}
           >
+            {topBar}
             {middleHeader}
           </ScrollView>
         ) : (
           <>
+            {topBar}
             {!layout.wholeMiddleScroll && middleHeader}
             <FlatList
               key={`${layout.gridColumns}-${layout.wholeMiddleScroll}`}
