@@ -42,6 +42,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     relayUrl: process.env.EXPO_PUBLIC_RELAY_URL ?? 'https://turn-relay.m1ku-turn.workers.dev',
     revenueCatTestStoreKey: process.env.EXPO_PUBLIC_RC_TEST_STORE_KEY ?? 'test_TXxJjdDavsAIFUJqzvnenrRIqBc',
-    buildKind: process.env.EXPO_PUBLIC_BUILD_KIND ?? 'simulator'
+    buildKind: process.env.EXPO_PUBLIC_BUILD_KIND ?? 'simulator',
+    listenEngine: 'auto'
   }
 })

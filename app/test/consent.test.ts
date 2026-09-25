@@ -6,8 +6,12 @@ import starterBank from '../src/content/starter-bank.json'
 import type { Config } from '@turn/shared/relay'
 import { startingPolicy } from '@turn/shared/row'
 import { createConsentController } from '../src/consent/controller'
+import { createLiveListenSession } from '../src/listen/live-session'
+import type { ListenEngine } from '../src/listen/engine'
+import { createTypedListenSession } from '../src/listen/typed-session'
 
 const databases: DatabaseSync[] = []
+const sessions: Array<ReturnType<typeof createLiveListenSession>> = []
 
 function database(): BankDatabase {
   const sqlite = new DatabaseSync(':memory:')
@@ -36,7 +40,8 @@ function database(): BankDatabase {
   return adapter
 }
 
-afterEach(() => {
+afterEach(async () => {
+  for (const session of sessions.splice(0)) await session.dispose()
   for (const db of databases.splice(0)) db.close()
 })
 
@@ -66,25 +71,46 @@ function configPort(initialNamed = false, refreshNames: boolean[] = []) {
   }
 }
 
-async function rig(options: { db?: BankDatabase; named?: boolean; refreshNames?: boolean[] } = {}) {
+function fakeEngine() {
+  const engine: ListenEngine = {
+    id: 'turn-listen',
+    listen: vi.fn(() => () => undefined),
+    availability: vi.fn(async () => 'installed' as const),
+    installAsset: vi.fn(async () => undefined),
+    start: vi.fn(async () => undefined),
+    pause: vi.fn(async () => undefined),
+    resume: vi.fn(async () => undefined),
+    stop: vi.fn(async () => undefined),
+    endLine: vi.fn(async () => undefined),
+    muteForSpeech: vi.fn(async () => undefined)
+  }
+  return engine
+}
+
+async function rig(
+  options: { db?: BankDatabase; named?: boolean; refreshNames?: boolean[]; typedOnly?: boolean } = {}
+) {
   const db = options.db ?? database()
   const bank = createBankStore(db, starterBank, () => new Date('2026-09-25T15:30:00.000Z'))
   await bank.initialize()
   const config = configPort(options.named, options.refreshNames)
   let controller: ReturnType<typeof createConsentController>
-  let active = false
-  let microphoneStarts = 0
   let lineRequests = 0
   let chosenVoice = 'personal-voice-id'
   const spoken: Array<{ text: string; voice: string }> = []
+  const typed = createTypedListenSession(bank)
+  await typed.ready
+  const engine = fakeEngine()
+  const session = createLiveListenSession({
+    typed,
+    engine: options.typedOnly ? null : engine,
+    now: () => 123,
+    log: () => {}
+  })
+  sessions.push(session)
   const listen = {
-    start: vi.fn(async () => {
-      active = true
-      if (!controller.snapshot().requestsBlocked) microphoneStarts++
-    }),
-    end: vi.fn(async () => {
-      active = false
-    }),
+    start: vi.fn(() => session.start()),
+    end: vi.fn(async () => session.end()),
     blocked: vi.fn(() => false)
   }
   const speech = {
@@ -109,14 +135,15 @@ async function rig(options: { db?: BankDatabase; named?: boolean; refreshNames?:
     config,
     controller,
     listen,
+    engine,
+    session,
     speech,
     navigate,
     spoken,
     setChosenVoice: (voice: string) => {
       chosenVoice = voice
     },
-    isActive: () => active,
-    microphoneStarts: () => microphoneStarts,
+    isActive: () => session.getSnapshot().active,
     requestLine: () => {
       if (!controller.snapshot().requestsBlocked) lineRequests++
     },
@@ -133,6 +160,8 @@ describe('consent controller', () => {
     app.controller.notNow()
     expect(await app.bank.setting('listen_permission')).toBeNull()
     expect(app.isActive()).toBe(false)
+    expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(app.engine.start).not.toHaveBeenCalled()
     expect(app.navigate).toHaveBeenLastCalledWith('/')
 
     await app.controller.readAloud()
@@ -152,21 +181,25 @@ describe('consent controller', () => {
     expect(app.listen.start).not.toHaveBeenCalled()
   })
 
-  test('shows the consent card for every allowed start and waits for the partner answer', async () => {
+  test('waits for They agreed before starting the engine and ends on partner decline', async () => {
     const app = await rig()
     await app.controller.grant()
 
     expect(await app.controller.startListen()).toBe('consent')
     expect(app.listen.start).not.toHaveBeenCalled()
+    expect(app.engine.start).not.toHaveBeenCalled()
     app.controller.partnerDeclined()
     expect(app.isActive()).toBe(false)
     expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(app.engine.start).not.toHaveBeenCalled()
     expect(await app.controller.startListen()).toBe('consent')
     expect(app.config.refresh).toHaveBeenCalledTimes(2)
     expect(app.listen.start).not.toHaveBeenCalled()
+    expect(app.engine.start).not.toHaveBeenCalled()
 
     await app.controller.partnerAgreed()
     expect(app.listen.start).toHaveBeenCalledOnce()
+    expect(app.engine.start).toHaveBeenCalledOnce()
     expect(app.isActive()).toBe(true)
     expect(app.navigate).toHaveBeenLastCalledWith('/')
   })
@@ -177,8 +210,29 @@ describe('consent controller', () => {
     await app.controller.partnerAgreed()
 
     expect(app.listen.start).not.toHaveBeenCalled()
+    expect(app.engine.start).not.toHaveBeenCalled()
     expect(app.isActive()).toBe(false)
     expect(app.navigate).toHaveBeenLastCalledWith('/permission')
+  })
+
+  test('They agreed starts the typed session without touching an engine', async () => {
+    const app = await rig({ typedOnly: true })
+    await app.controller.grant()
+    await app.controller.startListen()
+
+    await app.controller.partnerAgreed()
+
+    expect(app.isActive()).toBe(true)
+    expect(app.engine.listen).not.toHaveBeenCalled()
+    expect(app.engine.availability).not.toHaveBeenCalled()
+    expect(app.engine.installAsset).not.toHaveBeenCalled()
+    expect(app.engine.start).not.toHaveBeenCalled()
+    expect(app.engine.pause).not.toHaveBeenCalled()
+    expect(app.engine.resume).not.toHaveBeenCalled()
+    expect(app.engine.stop).not.toHaveBeenCalled()
+    expect(app.engine.endLine).not.toHaveBeenCalled()
+    expect(app.engine.muteForSpeech).not.toHaveBeenCalled()
+    expect(app.controller.snapshot().requestsBlocked).toBe(false)
   })
 
   test('reads the card lead and four facts in order in the selected voice', async () => {
@@ -210,9 +264,23 @@ describe('consent controller', () => {
     await next.controller.partnerAgreed()
 
     next.requestLine()
-    expect(next.isActive()).toBe(true)
-    expect(next.microphoneStarts()).toBe(0)
+    expect(next.engine.start).not.toHaveBeenCalled()
+    expect(next.isActive()).toBe(false)
     expect(next.lineRequests()).toBe(0)
+  })
+
+  test('turning on under-18 mode stops a running engine immediately', async () => {
+    const app = await rig()
+    await app.controller.grant()
+    await app.controller.partnerAgreed()
+    expect(app.engine.start).toHaveBeenCalledOnce()
+
+    await app.controller.setUnder18(true)
+
+    expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(app.engine.stop).toHaveBeenCalledOnce()
+    expect(app.isActive()).toBe(false)
+    expect(app.controller.snapshot().requestsBlocked).toBe(true)
   })
 
   test('withdrawal ends Listen mode and blocks lines until permission is granted again', async () => {
@@ -226,6 +294,7 @@ describe('consent controller', () => {
     app.requestLine()
     expect(app.isActive()).toBe(false)
     expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(app.engine.stop).toHaveBeenCalledOnce()
     expect(await app.bank.setting('listen_permission')).toBeNull()
     expect(await app.bank.setting('listen_permission_date')).toBeNull()
     expect(app.controller.snapshot().requestsBlocked).toBe(true)
