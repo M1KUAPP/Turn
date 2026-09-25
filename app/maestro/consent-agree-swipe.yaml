@@ -36,7 +36,6 @@ name: Consent agree and edge swipe
 - tapOn: Chat
 - scrollUntilVisible:
     element: 'Hi, how are you\?'
-    direction: UP
 - extendedWaitUntil:
     visible: 'Hi, how are you\?'
     timeout: 10000
@@ -47,7 +46,6 @@ name: Consent agree and edge swipe
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: 'Hi, how are you\?'
-    direction: UP
 - assertVisible: 'Hi, how are you\?'
 - scrollUntilVisible:
     element: Mic off
