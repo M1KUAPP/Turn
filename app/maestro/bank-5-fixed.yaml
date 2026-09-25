@@ -10,6 +10,7 @@ name: Phrase bank protected items
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
+    direction: DOWN
 - tapOn: Phrase bank
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
@@ -18,6 +19,7 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: Body and pain
     centerElement: true
+    direction: DOWN
 - assertNotVisible:
     text: Delete
     below: Body and pain
@@ -26,7 +28,6 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: Quick
     direction: UP
-    centerElement: true
 - tapOn: Quick
 - extendedWaitUntil:
     visible: Edit
@@ -35,21 +36,21 @@ name: Phrase bank protected items
 - tapOn: Edit
 - scrollUntilVisible:
     element: 'Yes'
-    centerElement: true
+    direction: DOWN
 - assertNotVisible:
     text: Delete
     below: 'Yes'
     above: 'No'
 - scrollUntilVisible:
     element: 'No'
-    centerElement: true
+    direction: DOWN
 - assertNotVisible:
     text: Delete
     below: 'No'
     above: Not sure
 - scrollUntilVisible:
     element: Not sure
-    centerElement: true
+    direction: DOWN
 - assertNotVisible:
     text: Delete
     below: Not sure
