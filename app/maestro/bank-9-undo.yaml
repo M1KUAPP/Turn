@@ -19,7 +19,9 @@ name: Phrase bank undo after one minute
 - scrollUntilVisible:
     element: Chat
     direction: DOWN
+    speed: 10
 - tapOn: Chat
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: Edit
     timeout: 10000
@@ -46,6 +48,10 @@ name: Phrase bank undo after one minute
 - assertVisible: Undo
 - takeScreenshot: bank-9-undo-after-one-minute
 - tapOn: Undo
+- scrollUntilVisible:
+    element: 'Hi, how are you\?'
+    direction: UP
+    speed: 10
 - extendedWaitUntil:
     visible: 'Hi, how are you\?'
     timeout: 10000

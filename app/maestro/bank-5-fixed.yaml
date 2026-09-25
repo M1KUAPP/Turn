@@ -20,6 +20,7 @@ name: Phrase bank protected items
     element: Body and pain
     centerElement: true
     direction: DOWN
+    speed: 10
 - assertNotVisible:
     text: Delete
     below: Body and pain
@@ -28,7 +29,9 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: Quick
     direction: UP
+    speed: 10
 - tapOn: Quick
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: Edit
     timeout: 10000
@@ -37,6 +40,7 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: 'Yes'
     direction: DOWN
+    speed: 10
 - assertNotVisible:
     text: Delete
     below: 'Yes'
@@ -44,6 +48,7 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: 'No'
     direction: DOWN
+    speed: 10
 - assertNotVisible:
     text: Delete
     below: 'No'
@@ -51,6 +56,7 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: Not sure
     direction: DOWN
+    speed: 10
 - assertNotVisible:
     text: Delete
     below: Not sure

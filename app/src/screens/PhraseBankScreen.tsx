@@ -468,8 +468,8 @@ export default function PhraseBankScreen() {
         }}
       >
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
-          <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-            <ScrollView contentContainerStyle={{ padding: 16, gap: 20 }}>
+          <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
+            <View style={{ gap: 4, marginBottom: 12 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Pressable
                   accessibilityRole="button"
@@ -484,9 +484,6 @@ export default function PhraseBankScreen() {
                     Cancel
                   </TurnText>
                 </Pressable>
-                <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-                  {editor?.id ? 'Edit phrase' : 'Add phrase'}
-                </TurnText>
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel="Save"
@@ -509,7 +506,16 @@ export default function PhraseBankScreen() {
                   </TurnText>
                 </Pressable>
               </View>
+              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, textAlign: 'center' }}>
+                {editor?.id ? 'Edit phrase' : 'Add phrase'}
+              </TurnText>
+            </View>
 
+            <ScrollView
+              style={{ flex: 1 }}
+              contentContainerStyle={{ gap: 20, paddingBottom: 16 }}
+              keyboardShouldPersistTaps="handled"
+            >
               <View style={{ gap: 8 }}>
                 <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   Phrase
@@ -526,15 +532,18 @@ export default function PhraseBankScreen() {
                     setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
                   }
                   selectionColor={colors.accent}
+                  scrollEnabled
                   style={{
                     ...textStyle('body', boldText),
                     minHeight: 78,
+                    maxHeight: 180,
                     padding: 12,
                     borderWidth: 2,
                     borderColor: colors.edge,
                     borderRadius: 12,
                     color: colors.ink,
-                    backgroundColor: colors.surface
+                    backgroundColor: colors.surface,
+                    textAlignVertical: 'top'
                   }}
                 />
                 {!!editor && editor.text.length >= 180 && (
