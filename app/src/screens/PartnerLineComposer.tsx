@@ -29,11 +29,14 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
         paddingBottom: 4,
         borderTopWidth: 1,
         borderTopColor: colors.edge,
-        backgroundColor: colors.board
+        backgroundColor: colors.board,
+        flexShrink: 1
       }}
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+      <View
+        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, flexShrink: 0 }}
+      >
+        <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
           What did they say?
         </TurnText>
         <Pressable
@@ -68,12 +71,16 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           borderRadius: 12,
           paddingHorizontal: 12,
           paddingVertical: 8,
-          height: inputHeight,
+          height: Math.max(minInputHeight, inputHeight),
+          minHeight: 44,
           maxHeight: maxInputHeight,
+          flexShrink: 1,
           textAlignVertical: 'top'
         }}
       />
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+      <View
+        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexShrink: 0 }}
+      >
         <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
           {text.length >= 450 ? `${500 - text.length} characters left` : ''}
         </TurnText>
