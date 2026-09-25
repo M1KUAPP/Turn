@@ -23,6 +23,11 @@ name: Home
     direction: DOWN
 - assertVisible: '.*Hi, how are you\?.*'
 - takeScreenshot: home-chat
+# Back to the caption first: a tab half under the top bar already counts as visible, so only a real scroll
+# down to it centers it.
+- scrollUntilVisible:
+    element: '.*Listen mode is off\..*'
+    direction: UP
 - scrollUntilVisible:
     element:
       text: All
