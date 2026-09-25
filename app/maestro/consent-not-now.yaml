@@ -5,11 +5,13 @@ name: Consent not now
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Listen
 - tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000
@@ -18,11 +20,13 @@ name: Consent not now
 - tapOn: Not now
 - waitForAnimationToEnd
 - scrollUntilVisible:
-    element: Yes
-- tapOn: Yes
+    element: 'Yes'
+- tapOn: 'Yes'
 - scrollUntilVisible:
-    element: Listen
-- tapOn: Listen
+    element: '^Listen$'
+- tapOn: '^Listen$'
+- scrollUntilVisible:
+    element: Before Listen mode starts
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000

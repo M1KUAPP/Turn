@@ -5,9 +5,14 @@ name: Settings
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
 - tapOn: Settings
+- scrollUntilVisible:
+    element: Your words
+    direction: UP
 - extendedWaitUntil:
     visible: Your words
     timeout: 10000
