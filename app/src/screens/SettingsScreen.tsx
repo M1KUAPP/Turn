@@ -2,7 +2,7 @@ import * as Application from 'expo-application'
 import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useEffect, useState } from 'react'
-import { Alert, Pressable, ScrollView, View } from 'react-native'
+import { Alert, Pressable, ScrollView, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors } from '../constants/theme'
 import { rebuildGazetteer } from '../listen/gazetteer'
@@ -25,6 +25,8 @@ type Section = { title: string; rows: Row[]; note?: string }
 export default function SettingsScreen() {
   const router = useRouter()
   const { ready, boldText } = useTurn()
+  // From AX1 a row's value goes under its label, as in iOS Settings, so neither squeezes the other to letters.
+  const stacked = useWindowDimensions().fontScale >= 1.786
   const [voiceNote, setVoiceNote] = useState<string | null>(null)
   const [, setVoiceRevision] = useState(0)
 
@@ -158,18 +160,30 @@ export default function SettingsScreen() {
                       backgroundColor: pressed && enabled ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText
-                      kind="body"
-                      boldText={boldText}
-                      style={{ color: enabled || staticText ? colors.ink : colors['ink-secondary'], flex: 1 }}
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: stacked ? 'column' : 'row',
+                        alignItems: stacked ? 'flex-start' : 'center',
+                        gap: stacked ? 2 : 12
+                      }}
                     >
-                      {row.label}
-                    </TurnText>
-                    {row.value && (
-                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        {row.value}
+                      <TurnText
+                        kind="body"
+                        boldText={boldText}
+                        style={{
+                          color: enabled || staticText ? colors.ink : colors['ink-secondary'],
+                          flex: stacked ? undefined : 1
+                        }}
+                      >
+                        {row.label}
                       </TurnText>
-                    )}
+                      {row.value && (
+                        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          {row.value}
+                        </TurnText>
+                      )}
+                    </View>
                     {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
                     {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
                     {enabled && row.open && (
