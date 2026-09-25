@@ -207,6 +207,7 @@ export default function PhraseBankScreen() {
 
           const phrasePlacesList = (placeMap[phrase.id] ?? []).map((pId) => placeNameMap.get(pId)).filter(Boolean)
           const placesText = phrasePlacesList.join(', ')
+          const phraseDetails = [placesText, phrase.reviewed === 0 ? 'Starter' : null].filter(Boolean).join(', ')
 
           const actions = [
             { name: 'edit', label: 'Edit' },
@@ -229,6 +230,8 @@ export default function PhraseBankScreen() {
             >
               <Pressable
                 accessibilityRole="button"
+                accessibilityLabel={phrase.text}
+                accessibilityValue={phraseDetails ? { text: phraseDetails } : undefined}
                 accessibilityActions={actions}
                 onAccessibilityAction={(event) => {
                   if (event.nativeEvent.actionName === 'edit') void openEdit(phrase)
@@ -513,7 +516,8 @@ export default function PhraseBankScreen() {
                 </TurnText>
                 <TextInput
                   autoFocus
-                  accessibilityLabel="Phrase text"
+                  accessibilityLabel="Phrase"
+                  accessibilityHint="Type the phrase you want to say, up to 200 characters."
                   maxLength={200}
                   multiline
                   editable={!editor?.isFixed}
@@ -521,8 +525,6 @@ export default function PhraseBankScreen() {
                   onChangeText={(text) =>
                     setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
                   }
-                  placeholder="Phrase text"
-                  placeholderTextColor={colors['ink-secondary']}
                   selectionColor={colors.accent}
                   style={{
                     ...textStyle('body', boldText),
