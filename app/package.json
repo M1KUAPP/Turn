@@ -15,6 +15,7 @@
     }
   },
   "dependencies": {
+    "@turn/shared": "workspace:*",
     "expo": "~57.0.24",
     "expo-application": "~57.0.3",
     "expo-audio": "~57.0.5",

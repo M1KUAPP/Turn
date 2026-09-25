@@ -1,3 +1,5 @@
+import type { Phrase as RankablePhrase } from '@turn/shared/shortlist'
+
 export type Category = { id: string; name: string; position: number; fixed: number }
 export type Place = { id: string; name: string; position: number }
 export type Phrase = {
@@ -240,6 +242,33 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
           : 'SELECT * FROM phrase WHERE category_id = ? ORDER BY position, id',
         ...(categoryId === 'all' ? [] : [categoryId])
       )
+    },
+    async rankingData(): Promise<{ bank: RankablePhrase[]; taps: Map<string, number> }> {
+      const [phrases, ties, counts] = await Promise.all([
+        db.getAllAsync<Phrase>(
+          "SELECT p.* FROM phrase p JOIN category c ON c.id = p.category_id WHERE c.id != 'strip' ORDER BY c.position, p.position, p.id"
+        ),
+        db.getAllAsync<{ phrase_id: string; place_id: string }>('SELECT phrase_id, place_id FROM phrase_place'),
+        db.getAllAsync<{ phrase_id: string; count: number }>(
+          'SELECT phrase_id, SUM(count) AS count FROM tap WHERE day >= ? GROUP BY phrase_id',
+          localDay(now()) - 29
+        )
+      ])
+      const places = new Map<string, string[]>()
+      for (const tie of ties) {
+        const list = places.get(tie.phrase_id) ?? []
+        list.push(tie.place_id)
+        places.set(tie.phrase_id, list)
+      }
+      return {
+        bank: phrases.map((phrase) => ({
+          id: phrase.id,
+          text: phrase.text,
+          places: places.get(phrase.id) ?? [],
+          fixed: phrase.fixed === 1
+        })),
+        taps: new Map(counts.map(({ phrase_id, count }) => [phrase_id, count]))
+      }
     },
     async recordTap(phraseId: string) {
       await db.runAsync(
