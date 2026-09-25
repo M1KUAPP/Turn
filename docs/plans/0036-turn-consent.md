@@ -87,30 +87,30 @@ SQLite's `setting` table, `expo-speech`, Vitest.
 `app/test/relay-config.test.ts` (from `app/test/relay-naming.test.ts`),
 `app/src/turn-context.tsx`.
 
-- [ ] Write failing tests with fakes: the ID is made once and reused, a saved
+- [x] Write failing tests with fakes: the ID is made once and reused, a saved
       non-UUID is replaced, every request carries all three headers, a good
       answer is cached, and a failure, a 3-second timeout, or a bad shape
       keeps the last copy and leaves `typesafeNamed()` false without one.
-- [ ] `createConfigClient(ports)` with the TRD's port shapes:
+- [x] `createConfigClient(ports)` with the TRD's port shapes:
       `headers(): Record<string, string>`, `read(): Promise<Config>`,
       `typesafeNamed(): boolean`, `refresh(): Promise<Config>`, and
       `subscribe(listener)`, over `setting(key)`, `setSetting(key, value)`,
       `getItemAsync`, `setItemAsync`, `createId`, `request(url, init)`,
       `relayUrl`, `version`, and `buildKind`. Keep the whole `Config` under
       `relay_config`; keep the 3-second abort.
-- [ ] Call `refresh()` once at launch in the provider, and expose
+- [x] Call `refresh()` once at launch in the provider, and expose
       `typesafeNamed` from the client so `ready.typesafeNamed` keeps working
       for the privacy notice.
-- [ ] `rtk bun run --cwd app test -- relay-config.test.ts` and
+- [x] `rtk bun run --cwd app test -- relay-config.test.ts` and
       `rtk bun run --cwd app typecheck`.
 
 ## Task 2: The two texts, both versions
 
 **Files:** `app/src/consent/strings.ts`, `app/test/consent-strings.test.ts`.
 
-- [ ] Write failing tests that pin every string exactly, in both versions, and
+- [x] Write failing tests that pin every string exactly, in both versions, and
       that no string names TypeSafe when the configuration is off.
-- [ ] Export the design's words, from `/docs/DESIGN.md`: the step's title
+- [x] Export the design's words, from `/docs/DESIGN.md`: the step's title
       "Before Listen mode starts", its body with `{service}` (lines 1438-1443),
       the link "Read the privacy notice", and "Allow" and "Not now"; the
       card's lead "Can my phone listen while we talk?" and its four facts
@@ -120,16 +120,16 @@ SQLite's `setting` table, `expo-speech`, Vitest.
       "Tap here to type what they say." (lines 1230, 1409-1413); and
       Settings' "Allowed on", "Withdraw", "Not allowed", "Allow", and the
       after-Withdraw note (lines 1428-1429).
-- [ ] `permissionStep(typesafeNamed): Step` and `consentCard(typesafeNamed):
-  Card`, each with its ordered paragraphs and facts, shaped like
+- [x] `permissionStep(typesafeNamed): Step` and `consentCard(typesafeNamed):
+Card`, each with its ordered paragraphs and facts, shaped like
       `app/src/content/privacy-notice.ts`.
-- [ ] `rtk bun run --cwd app test -- consent-strings.test.ts`.
+- [x] `rtk bun run --cwd app test -- consent-strings.test.ts`.
 
 ## Task 3: The consent controller
 
 **Files:** `app/src/consent/controller.ts`, `app/test/consent.test.ts`.
 
-- [ ] Write failing tests with fakes for: the step showing once and returning
+- [x] Write failing tests with fakes for: the step showing once and returning
       after "Not now", with speaking still working; "Allow" writing the
       permission and its date; the card showing on every start and each
       answer's effect, with nothing started before "They agreed"; Read aloud
@@ -138,7 +138,7 @@ SQLite's `setting` table, `expo-speech`, Vitest.
       off the microphone, the request, and the card's effect; withdrawal
       stopping Listen mode at once and blocking requests until the user allows
       again; and each text following the configuration.
-- [ ] `createConsentController(ports)` with
+- [x] `createConsentController(ports)` with
       `snapshot(): ConsentState`, `subscribe(listener)`,
       `startListen(): Promise<'permission' | 'consent'>`, `allow(): Promise<void>`,
       `notNow(): void`, `partnerAgreed(): Promise<void>`, `partnerDeclined(): void`,
@@ -146,11 +146,11 @@ SQLite's `setting` table, `expo-speech`, Vitest.
       `withdraw(): Promise<void>`, and `grant(): Promise<void>`, over
       `setting`, `setSetting`, `now`, `config` (the Task 1 client), `speech`,
       `listen` (start, end, and a `blocked()` check), and `navigate(route)`.
-- [ ] Refresh the configuration in `startListen()` before it answers, so both
+- [x] Refresh the configuration in `startListen()` before it answers, so both
       texts follow the copy just fetched; `startListen()` answers
       `'permission'` when no permission is saved and `'consent'` when one is,
       and never starts the session itself.
-- [ ] `rtk bun run --cwd app test -- consent.test.ts` and
+- [x] `rtk bun run --cwd app test -- consent.test.ts` and
       `rtk bun run --cwd app typecheck`.
 
 ## Task 4: The screens
@@ -161,24 +161,24 @@ SQLite's `setting` table, `expo-speech`, Vitest.
 `app/src/screens/HomeScreen.tsx`, `app/src/screens/SettingsScreen.tsx`,
 `app/src/turn-context.tsx`.
 
-- [ ] `/permission` is a `formSheet` at full height with
+- [x] `/permission` is a `formSheet` at full height with
       `headerTransparent: false` and a `surface` background, the title in
       `title2`, the body paragraphs in `body`, the privacy-notice link, and
       the equal pair of secondary buttons stacked from AX1. The link opens
       `/settings/privacy`.
-- [ ] `/consent` is a full screen on the board: the lead in
+- [x] `/consent` is a full screen on the board: the lead in
       `largeTitle-emphasized`, the four facts one to a line in `title2`, the
       under-18 switch in a list row, "Read aloud" as a secondary button, and
       the equal pair of "They agreed" and "They said no" within a thumb's
       reach. Every word is text, never an image.
-- [ ] Home's Listen control calls `startListen()` and pushes the route it
+- [x] Home's Listen control calls `startListen()` and pushes the route it
       answers; while the switch is on it shows "Mic off" with End, the caption
       shows the note and the typed line, and the row's empty note is the
       under-18 sentence.
-- [ ] Settings' Listen mode group holds the permission row with "Withdraw" or
+- [x] Settings' Listen mode group holds the permission row with "Withdraw" or
       "Allow", the under-18 switch, and the after-Withdraw note.
-- [ ] Follow the design's rules that do not bend, as Task 3's last rule says.
-- [ ] `rtk bun run --cwd app typecheck` and `rtk bun run lint`.
+- [x] Follow the design's rules that do not bend, as Task 3's last rule says.
+- [x] `rtk bun run --cwd app typecheck` and `rtk bun run lint`.
 
 ## Task 5: Handoff
 
