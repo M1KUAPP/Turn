@@ -266,32 +266,32 @@ export type EnginePicker = (input: {
 `modules/turn-listen/src/index.ts`, `app/src/listen/native-engine.ts`,
 `modules/turn-listen/ios/TurnListen.podspec`.
 
-- [ ] Add the transcription half beside the existing name tagging in
+- [x] Add the transcription half beside the existing name tagging in
       `TurnListenModule.swift`: `availability()`, `installAsset()`, `start()`,
       `pause()`, `resume()`, `stop()`, `endLine()`, `muteForSpeech(_:)`, and
       the five events with `sendEvent`, each behind `#available(iOS 26.0, *)`.
-- [ ] `ListenEngine.swift` holds the pipeline: an `en-US` transcriber built
+- [x] `ListenEngine.swift` holds the pipeline: an `en-US` transcriber built
       from `supportedLocale(equivalentTo:)` with `reportingOptions:
 [.volatileResults]` and `attributeOptions: [.audioTimeRange]`; an
       `AVAudioEngine` input tap; each buffer converted with `AVAudioConverter`
       to `bestAvailableAudioFormat(compatibleWith:)`; an
       `AsyncStream<AnalyzerInput>` into `start(inputSequence:)`; and
       `prepareToAnalyze(in:)` before the tap, which starts after the consumer.
-- [ ] Availability is `isAvailable` (capability) plus
+- [x] Availability is `isAvailable` (capability) plus
       `AssetInventory.status(forModules:)` for the `en-US` transcriber, mapped
       to the port's `AssetStatus`. `installAsset()` takes
       `assetInstallationRequest(supporting:)`, publishes
       `progress.fractionCompleted` on the main actor, and awaits
       `downloadAndInstall()`.
-- [ ] Results are read concurrently with capture, volatile text kept separate
+- [x] Results are read concurrently with capture, volatile text kept separate
       so a final replaces it. Text settles when `resultsFinalizationTime`
       passes a result's end, not only on `isFinal`.
-- [ ] The engine takes `SpeechTranscriber` when it is available and falls to
+- [x] The engine takes `SpeechTranscriber` when it is available and falls to
       `DictationTranscriber` with `[.volatileResults, .frequentFinalization]`
       in the same analyzer, checking that module's own locale and asset
       status, chosen before the line is fed. The module's `#if DEBUG` switch
       forces the second, so the video iPhone's check can force it (#49).
-- [ ] The silence rule: the tap's audio level drives `onVoice`, and after
+- [x] The silence rule: the tap's audio level drives `onVoice`, and after
       `SILENCE_WINDOW_MS` below level with no new words, the engine calls
       `finalize(through: nil)` and reports the settled text once as one
       `onLine`, stamped with the end of the line. `endLine()` does the same at
@@ -300,11 +300,11 @@ export type EnginePicker = (input: {
       queue lag could split a line. End of session: remove the tap, stop the
       engine, finish the continuation, `finalizeAndFinishThroughEndOfInput()`,
       then await the consumer.
-- [ ] `modules/turn-listen/src/index.ts` grows the port's functions and a
+- [x] `modules/turn-listen/src/index.ts` grows the port's functions and a
       listener registration beside today's `findNames` and `setGazetteer`,
       keeping `requireOptionalNativeModule`, so the Simulator's null path
       holds and `turnListen` stays nullable.
-- [ ] `native-engine.ts` wraps it into the port, or returns `null` when the
+- [x] `native-engine.ts` wraps it into the port, or returns `null` when the
       module is absent, so `app/src/turn-context.tsx` keeps its name tagging.
 - [ ] Confirm the podspec's deployment target and that the module's Swift
       compiles in CI; the Swift is never compiled on Linux.

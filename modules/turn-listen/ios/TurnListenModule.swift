@@ -6,8 +6,84 @@ public class TurnListenModule: Module {
   private let gazetteerLock = NSLock()
   private var gazetteer: NLGazetteer?
 
+  @available(iOS 26.0, *)
+  @MainActor
+  private lazy var listenEngine = ListenEngine(
+    onPartial: { [weak self] text in
+      self?.sendEvent("onPartial", ["text": text])
+    },
+    onLine: { [weak self] text, endedAt, silenceWindowMs in
+      self?.sendEvent("onLine", [
+        "text": text,
+        "endedAt": endedAt,
+        "silenceWindowMs": silenceWindowMs
+      ])
+    },
+    onState: { [weak self] state, reason in
+      var payload: [String: Any] = ["state": state]
+      if let reason {
+        payload["reason"] = reason
+      }
+      self?.sendEvent("onState", payload)
+    },
+    onAssetProgress: { [weak self] fraction in
+      var payload: [String: Any] = [:]
+      if let fraction {
+        payload["fraction"] = fraction
+      } else {
+        payload["fraction"] = NSNull()
+      }
+      self?.sendEvent("onAssetProgress", payload)
+    },
+    onVoice: { [weak self] active in
+      self?.sendEvent("onVoice", ["active": active])
+    }
+  )
+
   public func definition() -> ModuleDefinition {
     Name("TurnListen")
+
+    Events("onPartial", "onLine", "onState", "onAssetProgress", "onVoice")
+
+    AsyncFunction("availability") { () async -> String in
+      guard #available(iOS 26.0, *) else { return "none" }
+      return await self.listenEngine.availability()
+    }
+
+    AsyncFunction("installAsset") { () async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.installAsset()
+    }
+
+    AsyncFunction("start") { () async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.start()
+    }
+
+    AsyncFunction("pause") { () async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.pause()
+    }
+
+    AsyncFunction("resume") { () async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.resume()
+    }
+
+    AsyncFunction("stop") { () async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.stop()
+    }
+
+    AsyncFunction("endLine") { () async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.endLine()
+    }
+
+    AsyncFunction("muteForSpeech") { (muted: Bool) async throws in
+      guard #available(iOS 26.0, *) else { return }
+      try await self.listenEngine.muteForSpeech(muted)
+    }
 
     AsyncFunction("findNames") { (texts: [String]) -> [[[String: Any]]] in
       let tagger = NLTagger(tagSchemes: [.nameType])
