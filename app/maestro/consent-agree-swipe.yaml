@@ -1,5 +1,5 @@
 appId: com.m1ku.turn
-name: Typed Listen
+name: Consent agree and edge swipe
 ---
 - launchApp:
     clearState: true
@@ -13,14 +13,12 @@ name: Typed Listen
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000
-- takeScreenshot: listen-permission-step
 - scrollUntilVisible:
     element: Allow
 - tapOn: Allow
 - extendedWaitUntil:
     visible: Can my phone listen while we talk\?
     timeout: 10000
-- takeScreenshot: listen-consent-card
 - scrollUntilVisible:
     element: They agreed
 - tapOn: They agreed
@@ -28,19 +26,18 @@ name: Typed Listen
     visible: Mic off
     timeout: 10000
 - scrollUntilVisible:
-    element: 'Tap here to type what they say\.'
-- tapOn: 'Tap here to type what they say\.'
-- inputText: 'Are you tired?'
+    element: Chat
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: 'Hi, how are you\?'
+    timeout: 10000
+- takeScreenshot: consent-agree-swipe-chat
+- swipe:
+    start: '1%, 50%'
+    end: '80%, 50%'
+- waitForAnimationToEnd
 - scrollUntilVisible:
-    element: Send
-- tapOn: Send
-- scrollUntilVisible:
-    element: 'Are you tired\?'
-- assertVisible: 'Are you tired\?'
-- scrollUntilVisible:
-    element: "I'm tired"
-- takeScreenshot: listen-reply-row
-- scrollUntilVisible:
-    element: End
-- tapOn: End
-- assertVisible: '^Listen$'
+    element: 'Hi, how are you\?'
+- assertVisible: 'Hi, how are you\?'
+- assertVisible: Mic off
+- takeScreenshot: consent-agree-swipe-stays-home
