@@ -1,6 +1,8 @@
 import { describe, expect, test, vi } from 'vitest'
 import { pickEngine, pickListenEngine } from '../src/listen/engine-picker'
 import type { AssetStatus, EngineChoice, ListenEngine } from '../src/listen/engine'
+import Constants from 'expo-constants'
+import appConfig from '../app.config'
 
 vi.mock('expo-constants', () => ({
   default: { expoConfig: { extra: { buildKind: 'device', listenEngine: 'expo' } } }
@@ -96,5 +98,27 @@ describe('listen engine picker', () => {
 
     await expect(pickListenEngine(() => apple, expo)).resolves.toBe(expo)
     expect(apple.availability).not.toHaveBeenCalled()
+  })
+
+  test('the app config routes a Simulator build through the typed picker path', async () => {
+    const constants = Constants as unknown as { expoConfig: { extra: unknown } }
+    const previousExtra = constants.expoConfig.extra
+    vi.stubEnv('EXPO_PUBLIC_BUILD_KIND', 'simulator')
+    try {
+      const config = appConfig({ config: {} } as never)
+      expect(config.extra?.buildKind).toBe('simulator')
+      expect(config.extra?.listenEngine).toBe('auto')
+      constants.expoConfig.extra = config.extra
+
+      const turnListen = vi.fn(() => engine('turn-listen', 'installed'))
+      const expo = engine('expo-speech-recognition', 'installed')
+
+      await expect(pickListenEngine(turnListen, expo)).resolves.toBeNull()
+      expect(turnListen).not.toHaveBeenCalled()
+      expect(expo.availability).not.toHaveBeenCalled()
+    } finally {
+      constants.expoConfig.extra = previousExtra
+      vi.unstubAllEnvs()
+    }
   })
 })

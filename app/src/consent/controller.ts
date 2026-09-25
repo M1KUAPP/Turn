@@ -135,6 +135,10 @@ export function createConsentController(ports: ConsentPorts) {
         ports.navigate('/permission')
         return
       }
+      if (state.under18) {
+        ports.navigate('/')
+        return
+      }
       await ports.listen.start()
       ports.navigate('/')
     },
@@ -148,6 +152,7 @@ export function createConsentController(ports: ConsentPorts) {
     async setUnder18(on: boolean): Promise<void> {
       await ports.setSetting(under18Key, String(on))
       publish({ under18: on })
+      if (on) await ports.listen.end()
     },
     async withdraw(): Promise<void> {
       await ports.setSetting(permissionKey, null)
