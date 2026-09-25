@@ -30,6 +30,64 @@ type Props = {
   boldText: boolean
 }
 
+function CaptionWords({ text, boldText, measure }: { text: string; boldText: boolean; measure: boolean }) {
+  const [tail, setTail] = useState<{ text: string; first: string; second: string } | null>(null)
+  const visibleTail = tail?.text === text ? tail : null
+
+  return (
+    <View>
+      {visibleTail ? (
+        <>
+          <TurnText
+            kind="title3"
+            boldText={boldText}
+            numberOfLines={1}
+            ellipsizeMode="head"
+            style={{ color: colors.ink }}
+          >
+            …{visibleTail.first}
+          </TurnText>
+          <TurnText kind="title3" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+            {visibleTail.second}
+          </TurnText>
+        </>
+      ) : (
+        <TurnText kind="title3" boldText={boldText} numberOfLines={2} style={{ color: colors.ink }}>
+          {text}
+        </TurnText>
+      )}
+      {measure && (
+        <View
+          pointerEvents="none"
+          importantForAccessibility="no-hide-descendants"
+          style={{ position: 'absolute', left: 0, right: 0, top: 0, opacity: 0 }}
+        >
+          <TurnText
+            kind="title3"
+            boldText={boldText}
+            onTextLayout={({ nativeEvent }) => {
+              const lines = nativeEvent.lines
+              if (lines.length <= 2) {
+                setTail(null)
+                return
+              }
+              const first = lines[lines.length - 2].text.trim()
+              const second = lines[lines.length - 1].text.trim()
+              setTail((previous) =>
+                previous?.text === text && previous.first === first && previous.second === second
+                  ? previous
+                  : { text, first, second }
+              )
+            }}
+          >
+            {text}
+          </TurnText>
+        </View>
+      )}
+    </View>
+  )
+}
+
 export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const router = useRouter()
   const [categories, setCategories] = useState<Category[]>([])
@@ -340,9 +398,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                     : 'Mic off · Typed lines only'
                 : 'Caption'}
             </TurnText>
-            <TurnText kind="title3" boldText={boldText} numberOfLines={2} style={{ color: colors.ink }}>
-              {listening.active ? (listening.line ?? 'Tap here to type what they say.') : 'Listen mode is off.'}
-            </TurnText>
+            <CaptionWords
+              text={listening.active ? (listening.line ?? 'Tap here to type what they say.') : 'Listen mode is off.'}
+              boldText={boldText}
+              measure={Boolean(listening.active && listening.line)}
+            />
           </Pressable>
           {listening.active && listening.row.answers > 0 && (
             <Pressable

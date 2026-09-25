@@ -42,7 +42,8 @@
 - [x] Build and launch the app in the iOS 27 Simulator; inspect the home screen screenshot for startup errors.
 - [x] In Device Hub, check fixed replies, shared-word ranking, a held row, a newly saved phrase, a tap count that stays unchanged while untouched and rises after a tap, Clear, End, stable grid position, and a two-line ellipsis with the full accessibility label.
 - [x] Fix the long phrase's over-shrinking and keep the composer open when a hardware keyboard is connected; rebuild and inspect both in the Simulator.
-- [ ] Verify the Reduce Motion row transition frame by frame. The setting was enabled and the row updated, but Simulator video capture produced an empty file.
+- [x] Show the newest two lines of a long partner caption with a leading ellipsis; inspect a 363-character line in the Simulator and confirm its full accessibility label.
+- [x] Verify the Reduce Motion row transition. The setting was enabled in Device Hub, the row updated, and the user confirmed the change appeared without a fade.
 - [ ] Run the physical iPhone VoiceOver announcement check.
 - [x] Run `rtk graphify update .` and format the generated graph files.
 - [x] Push the branch and open [PR #109](https://github.com/RevenueCat-M1KU/RevenueCat/pull/109), now targeting `main`.
