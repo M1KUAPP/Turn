@@ -1,0 +1,65 @@
+appId: com.m1ku.turn
+name: Consent withdrawal during Listen
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- extendedWaitUntil:
+    visible: 'Can my phone listen while we talk\?'
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible: End
+- takeScreenshot: consent-withdraw-listen-active
+- tapOn: Settings
+- extendedWaitUntil:
+    visible: Voice
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}'
+- assertVisible: 'Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}'
+- scrollUntilVisible:
+    element: Withdraw
+- assertVisible: Withdraw
+- takeScreenshot: consent-withdraw-allowed
+- tapOn: Withdraw
+- extendedWaitUntil:
+    visible: Not allowed
+    timeout: 10000
+- assertVisible: Allow
+- scrollUntilVisible:
+    element: 'Listen mode is off, and nothing more leaves this phone until you allow it again\.'
+- assertVisible: 'Listen mode is off, and nothing more leaves this phone until you allow it again\.'
+- takeScreenshot: consent-withdraw-settings-note
+- swipe:
+    start: '1%, 50%'
+    end: '80%, 50%'
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: '^Listen$'
+    timeout: 10000
+- assertVisible: '^Listen$'
+- assertNotVisible: Mic off
+- assertNotVisible: End
+- scrollUntilVisible:
+    element: 'Listen mode is off\.'
+- assertVisible: 'Listen mode is off\.'
+- takeScreenshot: consent-withdraw-home
