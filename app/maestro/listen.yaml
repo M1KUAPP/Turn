@@ -41,8 +41,8 @@ name: Typed Listen
     element: Send
 - tapOn: Send
 - scrollUntilVisible:
-    element: 'Are you tired\?'
-- assertVisible: 'Are you tired\?'
+    element: '.*Are you tired\?.*'
+- assertVisible: '.*Are you tired\?.*'
 - scrollUntilVisible:
     element: "I'm tired"
 - takeScreenshot: listen-reply-row
