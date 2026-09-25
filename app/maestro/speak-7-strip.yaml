@@ -7,6 +7,9 @@ name: Conversation strip rewording
     visible: Listen
     timeout: 30000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
@@ -17,25 +20,30 @@ name: Conversation strip rewording
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
-    element: Phrases always visible above the grid
+    element: '.*Phrases always visible above the grid.*'
     direction: DOWN
-    speed: 10
-- tapOn: Phrases always visible above the grid
+    speed: 40
+    timeout: 40000
+- tapOn: '.*Phrases always visible above the grid.*'
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: ".*Wait, I'm typing.*"
+    direction: DOWN
 - extendedWaitUntil:
-    visible: Wait, I'm typing
+    visible: ".*Wait, I'm typing.*"
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
-    element: Wait, I'm typing
+    element: ".*Wait, I'm typing.*"
     direction: DOWN
     speed: 10
-- assertVisible: Wait, I'm typing
+- assertVisible: ".*Wait, I'm typing.*"
 - assertNotVisible: Delete
 - takeScreenshot: speak-7-strip-phrase-list
 - scrollUntilVisible:
-    element: Wait, I'm typing
+    element: ".*Wait, I'm typing.*"
     direction: DOWN
-- tapOn: Wait, I'm typing
+- tapOn: ".*Wait, I'm typing.*"
 - extendedWaitUntil:
     visible: Edit phrase
     timeout: 10000
@@ -49,32 +57,40 @@ name: Conversation strip rewording
     text: Phrase
     below: Phrase
 - takeScreenshot: speak-7-strip-edit-form
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
 - tapOn:
     text: Phrase
     below: Phrase
 - eraseText: 30
 - inputText: Wait, I'm ready
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
-    element: Wait, I'm ready
+    element: ".*Wait, I'm ready.*"
     direction: DOWN
     speed: 10
 - extendedWaitUntil:
-    visible: Wait, I'm ready
+    visible: ".*Wait, I'm ready.*"
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: Wait, I'm ready
-      above: Sorry, say that again
+      text: ".*Wait, I'm ready.*"
+      above: '.*Sorry, say that again.*'
     direction: DOWN
     speed: 10
 - assertVisible:
-    text: Wait, I'm ready
-    above: Sorry, say that again
+    text: ".*Wait, I'm ready.*"
+    above: '.*Sorry, say that again.*'
 - scrollUntilVisible:
-    element: 'And you\?'
+    element: '.*And you\?.*'
     direction: DOWN
     speed: 10
-- assertVisible: 'And you\?'
+- assertVisible: '.*And you\?.*'
 - takeScreenshot: speak-7-strip-reworded-in-place

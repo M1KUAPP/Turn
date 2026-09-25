@@ -7,6 +7,9 @@ name: Phrase bank character limit
     visible: Listen
     timeout: 30000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
@@ -26,6 +29,9 @@ name: Phrase bank character limit
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
+    element: Edit
+    direction: UP
+- scrollUntilVisible:
     element: Add phrase
     direction: DOWN
     speed: 10
@@ -40,23 +46,44 @@ name: Phrase bank character limit
     text: Phrase
     below: Phrase
 - takeScreenshot: bank-3-character-limit-form
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
 - tapOn:
     text: Phrase
     below: Phrase
 - inputText: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - scrollUntilVisible:
-    element: 0 characters left
+    element: '0 characters left'
     direction: DOWN
 - scrollUntilVisible:
+    visibilityPercentage: 50
+    centerElement: true
     element: '^x{200}$'
     direction: DOWN
     speed: 10
-- assertVisible: 0 characters left
+- scrollUntilVisible:
+    element: '0 characters left'
+    direction: DOWN
+- assertVisible: '0 characters left'
+- scrollUntilVisible:
+    visibilityPercentage: 50
+    centerElement: true
+    element: '^x{200}$'
+    direction: DOWN
+    speed: 10
 - assertVisible: '^x{200}$'
 - assertNotVisible: '^x{201}$'
 - takeScreenshot: bank-3-character-limit-boundary
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
+    visibilityPercentage: 50
+    centerElement: true
     element: '^x{200}$'
     direction: DOWN
     speed: 10

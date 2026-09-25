@@ -33,6 +33,7 @@ name: Consent agree and edge swipe
     timeout: 10000
 - scrollUntilVisible:
     element: Chat
+    centerElement: true
 - tapOn: Chat
 - scrollUntilVisible:
     element: 'Hi, how are you\?'
