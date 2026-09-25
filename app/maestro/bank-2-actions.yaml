@@ -1,0 +1,246 @@
+appId: com.m1ku.turn
+name: Phrase bank actions and category limit
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Type
+- tapOn: Type
+- extendedWaitUntil:
+    visible: Type what to say
+    timeout: 10000
+- waitForAnimationToEnd
+- inputText: Maestro limit marker
+- hideKeyboard
+- tapOn: Speak
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Typed
+- assertVisible: Typed
+- takeScreenshot: bank-2-actions-categories
+- scrollUntilVisible:
+    element: Add category
+- tapOn: Add category
+- extendedWaitUntil:
+    visible: Category name
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: bank-2-actions-add-category-form
+- tapOn: Category name
+- inputText: Automation
+- tapOn: Save
+- scrollUntilVisible:
+    element: Automation
+- scrollUntilVisible:
+    element: 'You can have up to 12 categories\.'
+- extendedWaitUntil:
+    visible: 'You can have up to 12 categories\.'
+    timeout: 10000
+- assertVisible:
+    text: Add category
+    enabled: false
+- assertNotVisible:
+    text: Add category
+    enabled: true
+- takeScreenshot: bank-2-actions-limit-at-12
+- scrollUntilVisible:
+    element:
+      text: Rename
+      below: Automation
+      above: Conversation strip
+    direction: UP
+- tapOn:
+    text: Rename
+    below: Automation
+    above: Conversation strip
+- extendedWaitUntil:
+    visible: Rename category
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: bank-2-actions-rename-category-form
+- tapOn: Automation
+- eraseText: 40
+- inputText: Flow category
+- tapOn: Save
+- scrollUntilVisible:
+    element:
+      text: Move up
+      below: Flow category
+      above: Conversation strip
+- tapOn:
+    text: Move up
+    below: Flow category
+    above: Conversation strip
+- assertVisible:
+    text: Flow category
+    above: Out and about
+- scrollUntilVisible:
+    element:
+      text: Move down
+      below: Flow category
+      above: Out and about
+- tapOn:
+    text: Move down
+    below: Flow category
+    above: Out and about
+- assertVisible:
+    text: Out and about
+    above: Flow category
+- takeScreenshot: bank-2-actions-category-order
+- tapOn: Flow category
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-2-actions-phrase-list
+- scrollUntilVisible:
+    element: Add phrase
+- tapOn: Add phrase
+- extendedWaitUntil:
+    visible: Phrase text
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: bank-2-actions-add-phrase-form
+- tapOn: Phrase text
+- inputText: Flow phrase
+- hideKeyboard
+- scrollUntilVisible:
+    element: Home
+- tapOn: Home
+- scrollUntilVisible:
+    element: Clinic
+- tapOn: Clinic
+- tapOn: Save
+- extendedWaitUntil:
+    visible: Flow phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Home
+    below: Flow phrase
+- assertVisible:
+    text: Clinic
+    below: Flow phrase
+- takeScreenshot: bank-2-actions-phrase-added
+- tapOn: Phrase bank
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Delete
+      below: Flow category
+      above: Conversation strip
+- tapOn:
+    text: Delete
+    below: Flow category
+    above: Conversation strip
+- extendedWaitUntil:
+    visible: 'Choose where its phrases will go\.'
+    timeout: 10000
+- takeScreenshot: bank-2-actions-delete-category-destination
+- tapOn:
+    text: Chat
+    below: 'Choose where its phrases will go\.'
+- waitForAnimationToEnd
+- assertNotVisible: Flow category
+- scrollUntilVisible:
+    element: Chat
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- scrollUntilVisible:
+    element: Flow phrase
+- extendedWaitUntil:
+    visible: Flow phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Home
+    below: Flow phrase
+- assertVisible:
+    text: Clinic
+    below: Flow phrase
+- takeScreenshot: bank-2-actions-phrase-moved-with-category
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: Flow phrase
+      above: Add phrase
+- tapOn:
+    text: Edit
+    below: Flow phrase
+    above: Add phrase
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- hideKeyboard
+- takeScreenshot: bank-2-actions-edit-phrase-form
+- tapOn: Flow phrase
+- eraseText: 30
+- inputText: Moved phrase
+- hideKeyboard
+- scrollUntilVisible:
+    element: Quick
+    direction: LEFT
+- tapOn: Quick
+- scrollUntilVisible:
+    element: Clinic
+- tapOn: Clinic
+- scrollUntilVisible:
+    element: Shop
+- tapOn: Shop
+- tapOn: Save
+- extendedWaitUntil:
+    notVisible: Flow phrase
+    timeout: 10000
+- tapOn: Phrase bank
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Quick
+- tapOn: Quick
+- scrollUntilVisible:
+    element: Moved phrase
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- extendedWaitUntil:
+    visible: Moved phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Home
+    below: Moved phrase
+- assertVisible:
+    text: Shop
+    below: Moved phrase
+- takeScreenshot: bank-2-actions-edited-phrase-in-quick

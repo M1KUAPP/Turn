@@ -1,0 +1,56 @@
+appId: com.m1ku.turn
+name: Phrase bank protected items
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Body and pain
+    centerElement: true
+- assertNotVisible:
+    text: Delete
+    below: Body and pain
+    above: Food and drink
+- takeScreenshot: bank-5-fixed-protected-category
+- scrollUntilVisible:
+    element: Quick
+    direction: UP
+- tapOn: Quick
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Edit
+- scrollUntilVisible:
+    element: Yes
+    centerElement: true
+- assertNotVisible:
+    text: Delete
+    below: Yes
+    above: No
+- scrollUntilVisible:
+    element: No
+    centerElement: true
+- assertNotVisible:
+    text: Delete
+    below: No
+    above: Not sure
+- scrollUntilVisible:
+    element: Not sure
+    centerElement: true
+- assertNotVisible:
+    text: Delete
+    below: Not sure
+    above: "I don't know"
+- takeScreenshot: bank-5-fixed-protected-phrases
