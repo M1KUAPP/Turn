@@ -10,6 +10,7 @@ name: Phrase bank reorder controls
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
+    direction: DOWN
 - tapOn: Phrase bank
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
@@ -20,11 +21,17 @@ name: Phrase bank reorder controls
       text: Move down
       below: Care and help
       above: Body and pain
+    direction: DOWN
 - takeScreenshot: a11y-8-reorder-category-controls
 - tapOn:
     text: Move down
     below: Care and help
     above: Body and pain
+- scrollUntilVisible:
+    element:
+      text: Body and pain
+      above: Care and help
+    direction: DOWN
 - assertVisible:
     text: Body and pain
     above: Care and help
@@ -34,10 +41,16 @@ name: Phrase bank reorder controls
       text: Move up
       below: Care and help
       above: Food and drink
+    direction: DOWN
 - tapOn:
     text: Move up
     below: Care and help
     above: Food and drink
+- scrollUntilVisible:
+    element:
+      text: Care and help
+      above: Body and pain
+    direction: DOWN
 - assertVisible:
     text: Care and help
     above: Body and pain
@@ -55,10 +68,16 @@ name: Phrase bank reorder controls
       text: Move down
       below: "I don't know"
       above: I have something to say
+    direction: DOWN
 - tapOn:
     text: Move down
     below: "I don't know"
     above: I have something to say
+- scrollUntilVisible:
+    element:
+      text: I have something to say
+      above: "I don't know"
+    direction: DOWN
 - assertVisible:
     text: I have something to say
     above: "I don't know"
@@ -68,10 +87,16 @@ name: Phrase bank reorder controls
       text: Move up
       below: "I don't know"
       above: Add phrase
+    direction: DOWN
 - tapOn:
     text: Move up
     below: "I don't know"
     above: Add phrase
+- scrollUntilVisible:
+    element:
+      text: "I don't know"
+      above: I have something to say
+    direction: UP
 - assertVisible:
     text: "I don't know"
     above: I have something to say

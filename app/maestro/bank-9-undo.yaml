@@ -10,6 +10,7 @@ name: Phrase bank undo after one minute
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
+    direction: DOWN
 - tapOn: Phrase bank
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
@@ -17,6 +18,7 @@ name: Phrase bank undo after one minute
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Chat
+    direction: DOWN
 - tapOn: Chat
 - extendedWaitUntil:
     visible: Edit
@@ -28,6 +30,7 @@ name: Phrase bank undo after one minute
       text: Delete
       below: 'Hi, how are you\?'
       above: "I'm good, thanks"
+    direction: DOWN
 - tapOn:
     text: Delete
     below: 'Hi, how are you\?'

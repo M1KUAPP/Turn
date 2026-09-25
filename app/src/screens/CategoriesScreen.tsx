@@ -233,6 +233,8 @@ export default function CategoriesScreen() {
           </TurnText>
           <Pressable
             accessibilityRole="button"
+            accessibilityLabel="Conversation strip"
+            accessibilityValue={{ text: 'Phrases always visible above the grid' }}
             accessibilityHint="Opens its phrases."
             onPress={() => router.push('/bank/strip')}
             style={({ pressed }) => ({

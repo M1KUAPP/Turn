@@ -10,6 +10,7 @@ name: Phrase bank character limit
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
+    direction: DOWN
 - tapOn: Phrase bank
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
@@ -17,6 +18,7 @@ name: Phrase bank character limit
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Quick
+    direction: UP
 - tapOn: Quick
 - extendedWaitUntil:
     visible: Edit
@@ -24,17 +26,28 @@ name: Phrase bank character limit
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Add phrase
+    direction: DOWN
 - tapOn: Add phrase
-- extendedWaitUntil:
-    visible: Phrase text
-    timeout: 10000
 - waitForAnimationToEnd
-- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
 - takeScreenshot: bank-3-character-limit-form
-- tapOn: Phrase text
+- tapOn:
+    text: Phrase
+    below: Phrase
 - inputText: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - scrollUntilVisible:
     element: 0 characters left
+    direction: DOWN
+- scrollUntilVisible:
+    element: '^x{200}$'
+    direction: DOWN
 - assertVisible: 0 characters left
 - assertVisible: '^x{200}$'
 - assertNotVisible: '^x{201}$'
@@ -42,6 +55,7 @@ name: Phrase bank character limit
 - tapOn: Save
 - scrollUntilVisible:
     element: '^x{200}$'
+    direction: DOWN
 - extendedWaitUntil:
     visible: '^x{200}$'
     timeout: 10000
