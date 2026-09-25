@@ -66,7 +66,10 @@ chosen once, at Listen mode's start, by `extra.buildKind` and
   confirmed with `getSupportedLocales({})` and an `error` from an on-device
   start fails closed; it never auto-rotates its single task, so a line is
   `stop()`ed, its final `result` taken, `end` awaited, and the next line
-  started, with a long line capped; and `speechend` is unsupported on iOS, so
+  started, with a long line capped; on iOS 18 and later it marks a result
+  final at each pause, many times in one task, each holding only its new
+  segment, so the engine joins a task's segments and sends the line once, at
+  `end`; and `speechend` is unsupported on iOS, so
   the 0.5-second rule is Turn's own timer over `onVoice`, not an engine event.
 - **The line ends (LISTEN-2, PERF-1, PERF-5).** `SILENCE_WINDOW_MS = 500` is
   exported from `live-session.ts` for #55. Neither engine reports an
@@ -248,7 +251,8 @@ export type EnginePicker = (input: {
       options in the Rules, including `.default` mode; it asks
       `isRecognitionAvailable()` and `supportsOnDeviceRecognition()` and
       confirms `en-US` in `getSupportedLocales({})`; it reports `onPartial`
-      from a non-final `result` and one `onLine` from the final one; it
+      from every `result` with the task's words so far, and one `onLine`
+      per task, at its `end`; it
       `stop()`s at a line end, waits for `end`, then starts the next line, so
       no task runs past a minute; it reports `onAssetProgress` never; and an
       `error` from an on-device start maps to `onState` `unavailable` with a
