@@ -113,6 +113,9 @@ describe('relay configuration client', () => {
     const client = createConfigClient(ports)
 
     expect(await client.refresh()).toEqual(remoteConfig)
+    expect(client.status()).toBe('working')
+    client.lineResult('unreachable')
+    expect(client.status()).toBe('unreachable')
     expect(await ports.setting('relay_config')).toBe(JSON.stringify(remoteConfig))
     expect(await createConfigClient(clientPorts(db, { storage })).read()).toEqual(remoteConfig)
     expect(client.typesafeNamed()).toBe(true)
@@ -165,12 +168,24 @@ describe('relay configuration client', () => {
     const client = createConfigClient(clientPorts(db, { storage, request }))
 
     await client.refresh()
+    expect(client.status()).toBe('working')
     response = async () => Response.json({ ...remoteConfig, policy: { floor: 0.1 } })
     expect(await client.refresh()).toEqual(remoteConfig)
+    expect(client.status()).toBe('unreachable')
     response = async () => Promise.reject(new Error('offline'))
     expect(await client.refresh()).toEqual(remoteConfig)
     expect(await client.read()).toEqual(remoteConfig)
     expect(client.typesafeNamed()).toBe(true)
+  })
+
+  test('shows the relay as off when its current configuration turns Jev off', async () => {
+    const db = database()
+    const client = createConfigClient(
+      clientPorts(db, { request: async () => Response.json({ ...remoteConfig, jevOn: false }) })
+    )
+    await client.refresh()
+    expect(client.status()).toBe('off')
+    expect(client.snapshot().jevOn).toBe(false)
   })
 
   test('stays unnamed without a cached config after a three-second timeout', async () => {

@@ -92,7 +92,10 @@ export function createLiveListenSession(options: {
   const caption = (): LiveCaption => ({
     label: captionLabel,
     words: captionWords,
-    note: captionNote,
+    note:
+      typedState.degraded && !captionNote?.startsWith(listenStrings.degraded)
+        ? `${listenStrings.degraded}${captionNote ? ` · ${captionNote}` : ''}`
+        : captionNote,
     prompt: captionPrompt,
     accessibilityLabel: captionWords || captionLabel
   })
