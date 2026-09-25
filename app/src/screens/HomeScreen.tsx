@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   ScrollView,
+  StyleSheet,
   useWindowDimensions,
   View
 } from 'react-native'
@@ -115,6 +116,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const captionHeight = Math.max(layout.short ? 56 : 86, 24 + 70 * fontScale)
   const twoControlRows = width < 352 || fontScale >= 1.786
   const oneControlColumn = fontScale >= 2.5
+  // SF Symbols grow with the words beside them, as they do in iOS's own labels.
+  const symbolSize = (base: number) => Math.round(base * Math.min(fontScale, 2.6))
+  const [barWidths, setBarWidths] = useState<Record<string, number>>({})
+  const topBarHeight = useRef(0)
+  const rowTop = useRef(0)
   const speaking = useSyncExternalStore(speech.subscribe, speech.getSnapshot)
   const listening = useSyncExternalStore(listen.subscribe, listen.getSnapshot)
   const composerOpen = composerMode !== null
@@ -185,6 +191,10 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       unsubscribe()
     }
   }, [bank, composerMode, draft, selectedPlace?.id])
+
+  // With the keyboard up, the row comes first: its first slots, where matches land, stay in view.
+  const scrollToRow = () =>
+    composerContent.current?.scrollTo({ y: Math.max(0, topBarHeight.current + rowTop.current - 8), animated: false })
 
   const closeComposer = () => {
     Keyboard.dismiss()
@@ -289,6 +299,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           void speech.speak(phrase.text, phrase.id)
         }}
         style={({ pressed }) => ({
+          flexGrow: 1,
           minHeight: 48,
           justifyContent: 'center',
           borderWidth: 2,
@@ -301,7 +312,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         {phrase.id === 'somethings-wrong' && (
           <SymbolView
             name="exclamationmark.triangle"
-            size={16}
+            size={symbolSize(16)}
             tintColor={colors.ink}
             accessible={false}
             style={{
@@ -317,8 +328,8 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           style={{
             color: colors.ink,
             width: cardWidth - (phrase.id === 'somethings-wrong' && layout.stripColumns === 3 ? 12 : 20),
-            paddingTop: phrase.id === 'somethings-wrong' && layout.stripColumns === 3 ? 18 : 0,
-            paddingLeft: phrase.id === 'somethings-wrong' && layout.stripColumns === 1 ? 22 : 0
+            paddingTop: phrase.id === 'somethings-wrong' && layout.stripColumns === 3 ? symbolSize(16) + 2 : 0,
+            paddingLeft: phrase.id === 'somethings-wrong' && layout.stripColumns === 1 ? symbolSize(16) + 6 : 0
           }}
         >
           {phrase.text}
@@ -353,7 +364,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             height: captionHeight,
             marginHorizontal: 16,
             marginTop: 4,
-            marginBottom: 4,
+            marginBottom: 8,
             padding: 12,
             borderRadius: 12,
             borderWidth: 2,
@@ -371,25 +382,31 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             onPress={() => setComposerMode('partner')}
             style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
           >
-            <TurnText
-              kind="subheadline"
-              boldText={boldText}
-              numberOfLines={1}
-              style={{ color: colors['ink-secondary'] }}
-            >
-              {listening.active
-                ? listening.answeringLine
-                  ? `Still answering: ${listening.answeringLine}`
-                  : listening.line
-                    ? `They said${listening.rankedOnPhone ? ' · Ranked on this phone' : ''}`
-                    : 'Mic off · Typed lines only'
-                : 'Caption'}
-            </TurnText>
-            <CaptionWords
-              text={listening.active ? (listening.line ?? 'Tap here to type what they say.') : 'Listen mode is off.'}
-              boldText={boldText}
-              measure={Boolean(listening.active && listening.line)}
-            />
+            {listening.active ? (
+              <>
+                <TurnText
+                  kind="subheadline"
+                  boldText={boldText}
+                  numberOfLines={1}
+                  style={{ color: colors['ink-secondary'] }}
+                >
+                  {listening.answeringLine
+                    ? `Still answering: ${listening.answeringLine}`
+                    : listening.line
+                      ? `They said${listening.rankedOnPhone ? ' · Ranked on this phone' : ''}`
+                      : 'Mic off · Typed lines only'}
+                </TurnText>
+                <CaptionWords
+                  text={listening.line ?? 'Tap here to type what they say.'}
+                  boldText={boldText}
+                  measure={Boolean(listening.line)}
+                />
+              </>
+            ) : (
+              <TurnText kind="title3" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                Listen mode is off.
+              </TurnText>
+            )}
           </Pressable>
           {listening.active && listening.row.answers > 0 && (
             <Pressable
@@ -405,8 +422,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           )}
         </View>
       )}
-      <View style={{ marginHorizontal: 16, marginBottom: 4 }}>{stripContent}</View>
-      <View style={{ marginBottom: 4 }}>
+      <View style={{ marginHorizontal: 16, marginBottom: 8 }}>{stripContent}</View>
+      <View
+        onLayout={(event) => {
+          rowTop.current = event.nativeEvent.layout.y
+        }}
+        style={{ marginBottom: 4 }}
+      >
         <ReplyRow
           layout={layout}
           width={width}
@@ -448,7 +470,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             horizontal
             showsHorizontalScrollIndicator
             style={{ flexGrow: 1, height: tabHeight + 8 }}
-            contentContainerStyle={{ paddingLeft: 16, paddingRight: 8, paddingVertical: 4, gap: 8 }}
+            contentContainerStyle={{ paddingLeft: 16, paddingRight: 12, paddingVertical: 4, gap: 8 }}
           >
             {categories.map((category) => {
               const selected = categoryId === category.id
@@ -480,6 +502,14 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               )
             })}
           </ScrollView>
+          <View
+            style={{
+              width: StyleSheet.hairlineWidth,
+              alignSelf: 'stretch',
+              marginVertical: 10,
+              backgroundColor: colors.edge
+            }}
+          />
           <Pressable
             accessibilityRole="button"
             accessibilityState={{ selected: categoryId === 'all' }}
@@ -489,6 +519,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               minWidth: 44,
               justifyContent: 'center',
               paddingHorizontal: 16,
+              marginLeft: 12,
               marginRight: 16,
               borderRadius: 22,
               borderWidth: categoryId === 'all' ? 0 : 2,
@@ -523,8 +554,33 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     { label: 'Down', icon: 'chevron.down', action: () => page(1), disabled: offset >= contentHeight - viewportHeight }
   ] as const
 
+  // The bar's four buttons share one row when their words fit, then two rows, then one column (DESIGN, the bottom bar).
+  const barIcon = symbolSize(18)
+  const barSpace = width - 32
+  const barMeasures = [
+    { label: 'Type', icon: 'keyboard' },
+    { label: 'Repeat', icon: 'arrow.counterclockwise' },
+    { label: 'Up', icon: 'chevron.up' },
+    { label: 'Down', icon: 'chevron.down' }
+  ] as const
+  const natural = barMeasures.map(({ label }) => barWidths[label] ?? 0)
+  const barLayout: 'row' | 'grid' | 'column' = natural.some((measured) => measured === 0)
+    ? oneControlColumn
+      ? 'column'
+      : twoControlRows
+        ? 'grid'
+        : 'row'
+    : natural.reduce((sum, measured) => sum + measured, 0) + 8 * 3 <= barSpace
+      ? 'row'
+      : Math.max(...natural) <= (barSpace - 8) / 2
+        ? 'grid'
+        : 'column'
+
   const topBar = (
     <View
+      onLayout={(event) => {
+        topBarHeight.current = event.nativeEvent.layout.height
+      }}
       style={{
         minHeight: 52,
         flexDirection: 'row',
@@ -532,7 +588,9 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         alignItems: 'center',
         gap: 8,
         paddingHorizontal: 16,
-        paddingVertical: 4
+        paddingVertical: 4,
+        borderBottomWidth: layout.wholeMiddleScroll && !composerOpen ? StyleSheet.hairlineWidth : 0,
+        borderBottomColor: colors.edge
       }}
     >
       <Pressable
@@ -546,7 +604,12 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           justifyContent: 'center'
         }}
       >
-        <SymbolView name="gearshape" size={22} tintColor={colors.ink} accessible={false} />
+        <SymbolView
+          name="gearshape"
+          size={Math.round(22 * Math.min(fontScale, 1.6))}
+          tintColor={colors.ink}
+          accessible={false}
+        />
       </Pressable>
       <Pressable
         accessibilityRole="button"
@@ -567,7 +630,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
         })}
       >
-        <SymbolView name="mappin.and.ellipse" size={18} tintColor={colors.ink} accessible={false} />
+        <SymbolView name="mappin.and.ellipse" size={symbolSize(18)} tintColor={colors.ink} accessible={false} />
         <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
           {selectedPlace?.name ?? 'Place'}
         </TurnText>
@@ -588,10 +651,12 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           disabled={listening.active}
           onPress={() => listen.start()}
           style={({ pressed }) => ({
+            flex: oneControlColumn ? 1 : undefined,
             minHeight: oneControlColumn ? controlHeight : 44,
             minWidth: 44,
             flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'center',
             gap: 6,
             paddingHorizontal: 12,
             borderRadius: 22,
@@ -602,7 +667,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         >
           <SymbolView
             name={listening.active ? 'mic.slash' : 'ear'}
-            size={18}
+            size={symbolSize(18)}
             tintColor={listening.active ? colors['ink-secondary'] : colors.ink}
             accessible={false}
           />
@@ -655,8 +720,8 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             style={{ flex: 1 }}
             keyboardShouldPersistTaps="always"
             contentContainerStyle={{ paddingBottom: 16 }}
-            onLayout={() => composerContent.current?.scrollToEnd({ animated: false })}
-            onContentSizeChange={() => composerContent.current?.scrollToEnd({ animated: false })}
+            onLayout={scrollToRow}
+            onContentSizeChange={scrollToRow}
           >
             {topBar}
             {middleHeader}
@@ -674,7 +739,12 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               numColumns={layout.gridColumns}
               columnWrapperStyle={layout.gridColumns === 2 ? { gap: 12, alignItems: 'stretch' } : undefined}
               ListHeaderComponent={layout.wholeMiddleScroll ? middleHeader : null}
-              contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 16, gap: 12 }}
+              contentContainerStyle={{
+                paddingHorizontal: 16,
+                paddingTop: layout.wholeMiddleScroll ? 8 : 4,
+                paddingBottom: 16,
+                gap: 12
+              }}
               onScroll={(event) => setOffset(event.nativeEvent.contentOffset.y)}
               scrollEventThrottle={100}
               onLayout={(event) => setViewportHeight(event.nativeEvent.layout.height)}
@@ -710,14 +780,45 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             <View
               style={{
                 flexDirection: 'row',
-                flexWrap: twoControlRows ? 'wrap' : 'nowrap',
+                flexWrap: barLayout === 'row' ? 'nowrap' : 'wrap',
                 gap: 8,
                 paddingHorizontal: 16,
                 paddingVertical: 4,
-                borderTopWidth: 1,
+                borderTopWidth: StyleSheet.hairlineWidth,
                 borderTopColor: colors.edge
               }}
             >
+              {/* Measures each button at its natural width, so the bar picks one row, two, or four without cutting a label. */}
+              <View
+                pointerEvents="none"
+                accessibilityElementsHidden
+                importantForAccessibility="no-hide-descendants"
+                style={{ position: 'absolute', top: 0, left: 0, width: 4000, flexDirection: 'row', opacity: 0 }}
+              >
+                {barMeasures.map(({ label, icon }) => (
+                  <View
+                    key={label}
+                    onLayout={(event) => {
+                      const measured = Math.ceil(event.nativeEvent.layout.width)
+                      setBarWidths((current) =>
+                        current[label] === measured ? current : { ...current, [label]: measured }
+                      )
+                    }}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 4,
+                      paddingHorizontal: 10,
+                      borderWidth: 2
+                    }}
+                  >
+                    <SymbolView name={icon} size={barIcon} tintColor={colors.ink} accessible={false} />
+                    <TurnText kind="headline" boldText={boldText}>
+                      {label}
+                    </TurnText>
+                  </View>
+                ))}
+              </View>
               {bottomControls.map(({ label, icon, action, disabled }) => (
                 <Pressable
                   key={label}
@@ -727,10 +828,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                   disabled={disabled}
                   onPress={action}
                   style={({ pressed }) => ({
-                    flex: twoControlRows ? undefined : 1,
-                    width: oneControlColumn ? width - 32 : twoControlRows ? (width - 40) / 2 : undefined,
+                    flexGrow: barLayout === 'row' ? 1 : 0,
+                    width: barLayout === 'column' ? barSpace : barLayout === 'grid' ? (barSpace - 8) / 2 : undefined,
                     minHeight: controlHeight,
                     minWidth: 44,
+                    paddingHorizontal: 10,
                     borderRadius: 22,
                     borderWidth: 2,
                     borderColor: colors.edge,
@@ -742,7 +844,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                     <SymbolView
                       name={icon}
-                      size={18}
+                      size={barIcon}
                       tintColor={disabled ? colors['ink-secondary'] : colors.ink}
                       accessible={false}
                     />
