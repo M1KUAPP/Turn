@@ -118,22 +118,21 @@ export default function PhraseBankScreen() {
   useEffect(() => {
     navigation.setOptions({
       title: categoryName || (isStrip ? 'Conversation strip' : 'Phrases'),
-      headerRight: isStrip
+      // A native bar button, like the back button beside it: iOS keeps it at bar size and shows it in the Large
+      // Content Viewer at accessibility sizes, where a React view in the bar grew past the title.
+      unstable_headerRightItems: isStrip
         ? undefined
-        : () => (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={editMode ? 'Done' : 'Edit'}
-              onPress={() => setEditMode((prev) => !prev)}
-              style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'flex-end' }}
-            >
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.accent }}>
-                {editMode ? 'Done' : 'Edit'}
-              </TurnText>
-            </Pressable>
-          )
+        : () => [
+            {
+              type: 'button',
+              label: editMode ? 'Done' : 'Edit',
+              variant: editMode ? 'done' : 'plain',
+              tintColor: colors.accent,
+              onPress: () => setEditMode((prev) => !prev)
+            }
+          ]
     })
-  }, [navigation, categoryName, isStrip, editMode, boldText])
+  }, [navigation, categoryName, isStrip, editMode])
 
   const move = (id: string, direction: -1 | 1) => {
     if (!bank) return
