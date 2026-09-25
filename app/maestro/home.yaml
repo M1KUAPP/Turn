@@ -3,7 +3,13 @@ name: Home
 ---
 - launchApp:
     clearState: true
-- assertVisible: 'Yes'
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: home-first-view
+- scrollUntilVisible:
+    element: 'Yes'
 - takeScreenshot: home-grid
 - tapOn: Chat
 - assertVisible: 'Hi, how are you?'
