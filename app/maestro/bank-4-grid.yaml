@@ -19,6 +19,7 @@ name: Phrase bank grid updates
 - scrollUntilVisible:
     element: Chat
     direction: DOWN
+    speed: 10
 - tapOn: Chat
 - extendedWaitUntil:
     visible: Edit
@@ -31,6 +32,7 @@ name: Phrase bank grid updates
       below: 'Hi, how are you\?'
       above: "I'm good, thanks"
     direction: DOWN
+    speed: 10
 - tapOn:
     text: Edit
     below: 'Hi, how are you\?'
@@ -56,6 +58,7 @@ name: Phrase bank grid updates
 - scrollUntilVisible:
     element: My greeting
     direction: DOWN
+    speed: 10
 - extendedWaitUntil:
     visible: My greeting
     timeout: 10000
@@ -65,6 +68,7 @@ name: Phrase bank grid updates
       below: "I'm good, thanks"
       above: Good morning
     direction: DOWN
+    speed: 10
 - tapOn:
     text: Edit
     below: "I'm good, thanks"
@@ -90,6 +94,7 @@ name: Phrase bank grid updates
 - scrollUntilVisible:
     element: I'm doing well
     direction: DOWN
+    speed: 10
 - extendedWaitUntil:
     visible: I'm doing well
     timeout: 10000
@@ -99,6 +104,7 @@ name: Phrase bank grid updates
       text: My greeting
       above: I'm doing well
     direction: DOWN
+    speed: 10
 - assertVisible:
     text: My greeting
     above: I'm doing well
@@ -107,6 +113,7 @@ name: Phrase bank grid updates
       text: I'm doing well
       above: Good morning
     direction: DOWN
+    speed: 10
 - assertVisible:
     text: I'm doing well
     above: Good morning
@@ -133,9 +140,11 @@ name: Phrase bank grid updates
 - scrollUntilVisible:
     element: Chat
     direction: DOWN
+    speed: 10
 - scrollUntilVisible:
     element: Chat
     direction: RIGHT
+    speed: 10
 - tapOn: Chat
 - scrollUntilVisible:
     element: My greeting
