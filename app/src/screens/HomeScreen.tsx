@@ -617,15 +617,20 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           >
             {categories.map((category) => {
               const selected = categoryId === category.id
+              const suggested = listening.active && listening.row.tab === category.id
               return (
                 <Pressable
                   key={category.id}
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
+                  accessibilityValue={suggested ? { text: 'suggested' } : undefined}
                   onPress={() => chooseCategory(category.id)}
                   style={{
                     minHeight: tabHeight,
                     minWidth: 44,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 6,
                     justifyContent: 'center',
                     paddingHorizontal: 16,
                     borderRadius: 22,
@@ -637,10 +642,21 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                   <TurnText
                     kind="subheadline-emphasized"
                     boldText={boldText}
-                    style={{ color: selected ? colors.surface : colors.ink }}
+                    style={{ color: selected ? colors.surface : colors.ink, fontWeight: suggested ? '700' : '600' }}
                   >
                     {category.name}
                   </TurnText>
+                  {suggested && (
+                    <View
+                      accessible={false}
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: 3,
+                        backgroundColor: selected ? colors.surface : colors.ink
+                      }}
+                    />
+                  )}
                 </Pressable>
               )
             })}
