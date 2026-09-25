@@ -671,7 +671,9 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     { label: 'Down', icon: 'chevron.down', action: () => page(1), disabled: offset >= contentHeight - viewportHeight }
   ] as const
 
-  // The bar's four buttons share one row when their words fit, then two rows, then one column (DESIGN, the bottom bar).
+  // The bar's four buttons share one row when their words fit, and otherwise take two rows, Type and Repeat over Up
+  // and Down (DESIGN, the bottom bar). A pair splits only when its two words can't fit side by side, as Type and
+  // Repeat can't at AX5, so no label is cut and no row is spent on a button that fits beside its pair.
   // Measured with 6-point sides, the four fit one row at the default size on a 6.1-inch iPhone, and a row shares
   // what's left, so two rows never push Yes and No under the bar there.
   const barIcon = symbolSize(18)
@@ -683,17 +685,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     { label: 'Down', icon: 'chevron.down' }
   ] as const
   const natural = barMeasures.map(({ label }) => barWidths[label] ?? 0)
-  const barLayout: 'row' | 'grid' | 'column' = natural.some((measured) => measured === 0)
-    ? oneControlColumn
-      ? 'column'
-      : twoControlRows
-        ? 'grid'
-        : 'row'
+  const barLayout: 'row' | 'pairs' = natural.some((measured) => measured === 0)
+    ? twoControlRows
+      ? 'pairs'
+      : 'row'
     : natural.reduce((sum, measured) => sum + measured, 0) + 8 * 3 <= barSpace
       ? 'row'
-      : Math.max(...natural) <= (barSpace - 8) / 2
-        ? 'grid'
-        : 'column'
+      : 'pairs'
 
   const topBar = (
     <View
@@ -754,10 +752,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           {selectedPlace?.name ?? 'Place'}
         </TurnText>
       </Pressable>
-      {/* In one column, End takes its own row, so neither label is cut beside the other. */}
+      {/* From AX3 the controls fill their row and share it only when both words fit, so neither label is cut. */}
       <View
         style={{
-          flexDirection: oneControlColumn ? 'column' : 'row',
+          flexDirection: 'row',
+          flexWrap: oneControlColumn ? 'wrap' : 'nowrap',
           width: oneControlColumn ? width - 32 : undefined,
           gap: oneControlColumn ? 8 : 6,
           alignItems: oneControlColumn ? 'stretch' : 'center'
@@ -778,6 +777,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               .finally(() => setStartingListen(false))
           }}
           style={({ pressed }) => ({
+            flexGrow: oneControlColumn ? 1 : 0,
             minHeight: oneControlColumn ? controlHeight : 44,
             minWidth: 44,
             flexDirection: 'row',
@@ -817,6 +817,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               listen.end()
             }}
             style={({ pressed }) => ({
+              flexGrow: oneControlColumn ? 1 : 0,
               minHeight: oneControlColumn ? controlHeight : 44,
               minWidth: 52,
               paddingHorizontal: 12,
@@ -908,8 +909,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             />
             <View
               style={{
-                flexDirection: 'row',
-                flexWrap: barLayout === 'row' ? 'nowrap' : 'wrap',
+                flexDirection: barLayout === 'row' ? 'row' : 'column',
                 gap: 8,
                 paddingHorizontal: 16,
                 paddingVertical: 4,
@@ -948,45 +948,62 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                   </View>
                 ))}
               </View>
-              {bottomControls.map(({ label, icon, action, disabled }) => (
-                <Pressable
-                  key={label}
-                  accessibilityRole="button"
-                  accessibilityLabel={label}
-                  accessibilityState={{ disabled }}
-                  disabled={disabled}
-                  onPress={action}
-                  style={({ pressed }) => ({
-                    flexGrow: barLayout === 'row' ? 1 : 0,
-                    width: barLayout === 'column' ? barSpace : barLayout === 'grid' ? (barSpace - 8) / 2 : undefined,
-                    minHeight: controlHeight,
-                    minWidth: 44,
-                    paddingHorizontal: 6,
-                    borderRadius: 22,
-                    borderWidth: 2,
-                    borderColor: colors.edge,
-                    backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  })}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                    <SymbolView
-                      name={icon}
-                      size={barIcon}
-                      tintColor={disabled ? colors['ink-secondary'] : colors.ink}
-                      accessible={false}
-                    />
-                    <TurnText
-                      kind="headline"
-                      boldText={boldText}
-                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
-                    >
-                      {label}
-                    </TurnText>
+              {(barLayout === 'row' ? [bottomControls] : [bottomControls.slice(0, 2), bottomControls.slice(2)]).map(
+                (group) => (
+                  <View
+                    key={group[0].label}
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: barLayout === 'row' ? 'nowrap' : 'wrap',
+                      gap: 8,
+                      flexGrow: 1
+                    }}
+                  >
+                    {group.map(({ label, icon, action, disabled }) => (
+                      <Pressable
+                        key={label}
+                        accessibilityRole="button"
+                        accessibilityLabel={label}
+                        accessibilityState={{ disabled }}
+                        disabled={disabled}
+                        onPress={action}
+                        style={({ pressed }) => ({
+                          flexGrow: 1,
+                          minHeight: controlHeight,
+                          minWidth: 44,
+                          paddingHorizontal: 6,
+                          borderRadius: 22,
+                          borderWidth: 2,
+                          borderColor: colors.edge,
+                          backgroundColor: disabled
+                            ? colors.surface
+                            : pressed
+                              ? colors['surface-pressed']
+                              : colors.surface,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        })}
+                      >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                          <SymbolView
+                            name={icon}
+                            size={barIcon}
+                            tintColor={disabled ? colors['ink-secondary'] : colors.ink}
+                            accessible={false}
+                          />
+                          <TurnText
+                            kind="headline"
+                            boldText={boldText}
+                            style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
+                          >
+                            {label}
+                          </TurnText>
+                        </View>
+                      </Pressable>
+                    ))}
                   </View>
-                </Pressable>
-              ))}
+                )
+              )}
             </View>
           </>
         )}
