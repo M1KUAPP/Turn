@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { Alert, KeyboardAvoidingView, Modal, Pressable, ScrollView, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Place } from '../bank/store'
-import { colors, scaledTextStyle } from '../constants/theme'
+import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
 import TurnText from './TurnText'
 
 type Editor = { id: string | null; name: string }
 
 export default function PlacesScreen() {
-  const { ready, boldText, fontScale } = useTurn()
+  const { ready, boldText } = useTurn()
   const bank = ready?.bank
   const [places, setPlaces] = useState<Place[]>([])
   const [selected, setSelected] = useState<Place | null>(null)
@@ -113,7 +113,6 @@ export default function PlacesScreen() {
             >
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={`${place.name}${selected?.id === place.id ? ', current place' : ''}. Rename`}
                 accessibilityActions={actions}
                 onAccessibilityAction={(event) => {
                   if (event.nativeEvent.actionName === 'move-up') move(place.id, -1)
@@ -156,7 +155,6 @@ export default function PlacesScreen() {
                   <Pressable
                     key={label}
                     accessibilityRole="button"
-                    accessibilityLabel={`${label} ${place.name}`}
                     accessibilityState={{ disabled }}
                     disabled={disabled}
                     onPress={action}
@@ -169,11 +167,14 @@ export default function PlacesScreen() {
                       borderWidth: 2,
                       borderColor: colors.edge,
                       borderRadius: 22,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
-                      opacity: disabled ? 0.45 : 1
+                      backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                    <TurnText
+                      kind="subheadline-emphasized"
+                      boldText={boldText}
+                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
+                    >
                       {label}
                     </TurnText>
                   </Pressable>
@@ -183,7 +184,7 @@ export default function PlacesScreen() {
           )
         })}
         {error && !editor && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['no-edge'] }}>
+          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
           </TurnText>
         )}
@@ -199,13 +200,16 @@ export default function PlacesScreen() {
           style={({ pressed }) => ({
             minHeight: 52,
             borderRadius: 26,
-            backgroundColor: pressed ? colors['accent-pressed'] : colors.accent,
+            backgroundColor: places.length >= 12 ? colors.surface : pressed ? colors['accent-pressed'] : colors.accent,
             alignItems: 'center',
-            justifyContent: 'center',
-            opacity: places.length >= 12 ? 0.45 : 1
+            justifyContent: 'center'
           })}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ color: colors['on-accent'] }}>
+          <TurnText
+            kind="headline"
+            boldText={boldText}
+            style={{ color: places.length >= 12 ? colors['ink-secondary'] : colors['on-accent'] }}
+          >
             Add place
           </TurnText>
         </Pressable>
@@ -246,7 +250,7 @@ export default function PlacesScreen() {
               </TurnText>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="Save place"
+                accessibilityLabel="Save"
                 accessibilityState={{ disabled: !editor?.name.trim() || saving }}
                 disabled={!editor?.name.trim() || saving}
                 onPress={() => void save()}
@@ -254,11 +258,14 @@ export default function PlacesScreen() {
                   minWidth: 44,
                   minHeight: 44,
                   alignItems: 'flex-end',
-                  justifyContent: 'center',
-                  opacity: !editor?.name.trim() || saving ? 0.45 : 1
+                  justifyContent: 'center'
                 }}
               >
-                <TurnText kind="body" boldText={boldText} style={{ color: colors.accent }}>
+                <TurnText
+                  kind="body"
+                  boldText={boldText}
+                  style={{ color: !editor?.name.trim() || saving ? colors['ink-secondary'] : colors.accent }}
+                >
                   Save
                 </TurnText>
               </Pressable>
@@ -266,7 +273,6 @@ export default function PlacesScreen() {
             <TextInput
               autoFocus
               accessibilityLabel="Place name"
-              allowFontScaling={false}
               maxLength={40}
               value={editor?.name ?? ''}
               onChangeText={(name) =>
@@ -276,7 +282,7 @@ export default function PlacesScreen() {
               placeholderTextColor={colors['ink-secondary']}
               selectionColor={colors.accent}
               style={{
-                ...scaledTextStyle('body', boldText, fontScale),
+                ...textStyle('body', boldText),
                 minHeight: 52,
                 padding: 12,
                 borderWidth: 2,
@@ -292,7 +298,7 @@ export default function PlacesScreen() {
               </TurnText>
             )}
             {error && (
-              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['no-edge'] }}>
+              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                 {error}
               </TurnText>
             )}
