@@ -218,7 +218,12 @@ export default function SettingsScreen() {
                         borderTopColor: colors.edge
                       }}
                     >
-                      <View style={{ flex: 1 }}>
+                      {/* One element for VoiceOver: "Allowed on, 9/25/2026". */}
+                      <View
+                        accessible
+                        accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
+                        style={{ flex: 1 }}
+                      >
                         <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
                           {row.label}
                         </TurnText>
