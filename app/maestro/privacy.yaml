@@ -1,0 +1,11 @@
+appId: com.m1ku.turn
+name: Privacy notice
+---
+- launchApp:
+    clearState: true
+- tapOn: Settings
+- scrollUntilVisible:
+    element: 'Privacy notice'
+- tapOn: 'Privacy notice'
+- assertVisible: 'Privacy notice'
+- takeScreenshot: privacy-notice
