@@ -15,7 +15,6 @@ name: Phrase bank actions and category limit
     timeout: 10000
 - waitForAnimationToEnd
 - inputText: Maestro limit marker
-- hideKeyboard
 - tapOn: Speak
 - tapOn: Settings
 - scrollUntilVisible:
