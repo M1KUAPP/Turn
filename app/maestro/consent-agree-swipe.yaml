@@ -1,5 +1,5 @@
 appId: com.m1ku.turn
-name: Typed Listen
+name: Consent agree and edge swipe
 ---
 - launchApp:
     clearState: true
@@ -15,7 +15,6 @@ name: Typed Listen
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000
-- takeScreenshot: listen-permission-step
 - scrollUntilVisible:
     element: Allow
 - tapOn: Allow
@@ -24,7 +23,6 @@ name: Typed Listen
 - extendedWaitUntil:
     visible: Can my phone listen while we talk\?
     timeout: 10000
-- takeScreenshot: listen-consent-card
 - scrollUntilVisible:
     element: They agreed
 - tapOn: They agreed
@@ -34,21 +32,24 @@ name: Typed Listen
     visible: Mic off
     timeout: 10000
 - scrollUntilVisible:
-    element: '.*Tap here to type what they say\..*'
-- tapOn: '.*Tap here to type what they say\..*'
-- inputText: 'Are you tired?'
+    element: Chat
+- tapOn: Chat
 - scrollUntilVisible:
-    element: Send
-- tapOn: Send
+    element: 'Hi, how are you\?'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Hi, how are you\?'
+    timeout: 10000
+- takeScreenshot: consent-agree-swipe-chat
+- swipe:
+    start: '1%, 50%'
+    end: '80%, 50%'
+- waitForAnimationToEnd
 - scrollUntilVisible:
-    element: '.*Are you tired\?.*'
-- assertVisible: '.*Are you tired\?.*'
+    element: 'Hi, how are you\?'
+    direction: UP
+- assertVisible: 'Hi, how are you\?'
 - scrollUntilVisible:
-    element: "I'm tired"
-- takeScreenshot: listen-reply-row
-- scrollUntilVisible:
-    element: End
-- tapOn: End
-- scrollUntilVisible:
-    element: '^Listen$'
-- assertVisible: '^Listen$'
+    element: Mic off
+- assertVisible: Mic off
+- takeScreenshot: consent-agree-swipe-stays-home

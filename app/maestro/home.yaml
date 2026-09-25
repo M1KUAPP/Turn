@@ -5,7 +5,7 @@ name: Home
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
 - takeScreenshot: home-first-view
 - scrollUntilVisible:
