@@ -7,6 +7,9 @@ name: Phrase bank grid updates
     visible: Listen
     timeout: 30000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
@@ -25,18 +28,21 @@ name: Phrase bank grid updates
     visible: Edit
     timeout: 10000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Edit
+    direction: UP
 - tapOn: Edit
 - scrollUntilVisible:
     element:
       text: Edit
-      below: 'Hi, how are you\?'
-      above: "I'm good, thanks"
+      below: '.*Hi, how are you\?.*'
+      above: ".*I'm good, thanks.*"
     direction: DOWN
     speed: 10
 - tapOn:
     text: Edit
-    below: 'Hi, how are you\?'
-    above: "I'm good, thanks"
+    below: '.*Hi, how are you\?.*'
+    above: ".*I'm good, thanks.*"
 - extendedWaitUntil:
     visible: Edit phrase
     timeout: 10000
@@ -49,30 +55,38 @@ name: Phrase bank grid updates
 - assertVisible:
     text: Phrase
     below: Phrase
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
 - tapOn:
     text: Phrase
     below: Phrase
 - eraseText: 30
 - inputText: My greeting
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
-    element: My greeting
+    element: '.*My greeting.*'
     direction: DOWN
     speed: 10
 - extendedWaitUntil:
-    visible: My greeting
+    visible: '.*My greeting.*'
     timeout: 10000
 - scrollUntilVisible:
     element:
       text: Edit
-      below: "I'm good, thanks"
-      above: Good morning
+      below: ".*I'm good, thanks.*"
+      above: '.*Good morning.*'
     direction: DOWN
     speed: 10
 - tapOn:
     text: Edit
-    below: "I'm good, thanks"
-    above: Good morning
+    below: ".*I'm good, thanks.*"
+    above: '.*Good morning.*'
 - extendedWaitUntil:
     visible: Edit phrase
     timeout: 10000
@@ -85,39 +99,50 @@ name: Phrase bank grid updates
 - assertVisible:
     text: Phrase
     below: Phrase
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
 - tapOn:
     text: Phrase
     below: Phrase
 - eraseText: 30
 - inputText: I'm doing well
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
-    element: I'm doing well
+    element: ".*I'm doing well.*"
     direction: DOWN
     speed: 10
 - extendedWaitUntil:
-    visible: I'm doing well
+    visible: ".*I'm doing well.*"
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: My greeting
-      above: I'm doing well
-    direction: DOWN
+      text: '.*My greeting.*'
+      above: ".*I'm doing well.*"
+    direction: UP
     speed: 10
 - assertVisible:
-    text: My greeting
-    above: I'm doing well
+    text: '.*My greeting.*'
+    above: ".*I'm doing well.*"
 - scrollUntilVisible:
     element:
-      text: I'm doing well
-      above: Good morning
+      text: ".*I'm doing well.*"
+      above: '.*Good morning.*'
     direction: DOWN
     speed: 10
 - assertVisible:
-    text: I'm doing well
-    above: Good morning
+    text: ".*I'm doing well.*"
+    above: '.*Good morning.*'
 - takeScreenshot: bank-4-grid-edits-in-editor
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: UP
 - tapOn: Phrase bank
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -127,31 +152,40 @@ name: Phrase bank grid updates
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
 - tapOn: Settings
 - extendedWaitUntil:
     visible: Settings
     timeout: 10000
 - waitForAnimationToEnd
-- tapOn: Back
+- scrollUntilVisible:
+    element:
+      text: '.*Turn.*'
+      leftOf: Settings
+    direction: UP
+- tapOn:
+    text: '.*Turn.*'
+    leftOf: Settings
+- scrollUntilVisible:
+    element: Listen
+    direction: UP
 - extendedWaitUntil:
     visible: Listen
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Chat
-    direction: DOWN
     speed: 10
-- scrollUntilVisible:
-    element: Chat
-    direction: RIGHT
-    speed: 10
+    centerElement: true
 - tapOn: Chat
 - scrollUntilVisible:
-    element: My greeting
+    element: '.*My greeting.*'
     direction: DOWN
-- assertVisible: My greeting
+- assertVisible: '.*My greeting.*'
 - scrollUntilVisible:
-    element: I'm doing well
+    element: ".*I'm doing well.*"
     direction: DOWN
-- assertVisible: I'm doing well
+- assertVisible: ".*I'm doing well.*"
 - takeScreenshot: bank-4-grid-updated
