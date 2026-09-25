@@ -32,8 +32,10 @@ on:
 permissions:
   contents: read
 
+# A pull request's build and a started screenshot run of the same branch are separate groups, so opening or
+# pushing to a pull request never cancels screenshots someone is waiting for.
 concurrency:
-  group: ios-simulator-build-${{ inputs.ref || github.head_ref || github.ref }}
+  group: ios-simulator-build-${{ github.event_name }}-${{ inputs.ref || github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
