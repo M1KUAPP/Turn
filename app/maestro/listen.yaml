@@ -1,0 +1,22 @@
+appId: com.m1ku.turn
+name: Typed Listen
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Listen
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'Are you tired?'
+- tapOn: Send
+- assertVisible: '.*Are you tired\?.*'
+- scrollUntilVisible:
+    element: "I'm tired"
+- takeScreenshot: listen-reply-row
+- tapOn: End
+- assertVisible: Listen
