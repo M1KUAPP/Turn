@@ -171,6 +171,16 @@ describe('consent controller', () => {
     expect(app.navigate).toHaveBeenLastCalledWith('/')
   })
 
+  test('They agreed without a saved permission opens the step and starts nothing', async () => {
+    const app = await rig()
+
+    await app.controller.partnerAgreed()
+
+    expect(app.listen.start).not.toHaveBeenCalled()
+    expect(app.isActive()).toBe(false)
+    expect(app.navigate).toHaveBeenLastCalledWith('/permission')
+  })
+
   test('reads the card lead and four facts in order in the selected voice', async () => {
     const app = await rig({ named: true })
     app.setChosenVoice('selected-voice')
