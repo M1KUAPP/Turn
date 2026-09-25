@@ -15,8 +15,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
 import { colors } from '../constants/theme'
+import { consentWords } from '../consent/strings'
 import type { createTypedListenSession, TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
+import { useConsent } from '../turn-context'
 import { homeLayout, pageOffset } from './home-layout'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
 import PartnerLineComposer from './PartnerLineComposer'
@@ -90,6 +92,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
 
 export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const router = useRouter()
+  const { consent, state: consentState } = useConsent()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [strip, setStrip] = useState<Phrase[]>([])
@@ -105,6 +108,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const [draft, setDraft] = useState('')
   const [typeMatches, setTypeMatches] = useState<Phrase[]>([])
   const [touchedRow, setTouchedRow] = useState<TypedListenState | null>(null)
+  const [startingListen, setStartingListen] = useState(false)
   const list = useRef<FlatList<Phrase>>(null)
   const composerContent = useRef<ScrollView>(null)
   const { width, height, fontScale } = useWindowDimensions()
@@ -120,6 +124,19 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const composerOpen = composerMode !== null
   const shownListening = touchedRow ?? listening
   const rowAnnouncement = useRef<{ signature: string; pending: string | null }>({ signature: '', pending: null })
+  const under18Active = listening.active && consentState.under18
+  const captionStatus = under18Active
+    ? consentWords.under18Note
+    : listening.answeringLine
+      ? `Still answering: ${listening.answeringLine}`
+      : listening.line
+        ? `They said${listening.rankedOnPhone ? ' · Ranked on this phone' : ''}`
+        : listening.active
+          ? 'Mic off · Typed lines only'
+          : null
+  const captionText = listening.active ? (listening.line ?? consentWords.typedLinePrompt) : 'Listen mode is off.'
+  const listenControlDisabled = listening.active || !consent || startingListen
+
   useEffect(() => {
     const current = rowAnnouncement.current
     if (!shownListening.active) {
@@ -377,16 +394,10 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               numberOfLines={1}
               style={{ color: colors['ink-secondary'] }}
             >
-              {listening.active
-                ? listening.answeringLine
-                  ? `Still answering: ${listening.answeringLine}`
-                  : listening.line
-                    ? `They said${listening.rankedOnPhone ? ' · Ranked on this phone' : ''}`
-                    : 'Mic off · Typed lines only'
-                : 'Caption'}
+              {listening.active ? captionStatus : 'Caption'}
             </TurnText>
             <CaptionWords
-              text={listening.active ? (listening.line ?? 'Tap here to type what they say.') : 'Listen mode is off.'}
+              text={captionText}
               boldText={boldText}
               measure={Boolean(listening.active && listening.line)}
             />
@@ -411,7 +422,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           layout={layout}
           width={width}
           boldText={boldText}
-          emptyNote={composerMode === 'speak' ? 'Matching phrases appear here.' : undefined}
+          emptyNote={
+            composerMode === 'speak'
+              ? 'Matching phrases appear here.'
+              : consentState.under18
+                ? consentWords.under18RowNote
+                : undefined
+          }
           slots={
             composerMode === 'speak'
               ? typeMatches
@@ -584,11 +601,18 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           >
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={listening.active ? 'Mic off' : 'Listen'}
+              accessibilityLabel={listening.active ? consentWords.micOff : 'Listen'}
               accessibilityHint={listening.active ? 'Type partner lines from the caption.' : undefined}
-              accessibilityState={{ disabled: listening.active }}
-              disabled={listening.active}
-              onPress={() => listen.start()}
+              accessibilityState={{ disabled: listenControlDisabled }}
+              disabled={listenControlDisabled}
+              onPress={() => {
+                if (!consent) return
+                setStartingListen(true)
+                void consent
+                  .startListen()
+                  .then((route) => router.push(route === 'permission' ? '/permission' : '/consent'))
+                  .finally(() => setStartingListen(false))
+              }}
               style={({ pressed }) => ({
                 minHeight: oneControlColumn ? controlHeight : 44,
                 minWidth: 44,
@@ -609,15 +633,15 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               <SymbolView
                 name={listening.active ? 'mic.slash' : 'ear'}
                 size={18}
-                tintColor={listening.active ? colors['ink-secondary'] : colors.ink}
+                tintColor={listenControlDisabled ? colors['ink-secondary'] : colors.ink}
                 accessible={false}
               />
               <TurnText
                 kind="headline"
                 boldText={boldText}
-                style={{ color: listening.active ? colors['ink-secondary'] : colors.ink }}
+                style={{ color: listenControlDisabled ? colors['ink-secondary'] : colors.ink }}
               >
-                {listening.active ? 'Mic off' : 'Listen'}
+                {listening.active ? consentWords.micOff : 'Listen'}
               </TurnText>
             </Pressable>
             {listening.active && (

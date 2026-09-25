@@ -9,6 +9,25 @@ export default function RootLayout() {
       <TurnProvider>
         <Stack screenOptions={{ contentStyle: { backgroundColor: colors.board }, headerTintColor: colors.ink }}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="permission"
+            options={{
+              presentation: 'formSheet',
+              sheetAllowedDetents: [1],
+              headerShown: false,
+              headerTransparent: false,
+              gestureEnabled: false,
+              contentStyle: { backgroundColor: colors.surface }
+            }}
+          />
+          <Stack.Screen
+            name="consent"
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+              contentStyle: { backgroundColor: colors.board }
+            }}
+          />
           <Stack.Screen name="settings/index" options={{ title: 'Settings' }} />
           <Stack.Screen name="settings/places" options={{ title: 'Places' }} />
           <Stack.Screen name="settings/voice" options={{ title: 'Voice' }} />
