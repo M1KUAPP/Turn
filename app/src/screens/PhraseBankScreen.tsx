@@ -194,7 +194,7 @@ export default function PhraseBankScreen() {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 80, gap: 12 }}>
+      <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
         {phrases.length === 0 && (
           <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
             No phrases in this category yet.
@@ -411,18 +411,18 @@ export default function PhraseBankScreen() {
         )}
       </ScrollView>
 
-      {/* Undo bar stays at the bottom while any deletion is staged */}
+      {/* Undo bar stays at the bottom while any deletion is staged. It sits under the list rather than over it,
+          and from AX1 Undo wraps to its own line, so nothing it covers or holds goes out of reach. */}
       {hasUndo && (
         <View
           style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
             minHeight: 56,
             flexDirection: 'row',
+            flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'space-between',
+            columnGap: 12,
+            rowGap: 8,
             paddingHorizontal: 16,
             paddingVertical: 8,
             borderTopWidth: 2,
@@ -430,7 +430,7 @@ export default function PhraseBankScreen() {
             backgroundColor: colors.surface
           }}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+          <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.ink }}>
             Phrase deleted
           </TurnText>
           <Pressable
