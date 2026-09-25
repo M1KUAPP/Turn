@@ -271,6 +271,38 @@ describe('live partner session', () => {
     }
   })
 
+  test('with the microphone off, the engine never starts and typed lines still rank', async () => {
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine })
+    const send = vi.spyOn(typed, 'send')
+    await live.start({ microphone: false })
+
+    expect(fake.engine.availability).not.toHaveBeenCalled()
+    expect(fake.engine.start).not.toHaveBeenCalled()
+    expect(live.getSnapshot()).toMatchObject({ active: true, phase: 'unavailable' })
+    await live.send('How was physio?', 'home')
+    expect(send).toHaveBeenCalledOnce()
+    await live.dispose()
+  })
+
+  test('turning the microphone off drops the open line and keeps typed Listen mode', async () => {
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine })
+    const send = vi.spyOn(typed, 'send')
+    await live.start()
+    fake.partial('Is your son')
+
+    await live.micOff()
+    fake.line({ text: 'Is your son twelve?', endedAt: 1000, silenceWindowMs: 500 })
+    fake.partial('He said')
+
+    expect(fake.engine.stop).toHaveBeenCalledOnce()
+    expect(send).not.toHaveBeenCalled()
+    expect(live.getSnapshot()).toMatchObject({ active: true, phase: 'unavailable' })
+    expect(live.getSnapshot().caption.words).toBe('')
+    await live.dispose()
+  })
+
   test('End stops the engine and clears the caption and row', async () => {
     const { live, engine } = await session()
     await live.start()

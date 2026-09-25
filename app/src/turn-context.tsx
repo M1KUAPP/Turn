@@ -126,8 +126,9 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         config,
         speech,
         listen: {
-          start: () => liveListen.start(),
+          start: (options) => liveListen.start(options),
           end: () => liveListen.end(),
+          micOff: () => liveListen.micOff(),
           blocked: () => false
         },
         navigate: (route) => (route === '/' ? router.dismissTo('/') : router.replace(route))

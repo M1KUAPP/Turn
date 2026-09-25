@@ -169,7 +169,7 @@ export function createLiveListenSession(options: {
 
   const engineEvents: ListenEngineEvents = {
     onPartial(text) {
-      if (disposed || !typedState.active) return
+      if (disposed || !typedState.active || !engineRunning) return
       if (!lineOpen) {
         lineConsumed = false
         ignoreNextEngineLine = false
@@ -191,6 +191,7 @@ export function createLiveListenSession(options: {
       publish()
     },
     onLine(line) {
+      if (!engineRunning) return
       if (ignoreNextEngineLine) {
         ignoreNextEngineLine = false
         lineOpen = false
@@ -229,7 +230,7 @@ export function createLiveListenSession(options: {
       publish()
     },
     onVoice(active) {
-      if (disposed || !typedState.active) return
+      if (disposed || !typedState.active || !engineRunning) return
       voiceActive = active
       if (active) {
         if (!lineOpen) {
@@ -265,8 +266,10 @@ export function createLiveListenSession(options: {
     getSnapshot(): LiveListenSnapshot {
       return snapshot
     },
-    async start(): Promise<void> {
+    // With the microphone off (a partner under 18, CONSENT-6), typed lines still get the phone's replies.
+    async start(options: { microphone?: boolean } = {}): Promise<void> {
       if (typedState.active || disposed) return
+      const microphone = engine !== null && options.microphone !== false
       const currentRevision = ++revision
       rankedLines.clear()
       typed.start()
@@ -277,12 +280,12 @@ export function createLiveListenSession(options: {
       captionLabel = listenStrings.listening
       captionWords = ''
       captionNote = engine ? null : listenStrings.unavailable
-      captionPrompt = engine ? null : listenStrings.typedLinePrompt
+      captionPrompt = microphone ? null : listenStrings.typedLinePrompt
       rankedOnce = false
       assetProgress = null
-      phase = engine ? 'starting' : 'unavailable'
+      phase = microphone ? 'starting' : 'unavailable'
       publish()
-      if (!engine) return
+      if (!engine || !microphone) return
 
       try {
         const status = await engine.availability()
@@ -310,6 +313,29 @@ export function createLiveListenSession(options: {
         engineRunning = false
         setUnavailable()
       }
+    },
+    // The under-18 switch turns the microphone off mid-session: the line in flight is dropped, never ranked, and
+    // typed lines go on.
+    async micOff(): Promise<void> {
+      if (disposed || !typedState.active) return
+      ++revision
+      cancelSilenceTimer()
+      const shouldStop = engine !== null && engineRunning
+      engineRunning = false
+      lineOpen = false
+      lineEnding = null
+      openLineWords = ''
+      voiceActive = false
+      ignoreNextEngineLine = false
+      if (captionLabel === listenStrings.saying || captionLabel === listenStrings.listening) {
+        captionLabel = listenStrings.listening
+        captionWords = ''
+      }
+      captionPrompt = listenStrings.typedLinePrompt
+      assetProgress = null
+      phase = 'unavailable'
+      publish()
+      if (shouldStop) await engine.stop()
     },
     async endLine(): Promise<void> {
       if (!typedState.active) return
