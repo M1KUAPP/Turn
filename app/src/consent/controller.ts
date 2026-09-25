@@ -14,8 +14,9 @@ type ConsentPorts = {
   config: ConfigPort
   speech: { speak(text: string): Promise<void> | void }
   listen: {
-    start(): Promise<void> | void
+    start(options: { microphone: boolean }): Promise<void> | void
     end(): Promise<void> | void
+    micOff(): Promise<void> | void
     blocked(): boolean
   }
   navigate(route: '/' | '/permission' | '/consent'): void
@@ -135,11 +136,8 @@ export function createConsentController(ports: ConsentPorts) {
         ports.navigate('/permission')
         return
       }
-      if (state.under18) {
-        ports.navigate('/')
-        return
-      }
-      await ports.listen.start()
+      // For a partner under 18 the microphone stays off, and typed lines get the phone's replies (CONSENT-6).
+      await ports.listen.start({ microphone: !state.under18 })
       ports.navigate('/')
     },
     partnerDeclined(): void {
@@ -152,7 +150,7 @@ export function createConsentController(ports: ConsentPorts) {
     async setUnder18(on: boolean): Promise<void> {
       await ports.setSetting(under18Key, String(on))
       publish({ under18: on })
-      if (on) await ports.listen.end()
+      if (on) await ports.listen.micOff()
     },
     async withdraw(): Promise<void> {
       await ports.setSetting(permissionKey, null)
