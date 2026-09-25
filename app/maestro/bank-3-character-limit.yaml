@@ -19,6 +19,7 @@ name: Phrase bank character limit
 - scrollUntilVisible:
     element: Quick
     direction: UP
+    speed: 10
 - tapOn: Quick
 - extendedWaitUntil:
     visible: Edit
@@ -27,6 +28,7 @@ name: Phrase bank character limit
 - scrollUntilVisible:
     element: Add phrase
     direction: DOWN
+    speed: 10
 - tapOn: Add phrase
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -48,6 +50,7 @@ name: Phrase bank character limit
 - scrollUntilVisible:
     element: '^x{200}$'
     direction: DOWN
+    speed: 10
 - assertVisible: 0 characters left
 - assertVisible: '^x{200}$'
 - assertNotVisible: '^x{201}$'
@@ -56,6 +59,7 @@ name: Phrase bank character limit
 - scrollUntilVisible:
     element: '^x{200}$'
     direction: DOWN
+    speed: 10
 - extendedWaitUntil:
     visible: '^x{200}$'
     timeout: 10000

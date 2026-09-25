@@ -17,13 +17,10 @@ name: Conversation strip rewording
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
-    element:
-      text: Conversation strip
-      below: Conversation strip
+    element: Phrases always visible above the grid
     direction: DOWN
-- tapOn:
-    text: Conversation strip
-    below: Conversation strip
+    speed: 10
+- tapOn: Phrases always visible above the grid
 - extendedWaitUntil:
     visible: Wait, I'm typing
     timeout: 10000
@@ -31,6 +28,7 @@ name: Conversation strip rewording
 - scrollUntilVisible:
     element: Wait, I'm typing
     direction: DOWN
+    speed: 10
 - assertVisible: Wait, I'm typing
 - assertNotVisible: Delete
 - takeScreenshot: speak-7-strip-phrase-list
@@ -60,6 +58,7 @@ name: Conversation strip rewording
 - scrollUntilVisible:
     element: Wait, I'm ready
     direction: DOWN
+    speed: 10
 - extendedWaitUntil:
     visible: Wait, I'm ready
     timeout: 10000
@@ -69,11 +68,13 @@ name: Conversation strip rewording
       text: Wait, I'm ready
       above: Sorry, say that again
     direction: DOWN
+    speed: 10
 - assertVisible:
     text: Wait, I'm ready
     above: Sorry, say that again
 - scrollUntilVisible:
     element: 'And you\?'
     direction: DOWN
+    speed: 10
 - assertVisible: 'And you\?'
 - takeScreenshot: speak-7-strip-reworded-in-place

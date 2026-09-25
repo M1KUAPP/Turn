@@ -20,6 +20,7 @@ name: Phrase bank persistence
 - scrollUntilVisible:
     element: Chat
     direction: DOWN
+    speed: 10
 - tapOn: Chat
 - extendedWaitUntil:
     visible: Edit
@@ -89,6 +90,7 @@ name: Phrase bank persistence
 - scrollUntilVisible:
     element: Chat
     direction: DOWN
+    speed: 10
 - tapOn: Chat
 - extendedWaitUntil:
     visible: Edit
