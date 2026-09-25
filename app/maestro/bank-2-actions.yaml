@@ -23,7 +23,6 @@ name: Phrase bank actions and category limit
     element: Speak
     direction: DOWN
 - tapOn: Speak
-- hideKeyboard
 - scrollUntilVisible:
     element: Close composer
     direction: UP
