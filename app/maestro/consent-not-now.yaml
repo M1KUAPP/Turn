@@ -1,0 +1,33 @@
+appId: com.m1ku.turn
+name: Consent not now
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Not now
+- tapOn: Not now
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Yes'
+- tapOn: 'Yes'
+- scrollUntilVisible:
+    element: '^Listen$'
+- tapOn: '^Listen$'
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- takeScreenshot: consent-not-now-step-returned

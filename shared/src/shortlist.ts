@@ -75,14 +75,19 @@ export type Context = {
 }
 
 /** The candidates Jev scores for a line, in the TRD's order and without duplicates (ROW-2). */
-export function pickShortlist(line: string, index: PhraseIndex, { bank, row, place, taps }: Context): Phrase[] {
+export function pickShortlist(
+  line: string,
+  index: PhraseIndex,
+  { bank, row, place, taps }: Context,
+  size = 40
+): Phrase[] {
   index.update(bank)
   const byId = new Map(bank.filter(rankable).map((phrase) => [phrase.id, phrase]))
   const picked = new Map<string, Phrase>()
   const take = (ids: Iterable<string>, limit: number) => {
     let taken = 0
     for (const id of ids) {
-      if (taken === limit || picked.size === 40) return
+      if (taken === limit || picked.size === size) return
       const phrase = byId.get(id)
       if (!phrase || picked.has(id)) continue
       picked.set(id, phrase)
