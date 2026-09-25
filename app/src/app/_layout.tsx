@@ -9,7 +9,7 @@ export default function RootLayout() {
       <TurnProvider>
         <Stack screenOptions={{ contentStyle: { backgroundColor: colors.board }, headerTintColor: colors.ink }}>
           <Stack.Screen name="index" options={{ headerShown: false, title: 'Turn' }} />
-          <Stack.Screen name="settings/index" options={{ title: 'Settings' }} />
+          <Stack.Screen name="settings/index" options={{ title: 'Settings', headerLargeTitle: true }} />
           <Stack.Screen name="settings/places" options={{ title: 'Places' }} />
           <Stack.Screen name="settings/privacy" options={{ title: 'Privacy notice' }} />
           <Stack.Screen name="settings/licenses" options={{ title: 'Open-source licenses' }} />
