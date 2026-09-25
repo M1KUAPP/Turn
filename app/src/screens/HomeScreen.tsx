@@ -139,15 +139,6 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     }
   }, [bank, composerMode, draft, selectedPlace?.id])
 
-  useEffect(() => {
-    const listener = Keyboard.addListener('keyboardDidHide', () => {
-      setComposerMode(null)
-      setDraft('')
-      setTypeMatches([])
-    })
-    return () => listener.remove()
-  }, [])
-
   const closeComposer = () => {
     Keyboard.dismiss()
     setComposerMode(null)
