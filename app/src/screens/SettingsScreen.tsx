@@ -1,8 +1,7 @@
 import * as Application from 'expo-application'
 import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
-import { Pressable, ScrollView, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { colors } from '../constants/theme'
 import { useTurn } from '../turn-context'
 import TurnText from './TurnText'
@@ -34,69 +33,76 @@ export default function SettingsScreen() {
   ]
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32, gap: 24 }}>
-        {sections.map((section) => (
-          <View key={section.title} style={{ gap: 8 }}>
-            <TurnText
-              kind="subheadline-emphasized"
-              boldText={boldText}
-              style={{ color: colors['ink-secondary'], marginLeft: 12 }}
-            >
-              {section.title}
-            </TurnText>
-            <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
-              {section.rows.map((row, index) => {
-                const enabled = !!row.open
-                const disabled = !enabled && !row.value
-                return (
-                  <Pressable
-                    key={row.label}
-                    accessibilityRole={row.value ? 'text' : 'button'}
-                    // Named explicitly: left to iOS, the chevron's symbol adds "Forward" to the name.
-                    accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
-                    accessibilityState={row.value ? undefined : { disabled: !enabled }}
-                    disabled={!enabled}
-                    onPress={row.open}
-                    style={({ pressed }) => ({
-                      minHeight: 52,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 12,
-                      paddingHorizontal: 16,
-                      paddingVertical: 12,
-                      borderTopWidth: index === 0 ? 0 : 1,
-                      borderTopColor: colors.edge,
-                      backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
-                    })}
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={{ flex: 1, backgroundColor: colors.board }}
+      contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 32, gap: 24 }}
+    >
+      {sections.map((section) => (
+        <View key={section.title} style={{ gap: 8 }}>
+          <TurnText
+            kind="subheadline-emphasized"
+            boldText={boldText}
+            style={{ color: colors['ink-secondary'], marginLeft: 16 }}
+          >
+            {section.title}
+          </TurnText>
+          <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
+            {section.rows.map((row, index) => {
+              const enabled = !!row.open
+              const disabled = !enabled && !row.value
+              return (
+                <Pressable
+                  key={row.label}
+                  accessibilityRole={row.value ? 'text' : 'button'}
+                  // Named explicitly: left to iOS, the chevron's symbol adds "Forward" to the name.
+                  accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
+                  accessibilityState={row.value ? undefined : { disabled: !enabled }}
+                  disabled={!enabled}
+                  onPress={row.open}
+                  style={({ pressed }) => ({
+                    minHeight: 52,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 12,
+                    paddingHorizontal: 16,
+                    paddingVertical: 12,
+                    backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
+                  })}
+                >
+                  {index > 0 && (
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 16,
+                        right: 0,
+                        height: StyleSheet.hairlineWidth,
+                        backgroundColor: colors.edge
+                      }}
+                    />
+                  )}
+                  <TurnText
+                    kind="body"
+                    boldText={boldText}
+                    style={{ color: disabled ? colors['ink-secondary'] : colors.ink, flex: 1 }}
                   >
-                    <TurnText
-                      kind="body"
-                      boldText={boldText}
-                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink, flex: 1 }}
-                    >
-                      {row.label}
+                    {row.label}
+                  </TurnText>
+                  {row.value && (
+                    <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                      {row.value}
                     </TurnText>
-                    {row.value && (
-                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        {row.value}
-                      </TurnText>
-                    )}
-                    {enabled && (
-                      <SymbolView
-                        name="chevron.right"
-                        size={15}
-                        tintColor={colors['ink-secondary']}
-                        accessible={false}
-                      />
-                    )}
-                  </Pressable>
-                )
-              })}
-            </View>
+                  )}
+                  {enabled && (
+                    <SymbolView name="chevron.right" size={15} tintColor={colors['ink-secondary']} accessible={false} />
+                  )}
+                </Pressable>
+              )
+            })}
           </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+        </View>
+      ))}
+    </ScrollView>
   )
 }

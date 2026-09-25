@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { FlatList, Pressable, TextInput, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import iosLicenses from '../content/ios-licenses.json'
 import licenses from '../content/open-source-licenses.json'
@@ -67,9 +67,11 @@ export default function LicensesScreen() {
             No packages found.
           </TurnText>
         }
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           const key = `${item.source}/${item.name}@${item.version ?? ''}`
           const open = expanded === key
+          const first = index === 0
+          const last = index === results.length - 1
           return (
             <Pressable
               accessibilityRole={item.text ? 'button' : 'text'}
@@ -82,11 +84,25 @@ export default function LicensesScreen() {
                 paddingHorizontal: 16,
                 paddingVertical: 12,
                 gap: 6,
-                borderBottomColor: colors.edge,
-                borderBottomWidth: 1,
+                borderTopLeftRadius: first ? 12 : 0,
+                borderTopRightRadius: first ? 12 : 0,
+                borderBottomLeftRadius: last ? 12 : 0,
+                borderBottomRightRadius: last ? 12 : 0,
                 backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
               })}
             >
+              {!first && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 16,
+                    right: 0,
+                    height: StyleSheet.hairlineWidth,
+                    backgroundColor: colors.edge
+                  }}
+                />
+              )}
               <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
                 {item.name} {item.version ?? ''}
               </TurnText>
