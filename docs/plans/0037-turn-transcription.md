@@ -237,11 +237,11 @@ export type EnginePicker = (input: {
 **Files:** `app/package.json`, `app/app.config.ts`, `app/src/listen/expo-engine.ts`,
 `app/test/expo-engine.test.ts`.
 
-- [ ] `bun add expo-speech-recognition@57.1.0` in `app/`, the TRD's pin, and
+- [x] `bun add expo-speech-recognition@57.1.0` in `app/`, the TRD's pin, and
       add the plugin with `microphonePermission` and
       `speechRecognitionPermission` strings matching the ones already in
       `app/app.config.ts:16-21`, so the keys stay the same.
-- [ ] Write failing tests with the library faked: the engine calls
+- [x] Write failing tests with the library faked: the engine calls
       `requestMicrophonePermissionsAsync()` and never
       `requestPermissionsAsync()` or
       `requestSpeechRecognizerPermissionsAsync()`; it starts with the
@@ -253,10 +253,10 @@ export type EnginePicker = (input: {
       no task runs past a minute; it reports `onAssetProgress` never; and an
       `error` from an on-device start maps to `onState` `unavailable` with a
       reason, never a throw into the session.
-- [ ] `expo-engine.ts` maps the library's events, `volumechange` into
+- [x] `expo-engine.ts` maps the library's events, `volumechange` into
       `onVoice`, and its errors onto the port. It is written against the port
       only, so Task 2 never waits on Task 3.
-- [ ] `bun run --cwd app test -- expo-engine.test.ts` and
+- [x] `bun run --cwd app test -- expo-engine.test.ts` and
       `bun run --cwd app typecheck`.
 
 ## Task 3: The `turn-listen` Swift engine
