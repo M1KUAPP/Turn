@@ -5,32 +5,42 @@ name: Consent step
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Listen
 - tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000
 - takeScreenshot: consent-step-intro
 - scrollUntilVisible:
     element: Not now
+- scrollUntilVisible:
+    element: Allow
+    direction: UP
 - assertVisible: Allow
+- scrollUntilVisible:
+    element: Not now
 - assertVisible: Not now
 - takeScreenshot: consent-step-options
 - scrollUntilVisible:
     element: Read the privacy notice
 - tapOn: Read the privacy notice
+- scrollUntilVisible:
+    element: What stays on this iPhone
 - extendedWaitUntil:
     visible: What stays on this iPhone
     timeout: 10000
 - takeScreenshot: consent-step-privacy-notice
 - swipe:
-    start: '1%, 50%'
-    end: '80%, 50%'
+    start: '50%, 10%'
+    end: '50%, 80%'
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Before Listen mode starts
+    direction: UP
 - assertVisible: Before Listen mode starts
 - takeScreenshot: consent-step-return

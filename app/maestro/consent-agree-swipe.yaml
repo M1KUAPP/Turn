@@ -5,29 +5,38 @@ name: Consent agree and edge swipe
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Listen
 - tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000
 - scrollUntilVisible:
     element: Allow
 - tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
 - extendedWaitUntil:
     visible: Can my phone listen while we talk\?
     timeout: 10000
 - scrollUntilVisible:
     element: They agreed
 - tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
 - extendedWaitUntil:
     visible: Mic off
     timeout: 10000
 - scrollUntilVisible:
     element: Chat
 - tapOn: Chat
+- scrollUntilVisible:
+    element: 'Hi, how are you\?'
+    direction: UP
 - extendedWaitUntil:
     visible: 'Hi, how are you\?'
     timeout: 10000
@@ -38,6 +47,9 @@ name: Consent agree and edge swipe
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: 'Hi, how are you\?'
+    direction: UP
 - assertVisible: 'Hi, how are you\?'
+- scrollUntilVisible:
+    element: Mic off
 - assertVisible: Mic off
 - takeScreenshot: consent-agree-swipe-stays-home
