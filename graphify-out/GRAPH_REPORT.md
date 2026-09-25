@@ -1,8 +1,8 @@
-# Graph Report - RevenueCat-issue-43 (2026-09-24)
+# Graph Report - RevenueCat-issue-43 (2026-09-25)
 
 ## Corpus Check
 
-- 314 files · ~853,981 words
+- 314 files · ~854,066 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 16 file(s) not represented in the graph (top: (none) 7, .jsonl 5, .example 2)
 
@@ -14,7 +14,7 @@
 
 ## Graph Freshness
 
-- Built from commit: `0f7c2431`
+- Built from commit: `b10d295a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

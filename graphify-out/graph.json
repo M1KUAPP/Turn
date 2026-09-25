@@ -4895,7 +4895,7 @@
       "file_type": "code",
       "norm_label": "replyrow()",
       "source_file": "app/src/screens/ReplyRow.tsx",
-      "source_location": "L122"
+      "source_location": "L127"
     },
     {
       "id": "app_src_screens_replyrow_replyslot",
@@ -50401,7 +50401,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/src/screens/HomeScreen.tsx",
-      "source_location": "L198",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -66886,7 +66886,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/ReplyRow.tsx",
-      "source_location": "L122",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -108339,5 +108339,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0f7c2431ead230b72601e4ed29665cfde612f2f5"
+  "built_at_commit": "b10d295aff571e0c2dff6b1c9ca8edf3250f0afb"
 }
