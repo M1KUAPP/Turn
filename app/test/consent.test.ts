@@ -109,8 +109,9 @@ async function rig(
   })
   sessions.push(session)
   const listen = {
-    start: vi.fn(() => session.start()),
+    start: vi.fn((options: { microphone: boolean }) => session.start(options)),
     end: vi.fn(async () => session.end()),
+    micOff: vi.fn(async () => session.micOff()),
     blocked: vi.fn(() => false)
   }
   const speech = {
@@ -265,11 +266,12 @@ describe('consent controller', () => {
 
     next.requestLine()
     expect(next.engine.start).not.toHaveBeenCalled()
-    expect(next.isActive()).toBe(false)
+    expect(next.listen.start).toHaveBeenCalledWith({ microphone: false })
+    expect(next.isActive()).toBe(true)
     expect(next.lineRequests()).toBe(0)
   })
 
-  test('turning on under-18 mode stops a running engine immediately', async () => {
+  test('turning on under-18 mode stops a running engine at once and keeps typed Listen mode', async () => {
     const app = await rig()
     await app.controller.grant()
     await app.controller.partnerAgreed()
@@ -277,9 +279,10 @@ describe('consent controller', () => {
 
     await app.controller.setUnder18(true)
 
-    expect(app.listen.end).toHaveBeenCalledOnce()
+    expect(app.listen.micOff).toHaveBeenCalledOnce()
+    expect(app.listen.end).not.toHaveBeenCalled()
     expect(app.engine.stop).toHaveBeenCalledOnce()
-    expect(app.isActive()).toBe(false)
+    expect(app.isActive()).toBe(true)
     expect(app.controller.snapshot().requestsBlocked).toBe(true)
   })
 
