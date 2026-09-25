@@ -53,6 +53,8 @@ export default function SettingsScreen() {
                   <Pressable
                     key={row.label}
                     accessibilityRole={row.value ? 'text' : 'button'}
+                    // Named explicitly: left to iOS, the chevron's symbol adds "Forward" to the name.
+                    accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
                     accessibilityState={row.value ? undefined : { disabled: !enabled }}
                     disabled={!enabled}
                     onPress={row.open}

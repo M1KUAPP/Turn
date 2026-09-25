@@ -1,0 +1,25 @@
+appId: com.m1ku.turn
+name: Places
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- extendedWaitUntil:
+    visible: Your words
+    timeout: 10000
+- scrollUntilVisible:
+    element: Places
+- tapOn: Places
+- assertVisible: 'Choose a place from the Home screen. Move places here to change the picker order.'
+- takeScreenshot: places-list
+- scrollUntilVisible:
+    element: 'Add place'
+- tapOn: 'Add place'
+- inputText: Clinic
+- tapOn: Save
+- assertVisible: Clinic
+- takeScreenshot: places-added
