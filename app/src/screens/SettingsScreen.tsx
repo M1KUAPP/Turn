@@ -1,19 +1,40 @@
 import * as Application from 'expo-application'
 import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
-import { Alert, Pressable, ScrollView, View } from 'react-native'
+import { useEffect, useState } from 'react'
+import { Alert, Pressable, ScrollView, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors } from '../constants/theme'
 import { rebuildGazetteer } from '../listen/gazetteer'
 import { runTagChecks } from '../listen/tag-checks'
+import { SPEECH_RATE_STEPS } from '../speech/voice-settings'
 import { useTurn } from '../turn-context'
 import TurnText from './TurnText'
 
-type Row = { label: string; value?: string; open?: () => void }
+type Row = {
+  label: string
+  value?: string
+  hint?: string
+  open?: () => void
+  action?: () => void
+  disabled?: boolean
+  selected?: boolean
+}
+type Section = { title: string; rows: Row[]; note?: string }
 
 export default function SettingsScreen() {
   const router = useRouter()
   const { ready, boldText } = useTurn()
+  // From AX1 a row's value goes under its label, as in iOS Settings, so neither squeezes the other to letters.
+  const stacked = useWindowDimensions().fontScale >= 1.786
+  const [voiceNote, setVoiceNote] = useState<string | null>(null)
+  const [, setVoiceRevision] = useState(0)
+
+  useEffect(() => {
+    const voiceSettings = ready?.voiceSettings
+    if (!voiceSettings) return
+    return voiceSettings.subscribe(() => setVoiceRevision((revision) => revision + 1))
+  }, [ready?.voiceSettings])
 
   const checkNameTags = async () => {
     const finder = ready?.nameTagger
@@ -41,8 +62,45 @@ export default function SettingsScreen() {
   const debugRows: Row[] =
     __DEV__ && ready?.nameTagger ? [{ label: 'Check name tags', open: () => void checkNameTags() }] : []
 
-  const sections: { title: string; rows: Row[] }[] = [
-    { title: 'Voice', rows: [{ label: 'Voice' }, { label: 'Speech rate' }, { label: 'Personal Voice' }] },
+  const choosePersonalVoice = async () => {
+    if (!ready) return
+    setVoiceNote(null)
+    try {
+      setVoiceNote(await ready.voiceSettings.choosePersonalVoice())
+    } catch (cause) {
+      setVoiceNote(cause instanceof Error ? cause.message : String(cause))
+    }
+  }
+
+  const rateStep = ready?.voiceSettings.rateStep() ?? null
+  const voiceRows: Row[] = [
+    {
+      label: 'Voice',
+      value: ready?.voiceSettings.selected().name ?? 'Loading…',
+      hint: ready
+        ? `Current voice: ${ready.voiceSettings.selected().name}. Open the voice list.`
+        : 'Voice settings are loading',
+      open: () => router.push('/settings/voice')
+    },
+    ...SPEECH_RATE_STEPS.map(({ label, step }) => ({
+      label,
+      hint: rateStep === step ? 'Selected speech rate' : 'Set speech rate',
+      disabled: !ready,
+      selected: rateStep === step,
+      action: ready
+        ? () => void ready.voiceSettings.chooseRate(step).catch((cause) => setVoiceNote(String(cause)))
+        : undefined
+    })),
+    {
+      label: 'Personal Voice',
+      hint: 'Ask iOS to let Turn use your Personal Voice',
+      disabled: !ready,
+      action: ready ? () => void choosePersonalVoice() : undefined
+    }
+  ]
+
+  const sections: Section[] = [
+    { title: 'Voice', rows: voiceRows, note: voiceNote ?? undefined },
     { title: 'Listen mode', rows: [{ label: 'Permission' }, { label: 'Under-18 mode' }] },
     {
       title: 'Your words',
@@ -76,17 +134,20 @@ export default function SettingsScreen() {
             </TurnText>
             <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
               {section.rows.map((row, index) => {
-                const enabled = !!row.open
-                const disabled = !enabled && !row.value
+                const action = row.open ?? row.action
+                const enabled = !!action && !row.disabled
+                const selected = row.selected === true
+                const staticText = row.value !== undefined && !action
                 return (
                   <Pressable
                     key={row.label}
-                    accessibilityRole={row.value ? 'text' : 'button'}
+                    accessibilityRole={staticText ? 'text' : 'button'}
                     // Named explicitly: left to iOS, the chevron's symbol adds "Forward" to the name.
                     accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
-                    accessibilityState={row.value ? undefined : { disabled: !enabled }}
+                    accessibilityHint={row.hint}
+                    accessibilityState={staticText ? undefined : { disabled: !enabled, selected }}
                     disabled={!enabled}
-                    onPress={row.open}
+                    onPress={action}
                     style={({ pressed }) => ({
                       minHeight: 52,
                       flexDirection: 'row',
@@ -96,22 +157,36 @@ export default function SettingsScreen() {
                       paddingVertical: 12,
                       borderTopWidth: index === 0 ? 0 : 1,
                       borderTopColor: colors.edge,
-                      backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
+                      backgroundColor: pressed && enabled ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText
-                      kind="body"
-                      boldText={boldText}
-                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink, flex: 1 }}
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: stacked ? 'column' : 'row',
+                        alignItems: stacked ? 'flex-start' : 'center',
+                        gap: stacked ? 2 : 12
+                      }}
                     >
-                      {row.label}
-                    </TurnText>
-                    {row.value && (
-                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        {row.value}
+                      <TurnText
+                        kind="body"
+                        boldText={boldText}
+                        style={{
+                          color: enabled || staticText ? colors.ink : colors['ink-secondary'],
+                          flex: stacked ? undefined : 1
+                        }}
+                      >
+                        {row.label}
                       </TurnText>
-                    )}
-                    {enabled && (
+                      {row.value && (
+                        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          {row.value}
+                        </TurnText>
+                      )}
+                    </View>
+                    {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
+                    {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
+                    {enabled && row.open && (
                       <SymbolView
                         name="chevron.right"
                         size={15}
@@ -123,6 +198,15 @@ export default function SettingsScreen() {
                 )
               })}
             </View>
+            {section.note && (
+              <TurnText
+                kind="subheadline"
+                boldText={boldText}
+                style={{ color: colors['ink-secondary'], marginLeft: 12 }}
+              >
+                {section.note}
+              </TurnText>
+            )}
           </View>
         ))}
       </ScrollView>
