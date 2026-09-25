@@ -14,6 +14,10 @@ import starterBank from './content/starter-bank.json'
 import { createConsentController, type ConsentState } from './consent/controller'
 import { consentCard, permissionStep } from './consent/strings'
 import { rebuildGazetteer } from './listen/gazetteer'
+import { expoEngine } from './listen/expo-engine'
+import { createLiveListenSession } from './listen/live-session'
+import { pickListenEngine } from './listen/engine-picker'
+import { nativeListenEngine } from './listen/native-engine'
 import { createTypedListenSession } from './listen/typed-session'
 import { createConfigClient } from './relay/config'
 import { createSpeechController } from './speech/controller'
@@ -27,7 +31,7 @@ type Ready = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
   voiceSettings: ReturnType<typeof createVoiceSettings>
-  listen: ReturnType<typeof createTypedListenSession>
+  listen: ReturnType<typeof createLiveListenSession>
   consent: ReturnType<typeof createConsentController>
   nameTagger: typeof turnListen
   config: ReturnType<typeof createConfigClient>
@@ -51,7 +55,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let active = true
-    let listen: ReturnType<typeof createTypedListenSession> | null = null
+    let listen: ReturnType<typeof createLiveListenSession> | null = null
     let unsubscribeGazetteer: (() => void) | null = null
     let unsubscribeVoiceChanges: (() => void) | null = null
     let unsubscribeConfig: (() => void) | null = null
@@ -95,9 +99,24 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         },
         { voice: () => voiceSettings.selected().identifier, rate: () => voiceSettings.rate() }
       )
-      listen = createTypedListenSession(bank)
-      await listen.ready
+      const typed = createTypedListenSession(bank)
+      await typed.ready
+      const engine = await pickListenEngine(() => nativeListenEngine, expoEngine)
+      const liveListen = createLiveListenSession({
+        typed,
+        engine,
+        now: Date.now,
+        log: ({ endedAt, rankedAt, silenceWindowMs }) => {
+          if (__DEV__) {
+            console.info(`[listen] endedAt=${endedAt} rankedAt=${rankedAt} windowMs=${silenceWindowMs}`)
+          }
+        },
+        place: async () => (await bank.selectedPlace())?.id ?? ''
+      })
+      listen = liveListen
+      await liveListen.ready
       if (!active) {
+        await liveListen.dispose()
         return
       }
       const consent = createConsentController({
@@ -107,8 +126,9 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         config,
         speech,
         listen: {
-          start: () => listen?.start(),
-          end: () => listen?.end(),
+          start: (options) => liveListen.start(options),
+          end: () => liveListen.end(),
+          micOff: () => liveListen.micOff(),
           blocked: () => false
         },
         navigate: (route) => (route === '/' ? router.dismissTo('/') : router.replace(route))
@@ -116,7 +136,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       await consent.ready
       if (!active) return
       const nameTagger = turnListen
-      setReady({ bank, speech, voiceSettings, listen, consent, nameTagger, config, typesafeNamed })
+      setReady({ bank, speech, voiceSettings, listen: liveListen, consent, nameTagger, config, typesafeNamed })
       unsubscribeConfig = config.subscribe(() => {
         const named = config.typesafeNamed()
         setReady((current) => (current ? { ...current, typesafeNamed: named } : current))
