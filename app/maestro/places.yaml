@@ -5,21 +5,32 @@ name: Places
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
 - tapOn: Settings
+- scrollUntilVisible:
+    element: Your words
+    direction: UP
 - extendedWaitUntil:
     visible: Your words
     timeout: 10000
 - scrollUntilVisible:
     element: Places
 - tapOn: Places
+- scrollUntilVisible:
+    element: 'Choose a place from the Home screen\. Move places here to change the picker order\.'
 - assertVisible: 'Choose a place from the Home screen. Move places here to change the picker order.'
 - takeScreenshot: places-list
 - scrollUntilVisible:
     element: 'Add place'
 - tapOn: 'Add place'
 - inputText: Clinic
+- scrollUntilVisible:
+    element: Save
 - tapOn: Save
+- scrollUntilVisible:
+    element: Clinic
 - assertVisible: Clinic
 - takeScreenshot: places-added

@@ -5,14 +5,21 @@ name: Open-source licenses
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
 - tapOn: Settings
+- scrollUntilVisible:
+    element: Your words
+    direction: UP
 - extendedWaitUntil:
     visible: Your words
     timeout: 10000
 - scrollUntilVisible:
     element: 'Open-source licenses'
 - tapOn: 'Open-source licenses'
+- scrollUntilVisible:
+    element: 'Search packages'
 - assertVisible: 'Search packages'
 - takeScreenshot: licenses-list
