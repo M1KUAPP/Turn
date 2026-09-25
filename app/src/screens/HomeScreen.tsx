@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import {
   ActionSheetIOS,
+  AccessibilityInfo,
   FlatList,
   Keyboard,
   KeyboardAvoidingView,
@@ -14,19 +15,80 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
 import { colors } from '../constants/theme'
+import type { createTypedListenSession, TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
 import { homeLayout, pageOffset } from './home-layout'
 import ReplyRow from './ReplyRow'
+import PartnerLineComposer from './PartnerLineComposer'
 import TurnText from './TurnText'
 import TypedComposer from './TypedComposer'
 
 type Props = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
+  listen: ReturnType<typeof createTypedListenSession>
   boldText: boolean
 }
 
-export default function HomeScreen({ bank, speech, boldText }: Props) {
+function CaptionWords({ text, boldText, measure }: { text: string; boldText: boolean; measure: boolean }) {
+  const [tail, setTail] = useState<{ text: string; first: string; second: string } | null>(null)
+  const visibleTail = tail?.text === text ? tail : null
+
+  return (
+    <View>
+      {visibleTail ? (
+        <>
+          <TurnText
+            kind="title3"
+            boldText={boldText}
+            numberOfLines={1}
+            ellipsizeMode="head"
+            style={{ color: colors.ink }}
+          >
+            …{visibleTail.first}
+          </TurnText>
+          <TurnText kind="title3" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+            {visibleTail.second}
+          </TurnText>
+        </>
+      ) : (
+        <TurnText kind="title3" boldText={boldText} numberOfLines={2} style={{ color: colors.ink }}>
+          {text}
+        </TurnText>
+      )}
+      {measure && (
+        <View
+          pointerEvents="none"
+          importantForAccessibility="no-hide-descendants"
+          style={{ position: 'absolute', left: 0, right: 0, top: 0, opacity: 0 }}
+        >
+          <TurnText
+            kind="title3"
+            boldText={boldText}
+            onTextLayout={({ nativeEvent }) => {
+              const lines = nativeEvent.lines
+              if (lines.length <= 2) {
+                setTail(null)
+                return
+              }
+              const first = lines[lines.length - 2].text.trim()
+              const second = lines[lines.length - 1].text.trim()
+              setTail((previous) =>
+                previous?.text === text && previous.first === first && previous.second === second
+                  ? previous
+                  : { text, first, second }
+              )
+            }}
+          >
+            {text}
+          </TurnText>
+        </View>
+      )}
+    </View>
+  )
+}
+
+export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const router = useRouter()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
@@ -39,9 +101,10 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
   const [contentHeight, setContentHeight] = useState(1)
   const [headerHeight, setHeaderHeight] = useState(0)
   const [replyPreview, setReplyPreview] = useState(0)
-  const [composerOpen, setComposerOpen] = useState(false)
+  const [composerMode, setComposerMode] = useState<'speak' | 'partner' | null>(null)
   const [draft, setDraft] = useState('')
   const [typeMatches, setTypeMatches] = useState<Phrase[]>([])
+  const [touchedRow, setTouchedRow] = useState<TypedListenState | null>(null)
   const list = useRef<FlatList<Phrase>>(null)
   const composerContent = useRef<ScrollView>(null)
   const { width, height, fontScale } = useWindowDimensions()
@@ -49,9 +112,48 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
   const minPhraseHeight = layout.short ? 64 : 78
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
   const controlHeight = Math.max(44, 22 * Math.min(fontScale, 2.82) + 16)
+  const captionHeight = Math.max(layout.short ? 56 : 86, 24 + 70 * fontScale)
   const twoControlRows = width < 352 || fontScale >= 1.786
   const oneControlColumn = fontScale >= 2.5
   const speaking = useSyncExternalStore(speech.subscribe, speech.getSnapshot)
+  const listening = useSyncExternalStore(listen.subscribe, listen.getSnapshot)
+  const composerOpen = composerMode !== null
+  const shownListening = touchedRow ?? listening
+  const rowAnnouncement = useRef<{ signature: string; pending: string | null }>({ signature: '', pending: null })
+  const captionLabel = listening.active
+    ? [
+        listening.line ? `They said: ${listening.line}` : 'Tap here to type what they say',
+        listening.rankedOnPhone ? 'Ranked on this phone' : null,
+        listening.answeringLine ? `Still answering: ${listening.answeringLine}` : null,
+        'Type partner line'
+      ]
+        .filter(Boolean)
+        .join('. ')
+    : undefined
+
+  useEffect(() => {
+    const current = rowAnnouncement.current
+    if (!shownListening.active) {
+      current.signature = ''
+      current.pending = null
+      return
+    }
+    if (touchedRow) return
+    const signature = `${shownListening.row.big ?? ''}|${shownListening.row.slots.join('|')}`
+    if (signature !== current.signature) {
+      current.signature = signature
+      const count = shownListening.row.big ? 1 : shownListening.row.slots.filter(Boolean).length
+      current.pending =
+        shownListening.row.answers > 0 && count > 0 ? `${count} ${count === 1 ? 'reply' : 'replies'}` : null
+    }
+    if (current.pending && !speaking.speaking) {
+      const timer = setTimeout(() => {
+        if (current.pending) AccessibilityInfo.announceForAccessibilityWithOptions(current.pending, { queue: true })
+        current.pending = null
+      }, 150)
+      return () => clearTimeout(timer)
+    }
+  }, [shownListening, touchedRow, speaking.speaking])
 
   useEffect(() => {
     let alive = true
@@ -80,7 +182,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
   }, [bank, categoryId])
 
   useEffect(() => {
-    if (!composerOpen) return
+    if (composerMode !== 'speak') return
     let alive = true
     const read = () => {
       void bank.typeMatches(draft, selectedPlace?.id).then((next) => {
@@ -93,20 +195,11 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
       alive = false
       unsubscribe()
     }
-  }, [bank, composerOpen, draft, selectedPlace?.id])
-
-  useEffect(() => {
-    const listener = Keyboard.addListener('keyboardDidHide', () => {
-      setComposerOpen(false)
-      setDraft('')
-      setTypeMatches([])
-    })
-    return () => listener.remove()
-  }, [])
+  }, [bank, composerMode, draft, selectedPlace?.id])
 
   const closeComposer = () => {
     Keyboard.dismiss()
-    setComposerOpen(false)
+    setComposerMode(null)
     setDraft('')
     setTypeMatches([])
   }
@@ -121,6 +214,13 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
       // Speech still works when the local bank cannot save the sentence.
     }
     await speech.speak(text, phrase?.id)
+  }
+
+  const sendPartnerLine = () => {
+    const line = draft.trim()
+    if (!line) return
+    closeComposer()
+    void listen.send(line, selectedPlace?.id ?? '')
   }
 
   const chooseCategory = (id: string) => {
@@ -263,7 +363,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
       {!composerOpen && (
         <View
           style={{
-            minHeight: layout.short ? 56 : 86,
+            height: captionHeight,
             marginHorizontal: 16,
             marginTop: 4,
             marginBottom: 4,
@@ -272,15 +372,50 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
             borderWidth: 2,
             borderColor: colors.edge,
             backgroundColor: colors.surface,
-            justifyContent: 'center'
+            justifyContent: 'center',
+            flexDirection: 'row',
+            alignItems: 'center'
           }}
         >
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            Caption
-          </TurnText>
-          <TurnText kind="title3" boldText={boldText} style={{ color: colors.ink }}>
-            Listen mode is off.
-          </TurnText>
+          <Pressable
+            accessibilityRole={listening.active ? 'button' : undefined}
+            accessibilityLabel={captionLabel}
+            disabled={!listening.active}
+            onPress={() => setComposerMode('partner')}
+            style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
+          >
+            <TurnText
+              kind="subheadline"
+              boldText={boldText}
+              numberOfLines={1}
+              style={{ color: colors['ink-secondary'] }}
+            >
+              {listening.active
+                ? listening.answeringLine
+                  ? `Still answering: ${listening.answeringLine}`
+                  : listening.line
+                    ? `They said${listening.rankedOnPhone ? ' · Ranked on this phone' : ''}`
+                    : 'Mic off · Typed lines only'
+                : 'Caption'}
+            </TurnText>
+            <CaptionWords
+              text={listening.active ? (listening.line ?? 'Tap here to type what they say.') : 'Listen mode is off.'}
+              boldText={boldText}
+              measure={Boolean(listening.active && listening.line)}
+            />
+          </Pressable>
+          {listening.active && listening.row.answers > 0 && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Clear replies"
+              onPress={() => listen.clear()}
+              style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
+            >
+              <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                Clear
+              </TurnText>
+            </Pressable>
+          )}
         </View>
       )}
       <View style={{ marginHorizontal: 16, marginBottom: 4 }}>{stripContent}</View>
@@ -289,26 +424,32 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
           layout={layout}
           width={width}
           boldText={boldText}
-          emptyNote={composerOpen ? 'Matching phrases appear here.' : undefined}
+          emptyNote={composerMode === 'speak' ? 'Matching phrases appear here.' : undefined}
           slots={
-            composerOpen
+            composerMode === 'speak'
               ? typeMatches
-              : __DEV__ && replyPreview === 1
-                ? [
-                    { id: 'yes', text: 'Yes' },
-                    { id: 'no', text: 'No' },
-                    { id: 'not-sure', text: 'Not sure' },
-                    { id: 'dont-know', text: "I don't know" },
-                    { id: 'please-wait', text: 'Please wait' },
-                    { id: 'help-me', text: 'Help me' }
-                  ]
-                : undefined
+              : listening.active
+                ? shownListening.slots
+                : __DEV__ && replyPreview === 1
+                  ? [
+                      { id: 'yes', text: 'Yes' },
+                      { id: 'no', text: 'No' },
+                      { id: 'not-sure', text: 'Not sure' },
+                      { id: 'dont-know', text: "I don't know" },
+                      { id: 'please-wait', text: 'Please wait' },
+                      { id: 'help-me', text: 'Help me' }
+                    ]
+                  : undefined
           }
           bigButton={
-            !composerOpen && __DEV__ && replyPreview === 2
-              ? { id: 'have-something-to-say', text: 'I have something to say' }
-              : null
+            composerMode !== 'speak' && listening.active
+              ? shownListening.bigButton
+              : !composerOpen && __DEV__ && replyPreview === 2
+                ? { id: 'have-something-to-say', text: 'I have something to say' }
+                : null
           }
+          activePhraseId={speaking.activePhraseId}
+          onInteractionChange={(pressed) => setTouchedRow(pressed ? listening : null)}
           onSpeak={(reply) => {
             void speech.speak(reply.text, reply.id)
           }}
@@ -382,7 +523,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
   )
 
   const bottomControls = [
-    { label: 'Type', icon: 'keyboard', action: () => setComposerOpen(true), disabled: false },
+    { label: 'Type', icon: 'keyboard', action: () => setComposerMode('speak'), disabled: false },
     {
       label: speaking.speaking ? 'Stop' : 'Repeat',
       icon: speaking.speaking ? 'stop.fill' : 'arrow.counterclockwise',
@@ -446,31 +587,68 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
               {selectedPlace?.name ?? 'Place'}
             </TurnText>
           </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Listen"
-            accessibilityState={{ disabled: true }}
-            disabled
+          <View
             style={{
-              minHeight: oneControlColumn ? controlHeight : 44,
-              minWidth: 44,
-              width: oneControlColumn ? width - 32 : undefined,
               flexDirection: 'row',
-              alignItems: 'center',
+              width: oneControlColumn ? width - 32 : undefined,
               gap: 6,
-              paddingHorizontal: 12,
-              borderRadius: 22,
-              borderWidth: 2,
-              borderColor: colors.edge,
-              backgroundColor: colors.surface,
-              opacity: 0.45
+              alignItems: 'center'
             }}
           >
-            <SymbolView name="ear" size={18} tintColor={colors.ink} accessible={false} />
-            <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-              Listen
-            </TurnText>
-          </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={listening.active ? 'Mic off. Type partner lines from the caption.' : 'Listen'}
+              accessibilityState={{ disabled: listening.active }}
+              disabled={listening.active}
+              onPress={() => listen.start()}
+              style={({ pressed }) => ({
+                minHeight: oneControlColumn ? controlHeight : 44,
+                minWidth: 44,
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 6,
+                paddingHorizontal: 12,
+                borderRadius: 22,
+                borderWidth: 2,
+                borderColor: colors.edge,
+                backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+              })}
+            >
+              <SymbolView
+                name={listening.active ? 'mic.slash' : 'ear'}
+                size={18}
+                tintColor={colors.ink}
+                accessible={false}
+              />
+              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+                {listening.active ? 'Mic off' : 'Listen'}
+              </TurnText>
+            </Pressable>
+            {listening.active && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="End Listen mode"
+                onPress={() => {
+                  closeComposer()
+                  listen.end()
+                }}
+                style={({ pressed }) => ({
+                  minHeight: oneControlColumn ? controlHeight : 44,
+                  minWidth: 52,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 22,
+                  borderWidth: 2,
+                  borderColor: colors.edge,
+                  backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+                })}
+              >
+                <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+                  End
+                </TurnText>
+              </Pressable>
+            )}
+          </View>
         </View>
         {composerOpen ? (
           <ScrollView
@@ -572,7 +750,7 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
             </View>
           </>
         )}
-        {composerOpen && (
+        {composerMode === 'speak' && (
           <TypedComposer
             text={draft}
             onChangeText={setDraft}
@@ -584,6 +762,16 @@ export default function HomeScreen({ bank, speech, boldText }: Props) {
             }}
             onClose={closeComposer}
             speaking={speaking.speaking}
+            boldText={boldText}
+            fontScale={fontScale}
+          />
+        )}
+        {composerMode === 'partner' && (
+          <PartnerLineComposer
+            text={draft}
+            onChangeText={setDraft}
+            onSend={sendPartnerLine}
+            onClose={closeComposer}
             boldText={boldText}
             fontScale={fontScale}
           />

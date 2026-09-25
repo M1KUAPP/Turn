@@ -6,7 +6,7 @@ import { useTurn } from '../turn-context'
 
 export default function HomeRoute() {
   const { ready, error, boldText, fontScale } = useTurn()
-  if (ready) return <HomeScreen bank={ready.bank} speech={ready.speech} boldText={boldText} />
+  if (ready) return <HomeScreen bank={ready.bank} speech={ready.speech} listen={ready.listen} boldText={boldText} />
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.board, justifyContent: 'center', padding: 20 }}>

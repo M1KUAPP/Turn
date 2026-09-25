@@ -4,6 +4,7 @@ import { basename, dirname, join, resolve } from 'node:path'
 type PackageJson = {
   name: string
   version: string
+  private?: boolean
   license?: string | { type?: string }
   licenses?: Array<{ type?: string }>
   dependencies?: Record<string, string>
@@ -62,10 +63,13 @@ function visit(directory: string) {
   visited.add(path)
   const pkg = JSON.parse(readFileSync(join(path, 'package.json'), 'utf8')) as PackageJson
   const key = `${pkg.name}@${pkg.version}`
-  const text = licenseText(path)
-  const license = licenseExpression(pkg) || (text ? 'See bundled license text' : '')
-  if (!license) missing.push(key)
-  entries.set(key, { name: pkg.name, version: pkg.version, license, text })
+  // A private workspace package is this app's own code, not a third-party dependency to acknowledge.
+  if (!(pkg.private && pkg.name === '@turn/shared')) {
+    const text = licenseText(path)
+    const license = licenseExpression(pkg) || (text ? 'See bundled license text' : '')
+    if (!license) missing.push(key)
+    entries.set(key, { name: pkg.name, version: pkg.version, license, text })
+  }
 
   for (const name of Object.keys({ ...pkg.dependencies, ...pkg.optionalDependencies, ...pkg.peerDependencies })) {
     const dependency = installedFrom(path, name)
