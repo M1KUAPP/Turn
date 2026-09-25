@@ -26,6 +26,7 @@ name: Phrase bank protected items
 - scrollUntilVisible:
     element: Quick
     direction: UP
+    centerElement: true
 - tapOn: Quick
 - extendedWaitUntil:
     visible: Edit
@@ -33,18 +34,18 @@ name: Phrase bank protected items
 - waitForAnimationToEnd
 - tapOn: Edit
 - scrollUntilVisible:
-    element: Yes
+    element: 'Yes'
     centerElement: true
 - assertNotVisible:
     text: Delete
-    below: Yes
-    above: No
+    below: 'Yes'
+    above: 'No'
 - scrollUntilVisible:
-    element: No
+    element: 'No'
     centerElement: true
 - assertNotVisible:
     text: Delete
-    below: No
+    below: 'No'
     above: Not sure
 - scrollUntilVisible:
     element: Not sure
