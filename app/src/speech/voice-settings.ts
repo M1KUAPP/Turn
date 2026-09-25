@@ -113,6 +113,14 @@ export function createVoiceSettings(ports: VoiceSettingsPorts) {
       notify()
       return null
     },
+    // Startup reads only the saved choice: iOS can take many seconds to list its voices on a first launch, and
+    // speaking needs just the identifier. refresh() then builds the list and checks the choice still resolves.
+    async loadSaved(): Promise<void> {
+      const [voiceId, savedRate] = await Promise.all([ports.setting('voice_id'), ports.setting('speech_rate')])
+      if (voiceId !== null) selected = { identifier: voiceId, name: '', personal: false }
+      selectedRateStep = rateStep(savedRate)
+      notify()
+    },
     async refresh(): Promise<void> {
       const [available, personal, voiceId, savedRate] = await Promise.all([
         ports.availableVoices(),

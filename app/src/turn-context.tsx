@@ -62,8 +62,9 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         requestPersonalVoice: turnVoice.requestPersonalVoice,
         personalVoice: turnVoice.personalVoice
       })
-      await voiceSettings.refresh()
+      await voiceSettings.loadSaved()
       if (!active) return
+      void voiceSettings.refresh().catch(() => {})
       unsubscribeVoiceChanges = turnVoice.onVoicesChanged(() => {
         void voiceSettings.refresh().catch(() => {})
       })
