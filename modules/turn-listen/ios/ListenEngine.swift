@@ -3,21 +3,17 @@ import CoreMedia
 import Foundation
 import Speech
 
-@available(iOS 26.0, *)
 @MainActor
 final class ListenEngine {
   private static let silenceWindowMs = 500
   private static let silenceWindowNanoseconds: UInt64 = 500_000_000
+  private static let resultFinalizationTimeoutNanoseconds: UInt64 = 1_000_000_000
   private static let voiceRmsThreshold = 0.015
-
-  private struct Segment {
-    let range: CMTimeRange
-    let text: String
-  }
 
   private struct ResultWaiter {
     let through: CMTime
     let continuation: CheckedContinuation<Void, Never>
+    var timeoutTask: Task<Void, Never>?
   }
 
   private enum SelectedTranscriber {
@@ -69,11 +65,11 @@ final class ListenEngine {
   }
 
   private let timeline = AudioTimeline()
-  private let onPartial: (String) -> Void
-  private let onLine: (String, Double, Int) -> Void
-  private let onState: (String, String?) -> Void
-  private let onAssetProgress: (Double?) -> Void
-  private let onVoice: (Bool) -> Void
+  private let onPartial: @MainActor (String) -> Void
+  private let onLine: @MainActor (String, Double, Int) -> Void
+  private let onState: @MainActor (String, String?) -> Void
+  private let onAssetProgress: @MainActor (Double?) -> Void
+  private let onVoice: @MainActor (Bool) -> Void
 
   private var selectedTranscriber: SelectedTranscriber?
   private var analyzer: SpeechAnalyzer?
@@ -89,17 +85,18 @@ final class ListenEngine {
   private var capturing = false
   private var voiceActive = false
   private var lineFinalizing = false
-  private var finalizedSegments: [Segment] = []
-  private var volatileSegments: [Segment] = []
+  private var finalizedText = ""
+  private var volatileText = ""
+  private var latestResultsFinalizationTime = CMTime.zero
   private var renderedText = ""
-  private var resultWaiters: [ResultWaiter] = []
+  private var resultWaiters: [UUID: ResultWaiter] = [:]
 
   init(
-    onPartial: @escaping (String) -> Void,
-    onLine: @escaping (String, Double, Int) -> Void,
-    onState: @escaping (String, String?) -> Void,
-    onAssetProgress: @escaping (Double?) -> Void,
-    onVoice: @escaping (Bool) -> Void
+    onPartial: @escaping @MainActor (String) -> Void,
+    onLine: @escaping @MainActor (String, Double, Int) -> Void,
+    onState: @escaping @MainActor (String, String?) -> Void,
+    onAssetProgress: @escaping @MainActor (Double?) -> Void,
+    onVoice: @escaping @MainActor (Bool) -> Void
   ) {
     self.onPartial = onPartial
     self.onLine = onLine
@@ -224,6 +221,7 @@ final class ListenEngine {
       selectedTranscriber = nil
       clearTranscript()
       timeline.reset()
+      latestResultsFinalizationTime = .zero
       let reason = String(describing: error)
       onState("unavailable", reason)
       throw error
@@ -280,6 +278,7 @@ final class ListenEngine {
       inputNode = nil
       audioConverter = nil
       timeline.reset()
+      latestResultsFinalizationTime = .zero
       onState("idle", nil)
     } catch {
       analyzer = nil
@@ -289,6 +288,7 @@ final class ListenEngine {
       inputNode = nil
       audioConverter = nil
       timeline.reset()
+      latestResultsFinalizationTime = .zero
       onState("unavailable", String(describing: error))
       throw error
     }
@@ -397,7 +397,6 @@ final class ListenEngine {
           for try await result in transcriber.results {
             self?.receiveResult(
               text: String(result.text.characters),
-              range: result.range,
               finalizationTime: result.resultsFinalizationTime,
               isFinal: result.isFinal
             )
@@ -412,7 +411,6 @@ final class ListenEngine {
           for try await result in transcriber.results {
             self?.receiveResult(
               text: String(result.text.characters),
-              range: result.range,
               finalizationTime: result.resultsFinalizationTime,
               isFinal: result.isFinal
             )
@@ -512,29 +510,19 @@ final class ListenEngine {
 
   private func receiveResult(
     text: String,
-    range: CMTimeRange,
     finalizationTime: CMTime,
     isFinal: Bool
   ) {
-    let newlyFinalized = volatileSegments.filter {
-      CMTimeCompare($0.range.end, finalizationTime) <= 0
+    if CMTimeCompare(finalizationTime, latestResultsFinalizationTime) > 0 {
+      latestResultsFinalizationTime = finalizationTime
     }
-    volatileSegments.removeAll {
-      CMTimeCompare($0.range.end, finalizationTime) <= 0
-    }
-    finalizedSegments.append(contentsOf: newlyFinalized)
 
-    finalizedSegments.removeAll { Self.sameRange($0.range, range) }
-    volatileSegments.removeAll { Self.sameRange($0.range, range) }
-
-    let segment = Segment(range: range, text: text)
-    if isFinal || CMTimeCompare(finalizationTime, range.end) >= 0 {
-      finalizedSegments.append(segment)
+    if isFinal {
+      finalizedText += text
+      volatileText = ""
     } else {
-      volatileSegments.append(segment)
+      volatileText = text
     }
-    finalizedSegments.sort { CMTimeCompare($0.range.start, $1.range.start) < 0 }
-    volatileSegments.sort { CMTimeCompare($0.range.start, $1.range.start) < 0 }
 
     resumeSettledWaiters()
     let nextText = currentText()
@@ -577,59 +565,70 @@ final class ListenEngine {
     try await analyzer.finalize(through: boundary)
     await waitForSettledResults(through: boundary)
 
-    let line = text(through: boundary).trimmingCharacters(in: .whitespacesAndNewlines)
+    let line = finalizedText.trimmingCharacters(in: .whitespacesAndNewlines)
     if publishLine, !line.isEmpty {
       onLine(line, endedAt, Self.silenceWindowMs)
     }
 
-    finalizedSegments.removeAll { CMTimeCompare($0.range.end, boundary) <= 0 }
-    volatileSegments.removeAll { CMTimeCompare($0.range.end, boundary) <= 0 }
+    finalizedText = ""
     renderedText = currentText()
-    if !renderedText.isEmpty {
+    if !volatileText.isEmpty {
       onPartial(renderedText)
     }
-    resumeSettledWaiters()
   }
 
   private func waitForSettledResults(through boundary: CMTime) async {
-    guard hasVolatileResults(through: boundary) else { return }
-    await withCheckedContinuation { continuation in
-      resultWaiters.append(ResultWaiter(through: boundary, continuation: continuation))
+    guard !currentText().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+          CMTimeCompare(latestResultsFinalizationTime, boundary) < 0 else {
+      return
     }
-  }
 
-  private func hasVolatileResults(through boundary: CMTime) -> Bool {
-    volatileSegments.contains { CMTimeCompare($0.range.end, boundary) <= 0 }
+    await withCheckedContinuation { continuation in
+      let id = UUID()
+      var waiter = ResultWaiter(
+        through: boundary,
+        continuation: continuation,
+        timeoutTask: nil
+      )
+      waiter.timeoutTask = Task { @MainActor [weak self] in
+        do {
+          try await Task.sleep(nanoseconds: Self.resultFinalizationTimeoutNanoseconds)
+        } catch {
+          return
+        }
+        self?.resumeResultWaiter(id)
+      }
+      resultWaiters[id] = waiter
+    }
   }
 
   private func resumeSettledWaiters() {
-    let settled = resultWaiters.filter { !hasVolatileResults(through: $0.through) }
-    resultWaiters.removeAll { !hasVolatileResults(through: $0.through) }
-    for waiter in settled {
-      waiter.continuation.resume()
+    let settled = Array(resultWaiters.keys.filter { id in
+      guard let waiter = resultWaiters[id] else { return false }
+      return CMTimeCompare(latestResultsFinalizationTime, waiter.through) >= 0
+    })
+    for id in settled {
+      resumeResultWaiter(id)
     }
   }
 
-  private func currentText() -> String {
-    (finalizedSegments + volatileSegments)
-      .sorted { CMTimeCompare($0.range.start, $1.range.start) < 0 }
-      .map(\.text)
-      .joined()
+  private func resumeResultWaiter(_ id: UUID) {
+    guard let waiter = resultWaiters.removeValue(forKey: id) else { return }
+    waiter.timeoutTask?.cancel()
+    waiter.continuation.resume()
   }
 
-  private func text(through boundary: CMTime) -> String {
-    (finalizedSegments + volatileSegments)
-      .filter { CMTimeCompare($0.range.end, boundary) <= 0 }
-      .sorted { CMTimeCompare($0.range.start, $1.range.start) < 0 }
-      .map(\.text)
-      .joined()
+  private func currentText() -> String {
+    finalizedText + volatileText
   }
 
   private func clearTranscript() {
-    finalizedSegments.removeAll()
-    volatileSegments.removeAll()
+    finalizedText = ""
+    volatileText = ""
     renderedText = ""
-    resumeSettledWaiters()
+    for id in Array(resultWaiters.keys) {
+      resumeResultWaiter(id)
+    }
   }
 
   private func reportResultFailure(_ error: Error) {
@@ -638,14 +637,9 @@ final class ListenEngine {
 
   private func reportFailure(_ reason: String) {
     onState("unavailable", reason)
-    for waiter in resultWaiters {
-      waiter.continuation.resume()
+    for id in Array(resultWaiters.keys) {
+      resumeResultWaiter(id)
     }
-    resultWaiters.removeAll()
-  }
-
-  private static func sameRange(_ lhs: CMTimeRange, _ rhs: CMTimeRange) -> Bool {
-    CMTimeCompare(lhs.start, rhs.start) == 0 && CMTimeCompare(lhs.end, rhs.end) == 0
   }
 
   private static func rmsLevel(of buffer: AVAudioPCMBuffer) -> Double {

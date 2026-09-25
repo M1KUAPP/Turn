@@ -6,7 +6,6 @@ public class TurnListenModule: Module {
   private let gazetteerLock = NSLock()
   private var gazetteer: NLGazetteer?
 
-  @available(iOS 26.0, *)
   @MainActor
   private lazy var listenEngine = ListenEngine(
     onPartial: { [weak self] text in
@@ -46,43 +45,43 @@ public class TurnListenModule: Module {
     Events("onPartial", "onLine", "onState", "onAssetProgress", "onVoice")
 
     AsyncFunction("availability") { () async -> String in
-      guard #available(iOS 26.0, *) else { return "none" }
-      return await self.listenEngine.availability()
+      let engine = await MainActor.run { self.listenEngine }
+      return await engine.availability()
     }
 
     AsyncFunction("installAsset") { () async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.installAsset()
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.installAsset()
     }
 
     AsyncFunction("start") { () async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.start()
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.start()
     }
 
     AsyncFunction("pause") { () async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.pause()
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.pause()
     }
 
     AsyncFunction("resume") { () async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.resume()
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.resume()
     }
 
     AsyncFunction("stop") { () async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.stop()
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.stop()
     }
 
     AsyncFunction("endLine") { () async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.endLine()
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.endLine()
     }
 
     AsyncFunction("muteForSpeech") { (muted: Bool) async throws in
-      guard #available(iOS 26.0, *) else { return }
-      try await self.listenEngine.muteForSpeech(muted)
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.muteForSpeech(muted)
     }
 
     AsyncFunction("findNames") { (texts: [String]) -> [[[String: Any]]] in
