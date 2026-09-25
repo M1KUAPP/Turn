@@ -1,0 +1,358 @@
+appId: com.m1ku.turn
+name: Phrase bank actions and category limit
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Type
+    direction: DOWN
+- tapOn: Type
+- extendedWaitUntil:
+    visible: Type what to say
+    timeout: 10000
+- waitForAnimationToEnd
+- inputText: Maestro limit marker
+- tapOn: Speak
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Typed
+    direction: DOWN
+    speed: 10
+- assertVisible: Typed
+- takeScreenshot: bank-2-actions-categories
+- scrollUntilVisible:
+    element: Add category
+    direction: DOWN
+    speed: 10
+- tapOn: Add category
+- extendedWaitUntil:
+    visible: Category name
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Category name
+    direction: DOWN
+    speed: 10
+- takeScreenshot: bank-2-actions-add-category-form
+- tapOn: Category name
+- inputText: Automation
+- tapOn: Save
+- scrollUntilVisible:
+    element: Automation
+    direction: DOWN
+    speed: 10
+- scrollUntilVisible:
+    element: 'You can have up to 12 categories\.'
+    direction: DOWN
+    speed: 10
+- extendedWaitUntil:
+    visible: 'You can have up to 12 categories\.'
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: Add category
+      enabled: false
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: Add category
+    enabled: false
+- assertNotVisible:
+    text: Add category
+    enabled: true
+- takeScreenshot: bank-2-actions-limit-at-12
+- scrollUntilVisible:
+    element:
+      text: Rename
+      below: Automation
+      above: Conversation strip
+    direction: UP
+    speed: 10
+- tapOn:
+    text: Rename
+    below: Automation
+    above: Conversation strip
+- extendedWaitUntil:
+    visible: Rename category
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Automation
+    direction: DOWN
+    speed: 10
+- takeScreenshot: bank-2-actions-rename-category-form
+- tapOn: Automation
+- eraseText: 40
+- inputText: Flow category
+- tapOn: Save
+- scrollUntilVisible:
+    element:
+      text: Move up
+      below: Flow category
+      above: Conversation strip
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Move up
+    below: Flow category
+    above: Conversation strip
+- scrollUntilVisible:
+    element:
+      text: Flow category
+      above: Typed
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: Flow category
+    above: Typed
+- scrollUntilVisible:
+    element:
+      text: Move down
+      below: Flow category
+      above: Typed
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Move down
+    below: Flow category
+    above: Typed
+- scrollUntilVisible:
+    element:
+      text: Typed
+      above: Flow category
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: Typed
+    above: Flow category
+- takeScreenshot: bank-2-actions-category-order
+- scrollUntilVisible:
+    element: Flow category
+    direction: DOWN
+    speed: 10
+- tapOn: Flow category
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-2-actions-phrase-list
+- scrollUntilVisible:
+    element: Add phrase
+    direction: DOWN
+- tapOn: Add phrase
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- takeScreenshot: bank-2-actions-add-phrase-form
+- tapOn:
+    text: Phrase
+    below: Phrase
+- inputText: Flow phrase
+- scrollUntilVisible:
+    element:
+      text: Home
+      below: Places
+    direction: DOWN
+- tapOn:
+    text: Home
+    below: Places
+- scrollUntilVisible:
+    element:
+      text: Clinic
+      below: Places
+    direction: DOWN
+- tapOn:
+    text: Clinic
+    below: Places
+- tapOn: Save
+- scrollUntilVisible:
+    element: Flow phrase
+    direction: DOWN
+- extendedWaitUntil:
+    visible: Flow phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Home
+    below: Flow phrase
+- scrollUntilVisible:
+    element:
+      text: Clinic
+      below: Flow phrase
+    direction: DOWN
+- assertVisible:
+    text: Clinic
+    below: Flow phrase
+- takeScreenshot: bank-2-actions-phrase-added
+- tapOn: Phrase bank
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Delete
+      below: Flow category
+      above: Conversation strip
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Delete
+    below: Flow category
+    above: Conversation strip
+- extendedWaitUntil:
+    visible: 'Choose where its phrases will go\.'
+    timeout: 10000
+- takeScreenshot: bank-2-actions-delete-category-destination
+- scrollUntilVisible:
+    element:
+      text: Chat
+      below: 'Choose where its phrases will go\.'
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Chat
+    below: 'Choose where its phrases will go\.'
+- waitForAnimationToEnd
+- assertNotVisible: Flow category
+- scrollUntilVisible:
+    element: Chat
+    direction: UP
+    speed: 10
+- tapOn: Chat
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- scrollUntilVisible:
+    element: Flow phrase
+    direction: DOWN
+- extendedWaitUntil:
+    visible: Flow phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible:
+    text: Home
+    below: Flow phrase
+- assertVisible:
+    text: Clinic
+    below: Flow phrase
+- takeScreenshot: bank-2-actions-phrase-moved-with-category
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: Flow phrase
+      above: Add phrase
+    direction: DOWN
+- tapOn:
+    text: Edit
+    below: Flow phrase
+    above: Add phrase
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- takeScreenshot: bank-2-actions-edit-phrase-form
+- tapOn:
+    text: Phrase
+    below: Phrase
+- eraseText: 30
+- inputText: Moved phrase
+- scrollUntilVisible:
+    element: Quick
+    direction: LEFT
+    speed: 10
+- tapOn: Quick
+- scrollUntilVisible:
+    element:
+      text: Clinic
+      below: Places
+    direction: DOWN
+- tapOn:
+    text: Clinic
+    below: Places
+- scrollUntilVisible:
+    element:
+      text: Shop
+      below: Places
+    direction: DOWN
+- tapOn:
+    text: Shop
+    below: Places
+- tapOn: Save
+- extendedWaitUntil:
+    notVisible: Flow phrase
+    timeout: 10000
+- tapOn: Phrase bank
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Quick
+    direction: UP
+    speed: 10
+- tapOn: Quick
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Moved phrase
+    direction: DOWN
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- extendedWaitUntil:
+    visible: Moved phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Home
+      below: Moved phrase
+    direction: DOWN
+- assertVisible:
+    text: Home
+    below: Moved phrase
+- scrollUntilVisible:
+    element:
+      text: Shop
+      below: Moved phrase
+    direction: DOWN
+- assertVisible:
+    text: Shop
+    below: Moved phrase
+- takeScreenshot: bank-2-actions-edited-phrase-in-quick

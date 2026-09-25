@@ -134,7 +134,10 @@ export default function SettingsScreen() {
     },
     {
       title: 'Your words',
-      rows: [{ label: 'Places', open: () => router.push('/settings/places') }, { label: 'Phrase bank' }]
+      rows: [
+        { label: 'Places', open: () => router.push('/settings/places') },
+        { label: 'Phrase bank', open: () => router.push('/bank') }
+      ]
     },
     { title: 'Turn Listen', rows: [{ label: 'Unlock Listen mode' }, { label: 'Restore Purchases' }] },
     {
