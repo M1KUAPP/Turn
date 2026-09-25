@@ -48,11 +48,11 @@ export default function SettingsScreen() {
             <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
               {section.rows.map((row, index) => {
                 const enabled = !!row.open
+                const disabled = !enabled && !row.value
                 return (
                   <Pressable
                     key={row.label}
                     accessibilityRole={row.value ? 'text' : 'button'}
-                    accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
                     accessibilityState={row.value ? undefined : { disabled: !enabled }}
                     disabled={!enabled}
                     onPress={row.open}
@@ -65,11 +65,14 @@ export default function SettingsScreen() {
                       paddingVertical: 12,
                       borderTopWidth: index === 0 ? 0 : 1,
                       borderTopColor: colors.edge,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
-                      opacity: enabled || row.value ? 1 : 0.5
+                      backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
+                    <TurnText
+                      kind="body"
+                      boldText={boldText}
+                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink, flex: 1 }}
+                    >
                       {row.label}
                     </TurnText>
                     {row.value && (
