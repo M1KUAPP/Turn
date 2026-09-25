@@ -1,0 +1,135 @@
+appId: com.m1ku.turn
+name: Voice
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Voice
+- extendedWaitUntil:
+    visible: Voice
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*Voice, System default.*'
+- tapOn: '.*Voice, System default.*'
+- scrollUntilVisible:
+    element: 'Choose a voice or preview how it sounds\.'
+- extendedWaitUntil:
+    visible: 'Choose a voice or preview how it sounds\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*System default.*'
+- assertVisible: System default
+- takeScreenshot: voice-list
+- scrollUntilVisible:
+    element:
+      text: Preview
+      index: 0
+- tapOn:
+    text: Preview
+    index: 0
+- scrollUntilVisible:
+    element:
+      text: Preview
+      index: 1
+- tapOn:
+    text: Preview
+    index: 1
+- scrollUntilVisible:
+    element: Samantha
+- tapOn: Samantha
+- scrollUntilVisible:
+    element: Samantha
+- assertVisible:
+    text: Samantha
+    selected: true
+- takeScreenshot: voice-samantha-selected
+- swipe:
+    start: '1%, 50%'
+    end: '80%, 50%'
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Slowest
+- tapOn: Slowest
+- scrollUntilVisible:
+    element: Slowest
+- assertVisible:
+    text: Slowest
+    selected: true
+- scrollUntilVisible:
+    element: Slower
+- tapOn: Slower
+- scrollUntilVisible:
+    element: Slower
+- assertVisible:
+    text: Slower
+    selected: true
+- scrollUntilVisible:
+    element: Normal
+- tapOn: Normal
+- scrollUntilVisible:
+    element: Normal
+- assertVisible:
+    text: Normal
+    selected: true
+- scrollUntilVisible:
+    element: Faster
+- tapOn: Faster
+- scrollUntilVisible:
+    element: Faster
+- assertVisible:
+    text: Faster
+    selected: true
+- scrollUntilVisible:
+    element: Fastest
+- tapOn: Fastest
+- scrollUntilVisible:
+    element: Fastest
+- assertVisible:
+    text: Fastest
+    selected: true
+- takeScreenshot: voice-rate-steps
+- launchApp
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Voice
+- extendedWaitUntil:
+    visible: Voice
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*Voice, Samantha.*'
+- assertVisible: '.*Voice, Samantha.*'
+- scrollUntilVisible:
+    element: Fastest
+- assertVisible:
+    text: Fastest
+    selected: true
+- takeScreenshot: voice-persistence
+- scrollUntilVisible:
+    element: Personal Voice
+- tapOn: Personal Voice
+- runFlow:
+    when:
+      visible: "Don't Allow"
+    commands:
+      - tapOn: Allow
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*There''s no Personal Voice Turn can use on this iPhone\. If you''ve made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice\..*'
+- assertVisible: '.*There''s no Personal Voice Turn can use on this iPhone\. If you''ve made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice\..*'
+- takeScreenshot: voice-personal-unavailable
