@@ -191,4 +191,19 @@ describe('relay configuration client', () => {
     expect(client.typesafeNamed()).toBe(false)
     expect(request).toHaveBeenCalledTimes(1)
   })
+
+  test('gives up after three seconds when the keychain never returns the user ID', async () => {
+    vi.useFakeTimers()
+    const db = database()
+    const storage = identityStorage()
+    storage.getItemAsync.mockImplementation(() => new Promise<string | null>(() => {}))
+    const request = vi.fn(async () => Response.json(remoteConfig))
+    const client = createConfigClient(clientPorts(db, { storage, request }))
+
+    const refreshing = client.refresh()
+    await vi.advanceTimersByTimeAsync(3_000)
+
+    expect((await refreshing).typesafeNamed).toBe(false)
+    expect(request).not.toHaveBeenCalled()
+  })
 })
