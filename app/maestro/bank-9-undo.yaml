@@ -1,0 +1,60 @@
+appId: com.m1ku.turn
+name: Phrase bank undo after one minute
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+    direction: DOWN
+    speed: 10
+- tapOn: Chat
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Delete
+      below: 'Hi, how are you\?'
+      above: "I'm good, thanks"
+    direction: DOWN
+- tapOn:
+    text: Delete
+    below: 'Hi, how are you\?'
+    above: "I'm good, thanks"
+- extendedWaitUntil:
+    visible: Phrase deleted
+    timeout: 10000
+- assertNotVisible: 'Hi, how are you\?'
+- assertVisible: Undo
+- takeScreenshot: bank-9-undo-staged
+- runScript: wait-one-minute.js
+- assertVisible: Phrase deleted
+- assertVisible: Undo
+- takeScreenshot: bank-9-undo-after-one-minute
+- tapOn: Undo
+- scrollUntilVisible:
+    element: 'Hi, how are you\?'
+    direction: UP
+    speed: 10
+- extendedWaitUntil:
+    visible: 'Hi, how are you\?'
+    timeout: 10000
+- waitForAnimationToEnd
+- assertNotVisible: Phrase deleted
+- takeScreenshot: bank-9-undo-restored

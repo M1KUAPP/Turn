@@ -1,0 +1,103 @@
+appId: com.m1ku.turn
+name: Phrase bank persistence
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-1-persistence-categories
+- scrollUntilVisible:
+    element: Chat
+    direction: DOWN
+    speed: 10
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-1-persistence-chat
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: 'Hi, how are you\?'
+      above: "I'm good, thanks"
+    direction: DOWN
+- tapOn:
+    text: Edit
+    below: 'Hi, how are you\?'
+    above: "I'm good, thanks"
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- takeScreenshot: bank-1-persistence-edit-form
+- tapOn:
+    text: Phrase
+    below: Phrase
+- eraseText: 30
+- inputText: Hi from my words
+- tapOn: Save
+- scrollUntilVisible:
+    element: Hi from my words
+    direction: DOWN
+- extendedWaitUntil:
+    visible: Hi from my words
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Hi from my words
+      above: "I'm good, thanks"
+    direction: DOWN
+- assertVisible:
+    text: Hi from my words
+    above: "I'm good, thanks"
+- takeScreenshot: bank-1-persistence-edited
+- launchApp
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+    direction: DOWN
+    speed: 10
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Hi from my words
+    direction: DOWN
+- assertVisible: Hi from my words
+- takeScreenshot: bank-1-persistence-after-relaunch

@@ -1,0 +1,157 @@
+appId: com.m1ku.turn
+name: Phrase bank grid updates
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+    direction: DOWN
+    speed: 10
+- tapOn: Chat
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: 'Hi, how are you\?'
+      above: "I'm good, thanks"
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Edit
+    below: 'Hi, how are you\?'
+    above: "I'm good, thanks"
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- tapOn:
+    text: Phrase
+    below: Phrase
+- eraseText: 30
+- inputText: My greeting
+- tapOn: Save
+- scrollUntilVisible:
+    element: My greeting
+    direction: DOWN
+    speed: 10
+- extendedWaitUntil:
+    visible: My greeting
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: Edit
+      below: "I'm good, thanks"
+      above: Good morning
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Edit
+    below: "I'm good, thanks"
+    above: Good morning
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- tapOn:
+    text: Phrase
+    below: Phrase
+- eraseText: 30
+- inputText: I'm doing well
+- tapOn: Save
+- scrollUntilVisible:
+    element: I'm doing well
+    direction: DOWN
+    speed: 10
+- extendedWaitUntil:
+    visible: I'm doing well
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: My greeting
+      above: I'm doing well
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: My greeting
+    above: I'm doing well
+- scrollUntilVisible:
+    element:
+      text: I'm doing well
+      above: Good morning
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: I'm doing well
+    above: Good morning
+- takeScreenshot: bank-4-grid-edits-in-editor
+- tapOn: Phrase bank
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Settings
+- extendedWaitUntil:
+    visible: Settings
+    timeout: 10000
+- waitForAnimationToEnd
+- tapOn: Back
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Chat
+    direction: DOWN
+    speed: 10
+- scrollUntilVisible:
+    element: Chat
+    direction: RIGHT
+    speed: 10
+- tapOn: Chat
+- scrollUntilVisible:
+    element: My greeting
+    direction: DOWN
+- assertVisible: My greeting
+- scrollUntilVisible:
+    element: I'm doing well
+    direction: DOWN
+- assertVisible: I'm doing well
+- takeScreenshot: bank-4-grid-updated

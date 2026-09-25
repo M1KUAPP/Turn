@@ -64,6 +64,8 @@ export function localDay(date: Date): number {
 
 export function createBankStore(db: BankDatabase, starter: StarterBank, now: () => Date = () => new Date()) {
   const listeners = new Set<() => void>()
+  const stagedPhraseIds = new Set<string>()
+  const stagedStack: string[] = []
   const notify = () => {
     for (const listener of listeners) listener()
   }
@@ -123,6 +125,141 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       return db.getAllAsync<Category>(
         "SELECT id, name, position, fixed FROM category WHERE id != 'strip' ORDER BY position, id"
       )
+    },
+    async addCategory(name: string): Promise<Category> {
+      const trimmed = name.trim()
+      if (trimmed.length < 1) throw new Error('Name is required')
+      if (trimmed.length > 40) throw new Error('Name is too long')
+
+      let result!: Category
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const catCount = await tx.getFirstAsync<{ count: number }>('SELECT COUNT(*) AS count FROM category')
+        const typedExists = await tx.getFirstAsync<{ id: string }>("SELECT id FROM category WHERE id = 'typed'")
+        const effectiveCount = (catCount?.count ?? 0) + (typedExists ? 0 : 1)
+        if (effectiveCount >= 12) throw new Error('Too many categories')
+
+        const maxPos = await tx.getFirstAsync<{ max_pos: number | null }>(
+          'SELECT MAX(position) AS max_pos FROM category'
+        )
+        const position = (maxPos?.max_pos ?? -1) + 1
+        const id =
+          typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+            ? crypto.randomUUID()
+            : `category-${now().getTime()}-${Math.random().toString(36).slice(2, 9)}`
+
+        await tx.runAsync('INSERT INTO category (id, name, position, fixed) VALUES (?, ?, ?, 0)', id, trimmed, position)
+        result = { id, name: trimmed, position, fixed: 0 }
+      })
+
+      notify()
+
+      return result
+    },
+    async renameCategory(id: string, name: string): Promise<void> {
+      const trimmed = name.trim()
+      if (trimmed.length < 1) throw new Error('Name is required')
+      if (trimmed.length > 40) throw new Error('Name is too long')
+      if (id === 'strip') throw new Error('Cannot rename strip')
+
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const category = await tx.getFirstAsync<{ id: string; name: string }>(
+          'SELECT id, name FROM category WHERE id = ?',
+          id
+        )
+        if (!category) throw new Error('Unknown category')
+        if (category.name === trimmed) return
+        await tx.runAsync('UPDATE category SET name = ? WHERE id = ?', trimmed, id)
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+    },
+    async moveCategory(id: string, direction: -1 | 1): Promise<void> {
+      if (id === 'strip') throw new Error('Cannot move strip')
+      if (id === 'quick') throw new Error('Quick cannot be moved')
+
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const rows = await tx.getAllAsync<{ id: string; position: number }>(
+          "SELECT id, position FROM category WHERE id != 'strip' ORDER BY position, id"
+        )
+        const index = rows.findIndex((row) => row.id === id)
+        if (index === -1) throw new Error('Unknown category')
+        const neighbor = rows[index + direction]
+        if (!neighbor) return
+        if (neighbor.id === 'quick') throw new Error('Quick must stay first')
+        if (rows[index].position === neighbor.position) return
+        await tx.runAsync('UPDATE category SET position = ? WHERE id = ?', neighbor.position, id)
+        await tx.runAsync('UPDATE category SET position = ? WHERE id = ?', rows[index].position, neighbor.id)
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+    },
+    async deleteCategory(id: string, destinationId?: string): Promise<void> {
+      if (id === 'strip' || id === 'quick' || id === 'body-pain') {
+        throw new Error('Category cannot be deleted')
+      }
+
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const category = await tx.getFirstAsync<{ id: string; fixed: number }>(
+          'SELECT id, fixed FROM category WHERE id = ?',
+          id
+        )
+        if (!category) throw new Error('Unknown category')
+        if (category.fixed === 1) throw new Error('Category cannot be deleted')
+
+        const phraseCountRow = await tx.getFirstAsync<{ count: number }>(
+          'SELECT COUNT(*) AS count FROM phrase WHERE category_id = ?',
+          id
+        )
+        const phraseCount = phraseCountRow?.count ?? 0
+
+        if (phraseCount > 0) {
+          if (!destinationId) throw new Error('Destination category is required')
+          if (destinationId === id) throw new Error('Destination cannot be the same category')
+          if (destinationId === 'strip') throw new Error('Cannot move phrases to strip')
+
+          const dest = await tx.getFirstAsync<{ id: string }>('SELECT id FROM category WHERE id = ?', destinationId)
+          if (!dest) throw new Error('Unknown destination category')
+
+          const maxPos = await tx.getFirstAsync<{ max_pos: number | null }>(
+            'SELECT MAX(position) AS max_pos FROM phrase WHERE category_id = ?',
+            destinationId
+          )
+          let startPos = (maxPos?.max_pos ?? -1) + 1
+
+          const phrases = await tx.getAllAsync<{ id: string }>(
+            'SELECT id FROM phrase WHERE category_id = ? ORDER BY position, id',
+            id
+          )
+          for (const phrase of phrases) {
+            await tx.runAsync(
+              'UPDATE phrase SET category_id = ?, position = ? WHERE id = ?',
+              destinationId,
+              startPos++,
+              phrase.id
+            )
+          }
+        }
+
+        await tx.runAsync('DELETE FROM category WHERE id = ?', id)
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
     },
     places() {
       return db.getAllAsync<Place>('SELECT id, name, position FROM place ORDER BY position, id')
@@ -250,16 +387,18 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         notify()
       }
     },
-    phrases(categoryId: string) {
-      return db.getAllAsync<Phrase>(
+    async phrases(categoryId: string) {
+      const rows = await db.getAllAsync<Phrase>(
         categoryId === 'all'
           ? "SELECT p.* FROM phrase p JOIN category c ON c.id = p.category_id WHERE c.id != 'strip' ORDER BY c.position, p.position, p.id"
           : 'SELECT * FROM phrase WHERE category_id = ? ORDER BY position, id',
         ...(categoryId === 'all' ? [] : [categoryId])
       )
+      if (stagedPhraseIds.size === 0) return rows
+      return rows.filter((p) => !stagedPhraseIds.has(p.id))
     },
     async rankingData(): Promise<{ bank: RankablePhrase[]; taps: Map<string, number> }> {
-      const [phrases, ties, counts] = await Promise.all([
+      const [allPhrases, ties, counts] = await Promise.all([
         db.getAllAsync<Phrase>(
           "SELECT p.* FROM phrase p JOIN category c ON c.id = p.category_id WHERE c.id != 'strip' ORDER BY c.position, p.position, p.id"
         ),
@@ -269,6 +408,7 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
           localDay(now()) - 29
         )
       ])
+      const phrases = stagedPhraseIds.size === 0 ? allPhrases : allPhrases.filter((p) => !stagedPhraseIds.has(p.id))
       const places = new Map<string, string[]>()
       for (const tie of ties) {
         const list = places.get(tie.phrase_id) ?? []
@@ -285,6 +425,211 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         taps: new Map(counts.map(({ phrase_id, count }) => [phrase_id, count]))
       }
     },
+    async addPhrase(categoryId: string, text: string, placeIds: string[] = []): Promise<Phrase> {
+      const trimmed = text.trim()
+      if (trimmed.length < 1) throw new Error('Text is required')
+      if (trimmed.length > 200) throw new Error('Text is too long')
+      if (categoryId === 'strip') throw new Error('Cannot add phrases to strip')
+
+      let result!: Phrase
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const cat = await tx.getFirstAsync<{ id: string }>('SELECT id FROM category WHERE id = ?', categoryId)
+        if (!cat) throw new Error('Unknown category')
+
+        const maxPos = await tx.getFirstAsync<{ max_pos: number | null }>(
+          'SELECT MAX(position) AS max_pos FROM phrase WHERE category_id = ?',
+          categoryId
+        )
+        const position = (maxPos?.max_pos ?? -1) + 1
+        const id =
+          typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+            ? crypto.randomUUID()
+            : `phrase-${now().getTime()}-${Math.random().toString(36).slice(2, 9)}`
+        const createdAt = now().getTime()
+
+        await tx.runAsync(
+          'INSERT INTO phrase (id, category_id, text, position, fixed, reviewed, created_at) VALUES (?, ?, ?, ?, 0, 1, ?)',
+          id,
+          categoryId,
+          trimmed,
+          position,
+          createdAt
+        )
+
+        if (placeIds && placeIds.length > 0) {
+          const uniquePlaces = Array.from(new Set(placeIds))
+          for (const placeId of uniquePlaces) {
+            await tx.runAsync('INSERT INTO phrase_place (phrase_id, place_id) VALUES (?, ?)', id, placeId)
+          }
+        }
+
+        result = {
+          id,
+          category_id: categoryId,
+          text: trimmed,
+          position,
+          fixed: 0,
+          reviewed: 1,
+          created_at: createdAt
+        }
+      })
+
+      notify()
+
+      return result
+    },
+    async phrasePlaces(id: string): Promise<string[]> {
+      const rows = await db.getAllAsync<{ place_id: string }>(
+        'SELECT place_id FROM phrase_place WHERE phrase_id = ? ORDER BY place_id',
+        id
+      )
+      return rows.map((r) => r.place_id)
+    },
+    async editPhrase(id: string, updates: { text?: string; categoryId?: string; placeIds?: string[] }): Promise<void> {
+      if (stagedPhraseIds.has(id)) throw new Error('Unknown phrase')
+
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const phrase = await tx.getFirstAsync<Phrase>('SELECT * FROM phrase WHERE id = ?', id)
+        if (!phrase) throw new Error('Unknown phrase')
+
+        let newText = phrase.text
+        if (updates.text !== undefined) {
+          const trimmed = updates.text.trim()
+          if (trimmed.length < 1) throw new Error('Text is required')
+          if (trimmed.length > 200) throw new Error('Text is too long')
+          if (phrase.fixed === 1 && trimmed !== phrase.text) {
+            throw new Error('Fixed phrases cannot be renamed')
+          }
+          newText = trimmed
+        }
+
+        let newCategoryId = phrase.category_id
+        let newPosition = phrase.position
+        if (updates.categoryId !== undefined && updates.categoryId !== phrase.category_id) {
+          if (phrase.fixed === 1) throw new Error('Fixed phrases cannot be moved out of Quick')
+          if (phrase.category_id === 'strip') throw new Error('Cannot move strip phrases')
+          if (updates.categoryId === 'strip') throw new Error('Cannot move phrases to strip')
+
+          const dest = await tx.getFirstAsync<{ id: string }>(
+            'SELECT id FROM category WHERE id = ?',
+            updates.categoryId
+          )
+          if (!dest) throw new Error('Unknown category')
+
+          const maxPos = await tx.getFirstAsync<{ max_pos: number | null }>(
+            'SELECT MAX(position) AS max_pos FROM phrase WHERE category_id = ?',
+            updates.categoryId
+          )
+          newPosition = (maxPos?.max_pos ?? -1) + 1
+          newCategoryId = updates.categoryId
+        }
+
+        const textChanged = newText !== phrase.text
+        const categoryChanged = newCategoryId !== phrase.category_id
+
+        let placesChanged = false
+        if (updates.placeIds !== undefined) {
+          const currentPlaces = await tx.getAllAsync<{ place_id: string }>(
+            'SELECT place_id FROM phrase_place WHERE phrase_id = ? ORDER BY place_id',
+            id
+          )
+          const currentPlaceIds = currentPlaces.map((p) => p.place_id).sort()
+          const uniqueNew = Array.from(new Set(updates.placeIds)).sort()
+          if (currentPlaceIds.length !== uniqueNew.length || currentPlaceIds.some((p, i) => p !== uniqueNew[i])) {
+            placesChanged = true
+            await tx.runAsync('DELETE FROM phrase_place WHERE phrase_id = ?', id)
+            for (const placeId of uniqueNew) {
+              await tx.runAsync('INSERT INTO phrase_place (phrase_id, place_id) VALUES (?, ?)', id, placeId)
+            }
+          }
+        }
+
+        if (textChanged || categoryChanged || placesChanged || phrase.reviewed === 0) {
+          await tx.runAsync(
+            'UPDATE phrase SET text = ?, category_id = ?, position = ?, reviewed = 1 WHERE id = ?',
+            newText,
+            newCategoryId,
+            newPosition,
+            id
+          )
+          notifyNeeded = true
+        }
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+    },
+    async movePhrase(id: string, direction: -1 | 1): Promise<void> {
+      if (stagedPhraseIds.has(id)) throw new Error('Unknown phrase')
+
+      let notifyNeeded = false
+
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        const phrase = await tx.getFirstAsync<Phrase>('SELECT * FROM phrase WHERE id = ?', id)
+        if (!phrase) throw new Error('Unknown phrase')
+        if (phrase.category_id === 'strip') throw new Error('Cannot move strip phrases')
+
+        const allRows = await tx.getAllAsync<Phrase>(
+          'SELECT id, position FROM phrase WHERE category_id = ? ORDER BY position, id',
+          phrase.category_id
+        )
+        const rows = stagedPhraseIds.size === 0 ? allRows : allRows.filter((p) => !stagedPhraseIds.has(p.id))
+        const index = rows.findIndex((row) => row.id === id)
+        if (index === -1) throw new Error('Unknown phrase')
+        const neighbor = rows[index + direction]
+        if (!neighbor || rows[index].position === neighbor.position) return
+
+        await tx.runAsync('UPDATE phrase SET position = ? WHERE id = ?', neighbor.position, id)
+        await tx.runAsync('UPDATE phrase SET position = ? WHERE id = ?', rows[index].position, neighbor.id)
+        notifyNeeded = true
+      })
+
+      if (notifyNeeded) {
+        notify()
+      }
+    },
+    async deletePhrase(id: string): Promise<void> {
+      if (stagedPhraseIds.has(id)) throw new Error('Unknown phrase')
+
+      const phrase = await db.getFirstAsync<Phrase>('SELECT * FROM phrase WHERE id = ?', id)
+      if (!phrase) throw new Error('Unknown phrase')
+      if (phrase.fixed === 1) throw new Error('Fixed phrases cannot be deleted')
+      if (phrase.category_id === 'strip') throw new Error('Cannot delete strip phrases')
+
+      stagedPhraseIds.add(id)
+      stagedStack.push(id)
+      notify()
+    },
+    async undoDelete(): Promise<Phrase | null> {
+      const lastId = stagedStack.pop()
+      if (!lastId) return null
+
+      stagedPhraseIds.delete(lastId)
+      const phrase = await db.getFirstAsync<Phrase>('SELECT * FROM phrase WHERE id = ?', lastId)
+      notify()
+      return phrase ?? null
+    },
+    async commitDeletes(): Promise<void> {
+      if (stagedPhraseIds.size === 0) return
+
+      const toDelete = Array.from(stagedPhraseIds)
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        for (const id of toDelete) {
+          await tx.runAsync('DELETE FROM phrase WHERE id = ?', id)
+        }
+      })
+
+      stagedPhraseIds.clear()
+      stagedStack.length = 0
+      notify()
+    },
+    hasStagedDeletes(): boolean {
+      return stagedStack.length > 0
+    },
     async recordTap(phraseId: string) {
       await db.runAsync(
         'INSERT INTO tap (phrase_id, day, count) VALUES (?, ?, 1) ON CONFLICT (phrase_id, day) DO UPDATE SET count = count + 1',
@@ -299,10 +644,6 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         day
       )
       return row?.count ?? 0
-    },
-    async updatePhraseText(phraseId: string, text: string) {
-      await db.runAsync('UPDATE phrase SET text = ?, reviewed = 1 WHERE id = ?', text, phraseId)
-      notify()
     },
     async saveTypedPhrase(text: string): Promise<Phrase | null> {
       const trimmed = text.trim()
@@ -423,6 +764,7 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
 
       const matches: Phrase[] = []
       for (const row of rows) {
+        if (stagedPhraseIds.has(row.id)) continue
         const phraseWords = row.text.match(/[\p{L}\p{N}']+/gu) || []
         const hasPrefixMatch = phraseWords.some((w) => {
           const lower = w.toLowerCase()

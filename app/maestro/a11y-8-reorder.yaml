@@ -1,0 +1,112 @@
+appId: com.m1ku.turn
+name: Phrase bank reorder controls
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Move down
+      below: Care and help
+      above: Body and pain
+    direction: DOWN
+    speed: 10
+- takeScreenshot: a11y-8-reorder-category-controls
+- tapOn:
+    text: Move down
+    below: Care and help
+    above: Body and pain
+- scrollUntilVisible:
+    element:
+      text: Body and pain
+      above: Care and help
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: Body and pain
+    above: Care and help
+- takeScreenshot: a11y-8-reorder-category-moved
+- scrollUntilVisible:
+    element:
+      text: Move up
+      below: Care and help
+      above: Food and drink
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Move up
+    below: Care and help
+    above: Food and drink
+- scrollUntilVisible:
+    element:
+      text: Care and help
+      above: Body and pain
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: Care and help
+    above: Body and pain
+- scrollUntilVisible:
+    element: Quick
+    direction: UP
+    speed: 10
+- tapOn: Quick
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- tapOn: Edit
+- scrollUntilVisible:
+    element:
+      text: Move down
+      below: "I don't know"
+      above: I have something to say
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Move down
+    below: "I don't know"
+    above: I have something to say
+- scrollUntilVisible:
+    element:
+      text: I have something to say
+      above: "I don't know"
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: I have something to say
+    above: "I don't know"
+- takeScreenshot: a11y-8-reorder-phrase-moved
+- scrollUntilVisible:
+    element:
+      text: Move up
+      below: "I don't know"
+      above: Add phrase
+    direction: DOWN
+    speed: 10
+- tapOn:
+    text: Move up
+    below: "I don't know"
+    above: Add phrase
+- scrollUntilVisible:
+    element:
+      text: "I don't know"
+      above: I have something to say
+    direction: UP
+    speed: 10
+- assertVisible:
+    text: "I don't know"
+    above: I have something to say
+- takeScreenshot: a11y-8-reorder-phrase-restored

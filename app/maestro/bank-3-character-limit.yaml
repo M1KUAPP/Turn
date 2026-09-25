@@ -1,0 +1,66 @@
+appId: com.m1ku.turn
+name: Phrase bank character limit
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Quick
+    direction: UP
+    speed: 10
+- tapOn: Quick
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Add phrase
+    direction: DOWN
+    speed: 10
+- tapOn: Add phrase
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- takeScreenshot: bank-3-character-limit-form
+- tapOn:
+    text: Phrase
+    below: Phrase
+- inputText: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- scrollUntilVisible:
+    element: 0 characters left
+    direction: DOWN
+- scrollUntilVisible:
+    element: '^x{200}$'
+    direction: DOWN
+    speed: 10
+- assertVisible: 0 characters left
+- assertVisible: '^x{200}$'
+- assertNotVisible: '^x{201}$'
+- takeScreenshot: bank-3-character-limit-boundary
+- tapOn: Save
+- scrollUntilVisible:
+    element: '^x{200}$'
+    direction: DOWN
+    speed: 10
+- extendedWaitUntil:
+    visible: '^x{200}$'
+    timeout: 10000
+- takeScreenshot: bank-3-character-limit-saved
