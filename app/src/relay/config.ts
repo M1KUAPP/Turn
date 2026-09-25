@@ -52,12 +52,19 @@ function isConfig(value: unknown): value is Config {
 
 export function createConfigClient(ports: ConfigPorts) {
   let current = defaultConfig
+  let relayStatus: 'working' | 'unreachable' | 'off' = 'unreachable'
   let userId: string | null = null
   let userIdPromise: Promise<string> | null = null
   const listeners = new Set<() => void>()
 
   const notify = () => {
     for (const listener of listeners) listener()
+  }
+
+  const setStatus = (next: typeof relayStatus) => {
+    if (relayStatus === next) return
+    relayStatus = next
+    notify()
   }
 
   async function getUserId(): Promise<string> {
@@ -116,7 +123,10 @@ export function createConfigClient(ports: ConfigPorts) {
     } catch {
       // A local storage failure leaves the in-memory copy available.
     }
-    if (!ports.relayUrl) return cached
+    if (!ports.relayUrl) {
+      setStatus('unreachable')
+      return cached
+    }
 
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 3_000)
@@ -135,14 +145,22 @@ export function createConfigClient(ports: ConfigPorts) {
         headers: headers(),
         signal: controller.signal
       })
-      if (!response.ok) return cached
+      if (!response.ok) {
+        setStatus('unreachable')
+        return cached
+      }
       const body: unknown = await response.json()
-      if (!isConfig(body)) return cached
+      if (!isConfig(body)) {
+        setStatus('unreachable')
+        return cached
+      }
       await ports.setSetting(configKey, JSON.stringify(body))
       current = body
+      relayStatus = body.jevOn ? 'working' : 'off'
       notify()
       return current
     } catch {
+      setStatus('unreachable')
       return cached
     } finally {
       clearTimeout(timeout)
@@ -152,6 +170,9 @@ export function createConfigClient(ports: ConfigPorts) {
   return {
     headers,
     read,
+    snapshot: () => current,
+    status: () => relayStatus,
+    lineResult: setStatus,
     typesafeNamed: () => current.typesafeNamed,
     refresh,
     subscribe(listener: () => void) {
