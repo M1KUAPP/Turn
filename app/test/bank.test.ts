@@ -95,6 +95,30 @@ describe('bank store', () => {
     unsubscribe()
   })
 
+  test('reads the rankable bank with place ties and recent tap counts', async () => {
+    const date = new Date(2026, 8, 23)
+    const store = createBankStore(database(), starterBank, () => date)
+    await store.initialize()
+    await store.recordTap('it-was-hard')
+    await store.recordTap('it-was-hard')
+
+    const first = await store.rankingData()
+    expect(first.bank.some((phrase) => phrase.id === 'wait-im-typing')).toBe(false)
+    expect(first.bank.find((phrase) => phrase.id === 'it-was-hard')).toMatchObject({
+      text: 'It was hard',
+      places: ['clinic'],
+      fixed: false
+    })
+    expect(first.bank.find((phrase) => phrase.id === 'yes')?.fixed).toBe(true)
+    expect(first.taps.get('it-was-hard')).toBe(2)
+
+    await store.updatePhraseText('it-was-hard', 'Physio was hard')
+    const typed = await store.saveTypedPhrase('The new nurse is kind')
+    const next = await store.rankingData()
+    expect(next.bank.find((phrase) => phrase.id === 'it-was-hard')?.text).toBe('Physio was hard')
+    expect(next.bank.find((phrase) => phrase.id === typed?.id)?.text).toBe('The new nurse is kind')
+  })
+
   test('the debug action seeds 2,000 phrases without duplicating them', async () => {
     vi.stubGlobal('__DEV__', true)
     try {
