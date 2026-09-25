@@ -3,6 +3,16 @@ name: Settings
 ---
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
 - tapOn: Settings
-- assertVisible: Settings
-- takeScreenshot: settings-screen
+- extendedWaitUntil:
+    visible: Your words
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: settings-top
+- scrollUntilVisible:
+    element: Erase all data
+- takeScreenshot: settings-bottom
