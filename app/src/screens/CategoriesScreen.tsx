@@ -15,6 +15,7 @@ import { SymbolView } from 'expo-symbols'
 import type { Category } from '../bank/store'
 import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
+import SheetHeader from './SheetHeader'
 import TurnText from './TurnText'
 
 type Editor = { id: string | null; name: string }
@@ -313,47 +314,16 @@ export default function CategoriesScreen() {
       >
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
           <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
-            <View style={{ gap: 4, marginBottom: 12 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Cancel"
-                  onPress={() => {
-                    setEditor(null)
-                    setError(null)
-                  }}
-                  style={{ minWidth: 44, minHeight: 44, justifyContent: 'center' }}
-                >
-                  <TurnText kind="body" boldText={boldText} style={{ color: colors.accent }}>
-                    Cancel
-                  </TurnText>
-                </Pressable>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Save"
-                  accessibilityState={{ disabled: !editor?.name.trim() || saving }}
-                  disabled={!editor?.name.trim() || saving}
-                  onPress={() => void save()}
-                  style={{
-                    minWidth: 44,
-                    minHeight: 44,
-                    alignItems: 'flex-end',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <TurnText
-                    kind="body"
-                    boldText={boldText}
-                    style={{ color: !editor?.name.trim() || saving ? colors['ink-secondary'] : colors.accent }}
-                  >
-                    Save
-                  </TurnText>
-                </Pressable>
-              </View>
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, textAlign: 'center' }}>
-                {editor?.id ? 'Rename category' : 'Add category'}
-              </TurnText>
-            </View>
+            <SheetHeader
+              title={editor?.id ? 'Rename category' : 'Add category'}
+              boldText={boldText}
+              canSave={!!editor?.name.trim() && !saving}
+              onCancel={() => {
+                setEditor(null)
+                setError(null)
+              }}
+              onSave={() => void save()}
+            />
             <ScrollView
               style={{ flex: 1 }}
               contentContainerStyle={{ gap: 20, paddingBottom: 16 }}
