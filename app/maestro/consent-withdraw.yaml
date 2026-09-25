@@ -47,7 +47,6 @@ name: Consent withdrawal during Listen
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
-    direction: UP
 - assertVisible: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
 - scrollUntilVisible:
     element: Withdraw

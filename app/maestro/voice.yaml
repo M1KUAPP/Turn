@@ -130,6 +130,8 @@ name: Voice
       - tapOn: Allow
 - waitForAnimationToEnd
 - scrollUntilVisible:
+    visibilityPercentage: 50
+    centerElement: true
     element: '.*There''s no Personal Voice Turn can use on this iPhone\. If you''ve made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice\..*'
 - assertVisible: '.*There''s no Personal Voice Turn can use on this iPhone\. If you''ve made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice\..*'
 - takeScreenshot: voice-personal-unavailable
