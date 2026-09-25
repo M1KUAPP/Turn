@@ -555,6 +555,8 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   ] as const
 
   // The bar's four buttons share one row when their words fit, then two rows, then one column (DESIGN, the bottom bar).
+  // Measured with 6-point sides, the four fit one row at the default size on a 6.1-inch iPhone, and a row shares
+  // what's left, so two rows never push Yes and No under the bar there.
   const barIcon = symbolSize(18)
   const barSpace = width - 32
   const barMeasures = [
@@ -635,12 +637,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           {selectedPlace?.name ?? 'Place'}
         </TurnText>
       </Pressable>
+      {/* In one column, End takes its own row, so neither label is cut beside the other. */}
       <View
         style={{
-          flexDirection: 'row',
+          flexDirection: oneControlColumn ? 'column' : 'row',
           width: oneControlColumn ? width - 32 : undefined,
-          gap: 6,
-          alignItems: 'center'
+          gap: oneControlColumn ? 8 : 6,
+          alignItems: oneControlColumn ? 'stretch' : 'center'
         }}
       >
         <Pressable
@@ -651,7 +654,6 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           disabled={listening.active}
           onPress={() => listen.start()}
           style={({ pressed }) => ({
-            flex: oneControlColumn ? 1 : undefined,
             minHeight: oneControlColumn ? controlHeight : 44,
             minWidth: 44,
             flexDirection: 'row',
@@ -691,6 +693,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             style={({ pressed }) => ({
               minHeight: oneControlColumn ? controlHeight : 44,
               minWidth: 52,
+              paddingHorizontal: 12,
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 22,
@@ -808,7 +811,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                       flexDirection: 'row',
                       alignItems: 'center',
                       gap: 4,
-                      paddingHorizontal: 10,
+                      paddingHorizontal: 6,
                       borderWidth: 2
                     }}
                   >
@@ -832,7 +835,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                     width: barLayout === 'column' ? barSpace : barLayout === 'grid' ? (barSpace - 8) / 2 : undefined,
                     minHeight: controlHeight,
                     minWidth: 44,
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 6,
                     borderRadius: 22,
                     borderWidth: 2,
                     borderColor: colors.edge,

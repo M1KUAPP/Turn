@@ -72,7 +72,8 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           paddingHorizontal: 12,
           paddingVertical: 8,
           height: Math.max(minInputHeight, inputHeight),
-          minHeight: 44,
+          // On a short screen the field gives up lines down to two, then scrolls; it never cuts a line it shows.
+          minHeight: Math.min(Math.max(minInputHeight, inputHeight), lineHeight * 2 + 20),
           maxHeight: maxInputHeight,
           flexShrink: 1,
           textAlignVertical: 'top'
