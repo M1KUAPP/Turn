@@ -330,7 +330,7 @@
       "_origin": "ast",
       "id": "app_package_dependencies_expo_build_properties",
       "community": 272,
-      "community_name": "embeddings.ts",
+      "community_name": "request.ts",
       "norm_label": "expo-build-properties"
     },
     {
@@ -341,7 +341,7 @@
       "_origin": "ast",
       "id": "expo_build_properties",
       "community": 272,
-      "community_name": "embeddings.ts",
+      "community_name": "request.ts",
       "norm_label": "expo-build-properties"
     },
     {
@@ -396,7 +396,7 @@
       "_origin": "ast",
       "id": "app_package_dependencies_expo_linking",
       "community": 278,
-      "community_name": "gazetteer.ts",
+      "community_name": "SettingsScreen.tsx",
       "norm_label": "expo-linking"
     },
     {
@@ -407,7 +407,7 @@
       "_origin": "ast",
       "id": "expo_linking",
       "community": 278,
-      "community_name": "gazetteer.ts",
+      "community_name": "SettingsScreen.tsx",
       "norm_label": "expo-linking"
     },
     {
@@ -418,7 +418,7 @@
       "_origin": "ast",
       "id": "app_package_dependencies_expo_router",
       "community": 287,
-      "community_name": "replay.ts",
+      "community_name": "turn-voice/package.json",
       "norm_label": "expo-router"
     },
     {
@@ -429,7 +429,7 @@
       "_origin": "ast",
       "id": "expo_router",
       "community": 287,
-      "community_name": "replay.ts",
+      "community_name": "turn-voice/package.json",
       "norm_label": "expo-router"
     },
     {
@@ -616,7 +616,7 @@
       "_origin": "ast",
       "id": "app_package_dependencies_react_native_safe_area_context",
       "community": 293,
-      "community_name": "report.test.ts",
+      "community_name": "expo-router",
       "norm_label": "react-native-safe-area-context"
     },
     {
@@ -627,7 +627,7 @@
       "_origin": "ast",
       "id": "react_native_safe_area_context",
       "community": 293,
-      "community_name": "report.test.ts",
+      "community_name": "expo-router",
       "norm_label": "react-native-safe-area-context"
     },
     {
@@ -923,8 +923,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_app_layout",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "_layout.tsx"
     },
     {
@@ -934,8 +934,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_app_layout_rootlayout",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "rootlayout()"
     },
     {
@@ -946,7 +946,7 @@
       "_origin": "ast",
       "id": "app_src_app_index",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "app/index.tsx"
     },
     {
@@ -957,7 +957,7 @@
       "_origin": "ast",
       "id": "app_src_app_index_homeroute",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "homeroute()"
     },
     {
@@ -967,8 +967,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_app_settings_index",
-      "community": 273,
-      "community_name": "calibration.ts",
+      "community": 224,
+      "community_name": "theme.ts",
       "norm_label": "settings/index.tsx"
     },
     {
@@ -979,7 +979,7 @@
       "_origin": "ast",
       "id": "app_src_app_settings_licenses",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "licenses.tsx"
     },
     {
@@ -990,7 +990,7 @@
       "_origin": "ast",
       "id": "app_src_app_settings_places",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "places.tsx"
     },
     {
@@ -1001,8 +1001,19 @@
       "_origin": "ast",
       "id": "app_src_app_settings_privacy",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "privacy.tsx"
+    },
+    {
+      "label": "voice.tsx",
+      "file_type": "code",
+      "source_file": "app/src/app/settings/voice.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_src_app_settings_voice",
+      "community": 224,
+      "community_name": "theme.ts",
+      "norm_label": "voice.tsx"
     },
     {
       "label": "bank/store.ts",
@@ -1100,7 +1111,7 @@
       "_origin": "ast",
       "id": "app_src_constants_theme",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "theme.ts"
     },
     {
@@ -1110,8 +1121,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_src_constants_theme_colorvalues",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "colorvalues"
     },
     {
@@ -1122,7 +1133,7 @@
       "_origin": "ast",
       "id": "app_src_constants_theme_colorname",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "colorname"
     },
     {
@@ -1133,7 +1144,7 @@
       "_origin": "ast",
       "id": "app_src_constants_theme_colors",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "colors"
     },
     {
@@ -1144,7 +1155,7 @@
       "_origin": "ast",
       "id": "app_src_constants_theme_typography",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "typography"
     },
     {
@@ -1155,7 +1166,7 @@
       "_origin": "ast",
       "id": "app_src_constants_theme_textstyle",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "textstyle()"
     },
     {
@@ -1166,7 +1177,7 @@
       "_origin": "ast",
       "id": "app_src_content_privacy_notice",
       "community": 282,
-      "community_name": "PrivacyNoticeScreen.tsx",
+      "community_name": "privacy-notice.ts",
       "norm_label": "privacy-notice.ts"
     },
     {
@@ -1177,7 +1188,7 @@
       "_origin": "ast",
       "id": "app_src_content_privacy_notice_noticesection",
       "community": 282,
-      "community_name": "PrivacyNoticeScreen.tsx",
+      "community_name": "privacy-notice.ts",
       "norm_label": "noticesection"
     },
     {
@@ -1188,7 +1199,7 @@
       "_origin": "ast",
       "id": "app_src_content_privacy_notice_notice",
       "community": 282,
-      "community_name": "PrivacyNoticeScreen.tsx",
+      "community_name": "privacy-notice.ts",
       "norm_label": "notice()"
     },
     {
@@ -1199,7 +1210,7 @@
       "_origin": "ast",
       "id": "app_src_content_privacy_notice_privacynotices",
       "community": 282,
-      "community_name": "PrivacyNoticeScreen.tsx",
+      "community_name": "privacy-notice.ts",
       "norm_label": "privacynotices"
     },
     {
@@ -1210,7 +1221,7 @@
       "_origin": "ast",
       "id": "app_src_content_privacy_notice_selectprivacynotice",
       "community": 282,
-      "community_name": "PrivacyNoticeScreen.tsx",
+      "community_name": "privacy-notice.ts",
       "norm_label": "selectprivacynotice()"
     },
     {
@@ -1221,7 +1232,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "gazetteer.ts"
     },
     {
@@ -1232,7 +1243,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_gazetteerbank",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "gazetteerbank"
     },
     {
@@ -1243,7 +1254,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_gazetteerfinder",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "gazetteerfinder"
     },
     {
@@ -1254,7 +1265,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_rebuildstate",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "rebuildstate"
     },
     {
@@ -1265,7 +1276,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_rebuilding",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "rebuilding"
     },
     {
@@ -1276,7 +1287,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_normalize",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "normalize()"
     },
     {
@@ -1287,7 +1298,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_buildgazetteer",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "buildgazetteer()"
     },
     {
@@ -1298,7 +1309,7 @@
       "_origin": "ast",
       "id": "app_src_listen_gazetteer_rebuildgazetteer",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "rebuildgazetteer()"
     },
     {
@@ -1309,7 +1320,7 @@
       "_origin": "ast",
       "id": "app_src_listen_tag_checks",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "tag-checks.ts"
     },
     {
@@ -1320,7 +1331,7 @@
       "_origin": "ast",
       "id": "app_src_listen_tag_checks_tagcheckresult",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "tagcheckresult"
     },
     {
@@ -1331,7 +1342,7 @@
       "_origin": "ast",
       "id": "app_src_listen_tag_checks_runtagchecks",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "runtagchecks()"
     },
     {
@@ -1573,7 +1584,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "naming.ts"
     },
     {
@@ -1584,7 +1595,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_namingdatabase",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "namingdatabase"
     },
     {
@@ -1595,7 +1606,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_identitystorage",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "identitystorage"
     },
     {
@@ -1606,7 +1617,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_namingstore",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "namingstore"
     },
     {
@@ -1617,7 +1628,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_refreshoptions",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "refreshoptions"
     },
     {
@@ -1628,7 +1639,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_createnamingstore",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "createnamingstore()"
     },
     {
@@ -1639,7 +1650,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_getorcreateuserid",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "getorcreateuserid()"
     },
     {
@@ -1650,7 +1661,7 @@
       "_origin": "ast",
       "id": "app_src_relay_naming_refreshnaming",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "refreshnaming()"
     },
     {
@@ -1705,7 +1716,7 @@
       "_origin": "ast",
       "id": "app_src_screens_licensesscreen",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "licensesscreen.tsx"
     },
     {
@@ -1716,7 +1727,7 @@
       "_origin": "ast",
       "id": "app_src_screens_licensesscreen_licenseentry",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "licenseentry"
     },
     {
@@ -1727,7 +1738,7 @@
       "_origin": "ast",
       "id": "app_src_screens_licensesscreen_alllicenses",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "alllicenses"
     },
     {
@@ -1738,7 +1749,7 @@
       "_origin": "ast",
       "id": "app_src_screens_licensesscreen_licensesscreen",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "licensesscreen()"
     },
     {
@@ -1749,7 +1760,7 @@
       "_origin": "ast",
       "id": "app_src_screens_partnerlinecomposer",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "partnerlinecomposer.tsx"
     },
     {
@@ -1760,7 +1771,7 @@
       "_origin": "ast",
       "id": "app_src_screens_partnerlinecomposer_props",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "props"
     },
     {
@@ -1771,7 +1782,7 @@
       "_origin": "ast",
       "id": "app_src_screens_partnerlinecomposer_partnerlinecomposer",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "partnerlinecomposer()"
     },
     {
@@ -1782,7 +1793,7 @@
       "_origin": "ast",
       "id": "app_src_screens_placesscreen",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "placesscreen.tsx"
     },
     {
@@ -1793,7 +1804,7 @@
       "_origin": "ast",
       "id": "app_src_screens_placesscreen_editor",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "editor"
     },
     {
@@ -1804,7 +1815,7 @@
       "_origin": "ast",
       "id": "app_src_screens_placesscreen_placesscreen",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "placesscreen()"
     },
     {
@@ -1815,7 +1826,7 @@
       "_origin": "ast",
       "id": "app_src_screens_privacynoticescreen",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "privacynoticescreen.tsx"
     },
     {
@@ -1826,7 +1837,7 @@
       "_origin": "ast",
       "id": "app_src_screens_privacynoticescreen_privacynoticescreen",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "privacynoticescreen()"
     },
     {
@@ -1836,8 +1847,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_screens_replyrow",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 256,
+      "community_name": "HomeScreen.tsx",
       "norm_label": "replyrow.tsx"
     },
     {
@@ -1847,8 +1858,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_screens_replyrow_reply",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 256,
+      "community_name": "HomeScreen.tsx",
       "norm_label": "reply"
     },
     {
@@ -1858,8 +1869,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_src_screens_replyrow_phrasecolortokens",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 256,
+      "community_name": "HomeScreen.tsx",
       "norm_label": "phrasecolortokens"
     },
     {
@@ -1880,8 +1891,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_src_screens_replyrow_props",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 256,
+      "community_name": "HomeScreen.tsx",
       "norm_label": "props"
     },
     {
@@ -1902,8 +1913,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_src_screens_replyrow_replyrow",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 256,
+      "community_name": "HomeScreen.tsx",
       "norm_label": "replyrow()"
     },
     {
@@ -1913,30 +1924,41 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_screens_settingsscreen",
-      "community": 273,
-      "community_name": "calibration.ts",
+      "community": 224,
+      "community_name": "theme.ts",
       "norm_label": "settingsscreen.tsx"
     },
     {
       "label": "Row",
       "file_type": "code",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "app_src_screens_settingsscreen_row",
-      "community": 273,
-      "community_name": "calibration.ts",
+      "community": 224,
+      "community_name": "theme.ts",
       "norm_label": "row"
+    },
+    {
+      "label": "Section",
+      "file_type": "code",
+      "source_file": "app/src/screens/SettingsScreen.tsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "app_src_screens_settingsscreen_section",
+      "community": 224,
+      "community_name": "theme.ts",
+      "norm_label": "section"
     },
     {
       "label": "SettingsScreen()",
       "file_type": "code",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L14",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "app_src_screens_settingsscreen_settingsscreen",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "settingsscreen()"
     },
     {
@@ -1947,7 +1969,7 @@
       "_origin": "ast",
       "id": "app_src_screens_turntext",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "turntext.tsx"
     },
     {
@@ -1958,7 +1980,7 @@
       "_origin": "ast",
       "id": "app_src_screens_turntext_props",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "props"
     },
     {
@@ -1969,7 +1991,7 @@
       "_origin": "ast",
       "id": "app_src_screens_turntext_turntext",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "turntext()"
     },
     {
@@ -1980,7 +2002,7 @@
       "_origin": "ast",
       "id": "app_src_screens_typedcomposer",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "typedcomposer.tsx"
     },
     {
@@ -1991,7 +2013,7 @@
       "_origin": "ast",
       "id": "app_src_screens_typedcomposer_props",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "props"
     },
     {
@@ -2002,8 +2024,30 @@
       "_origin": "ast",
       "id": "app_src_screens_typedcomposer_typedcomposer",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "typedcomposer()"
+    },
+    {
+      "label": "VoiceScreen.tsx",
+      "file_type": "code",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_src_screens_voicescreen",
+      "community": 224,
+      "community_name": "theme.ts",
+      "norm_label": "voicescreen.tsx"
+    },
+    {
+      "label": "VoiceScreen()",
+      "file_type": "code",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "app_src_screens_voicescreen_voicescreen",
+      "community": 224,
+      "community_name": "theme.ts",
+      "norm_label": "voicescreen()"
     },
     {
       "label": "home-layout.ts",
@@ -2061,10 +2105,21 @@
       "norm_label": "speechport"
     },
     {
+      "label": "SpeechSettingsPort",
+      "file_type": "code",
+      "source_file": "app/src/speech/controller.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_src_speech_controller_speechsettingsport",
+      "community": 234,
+      "community_name": "device.ts",
+      "norm_label": "speechsettingsport"
+    },
+    {
       "label": "SpeechState",
       "file_type": "code",
       "source_file": "app/src/speech/controller.ts",
-      "source_location": "L6",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "app_src_speech_controller_speechstate",
       "community": 234,
@@ -2075,12 +2130,144 @@
       "label": "createSpeechController()",
       "file_type": "code",
       "source_file": "app/src/speech/controller.ts",
-      "source_location": "L8",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "app_src_speech_controller_createspeechcontroller",
       "community": 234,
       "community_name": "device.ts",
       "norm_label": "createspeechcontroller()"
+    },
+    {
+      "label": "voice-settings.ts",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "voice-settings.ts"
+    },
+    {
+      "label": "PersonalVoiceAuthorization",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_personalvoiceauthorization",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "personalvoiceauthorization"
+    },
+    {
+      "label": "AvailableVoice",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_availablevoice",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "availablevoice"
+    },
+    {
+      "label": "PersonalVoice",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_personalvoice",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "personalvoice"
+    },
+    {
+      "label": "VoiceOption",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_voiceoption",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "voiceoption"
+    },
+    {
+      "label": "SPEECH_RATE_STEPS",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_speech_rate_steps",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "speech_rate_steps"
+    },
+    {
+      "label": "SpeechRateStep",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_speechratestep",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "speechratestep"
+    },
+    {
+      "label": "VoiceSettingsPorts",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_voicesettingsports",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "voicesettingsports"
+    },
+    {
+      "label": "systemDefault",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_systemdefault",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "systemdefault"
+    },
+    {
+      "label": "rateStep()",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_ratestep",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "ratestep()"
+    },
+    {
+      "label": "buildVoiceList()",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_buildvoicelist",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "buildvoicelist()"
+    },
+    {
+      "label": "createVoiceSettings()",
+      "file_type": "code",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "app_src_speech_voice_settings_createvoicesettings",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "createvoicesettings()"
     },
     {
       "label": "turn-context.tsx",
@@ -2089,74 +2276,74 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_turn_context",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "turn-context.tsx"
     },
     {
       "label": "accessibilityStore",
       "file_type": "code",
       "source_file": "app/src/turn-context.tsx",
-      "source_location": "L19",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_turn_context_accessibilitystore",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "accessibilitystore"
     },
     {
       "label": "Ready",
       "file_type": "code",
       "source_file": "app/src/turn-context.tsx",
-      "source_location": "L21",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "app_src_turn_context_ready",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "ready"
     },
     {
       "label": "TurnState",
       "file_type": "code",
       "source_file": "app/src/turn-context.tsx",
-      "source_location": "L29",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "app_src_turn_context_turnstate",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "turnstate"
     },
     {
       "label": "TurnContext",
       "file_type": "code",
       "source_file": "app/src/turn-context.tsx",
-      "source_location": "L36",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "app_src_turn_context_turncontext",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "turncontext"
     },
     {
       "label": "TurnProvider()",
       "file_type": "code",
       "source_file": "app/src/turn-context.tsx",
-      "source_location": "L38",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "app_src_turn_context_turnprovider",
-      "community": 226,
-      "community_name": "accessibility/store.ts",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "turnprovider()"
     },
     {
       "label": "useTurn()",
       "file_type": "code",
       "source_file": "app/src/turn-context.tsx",
-      "source_location": "L112",
+      "source_location": "L133",
       "_origin": "ast",
       "id": "app_src_turn_context_useturn",
       "community": 224,
-      "community_name": "turn-context.tsx",
+      "community_name": "theme.ts",
       "norm_label": "useturn()"
     },
     {
@@ -2277,7 +2464,7 @@
       "_origin": "ast",
       "id": "app_test_gazetteer_test",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "gazetteer.test.ts"
     },
     {
@@ -2288,7 +2475,7 @@
       "_origin": "ast",
       "id": "app_test_gazetteer_test_bank",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "bank()"
     },
     {
@@ -2365,7 +2552,7 @@
       "_origin": "ast",
       "id": "app_test_privacy_notice_test",
       "community": 282,
-      "community_name": "PrivacyNoticeScreen.tsx",
+      "community_name": "privacy-notice.ts",
       "norm_label": "privacy-notice.test.ts"
     },
     {
@@ -2376,7 +2563,7 @@
       "_origin": "ast",
       "id": "app_test_relay_naming_test",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "relay-naming.test.ts"
     },
     {
@@ -2387,7 +2574,7 @@
       "_origin": "ast",
       "id": "app_test_relay_naming_test_databases",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "databases"
     },
     {
@@ -2398,7 +2585,7 @@
       "_origin": "ast",
       "id": "app_test_relay_naming_test_database",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "database()"
     },
     {
@@ -2409,7 +2596,7 @@
       "_origin": "ast",
       "id": "app_test_relay_naming_test_identitystorage",
       "community": 267,
-      "community_name": "naming.ts",
+      "community_name": "turn-context.tsx",
       "norm_label": "identitystorage()"
     },
     {
@@ -2442,7 +2629,7 @@
       "_origin": "ast",
       "id": "app_test_tag_checks_test",
       "community": 273,
-      "community_name": "calibration.ts",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "tag-checks.test.ts"
     },
     {
@@ -2518,8 +2705,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_test_theme_test",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "theme.test.ts"
     },
     {
@@ -2529,8 +2716,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_test_theme_test_design",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "design"
     },
     {
@@ -2540,8 +2727,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_test_theme_test_yamlblocks",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "yamlblocks"
     },
     {
@@ -2551,8 +2738,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_test_theme_test_designcolors",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "designcolors"
     },
     {
@@ -2562,8 +2749,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_test_theme_test_designtypography",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "designtypography"
     },
     {
@@ -2573,8 +2760,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_test_theme_test_appearances",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "appearances"
     },
     {
@@ -2584,8 +2771,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_test_theme_test_luminance",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "luminance()"
     },
     {
@@ -2595,8 +2782,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_test_theme_test_contrast",
-      "community": 224,
-      "community_name": "turn-context.tsx",
+      "community": 279,
+      "community_name": "Typed composer implementation plan",
       "norm_label": "contrast()"
     },
     {
@@ -2642,6 +2829,61 @@
       "community": 256,
       "community_name": "HomeScreen.tsx",
       "norm_label": "session()"
+    },
+    {
+      "label": "voice-settings.test.ts",
+      "file_type": "code",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_test_voice_settings_test",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "voice-settings.test.ts"
+    },
+    {
+      "label": "AvailableVoice",
+      "file_type": "code",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "app_test_voice_settings_test_availablevoice",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "availablevoice"
+    },
+    {
+      "label": "Authorization",
+      "file_type": "code",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_test_voice_settings_test_authorization",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "authorization"
+    },
+    {
+      "label": "ports()",
+      "file_type": "code",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "app_test_voice_settings_test_ports",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "ports()"
+    },
+    {
+      "label": "createSettings()",
+      "file_type": "code",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "app_test_voice_settings_test_createsettings",
+      "community": 165,
+      "community_name": "Listening and speaking on the phone",
+      "norm_label": "createsettings()"
     },
     {
       "label": "app/tsconfig.json",
@@ -3102,7 +3344,7 @@
       "_origin": "ast",
       "id": "eval_src_agreement_alphaof",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "alphaof()"
     },
     {
@@ -3124,7 +3366,7 @@
       "_origin": "ast",
       "id": "eval_src_apple",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "apple.ts"
     },
     {
@@ -3135,7 +3377,7 @@
       "_origin": "ast",
       "id": "eval_src_apple_helper",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "helper"
     },
     {
@@ -3146,7 +3388,7 @@
       "_origin": "ast",
       "id": "eval_src_apple_sentenceembedding",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "sentenceembedding"
     },
     {
@@ -3157,7 +3399,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "calibration.ts"
     },
     {
@@ -3168,7 +3410,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_forecast",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "forecast"
     },
     {
@@ -3179,7 +3421,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_topphrase",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "topphrase()"
     },
     {
@@ -3190,7 +3432,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_beyondreach",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "beyondreach()"
     },
     {
@@ -3201,7 +3443,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_byscore",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "byscore()"
     },
     {
@@ -3212,7 +3454,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_block",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "block"
     },
     {
@@ -3223,7 +3465,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_pav",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "pav()"
     },
     {
@@ -3234,7 +3476,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_fitat",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "fitat()"
     },
     {
@@ -3245,7 +3487,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_bounds",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "bounds"
     },
     {
@@ -3256,7 +3498,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_consistencyband",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "consistencyband()"
     },
     {
@@ -3267,7 +3509,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_brier",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "brier"
     },
     {
@@ -3278,7 +3520,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_reliability",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "reliability"
     },
     {
@@ -3300,7 +3542,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_frame",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "frame"
     },
     {
@@ -3311,7 +3553,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_across",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "across()"
     },
     {
@@ -3322,7 +3564,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_up",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "up()"
     },
     {
@@ -3333,7 +3575,7 @@
       "_origin": "ast",
       "id": "eval_src_calibration_reliabilityplot",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "reliabilityplot()"
     },
     {
@@ -3388,7 +3630,7 @@
       "_origin": "ast",
       "id": "eval_src_curves",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "curves.ts"
     },
     {
@@ -3399,7 +3641,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_point",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "point"
     },
     {
@@ -3410,7 +3652,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_curve",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "curve"
     },
     {
@@ -3421,7 +3663,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_top",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "top()"
     },
     {
@@ -3432,7 +3674,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_riskcoverage",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "riskcoverage()"
     },
     {
@@ -3443,7 +3685,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_size",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "size"
     },
     {
@@ -3454,7 +3696,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_colors",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "colors"
     },
     {
@@ -3465,7 +3707,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_dashes",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "dashes"
     },
     {
@@ -3476,7 +3718,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_x",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "x()"
     },
     {
@@ -3487,7 +3729,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_y",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "y()"
     },
     {
@@ -3498,7 +3740,7 @@
       "_origin": "ast",
       "id": "eval_src_curves_plot",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "plot()"
     },
     {
@@ -3740,7 +3982,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "embeddings.ts"
     },
     {
@@ -3751,7 +3993,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_embed",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "embed"
     },
     {
@@ -3762,7 +4004,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_vectors",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "vectors"
     },
     {
@@ -3773,7 +4015,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_vectorsin",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "vectorsin()"
     },
     {
@@ -3784,7 +4026,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_batched",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "batched()"
     },
     {
@@ -3795,7 +4037,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_workersai",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "workersai()"
     },
     {
@@ -3806,7 +4048,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_qwen",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "qwen()"
     },
     {
@@ -3817,7 +4059,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_cosine",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "cosine()"
     },
     {
@@ -3828,7 +4070,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_embeddings",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "embeddings()"
     },
     {
@@ -3839,7 +4081,7 @@
       "_origin": "ast",
       "id": "eval_src_embeddings_atcutoff",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "atcutoff()"
     },
     {
@@ -3993,7 +4235,7 @@
       "_origin": "ast",
       "id": "eval_src_rankers_ranker",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "ranker"
     },
     {
@@ -4015,7 +4257,7 @@
       "_origin": "ast",
       "id": "eval_src_rankers_phonekind",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "phonekind()"
     },
     {
@@ -4235,7 +4477,7 @@
       "_origin": "ast",
       "id": "eval_src_report_apple",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "apple"
     },
     {
@@ -4389,7 +4631,7 @@
       "_origin": "ast",
       "id": "eval_src_report_commit",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "commit()"
     },
     {
@@ -4400,7 +4642,7 @@
       "_origin": "ast",
       "id": "eval_src_report_main",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "main()"
     },
     {
@@ -4411,7 +4653,7 @@
       "_origin": "ast",
       "id": "eval_src_reranker",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "reranker.ts"
     },
     {
@@ -4422,7 +4664,7 @@
       "_origin": "ast",
       "id": "eval_src_reranker_scored",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "scored"
     },
     {
@@ -4433,7 +4675,7 @@
       "_origin": "ast",
       "id": "eval_src_reranker_reranker",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "reranker()"
     },
     {
@@ -4455,7 +4697,7 @@
       "_origin": "ast",
       "id": "eval_src_score_scoredline",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "scoredline"
     },
     {
@@ -4499,7 +4741,7 @@
       "_origin": "ast",
       "id": "eval_src_score_linescore",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "linescore"
     },
     {
@@ -4642,7 +4884,7 @@
       "_origin": "ast",
       "id": "eval_src_score_summarize",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "summarize()"
     },
     {
@@ -4759,8 +5001,8 @@
       "label": "Foundation",
       "file_type": "code",
       "type": "module",
-      "source_file": "modules/turn-listen/ios/TurnListenModule.swift",
-      "source_location": "L2",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L3",
       "_origin": "ast",
       "id": "foundation",
       "community": 271,
@@ -4842,7 +5084,7 @@
       "_origin": "ast",
       "id": "eval_src_stats",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "stats.ts"
     },
     {
@@ -4853,7 +5095,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_mean",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "mean()"
     },
     {
@@ -4864,7 +5106,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_wilson",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "wilson()"
     },
     {
@@ -4875,7 +5117,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_percentile",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "percentile()"
     },
     {
@@ -4886,7 +5128,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_chancehit",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "chancehit()"
     },
     {
@@ -4897,7 +5139,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_chancereciprocalrank",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "chancereciprocalrank()"
     },
     {
@@ -4908,7 +5150,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_rotl",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "rotl()"
     },
     {
@@ -4919,7 +5161,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_seed",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "seed"
     },
     {
@@ -4930,7 +5172,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_seeded",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "seeded()"
     },
     {
@@ -4941,7 +5183,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_below",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "below()"
     },
     {
@@ -4952,7 +5194,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_bootstrap",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "bootstrap()"
     },
     {
@@ -4963,7 +5205,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_bootstrapmean",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "bootstrapmean()"
     },
     {
@@ -4974,7 +5216,7 @@
       "_origin": "ast",
       "id": "eval_src_stats_pairedbootstrap",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "pairedbootstrap()"
     },
     {
@@ -4985,7 +5227,7 @@
       "_origin": "ast",
       "id": "eval_src_svg",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "svg.ts"
     },
     {
@@ -4996,7 +5238,7 @@
       "_origin": "ast",
       "id": "eval_src_svg_escaped",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "escaped()"
     },
     {
@@ -5007,7 +5249,7 @@
       "_origin": "ast",
       "id": "eval_src_svg_tag",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "tag()"
     },
     {
@@ -5018,7 +5260,7 @@
       "_origin": "ast",
       "id": "eval_src_svg_grid",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "grid()"
     },
     {
@@ -5029,7 +5271,7 @@
       "_origin": "ast",
       "id": "eval_src_svg_svg",
       "community": 170,
-      "community_name": "main",
+      "community_name": "calibration.ts",
       "norm_label": "svg()"
     },
     {
@@ -5040,7 +5282,7 @@
       "_origin": "ast",
       "id": "eval_src_workers_ai",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "workers-ai.ts"
     },
     {
@@ -5051,7 +5293,7 @@
       "_origin": "ast",
       "id": "eval_src_workers_ai_env",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "env"
     },
     {
@@ -5062,7 +5304,7 @@
       "_origin": "ast",
       "id": "eval_src_workers_ai_answer",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "answer"
     },
     {
@@ -5073,7 +5315,7 @@
       "_origin": "ast",
       "id": "eval_src_workers_ai_runmodel",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "runmodel()"
     },
     {
@@ -5117,7 +5359,7 @@
       "_origin": "ast",
       "id": "eval_test_apple_test",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "apple.test.ts"
     },
     {
@@ -5128,7 +5370,7 @@
       "_origin": "ast",
       "id": "eval_test_apple_test_standin",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "standin()"
     },
     {
@@ -5139,7 +5381,7 @@
       "_origin": "ast",
       "id": "eval_test_apple_test_named",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "named"
     },
     {
@@ -5150,7 +5392,7 @@
       "_origin": "ast",
       "id": "eval_test_apple_test_folder",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "folder()"
     },
     {
@@ -5161,7 +5403,7 @@
       "_origin": "ast",
       "id": "eval_test_apple_test_ended",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "ended()"
     },
     {
@@ -5172,7 +5414,7 @@
       "_origin": "ast",
       "id": "eval_test_calibration_test",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "calibration.test.ts"
     },
     {
@@ -5183,7 +5425,7 @@
       "_origin": "ast",
       "id": "eval_test_calibration_test_forecasts",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "forecasts()"
     },
     {
@@ -5194,7 +5436,7 @@
       "_origin": "ast",
       "id": "eval_test_calibration_test_worked",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "worked"
     },
     {
@@ -5205,7 +5447,7 @@
       "_origin": "ast",
       "id": "eval_test_calibration_test_exactband",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "exactband()"
     },
     {
@@ -5370,7 +5612,7 @@
       "_origin": "ast",
       "id": "eval_test_embeddings_test",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "embeddings.test.ts"
     },
     {
@@ -5381,7 +5623,7 @@
       "_origin": "ast",
       "id": "eval_test_embeddings_test_home",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "home"
     },
     {
@@ -5392,7 +5634,7 @@
       "_origin": "ast",
       "id": "eval_test_embeddings_test_shortlist",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "shortlist"
     },
     {
@@ -5611,8 +5853,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "eval_test_replay_test_fakerelay",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "fakerelay()"
     },
     {
@@ -5645,7 +5887,7 @@
       "_origin": "ast",
       "id": "eval_test_report_test",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "report.test.ts"
     },
     {
@@ -5656,7 +5898,7 @@
       "_origin": "ast",
       "id": "eval_test_report_test_fixture",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fixture"
     },
     {
@@ -5667,7 +5909,7 @@
       "_origin": "ast",
       "id": "eval_test_report_test_qwenbodies",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "qwenbodies"
     },
     {
@@ -5678,7 +5920,7 @@
       "_origin": "ast",
       "id": "eval_test_report_test_section",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "section()"
     },
     {
@@ -5689,7 +5931,7 @@
       "_origin": "ast",
       "id": "eval_test_report_test_prose",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "prose()"
     },
     {
@@ -5700,7 +5942,7 @@
       "_origin": "ast",
       "id": "eval_test_report_test_cells",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "cells()"
     },
     {
@@ -5843,7 +6085,7 @@
       "_origin": "ast",
       "id": "eval_test_services",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "services.ts"
     },
     {
@@ -5854,7 +6096,7 @@
       "_origin": "ast",
       "id": "eval_test_services_words",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "words()"
     },
     {
@@ -5865,7 +6107,7 @@
       "_origin": "ast",
       "id": "eval_test_services_madeupvector",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "madeupvector()"
     },
     {
@@ -5876,7 +6118,7 @@
       "_origin": "ast",
       "id": "eval_test_services_fakevector",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fakevector()"
     },
     {
@@ -5887,7 +6129,7 @@
       "_origin": "ast",
       "id": "eval_test_services_fakeqwenvector",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fakeqwenvector()"
     },
     {
@@ -5898,7 +6140,7 @@
       "_origin": "ast",
       "id": "eval_test_services_fakesentenceembedding",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fakesentenceembedding()"
     },
     {
@@ -5909,7 +6151,7 @@
       "_origin": "ast",
       "id": "eval_test_services_fakejevanswer",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fakejevanswer()"
     },
     {
@@ -5920,7 +6162,7 @@
       "_origin": "ast",
       "id": "eval_test_services_fakererank",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fakererank()"
     },
     {
@@ -5931,7 +6173,7 @@
       "_origin": "ast",
       "id": "eval_test_services_endpoint",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "endpoint()"
     },
     {
@@ -5942,7 +6184,7 @@
       "_origin": "ast",
       "id": "eval_test_services_fakeservices",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "fakeservices()"
     },
     {
@@ -6074,7 +6316,7 @@
       "_origin": "ast",
       "id": "eval_test_stats_test",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "stats.test.ts"
     },
     {
@@ -6085,7 +6327,7 @@
       "_origin": "ast",
       "id": "eval_test_stats_test_oneto",
       "community": 12,
-      "community_name": "CLAUDE.md",
+      "community_name": "voice-settings.ts",
       "norm_label": "oneto()"
     },
     {
@@ -6096,7 +6338,7 @@
       "_origin": "ast",
       "id": "eval_test_workers_ai_test",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "workers-ai.test.ts"
     },
     {
@@ -6235,8 +6477,8 @@
       "label": "ExpoModulesCore",
       "file_type": "code",
       "type": "module",
-      "source_file": "modules/turn-listen/ios/TurnListenModule.swift",
-      "source_location": "L1",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L2",
       "_origin": "ast",
       "id": "expomodulescore",
       "community": 271,
@@ -6293,7 +6535,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "moduledefinition",
+      "id": "modules_turn_listen_ios_turnlistenmodule_swift_moduledefinition",
       "community": 271,
       "community_name": "sentence-embedding.swift",
       "norm_label": "moduledefinition"
@@ -6306,7 +6548,7 @@
       "_origin": "ast",
       "id": "modules_turn_listen_package",
       "community": 305,
-      "community_name": "turn-listen/package.json",
+      "community_name": "turn-voice/package.json",
       "norm_label": "turn-listen/package.json"
     },
     {
@@ -6317,7 +6559,7 @@
       "_origin": "ast",
       "id": "modules_turn_listen_package_name",
       "community": 305,
-      "community_name": "turn-listen/package.json",
+      "community_name": "turn-voice/package.json",
       "norm_label": "name"
     },
     {
@@ -6328,7 +6570,7 @@
       "_origin": "ast",
       "id": "modules_turn_listen_package_version",
       "community": 305,
-      "community_name": "turn-listen/package.json",
+      "community_name": "turn-voice/package.json",
       "norm_label": "version"
     },
     {
@@ -6339,7 +6581,7 @@
       "_origin": "ast",
       "id": "modules_turn_listen_package_private",
       "community": 305,
-      "community_name": "turn-listen/package.json",
+      "community_name": "turn-voice/package.json",
       "norm_label": "private"
     },
     {
@@ -6350,7 +6592,7 @@
       "_origin": "ast",
       "id": "modules_turn_listen_package_main",
       "community": 305,
-      "community_name": "turn-listen/package.json",
+      "community_name": "turn-voice/package.json",
       "norm_label": "main"
     },
     {
@@ -6361,7 +6603,7 @@
       "_origin": "ast",
       "id": "modules_turn_listen_package_types",
       "community": 305,
-      "community_name": "turn-listen/package.json",
+      "community_name": "turn-voice/package.json",
       "norm_label": "types"
     },
     {
@@ -6428,6 +6670,205 @@
       "id": "modules_turn_listen_src_index_native",
       "community": 221,
       "community_name": "row.ts",
+      "norm_label": "native"
+    },
+    {
+      "label": "TurnVoiceModule.swift",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "modules_turn_voice_ios_turnvoicemodule",
+      "community": 271,
+      "community_name": "sentence-embedding.swift",
+      "norm_label": "turnvoicemodule.swift"
+    },
+    {
+      "label": "AVFAudio",
+      "file_type": "code",
+      "type": "module",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "avfaudio",
+      "community": 271,
+      "community_name": "sentence-embedding.swift",
+      "norm_label": "avfaudio"
+    },
+    {
+      "label": "TurnVoiceModule",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule",
+      "community": 271,
+      "community_name": "sentence-embedding.swift",
+      "norm_label": "turnvoicemodule"
+    },
+    {
+      "label": "NSObjectProtocol",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "nsobjectprotocol",
+      "community": 271,
+      "community_name": "sentence-embedding.swift",
+      "norm_label": "nsobjectprotocol"
+    },
+    {
+      "label": ".definition()",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule_definition",
+      "community": 271,
+      "community_name": "sentence-embedding.swift",
+      "norm_label": ".definition()"
+    },
+    {
+      "label": "ModuleDefinition",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "modules_turn_voice_ios_turnvoicemodule_swift_moduledefinition",
+      "community": 271,
+      "community_name": "sentence-embedding.swift",
+      "norm_label": "moduledefinition"
+    },
+    {
+      "label": "turn-voice/package.json",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "modules_turn_voice_package",
+      "community": 306,
+      "community_name": "turn-voice/package.json",
+      "norm_label": "turn-voice/package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "modules_turn_voice_package_name",
+      "community": 306,
+      "community_name": "turn-voice/package.json",
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "modules_turn_voice_package_version",
+      "community": 306,
+      "community_name": "turn-voice/package.json",
+      "norm_label": "version"
+    },
+    {
+      "label": "private",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "modules_turn_voice_package_private",
+      "community": 306,
+      "community_name": "turn-voice/package.json",
+      "norm_label": "private"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "modules_turn_voice_package_main",
+      "community": 306,
+      "community_name": "turn-voice/package.json",
+      "norm_label": "main"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "modules_turn_voice_package_types",
+      "community": 306,
+      "community_name": "turn-voice/package.json",
+      "norm_label": "types"
+    },
+    {
+      "label": "turn-voice/src/index.ts",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "modules_turn_voice_src_index",
+      "community": 267,
+      "community_name": "turn-context.tsx",
+      "norm_label": "turn-voice/src/index.ts"
+    },
+    {
+      "label": "PersonalVoiceAuthorization",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "modules_turn_voice_src_index_personalvoiceauthorization",
+      "community": 267,
+      "community_name": "turn-context.tsx",
+      "norm_label": "personalvoiceauthorization"
+    },
+    {
+      "label": "PersonalVoice",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "modules_turn_voice_src_index_personalvoice",
+      "community": 267,
+      "community_name": "turn-context.tsx",
+      "norm_label": "personalvoice"
+    },
+    {
+      "label": "NativeTurnVoiceModule",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "modules_turn_voice_src_index_nativeturnvoicemodule",
+      "community": 267,
+      "community_name": "turn-context.tsx",
+      "norm_label": "nativeturnvoicemodule"
+    },
+    {
+      "label": "TurnVoice",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "modules_turn_voice_src_index_turnvoice",
+      "community": 267,
+      "community_name": "turn-context.tsx",
+      "norm_label": "turnvoice"
+    },
+    {
+      "label": "native",
+      "file_type": "code",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "modules_turn_voice_src_index_native",
+      "community": 267,
+      "community_name": "turn-context.tsx",
       "norm_label": "native"
     },
     {
@@ -7368,7 +7809,7 @@
       "_origin": "ast",
       "id": "shared_src_jev_jevrequest",
       "community": 219,
-      "community_name": "services.ts",
+      "community_name": "embeddings.ts",
       "norm_label": "jevrequest"
     },
     {
@@ -7477,8 +7918,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "shared_src_relay_limits",
-      "community": 221,
-      "community_name": "row.ts",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "limits"
     },
     {
@@ -7543,8 +7984,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "shared_src_relay_outcome",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 238,
+      "community_name": "summary.ts",
       "norm_label": "outcome"
     },
     {
@@ -7554,8 +7995,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "shared_src_relay_errorcode",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "errorcode"
     },
     {
@@ -7576,8 +8017,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "shared_src_row_policy",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "policy"
     },
     {
@@ -9116,8 +9557,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_src_budget",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 242,
+      "community_name": "helpers.ts",
       "norm_label": "budget.ts"
     },
     {
@@ -9127,8 +9568,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "worker_src_budget_budget",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 242,
+      "community_name": "helpers.ts",
       "norm_label": "budget"
     },
     {
@@ -9138,8 +9579,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_src_budget_budget_constructor",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 242,
+      "community_name": "helpers.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -9149,8 +9590,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "worker_src_budget_budget_take",
-      "community": 297,
-      "community_name": "expo-linking",
+      "community": 242,
+      "community_name": "helpers.ts",
       "norm_label": ".take()"
     },
     {
@@ -9160,8 +9601,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_src_config",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "config.ts"
     },
     {
@@ -9171,8 +9612,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "worker_src_config_ison",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 297,
+      "community_name": "expo-linking",
       "norm_label": "ison()"
     },
     {
@@ -9182,8 +9623,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "worker_src_config_fits",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "fits()"
     },
     {
@@ -9193,8 +9634,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "worker_src_config_readpolicy",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "readpolicy()"
     },
     {
@@ -9204,8 +9645,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "worker_src_config_wholenumber",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 220,
+      "community_name": "worker/src/index.ts",
       "norm_label": "wholenumber()"
     },
     {
@@ -9215,8 +9656,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "worker_src_config_readconfig",
-      "community": 298,
-      "community_name": "expo-router",
+      "community": 297,
+      "community_name": "expo-linking",
       "norm_label": "readconfig()"
     },
     {
@@ -9424,8 +9865,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_src_entitlement",
-      "community": 242,
-      "community_name": "helpers.ts",
+      "community": 298,
+      "community_name": "expo-router",
       "norm_label": "entitlement.ts"
     },
     {
@@ -9435,8 +9876,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "worker_src_entitlement_entitlement",
-      "community": 242,
-      "community_name": "helpers.ts",
+      "community": 301,
+      "community_name": "expo-sqlite",
       "norm_label": "entitlement"
     },
     {
@@ -9446,8 +9887,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "worker_src_entitlement_settings",
-      "community": 242,
-      "community_name": "helpers.ts",
+      "community": 298,
+      "community_name": "expo-router",
       "norm_label": "settings"
     },
     {
@@ -9457,8 +9898,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "worker_src_entitlement_item",
-      "community": 242,
-      "community_name": "helpers.ts",
+      "community": 298,
+      "community_name": "expo-router",
       "norm_label": "item"
     },
     {
@@ -9468,8 +9909,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "worker_src_entitlement_isitem",
-      "community": 242,
-      "community_name": "helpers.ts",
+      "community": 298,
+      "community_name": "expo-router",
       "norm_label": "isitem()"
     },
     {
@@ -9479,8 +9920,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "worker_src_entitlement_checkentitlement",
-      "community": 242,
-      "community_name": "helpers.ts",
+      "community": 298,
+      "community_name": "expo-router",
       "norm_label": "checkentitlement()"
     },
     {
@@ -12636,8 +13077,8 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "docs_trd_stack_and_repository",
-      "community": 288,
-      "community_name": "Stack and repository",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "stack and repository"
     },
     {
@@ -12647,8 +13088,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "docs_trd_versions_on_september_22_2026",
-      "community": 288,
-      "community_name": "Stack and repository",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "versions on september 22, 2026"
     },
     {
@@ -12658,8 +13099,8 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "docs_trd_repository_layout",
-      "community": 288,
-      "community_name": "Stack and repository",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "repository layout"
     },
     {
@@ -12812,8 +13253,8 @@
       "source_location": "L710",
       "_origin": "ast",
       "id": "docs_trd_listening_and_speaking_on_the_phone",
-      "community": 165,
-      "community_name": "Listening and speaking on the phone",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "listening and speaking on the phone"
     },
     {
@@ -12823,8 +13264,8 @@
       "source_location": "L712",
       "_origin": "ast",
       "id": "docs_trd_the_turn_listen_module",
-      "community": 165,
-      "community_name": "Listening and speaking on the phone",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "the turn-listen module"
     },
     {
@@ -12834,8 +13275,8 @@
       "source_location": "L761",
       "_origin": "ast",
       "id": "docs_trd_the_audio_session",
-      "community": 165,
-      "community_name": "Listening and speaking on the phone",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "the audio session"
     },
     {
@@ -12845,8 +13286,8 @@
       "source_location": "L796",
       "_origin": "ast",
       "id": "docs_trd_the_turn_voice_module",
-      "community": 165,
-      "community_name": "Listening and speaking on the phone",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "the turn-voice module"
     },
     {
@@ -12856,8 +13297,8 @@
       "source_location": "L822",
       "_origin": "ast",
       "id": "docs_trd_when_transcription_isn_t_available",
-      "community": 165,
-      "community_name": "Listening and speaking on the phone",
+      "community": 106,
+      "community_name": "Turn technical requirements",
       "norm_label": "when transcription isn't available"
     },
     {
@@ -21975,8 +22416,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_plans_0029_turn_typed_composer_typed_composer_implementation_plan",
-      "community": 279,
-      "community_name": "Typed composer implementation plan",
+      "community": 280,
+      "community_name": "DESIGN.md",
       "norm_label": "typed composer implementation plan"
     },
     {
@@ -21986,8 +22427,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "docs_plans_0029_turn_typed_composer_task_1_store_typed_phrases_and_find_prefix_matches",
-      "community": 279,
-      "community_name": "Typed composer implementation plan",
+      "community": 280,
+      "community_name": "DESIGN.md",
       "norm_label": "task 1: store typed phrases and find prefix matches"
     },
     {
@@ -21997,8 +22438,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "docs_plans_0029_turn_typed_composer_task_2_speak_text_that_is_not_saved",
-      "community": 279,
-      "community_name": "Typed composer implementation plan",
+      "community": 280,
+      "community_name": "DESIGN.md",
       "norm_label": "task 2: speak text that is not saved"
     },
     {
@@ -22008,8 +22449,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "docs_plans_0029_turn_typed_composer_task_3_composer_and_row_behavior",
-      "community": 279,
-      "community_name": "Typed composer implementation plan",
+      "community": 280,
+      "community_name": "DESIGN.md",
       "norm_label": "task 3: composer and row behavior"
     },
     {
@@ -22019,8 +22460,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "docs_plans_0029_turn_typed_composer_task_4_handoff",
-      "community": 279,
-      "community_name": "Typed composer implementation plan",
+      "community": 280,
+      "community_name": "DESIGN.md",
       "norm_label": "task 4: handoff"
     },
     {
@@ -22229,7 +22670,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "0033-turn-name-tags.md"
     },
     {
@@ -22240,7 +22681,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_names_as_tags_implementation_plan",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "names as tags implementation plan"
     },
     {
@@ -22251,7 +22692,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_rules",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "rules"
     },
     {
@@ -22262,7 +22703,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_task_1_spare_phrases_from_the_shortlist",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "task 1: spare phrases from the shortlist"
     },
     {
@@ -22273,7 +22714,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_task_2_tagging_and_cutting",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "task 2: tagging and cutting"
     },
     {
@@ -22284,7 +22725,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_task_3_the_turn_listen_module_s_name_finder",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "task 3: the turn-listen module's name finder"
     },
     {
@@ -22295,7 +22736,7 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_task_4_the_device_self_check",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
       "norm_label": "task 4: the device self-check"
     },
     {
@@ -22306,7 +22747,95 @@
       "_origin": "ast",
       "id": "docs_plans_0033_turn_name_tags_task_5_handoff",
       "community": 304,
-      "community_name": "Names as tags implementation plan",
+      "community_name": "Personal Voice implementation plan",
+      "norm_label": "task 5: handoff"
+    },
+    {
+      "label": "0035-turn-personal-voice.md",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "0035-turn-personal-voice.md"
+    },
+    {
+      "label": "Personal Voice implementation plan",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "personal voice implementation plan"
+    },
+    {
+      "label": "Rules",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_rules",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "rules"
+    },
+    {
+      "label": "Task 1: Voice settings",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_task_1_voice_settings",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "task 1: voice settings"
+    },
+    {
+      "label": "Task 2: The turn-voice module",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_task_2_the_turn_voice_module",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "task 2: the turn-voice module"
+    },
+    {
+      "label": "Task 3: Speaking with the voice and rate",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_task_3_speaking_with_the_voice_and_rate",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "task 3: speaking with the voice and rate"
+    },
+    {
+      "label": "Task 4: Settings",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L103",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_task_4_settings",
+      "community": 288,
+      "community_name": "Stack and repository",
+      "norm_label": "task 4: settings"
+    },
+    {
+      "label": "Task 5: Handoff",
+      "file_type": "document",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L117",
+      "_origin": "ast",
+      "id": "docs_plans_0035_turn_personal_voice_task_5_handoff",
+      "community": 288,
+      "community_name": "Stack and repository",
       "norm_label": "task 5: handoff"
     },
     {
@@ -48263,6 +48792,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/app/settings/voice.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_app_settings_voice",
+      "target": "app_src_screens_voicescreen",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/bank/store.ts",
@@ -48723,7 +49264,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -48751,6 +49292,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_typedcomposer",
+      "target": "app_src_constants_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
       "target": "app_src_constants_theme",
       "confidence_score": 1.0
     },
@@ -48855,7 +49408,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -48871,6 +49424,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_typedcomposer",
+      "target": "app_src_constants_theme_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
       "target": "app_src_constants_theme_colors",
       "confidence_score": 1.0
     },
@@ -49300,7 +49865,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -49456,7 +50021,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -49469,7 +50034,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L34",
+      "source_location": "L53",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen_settingsscreen",
@@ -49550,7 +50115,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -49586,7 +50151,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -49599,7 +50164,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L22",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen_settingsscreen",
@@ -51150,7 +51715,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -51161,7 +51726,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L14",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_settingsscreen",
+      "target": "app_src_screens_settingsscreen_section",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/SettingsScreen.tsx",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -51173,7 +51749,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -51185,7 +51761,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -51197,7 +51773,31 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_settingsscreen",
+      "target": "app_src_speech_voice_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/SettingsScreen.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_settingsscreen",
+      "target": "app_src_speech_voice_settings_speech_rate_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/SettingsScreen.tsx",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -51209,7 +51809,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen",
@@ -51222,7 +51822,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/screens/SettingsScreen.tsx",
-      "source_location": "L16",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_settingsscreen_settingsscreen",
@@ -51263,6 +51863,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
+      "target": "app_src_screens_turntext",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -51271,6 +51883,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_screens_typedcomposer",
+      "target": "app_src_screens_turntext_turntext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
       "target": "app_src_screens_turntext_turntext",
       "confidence_score": 1.0
     },
@@ -51295,6 +51919,77 @@
       "source": "app_src_screens_typedcomposer",
       "target": "app_src_screens_typedcomposer_typedcomposer",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
+      "target": "app_src_screens_voicescreen_voicescreen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
+      "target": "app_src_speech_voice_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
+      "target": "app_src_speech_voice_settings_voiceoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
+      "target": "app_src_turn_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen",
+      "target": "app_src_turn_context_useturn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/src/screens/VoiceScreen.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_screens_voicescreen_voicescreen",
+      "target": "app_src_turn_context_useturn"
     },
     {
       "relation": "contains",
@@ -51358,7 +52053,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/speech/controller.ts",
-      "source_location": "L8",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_speech_controller",
@@ -51380,7 +52075,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/speech/controller.ts",
-      "source_location": "L6",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_controller",
+      "target": "app_src_speech_controller_speechsettingsport",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/speech/controller.ts",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_speech_controller",
@@ -51417,7 +52123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/speech/controller.ts",
-      "source_location": "L20",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_speech_controller_createspeechcontroller",
@@ -51452,7 +52158,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/test/speech-controller.test.ts",
-      "source_location": "L15",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_test_speech_controller_test_fixture",
@@ -51462,67 +52168,122 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/src/turn-context.tsx",
-      "source_location": "L19",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_src_turn_context",
-      "target": "app_src_turn_context_accessibilitystore",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_availablevoice",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/src/turn-context.tsx",
-      "source_location": "L21",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_src_turn_context",
-      "target": "app_src_turn_context_ready",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_buildvoicelist",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/src/turn-context.tsx",
-      "source_location": "L36",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L65",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_src_turn_context",
-      "target": "app_src_turn_context_turncontext",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_createvoicesettings",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/src/turn-context.tsx",
-      "source_location": "L38",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_src_turn_context",
-      "target": "app_src_turn_context_turnprovider",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_personalvoice",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/src/turn-context.tsx",
-      "source_location": "L29",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_src_turn_context",
-      "target": "app_src_turn_context_turnstate",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_personalvoiceauthorization",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/src/turn-context.tsx",
-      "source_location": "L112",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_src_turn_context",
-      "target": "app_src_turn_context_useturn",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_ratestep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_speech_rate_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_speechratestep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_systemdefault",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_voiceoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_voice_settings",
+      "target": "app_src_speech_voice_settings_voicesettingsports",
       "confidence_score": 1.0
     },
     {
@@ -51534,8 +52295,32 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_turn_context",
-      "target": "modules_turn_listen_src_index",
+      "target": "app_src_speech_voice_settings",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test",
+      "target": "app_src_speech_voice_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/src/speech/voice-settings.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_speech_voice_settings_ratestep",
+      "target": "app_src_speech_voice_settings_speech_rate_steps"
     },
     {
       "relation": "imports",
@@ -51546,7 +52331,145 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_turn_context",
+      "target": "app_src_speech_voice_settings_createvoicesettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test",
+      "target": "app_src_speech_voice_settings_createvoicesettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test_createsettings",
+      "target": "app_src_speech_voice_settings_createvoicesettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "app_src_turn_context_accessibilitystore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "app_src_turn_context_ready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "app_src_turn_context_turncontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "app_src_turn_context_turnprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "app_src_turn_context_turnstate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "app_src_turn_context_useturn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "modules_turn_listen_src_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
       "target": "modules_turn_listen_src_index_turnlisten",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "modules_turn_voice_src_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/turn-context.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_turn_context",
+      "target": "modules_turn_voice_src_index_turnvoice",
       "confidence_score": 1.0
     },
     {
@@ -51903,6 +52826,62 @@
       "_origin": "ast",
       "source": "app_test_typed_listen_test_session",
       "target": "app_test_typed_listen_test_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test",
+      "target": "app_test_voice_settings_test_authorization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test",
+      "target": "app_test_voice_settings_test_availablevoice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test",
+      "target": "app_test_voice_settings_test_createsettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test",
+      "target": "app_test_voice_settings_test_ports",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/test/voice-settings.test.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_test_voice_settings_test_createsettings",
+      "target": "app_test_voice_settings_test_ports",
       "confidence_score": 1.0
     },
     {
@@ -59689,6 +60668,18 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule",
+      "target": "foundation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "modules/turn-listen/ios/TurnListenModule.swift",
       "source_location": "L3",
       "weight": 1.0,
@@ -62403,6 +63394,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule",
+      "target": "expomodulescore",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "modules/turn-listen/ios/TurnListenModule.swift",
@@ -62437,6 +63440,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule",
+      "target": "module",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -62457,7 +63471,7 @@
       "context": "return_type",
       "_origin": "ast",
       "source": "modules_turn_listen_ios_turnlistenmodule_turnlistenmodule_definition",
-      "target": "moduledefinition",
+      "target": "modules_turn_listen_ios_turnlistenmodule_swift_moduledefinition",
       "confidence_score": 1.0
     },
     {
@@ -62568,6 +63582,174 @@
       "_origin": "ast",
       "source": "modules_turn_listen_src_index",
       "target": "modules_turn_listen_src_index_turnlisten",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule",
+      "target": "avfaudio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule",
+      "target": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule",
+      "target": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule_definition",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "field",
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule",
+      "target": "nsobjectprotocol",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/ios/TurnVoiceModule.swift",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "return_type",
+      "_origin": "ast",
+      "source": "modules_turn_voice_ios_turnvoicemodule_turnvoicemodule_definition",
+      "target": "modules_turn_voice_ios_turnvoicemodule_swift_moduledefinition",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_package",
+      "target": "modules_turn_voice_package_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_package",
+      "target": "modules_turn_voice_package_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_package",
+      "target": "modules_turn_voice_package_private",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_package",
+      "target": "modules_turn_voice_package_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_package",
+      "target": "modules_turn_voice_package_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_src_index",
+      "target": "modules_turn_voice_src_index_native",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_src_index",
+      "target": "modules_turn_voice_src_index_nativeturnvoicemodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_src_index",
+      "target": "modules_turn_voice_src_index_personalvoice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_src_index",
+      "target": "modules_turn_voice_src_index_personalvoiceauthorization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "modules/turn-voice/src/index.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "modules_turn_voice_src_index",
+      "target": "modules_turn_voice_src_index_turnvoice",
       "confidence_score": 1.0
     },
     {
@@ -82171,6 +83353,83 @@
       "_origin": "ast",
       "source": "docs_plans_0033_turn_name_tags_names_as_tags_implementation_plan",
       "target": "docs_plans_0033_turn_name_tags_task_5_handoff",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice",
+      "target": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "target": "docs_plans_0035_turn_personal_voice_rules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "target": "docs_plans_0035_turn_personal_voice_task_1_voice_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "target": "docs_plans_0035_turn_personal_voice_task_2_the_turn_voice_module",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "target": "docs_plans_0035_turn_personal_voice_task_3_speaking_with_the_voice_and_rate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L103",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "target": "docs_plans_0035_turn_personal_voice_task_4_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/plans/0035-turn-personal-voice.md",
+      "source_location": "L117",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_plans_0035_turn_personal_voice_personal_voice_implementation_plan",
+      "target": "docs_plans_0035_turn_personal_voice_task_5_handoff",
       "confidence_score": 1.0
     },
     {
@@ -105605,5 +106864,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7c32de56a628d803b0745323d38fbe110b4fbc49"
+  "built_at_commit": "15bd18865332c3c12144d840b5e0651bf4d62aff"
 }
