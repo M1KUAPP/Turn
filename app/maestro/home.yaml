@@ -10,16 +10,46 @@ name: Home
 - takeScreenshot: home-first-view
 - scrollUntilVisible:
     element: 'Yes'
+    direction: DOWN
 - takeScreenshot: home-grid
+# From AX1 the column scrolls under the top bar, and Maestro still counts a tab half under the bar as on screen, so
+# center each tab before tapping it or the tap lands on Listen.
+- scrollUntilVisible:
+    element: Chat
+    centerElement: true
 - tapOn: Chat
-- assertVisible: 'Hi, how are you?'
+- scrollUntilVisible:
+    element: '.*Hi, how are you\?.*'
+    direction: DOWN
+- assertVisible: '.*Hi, how are you\?.*'
 - takeScreenshot: home-chat
-- tapOn: All
+- scrollUntilVisible:
+    element:
+      text: All
+      rightOf: Chat
+    centerElement: true
+- tapOn:
+    text: All
+    rightOf: Chat
+- waitForAnimationToEnd
+- assertNotVisible: Before Listen mode starts
+- scrollUntilVisible:
+    element: Down
+    direction: DOWN
 - tapOn: Down
 - takeScreenshot: home-all-down
+- scrollUntilVisible:
+    element: Up
+    direction: DOWN
 - tapOn: Up
 - takeScreenshot: home-all-up
+- scrollUntilVisible:
+    element: Type
+    direction: DOWN
 - tapOn: Type
 - inputText: 'I need a break'
+- scrollUntilVisible:
+    element: 'I need a break'
+    direction: DOWN
 - assertVisible: 'I need a break'
 - takeScreenshot: home-typing-composer

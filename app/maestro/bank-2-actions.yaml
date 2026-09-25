@@ -15,8 +15,23 @@ name: Phrase bank actions and category limit
     visible: Type what to say
     timeout: 10000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Type what to say
+    direction: DOWN
 - inputText: Maestro limit marker
+- scrollUntilVisible:
+    element: Speak
+    direction: DOWN
 - tapOn: Speak
+- hideKeyboard
+- scrollUntilVisible:
+    element: Close composer
+    direction: UP
+- tapOn: Close composer
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
@@ -46,8 +61,14 @@ name: Phrase bank actions and category limit
     direction: DOWN
     speed: 10
 - takeScreenshot: bank-2-actions-add-category-form
+- scrollUntilVisible:
+    element: Category name
+    direction: DOWN
 - tapOn: Category name
 - inputText: Automation
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
     element: Automation
@@ -93,9 +114,15 @@ name: Phrase bank actions and category limit
     direction: DOWN
     speed: 10
 - takeScreenshot: bank-2-actions-rename-category-form
+- scrollUntilVisible:
+    element: Automation
+    direction: DOWN
 - tapOn: Automation
 - eraseText: 40
 - inputText: Flow category
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
     element:
@@ -162,6 +189,11 @@ name: Phrase bank actions and category limit
     text: Phrase
     below: Phrase
 - takeScreenshot: bank-2-actions-add-phrase-form
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
 - tapOn:
     text: Phrase
     below: Phrase
@@ -182,6 +214,9 @@ name: Phrase bank actions and category limit
 - tapOn:
     text: Clinic
     below: Places
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - scrollUntilVisible:
     element: Flow phrase
@@ -190,18 +225,18 @@ name: Phrase bank actions and category limit
     visible: Flow phrase
     timeout: 10000
 - waitForAnimationToEnd
-- assertVisible:
-    text: Home
-    below: Flow phrase
 - scrollUntilVisible:
-    element:
-      text: Clinic
-      below: Flow phrase
+    element: '.*Flow phrase.*Home.*'
     direction: DOWN
-- assertVisible:
-    text: Clinic
-    below: Flow phrase
+- assertVisible: '.*Flow phrase.*Home.*'
+- scrollUntilVisible:
+    element: '.*Flow phrase.*Clinic.*'
+    direction: DOWN
+- assertVisible: '.*Flow phrase.*Clinic.*'
 - takeScreenshot: bank-2-actions-phrase-added
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: UP
 - tapOn: Phrase bank
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -253,13 +288,18 @@ name: Phrase bank actions and category limit
     visible: Flow phrase
     timeout: 10000
 - waitForAnimationToEnd
-- assertVisible:
-    text: Home
-    below: Flow phrase
-- assertVisible:
-    text: Clinic
-    below: Flow phrase
+- scrollUntilVisible:
+    element: '.*Flow phrase.*Home.*'
+    direction: DOWN
+- assertVisible: '.*Flow phrase.*Home.*'
+- scrollUntilVisible:
+    element: '.*Flow phrase.*Clinic.*'
+    direction: DOWN
+- assertVisible: '.*Flow phrase.*Clinic.*'
 - takeScreenshot: bank-2-actions-phrase-moved-with-category
+- scrollUntilVisible:
+    element: Edit
+    direction: UP
 - tapOn: Edit
 - scrollUntilVisible:
     element:
@@ -284,6 +324,11 @@ name: Phrase bank actions and category limit
     text: Phrase
     below: Phrase
 - takeScreenshot: bank-2-actions-edit-phrase-form
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
 - tapOn:
     text: Phrase
     below: Phrase
@@ -310,10 +355,16 @@ name: Phrase bank actions and category limit
 - tapOn:
     text: Shop
     below: Places
+- scrollUntilVisible:
+    element: Save
+    direction: UP
 - tapOn: Save
 - extendedWaitUntil:
     notVisible: Flow phrase
     timeout: 10000
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: UP
 - tapOn: Phrase bank
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -340,19 +391,11 @@ name: Phrase bank actions and category limit
     timeout: 10000
 - waitForAnimationToEnd
 - scrollUntilVisible:
-    element:
-      text: Home
-      below: Moved phrase
+    element: '.*Moved phrase.*Home.*'
     direction: DOWN
-- assertVisible:
-    text: Home
-    below: Moved phrase
+- assertVisible: '.*Moved phrase.*Home.*'
 - scrollUntilVisible:
-    element:
-      text: Shop
-      below: Moved phrase
+    element: '.*Moved phrase.*Shop.*'
     direction: DOWN
-- assertVisible:
-    text: Shop
-    below: Moved phrase
+- assertVisible: '.*Moved phrase.*Shop.*'
 - takeScreenshot: bank-2-actions-edited-phrase-in-quick

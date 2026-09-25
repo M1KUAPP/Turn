@@ -9,47 +9,60 @@ name: Under-18 partner
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Listen
+    direction: DOWN
 - tapOn: Listen
 - scrollUntilVisible:
     element: Before Listen mode starts
+    direction: UP
 - extendedWaitUntil:
     visible: Before Listen mode starts
     timeout: 10000
 - scrollUntilVisible:
     element: Allow
+    direction: DOWN
 - tapOn: Allow
 - scrollUntilVisible:
     element: 'Can my phone listen while we talk\?'
+    direction: UP
 - extendedWaitUntil:
     visible: Can my phone listen while we talk\?
     timeout: 10000
+# From AX1 the card's text scrolls above the pinned answers, and Maestro still counts the switch as on screen when
+# it's under They agreed, so center it before tapping it or the tap agrees for the partner.
 - scrollUntilVisible:
-    element: My partner is under 18
+    element: '.*My partner is under 18.*'
+    centerElement: true
 - tapOn:
-    text: My partner is under 18
+    text: '.*My partner is under 18.*'
     checked: false
 - scrollUntilVisible:
-    element: My partner is under 18
+    element: '.*My partner is under 18.*'
+    centerElement: true
 - assertVisible:
-    text: My partner is under 18
+    text: '.*My partner is under 18.*'
     checked: true
 - scrollUntilVisible:
     element: They agreed
+    direction: DOWN
 - tapOn: They agreed
 - scrollUntilVisible:
     element: Mic off
+    direction: UP
 - extendedWaitUntil:
     visible: Mic off
     timeout: 10000
 - scrollUntilVisible:
     element: End
+    direction: UP
 - assertVisible: End
 - takeScreenshot: consent-under18-mic-off
 - scrollUntilVisible:
     element: '.*Listen mode is off for this partner.*'
+    direction: DOWN
 - assertVisible: '.*Listen mode is off for this partner.*'
 - takeScreenshot: consent-under18-caption-note
 - scrollUntilVisible:
-    element: Listen mode is off for this partner\.
-- assertVisible: Listen mode is off for this partner\.
+    element: '.*Listen mode is off for this partner\..*'
+    direction: DOWN
+- assertVisible: '.*Listen mode is off for this partner\..*'
 - takeScreenshot: consent-under18-row-note
