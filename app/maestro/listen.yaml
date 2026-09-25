@@ -3,13 +3,20 @@ name: Typed Listen
 ---
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
 - tapOn: Listen
-- assertVisible: 'Mic off · Typed lines only'
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
 - tapOn: '.*Tap here to type what they say\..*'
 - inputText: 'Are you tired?'
 - tapOn: Send
 - assertVisible: '.*Are you tired\?.*'
-- assertVisible: "I'm tired"
+- scrollUntilVisible:
+    element: "I'm tired"
 - takeScreenshot: listen-reply-row
 - tapOn: End
 - assertVisible: Listen

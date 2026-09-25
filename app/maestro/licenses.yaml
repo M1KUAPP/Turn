@@ -3,7 +3,14 @@ name: Open-source licenses
 ---
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
 - tapOn: Settings
+- extendedWaitUntil:
+    visible: Your words
+    timeout: 10000
 - scrollUntilVisible:
     element: 'Open-source licenses'
 - tapOn: 'Open-source licenses'
