@@ -1,0 +1,86 @@
+appId: com.m1ku.turn
+name: Consent withdrawal during Listen
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: 'Can my phone listen while we talk\?'
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: End
+- assertVisible: End
+- takeScreenshot: consent-withdraw-listen-active
+- scrollUntilVisible:
+    element: Settings
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Voice
+- extendedWaitUntil:
+    visible: Voice
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
+    direction: UP
+- assertVisible: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
+- scrollUntilVisible:
+    element: Withdraw
+- assertVisible: Withdraw
+- takeScreenshot: consent-withdraw-allowed
+- tapOn: Withdraw
+- scrollUntilVisible:
+    element: '.*Not allowed.*'
+    direction: UP
+- extendedWaitUntil:
+    visible: '.*Not allowed.*'
+    timeout: 10000
+- scrollUntilVisible:
+    element: '.*Allow.*'
+- assertVisible: '.*Allow.*'
+- scrollUntilVisible:
+    element: '.*Listen mode is off, and nothing more leaves this phone until you allow it again\..*'
+- assertVisible: '.*Listen mode is off, and nothing more leaves this phone until you allow it again\..*'
+- takeScreenshot: consent-withdraw-settings-note
+- swipe:
+    start: '1%, 50%'
+    end: '80%, 50%'
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '^Listen$'
+- extendedWaitUntil:
+    visible: '^Listen$'
+    timeout: 10000
+- assertVisible: '^Listen$'
+- assertNotVisible: Mic off
+- assertNotVisible: End
+- scrollUntilVisible:
+    element: '.*Listen mode is off\..*'
+    direction: UP
+- assertVisible: '.*Listen mode is off\..*'
+- takeScreenshot: consent-withdraw-home

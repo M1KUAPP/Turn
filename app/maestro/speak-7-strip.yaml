@@ -1,0 +1,80 @@
+appId: com.m1ku.turn
+name: Conversation strip rewording
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Phrases always visible above the grid
+    direction: DOWN
+    speed: 10
+- tapOn: Phrases always visible above the grid
+- extendedWaitUntil:
+    visible: Wait, I'm typing
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Wait, I'm typing
+    direction: DOWN
+    speed: 10
+- assertVisible: Wait, I'm typing
+- assertNotVisible: Delete
+- takeScreenshot: speak-7-strip-phrase-list
+- scrollUntilVisible:
+    element: Wait, I'm typing
+    direction: DOWN
+- tapOn: Wait, I'm typing
+- extendedWaitUntil:
+    visible: Edit phrase
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Phrase
+      below: Phrase
+    direction: DOWN
+- assertVisible:
+    text: Phrase
+    below: Phrase
+- takeScreenshot: speak-7-strip-edit-form
+- tapOn:
+    text: Phrase
+    below: Phrase
+- eraseText: 30
+- inputText: Wait, I'm ready
+- tapOn: Save
+- scrollUntilVisible:
+    element: Wait, I'm ready
+    direction: DOWN
+    speed: 10
+- extendedWaitUntil:
+    visible: Wait, I'm ready
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Wait, I'm ready
+      above: Sorry, say that again
+    direction: DOWN
+    speed: 10
+- assertVisible:
+    text: Wait, I'm ready
+    above: Sorry, say that again
+- scrollUntilVisible:
+    element: 'And you\?'
+    direction: DOWN
+    speed: 10
+- assertVisible: 'And you\?'
+- takeScreenshot: speak-7-strip-reworded-in-place

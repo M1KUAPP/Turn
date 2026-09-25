@@ -32,8 +32,10 @@ on:
 permissions:
   contents: read
 
+# A pull request's build and a started screenshot run of the same branch are separate groups, so opening or
+# pushing to a pull request never cancels screenshots someone is waiting for.
 concurrency:
-  group: ios-simulator-build-${{ inputs.ref || github.head_ref || github.ref }}
+  group: ios-simulator-build-${{ github.event_name }}-${{ inputs.ref || github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -68,10 +70,15 @@ jobs:
         working-directory: app/ios
         shell: bash
         run: |
-          set -o pipefail
-          xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
+          # Parallel targets push a compile error far above the log's tail, so a failure prints every error line.
+          if ! xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
-            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -n 200
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build > xcodebuild.log 2>&1; then
+            grep -E ': (fatal )?error: ' xcodebuild.log | sort -u
+            tail -n 50 xcodebuild.log
+            exit 1
+          fi
+          tail -n 200 xcodebuild.log
       # Expo's bundling phase sets SKIP_BUNDLING in every Debug build, which FORCE_BUNDLING can't override, so the
       # bundle is embedded here, from the entry the phase would use. Whether the Debug app runs from it without
       # Metro is the Simulator check's question (#50).

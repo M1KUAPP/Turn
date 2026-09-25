@@ -16,8 +16,12 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
 import { colors } from '../constants/theme'
-import type { createTypedListenSession, TypedListenState } from '../listen/typed-session'
+import { consentWords } from '../consent/strings'
+import type { createLiveListenSession } from '../listen/live-session'
+import { listenStrings } from '../listen/strings'
+import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
+import { useConsent } from '../turn-context'
 import { homeLayout, pageOffset } from './home-layout'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
 import PartnerLineComposer from './PartnerLineComposer'
@@ -27,7 +31,7 @@ import TypedComposer from './TypedComposer'
 type Props = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
-  listen: ReturnType<typeof createTypedListenSession>
+  listen: ReturnType<typeof createLiveListenSession>
   boldText: boolean
 }
 
@@ -91,6 +95,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
 
 export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const router = useRouter()
+  const { consent, state: consentState } = useConsent()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [strip, setStrip] = useState<Phrase[]>([])
@@ -106,6 +111,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const [draft, setDraft] = useState('')
   const [typeMatches, setTypeMatches] = useState<Phrase[]>([])
   const [touchedRow, setTouchedRow] = useState<TypedListenState | null>(null)
+  const [startingListen, setStartingListen] = useState(false)
   const list = useRef<FlatList<Phrase>>(null)
   const composerContent = useRef<ScrollView>(null)
   const { width, height, fontScale } = useWindowDimensions()
@@ -126,6 +132,40 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const composerOpen = composerMode !== null
   const shownListening = touchedRow ?? listening
   const rowAnnouncement = useRef<{ signature: string; pending: string | null }>({ signature: '', pending: null })
+  const under18Active = listening.active && consentState.under18
+  // The design's Listen mode states: the session's caption, with the under-18 note over it.
+  const caption = listening.caption
+  const micUnavailable = listening.active && (under18Active || listening.phase === 'unavailable')
+  const paused = listening.active && !micUnavailable && listening.phase === 'paused'
+  const micOn = listening.active && !micUnavailable && !paused
+  const lineOpen = micOn && caption.label === listenStrings.saying
+  const unavailableNote = !under18Active && caption.note === listenStrings.unavailable
+  const captionLabel = under18Active
+    ? consentWords.under18Note
+    : unavailableNote
+      ? listenStrings.unavailableLabel
+      : caption.label === listenStrings.saying || caption.label === listenStrings.said
+        ? caption.label
+        : null
+  const captionNote = under18Active || unavailableNote ? null : caption.note
+  const captionText = !listening.active
+    ? listenStrings.off
+    : paused
+      ? 'Paused'
+      : caption.words || (micUnavailable ? consentWords.typedLinePrompt : listenStrings.listening)
+  // "Listening" is large until the first words, since a small light goes unnoticed.
+  const captionOpening = micOn && !caption.words
+  const noteSymbol =
+    captionNote === listenStrings.rankedOnPhone
+      ? 'iphone'
+      : captionNote === listenStrings.gettingModel
+        ? 'arrow.down.circle'
+        : 'hourglass'
+  const listenControlDisabled = listening.active || !consent || startingListen
+  // Listening shows while the microphone is on; Pause is #57's, so End stays beside it until then.
+  const listenWord = micOn ? 'Listening' : paused ? 'Paused' : listening.active ? consentWords.micOff : 'Listen'
+  const listenInk = micOn ? colors['on-listen'] : listenControlDisabled ? colors['ink-secondary'] : colors.ink
+
   useEffect(() => {
     const current = rowAnnouncement.current
     if (!shownListening.active) {
@@ -162,6 +202,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace]) => {
         if (!alive) return
         setCategories(nextCategories)
+        if (!nextCategories.some((category) => category.id === categoryId)) setCategoryId('quick')
         setPhrases(nextPhrases)
         setStrip(nextStrip)
         setPlaces(nextPlaces)
@@ -255,6 +296,18 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={item.text}
+          accessibilityActions={[
+            { name: 'edit', label: 'Edit' },
+            { name: 'move', label: 'Move' }
+          ]}
+          onAccessibilityAction={(event) => {
+            if (event.nativeEvent.actionName === 'edit' || event.nativeEvent.actionName === 'move') {
+              router.push({
+                pathname: '/bank/[category]',
+                params: { category: item.category_id, editPhraseId: item.id }
+              })
+            }
+          }}
           onPress={() => {
             void speech.speak(item.text, item.id)
           }}
@@ -295,6 +348,15 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={phrase.text}
+        accessibilityActions={[{ name: 'edit', label: 'Edit' }]}
+        onAccessibilityAction={(event) => {
+          if (event.nativeEvent.actionName === 'edit') {
+            router.push({
+              pathname: '/bank/[category]',
+              params: { category: phrase.category_id, editPhraseId: phrase.id }
+            })
+          }
+        }}
         onPress={() => {
           void speech.speak(phrase.text, phrase.id)
         }}
@@ -377,48 +439,97 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         >
           <Pressable
             accessibilityRole={listening.active ? 'button' : undefined}
+            accessibilityLabel={[captionLabel, captionNote, captionText].filter(Boolean).join(', ')}
             accessibilityHint={listening.active ? 'Type the partner line.' : undefined}
             disabled={!listening.active}
             onPress={() => setComposerMode('partner')}
             style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
           >
-            {listening.active ? (
-              <>
-                <TurnText
-                  kind="subheadline"
-                  boldText={boldText}
-                  numberOfLines={1}
-                  style={{ color: colors['ink-secondary'] }}
-                >
-                  {listening.answeringLine
-                    ? `Still answering: ${listening.answeringLine}`
-                    : listening.line
-                      ? `They said${listening.rankedOnPhone ? ' · Ranked on this phone' : ''}`
-                      : 'Mic off · Typed lines only'}
-                </TurnText>
-                <CaptionWords
-                  text={listening.line ?? 'Tap here to type what they say.'}
-                  boldText={boldText}
-                  measure={Boolean(listening.line)}
-                />
-              </>
-            ) : (
-              <TurnText kind="title3" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                Listen mode is off.
+            {(captionLabel || captionNote) && (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                {captionLabel && (
+                  <TurnText
+                    kind="subheadline"
+                    boldText={boldText}
+                    numberOfLines={1}
+                    style={{ color: colors['ink-secondary'], flexShrink: 1 }}
+                  >
+                    {captionLabel}
+                  </TurnText>
+                )}
+                {captionNote && (
+                  <View
+                    style={{ flexDirection: 'row', alignItems: 'center', gap: 4, flexShrink: 1, marginLeft: 'auto' }}
+                  >
+                    <SymbolView
+                      name={noteSymbol}
+                      size={Math.round(13 * Math.min(fontScale, 2))}
+                      tintColor={colors['ink-secondary']}
+                      accessible={false}
+                    />
+                    <TurnText
+                      kind="subheadline"
+                      boldText={boldText}
+                      numberOfLines={1}
+                      style={{ color: colors['ink-secondary'], flexShrink: 1 }}
+                    >
+                      {captionNote}
+                    </TurnText>
+                  </View>
+                )}
+              </View>
+            )}
+            {!listening.active ? (
+              <TurnText kind="title3" boldText={boldText} numberOfLines={2} style={{ color: colors['ink-secondary'] }}>
+                {captionText}
               </TurnText>
+            ) : captionOpening ? (
+              <TurnText kind="title2" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+                {captionText}
+              </TurnText>
+            ) : (
+              <CaptionWords text={captionText} boldText={boldText} measure={Boolean(caption.words)} />
+            )}
+            {listening.assetProgress !== null && (
+              <View
+                style={{ height: 4, marginTop: 6, borderRadius: 2, overflow: 'hidden', backgroundColor: colors.edge }}
+              >
+                <View
+                  style={{
+                    width: `${Math.round(listening.assetProgress * 100)}%`,
+                    height: 4,
+                    backgroundColor: colors.accent
+                  }}
+                />
+              </View>
             )}
           </Pressable>
-          {listening.active && listening.row.answers > 0 && (
+          {lineOpen ? (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Clear"
-              onPress={() => listen.clear()}
+              accessibilityLabel="Done"
+              accessibilityHint="Ends the partner's line now."
+              onPress={() => void listen.endLine()}
               style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
             >
               <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
-                Clear
+                Done
               </TurnText>
             </Pressable>
+          ) : (
+            listening.active &&
+            listening.row.answers > 0 && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Clear"
+                onPress={() => listen.clear()}
+                style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
+              >
+                <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                  Clear
+                </TurnText>
+              </Pressable>
+            )
           )}
         </View>
       )}
@@ -433,7 +544,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           layout={layout}
           width={width}
           boldText={boldText}
-          emptyNote={composerMode === 'speak' ? 'Matching phrases appear here.' : undefined}
+          emptyNote={
+            composerMode === 'speak'
+              ? 'Matching phrases appear here.'
+              : consentState.under18
+                ? consentWords.under18RowNote
+                : undefined
+          }
           slots={
             composerMode === 'speak'
               ? typeMatches
@@ -648,11 +765,18 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       >
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={listening.active ? 'Mic off' : 'Listen'}
+          accessibilityLabel={listenWord}
           accessibilityHint={listening.active ? 'Type partner lines from the caption.' : undefined}
-          accessibilityState={{ disabled: listening.active }}
-          disabled={listening.active}
-          onPress={() => listen.start()}
+          accessibilityState={{ disabled: listenControlDisabled }}
+          disabled={listenControlDisabled}
+          onPress={() => {
+            if (!consent) return
+            setStartingListen(true)
+            void consent
+              .startListen()
+              .then((route) => router.push(route === 'permission' ? '/permission' : '/consent'))
+              .finally(() => setStartingListen(false))
+          }}
           style={({ pressed }) => ({
             minHeight: oneControlColumn ? controlHeight : 44,
             minWidth: 44,
@@ -663,22 +787,24 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             paddingHorizontal: 12,
             borderRadius: 22,
             borderWidth: 2,
-            borderColor: colors.edge,
-            backgroundColor: listening.active ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
+            borderColor: micOn ? colors.listen : colors.edge,
+            backgroundColor: micOn
+              ? colors.listen
+              : listening.active
+                ? colors.surface
+                : pressed
+                  ? colors['surface-pressed']
+                  : colors.surface
           })}
         >
           <SymbolView
-            name={listening.active ? 'mic.slash' : 'ear'}
+            name={micOn ? 'mic.fill' : listening.active ? 'mic.slash' : 'ear'}
             size={symbolSize(18)}
-            tintColor={listening.active ? colors['ink-secondary'] : colors.ink}
+            tintColor={listenInk}
             accessible={false}
           />
-          <TurnText
-            kind="headline"
-            boldText={boldText}
-            style={{ color: listening.active ? colors['ink-secondary'] : colors.ink }}
-          >
-            {listening.active ? 'Mic off' : 'Listen'}
+          <TurnText kind="headline" boldText={boldText} style={{ color: listenInk }}>
+            {listenWord}
           </TurnText>
         </Pressable>
         {listening.active && (

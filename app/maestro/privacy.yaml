@@ -5,14 +5,23 @@ name: Privacy notice
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
 - tapOn: Settings
+- scrollUntilVisible:
+    element: Your words
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
 - extendedWaitUntil:
     visible: Your words
     timeout: 10000
 - scrollUntilVisible:
     element: 'Privacy notice'
 - tapOn: 'Privacy notice'
+- scrollUntilVisible:
+    element: 'Privacy notice'
 - assertVisible: 'Privacy notice'
 - takeScreenshot: privacy-notice

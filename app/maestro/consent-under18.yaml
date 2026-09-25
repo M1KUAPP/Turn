@@ -1,0 +1,55 @@
+appId: com.m1ku.turn
+name: Under-18 partner
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: My partner is under 18
+- tapOn:
+    text: My partner is under 18
+    checked: false
+- scrollUntilVisible:
+    element: My partner is under 18
+- assertVisible:
+    text: My partner is under 18
+    checked: true
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- scrollUntilVisible:
+    element: End
+- assertVisible: End
+- takeScreenshot: consent-under18-mic-off
+- scrollUntilVisible:
+    element: '.*Listen mode is off for this partner.*'
+- assertVisible: '.*Listen mode is off for this partner.*'
+- takeScreenshot: consent-under18-caption-note
+- scrollUntilVisible:
+    element: Listen mode is off for this partner\.
+- assertVisible: Listen mode is off for this partner\.
+- takeScreenshot: consent-under18-row-note

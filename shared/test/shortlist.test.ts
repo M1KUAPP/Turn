@@ -105,6 +105,16 @@ describe('pickShortlist', () => {
     )
   })
 
+  test('takes spare phrases beyond the default 40 in the same order', () => {
+    const bank = plain(...range(0, 59).map(numbered('p')))
+    const context = { bank, row: [], place: 'home', taps: new Map<string, number>() }
+    const normal = pickShortlist('Hello there', new PhraseIndex(), context)
+    const withSpares = pickShortlist('Hello there', new PhraseIndex(), context, 50)
+
+    expect(withSpares).toHaveLength(50)
+    expect(withSpares.slice(0, 40)).toEqual(normal)
+  })
+
   test("takes up to 8 of the place's phrases after the keyword matches", () => {
     const home = ['h00', 'h01', 'h02', 'h03', 'h04', 'h05', 'h06', 'h07', 'h08', 'h09', 'h10', 'h11']
     const bank = [...plain('o00', 'o01', 'o02'), ...home.map((id) => phrase(id, `Plain ${id}`, ['home']))]

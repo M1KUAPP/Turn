@@ -5,18 +5,50 @@ name: Typed Listen
     clearState: true
 - extendedWaitUntil:
     visible: Listen
-    timeout: 30000
+    timeout: 60000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
 - tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- takeScreenshot: listen-permission-step
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- takeScreenshot: listen-consent-card
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
 - extendedWaitUntil:
     visible: Mic off
     timeout: 10000
+- scrollUntilVisible:
+    element: '.*Tap here to type what they say\..*'
 - tapOn: '.*Tap here to type what they say\..*'
 - inputText: 'Are you tired?'
+- scrollUntilVisible:
+    element: Send
 - tapOn: Send
+- scrollUntilVisible:
+    element: '.*Are you tired\?.*'
 - assertVisible: '.*Are you tired\?.*'
 - scrollUntilVisible:
     element: "I'm tired"
 - takeScreenshot: listen-reply-row
+- scrollUntilVisible:
+    element: End
 - tapOn: End
-- assertVisible: Listen
+- scrollUntilVisible:
+    element: '^Listen$'
+- assertVisible: '^Listen$'

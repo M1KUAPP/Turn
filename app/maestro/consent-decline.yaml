@@ -1,0 +1,36 @@
+appId: com.m1ku.turn
+name: Consent decline
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They said no
+- tapOn: They said no
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*Listen mode is off\..*'
+- assertVisible: '.*Listen mode is off\..*'
+- scrollUntilVisible:
+    element: '^Listen$'
+- assertVisible: '^Listen$'
+- takeScreenshot: consent-decline-home
