@@ -36,3 +36,9 @@ name: Places
     element: Clinic
 - assertVisible: Clinic
 - takeScreenshot: places-added
+- tapOn: Clinic
+- extendedWaitUntil:
+    visible: Move up
+    timeout: 10000
+- takeScreenshot: places-actions
+- tapOn: Cancel

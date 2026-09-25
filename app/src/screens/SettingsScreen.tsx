@@ -2,8 +2,7 @@ import * as Application from 'expo-application'
 import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useEffect, useState } from 'react'
-import { Alert, Pressable, ScrollView, Switch, View, useWindowDimensions } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Alert, Pressable, ScrollView, StyleSheet, Switch, View, useWindowDimensions } from 'react-native'
 import { colors } from '../constants/theme'
 import { consentWords } from '../consent/strings'
 import { rebuildGazetteer } from '../listen/gazetteer'
@@ -24,6 +23,22 @@ type Row = {
   toggle?: { value: boolean; onValueChange: (value: boolean) => void }
 }
 type Section = { title: string; rows: Row[]; note?: string }
+
+// iOS's grouped-list separator: a hairline inset to the row's text.
+function Hairline() {
+  return (
+    <View
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 16,
+        right: 0,
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: colors.edge
+      }}
+    />
+  )
+}
 
 export default function SettingsScreen() {
   const router = useRouter()
@@ -154,153 +169,81 @@ export default function SettingsScreen() {
   ]
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32, gap: 24 }}>
-        {sections.map((section) => (
-          <View key={section.title} style={{ gap: 8 }}>
-            <TurnText
-              kind="subheadline-emphasized"
-              boldText={boldText}
-              style={{ color: colors['ink-secondary'], marginLeft: 12 }}
-            >
-              {section.title}
-            </TurnText>
-            <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
-              {section.rows.map((row, index) => {
-                const action = row.open ?? row.action
-                const enabled = !!action && !row.disabled
-                const selected = row.selected === true
-                const staticText = row.value !== undefined && !action
-                if (row.toggle) {
-                  return (
-                    <View
-                      key={row.label}
-                      style={{
-                        minHeight: 64,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 12,
-                        paddingHorizontal: 16,
-                        paddingVertical: 10,
-                        borderTopWidth: index === 0 ? 0 : 1,
-                        borderTopColor: colors.edge
-                      }}
-                    >
-                      <TurnText
-                        kind="body"
-                        boldText={boldText}
-                        style={{ flex: 1, color: ready ? colors.ink : colors['ink-secondary'] }}
-                      >
-                        {row.label}
-                      </TurnText>
-                      <Switch
-                        accessibilityLabel={row.label}
-                        accessibilityState={{ disabled: !ready, checked: row.toggle.value }}
-                        value={row.toggle.value}
-                        onValueChange={row.toggle.onValueChange}
-                        disabled={!ready}
-                        trackColor={{ false: colors.edge, true: colors.accent }}
-                        thumbColor={colors.surface}
-                        style={{ minWidth: 64, minHeight: 44 }}
-                      />
-                    </View>
-                  )
-                }
-                if (row.actionLabel) {
-                  return (
-                    <View
-                      key={row.label}
-                      style={{
-                        minHeight: 64,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 12,
-                        paddingHorizontal: 16,
-                        paddingVertical: 10,
-                        borderTopWidth: index === 0 ? 0 : 1,
-                        borderTopColor: colors.edge
-                      }}
-                    >
-                      {/* One element for VoiceOver: "Allowed on, 9/25/2026". */}
-                      <View
-                        accessible
-                        accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
-                        style={{ flex: 1 }}
-                      >
-                        <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                          {row.label}
-                        </TurnText>
-                        {row.value && (
-                          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                            {row.value}
-                          </TurnText>
-                        )}
-                      </View>
-                      <Pressable
-                        accessibilityRole="button"
-                        accessibilityLabel={row.actionLabel}
-                        accessibilityState={{ disabled: !enabled }}
-                        disabled={!enabled}
-                        onPress={action}
-                        style={({ pressed }) => ({
-                          minWidth: 64,
-                          minHeight: 44,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderRadius: 8,
-                          backgroundColor: pressed && enabled ? colors['surface-pressed'] : colors.surface,
-                          paddingHorizontal: 8
-                        })}
-                      >
-                        <TurnText
-                          kind="body"
-                          boldText={boldText}
-                          style={{ color: enabled ? colors.ink : colors['ink-secondary'] }}
-                        >
-                          {row.actionLabel}
-                        </TurnText>
-                      </Pressable>
-                    </View>
-                  )
-                }
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={{ flex: 1, backgroundColor: colors.board }}
+      contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 32, gap: 24 }}
+    >
+      {sections.map((section) => (
+        <View key={section.title} style={{ gap: 8 }}>
+          <TurnText
+            kind="subheadline-emphasized"
+            boldText={boldText}
+            style={{ color: colors['ink-secondary'], marginLeft: 16 }}
+          >
+            {section.title}
+          </TurnText>
+          <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
+            {section.rows.map((row, index) => {
+              const action = row.open ?? row.action
+              const enabled = !!action && !row.disabled
+              const selected = row.selected === true
+              const staticText = row.value !== undefined && !action
+              if (row.toggle) {
                 return (
-                  <Pressable
+                  <View
                     key={row.label}
-                    accessibilityRole={staticText ? 'text' : 'button'}
-                    // Named explicitly: left to iOS, the chevron's symbol adds "Forward" to the name.
-                    accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
-                    accessibilityHint={row.hint}
-                    accessibilityState={staticText ? undefined : { disabled: !enabled, selected }}
-                    disabled={!enabled}
-                    onPress={action}
-                    style={({ pressed }) => ({
-                      minHeight: 52,
+                    style={{
+                      minHeight: 64,
                       flexDirection: 'row',
                       alignItems: 'center',
                       gap: 12,
                       paddingHorizontal: 16,
-                      paddingVertical: 12,
-                      borderTopWidth: index === 0 ? 0 : 1,
-                      borderTopColor: colors.edge,
-                      backgroundColor: pressed && enabled ? colors['surface-pressed'] : colors.surface
-                    })}
+                      paddingVertical: 10
+                    }}
                   >
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: stacked ? 'column' : 'row',
-                        alignItems: stacked ? 'flex-start' : 'center',
-                        gap: stacked ? 2 : 12
-                      }}
+                    {index > 0 && <Hairline />}
+                    <TurnText
+                      kind="body"
+                      boldText={boldText}
+                      style={{ flex: 1, color: ready ? colors.ink : colors['ink-secondary'] }}
                     >
-                      <TurnText
-                        kind="body"
-                        boldText={boldText}
-                        style={{
-                          color: enabled || staticText ? colors.ink : colors['ink-secondary'],
-                          flex: stacked ? undefined : 1
-                        }}
-                      >
+                      {row.label}
+                    </TurnText>
+                    <Switch
+                      accessibilityLabel={row.label}
+                      accessibilityState={{ disabled: !ready, checked: row.toggle.value }}
+                      value={row.toggle.value}
+                      onValueChange={row.toggle.onValueChange}
+                      disabled={!ready}
+                      trackColor={{ false: colors.edge, true: colors.accent }}
+                      thumbColor={colors.surface}
+                      style={{ minWidth: 64, minHeight: 44 }}
+                    />
+                  </View>
+                )
+              }
+              if (row.actionLabel) {
+                return (
+                  <View
+                    key={row.label}
+                    style={{
+                      minHeight: 64,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 12,
+                      paddingHorizontal: 16,
+                      paddingVertical: 10
+                    }}
+                  >
+                    {index > 0 && <Hairline />}
+                    {/* One element for VoiceOver: "Allowed on, 9/25/2026". */}
+                    <View
+                      accessible
+                      accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
+                      style={{ flex: 1 }}
+                    >
+                      <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
                         {row.label}
                       </TurnText>
                       {row.value && (
@@ -309,32 +252,94 @@ export default function SettingsScreen() {
                         </TurnText>
                       )}
                     </View>
-                    {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
-                    {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
-                    {enabled && row.open && (
-                      <SymbolView
-                        name="chevron.right"
-                        size={15}
-                        tintColor={colors['ink-secondary']}
-                        accessible={false}
-                      />
-                    )}
-                  </Pressable>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={row.actionLabel}
+                      accessibilityState={{ disabled: !enabled }}
+                      disabled={!enabled}
+                      onPress={action}
+                      style={({ pressed }) => ({
+                        minWidth: 64,
+                        minHeight: 44,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 8,
+                        backgroundColor: pressed && enabled ? colors['surface-pressed'] : colors.surface,
+                        paddingHorizontal: 8
+                      })}
+                    >
+                      <TurnText
+                        kind="body"
+                        boldText={boldText}
+                        style={{ color: enabled ? colors.ink : colors['ink-secondary'] }}
+                      >
+                        {row.actionLabel}
+                      </TurnText>
+                    </Pressable>
+                  </View>
                 )
-              })}
-            </View>
-            {section.note && (
-              <TurnText
-                kind="subheadline"
-                boldText={boldText}
-                style={{ color: colors['ink-secondary'], marginLeft: 12 }}
-              >
-                {section.note}
-              </TurnText>
-            )}
+              }
+              return (
+                <Pressable
+                  key={row.label}
+                  accessibilityRole={staticText ? 'text' : 'button'}
+                  // Named explicitly: left to iOS, the chevron's symbol adds "Forward" to the name.
+                  accessibilityLabel={row.value ? `${row.label}, ${row.value}` : row.label}
+                  accessibilityHint={row.hint}
+                  accessibilityState={staticText ? undefined : { disabled: !enabled, selected }}
+                  disabled={!enabled}
+                  onPress={action}
+                  style={({ pressed }) => ({
+                    minHeight: 52,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 12,
+                    paddingHorizontal: 16,
+                    paddingVertical: 12,
+                    backgroundColor: pressed && enabled ? colors['surface-pressed'] : colors.surface
+                  })}
+                >
+                  {index > 0 && <Hairline />}
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: stacked ? 'column' : 'row',
+                      alignItems: stacked ? 'flex-start' : 'center',
+                      gap: stacked ? 2 : 12
+                    }}
+                  >
+                    <TurnText
+                      kind="body"
+                      boldText={boldText}
+                      style={{
+                        color: enabled || staticText ? colors.ink : colors['ink-secondary'],
+                        flex: stacked ? undefined : 1
+                      }}
+                    >
+                      {row.label}
+                    </TurnText>
+                    {row.value && (
+                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                        {row.value}
+                      </TurnText>
+                    )}
+                  </View>
+                  {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
+                  {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
+                  {enabled && row.open && (
+                    <SymbolView name="chevron.right" size={15} tintColor={colors['ink-secondary']} accessible={false} />
+                  )}
+                </Pressable>
+              )
+            })}
           </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+          {section.note && (
+            <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 16 }}>
+              {section.note}
+            </TurnText>
+          )}
+        </View>
+      ))}
+    </ScrollView>
   )
 }

@@ -211,19 +211,28 @@ export default function ReplyRow({
         </View>
       )}
       {empty && (
-        <TurnText
-          kind="subheadline"
-          boldText={boldText}
+        <View
+          pointerEvents="none"
           style={{
-            color: colors['ink-secondary'],
             position: 'absolute',
-            top: 12,
-            left: 4,
-            width: layout.rowColumns === 2 ? width - 40 : slotWidth - 8
+            top: 0,
+            left: 0,
+            right: 0,
+            // The first two slots' space: one band across two columns, or two stacked slots in one column.
+            height: layout.rowColumns === 2 ? layout.slotHeight : 2 * layout.slotHeight + layout.rowGap,
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: 12
           }}
         >
-          {emptyNote ?? 'Replies to your partner appear here.'}
-        </TurnText>
+          <TurnText
+            kind="subheadline"
+            boldText={boldText}
+            style={{ color: colors['ink-secondary'], textAlign: 'center' }}
+          >
+            {emptyNote ?? 'Replies to your partner appear here.'}
+          </TurnText>
+        </View>
       )}
     </View>
   )
