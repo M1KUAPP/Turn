@@ -63,6 +63,13 @@ function ReplySlot({
   }, [reply?.id, reply?.text, reduceMotion, opacity, pressed])
 
   const tone = shown?.id === 'yes' ? 'yes' : shown?.id === 'no' ? 'no' : shown?.id === 'not-sure' ? 'unsure' : null
+  const length = shown?.text.length ?? 0
+  const textKind =
+    length > Math.floor(width / 3)
+      ? 'subheadline-emphasized'
+      : short || length > Math.floor(width / 5)
+        ? 'headline'
+        : 'title3-emphasized'
   return (
     <Animated.View style={{ width, height, opacity }}>
       {shown && (
@@ -94,11 +101,9 @@ function ReplySlot({
           })}
         >
           <TurnText
-            kind={short ? 'headline' : 'title3-emphasized'}
+            kind={textKind}
             boldText={boldText}
             numberOfLines={2}
-            adjustsFontSizeToFit
-            minimumFontScale={0.8}
             ellipsizeMode="tail"
             style={{ color: colors.ink }}
           >

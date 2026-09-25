@@ -40,7 +40,9 @@
 - [x] Update the bundled license inventory for the shared runtime dependency and keep workspace code out of third-party acknowledgements.
 - [x] Run focused tests red and green, then the workspace suite, typecheck, lint, and an iOS export.
 - [x] Build and launch the app in the iOS 27 Simulator; inspect the home screen screenshot for startup errors.
-- [ ] Check the issue's typed-line scenarios in the Simulator. The computer-use connection failed before it could interact with the screen.
+- [x] In Device Hub, check fixed replies, shared-word ranking, a held row, a newly saved phrase, a tap count that stays unchanged while untouched and rises after a tap, Clear, End, stable grid position, and a two-line ellipsis with the full accessibility label.
+- [x] Fix the long phrase's over-shrinking and keep the composer open when a hardware keyboard is connected; rebuild and inspect both in the Simulator.
+- [ ] Verify the Reduce Motion row transition frame by frame. The setting was enabled and the row updated, but Simulator video capture produced an empty file.
 - [ ] Run the physical iPhone VoiceOver announcement check.
 - [x] Run `rtk graphify update .` and format the generated graph files.
-- [x] Push the branch and open [PR #109](https://github.com/RevenueCat-M1KU/RevenueCat/pull/109) against `feat/27-speak-grid`.
+- [x] Push the branch and open [PR #109](https://github.com/RevenueCat-M1KU/RevenueCat/pull/109), now targeting `main`.
