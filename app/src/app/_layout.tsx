@@ -8,7 +8,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <TurnProvider>
         <Stack screenOptions={{ contentStyle: { backgroundColor: colors.board }, headerTintColor: colors.ink }}>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false, title: 'Turn' }} />
           <Stack.Screen
             name="permission"
             options={{
@@ -28,7 +28,7 @@ export default function RootLayout() {
               contentStyle: { backgroundColor: colors.board }
             }}
           />
-          <Stack.Screen name="settings/index" options={{ title: 'Settings' }} />
+          <Stack.Screen name="settings/index" options={{ title: 'Settings', headerLargeTitle: true }} />
           <Stack.Screen name="settings/places" options={{ title: 'Places' }} />
           <Stack.Screen name="settings/voice" options={{ title: 'Voice' }} />
           <Stack.Screen name="settings/privacy" options={{ title: 'Privacy notice' }} />
