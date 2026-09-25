@@ -203,33 +203,33 @@ export type EnginePicker = (input: {
 `app/test/engine-picker.test.ts`. `app/src/listen/typed-session.ts` and
 `app/test/typed-listen.test.ts` are not modified.
 
-- [ ] Write failing tests for the picker: a Simulator build always yields
+- [x] Write failing tests for the picker: a Simulator build always yields
       `null`, whatever the choice; on a device `'auto'` takes `turn-listen` at
       `installed`, `supported`, and `downloading`, falls to `expo` when
       `turn-listen` is `unsupported` or `none`, and to `null` when both are
       out; `'apple'` and `'expo'` force one engine and fall to `null`;
       `'none'` is `null`.
-- [ ] Write failing tests with a fake engine: the caption shows "Listening"
+- [x] Write failing tests with a fake engine: the caption shows "Listening"
       until the first `onPartial`, then "They're saying" and the words as they
       arrive; a line ends on the 0.5-second timer after `onVoice(false)`,
       which `onPartial` and `onVoice(true)` reset, and at once on Done and on
       a typed send; each is ranked once, never twice; `endedAt` and the ranked
       time reach a `now()`-driven log (PERF-1); Clear empties the row; End
       clears the caption and the row.
-- [ ] Write failing tests for the design's words, pinned exactly:
+- [x] Write failing tests for the design's words, pinned exactly:
       "Listen mode is off.", "Listening", "They're saying", "They said",
       "Still answering “How was physio?”", "Ranked on this phone",
       "Live transcription isn't available here. Tap here to type what they
       say.", "Getting Apple's English speech model", and "Tap here to type
       what they say.", shaped like `app/src/content/privacy-notice.ts`.
-- [ ] `live-session.ts` takes `{ typed, engine, now, log }`, re-exports the
+- [x] `live-session.ts` takes `{ typed, engine, now, log }`, re-exports the
       typed session's `start`/`end`/`clear`/`send`/`dispose`, and adds
       `caption`, `phase`, `assetProgress`, and `rankedOnce`. The engine's
       events are registered on construction and removed on `dispose`; a `null`
       engine is the typed path, with the caption's typed prompt.
-- [ ] `engine-picker.ts` exports the `EnginePicker` signature above, reading
+- [x] `engine-picker.ts` exports the `EnginePicker` signature above, reading
       `extra.listenEngine` and `extra.buildKind` through `Constants`.
-- [ ] `bun run --cwd app test -- live-session.test.ts engine-picker.test.ts`
+- [x] `bun run --cwd app test -- live-session.test.ts engine-picker.test.ts`
       and `bun run --cwd app typecheck`.
 
 ## Task 2: The `expo-speech-recognition` engine
@@ -272,7 +272,7 @@ export type EnginePicker = (input: {
       the five events with `sendEvent`, each behind `#available(iOS 26.0, *)`.
 - [ ] `ListenEngine.swift` holds the pipeline: an `en-US` transcriber built
       from `supportedLocale(equivalentTo:)` with `reportingOptions:
-  [.volatileResults]` and `attributeOptions: [.audioTimeRange]`; an
+[.volatileResults]` and `attributeOptions: [.audioTimeRange]`; an
       `AVAudioEngine` input tap; each buffer converted with `AVAudioConverter`
       to `bestAvailableAudioFormat(compatibleWith:)`; an
       `AsyncStream<AnalyzerInput>` into `start(inputSequence:)`; and
