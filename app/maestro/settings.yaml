@@ -1,0 +1,8 @@
+appId: com.m1ku.turn
+name: Settings
+---
+- launchApp:
+    clearState: true
+- tapOn: Settings
+- assertVisible: Settings
+- takeScreenshot: settings-screen

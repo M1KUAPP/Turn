@@ -1793,6 +1793,12 @@ version.
   the relay's storage and logs hold no audio, transcript, or phrase text
   (RELEASE-3).
 
+### Simulator screenshots from CI
+
+In Actions, dispatch **iOS Simulator build** with `screenshots` set to `pr`
+or `full` (`none` skips capture). Download `Turn-screenshots`; images are
+under `<device>/<size>-<appearance>/`, and `results.txt` records each flow.
+
 ## Environments and release
 
 - **Local:** the relay under `wrangler dev`, the app in the Simulator or on

@@ -1,0 +1,11 @@
+appId: com.m1ku.turn
+name: Open-source licenses
+---
+- launchApp:
+    clearState: true
+- tapOn: Settings
+- scrollUntilVisible:
+    element: 'Open-source licenses'
+- tapOn: 'Open-source licenses'
+- assertVisible: 'Search packages'
+- takeScreenshot: licenses-list
