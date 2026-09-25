@@ -120,6 +120,9 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
   const controlHeight = Math.max(44, 22 * Math.min(fontScale, 2.82) + 16)
   const captionHeight = Math.max(layout.short ? 56 : 86, 24 + 70 * fontScale)
+  // From AX1 the column scrolls, so the caption grows to fit its label, note, and prompt rather than cutting them;
+  // only the partner's words keep their two lines (DESIGN, A11Y-4).
+  const captionGrows = fontScale >= 1.786
   const twoControlRows = width < 352 || fontScale >= 1.786
   const oneControlColumn = fontScale >= 2.5
   // SF Symbols grow with the words beside them, as they do in iOS's own labels.
@@ -423,7 +426,8 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       {!composerOpen && (
         <View
           style={{
-            height: captionHeight,
+            height: captionGrows ? undefined : captionHeight,
+            minHeight: captionHeight,
             marginHorizontal: 16,
             marginTop: 4,
             marginBottom: 8,
@@ -446,12 +450,19 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
           >
             {(captionLabel || captionNote) && (
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: captionGrows ? 'wrap' : 'nowrap',
+                  alignItems: 'center',
+                  gap: 6
+                }}
+              >
                 {captionLabel && (
                   <TurnText
                     kind="subheadline"
                     boldText={boldText}
-                    numberOfLines={1}
+                    numberOfLines={captionGrows ? undefined : 1}
                     style={{ color: colors['ink-secondary'], flexShrink: 1 }}
                   >
                     {captionLabel}
@@ -459,7 +470,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                 )}
                 {captionNote && (
                   <View
-                    style={{ flexDirection: 'row', alignItems: 'center', gap: 4, flexShrink: 1, marginLeft: 'auto' }}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 4,
+                      flexShrink: 1,
+                      marginLeft: captionGrows ? 0 : 'auto'
+                    }}
                   >
                     <SymbolView
                       name={noteSymbol}
@@ -470,7 +487,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                     <TurnText
                       kind="subheadline"
                       boldText={boldText}
-                      numberOfLines={1}
+                      numberOfLines={captionGrows ? undefined : 1}
                       style={{ color: colors['ink-secondary'], flexShrink: 1 }}
                     >
                       {captionNote}
@@ -485,6 +502,10 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               </TurnText>
             ) : captionOpening ? (
               <TurnText kind="title2" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+                {captionText}
+              </TurnText>
+            ) : captionGrows && !caption.words ? (
+              <TurnText kind="title3" boldText={boldText} style={{ color: colors.ink }}>
                 {captionText}
               </TurnText>
             ) : (
