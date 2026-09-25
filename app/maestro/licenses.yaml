@@ -12,7 +12,9 @@ name: Open-source licenses
 - tapOn: Settings
 - scrollUntilVisible:
     element: Your words
-    direction: UP
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
 - extendedWaitUntil:
     visible: Your words
     timeout: 10000
