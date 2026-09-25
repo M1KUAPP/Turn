@@ -11,7 +11,7 @@
   },
   "expo": {
     "autolinking": {
-      "nativeModulesDir": "./modules"
+      "nativeModulesDir": "../modules"
     }
   },
   "dependencies": {
