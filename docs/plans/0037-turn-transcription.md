@@ -318,9 +318,9 @@ export type EnginePicker = (input: {
 **Files:** `app/src/screens/HomeScreen.tsx`, `app/src/turn-context.tsx`,
 `app/src/consent/controller.ts`, `app/test/consent.test.ts`.
 
-- [ ] `turn-context.tsx` builds the engine by the picker once, wraps it in the
-      live session, passes both to the consent controller, and disposes both
-      on unmount.
+- [x] `turn-context.tsx` builds the engine by the picker once, wraps it in the
+      live session, passes it to the consent controller, and disposes it on
+      unmount. `extra.listenEngine` defaults to `'auto'` beside `buildKind`.
 - [ ] The Listen control, inline in `HomeScreen.tsx` where it lives today,
       gains one state beside "Listen" and "Mic off": Listening, the
       `listening` capsule, orange, `mic.fill` and "Listening". The free-line
@@ -330,14 +330,14 @@ export type EnginePicker = (input: {
       label, the words, Done or Clear, the progress bar under the words while
       the model downloads, the note for each degraded and unavailable state,
       and a tap on the words opening the partner's composer.
-- [ ] The consent controller's `listen` port becomes engine-aware: `start()`
-      reaches the engine only from `partnerAgreed()`, `end()` from
-      `partnerDeclined()`, `notNow()`, `withdraw()`, and `setUnder18(true)`,
-      and `blocked()` answers true when no engine is available. Add failing
-      tests first: the microphone never starts before "They agreed", stops at
-      once on Withdraw and on End, and never starts while the under-18 switch
-      is on, with the typed path asserting no prompt.
-- [ ] `bun run --cwd app test` and `bun run --cwd app typecheck`, then
+- [x] The consent controller's `listen` port is backed by the live session:
+      `start()` reaches the engine only from `partnerAgreed()`, `end()` runs
+      from `partnerDeclined()`, `notNow()`, `withdraw()`, and
+      `setUnder18(true)`, and `blocked()` stays false when no engine is
+      available so typed partner lines still get replies. Tests prove the
+      microphone never starts before "They agreed" or while under-18 mode is
+      on, and that Withdraw and the under-18 switch stop a running engine.
+- [x] `bun run --cwd app test` and `bun run --cwd app typecheck`, then
       `bun run lint`.
 
 ## Task 5: Handoff
