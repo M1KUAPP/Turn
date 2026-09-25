@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
@@ -29,7 +28,6 @@ export default function TypedComposer({
   const minInputHeight = Math.max(52, lineHeight + 20)
   const maxInputHeight = lineHeight * 4 + 20
   const disabled = !speaking && !text.trim()
-  const [inputHeight, setInputHeight] = useState(minInputHeight)
 
   return (
     <View
@@ -70,9 +68,6 @@ export default function TypedComposer({
         selectionColor={colors.accent}
         value={text}
         onChangeText={(value) => onChangeText(value.slice(0, 500))}
-        onContentSizeChange={(event) =>
-          setInputHeight(Math.max(minInputHeight, Math.min(maxInputHeight, event.nativeEvent.contentSize.height + 16)))
-        }
         style={{
           ...textStyle('body', boldText),
           color: colors.ink,
@@ -82,9 +77,9 @@ export default function TypedComposer({
           borderRadius: 12,
           paddingHorizontal: 12,
           paddingVertical: 8,
-          height: Math.max(minInputHeight, inputHeight),
-          // On a short screen the field gives up lines down to two, then scrolls; it never cuts a line it shows.
-          minHeight: Math.min(Math.max(minInputHeight, inputHeight), lineHeight * 2 + 20),
+          // The field grows with its words from one line to four, then scrolls; on a short screen the content
+          // above it scrolls away first.
+          minHeight: minInputHeight,
           maxHeight: maxInputHeight,
           flexShrink: 1,
           textAlignVertical: 'top'
