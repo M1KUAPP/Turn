@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Alert, KeyboardAvoidingView, Modal, Pressable, ScrollView, TextInput, View } from 'react-native'
+import { SymbolView } from 'expo-symbols'
+import {
+  ActionSheetIOS,
+  Alert,
+  KeyboardAvoidingView,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Place } from '../bank/store'
 import { colors, textStyle } from '../constants/theme'
@@ -16,6 +28,7 @@ export default function PlacesScreen() {
   const [editor, setEditor] = useState<Editor | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const { fontScale } = useWindowDimensions()
 
   useEffect(() => {
     if (!bank) return
@@ -54,6 +67,39 @@ export default function PlacesScreen() {
     ])
   }
 
+  // Move, Rename, and Delete sit one tap away, in iOS's own action sheet, and stay named accessibility actions (A11Y-8).
+  const placeActions = (index: number) => [
+    ...(index > 0 ? [{ name: 'move-up', label: 'Move up' }] : []),
+    ...(index < places.length - 1 ? [{ name: 'move-down', label: 'Move down' }] : []),
+    { name: 'rename', label: 'Rename' },
+    { name: 'delete', label: 'Delete' }
+  ]
+
+  const run = (place: Place, action: string) => {
+    if (action === 'move-up') move(place.id, -1)
+    if (action === 'move-down') move(place.id, 1)
+    if (action === 'rename') {
+      setError(null)
+      setEditor({ id: place.id, name: place.name })
+    }
+    if (action === 'delete') confirmDelete(place)
+  }
+
+  const showActions = (place: Place, index: number) => {
+    const actions = placeActions(index)
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: place.name,
+        options: [...actions.map(({ label }) => label), 'Cancel'],
+        destructiveButtonIndex: actions.length - 1,
+        cancelButtonIndex: actions.length
+      },
+      (chosen) => {
+        if (chosen < actions.length) run(place, actions[chosen].name)
+      }
+    )
+  }
+
   const save = async () => {
     if (!bank || !editor || saving) return
     setSaving(true)
@@ -81,108 +127,75 @@ export default function PlacesScreen() {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 16 }}>
-        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-          Choose a place from the Home screen. Move places here to change the picker order.
-        </TurnText>
-        {places.length === 0 && (
+      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 12 }}>
+        {places.length === 0 ? (
           <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
             No places yet. Add one to use the place picker.
           </TurnText>
-        )}
-        {places.map((place, index) => {
-          const canMoveUp = index > 0
-          const canMoveDown = index < places.length - 1
-          const actions = [
-            ...(canMoveUp ? [{ name: 'move-up', label: 'Move up' }] : []),
-            ...(canMoveDown ? [{ name: 'move-down', label: 'Move down' }] : []),
-            { name: 'rename', label: 'Rename' },
-            { name: 'delete', label: 'Delete' }
-          ]
-          return (
-            <View
-              key={place.id}
-              style={{
-                padding: 12,
-                gap: 8,
-                borderRadius: 12,
-                backgroundColor: colors.surface,
-                borderWidth: 2,
-                borderColor: colors.edge
-              }}
-            >
-              <Pressable
-                accessibilityRole="button"
-                accessibilityActions={actions}
-                onAccessibilityAction={(event) => {
-                  if (event.nativeEvent.actionName === 'move-up') move(place.id, -1)
-                  if (event.nativeEvent.actionName === 'move-down') move(place.id, 1)
-                  if (event.nativeEvent.actionName === 'rename') {
-                    setError(null)
-                    setEditor({ id: place.id, name: place.name })
-                  }
-                  if (event.nativeEvent.actionName === 'delete') confirmDelete(place)
-                }}
-                onPress={() => {
-                  setError(null)
-                  setEditor({ id: place.id, name: place.name })
-                }}
-                style={{ minHeight: 44, justifyContent: 'center' }}
-              >
-                <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                  {place.name}
-                </TurnText>
-                {selected?.id === place.id && (
-                  <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                    Current place
-                  </TurnText>
-                )}
-              </Pressable>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-                {[
-                  { label: 'Move up', disabled: !canMoveUp, action: () => move(place.id, -1) },
-                  { label: 'Move down', disabled: !canMoveDown, action: () => move(place.id, 1) },
-                  {
-                    label: 'Rename',
-                    disabled: false,
-                    action: () => {
-                      setError(null)
-                      setEditor({ id: place.id, name: place.name })
-                    }
-                  },
-                  { label: 'Delete', disabled: false, action: () => confirmDelete(place) }
-                ].map(({ label, disabled, action }) => (
-                  <Pressable
-                    key={label}
-                    accessibilityRole="button"
-                    accessibilityState={{ disabled }}
-                    disabled={disabled}
-                    onPress={action}
-                    style={({ pressed }) => ({
-                      minHeight: 44,
-                      minWidth: 64,
-                      paddingHorizontal: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 2,
-                      borderColor: colors.edge,
-                      borderRadius: 22,
-                      backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface
-                    })}
-                  >
-                    <TurnText
-                      kind="subheadline-emphasized"
-                      boldText={boldText}
-                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
-                    >
-                      {label}
+        ) : (
+          <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
+            {places.map((place, index) => {
+              const current = selected?.id === place.id
+              return (
+                <Pressable
+                  key={place.id}
+                  accessibilityRole="button"
+                  // Named explicitly: left to iOS, the trailing symbol adds its own name.
+                  accessibilityLabel={current ? `${place.name}, Current place` : place.name}
+                  accessibilityHint="Shows Move, Rename, and Delete."
+                  accessibilityActions={placeActions(index)}
+                  onAccessibilityAction={(event) => run(place, event.nativeEvent.actionName)}
+                  onPress={() => showActions(place, index)}
+                  style={({ pressed }) => ({
+                    minHeight: 52,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 12,
+                    paddingHorizontal: 16,
+                    paddingVertical: 12,
+                    backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
+                  })}
+                >
+                  {index > 0 && (
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 16,
+                        right: 0,
+                        height: StyleSheet.hairlineWidth,
+                        backgroundColor: colors.edge
+                      }}
+                    />
+                  )}
+                  <View style={{ flex: 1, gap: 2 }}>
+                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                      {place.name}
                     </TurnText>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-          )
-        })}
+                    {current && (
+                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                        Current place
+                      </TurnText>
+                    )}
+                  </View>
+                  <SymbolView
+                    name="ellipsis.circle"
+                    size={Math.round(22 * Math.min(fontScale, 2.6))}
+                    tintColor={colors.accent}
+                    accessible={false}
+                  />
+                </Pressable>
+              )
+            })}
+          </View>
+        )}
+        <TurnText
+          kind="subheadline"
+          boldText={boldText}
+          style={{ color: colors['ink-secondary'], marginHorizontal: 16 }}
+        >
+          Choose a place from the Home screen. Move places here to change the picker order.
+        </TurnText>
         {error && !editor && (
           <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
