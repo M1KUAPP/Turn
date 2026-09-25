@@ -1,0 +1,25 @@
+appId: com.m1ku.turn
+name: Home
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: home-first-view
+- scrollUntilVisible:
+    element: 'Yes'
+- takeScreenshot: home-grid
+- tapOn: Chat
+- assertVisible: 'Hi, how are you?'
+- takeScreenshot: home-chat
+- tapOn: All
+- tapOn: Down
+- takeScreenshot: home-all-down
+- tapOn: Up
+- takeScreenshot: home-all-up
+- tapOn: Type
+- inputText: 'I need a break'
+- assertVisible: 'I need a break'
+- takeScreenshot: home-typing-composer
