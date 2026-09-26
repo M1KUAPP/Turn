@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from 'react'
+import { AppState } from 'react-native'
 import * as Application from 'expo-application'
 import { useRouter } from 'expo-router'
 import { setAudioModeAsync } from 'expo-audio'
@@ -15,6 +16,7 @@ import { createConsentController, type ConsentState } from './consent/controller
 import { consentCard, permissionStep } from './consent/strings'
 import { rebuildGazetteer } from './listen/gazetteer'
 import { expoEngine } from './listen/expo-engine'
+import { bindListenLifecycle } from './listen/lifecycle'
 import { createLiveListenSession } from './listen/live-session'
 import { pickListenEngine } from './listen/engine-picker'
 import { nativeListenEngine } from './listen/native-engine'
@@ -43,6 +45,7 @@ type TurnState = {
   error: string | null
   boldText: boolean
   fontScale: number
+  reduceMotion: boolean
 }
 
 const TurnContext = createContext<TurnState | null>(null)
@@ -56,6 +59,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true
     let listen: ReturnType<typeof createLiveListenSession> | null = null
+    let unsubscribeListenLifecycle: (() => void) | null = null
     let unsubscribeGazetteer: (() => void) | null = null
     let unsubscribeVoiceChanges: (() => void) | null = null
     let unsubscribeConfig: (() => void) | null = null
@@ -114,8 +118,11 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         place: async () => (await bank.selectedPlace())?.id ?? ''
       })
       listen = liveListen
+      unsubscribeListenLifecycle = bindListenLifecycle(liveListen, AppState)
       await liveListen.ready
       if (!active) {
+        unsubscribeListenLifecycle?.()
+        unsubscribeListenLifecycle = null
         await liveListen.dispose()
         return
       }
@@ -164,13 +171,22 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       unsubscribeGazetteer?.()
       unsubscribeVoiceChanges?.()
       unsubscribeConfig?.()
+      const removeListenLifecycle = unsubscribeListenLifecycle
+      unsubscribeListenLifecycle = null
+      removeListenLifecycle?.()
       listen?.dispose()
     }
   }, [])
 
   return (
     <TurnContext.Provider
-      value={{ ready, error, boldText: accessibility.boldText, fontScale: accessibility.fontScale }}
+      value={{
+        ready,
+        error,
+        boldText: accessibility.boldText,
+        fontScale: accessibility.fontScale,
+        reduceMotion: accessibility.reduceMotion
+      }}
     >
       {children}
     </TurnContext.Provider>

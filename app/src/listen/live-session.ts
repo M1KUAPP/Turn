@@ -3,6 +3,7 @@ import { listenStrings } from './strings'
 import { createTypedListenSession, type TypedListenState } from './typed-session'
 
 export const SILENCE_WINDOW_MS = 500
+const CAPTION_EXPIRY_MS = 120_000
 
 type TypedSession = ReturnType<typeof createTypedListenSession>
 
@@ -53,10 +54,13 @@ export function createLiveListenSession(options: {
   let lineConsumed = false
   let voiceActive = false
   let ignoreNextEngineLine = false
-  let engineRunning = false
+  let engineInitialized = false
+  let engineCapturing = false
   let disposed = false
   let revision = 0
   let silenceTimer: ReturnType<typeof setTimeout> | null = null
+  let captionTimer: ReturnType<typeof setTimeout> | null = null
+  let captionRevision = 0
   let lineEnding: Promise<void> | null = null
   let pendingRanking: Promise<void> = Promise.resolve()
   let snapshot: LiveListenSnapshot
@@ -89,6 +93,46 @@ export function createLiveListenSession(options: {
     silenceTimer = null
   }
 
+  const cancelCaptionTimer = () => {
+    captionRevision++
+    if (captionTimer === null) return
+    clearTimeout(captionTimer)
+    captionTimer = null
+  }
+
+  const scheduleCaptionExpiry = (endedAt: number): number => {
+    cancelCaptionTimer()
+    const currentCaptionRevision = captionRevision
+    const delay = Math.max(0, endedAt + CAPTION_EXPIRY_MS - now())
+    captionTimer = setTimeout(() => {
+      if (disposed || currentCaptionRevision !== captionRevision) return
+      captionTimer = null
+      captionRevision++
+      if (!typedState.active) return
+      captionLabel = listenStrings.listening
+      captionWords = ''
+      captionNote = null
+      rankedOnce = false
+      publish()
+    }, delay)
+    return currentCaptionRevision
+  }
+
+  const clearPausedCaption = () => {
+    cancelSilenceTimer()
+    cancelCaptionTimer()
+    lineOpen = false
+    openLineWords = ''
+    lineConsumed = false
+    voiceActive = false
+    ignoreNextEngineLine = false
+    lineEnding = null
+    captionLabel = listenStrings.off
+    captionWords = ''
+    captionNote = null
+    rankedOnce = false
+  }
+
   const setUnavailable = () => {
     phase = 'unavailable'
     captionNote = listenStrings.unavailable
@@ -97,11 +141,53 @@ export function createLiveListenSession(options: {
     publish()
   }
 
+  const startEngine = async (currentRevision: number): Promise<void> => {
+    if (!engine) return
+    try {
+      const status = await engine.availability()
+      if (disposed || currentRevision !== revision || !typedState.active) return
+      if (status === 'unsupported' || status === 'none') {
+        setUnavailable()
+        return
+      }
+      if (engine.id === 'turn-listen' && status !== 'installed') {
+        captionNote = listenStrings.gettingModel
+        publish()
+        await engine.installAsset()
+        if (disposed || currentRevision !== revision || !typedState.active) return
+        captionNote = null
+        assetProgress = null
+        publish()
+      }
+      engineInitialized = true
+      engineCapturing = true
+      await engine.start({ lang: 'en-US' })
+      if (disposed || currentRevision !== revision || !typedState.active) {
+        engineCapturing = false
+        await engine.pause()
+        return
+      }
+      if (!engineCapturing) return
+      phase = 'listening'
+      publish()
+    } catch {
+      if (disposed || currentRevision !== revision || !typedState.active) {
+        if (engineInitialized && !engineCapturing) await engine.pause()
+        return
+      }
+      engineInitialized = false
+      engineCapturing = false
+      setUnavailable()
+    }
+  }
+
   const rankLine = (line: ListenLine) => {
     if (disposed || !typedState.active) return
     const text = line.text.trim()
     if (!text) {
+      cancelCaptionTimer()
       lineOpen = false
+      openLineWords = ''
       captionWords = ''
       captionLabel = listenStrings.listening
       rankedOnce = false
@@ -119,15 +205,18 @@ export function createLiveListenSession(options: {
     captionNote = null
     captionPrompt = engine ? null : listenStrings.typedLinePrompt
     rankedOnce = false
+    const currentCaptionRevision = scheduleCaptionExpiry(line.endedAt)
     publish()
 
     const previousSequence = typedState.row.seq
     pendingRanking = (async () => {
       await typed.send(text, await place())
       if (disposed || !typedState.active || typedState.row.seq <= previousSequence) return
-      rankedOnce = true
-      captionNote = rankingNote()
-      publish()
+      if (currentCaptionRevision === captionRevision) {
+        rankedOnce = true
+        captionNote = rankingNote()
+        publish()
+      }
       log({
         line: text,
         endedAt: line.endedAt,
@@ -169,7 +258,8 @@ export function createLiveListenSession(options: {
 
   const engineEvents: ListenEngineEvents = {
     onPartial(text) {
-      if (disposed || !typedState.active || !engineRunning) return
+      if (disposed || !typedState.active || !engineCapturing) return
+      cancelCaptionTimer()
       if (!lineOpen) {
         lineConsumed = false
         ignoreNextEngineLine = false
@@ -191,7 +281,7 @@ export function createLiveListenSession(options: {
       publish()
     },
     onLine(line) {
-      if (!engineRunning) return
+      if (!engineCapturing) return
       if (ignoreNextEngineLine) {
         ignoreNextEngineLine = false
         lineOpen = false
@@ -205,21 +295,21 @@ export function createLiveListenSession(options: {
       rankLine(line)
     },
     onState(nextPhase) {
-      if (disposed) return
-      phase = nextPhase
-      if (nextPhase === 'unavailable') {
-        captionNote = listenStrings.unavailable
-        captionPrompt = listenStrings.typedLinePrompt
-      } else if (nextPhase === 'paused') {
-        cancelSilenceTimer()
-        lineOpen = false
-        voiceActive = false
-        captionLabel = listenStrings.off
-        captionWords = ''
-        captionNote = null
-        rankedOnce = false
-      } else if (nextPhase === 'listening' && !captionWords) {
-        captionLabel = listenStrings.listening
+      if (disposed || !typedState.active) return
+      if (nextPhase === 'paused') {
+        engineCapturing = false
+        clearPausedCaption()
+        phase = 'paused'
+      } else {
+        if (!engineCapturing) return
+        phase = nextPhase
+        if (nextPhase === 'unavailable') {
+          engineCapturing = false
+          captionNote = listenStrings.unavailable
+          captionPrompt = listenStrings.typedLinePrompt
+        } else if (nextPhase === 'listening' && !captionWords) {
+          captionLabel = listenStrings.listening
+        }
       }
       publish()
     },
@@ -230,7 +320,7 @@ export function createLiveListenSession(options: {
       publish()
     },
     onVoice(active) {
-      if (disposed || !typedState.active || !engineRunning) return
+      if (disposed || !typedState.active || !engineCapturing) return
       voiceActive = active
       if (active) {
         if (!lineOpen) {
@@ -273,6 +363,8 @@ export function createLiveListenSession(options: {
       const currentRevision = ++revision
       rankedLines.clear()
       typed.start()
+      engineInitialized = false
+      engineCapturing = false
       lineOpen = false
       lineConsumed = false
       voiceActive = false
@@ -286,31 +378,56 @@ export function createLiveListenSession(options: {
       phase = microphone ? 'starting' : 'unavailable'
       publish()
       if (!engine || !microphone) return
+      await startEngine(currentRevision)
+    },
+    async pause(): Promise<void> {
+      if (
+        disposed ||
+        !typedState.active ||
+        !engine ||
+        phase === 'idle' ||
+        phase === 'paused' ||
+        phase === 'unavailable'
+      ) {
+        return
+      }
+      ++revision
+      engineCapturing = false
+      phase = 'paused'
+      clearPausedCaption()
+      publish()
+      await engine.pause()
+    },
+    async resume(): Promise<void> {
+      if (disposed || !typedState.active || !engine || phase !== 'paused') return
+      const currentRevision = ++revision
+      phase = 'starting'
+      captionLabel = listenStrings.listening
+      engineCapturing = engineInitialized
+      publish()
+
+      if (!engineInitialized) {
+        await startEngine(currentRevision)
+        return
+      }
 
       try {
-        const status = await engine.availability()
-        if (disposed || currentRevision !== revision || !typedState.active) return
-        if (status === 'unsupported' || status === 'none') {
-          setUnavailable()
+        engineCapturing = true
+        await engine.resume()
+        if (disposed || currentRevision !== revision || !typedState.active) {
+          engineCapturing = false
+          await engine.pause()
           return
         }
-        if (engine.id === 'turn-listen' && status !== 'installed') {
-          captionNote = listenStrings.gettingModel
-          publish()
-          await engine.installAsset()
-          if (disposed || currentRevision !== revision || !typedState.active) return
-          captionNote = null
-          assetProgress = null
-          publish()
-        }
-        engineRunning = true
-        await engine.start({ lang: 'en-US' })
-        if (disposed || currentRevision !== revision || !typedState.active) return
+        if (!engineCapturing) return
         phase = 'listening'
         publish()
       } catch {
-        if (disposed || currentRevision !== revision || !typedState.active) return
-        engineRunning = false
+        if (disposed || currentRevision !== revision || !typedState.active) {
+          if (!engineCapturing) await engine.pause()
+          return
+        }
+        engineCapturing = false
         setUnavailable()
       }
     },
@@ -320,8 +437,9 @@ export function createLiveListenSession(options: {
       if (disposed || !typedState.active) return
       ++revision
       cancelSilenceTimer()
-      const shouldStop = engine !== null && engineRunning
-      engineRunning = false
+      const shouldStop = engine !== null && engineInitialized
+      engineInitialized = false
+      engineCapturing = false
       lineOpen = false
       lineEnding = null
       openLineWords = ''
@@ -354,12 +472,15 @@ export function createLiveListenSession(options: {
       captionNote = null
       captionPrompt = engine ? null : listenStrings.typedLinePrompt
       rankedOnce = false
+      const currentCaptionRevision = scheduleCaptionExpiry(endedAt)
       publish()
       await typed.send(text, linePlace ?? (await place()))
       if (disposed || !typedState.active || typedState.row.seq <= previousSequence) return
-      rankedOnce = true
-      captionNote = rankingNote()
-      publish()
+      if (currentCaptionRevision === captionRevision) {
+        rankedOnce = true
+        captionNote = rankingNote()
+        publish()
+      }
       log({ line: text, endedAt, rankedAt: now(), silenceWindowMs: 0 })
     },
     clear(): void {
@@ -373,9 +494,12 @@ export function createLiveListenSession(options: {
       if (disposed) return
       ++revision
       cancelSilenceTimer()
-      const shouldStop = engine !== null && engineRunning
-      engineRunning = false
+      cancelCaptionTimer()
+      const shouldStop = engine !== null && engineInitialized
+      engineInitialized = false
+      engineCapturing = false
       lineOpen = false
+      openLineWords = ''
       lineConsumed = false
       voiceActive = false
       ignoreNextEngineLine = false
@@ -396,8 +520,10 @@ export function createLiveListenSession(options: {
       if (disposed) return
       ++revision
       cancelSilenceTimer()
-      const shouldStop = engine !== null && engineRunning
-      engineRunning = false
+      cancelCaptionTimer()
+      const shouldStop = engine !== null && engineInitialized
+      engineInitialized = false
+      engineCapturing = false
       disposed = true
       removeEngineEvents()
       removeTypedListener()
