@@ -121,7 +121,14 @@ export function createConfigClient(ports: ConfigPorts) {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 3_000)
     try {
-      await getUserId()
+      // The three seconds cover the keychain too: a cold keychain can hold the user ID for longer, and Listen
+      // mode waits on this refresh.
+      await Promise.race([
+        getUserId(),
+        new Promise<never>((_resolve, reject) =>
+          controller.signal.addEventListener('abort', () => reject(new Error('The config refresh timed out')))
+        )
+      ])
       const url = `${ports.relayUrl.replace(/\/+$/, '')}/v1/config`
       const response = await ports.request(url, {
         method: 'GET',

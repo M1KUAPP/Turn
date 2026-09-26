@@ -120,6 +120,9 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
   const controlHeight = Math.max(44, 22 * Math.min(fontScale, 2.82) + 16)
   const captionHeight = Math.max(layout.short ? 56 : 86, 24 + 70 * fontScale)
+  // From AX1 the column scrolls, so the caption grows to fit its label, note, and prompt rather than cutting them;
+  // only the partner's words keep their two lines (DESIGN, A11Y-4).
+  const captionGrows = fontScale >= 1.786
   const twoControlRows = width < 352 || fontScale >= 1.786
   const oneControlColumn = fontScale >= 2.5
   // SF Symbols grow with the words beside them, as they do in iOS's own labels.
@@ -423,7 +426,8 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       {!composerOpen && (
         <View
           style={{
-            height: captionHeight,
+            height: captionGrows ? undefined : captionHeight,
+            minHeight: captionHeight,
             marginHorizontal: 16,
             marginTop: 4,
             marginBottom: 8,
@@ -446,12 +450,19 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
           >
             {(captionLabel || captionNote) && (
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: captionGrows ? 'wrap' : 'nowrap',
+                  alignItems: 'center',
+                  gap: 6
+                }}
+              >
                 {captionLabel && (
                   <TurnText
                     kind="subheadline"
                     boldText={boldText}
-                    numberOfLines={1}
+                    numberOfLines={captionGrows ? undefined : 1}
                     style={{ color: colors['ink-secondary'], flexShrink: 1 }}
                   >
                     {captionLabel}
@@ -459,7 +470,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                 )}
                 {captionNote && (
                   <View
-                    style={{ flexDirection: 'row', alignItems: 'center', gap: 4, flexShrink: 1, marginLeft: 'auto' }}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 4,
+                      flexShrink: 1,
+                      marginLeft: captionGrows ? 0 : 'auto'
+                    }}
                   >
                     <SymbolView
                       name={noteSymbol}
@@ -470,7 +487,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                     <TurnText
                       kind="subheadline"
                       boldText={boldText}
-                      numberOfLines={1}
+                      numberOfLines={captionGrows ? undefined : 1}
                       style={{ color: colors['ink-secondary'], flexShrink: 1 }}
                     >
                       {captionNote}
@@ -485,6 +502,10 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               </TurnText>
             ) : captionOpening ? (
               <TurnText kind="title2" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+                {captionText}
+              </TurnText>
+            ) : captionGrows && !caption.words ? (
+              <TurnText kind="title3" boldText={boldText} style={{ color: colors.ink }}>
                 {captionText}
               </TurnText>
             ) : (
@@ -671,7 +692,9 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     { label: 'Down', icon: 'chevron.down', action: () => page(1), disabled: offset >= contentHeight - viewportHeight }
   ] as const
 
-  // The bar's four buttons share one row when their words fit, then two rows, then one column (DESIGN, the bottom bar).
+  // The bar's four buttons share one row when their words fit, and otherwise take two rows, Type and Repeat over Up
+  // and Down (DESIGN, the bottom bar). A pair splits only when its two words can't fit side by side, as Type and
+  // Repeat can't at AX5, so no label is cut and no row is spent on a button that fits beside its pair.
   // Measured with 6-point sides, the four fit one row at the default size on a 6.1-inch iPhone, and a row shares
   // what's left, so two rows never push Yes and No under the bar there.
   const barIcon = symbolSize(18)
@@ -683,17 +706,13 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
     { label: 'Down', icon: 'chevron.down' }
   ] as const
   const natural = barMeasures.map(({ label }) => barWidths[label] ?? 0)
-  const barLayout: 'row' | 'grid' | 'column' = natural.some((measured) => measured === 0)
-    ? oneControlColumn
-      ? 'column'
-      : twoControlRows
-        ? 'grid'
-        : 'row'
+  const barLayout: 'row' | 'pairs' = natural.some((measured) => measured === 0)
+    ? twoControlRows
+      ? 'pairs'
+      : 'row'
     : natural.reduce((sum, measured) => sum + measured, 0) + 8 * 3 <= barSpace
       ? 'row'
-      : Math.max(...natural) <= (barSpace - 8) / 2
-        ? 'grid'
-        : 'column'
+      : 'pairs'
 
   const topBar = (
     <View
@@ -754,10 +773,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
           {selectedPlace?.name ?? 'Place'}
         </TurnText>
       </Pressable>
-      {/* In one column, End takes its own row, so neither label is cut beside the other. */}
+      {/* From AX3 the controls fill their row and share it only when both words fit, so neither label is cut. */}
       <View
         style={{
-          flexDirection: oneControlColumn ? 'column' : 'row',
+          flexDirection: 'row',
+          flexWrap: oneControlColumn ? 'wrap' : 'nowrap',
           width: oneControlColumn ? width - 32 : undefined,
           gap: oneControlColumn ? 8 : 6,
           alignItems: oneControlColumn ? 'stretch' : 'center'
@@ -778,6 +798,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               .finally(() => setStartingListen(false))
           }}
           style={({ pressed }) => ({
+            flexGrow: oneControlColumn ? 1 : 0,
             minHeight: oneControlColumn ? controlHeight : 44,
             minWidth: 44,
             flexDirection: 'row',
@@ -817,6 +838,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
               listen.end()
             }}
             style={({ pressed }) => ({
+              flexGrow: oneControlColumn ? 1 : 0,
               minHeight: oneControlColumn ? controlHeight : 44,
               minWidth: 52,
               paddingHorizontal: 12,
@@ -908,8 +930,7 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             />
             <View
               style={{
-                flexDirection: 'row',
-                flexWrap: barLayout === 'row' ? 'nowrap' : 'wrap',
+                flexDirection: barLayout === 'row' ? 'row' : 'column',
                 gap: 8,
                 paddingHorizontal: 16,
                 paddingVertical: 4,
@@ -948,45 +969,62 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
                   </View>
                 ))}
               </View>
-              {bottomControls.map(({ label, icon, action, disabled }) => (
-                <Pressable
-                  key={label}
-                  accessibilityRole="button"
-                  accessibilityLabel={label}
-                  accessibilityState={{ disabled }}
-                  disabled={disabled}
-                  onPress={action}
-                  style={({ pressed }) => ({
-                    flexGrow: barLayout === 'row' ? 1 : 0,
-                    width: barLayout === 'column' ? barSpace : barLayout === 'grid' ? (barSpace - 8) / 2 : undefined,
-                    minHeight: controlHeight,
-                    minWidth: 44,
-                    paddingHorizontal: 6,
-                    borderRadius: 22,
-                    borderWidth: 2,
-                    borderColor: colors.edge,
-                    backgroundColor: disabled ? colors.surface : pressed ? colors['surface-pressed'] : colors.surface,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  })}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                    <SymbolView
-                      name={icon}
-                      size={barIcon}
-                      tintColor={disabled ? colors['ink-secondary'] : colors.ink}
-                      accessible={false}
-                    />
-                    <TurnText
-                      kind="headline"
-                      boldText={boldText}
-                      style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
-                    >
-                      {label}
-                    </TurnText>
+              {(barLayout === 'row' ? [bottomControls] : [bottomControls.slice(0, 2), bottomControls.slice(2)]).map(
+                (group) => (
+                  <View
+                    key={group[0].label}
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: barLayout === 'row' ? 'nowrap' : 'wrap',
+                      gap: 8,
+                      flexGrow: 1
+                    }}
+                  >
+                    {group.map(({ label, icon, action, disabled }) => (
+                      <Pressable
+                        key={label}
+                        accessibilityRole="button"
+                        accessibilityLabel={label}
+                        accessibilityState={{ disabled }}
+                        disabled={disabled}
+                        onPress={action}
+                        style={({ pressed }) => ({
+                          flexGrow: 1,
+                          minHeight: controlHeight,
+                          minWidth: 44,
+                          paddingHorizontal: 6,
+                          borderRadius: 22,
+                          borderWidth: 2,
+                          borderColor: colors.edge,
+                          backgroundColor: disabled
+                            ? colors.surface
+                            : pressed
+                              ? colors['surface-pressed']
+                              : colors.surface,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        })}
+                      >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                          <SymbolView
+                            name={icon}
+                            size={barIcon}
+                            tintColor={disabled ? colors['ink-secondary'] : colors.ink}
+                            accessible={false}
+                          />
+                          <TurnText
+                            kind="headline"
+                            boldText={boldText}
+                            style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
+                          >
+                            {label}
+                          </TurnText>
+                        </View>
+                      </Pressable>
+                    ))}
                   </View>
-                </Pressable>
-              ))}
+                )
+              )}
             </View>
           </>
         )}

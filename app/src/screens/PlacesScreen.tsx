@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Place } from '../bank/store'
 import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
+import SheetHeader from './SheetHeader'
 import TurnText from './TurnText'
 
 type Editor = { id: string | null; name: string }
@@ -243,78 +244,51 @@ export default function PlacesScreen() {
         }}
       >
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
-          <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16, gap: 20 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Cancel"
-                onPress={() => {
-                  setEditor(null)
-                  setError(null)
-                }}
-                style={{ minWidth: 44, minHeight: 44, justifyContent: 'center' }}
-              >
-                <TurnText kind="body" boldText={boldText} style={{ color: colors.accent }}>
-                  Cancel
-                </TurnText>
-              </Pressable>
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-                {editor?.id ? 'Rename place' : 'Add place'}
-              </TurnText>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Save"
-                accessibilityState={{ disabled: !editor?.name.trim() || saving }}
-                disabled={!editor?.name.trim() || saving}
-                onPress={() => void save()}
-                style={{
-                  minWidth: 44,
-                  minHeight: 44,
-                  alignItems: 'flex-end',
-                  justifyContent: 'center'
-                }}
-              >
-                <TurnText
-                  kind="body"
-                  boldText={boldText}
-                  style={{ color: !editor?.name.trim() || saving ? colors['ink-secondary'] : colors.accent }}
-                >
-                  Save
-                </TurnText>
-              </Pressable>
-            </View>
-            <TextInput
-              autoFocus
-              accessibilityLabel="Place name"
-              maxLength={40}
-              value={editor?.name ?? ''}
-              onChangeText={(name) =>
-                setEditor((current) => (current ? { ...current, name: name.slice(0, 40) } : null))
-              }
-              placeholder="Place name"
-              placeholderTextColor={colors['ink-secondary']}
-              selectionColor={colors.accent}
-              style={{
-                ...textStyle('body', boldText),
-                minHeight: 52,
-                padding: 12,
-                borderWidth: 2,
-                borderColor: colors.edge,
-                borderRadius: 12,
-                color: colors.ink,
-                backgroundColor: colors.surface
+          <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
+            <SheetHeader
+              title={editor?.id ? 'Rename place' : 'Add place'}
+              boldText={boldText}
+              canSave={!!editor?.name.trim() && !saving}
+              onCancel={() => {
+                setEditor(null)
+                setError(null)
               }}
+              onSave={() => void save()}
             />
-            {!!editor && editor.name.length >= 35 && (
-              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                {40 - editor.name.length} characters left
-              </TurnText>
-            )}
-            {error && (
-              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                {error}
-              </TurnText>
-            )}
+            <View style={{ gap: 20 }}>
+              <TextInput
+                autoFocus
+                accessibilityLabel="Place name"
+                maxLength={40}
+                value={editor?.name ?? ''}
+                onChangeText={(name) =>
+                  setEditor((current) => (current ? { ...current, name: name.slice(0, 40) } : null))
+                }
+                placeholder="Place name"
+                placeholderTextColor={colors['ink-secondary']}
+                selectionColor={colors.accent}
+                style={{
+                  ...textStyle('body', boldText),
+                  minHeight: 52,
+                  padding: 12,
+                  borderWidth: 2,
+                  borderColor: colors.edge,
+                  borderRadius: 12,
+                  color: colors.ink,
+                  backgroundColor: colors.surface
+                }}
+              />
+              {!!editor && editor.name.length >= 35 && (
+                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                  {40 - editor.name.length} characters left
+                </TurnText>
+              )}
+              {error && (
+                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                  {error}
+                </TurnText>
+              )}
+            </View>
           </KeyboardAvoidingView>
         </SafeAreaView>
       </Modal>
