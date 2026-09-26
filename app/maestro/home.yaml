@@ -12,30 +12,35 @@ name: Home
     element: 'Yes'
     direction: DOWN
 - takeScreenshot: home-grid
-# From AX1 the column scrolls under the top bar, and Maestro still counts a tab half under the bar as on screen, so
-# center each tab before tapping it or the tap lands on Listen.
+# From AX1 the column scrolls under the top bar and above the bottom bar, and Maestro counts an element under
+# either as on screen, so a tab only matches once it sits between them; otherwise the tap lands on the bar.
 - scrollUntilVisible:
-    element: Chat
-    centerElement: true
-- tapOn: Chat
+    element:
+      text: Chat
+      below: Listen
+      above: Type
+- tapOn:
+    text: Chat
+    below: Listen
+    above: Type
 - scrollUntilVisible:
     element: '.*Hi, how are you\?.*'
     direction: DOWN
 - assertVisible: '.*Hi, how are you\?.*'
 - takeScreenshot: home-chat
-# Back to the caption first: a tab half under the top bar already counts as visible, so only a real scroll
-# down to it centers it.
+# Back to the caption first, so All comes up from below the tab row's scrolled-away position.
 - scrollUntilVisible:
     element: '.*Listen mode is off\..*'
     direction: UP
 - scrollUntilVisible:
     element:
       text: All
-      rightOf: Chat
-    centerElement: true
+      below: Listen
+      above: Type
 - tapOn:
     text: All
-    rightOf: Chat
+    below: Listen
+    above: Type
 - waitForAnimationToEnd
 - assertNotVisible: Before Listen mode starts
 - scrollUntilVisible:

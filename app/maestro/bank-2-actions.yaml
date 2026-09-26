@@ -40,10 +40,12 @@ name: Phrase bank actions and category limit
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
 - waitForAnimationToEnd
+# At AX5 each category card holds its four buttons, so Typed, last in the list, is several screens down.
 - scrollUntilVisible:
     element: Typed
     direction: DOWN
-    speed: 10
+    speed: 40
+    timeout: 60000
 - assertVisible: Typed
 - takeScreenshot: bank-2-actions-categories
 - scrollUntilVisible:
@@ -224,14 +226,12 @@ name: Phrase bank actions and category limit
     visible: Flow phrase
     timeout: 10000
 - waitForAnimationToEnd
+# The row names its phrase and lists its places as its value, and Maestro matches each on its own.
 - scrollUntilVisible:
-    element: '.*Flow phrase.*Home.*'
+    element: Flow phrase
     direction: DOWN
-- assertVisible: '.*Flow phrase.*Home.*'
-- scrollUntilVisible:
-    element: '.*Flow phrase.*Clinic.*'
-    direction: DOWN
-- assertVisible: '.*Flow phrase.*Clinic.*'
+- assertVisible: Flow phrase
+- assertVisible: '(Clinic, Home|Home, Clinic)'
 - takeScreenshot: bank-2-actions-phrase-added
 - scrollUntilVisible:
     element: Phrase bank
@@ -287,14 +287,12 @@ name: Phrase bank actions and category limit
     visible: Flow phrase
     timeout: 10000
 - waitForAnimationToEnd
+# The row names its phrase and lists its places as its value, and Maestro matches each on its own.
 - scrollUntilVisible:
-    element: '.*Flow phrase.*Home.*'
+    element: Flow phrase
     direction: DOWN
-- assertVisible: '.*Flow phrase.*Home.*'
-- scrollUntilVisible:
-    element: '.*Flow phrase.*Clinic.*'
-    direction: DOWN
-- assertVisible: '.*Flow phrase.*Clinic.*'
+- assertVisible: Flow phrase
+- assertVisible: '(Clinic, Home|Home, Clinic)'
 - takeScreenshot: bank-2-actions-phrase-moved-with-category
 - scrollUntilVisible:
     element: Edit

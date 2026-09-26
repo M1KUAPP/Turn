@@ -31,10 +31,17 @@ name: Consent agree and edge swipe
 - extendedWaitUntil:
     visible: Mic off
     timeout: 10000
+# From AX1 the column scrolls under the top bar and above the bottom bar, and Maestro counts an element under
+# either as on screen, so a tab only matches once it sits between them; otherwise the tap lands on the bar.
 - scrollUntilVisible:
-    element: Chat
-    centerElement: true
-- tapOn: Chat
+    element:
+      text: Chat
+      below: Mic off
+      above: Type
+- tapOn:
+    text: Chat
+    below: Mic off
+    above: Type
 - scrollUntilVisible:
     element: 'Hi, how are you\?'
 - extendedWaitUntil:
