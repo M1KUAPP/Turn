@@ -79,6 +79,11 @@ public class TurnListenModule: Module {
       try await engine.endLine()
     }
 
+    AsyncFunction("setListenMode") { (active: Bool) async throws in
+      let engine = await MainActor.run { self.listenEngine }
+      try await engine.setListenMode(active)
+    }
+
     AsyncFunction("muteForSpeech") { (muted: Bool) async throws in
       let engine = await MainActor.run { self.listenEngine }
       try await engine.muteForSpeech(muted)

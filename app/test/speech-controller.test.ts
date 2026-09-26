@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { createSpeechController } from '../src/speech/controller'
 
-function fixture() {
+function fixture(gate?: { beforeSpeak(): Promise<void>; afterSpeech(): void }) {
   const utterances: Array<{
     text: string
     options: {
@@ -28,7 +28,8 @@ function fixture() {
     (id) => {
       counts.push(id)
     },
-    { voice: () => voice, rate: () => rate }
+    { voice: () => voice, rate: () => rate },
+    gate
   )
   return {
     controller,
@@ -196,5 +197,120 @@ describe('speech controller', () => {
     await app.controller.preview('Hello. This is how I sound.', null)
 
     expect(app.utterances[0].options).not.toHaveProperty('voice')
+  })
+
+  test('within speak(), the order is stop, gate, speak', async () => {
+    const order: string[] = []
+    const controller = createSpeechController(
+      {
+        speak: (_text, _options) => {
+          order.push('speak')
+        },
+        stop: async () => {
+          order.push('stop')
+        }
+      },
+      () => {},
+      { voice: () => null, rate: () => 1 },
+      {
+        beforeSpeak: async () => {
+          order.push('gate')
+        },
+        afterSpeech: () => {
+          order.push('afterSpeech')
+        }
+      }
+    )
+
+    await controller.speak('First')
+    order.length = 0
+
+    await controller.speak('Second')
+    expect(order).toEqual(['stop', 'gate', 'speak'])
+  })
+
+  test('a second tap runs the gate again and the first utterance onDone drops afterSpeech()', async () => {
+    const gates: string[] = []
+    const app = fixture({
+      beforeSpeak: async () => {
+        gates.push('beforeSpeak')
+      },
+      afterSpeech: () => {
+        gates.push('afterSpeech')
+      }
+    })
+
+    await app.controller.speak('First')
+    expect(gates).toEqual(['beforeSpeak'])
+
+    await app.controller.speak('Second')
+    expect(gates).toEqual(['beforeSpeak', 'beforeSpeak'])
+
+    app.utterances[0].options.onDone()
+    expect(gates).toEqual(['beforeSpeak', 'beforeSpeak'])
+
+    app.utterances[1].options.onDone()
+    expect(gates).toEqual(['beforeSpeak', 'beforeSpeak', 'afterSpeech'])
+  })
+
+  test('a tap that arrives while the gate is pending replaces the first', async () => {
+    let openGate = () => {}
+    let calls = 0
+    const { controller, utterances } = fixture({
+      beforeSpeak: () => {
+        calls++
+        if (calls > 1) return Promise.resolve()
+        return new Promise<void>((resolve) => {
+          openGate = resolve
+        })
+      },
+      afterSpeech: () => {}
+    })
+
+    const first = controller.speak('First')
+    await Promise.resolve()
+    await controller.speak('Second')
+    openGate()
+    await first
+
+    expect(utterances.map(({ text }) => text)).toEqual(['Second'])
+  })
+
+  test('stop(), onStopped, and a throwing speak each call afterSpeech()', async () => {
+    let afterSpeechCalls = 0
+    const app = fixture({
+      beforeSpeak: async () => {},
+      afterSpeech: () => {
+        afterSpeechCalls++
+      }
+    })
+
+    await app.controller.speak('First')
+    app.utterances[0].options.onStopped()
+    expect(afterSpeechCalls).toBe(1)
+
+    await app.controller.speak('Second')
+    await app.controller.stop()
+    expect(afterSpeechCalls).toBe(2)
+
+    const throwingController = createSpeechController(
+      {
+        speak: () => {
+          throw new Error('TTS engine crashed')
+        },
+        stop: async () => {}
+      },
+      () => {},
+      { voice: () => null, rate: () => 1 },
+      {
+        beforeSpeak: async () => {},
+        afterSpeech: () => {
+          afterSpeechCalls++
+        }
+      }
+    )
+
+    await expect(throwingController.speak('Fails')).rejects.toThrow('TTS engine crashed')
+    expect(afterSpeechCalls).toBe(3)
   })
 })

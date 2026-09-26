@@ -1,6 +1,7 @@
 import type { EngineState, ListenEngine, ListenEngineEvents, ListenLine } from './engine'
 import { listenStrings } from './strings'
 import { createTypedListenSession, type TypedListenState } from './typed-session'
+import type { TurnListen } from '../../../modules/turn-listen/src'
 
 export const SILENCE_WINDOW_MS = 500
 const CAPTION_EXPIRY_MS = 120_000
@@ -32,11 +33,13 @@ export type LiveListenSnapshot = TypedListenState & {
 export function createLiveListenSession(options: {
   typed: TypedSession
   engine: ListenEngine | null
+  module?: Pick<TurnListen, 'setListenMode' | 'muteForSpeech'> | null
   now: () => number
   log: (entry: ListenLogEntry) => void
   place?: () => string | Promise<string>
 }) {
   const { typed, engine, now, log } = options
+  const module = options.module ?? null
   const place = options.place ?? (() => '')
   const listeners = new Set<() => void>()
   const rankedLines = new Set<string>()
@@ -56,8 +59,29 @@ export function createLiveListenSession(options: {
   let ignoreNextEngineLine = false
   let engineInitialized = false
   let engineCapturing = false
+  let listenModeActive = false
+  let sessionMuted = false
   let disposed = false
   let revision = 0
+
+  const releaseMute = () => {
+    if (!sessionMuted) return
+    sessionMuted = false
+    try {
+      void module?.muteForSpeech(false).catch(() => {})
+    } catch {
+      // The typed path must keep working.
+    }
+  }
+
+  const setListenMode = (active: boolean) => {
+    if (!module) return
+    try {
+      void module.setListenMode(active).catch(() => {})
+    } catch {
+      // The typed path must keep working.
+    }
+  }
   let silenceTimer: ReturnType<typeof setTimeout> | null = null
   let captionTimer: ReturnType<typeof setTimeout> | null = null
   let captionRevision = 0
@@ -377,6 +401,8 @@ export function createLiveListenSession(options: {
       assetProgress = null
       phase = microphone ? 'starting' : 'unavailable'
       publish()
+      listenModeActive = true
+      setListenMode(true)
       if (!engine || !microphone) return
       await startEngine(currentRevision)
     },
@@ -392,6 +418,7 @@ export function createLiveListenSession(options: {
         return
       }
       ++revision
+      releaseMute()
       engineCapturing = false
       phase = 'paused'
       clearPausedCaption()
@@ -436,6 +463,7 @@ export function createLiveListenSession(options: {
     async micOff(): Promise<void> {
       if (disposed || !typedState.active) return
       ++revision
+      releaseMute()
       cancelSilenceTimer()
       const shouldStop = engine !== null && engineInitialized
       engineInitialized = false
@@ -458,6 +486,23 @@ export function createLiveListenSession(options: {
     async endLine(): Promise<void> {
       if (!typedState.active) return
       await endOpenLine()
+    },
+    async beforeSpeak(): Promise<void> {
+      if (!typedState.active || disposed || !engineCapturing || !module) return
+      try {
+        await endOpenLine()
+      } catch {
+        // Speech still goes ahead if ending the open line fails.
+      }
+      try {
+        await module.muteForSpeech(true)
+        sessionMuted = true
+      } catch {
+        // Speech still goes ahead if muting fails.
+      }
+    },
+    afterSpeech(): void {
+      releaseMute()
     },
     async send(line: string, linePlace?: string): Promise<void> {
       const text = line.trim()
@@ -493,6 +538,7 @@ export function createLiveListenSession(options: {
     async end(): Promise<void> {
       if (disposed) return
       ++revision
+      releaseMute()
       cancelSilenceTimer()
       cancelCaptionTimer()
       const shouldStop = engine !== null && engineInitialized
@@ -514,22 +560,37 @@ export function createLiveListenSession(options: {
       rankedOnce = false
       phase = engine ? 'idle' : 'unavailable'
       publish()
-      if (shouldStop) await engine.stop()
+      const leavingListenMode = listenModeActive
+      listenModeActive = false
+      try {
+        if (shouldStop) await engine.stop()
+      } finally {
+        // The engine stops first, so the category never changes under a running capture, and a session started
+        // meanwhile keeps the Listen mode category.
+        if (leavingListenMode && !listenModeActive) setListenMode(false)
+      }
     },
     async dispose(): Promise<void> {
       if (disposed) return
       ++revision
+      releaseMute()
       cancelSilenceTimer()
       cancelCaptionTimer()
       const shouldStop = engine !== null && engineInitialized
       engineInitialized = false
       engineCapturing = false
       disposed = true
+      const leavingListenMode = listenModeActive
+      listenModeActive = false
       removeEngineEvents()
       removeTypedListener()
       listeners.clear()
       typed.dispose()
-      if (shouldStop) await engine.stop()
+      try {
+        if (shouldStop) await engine.stop()
+      } finally {
+        if (leavingListenMode) setListenMode(false)
+      }
     }
   }
 }
