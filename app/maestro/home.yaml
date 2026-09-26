@@ -12,9 +12,9 @@ name: Home
     element: 'Yes'
     direction: DOWN
 - takeScreenshot: home-grid
-# From AX1 Home's column scrolls under both bars, and Maestro compares centers and counts an element under a bar as
-# on screen, so its taps on a tab there land on the bar. The tab steps run while the bottom bar is one row, as at the
-# default size, where the tabs never scroll.
+# From AX1 Home's column scrolls under both bars, and Maestro judges visibility against the whole screen, so it counts
+# a tab under a bar as on screen and its tap lands on the bar. The tab steps run while the bottom bar is one row, as at
+# the default size, where the tabs never scroll.
 - runFlow:
     when:
       visible:
