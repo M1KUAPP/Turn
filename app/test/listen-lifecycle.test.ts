@@ -54,8 +54,7 @@ function fakeEngine() {
     pause: vi.fn(async () => undefined),
     resume: vi.fn(async () => undefined),
     stop: vi.fn(async () => undefined),
-    endLine: vi.fn(async () => undefined),
-    muteForSpeech: vi.fn(async () => undefined)
+    endLine: vi.fn(async () => undefined)
   }
 
   return {
