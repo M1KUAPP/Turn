@@ -13,6 +13,7 @@ import {
   useWindowDimensions,
   View
 } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
 import { colors } from '../constants/theme'
@@ -23,6 +24,8 @@ import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
 import { useConsent } from '../turn-context'
 import { homeLayout, pageOffset } from './home-layout'
+import { listenControl } from './listen-control'
+import { useListenLight } from './listen-light'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
 import PartnerLineComposer from './PartnerLineComposer'
 import TurnText from './TurnText'
@@ -33,6 +36,7 @@ type Props = {
   speech: ReturnType<typeof createSpeechController>
   listen: ReturnType<typeof createLiveListenSession>
   boldText: boolean
+  reduceMotion: boolean
 }
 
 function CaptionWords({ text, boldText, measure }: { text: string; boldText: boolean; measure: boolean }) {
@@ -93,7 +97,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
   )
 }
 
-export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
+export default function HomeScreen({ bank, speech, listen, boldText, reduceMotion }: Props) {
   const router = useRouter()
   const { consent, state: consentState } = useConsent()
   const [categories, setCategories] = useState<Category[]>([])
@@ -164,10 +168,11 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
       : captionNote === listenStrings.gettingModel
         ? 'arrow.down.circle'
         : 'hourglass'
-  const listenControlDisabled = listening.active || !consent || startingListen
-  // Listening shows while the microphone is on; Pause is #57's, so End stays beside it until then.
-  const listenWord = micOn ? 'Listening' : paused ? 'Paused' : listening.active ? consentWords.micOff : 'Listen'
+  const control = listenControl({ active: listening.active, micUnavailable, paused })
+  const listenControlDisabled = control.action === null || (control.action === 'start' && (!consent || startingListen))
+  const listenWord = control.word
   const listenInk = micOn ? colors['on-listen'] : listenControlDisabled ? colors['ink-secondary'] : colors.ink
+  const lightStyle = useListenLight(lineOpen, reduceMotion)
 
   useEffect(() => {
     const current = rowAnnouncement.current
@@ -786,10 +791,12 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={listenWord}
-          accessibilityHint={listening.active ? 'Type partner lines from the caption.' : undefined}
+          accessibilityHint={control.hint}
           accessibilityState={{ disabled: listenControlDisabled }}
           disabled={listenControlDisabled}
           onPress={() => {
+            if (control.action === 'pause') return void listen.pause()
+            if (control.action === 'resume') return void listen.resume()
             if (!consent) return
             setStartingListen(true)
             void consent
@@ -811,24 +818,19 @@ export default function HomeScreen({ bank, speech, listen, boldText }: Props) {
             borderColor: micOn ? colors.listen : colors.edge,
             backgroundColor: micOn
               ? colors.listen
-              : listening.active
-                ? colors.surface
-                : pressed
-                  ? colors['surface-pressed']
-                  : colors.surface
+              : pressed && !listenControlDisabled
+                ? colors['surface-pressed']
+                : colors.surface
           })}
         >
-          <SymbolView
-            name={micOn ? 'mic.fill' : listening.active ? 'mic.slash' : 'ear'}
-            size={symbolSize(18)}
-            tintColor={listenInk}
-            accessible={false}
-          />
+          <Animated.View style={lightStyle}>
+            <SymbolView name={control.symbol} size={symbolSize(18)} tintColor={listenInk} accessible={false} />
+          </Animated.View>
           <TurnText kind="headline" boldText={boldText} style={{ color: listenInk }}>
             {listenWord}
           </TurnText>
         </Pressable>
-        {listening.active && (
+        {control.showsEnd && (
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="End"
