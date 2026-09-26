@@ -104,7 +104,8 @@ jobs:
     needs: build
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.screenshots != 'none' }}
     runs-on: xcode-27
-    timeout-minutes: 90
+    # About 45 minutes per text size for the 21 flows, so a full run's five combinations need well over three hours.
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

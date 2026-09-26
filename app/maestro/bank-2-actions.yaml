@@ -136,11 +136,12 @@ name: Phrase bank actions and category limit
     text: Move up
     below: Flow category
     above: Conversation strip
+# Moving a card keeps the scroll position, so at AX5 the moved card's name ends up above the screen.
 - scrollUntilVisible:
     element:
       text: Flow category
       above: Typed
-    direction: DOWN
+    direction: UP
     speed: 10
 - assertVisible:
     text: Flow category
@@ -160,7 +161,7 @@ name: Phrase bank actions and category limit
     element:
       text: Typed
       above: Flow category
-    direction: DOWN
+    direction: UP
     speed: 10
 - assertVisible:
     text: Typed
@@ -271,10 +272,14 @@ name: Phrase bank actions and category limit
     below: 'Choose where its phrases will go\.'
 - waitForAnimationToEnd
 - assertNotVisible: Flow category
+# Back to the top first: scrolling up only until Chat shows can leave it under the translucent navigation bar,
+# where Maestro still taps it and the bar takes the tap.
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
 - scrollUntilVisible:
     element: Chat
-    direction: UP
-    speed: 10
+    direction: DOWN
 - tapOn: Chat
 - waitForAnimationToEnd
 - extendedWaitUntil:

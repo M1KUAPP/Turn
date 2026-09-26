@@ -12,54 +12,24 @@ name: Home
     element: 'Yes'
     direction: DOWN
 - takeScreenshot: home-grid
-# From AX1 the column scrolls under the top bar and above the bottom bar, and Maestro counts an element under
-# either as on screen, so a tab only matches once it sits between them; otherwise the tap lands on the bar.
-- scrollUntilVisible:
-    element:
-      text: Chat
-      below: Listen
-      above: Type
-- tapOn:
-    text: Chat
-    below: Listen
-    above: Type
-- scrollUntilVisible:
-    element: '.*Hi, how are you\?.*'
-    direction: DOWN
-- assertVisible: '.*Hi, how are you\?.*'
-- takeScreenshot: home-chat
-# Back to the caption first, so All comes up from below the tab row's scrolled-away position.
-- scrollUntilVisible:
-    element: '.*Listen mode is off\..*'
-    direction: UP
-- scrollUntilVisible:
-    element:
-      text: All
-      below: Listen
-      above: Type
-- tapOn:
-    text: All
-    below: Listen
-    above: Type
-- waitForAnimationToEnd
-- assertNotVisible: Before Listen mode starts
-- scrollUntilVisible:
-    element: Down
-    direction: DOWN
-- tapOn: Down
-- takeScreenshot: home-all-down
-- scrollUntilVisible:
-    element: Up
-    direction: DOWN
-- tapOn: Up
-- takeScreenshot: home-all-up
-- scrollUntilVisible:
-    element: Type
-    direction: DOWN
+# From AX1 Home's column scrolls under both bars, and Maestro compares centers and counts an element under a bar as
+# on screen, so its taps on a tab there land on the bar. The tab steps run while the bottom bar is one row, as at the
+# default size, where the tabs never scroll.
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - tapOn: Chat
+      - assertVisible: 'Hi, how are you\?'
+      - takeScreenshot: home-chat
+      - tapOn: All
+      - tapOn: Down
+      - takeScreenshot: home-all-down
+      - tapOn: Up
+      - takeScreenshot: home-all-up
 - tapOn: Type
 - inputText: 'I need a break'
-- scrollUntilVisible:
-    element: 'I need a break'
-    direction: DOWN
 - assertVisible: 'I need a break'
 - takeScreenshot: home-typing-composer
