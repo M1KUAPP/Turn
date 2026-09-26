@@ -175,11 +175,18 @@ name: Phrase bank grid updates
     visible: Listen
     timeout: 10000
 - waitForAnimationToEnd
+# From AX1 the column scrolls under the top bar and above the bottom bar, and Maestro counts an element under
+# either as on screen, so a tab only matches once it sits between them; otherwise the tap lands on the bar.
 - scrollUntilVisible:
-    element: Chat
+    element:
+      text: Chat
+      below: Listen
+      above: Type
     speed: 10
-    centerElement: true
-- tapOn: Chat
+- tapOn:
+    text: Chat
+    below: Listen
+    above: Type
 - scrollUntilVisible:
     element: '.*My greeting.*'
     direction: DOWN
