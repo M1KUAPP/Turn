@@ -247,9 +247,11 @@ name: Phrase bank actions and category limit
     direction: UP
 - tapOn: Phrase bank
 - waitForAnimationToEnd
+# The categories list keeps its scroll position, and at AX5 its top is several screens up.
 - scrollUntilVisible:
     element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
+    timeout: 90000
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
@@ -287,6 +289,7 @@ name: Phrase bank actions and category limit
 - scrollUntilVisible:
     element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
+    timeout: 90000
 - scrollUntilVisible:
     element: Chat
     direction: DOWN
@@ -387,6 +390,7 @@ name: Phrase bank actions and category limit
 - scrollUntilVisible:
     element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
+    timeout: 90000
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
