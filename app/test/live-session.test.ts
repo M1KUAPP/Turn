@@ -316,6 +316,168 @@ describe('live partner session', () => {
     await live.dispose()
   })
 
+  test('pause drops an open line, preserves replies, and cancels caption expiry', async () => {
+    vi.useFakeTimers()
+    const now = vi.fn(() => 5000)
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine, now })
+    const send = vi.spyOn(typed, 'send')
+    await live.start()
+
+    fake.line({ text: 'Would you like some water?', endedAt: now(), silenceWindowMs: 500 })
+    await Promise.resolve()
+    await send.mock.results[0]?.value
+    const row = live.getSnapshot().row
+    fake.partial('And what time')
+
+    await live.pause()
+    await vi.advanceTimersByTimeAsync(120_000)
+
+    expect(fake.engine.pause).toHaveBeenCalledOnce()
+    expect(fake.engine.stop).not.toHaveBeenCalled()
+    expect(fake.engine.endLine).not.toHaveBeenCalled()
+    expect(send).toHaveBeenCalledOnce()
+    expect(live.getSnapshot()).toMatchObject({
+      phase: 'paused',
+      row,
+      caption: { label: 'Listen mode is off.', words: '' }
+    })
+    await live.dispose()
+  })
+
+  test('resume reuses the same engine without starting availability or consent again', async () => {
+    vi.useFakeTimers()
+    const fake = fakeEngine()
+    const { live } = await session({ engine: fake.engine, now: vi.fn(() => 5000) })
+    await live.start()
+    fake.engine.resume = vi.fn(async () => fake.state('listening'))
+
+    await live.pause()
+    await live.resume()
+
+    expect(fake.engine.availability).toHaveBeenCalledOnce()
+    expect(fake.engine.start).toHaveBeenCalledOnce()
+    expect(fake.engine.resume).toHaveBeenCalledOnce()
+    expect(live.getSnapshot()).toMatchObject({ active: true, phase: 'listening' })
+    await live.dispose()
+  })
+
+  test.each(['listening', 'paused'] as const)('End stops once and clears the row while %s', async (state) => {
+    vi.useFakeTimers()
+    const fake = fakeEngine()
+    const { live } = await session({ engine: fake.engine, now: vi.fn(() => 5000) })
+    await live.start()
+    await live.send('Would you like some water?', 'home')
+    if (state === 'paused') await live.pause()
+
+    await live.end()
+    await vi.advanceTimersByTimeAsync(120_000)
+
+    expect(fake.engine.stop).toHaveBeenCalledOnce()
+    expect(live.getSnapshot()).toMatchObject({
+      active: false,
+      phase: 'idle',
+      caption: { label: 'Listen mode is off.', words: '' }
+    })
+    expect(live.getSnapshot().row.slots.every((slot) => slot === null)).toBe(true)
+    await live.dispose()
+    expect(fake.engine.stop).toHaveBeenCalledOnce()
+  })
+
+  test('an interruption drops an open line and a later listening state does not resume it', async () => {
+    vi.useFakeTimers()
+    const now = vi.fn(() => 5000)
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine, now })
+    const send = vi.spyOn(typed, 'send')
+    await live.start()
+    fake.partial('An unfinished line')
+    fake.state('paused', 'interrupted')
+    fake.state('listening')
+    await vi.advanceTimersByTimeAsync(120_000)
+
+    expect(send).not.toHaveBeenCalled()
+    expect(fake.engine.resume).not.toHaveBeenCalled()
+    expect(live.getSnapshot()).toMatchObject({ phase: 'paused', active: true, caption: { words: '' } })
+    await live.dispose()
+  })
+
+  test('a late start completion after pause cannot leave capture active', async () => {
+    vi.useFakeTimers()
+    const fake = fakeEngine()
+    const { live } = await session({ engine: fake.engine, now: vi.fn(() => 5000) })
+    let finishStart = () => {}
+    let capturing = false
+    fake.engine.start = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finishStart = () => {
+            capturing = true
+            resolve()
+          }
+        })
+    )
+    fake.engine.pause = vi.fn(async () => {
+      capturing = false
+    })
+    const starting = live.start()
+    await Promise.resolve()
+    expect(fake.engine.start).toHaveBeenCalledOnce()
+
+    await live.pause()
+    finishStart()
+    await starting
+
+    expect(capturing).toBe(false)
+    expect(live.getSnapshot()).toMatchObject({ phase: 'paused', active: true })
+    await live.dispose()
+  })
+
+  test('a line caption expires exactly two minutes after endedAt while its reply row stays', async () => {
+    vi.useFakeTimers()
+    const now = vi.fn(() => 5000)
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine, now })
+    const send = vi.spyOn(typed, 'send')
+    await live.start()
+    fake.line({ text: 'Would you like some water?', endedAt: now(), silenceWindowMs: 500 })
+    await Promise.resolve()
+    await send.mock.results[0]?.value
+    const row = live.getSnapshot().row
+
+    await vi.advanceTimersByTimeAsync(119_999)
+    expect(live.getSnapshot().caption.words).toBe('Would you like some water?')
+    await vi.advanceTimersByTimeAsync(1)
+
+    expect(live.getSnapshot()).toMatchObject({
+      active: true,
+      row,
+      caption: { label: 'Listening', words: '', note: null }
+    })
+    await live.dispose()
+  })
+
+  test('a newer line replaces the prior caption deadline', async () => {
+    vi.useFakeTimers()
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine, now: vi.fn(() => 5000) })
+    const send = vi.spyOn(typed, 'send')
+    await live.start()
+    fake.line({ text: 'First line', endedAt: 5000, silenceWindowMs: 500 })
+    await Promise.resolve()
+    await send.mock.results[0]?.value
+    fake.partial('Newer line')
+    fake.line({ text: 'Newer line', endedAt: 5001, silenceWindowMs: 500 })
+    await Promise.resolve()
+    await send.mock.results[1]?.value
+
+    await vi.advanceTimersByTimeAsync(120_000)
+    expect(live.getSnapshot().caption.words).toBe('Newer line')
+    await vi.advanceTimersByTimeAsync(1)
+    expect(live.getSnapshot().caption).toMatchObject({ label: 'Listening', words: '' })
+    await live.dispose()
+  })
+
   test('a null engine offers the typed prompt and still ranks a typed line', async () => {
     const { live, typed } = await session({ engine: null })
     const send = vi.spyOn(typed, 'send')
