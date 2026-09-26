@@ -2,18 +2,18 @@
 
 ## Corpus Check
 
-- 372 files · ~897,464 words
+- 372 files · ~897,694 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 4553 nodes · 5802 edges · 320 communities (297 shown, 23 thin omitted)
+- 4552 nodes · 5802 edges · 319 communities (296 shown, 23 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `273bec6f`
+- Built from commit: `6ee7fb82`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -361,7 +361,7 @@
 
 - None detected.
 
-## Communities (320 total, 23 thin omitted)
+## Communities (319 total, 23 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1486,7 +1486,7 @@ Nodes (13): compilerOptions, paths, strict, types, extends, include, node, expo 
 ### Community 230 - "dependencies"
 
 Cohesion: 0.12
-Nodes (17): dependencies, expo, expo-build-properties, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
+Nodes (17): dependencies, expo-build-properties, expo-linking, expo-secure-store, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
 
 ### Community 231 - "generate-ios-licenses.ts"
 
