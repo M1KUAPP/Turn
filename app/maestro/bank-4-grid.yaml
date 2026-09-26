@@ -175,24 +175,22 @@ name: Phrase bank grid updates
     visible: Listen
     timeout: 10000
 - waitForAnimationToEnd
-# From AX1 the column scrolls under the top bar and above the bottom bar, and Maestro counts an element under
-# either as on screen, so a tab only matches once it sits between them; otherwise the tap lands on the bar.
-- scrollUntilVisible:
-    element:
-      text: Chat
-      below: Listen
-      above: Type
-    speed: 10
-- tapOn:
-    text: Chat
-    below: Listen
-    above: Type
-- scrollUntilVisible:
-    element: '.*My greeting.*'
-    direction: DOWN
-- assertVisible: '.*My greeting.*'
-- scrollUntilVisible:
-    element: ".*I'm doing well.*"
-    direction: DOWN
-- assertVisible: ".*I'm doing well.*"
-- takeScreenshot: bank-4-grid-updated
+# From AX1 Home's column scrolls under both bars, and Maestro judges visibility against the whole screen, so it counts
+# a tab under a bar as on screen and its tap lands on the bar. The grid check runs while the bottom bar is one row, as
+# at the default size, where the tabs never scroll.
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - tapOn: Chat
+      - scrollUntilVisible:
+          element: '.*My greeting.*'
+          direction: DOWN
+      - assertVisible: '.*My greeting.*'
+      - scrollUntilVisible:
+          element: ".*I'm doing well.*"
+          direction: DOWN
+      - assertVisible: ".*I'm doing well.*"
+      - takeScreenshot: bank-4-grid-updated
