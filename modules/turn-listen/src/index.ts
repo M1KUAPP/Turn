@@ -36,6 +36,7 @@ type NativeTurnListenModule = {
   resume(): Promise<void>
   stop(): Promise<void>
   endLine(): Promise<void>
+  setListenMode(active: boolean): Promise<void>
   muteForSpeech(muted: boolean): Promise<void>
   addListener<K extends keyof NativeEventPayloads>(
     eventName: K,
@@ -53,6 +54,7 @@ export type TurnListen = {
   resume(): Promise<void>
   stop(): Promise<void>
   endLine(): Promise<void>
+  setListenMode(active: boolean): Promise<void>
   muteForSpeech(muted: boolean): Promise<void>
   listen(events: ListenEngineEvents): () => void
 }
@@ -70,6 +72,7 @@ export const turnListen: TurnListen | null = native
       resume: () => native.resume(),
       stop: () => native.stop(),
       endLine: () => native.endLine(),
+      setListenMode: (active) => native.setListenMode(active),
       muteForSpeech: (muted) => native.muteForSpeech(muted),
       listen(events) {
         const subscriptions = [
