@@ -19,6 +19,7 @@ function fakeModule() {
     resume: vi.fn(async () => {}),
     stop: vi.fn(async () => {}),
     endLine: vi.fn(async () => {}),
+    setListenMode: vi.fn(async () => {}),
     muteForSpeech: vi.fn(async () => {}),
     listen
   }
@@ -44,7 +45,6 @@ describe('the native Listen engine adapter', () => {
     await engine?.pause()
     await engine?.resume()
     await engine?.endLine()
-    await engine?.muteForSpeech(true)
     await engine?.stop()
 
     expect(fake.module.availability).toHaveBeenCalledOnce()
@@ -54,7 +54,6 @@ describe('the native Listen engine adapter', () => {
     expect(fake.module.pause).toHaveBeenCalledOnce()
     expect(fake.module.resume).toHaveBeenCalledOnce()
     expect(fake.module.endLine).toHaveBeenCalledOnce()
-    expect(fake.module.muteForSpeech).toHaveBeenCalledWith(true)
     expect(fake.module.stop).toHaveBeenCalledOnce()
   })
 

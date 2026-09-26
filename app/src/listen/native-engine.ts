@@ -13,8 +13,7 @@ export function createNativeListenEngine(module: TurnListen | null = turnListen)
     pause: () => module.pause(),
     resume: () => module.resume(),
     stop: () => module.stop(),
-    endLine: () => module.endLine(),
-    muteForSpeech: (muted) => module.muteForSpeech(muted)
+    endLine: () => module.endLine()
   }
 }
 
