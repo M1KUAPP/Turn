@@ -136,11 +136,12 @@ name: Phrase bank actions and category limit
     text: Move up
     below: Flow category
     above: Conversation strip
+# Moving a card keeps the scroll position, so at AX5 the moved card's name ends up above the screen.
 - scrollUntilVisible:
     element:
       text: Flow category
       above: Typed
-    direction: DOWN
+    direction: UP
     speed: 10
 - assertVisible:
     text: Flow category
@@ -160,7 +161,7 @@ name: Phrase bank actions and category limit
     element:
       text: Typed
       above: Flow category
-    direction: DOWN
+    direction: UP
     speed: 10
 - assertVisible:
     text: Typed
@@ -199,6 +200,14 @@ name: Phrase bank actions and category limit
     text: Phrase
     below: Phrase
 - inputText: Flow phrase
+# The phrase field opens focused. At AX5 the keyboard then covers the place chips, but Maestro still counts them as
+# visible, so its taps type into the keyboard. A tap on the Phrase label, which handles no touches, puts it away first.
+- tapOn:
+    text: Phrase
+    above:
+      text: Phrase
+      below: Phrase
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: Home
@@ -238,13 +247,16 @@ name: Phrase bank actions and category limit
     direction: UP
 - tapOn: Phrase bank
 - waitForAnimationToEnd
+# The categories list keeps its scroll position, and at AX5 its top is several screens up.
 - scrollUntilVisible:
     element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
+    timeout: 90000
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
 - waitForAnimationToEnd
+# Flow category is last of the tall AX5 cards, further than the default 20 seconds of scrolling reach.
 - scrollUntilVisible:
     element:
       text: Delete
@@ -252,6 +264,7 @@ name: Phrase bank actions and category limit
       above: Conversation strip
     direction: DOWN
     speed: 10
+    timeout: 90000
 - tapOn:
     text: Delete
     below: Flow category
@@ -271,18 +284,25 @@ name: Phrase bank actions and category limit
     below: 'Choose where its phrases will go\.'
 - waitForAnimationToEnd
 - assertNotVisible: Flow category
+# Back to the top first: scrolling up only until Chat shows can leave it under the translucent navigation bar,
+# where Maestro still taps it and the bar takes the tap.
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+    timeout: 90000
 - scrollUntilVisible:
     element: Chat
-    direction: UP
-    speed: 10
+    direction: DOWN
 - tapOn: Chat
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: Edit
     timeout: 10000
+# Flow phrase is last in Chat, several screens down at AX5.
 - scrollUntilVisible:
     element: Flow phrase
     direction: DOWN
+    timeout: 90000
 - extendedWaitUntil:
     visible: Flow phrase
     timeout: 10000
@@ -291,6 +311,7 @@ name: Phrase bank actions and category limit
 - scrollUntilVisible:
     element: Flow phrase
     direction: DOWN
+    timeout: 90000
 - assertVisible: Flow phrase
 - assertVisible: '(Clinic, Home|Home, Clinic)'
 - takeScreenshot: bank-2-actions-phrase-moved-with-category
@@ -298,12 +319,14 @@ name: Phrase bank actions and category limit
     element: Edit
     direction: UP
 - tapOn: Edit
+# Edit mode gives every row its four buttons, so Chat grows to about seven screens at the default size, more at AX5.
 - scrollUntilVisible:
     element:
       text: Edit
       below: Flow phrase
       above: Add phrase
     direction: DOWN
+    timeout: 180000
 - tapOn:
     text: Edit
     below: Flow phrase
@@ -321,16 +344,16 @@ name: Phrase bank actions and category limit
     text: Phrase
     below: Phrase
 - takeScreenshot: bank-2-actions-edit-phrase-form
-- scrollUntilVisible:
-    element:
-      text: Phrase
-      below: Phrase
-    direction: DOWN
-- tapOn:
-    text: Phrase
-    below: Phrase
+# The field opens focused with the cursor after its text. A tap could move the cursor into the phrase once it wraps
+# at AX5, and the erase deletes only what is before the cursor.
 - eraseText: 30
 - inputText: Moved phrase
+- tapOn:
+    text: Phrase
+    above:
+      text: Phrase
+      below: Phrase
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Quick
     direction: LEFT
@@ -367,19 +390,22 @@ name: Phrase bank actions and category limit
 - scrollUntilVisible:
     element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
+    timeout: 90000
 - extendedWaitUntil:
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
 - waitForAnimationToEnd
+# The list is at its top, so Quick, the first card, can only be further down.
 - scrollUntilVisible:
     element: Quick
-    direction: UP
+    direction: DOWN
     speed: 10
 - tapOn: Quick
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Moved phrase
     direction: DOWN
+    timeout: 60000
 - extendedWaitUntil:
     visible: Edit
     timeout: 10000
@@ -387,12 +413,11 @@ name: Phrase bank actions and category limit
     visible: Moved phrase
     timeout: 10000
 - waitForAnimationToEnd
+# The row names its phrase and lists its places as its value, and Maestro matches each on its own.
 - scrollUntilVisible:
-    element: '.*Moved phrase.*Home.*'
+    element: Moved phrase
     direction: DOWN
-- assertVisible: '.*Moved phrase.*Home.*'
-- scrollUntilVisible:
-    element: '.*Moved phrase.*Shop.*'
-    direction: DOWN
-- assertVisible: '.*Moved phrase.*Shop.*'
+    timeout: 60000
+- assertVisible: Moved phrase
+- assertVisible: '(Home, Shop|Shop, Home)'
 - takeScreenshot: bank-2-actions-edited-phrase-in-quick
