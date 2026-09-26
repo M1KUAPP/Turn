@@ -101,7 +101,11 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         (id) => {
           void bank.recordTap(id)
         },
-        { voice: () => voiceSettings.selected().identifier, rate: () => voiceSettings.rate() }
+        { voice: () => voiceSettings.selected().identifier, rate: () => voiceSettings.rate() },
+        {
+          beforeSpeak: () => listen?.beforeSpeak() ?? Promise.resolve(),
+          afterSpeech: () => listen?.afterSpeech()
+        }
       )
       const typed = createTypedListenSession(bank)
       await typed.ready
@@ -109,6 +113,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       const liveListen = createLiveListenSession({
         typed,
         engine,
+        module: turnListen,
         now: Date.now,
         log: ({ endedAt, rankedAt, silenceWindowMs }) => {
           if (__DEV__) {

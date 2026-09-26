@@ -304,10 +304,6 @@ export function createExpoEngine(
     stopAtLineBoundary()
   }
 
-  async function muteForSpeech(_muted: boolean): Promise<void> {
-    // Hook for audio routing in #58
-  }
-
   function listen(events: ListenEngineEvents): () => void {
     currentEvents = events
     return () => {
@@ -326,8 +322,7 @@ export function createExpoEngine(
     pause,
     resume,
     stop,
-    endLine,
-    muteForSpeech
+    endLine
   }
 }
 

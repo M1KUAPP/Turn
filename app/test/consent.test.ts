@@ -81,8 +81,7 @@ function fakeEngine() {
     pause: vi.fn(async () => undefined),
     resume: vi.fn(async () => undefined),
     stop: vi.fn(async () => undefined),
-    endLine: vi.fn(async () => undefined),
-    muteForSpeech: vi.fn(async () => undefined)
+    endLine: vi.fn(async () => undefined)
   }
   return engine
 }
@@ -232,7 +231,6 @@ describe('consent controller', () => {
     expect(app.engine.resume).not.toHaveBeenCalled()
     expect(app.engine.stop).not.toHaveBeenCalled()
     expect(app.engine.endLine).not.toHaveBeenCalled()
-    expect(app.engine.muteForSpeech).not.toHaveBeenCalled()
     expect(app.controller.snapshot().requestsBlocked).toBe(false)
   })
 
