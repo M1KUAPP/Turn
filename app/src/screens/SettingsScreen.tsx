@@ -203,9 +203,11 @@ export default function SettingsScreen() {
                     }}
                   >
                     {index > 0 && <Hairline />}
+                    {/* The switch carries the label, so VoiceOver and Voice Control find one element, as in iOS. */}
                     <TurnText
                       kind="body"
                       boldText={boldText}
+                      accessibilityElementsHidden
                       style={{ flex: 1, color: ready ? colors.ink : colors['ink-secondary'] }}
                     >
                       {row.label}

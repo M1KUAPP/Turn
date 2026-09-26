@@ -84,9 +84,11 @@ export default function ConsentCardScreen() {
               paddingVertical: 10
             }}
           >
+            {/* The switch carries the label, so VoiceOver and Voice Control find one element, as in iOS. */}
             <TurnText
               kind="body"
               boldText={boldText}
+              accessibilityElementsHidden
               style={{ flex: 1, color: disabled ? colors['ink-secondary'] : colors.ink }}
             >
               {card.under18}
