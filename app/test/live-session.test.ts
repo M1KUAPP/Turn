@@ -61,8 +61,7 @@ function fakeEngine(status: AssetStatus = 'installed') {
     stop: vi.fn(async () => undefined),
     endLine: vi.fn(async () => {
       events?.onLine({ text: currentText, endedAt: endedAt++, silenceWindowMs: 500 })
-    }),
-    muteForSpeech: vi.fn(async () => undefined)
+    })
   }
 
   return {

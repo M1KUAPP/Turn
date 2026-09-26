@@ -36,7 +36,6 @@ export type ListenEngine = {
   resume(): Promise<void>
   stop(): Promise<void>
   endLine(): Promise<void>
-  muteForSpeech(muted: boolean): Promise<void>
 }
 
 /** From extra.listenEngine. 'auto' is the default. */

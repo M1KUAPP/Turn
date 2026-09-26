@@ -557,7 +557,6 @@ describe('expo-speech-recognition engine', () => {
     expect(typeof expoEngine.resume).toBe('function')
     expect(typeof expoEngine.stop).toBe('function')
     expect(typeof expoEngine.endLine).toBe('function')
-    expect(typeof expoEngine.muteForSpeech).toBe('function')
   })
 
   test('app.config.ts configures expo-speech-recognition plugin with matching permission strings', () => {

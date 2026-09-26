@@ -7,12 +7,19 @@ type SpeechPort = {
 }
 
 type SpeechSettingsPort = { voice: () => string | null; rate: () => number }
+type SpeechGate = { beforeSpeak(): Promise<void>; afterSpeech(): void }
 type SpeechState = { speaking: boolean; lastText: string | null; activePhraseId: string | null }
+
+const noopGate: SpeechGate = {
+  beforeSpeak: async () => {},
+  afterSpeech: () => {}
+}
 
 export function createSpeechController(
   port: SpeechPort,
   recordTap: (id: string) => void,
-  settings: SpeechSettingsPort = { voice: () => null, rate: () => 1 }
+  settings: SpeechSettingsPort = { voice: () => null, rate: () => 1 },
+  gate: SpeechGate = noopGate
 ) {
   let state: SpeechState = { speaking: false, lastText: null, activePhraseId: null }
   let last: { text: string; id?: string } | null = null
@@ -40,6 +47,8 @@ export function createSpeechController(
     const ticket = ++generation
     if (options.stopFirst || state.speaking || stopping) await stopNative()
     if (ticket !== generation) return
+    await gate.beforeSpeak()
+    if (ticket !== generation) return
     if (options.remember !== false) last = { text, id }
     setState({ speaking: true, lastText: text, activePhraseId: id ?? null })
     let counted = false
@@ -55,14 +64,23 @@ export function createSpeechController(
           }
         },
         onDone: () => {
-          if (ticket === generation) setState({ ...state, speaking: false, activePhraseId: null })
+          if (ticket === generation) {
+            gate.afterSpeech()
+            setState({ ...state, speaking: false, activePhraseId: null })
+          }
         },
         onStopped: () => {
-          if (ticket === generation) setState({ ...state, speaking: false, activePhraseId: null })
+          if (ticket === generation) {
+            gate.afterSpeech()
+            setState({ ...state, speaking: false, activePhraseId: null })
+          }
         }
       })
     } catch (error) {
-      if (ticket === generation) setState({ ...state, speaking: false, activePhraseId: null })
+      if (ticket === generation) {
+        gate.afterSpeech()
+        setState({ ...state, speaking: false, activePhraseId: null })
+      }
       throw error
     }
   }
@@ -85,6 +103,7 @@ export function createSpeechController(
     },
     async stop() {
       ++generation
+      gate.afterSpeech()
       if (state.speaking) {
         setState({ ...state, speaking: false, activePhraseId: null })
         await stopNative()
