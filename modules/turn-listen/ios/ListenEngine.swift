@@ -81,6 +81,7 @@ final class ListenEngine {
   private var resultTask: Task<Void, Never>?
   private var progressTask: Task<Void, Never>?
   private var silenceTask: Task<Void, Never>?
+  private var interruptionObservers: [NSObjectProtocol] = []
   private var tapInstalled = false
   private var capturing = false
   private var voiceActive = false
@@ -90,6 +91,10 @@ final class ListenEngine {
   private var latestResultsFinalizationTime = CMTime.zero
   private var renderedText = ""
   private var resultWaiters: [UUID: ResultWaiter] = [:]
+
+  isolated deinit {
+    removeInterruptionObservers()
+  }
 
   init(
     onPartial: @escaping @MainActor (String) -> Void,
@@ -209,6 +214,7 @@ final class ListenEngine {
       onState("listening", nil)
     } catch {
       removeCapture()
+      removeInterruptionObservers()
       inputBuilder?.finish()
       inputBuilder = nil
       if let analyzer {
@@ -228,7 +234,7 @@ final class ListenEngine {
     }
   }
 
-  func pause() async throws {
+  func pause(reason: String? = nil) async throws {
     guard analyzer != nil, capturing else { return }
     removeCapture()
     silenceTask?.cancel()
@@ -236,7 +242,7 @@ final class ListenEngine {
     do {
       try await finishCurrentAudio(publishLine: false)
       clearTranscript()
-      onState("paused", nil)
+      onState("paused", reason)
     } catch {
       onState("unavailable", String(describing: error))
       throw error
@@ -255,6 +261,7 @@ final class ListenEngine {
   }
 
   func stop() async throws {
+    removeInterruptionObservers()
     guard analyzer != nil else {
       onState("idle", nil)
       return
@@ -426,6 +433,7 @@ final class ListenEngine {
     guard let inputBuilder, let analyzerFormat else {
       throw ListenEngineFailure.analyzerNotPrepared
     }
+    observeInterruptionNotifications()
 
     let engine = audioEngine ?? AVAudioEngine()
     let input = engine.inputNode
@@ -490,6 +498,47 @@ final class ListenEngine {
       voiceActive = false
       onVoice(false)
     }
+  }
+
+  private func observeInterruptionNotifications() {
+    guard interruptionObservers.isEmpty else { return }
+
+    interruptionObservers.append(
+      NotificationCenter.default.addObserver(
+        forName: AVAudioSession.interruptionNotification,
+        object: AVAudioSession.sharedInstance(),
+        queue: .main
+      ) { [weak self] notification in
+        guard let typeValue = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+              AVAudioSession.InterruptionType(rawValue: typeValue) == .began else {
+          return
+        }
+        Task { @MainActor [weak self] in
+          try? await self?.pause(reason: "audio session interruption began")
+        }
+      }
+    )
+
+    if #available(iOS 27.0, *) {
+      interruptionObservers.append(
+        NotificationCenter.default.addObserver(
+          forName: AVAudioSession.didBecomeInactiveNotification,
+          object: AVAudioSession.sharedInstance(),
+          queue: .main
+        ) { [weak self] _ in
+          Task { @MainActor [weak self] in
+            try? await self?.pause(reason: "audio session became inactive")
+          }
+        }
+      )
+    }
+  }
+
+  private func removeInterruptionObservers() {
+    for observer in interruptionObservers {
+      NotificationCenter.default.removeObserver(observer)
+    }
+    interruptionObservers.removeAll()
   }
 
   private func receiveAudioLevel(_ level: Double) {
