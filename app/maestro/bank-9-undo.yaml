@@ -7,6 +7,9 @@ name: Phrase bank undo after one minute
     visible: Listen
     timeout: 30000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
 - tapOn: Settings
 - scrollUntilVisible:
     element: Phrase bank
@@ -26,34 +29,49 @@ name: Phrase bank undo after one minute
     visible: Edit
     timeout: 10000
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Edit
+    direction: UP
 - tapOn: Edit
 - scrollUntilVisible:
     element:
       text: Delete
-      below: 'Hi, how are you\?'
-      above: "I'm good, thanks"
+      below: '.*Hi, how are you\?.*'
+      above: ".*I'm good, thanks.*"
     direction: DOWN
 - tapOn:
     text: Delete
-    below: 'Hi, how are you\?'
-    above: "I'm good, thanks"
+    below: '.*Hi, how are you\?.*'
+    above: ".*I'm good, thanks.*"
 - extendedWaitUntil:
     visible: Phrase deleted
     timeout: 10000
-- assertNotVisible: 'Hi, how are you\?'
+- assertNotVisible: '.*Hi, how are you\?.*'
+- scrollUntilVisible:
+    element: Undo
+    direction: DOWN
 - assertVisible: Undo
 - takeScreenshot: bank-9-undo-staged
 - runScript: wait-one-minute.js
+- scrollUntilVisible:
+    element: Phrase deleted
+    direction: DOWN
 - assertVisible: Phrase deleted
+- scrollUntilVisible:
+    element: Undo
+    direction: DOWN
 - assertVisible: Undo
 - takeScreenshot: bank-9-undo-after-one-minute
+- scrollUntilVisible:
+    element: Undo
+    direction: DOWN
 - tapOn: Undo
 - scrollUntilVisible:
-    element: 'Hi, how are you\?'
+    element: '.*Hi, how are you\?.*'
     direction: UP
     speed: 10
 - extendedWaitUntil:
-    visible: 'Hi, how are you\?'
+    visible: '.*Hi, how are you\?.*'
     timeout: 10000
 - waitForAnimationToEnd
 - assertNotVisible: Phrase deleted

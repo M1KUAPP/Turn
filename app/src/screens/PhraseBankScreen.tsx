@@ -5,6 +5,7 @@ import { useLocalSearchParams, useNavigation } from 'expo-router'
 import type { Category, Phrase, Place } from '../bank/store'
 import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
+import SheetHeader from './SheetHeader'
 import TurnText from './TurnText'
 
 type Editor = {
@@ -117,22 +118,21 @@ export default function PhraseBankScreen() {
   useEffect(() => {
     navigation.setOptions({
       title: categoryName || (isStrip ? 'Conversation strip' : 'Phrases'),
-      headerRight: isStrip
+      // A native bar button, like the back button beside it: iOS keeps it at bar size and shows it in the Large
+      // Content Viewer at accessibility sizes, where a React view in the bar grew past the title.
+      unstable_headerRightItems: isStrip
         ? undefined
-        : () => (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={editMode ? 'Done' : 'Edit'}
-              onPress={() => setEditMode((prev) => !prev)}
-              style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'flex-end' }}
-            >
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.accent }}>
-                {editMode ? 'Done' : 'Edit'}
-              </TurnText>
-            </Pressable>
-          )
+        : () => [
+            {
+              type: 'button',
+              label: editMode ? 'Done' : 'Edit',
+              variant: editMode ? 'done' : 'plain',
+              tintColor: colors.accent,
+              onPress: () => setEditMode((prev) => !prev)
+            }
+          ]
     })
-  }, [navigation, categoryName, isStrip, editMode, boldText])
+  }, [navigation, categoryName, isStrip, editMode])
 
   const move = (id: string, direction: -1 | 1) => {
     if (!bank) return
@@ -193,7 +193,7 @@ export default function PhraseBankScreen() {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 80, gap: 12 }}>
+      <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
         {phrases.length === 0 && (
           <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
             No phrases in this category yet.
@@ -410,18 +410,18 @@ export default function PhraseBankScreen() {
         )}
       </ScrollView>
 
-      {/* Undo bar stays at the bottom while any deletion is staged */}
+      {/* Undo bar stays at the bottom while any deletion is staged. It sits under the list rather than over it,
+          and from AX1 Undo wraps to its own line, so nothing it covers or holds goes out of reach. */}
       {hasUndo && (
         <View
           style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
             minHeight: 56,
             flexDirection: 'row',
+            flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'space-between',
+            columnGap: 12,
+            rowGap: 8,
             paddingHorizontal: 16,
             paddingVertical: 8,
             borderTopWidth: 2,
@@ -429,7 +429,7 @@ export default function PhraseBankScreen() {
             backgroundColor: colors.surface
           }}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
+          <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.ink }}>
             Phrase deleted
           </TurnText>
           <Pressable
@@ -469,47 +469,16 @@ export default function PhraseBankScreen() {
       >
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
           <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
-            <View style={{ gap: 4, marginBottom: 12 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Cancel"
-                  onPress={() => {
-                    setEditor(null)
-                    setError(null)
-                  }}
-                  style={{ minWidth: 44, minHeight: 44, justifyContent: 'center' }}
-                >
-                  <TurnText kind="body" boldText={boldText} style={{ color: colors.accent }}>
-                    Cancel
-                  </TurnText>
-                </Pressable>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Save"
-                  accessibilityState={{ disabled: !editor?.text.trim() || saving }}
-                  disabled={!editor?.text.trim() || saving}
-                  onPress={() => void save()}
-                  style={{
-                    minWidth: 44,
-                    minHeight: 44,
-                    alignItems: 'flex-end',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <TurnText
-                    kind="body"
-                    boldText={boldText}
-                    style={{ color: !editor?.text.trim() || saving ? colors['ink-secondary'] : colors.accent }}
-                  >
-                    Save
-                  </TurnText>
-                </Pressable>
-              </View>
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, textAlign: 'center' }}>
-                {editor?.id ? 'Edit phrase' : 'Add phrase'}
-              </TurnText>
-            </View>
+            <SheetHeader
+              title={editor?.id ? 'Edit phrase' : 'Add phrase'}
+              boldText={boldText}
+              canSave={!!editor?.text.trim() && !saving}
+              onCancel={() => {
+                setEditor(null)
+                setError(null)
+              }}
+              onSave={() => void save()}
+            />
 
             <ScrollView
               style={{ flex: 1 }}
