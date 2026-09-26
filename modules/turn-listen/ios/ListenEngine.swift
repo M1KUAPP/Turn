@@ -81,7 +81,11 @@ final class ListenEngine {
   private var resultTask: Task<Void, Never>?
   private var progressTask: Task<Void, Never>?
   private var silenceTask: Task<Void, Never>?
+  private var muteTask: Task<Void, Never>?
+  private var muteGeneration = 0
   private var interruptionObservers: [NSObjectProtocol] = []
+  private var configurationChangeObserver: NSObjectProtocol?
+  private var listenMode = false
   private var tapInstalled = false
   private var capturing = false
   private var voiceActive = false
@@ -93,7 +97,9 @@ final class ListenEngine {
   private var resultWaiters: [UUID: ResultWaiter] = [:]
 
   isolated deinit {
+    releaseMute()
     removeInterruptionObservers()
+    removeConfigurationChangeObserver()
   }
 
   init(
@@ -261,7 +267,9 @@ final class ListenEngine {
   }
 
   func stop() async throws {
+    releaseMute()
     removeInterruptionObservers()
+    removeConfigurationChangeObserver()
     guard analyzer != nil else {
       onState("idle", nil)
       return
@@ -281,6 +289,7 @@ final class ListenEngine {
       analyzerFormat = nil
       selectedTranscriber = nil
       clearTranscript()
+      removeConfigurationChangeObserver()
       audioEngine = nil
       inputNode = nil
       audioConverter = nil
@@ -291,6 +300,7 @@ final class ListenEngine {
       analyzer = nil
       selectedTranscriber = nil
       clearTranscript()
+      removeConfigurationChangeObserver()
       audioEngine = nil
       inputNode = nil
       audioConverter = nil
@@ -307,8 +317,55 @@ final class ListenEngine {
     try await finishCurrentAudio(publishLine: true)
   }
 
+  func setListenMode(_ active: Bool) throws {
+    listenMode = active
+    try Self.setListenModeCategory(active)
+  }
+
+  private static func setListenModeCategory(_ active: Bool) throws {
+    let session = AVAudioSession.sharedInstance()
+    let category: AVAudioSession.Category = active ? .playAndRecord : .playback
+    let mode: AVAudioSession.Mode = .default
+    let options: AVAudioSession.CategoryOptions = active ? [.defaultToSpeaker] : []
+
+    if session.category == category && session.mode == mode && session.categoryOptions == options {
+      return
+    }
+
+    try session.setCategory(category, mode: mode, options: options)
+  }
+
   func muteForSpeech(_ muted: Bool) throws {
-    try AVAudioApplication.shared.setInputMuted(muted)
+    muteGeneration &+= 1
+    muteTask?.cancel()
+    muteTask = nil
+
+    if muted {
+      try AVAudioApplication.shared.setInputMuted(true)
+    } else {
+      let generation = muteGeneration
+      let latency = AVAudioSession.sharedInstance().outputLatency
+      let nanoseconds = (latency.isFinite && latency > 0)
+        ? UInt64((latency * 1_000_000_000).rounded())
+        : 0
+      muteTask = Task { @MainActor [weak self] in
+        // Wait for the speaker's output latency so Turn does not hear the tail of its own speech.
+        do {
+          try await Task.sleep(nanoseconds: nanoseconds)
+        } catch {
+          return
+        }
+        guard let self, !Task.isCancelled, self.muteGeneration == generation else { return }
+        try? AVAudioApplication.shared.setInputMuted(false)
+      }
+    }
+  }
+
+  private func releaseMute() {
+    muteGeneration &+= 1
+    muteTask?.cancel()
+    muteTask = nil
+    try? AVAudioApplication.shared.setInputMuted(false)
   }
 
   private func currentTranscriber() async -> SelectedTranscriber? {
@@ -433,9 +490,30 @@ final class ListenEngine {
     guard let inputBuilder, let analyzerFormat else {
       throw ListenEngineFailure.analyzerNotPrepared
     }
+    listenMode = true
+    try Self.setListenModeCategory(true)
     observeInterruptionNotifications()
 
     let engine = audioEngine ?? AVAudioEngine()
+    if configurationChangeObserver == nil {
+      configurationChangeObserver = NotificationCenter.default.addObserver(
+        forName: .AVAudioEngineConfigurationChange,
+        object: engine,
+        queue: .main
+      ) { [weak self] _ in
+        Task { @MainActor [weak self] in
+          // Leaving Listen mode changes the category too, and restarting then would switch it back.
+          guard let self, self.capturing, self.listenMode else { return }
+          self.removeCapture()
+          self.audioConverter = nil
+          do {
+            try self.startCapture()
+          } catch {
+            self.reportFailure(String(describing: error))
+          }
+        }
+      }
+    }
     let input = engine.inputNode
     let microphoneFormat = input.outputFormat(forBus: 0)
     let converter: AVAudioConverter
@@ -539,6 +617,13 @@ final class ListenEngine {
       NotificationCenter.default.removeObserver(observer)
     }
     interruptionObservers.removeAll()
+  }
+
+  private func removeConfigurationChangeObserver() {
+    if let configurationChangeObserver {
+      NotificationCenter.default.removeObserver(configurationChangeObserver)
+      self.configurationChangeObserver = nil
+    }
   }
 
   private func receiveAudioLevel(_ level: Double) {
