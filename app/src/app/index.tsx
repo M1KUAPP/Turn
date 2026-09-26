@@ -5,8 +5,17 @@ import TurnText from '../screens/TurnText'
 import { useTurn } from '../turn-context'
 
 export default function HomeRoute() {
-  const { ready, error, boldText } = useTurn()
-  if (ready) return <HomeScreen bank={ready.bank} speech={ready.speech} listen={ready.listen} boldText={boldText} />
+  const { ready, error, boldText, reduceMotion } = useTurn()
+  if (ready)
+    return (
+      <HomeScreen
+        bank={ready.bank}
+        speech={ready.speech}
+        listen={ready.listen}
+        boldText={boldText}
+        reduceMotion={reduceMotion}
+      />
+    )
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.board, justifyContent: 'center', padding: 20 }}>
