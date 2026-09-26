@@ -274,8 +274,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_package_dependencies_expo",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 289,
+      "community_name": "expo-secure-store",
       "norm_label": "expo"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "expo",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 289,
+      "community_name": "expo-secure-store",
       "norm_label": "expo"
     },
     {
@@ -450,8 +450,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_package_dependencies_expo_secure_store",
-      "community": 289,
-      "community_name": "expo-secure-store",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo-secure-store"
     },
     {
@@ -461,8 +461,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "expo_secure_store",
-      "community": 289,
-      "community_name": "expo-secure-store",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo-secure-store"
     },
     {
@@ -13359,29 +13359,18 @@
       "norm_label": "{ vars }"
     },
     {
-      "label": "GEMINI.md",
+      "label": "AGENTS.md",
       "file_type": "document",
-      "source_file": "GEMINI.md",
+      "source_file": "AGENTS.md",
       "source_location": "L1",
       "_origin": "ast",
       "id": "gemini",
       "community": 310,
       "community_name": "GEMINI.md",
-      "norm_label": "gemini.md"
+      "norm_label": "agents.md"
     },
     {
-      "label": "CLAUDE.md",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "claude",
-      "community": 316,
-      "community_name": "CLAUDE.md",
-      "norm_label": "claude.md"
-    },
-    {
-      "label": "AGENTS.md",
+      "label": "screens/AGENTS.md",
       "file_type": "document",
       "source_file": "app/src/screens/AGENTS.md",
       "source_location": "L1",
@@ -13389,7 +13378,7 @@
       "id": "app_src_screens_agents",
       "community": 236,
       "community_name": "AGENTS.md",
-      "norm_label": "agents.md"
+      "norm_label": "screens/agents.md"
     },
     {
       "label": "Screen design",
@@ -115668,5 +115657,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "273bec6f8c03b0d7585b0592faa1855f64c743b4"
+  "built_at_commit": "6ee7fb8245bcffa7fb6b1fde287ae494980cf117"
 }
