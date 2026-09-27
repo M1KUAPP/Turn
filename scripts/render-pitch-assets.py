@@ -45,13 +45,13 @@ def rounded_image(canvas: Image.Image, image: Image.Image, xy: tuple[int, int], 
 
 
 def thumbnail() -> None:
-    canvas = Image.new("RGB", (1800, 1200), BLUE)
+    canvas = Image.new("RGB", (1800, 1200), BOARD)
     draw = ImageDraw.Draw(canvas)
-    text(draw, (118, 86), "TURN", 56, "#DCE7FF", 700)
-    draw.line((118, 175, 1682, 175), fill="#84A4F2", width=2)
-    text(draw, (118, 265), "Your own words,\nin time for your turn.", 104, "#FFFFFF", 700)
-    draw.rounded_rectangle((1110, 836, 1682, 1048), radius=46, fill="#FFFFFF")
-    text(draw, (1173, 888), "It was hard", 81, BLUE, 700)
+    text(draw, (118, 86), "TURN", 56, BLUE, 700)
+    draw.line((118, 175, 1682, 175), fill=BLUE, width=3)
+    text(draw, (118, 265), "Your own words,\nin time for your turn.", 104, INK, 700)
+    draw.rounded_rectangle((1110, 836, 1682, 1048), radius=46, fill=BLUE)
+    text(draw, (1173, 888), "It was hard", 81, "#FFFFFF", 700)
     canvas.save(OUT / "devpost-thumbnail.png", optimize=True)
 
 
