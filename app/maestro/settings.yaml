@@ -22,4 +22,8 @@ name: Settings
 - takeScreenshot: settings-top
 - scrollUntilVisible:
     element: Erase all data
+# The build reaches the relay: a Keychain or network failure leaves it "can't be reached".
+- extendedWaitUntil:
+    visible: 'Listen service: working'
+    timeout: 15000
 - takeScreenshot: settings-bottom
