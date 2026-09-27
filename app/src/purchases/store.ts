@@ -1,5 +1,13 @@
 import type { PaywallDoor, PurchasesEngine, PurchasesSnapshot, PurchasesStore } from './engine'
 
+/** Each purchase and restore outcome's note, in DESIGN's words (PAY-4, PAY-5, PAY-6). */
+export const purchaseNotes = {
+  unlocked: 'Listen mode is unlocked.',
+  failed: "The purchase didn't go through. Listen mode is still locked.",
+  notFound: 'No purchase found for this phone. Listen mode is still locked.',
+  unchecked: "Turn couldn't check for a purchase. Listen mode hasn't changed."
+}
+
 type PurchasesStorePorts = {
   engine: PurchasesEngine
   config: {
@@ -111,17 +119,17 @@ export function createPurchasesStore(ports: PurchasesStorePorts): PurchasesStore
         if (result === 'PURCHASED' || result === 'RESTORED' || result === 'NOT_PRESENTED') {
           listen = true
           refresh = true
-          note = 'Listen mode is unlocked.'
+          note = purchaseNotes.unlocked
           publishIfChanged()
           return 'unlocked'
         } else {
-          note = "The purchase didn't go through. Listen mode is still locked."
+          note = purchaseNotes.failed
           publishIfChanged()
           return 'locked'
         }
       } catch {
         busy = false
-        note = "The purchase didn't go through. Listen mode is still locked."
+        note = purchaseNotes.failed
         publishIfChanged()
         return 'locked'
       }
@@ -138,19 +146,19 @@ export function createPurchasesStore(ports: PurchasesStorePorts): PurchasesStore
         if (result === true) {
           listen = true
           refresh = true
-          note = 'Listen mode is unlocked.'
+          note = purchaseNotes.unlocked
           publishIfChanged()
         } else if (result === false) {
           listen = false
-          note = 'No purchase found for this phone. Listen mode is still locked.'
+          note = purchaseNotes.notFound
           publishIfChanged()
         } else {
-          note = "Turn couldn't check for a purchase. Listen mode hasn't changed."
+          note = purchaseNotes.unchecked
           publishIfChanged()
         }
       } catch {
         busy = false
-        note = "Turn couldn't check for a purchase. Listen mode hasn't changed."
+        note = purchaseNotes.unchecked
         publishIfChanged()
       }
     },

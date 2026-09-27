@@ -22,7 +22,8 @@ import type { createLiveListenSession } from '../listen/live-session'
 import { listenStrings } from '../listen/strings'
 import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
-import { useConsent } from '../turn-context'
+import { purchaseNotes } from '../purchases/store'
+import { useConsent, usePurchases } from '../turn-context'
 import { homeLayout, pageOffset } from './home-layout'
 import { listenControl } from './listen-control'
 import { useListenLight } from './listen-light'
@@ -100,6 +101,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
 export default function HomeScreen({ bank, speech, listen, boldText, reduceMotion }: Props) {
   const router = useRouter()
   const { consent, state: consentState } = useConsent()
+  const { purchases, state: purchasesState } = usePurchases()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [strip, setStrip] = useState<Phrase[]>([])
@@ -154,22 +156,35 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
       : caption.label === listenStrings.saying || caption.label === listenStrings.said
         ? caption.label
         : null
-  const captionNote = under18Active || unavailableNote ? null : caption.note
+  // A purchase's note replaces "Listen mode is off."; during a session only the unlock shows, beside the words.
+  const sessionPurchaseNote = purchasesState.note === purchaseNotes.unlocked ? purchasesState.note : null
+  const captionNote = under18Active || unavailableNote ? null : (caption.note ?? sessionPurchaseNote)
   const captionText = !listening.active
-    ? listenStrings.off
+    ? (purchasesState.note ?? listenStrings.off)
     : paused
       ? 'Paused'
       : caption.words || (micUnavailable ? consentWords.typedLinePrompt : listenStrings.listening)
   // "Listening" is large until the first words, since a small light goes unnoticed.
   const captionOpening = micOn && !caption.words
   const noteSymbol =
-    captionNote === listenStrings.rankedOnPhone
-      ? 'iphone'
-      : captionNote === listenStrings.gettingModel
-        ? 'arrow.down.circle'
-        : 'hourglass'
-  const control = listenControl({ active: listening.active, micUnavailable, paused })
-  const listenControlDisabled = control.action === null || (control.action === 'start' && (!consent || startingListen))
+    captionNote === purchaseNotes.unlocked
+      ? 'lock.open'
+      : captionNote === listenStrings.rankedOnPhone
+        ? 'iphone'
+        : captionNote === listenStrings.gettingModel
+          ? 'arrow.down.circle'
+          : 'hourglass'
+  const control = listenControl({
+    active: listening.active,
+    micUnavailable,
+    paused,
+    locked: purchasesState.locked,
+    countLabel: purchasesState.countLabel
+  })
+  const listenControlDisabled =
+    control.action === null ||
+    (control.action === 'start' && (!consent || startingListen)) ||
+    (control.action === 'unlock' && (!purchases || purchasesState.busy || startingListen))
   const listenWord = control.word
   const listenInk = micOn ? colors['on-listen'] : listenControlDisabled ? colors['ink-secondary'] : colors.ink
   const lightStyle = useListenLight(lineOpen, reduceMotion)
@@ -807,18 +822,29 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={listenWord}
+          accessibilityValue={control.detail ? { text: control.detail } : undefined}
           accessibilityHint={control.hint}
           accessibilityState={{ disabled: listenControlDisabled }}
           disabled={listenControlDisabled}
           onPress={() => {
             if (control.action === 'pause') return void listen.pause()
             if (control.action === 'resume') return void listen.resume()
-            if (!consent) return
-            setStartingListen(true)
-            void consent
-              .startListen()
-              .then((route) => router.push(route === 'permission' ? '/permission' : '/consent'))
-              .finally(() => setStartingListen(false))
+            const startListen = () => {
+              if (!consent) return
+              purchases?.clearNote()
+              setStartingListen(true)
+              void consent
+                .startListen()
+                .then((route) => router.push(route === 'permission' ? '/permission' : '/consent'))
+                .finally(() => setStartingListen(false))
+            }
+            // Locked opens the paywall; a purchase goes on to start Listen mode, as the tap meant (PAY-4).
+            if (control.action === 'unlock') {
+              return void purchases?.openPaywall('control').then((result) => {
+                if (result === 'unlocked') startListen()
+              })
+            }
+            startListen()
           }}
           style={({ pressed }) => ({
             flexGrow: oneControlColumn ? 1 : 0,
@@ -842,9 +868,20 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           <Animated.View style={lightStyle}>
             <SymbolView name={control.symbol} size={symbolSize(18)} tintColor={listenInk} accessible={false} />
           </Animated.View>
-          <TurnText kind="headline" boldText={boldText} style={{ color: listenInk }}>
-            {listenWord}
-          </TurnText>
+          <View>
+            <TurnText kind="headline" boldText={boldText} style={{ color: listenInk }}>
+              {listenWord}
+            </TurnText>
+            {control.detail && (
+              <TurnText
+                kind="subheadline"
+                boldText={boldText}
+                style={{ color: colors['ink-secondary'], fontVariant: ['tabular-nums'] }}
+              >
+                {control.detail}
+              </TurnText>
+            )}
+          </View>
         </Pressable>
         {control.showsEnd && (
           <Pressable
