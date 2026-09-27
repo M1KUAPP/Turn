@@ -1,0 +1,45 @@
+appId: com.m1ku.turn
+name: Turn Listen purchase
+---
+# A new Keychain ID owns nothing, so the paywall shows; Test Store buys in the Simulator (#59, PAY-4, PAY-6).
+- clearKeychain
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Restore Purchases
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
+- takeScreenshot: paywall-settings
+- tapOn: Unlock Listen mode
+- extendedWaitUntil:
+    visible: Keep Listen mode on
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: paywall-open
+# Settings' row shares the button's words, and RevenueCat's sheet leaves it in the hierarchy under the paywall's.
+- tapOn:
+    text: Unlock Listen mode
+    index: 1
+- extendedWaitUntil:
+    visible: Test Store Purchase
+    timeout: 30000
+- takeScreenshot: paywall-test-store
+- tapOn: Test valid purchase
+- extendedWaitUntil:
+    visible: Unlocked
+    timeout: 60000
+- takeScreenshot: paywall-unlocked
+- tapOn: Restore Purchases
+- extendedWaitUntil:
+    visible: Listen mode is unlocked.
+    timeout: 30000
+- takeScreenshot: paywall-restored

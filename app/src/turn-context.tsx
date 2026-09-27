@@ -22,6 +22,9 @@ import { pickListenEngine } from './listen/engine-picker'
 import { nativeListenEngine } from './listen/native-engine'
 import { createRelayRanker } from './listen/relay-ranker'
 import { createTypedListenSession } from './listen/typed-session'
+import type { PurchasesSnapshot, PurchasesStore } from './purchases/engine'
+import { createRevenueCatEngine } from './purchases/revenuecat-engine'
+import { createPurchasesStore } from './purchases/store'
 import { createConfigClient } from './relay/config'
 import { createSpeechController } from './speech/controller'
 import { createVoiceSettings } from './speech/voice-settings'
@@ -38,6 +41,7 @@ type Ready = {
   consent: ReturnType<typeof createConsentController>
   nameTagger: typeof turnListen
   config: ReturnType<typeof createConfigClient>
+  purchases: PurchasesStore
   typesafeNamed: boolean
 }
 
@@ -65,6 +69,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
     let unsubscribeVoiceChanges: (() => void) | null = null
     let unsubscribeConfig: (() => void) | null = null
     let unsubscribeConsent: (() => void) | null = null
+    let purchasesRef: PurchasesStore | null = null
     async function start() {
       const db = await SQLite.openDatabaseAsync('turn.db')
       const bank = createBankStore(db, starterBank)
@@ -84,6 +89,16 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         buildKind: extra?.buildKind === 'device' ? 'device' : 'simulator'
       })
       await config.read()
+      // RevenueCat starts on its own, under the relay's user ID, and nothing waits on it (SPEAK-5).
+      const purchases = createPurchasesStore({ engine: createRevenueCatEngine(), config })
+      purchasesRef = purchases
+      const apiKey = typeof extra?.revenueCatTestStoreKey === 'string' ? extra.revenueCatTestStoreKey : ''
+      if (apiKey) {
+        void config
+          .userId()
+          .then((appUserID) => purchases.start({ apiKey, appUserID }))
+          .catch(() => {})
+      }
       const typesafeNamed = config.typesafeNamed()
       const voiceSettings = createVoiceSettings({
         setting: bank.setting,
@@ -122,9 +137,16 @@ export function TurnProvider({ children }: { children: ReactNode }) {
               findNames: nameTagger.findNames,
               relayUrl,
               createId: () => Crypto.randomUUID(),
-              request: fetch
+              request: fetch,
+              purchases
             }),
-            policy: () => config.snapshot().policy
+            policy: () => config.snapshot().policy,
+            // Past the free lines, the paywall opens; closing it without a purchase ends Listen mode (PAY-2).
+            onPaywall: () => {
+              void purchases.openPaywall('line').then((result) => {
+                if (result === 'locked') return listen?.end()
+              })
+            }
           }
         : undefined
       const typed = createTypedListenSession(bank, remote)
@@ -171,7 +193,17 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       unsubscribeConsent = consent.subscribe(() => {
         if (consent.snapshot().requestsBlocked) typed.cancelRemote()
       })
-      setReady({ bank, speech, voiceSettings, listen: liveListen, consent, nameTagger, config, typesafeNamed })
+      setReady({
+        bank,
+        speech,
+        voiceSettings,
+        listen: liveListen,
+        consent,
+        nameTagger,
+        config,
+        purchases,
+        typesafeNamed
+      })
       unsubscribeConfig = config.subscribe(() => {
         const named = config.typesafeNamed()
         setReady((current) => (current ? { ...current, typesafeNamed: named } : current))
@@ -203,6 +235,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       unsubscribeListenLifecycle = null
       removeListenLifecycle?.()
       unsubscribeConsent?.()
+      purchasesRef?.dispose()
       listen?.dispose()
     }
   }, [])
@@ -249,4 +282,25 @@ export function useConsent() {
   const getSnapshot = consent?.snapshot ?? emptyConsentSnapshot
   const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
   return { consent, state }
+}
+
+const emptyPurchasesState: PurchasesSnapshot = {
+  freeLinesLeft: null,
+  listen: null,
+  locked: false,
+  countLabel: null,
+  busy: false,
+  note: null
+}
+
+const noPurchasesSubscription = (_listener: () => void) => () => {}
+const emptyPurchasesSnapshot = () => emptyPurchasesState
+
+export function usePurchases() {
+  const { ready } = useTurn()
+  const purchases = ready?.purchases ?? null
+  const subscribe = purchases?.subscribe ?? noPurchasesSubscription
+  const getSnapshot = purchases?.snapshot ?? emptyPurchasesSnapshot
+  const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
+  return { purchases, state }
 }
