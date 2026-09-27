@@ -107,6 +107,8 @@ export type PurchasesSnapshot = {
 }
 
 export type PurchasesStore = {
+  /** Configures RevenueCat, reads `listen`, and follows it; never rejects, and nothing waits on it (SPEAK-5). */
+  start(input: { apiKey: string; appUserID: string }): Promise<void>
   snapshot(): PurchasesSnapshot
   subscribe(listener: () => void): () => void
   /** Opens the paywall unless it's open or busy, and says what Listen mode is now. */
@@ -145,8 +147,9 @@ config client's `snapshot()` and `subscribe()`:
 
 - **The count** is `config.snapshot().freeLinesLeft`, which the relay path
   keeps current (below).
-- **`listen`** starts null, takes `engine.listenActive()` once the SDK is
-  configured, then every `onListenChange`.
+- **`start()`** configures the engine, then sets `listen` from
+  `engine.listenActive()` and follows `onListenChange`; if `configure`
+  returns false, `listen` stays null. `listen` starts null.
 - **Locked** is `freeLinesLeft === 0 && listen !== true`.
 - **`countLabel`** is `` `${freeLinesLeft} free` `` when `freeLinesLeft` is
   at least 1 and `listen !== true`, else null. At 0 the control shows
