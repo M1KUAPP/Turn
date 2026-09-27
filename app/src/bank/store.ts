@@ -293,6 +293,18 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         )
       }
     },
+    async nextReviewCategoryId(): Promise<string | null> {
+      throw new Error('Task 1')
+    },
+    async reviewCategory(id: string): Promise<void> {
+      throw new Error(`Task 1: ${id}`)
+    },
+    async dismissStarterReview(): Promise<void> {
+      throw new Error('Task 1')
+    },
+    async starterReviewState(): Promise<{ pending: boolean; dismissed: boolean }> {
+      throw new Error('Task 1')
+    },
     async addPlace(name: string): Promise<Place> {
       const trimmed = name.trim()
       if (trimmed.length < 1) throw new Error('Name is required')
