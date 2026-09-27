@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import type { LineAnswer } from '@turn/shared/relay'
 import { startingPolicy } from '@turn/shared/row'
 import type { Phrase } from '@turn/shared/shortlist'
@@ -52,6 +52,7 @@ describe('typed lines with a remote ranker', () => {
         snapshot: () => ({ jevOn: true, typesafeNamed: false, freeLinesLeft: 20, policy: startingPolicy }),
         status: () => 'working',
         lineResult: () => {},
+        freeLines: vi.fn(),
         headers: () => ({ 'X-Turn-User': 'user', 'X-Turn-Version': '1', 'X-Turn-Build': 'simulator' })
       },
       allowed: () => true,
@@ -217,6 +218,139 @@ describe('typed lines with a remote ranker', () => {
     await line
     expect(listen.getSnapshot().row.big).toBeNull()
     expect(listen.getSnapshot().rankedOnPhone).toBe(true)
+    listen.dispose()
+  })
+
+  test('a paywall error calls onPaywall once, leaves the row empty with no phrases, never marks the line ranked on the phone, and leaves degraded false even after two paywall errors', async () => {
+    const onPaywall = vi.fn()
+    let failure: string | null = null
+    const listen = await session({
+      allowed: () => true,
+      onPaywall,
+      rank: async ({ seq }) => {
+        if (failure) throw Object.assign(new Error(failure), { code: failure })
+        return answer(seq)
+      }
+    })
+
+    await listen.send('What do you want for lunch?', 'home')
+    expect(listen.getSnapshot().row.big).toBe('phrase-0')
+    expect(listen.getSnapshot().bigButton?.text).toBe('Lunch sounds good')
+
+    failure = 'paywall'
+    await listen.send('First paywall line', 'home')
+    let state = listen.getSnapshot()
+    expect(onPaywall).toHaveBeenCalledOnce()
+    expect(state.row.big).toBeNull()
+    expect(state.row.slots.every((s) => s === null)).toBe(true)
+    expect(state.slots.every((s) => s === null)).toBe(true)
+    expect(state.bigButton).toBeNull()
+    expect(state.rankedOnPhone).toBe(false)
+    expect(state.degraded).toBe(false)
+    expect(state.answeringLine).toBeNull()
+
+    await listen.send('Second paywall line', 'home')
+    state = listen.getSnapshot()
+    expect(onPaywall).toHaveBeenCalledTimes(2)
+    expect(state.row.big).toBeNull()
+    expect(state.row.slots.every((s) => s === null)).toBe(true)
+    expect(state.slots.every((s) => s === null)).toBe(true)
+    expect(state.bigButton).toBeNull()
+    expect(state.rankedOnPhone).toBe(false)
+    expect(state.degraded).toBe(false)
+    expect(state.answeringLine).toBeNull()
+    listen.dispose()
+  })
+
+  test('paywall errors never count toward degrading', async () => {
+    let failure = 'paywall'
+    const listen = await session({
+      allowed: () => true,
+      onPaywall: vi.fn(),
+      rank: async () => {
+        throw Object.assign(new Error(failure), { code: failure })
+      }
+    })
+
+    await listen.send('First paywall line', 'home')
+    await listen.send('Second paywall line', 'home')
+    failure = 'jev_unavailable'
+    await listen.send('First failed line', 'home')
+    expect(listen.getSnapshot().degraded).toBe(false)
+    await listen.send('Second failed line', 'home')
+    expect(listen.getSnapshot().degraded).toBe(true)
+    listen.dispose()
+  })
+
+  test('with no onPaywall, a paywall error still empties the row', async () => {
+    let failure: string | null = null
+    const listen = await session({
+      allowed: () => true,
+      rank: async ({ seq }) => {
+        if (failure) throw Object.assign(new Error(failure), { code: failure })
+        return answer(seq)
+      }
+    })
+
+    await listen.send('What do you want for lunch?', 'home')
+    expect(listen.getSnapshot().row.big).toBe('phrase-0')
+
+    failure = 'paywall'
+    await listen.send('Paywall line', 'home')
+    const state = listen.getSnapshot()
+    expect(state.row.big).toBeNull()
+    expect(state.row.slots.every((s) => s === null)).toBe(true)
+    expect(state.slots.every((s) => s === null)).toBe(true)
+    expect(state.bigButton).toBeNull()
+    expect(state.rankedOnPhone).toBe(false)
+    listen.dispose()
+  })
+
+  test('jev_unavailable still degrades on the second failure', async () => {
+    const failure = 'jev_unavailable'
+    const listen = await session({
+      allowed: () => true,
+      rank: async ({ seq }) => {
+        if (failure) throw Object.assign(new Error(failure), { code: failure })
+        return answer(seq)
+      }
+    })
+
+    await listen.send('Lunch one', 'home')
+    expect(listen.getSnapshot().degraded).toBe(false)
+    expect(listen.getSnapshot().rankedOnPhone).toBe(true)
+
+    await listen.send('Lunch two', 'home')
+    expect(listen.getSnapshot().degraded).toBe(true)
+    expect(listen.getSnapshot().rankedOnPhone).toBe(true)
+    listen.dispose()
+  })
+
+  test("a paywall error for a line that's no longer current does nothing", async () => {
+    const onPaywall = vi.fn()
+    const calls: { seq: number; reject: (err: unknown) => void }[] = []
+    const listen = await session({
+      allowed: () => true,
+      onPaywall,
+      rank: ({ seq }) =>
+        new Promise((_resolve, reject) => {
+          calls.push({ seq, reject })
+        })
+    })
+
+    const first = listen.send('First lunch?', 'home')
+    await Promise.resolve()
+    const second = listen.send('Second lunch?', 'home')
+    await Promise.resolve()
+
+    expect(calls).toHaveLength(2)
+    calls[0].reject(Object.assign(new Error('paywall'), { code: 'paywall' }))
+    await first
+
+    expect(onPaywall).not.toHaveBeenCalled()
+    expect(listen.getSnapshot().line).toBe('Second lunch?')
+    calls[1].reject(new Error('aborted'))
+    await second
     listen.dispose()
   })
 })
