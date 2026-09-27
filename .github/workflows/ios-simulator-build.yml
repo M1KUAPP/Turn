@@ -1,6 +1,6 @@
-# Builds Turn for the iOS Simulator the way the TRD's Simulator build does: prebuild, CocoaPods, then xcodebuild
-# in the Debug configuration, then the JavaScript bundle embedded. It proves the local Swift modules compile and
-# Metro can bundle, which nobody on Linux can check, and keeps the zipped Turn.app for a week.
+# Builds Turn for the iOS Simulator with scripts/build-simulator.sh, the TRD's Simulator build: prebuild, CocoaPods,
+# then xcodebuild in the Debug configuration, then the JavaScript bundle embedded. It proves the local Swift modules
+# compile and Metro can bundle, which nobody on Linux can check, and keeps the zipped Turn.app for a week.
 name: iOS Simulator build
 
 on:
@@ -12,6 +12,7 @@ on:
       - 'app/app.config.ts'
       - 'app/plugins/**'
       - 'bun.lock'
+      - 'scripts/build-simulator.sh'
       - '.github/workflows/ios-simulator-build.yml'
   workflow_dispatch:
     inputs:
@@ -57,43 +58,9 @@ jobs:
           xcode="$(ls -d /Applications/Xcode_27*.app | sort -V | tail -1)"
           sudo xcode-select -s "$xcode"
           xcodebuild -version
-      - run: bun install --frozen-lockfile
-      - name: Generate the iOS project
-        working-directory: app
-        env:
-          EXPO_NO_GIT_STATUS: '1'
-        run: bunx expo prebuild --platform ios --no-install
-      - name: Install the pods
-        working-directory: app/ios
-        run: pod install
-      - name: Build for the Simulator
-        working-directory: app/ios
-        shell: bash
-        run: |
-          # Parallel targets push a compile error far above the log's tail, so a failure prints every error line.
-          if ! xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
-            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
-            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build > xcodebuild.log 2>&1; then
-            grep -E ': (fatal )?error: ' xcodebuild.log | sort -u
-            tail -n 50 xcodebuild.log
-            exit 1
-          fi
-          tail -n 200 xcodebuild.log
-      # Expo's bundling phase sets SKIP_BUNDLING in every Debug build, which FORCE_BUNDLING can't override, so the
-      # bundle is embedded here, from the entry the phase would use. Whether the Debug app runs from it without
-      # Metro is the Simulator check's question (#50).
-      - name: Embed the JavaScript bundle
-        working-directory: app
-        shell: bash
-        run: |
-          app="$PWD/ios/build/Build/Products/Debug-iphonesimulator/Turn.app"
-          entry="$(node -e "require('expo/scripts/resolveAppEntry')" "$PWD" ios absolute | tail -n 1)"
-          bunx expo export:embed --platform ios --dev false --entry-file "$entry" \
-            --bundle-output "$app/main.jsbundle" --assets-dest "$app"
-          test -s "$app/main.jsbundle"
-      - name: Zip Turn.app
-        working-directory: app/ios/build/Build/Products/Debug-iphonesimulator
-        run: ditto -c -k --sequesterRsrc --keepParent Turn.app "$GITHUB_WORKSPACE/Turn.app.zip"
+      # The one command that makes the build judges run (#50), so every run here proves it.
+      - name: Build Turn.app.zip
+        run: bash scripts/build-simulator.sh
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Turn-simulator
