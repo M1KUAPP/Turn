@@ -203,6 +203,7 @@ run_combination() {
   local flow_name
   local artifacts_dir
   local flow_result
+  local attempt
   local screenshot_path
   local screenshot_name
 
@@ -234,14 +235,20 @@ run_combination() {
     artifacts_dir="$combination_dir/maestro-artifacts/$flow_name"
     mkdir -p "$artifacts_dir"
 
-    if (
-      cd "$combination_dir"
-      "$maestro_bin" --device "$device_id" test \
-        --test-output-dir "$artifacts_dir" "$flow_path"
-    ); then
-      flow_result=PASS
-    else
+    # Maestro's driver can time out starting on a cold runner, before any step runs; only that gets one retry.
+    for attempt in 1 2; do
+      if (
+        cd "$combination_dir"
+        "$maestro_bin" --device "$device_id" test \
+          --test-output-dir "$artifacts_dir" "$flow_path"
+      ) 2>&1 | tee "$artifacts_dir/maestro-$attempt.log"; then
+        flow_result=PASS
+        break
+      fi
       flow_result=FAIL
+      grep -q IOSDriverTimeoutException "$artifacts_dir/maestro-$attempt.log" || break
+    done
+    if [[ $flow_result == FAIL ]]; then
       failures=$((failures + 1))
     fi
     printf '%s\t%s-%s\t%s\t%s\n' \
