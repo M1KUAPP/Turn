@@ -32,11 +32,13 @@ bun install --frozen-lockfile
 (cd app && bunx expo prebuild --platform ios --clean --no-install)
 (cd app/ios && pod install)
 
-# Parallel targets push a compile error far above the log's tail, so a failure prints every error line.
+# Parallel targets push a compile error far above the log's tail, so a failure prints every error line. The app is
+# signed to run locally: unsigned, it gets no Keychain entitlement in the Simulator, expo-secure-store fails with
+# -34018, and the app never has the user ID the relay and RevenueCat need.
 log="$PWD/app/ios/xcodebuild.log"
 if ! (cd app/ios && xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
   -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
-  -derivedDataPath build CODE_SIGNING_ALLOWED=NO build > "$log" 2>&1); then
+  -derivedDataPath build CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= build > "$log" 2>&1); then
   grep -E ': (fatal )?error: ' "$log" | sort -u
   tail -n 50 "$log"
   exit 1
@@ -53,6 +55,12 @@ app="$PWD/app/ios/build/Build/Products/Debug-iphonesimulator/Turn.app"
     --bundle-output "$app/main.jsbundle" --assets-dest "$app"
 )
 test -s "$app/main.jsbundle"
+
+binary="$app/$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Info.plist")"
+if ! grep -a -q '<key>application-identifier</key>' "$binary"; then
+  printf 'Turn.app has no application-identifier entitlement, so the Keychain would fail in the Simulator.\n' >&2
+  exit 1
+fi
 
 rm -f "$out"
 (cd "$(dirname "$app")" && ditto -c -k --sequesterRsrc --keepParent Turn.app "$out")
