@@ -4,7 +4,7 @@ import type { BankDatabase } from '../src/bank/store'
 import { createBankStore } from '../src/bank/store'
 import starterBank from '../src/content/starter-bank.json'
 import { createLiveListenSession } from '../src/listen/live-session'
-import { createTypedListenSession } from '../src/listen/typed-session'
+import { createTypedListenSession, type RemoteRanker } from '../src/listen/typed-session'
 import type { AssetStatus, ListenEngine, ListenEngineEvents, ListenLine } from '../src/listen/engine'
 
 const databases: DatabaseSync[] = []
@@ -90,11 +90,12 @@ async function session(
     now?: () => number
     log?: (entry: { line: string; endedAt: number; rankedAt: number; silenceWindowMs: number }) => void
     place?: () => string | Promise<string>
+    remote?: RemoteRanker
   } = {}
 ) {
   const bank = createBankStore(database(), starterBank, () => new Date(2026, 8, 23))
   await bank.initialize()
-  const typed = createTypedListenSession(bank)
+  const typed = createTypedListenSession(bank, options.remote)
   await typed.ready
   const fake = options.engine === undefined ? fakeEngine(options.status) : null
   const engine = options.engine === undefined ? (fake?.engine ?? null) : options.engine
@@ -111,6 +112,45 @@ async function session(
 }
 
 describe('live partner session', () => {
+  test('shows the degraded notice after two relay failures', async () => {
+    const { live } = await session({
+      engine: null,
+      remote: {
+        allowed: () => true,
+        rank: async () => {
+          throw new Error('offline')
+        }
+      }
+    })
+    await live.start()
+    await live.send('How was physio?')
+    expect(live.getSnapshot().caption.note).not.toContain('Listen mode is degraded')
+    await live.send('What do you want for lunch?')
+    expect(live.getSnapshot().degraded).toBe(true)
+    expect(live.getSnapshot().caption.note).toContain('Listen mode is degraded')
+    await live.dispose()
+  })
+
+  test('keeps the degraded notice visible while Listen mode is paused', async () => {
+    const fake = fakeEngine()
+    const { live } = await session({
+      engine: fake.engine,
+      remote: {
+        allowed: () => true,
+        rank: async () => {
+          throw new Error('offline')
+        }
+      }
+    })
+    await live.start()
+    await live.send('How was physio?')
+    await live.send('What do you want for lunch?')
+    await live.pause()
+    expect(live.getSnapshot().degraded).toBe(true)
+    expect(live.getSnapshot().caption.note).toContain('Listen mode is degraded')
+    await live.dispose()
+  })
+
   test('shows Listening until partial words arrive, then updates the live caption', async () => {
     const { live, fake } = await session()
 
