@@ -37,6 +37,8 @@ export type PurchasesSnapshot = {
 }
 
 export type PurchasesStore = {
+  /** Configures RevenueCat, reads `listen`, and follows it; never rejects, and nothing waits on it (SPEAK-5). */
+  start(input: { apiKey: string; appUserID: string }): Promise<void>
   snapshot(): PurchasesSnapshot
   subscribe(listener: () => void): () => void
   /** Opens the paywall unless it's open or busy, and says what Listen mode is now. */
