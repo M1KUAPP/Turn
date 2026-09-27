@@ -1,0 +1,106 @@
+appId: com.m1ku.turn
+name: Starter bank review
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# A fresh install's row holds the starter card (BANK-10); from AX1 the row is below the fold.
+- scrollUntilVisible:
+    element: 'The Turn team wrote these starter phrases\. Review them to make them yours\.'
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: bank-10-card
+# From AX1, center the buttons so a tap can't land on the bottom bar.
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Review
+          centerElement: true
+          direction: DOWN
+          timeout: 60000
+- tapOn: Review
+# Review opens the first category left to review, Quick, with its marks.
+- extendedWaitUntil:
+    visible: Starter
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: bank-10-quick-marked
+# Leave by the back button: a relaunch would skip the cleanup that marks Quick reviewed.
+- tapOn:
+    text: '.*Turn.*'
+    leftOf: Quick
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 10000
+- waitForAnimationToEnd
+# Chat and the rest remain, so the card is back; from AX1 Home kept its scroll, which is past the words.
+- scrollUntilVisible:
+    element: 'The Turn team wrote these starter phrases\. Review them to make them yours\.'
+    direction: UP
+    timeout: 60000
+- takeScreenshot: bank-10-card-returns
+# The check: Quick's marks are gone.
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Phrase bank
+    direction: DOWN
+- tapOn: Phrase bank
+- extendedWaitUntil:
+    visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Quick
+    direction: DOWN
+    speed: 10
+- tapOn: Quick
+- extendedWaitUntil:
+    visible: Edit
+    timeout: 10000
+- waitForAnimationToEnd
+- assertVisible: 'Yes'
+- assertNotVisible: Starter
+- takeScreenshot: bank-10-quick-reviewed
+# Not now sets the card aside for good.
+- launchApp
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Not now
+          centerElement: true
+          direction: DOWN
+          timeout: 60000
+- tapOn: Not now
+# The note sits at the top of the row's frame, above a centered Not now.
+- scrollUntilVisible:
+    element: '.*Replies to your partner appear here\..*'
+    direction: UP
+    timeout: 60000
+- assertNotVisible: Review
+- takeScreenshot: bank-10-not-now
+- launchApp
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 30000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: '.*Replies to your partner appear here\..*'
+    direction: DOWN
+    timeout: 60000
+- assertNotVisible: Review
+- takeScreenshot: bank-10-after-relaunch
