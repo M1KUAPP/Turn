@@ -1823,9 +1823,11 @@ under `<device>/<size>-<appearance>/`, and `results.txt` records each flow.
   `npx expo start --no-dev --minify`. Free profiles expire after seven
   days, so the video's build is installed on or after September 22
   (COMPAT-4) ([iPhone build notes][ios-free-build]).
-- **The Simulator build:** `xcodebuild` in the Debug configuration for the
-  `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the
-  JavaScript bundle embedded so it runs without Metro. That a Debug build
+- **The Simulator build:** `scripts/build-simulator.sh`, given a commit or
+  none for the checkout, which the `iOS Simulator build` workflow runs too:
+  `xcodebuild` in the Debug configuration for the `iphonesimulator` SDK,
+  from the prebuilt `ios/` workspace, with the JavaScript bundle embedded so
+  it runs without Metro, zipped as `Turn.app.zip`. That a Debug build
   runs from its embedded bundle is unverified, so the September 25 check
   covers it; if it can't, the README's Simulator path starts Metro first.
   The `.app` is zipped into a GitHub release, and the README installs it
