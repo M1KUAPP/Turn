@@ -274,8 +274,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_package_dependencies_expo",
-      "community": 329,
-      "community_name": "expo",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "expo",
-      "community": 329,
-      "community_name": "expo",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo"
     },
     {
@@ -362,8 +362,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_package_dependencies_expo_constants",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 329,
+      "community_name": "expo-constants",
       "norm_label": "expo-constants"
     },
     {
@@ -373,8 +373,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "expo_constants",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 329,
+      "community_name": "expo-constants",
       "norm_label": "expo-constants"
     },
     {
@@ -3552,8 +3552,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_test_consent_test",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "consent.test.ts"
     },
     {
@@ -3563,8 +3563,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_test_consent_test_databases",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "databases"
     },
     {
@@ -3574,8 +3574,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_test_consent_test_sessions",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "sessions"
     },
     {
@@ -3585,8 +3585,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_test_consent_test_database",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "database()"
     },
     {
@@ -3596,8 +3596,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_test_consent_test_configvalue",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "configvalue"
     },
     {
@@ -3607,8 +3607,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "app_test_consent_test_configport",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "configport()"
     },
     {
@@ -3618,8 +3618,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "app_test_consent_test_fakeengine",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "fakeengine()"
     },
     {
@@ -3629,8 +3629,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "app_test_consent_test_rig",
-      "community": 319,
-      "community_name": "consent.test.ts",
+      "community": 170,
+      "community_name": "bank/store.ts",
       "norm_label": "rig()"
     },
     {
@@ -3794,8 +3794,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "listen-audio-session.test.ts"
     },
     {
@@ -3805,8 +3805,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test_databases",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "databases"
     },
     {
@@ -3816,8 +3816,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test_database",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "database()"
     },
     {
@@ -3827,8 +3827,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test_fakemodule",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "fakemodule"
     },
     {
@@ -3838,8 +3838,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test_createfakemodule",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "createfakemodule()"
     },
     {
@@ -3849,8 +3849,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test_fakeengine",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "fakeengine()"
     },
     {
@@ -3860,8 +3860,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "app_test_listen_audio_session_test_session",
-      "community": 170,
-      "community_name": "bank/store.ts",
+      "community": 319,
+      "community_name": "listen-audio-session.test.ts",
       "norm_label": "session()"
     },
     {
@@ -14257,6 +14257,17 @@
       "community": 310,
       "community_name": "AGENTS.md",
       "norm_label": "agents.md"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "claude",
+      "community": 330,
+      "community_name": "CLAUDE.md",
+      "norm_label": "claude.md"
     },
     {
       "label": "screens/AGENTS.md",
@@ -76080,7 +76091,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L262",
+      "source_location": "L269",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -119705,5 +119716,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a9c4b8025f2cbc25225914eb0e7d421979cef6b3"
+  "built_at_commit": "0042cfa7ddfc75f497b57400331c7c93e493251d"
 }
