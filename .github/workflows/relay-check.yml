@@ -1,0 +1,69 @@
+# Checks the relay daily through judging, comments the check on #70, and logs yesterday's counts
+# (AVAIL-1, METRIC-2, RELEASE-5, PAY-9). worker/README.md describes the check and when it runs.
+name: Relay check
+
+on:
+  schedule:
+    # 01:41 UTC, October 1 to 13
+    - cron: '41 1 1-13 10 *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: relay-check
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.4.2
+      - name: Run the daily relay check and comment on #70
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          status=0
+          bun worker/scripts/check.ts --out check.md || status=$?
+          [ -s check.md ] || echo "The relay check stopped before it wrote a report (exit $status)." > check.md
+          gh issue comment 70 --body-file check.md
+          if [ "$status" != 0 ]; then
+            # One open issue at a time: a failure while one is open comments there instead.
+            open=$(gh issue list --label relay-check --state open --json number --jq '.[0].number // empty')
+            if [ -n "$open" ]; then
+              gh issue comment "$open" --body-file check.md
+            else
+              gh label create relay-check --color D93F0B \
+                --description 'Opened by the relay check workflow' 2> /dev/null || true
+              # Without the assignees if one can't be assigned, so the alert still opens.
+              gh issue create --title "The relay check failed" --label relay-check --body-file check.md \
+                --assignee kymil4,WhiteAvocad0,AlaskanTuna ||
+                gh issue create --title "The relay check failed" --label relay-check --body-file check.md
+            fi
+            exit "$status"
+          fi
+      - name: Log yesterday's counts and comment on #70
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TURN_CF_ACCOUNT_ID: ${{ secrets.TURN_CF_ACCOUNT_ID }}
+          TURN_CF_LOGS_TOKEN: ${{ secrets.TURN_CF_LOGS_TOKEN }}
+        run: |
+          yesterday=$(date -u -d "yesterday" +%Y-%m-%d)
+          echo "## Counts for $yesterday" > counts.md
+          echo "" >> counts.md
+          echo '```text' >> counts.md
+          (cd worker && bun run logs) >> counts.md
+          echo '```' >> counts.md
+          gh issue comment 70 --body-file counts.md
