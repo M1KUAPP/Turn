@@ -294,16 +294,38 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       }
     },
     async nextReviewCategoryId(): Promise<string | null> {
-      throw new Error('Task 1')
+      const row = await db.getFirstAsync<{ id: string }>(
+        `SELECT c.id FROM category c
+           JOIN phrase p ON p.category_id = c.id
+           WHERE p.reviewed = 0
+           ORDER BY c.position, c.id
+           LIMIT 1`
+      )
+      return row?.id ?? null
     },
     async reviewCategory(id: string): Promise<void> {
-      throw new Error(`Task 1: ${id}`)
+      const pending = await db.getFirstAsync<{ count: number }>(
+        'SELECT COUNT(*) AS count FROM phrase WHERE category_id = ? AND reviewed = 0',
+        id
+      )
+      if (!pending || pending.count === 0) return
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        await tx.runAsync('UPDATE phrase SET reviewed = 1 WHERE category_id = ? AND reviewed = 0', id)
+      })
+      notify()
     },
     async dismissStarterReview(): Promise<void> {
-      throw new Error('Task 1')
+      await db.runAsync(
+        "INSERT INTO setting (key, value) VALUES ('starter_review_dismissed', '1') ON CONFLICT (key) DO UPDATE SET value = excluded.value"
+      )
+      notify()
     },
     async starterReviewState(): Promise<{ pending: boolean; dismissed: boolean }> {
-      throw new Error('Task 1')
+      const [row, dismissed] = await Promise.all([
+        db.getFirstAsync<{ count: number }>('SELECT COUNT(*) AS count FROM phrase WHERE reviewed = 0'),
+        db.getFirstAsync<{ value: string }>("SELECT value FROM setting WHERE key = 'starter_review_dismissed'")
+      ])
+      return { pending: (row?.count ?? 0) > 0, dismissed: dismissed?.value === '1' }
     },
     async addPlace(name: string): Promise<Place> {
       const trimmed = name.trim()
