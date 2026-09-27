@@ -3,6 +3,7 @@ import { SymbolView } from 'expo-symbols'
 import { AccessibilityInfo, Animated, Pressable, View } from 'react-native'
 import { colors, typography } from '../constants/theme'
 import type { homeLayout } from './home-layout'
+import StarterReviewCard from './StarterReviewCard'
 import TurnText from './TurnText'
 
 type Reply = { id: string; text: string }
@@ -23,6 +24,7 @@ type Props = {
   boldText: boolean
   slots?: readonly (Reply | null)[]
   bigButton?: Reply | null
+  starterCard?: { onReview: () => void; onDismiss: () => void } | null
   emptyNote?: string
   activePhraseId?: string | null
   onInteractionChange?: (pressed: boolean) => void
@@ -140,6 +142,7 @@ export default function ReplyRow({
   boldText,
   slots = [],
   bigButton,
+  starterCard,
   emptyNote,
   activePhraseId,
   onInteractionChange,
@@ -192,6 +195,8 @@ export default function ReplyRow({
             <SymbolView name="speaker.wave.2" size={18} tintColor={colors['on-accent']} accessible={false} />
           )}
         </Pressable>
+      ) : empty && starterCard ? (
+        <StarterReviewCard boldText={boldText} onReview={starterCard.onReview} onDismiss={starterCard.onDismiss} />
       ) : (
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: layout.rowGap }}>
           {Array.from({ length: 6 }, (_, index) => (
@@ -210,7 +215,7 @@ export default function ReplyRow({
           ))}
         </View>
       )}
-      {empty && (
+      {empty && !starterCard && (
         <View
           pointerEvents="none"
           style={{
