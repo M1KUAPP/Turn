@@ -10,6 +10,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
   ios: {
+    icon: './assets/turn.icon',
     bundleIdentifier: 'com.m1ku.turn',
     deploymentTarget: '26',
     supportsTablet: false,
