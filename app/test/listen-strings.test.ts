@@ -10,6 +10,7 @@ describe('Listen mode copy', () => {
       said: 'They said',
       stillAnswering: expect.any(Function),
       rankedOnPhone: 'Ranked on this phone',
+      degraded: 'Listen mode is degraded',
       unavailable: "Live transcription isn't available here. Tap here to type what they say.",
       unavailableLabel: "Live transcription isn't available here.",
       gettingModel: "Getting Apple's English speech model",
