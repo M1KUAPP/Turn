@@ -10,6 +10,7 @@ Contents:
 
 1.  [Daily counts from the logs](#daily-counts-from-the-logs)
 1.  [The credit alert](#the-credit-alert)
+1.  [The daily check](#the-daily-check)
 1.  [See also](#see-also)
 
 ## Daily counts from the logs
@@ -108,6 +109,35 @@ gh workflow run credit-alert.yml -f level=0
 
 `bun scripts/credits.ts --level 0` in `worker/` runs the same check from the
 shell and prints the issue's body instead of opening it.
+
+## The daily check
+
+While judges try Turn from October 1 to 13, 2026, a
+[scheduled workflow](/.github/workflows/relay-check.yml) checks the relay once a
+day the way the Simulator build would use it (AVAIL-1, METRIC-2, RELEASE-5,
+PAY-9). It runs daily at 01:41 UTC, and on demand from the Actions tab or
+`gh workflow run`.
+
+- **What it does:** checks `GET /v1/config` for a valid configuration, reporting
+  `jevOn` and `freeLinesLeft`; then `POST /v1/lines` with the judge's line, "How
+  was physio?", at Clinic, with the starter bank's categories and 40 starter
+  phrases including "It was hard", checking that each candidate receives a
+  score from 0 to 1, and reporting "It was hard"'s place among the scores.
+- **When it runs:** daily at 01:41 UTC, from October 1 to 13, 2026.
+- **Where it comments:** it comments the check report on issue #70, and logs
+  yesterday's counts from the relay's logs under "Counts for <yesterday's date>"
+  in a `text` code block (METRIC-2).
+- **What a failure opens:** when either step fails, it opens an issue titled
+  "The relay check failed" with the label `relay-check`, assigned to kymil4,
+  WhiteAvocad0, and AlaskanTuna, with the same unassigned fallback the credit
+  alert has; while that issue is open, later failures comment on it.
+- **Running by hand:** `bun scripts/check.ts` runs the check from `worker/`:
+
+```shell
+cd worker
+bun scripts/check.ts                                 # against the default relay
+bun scripts/check.ts --relay https://turn-relay.m1ku-turn.workers.dev --out check.md
+```
 
 ## See also
 
