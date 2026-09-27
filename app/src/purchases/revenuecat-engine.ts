@@ -49,6 +49,8 @@ export function createRevenueCatEngine(): PurchasesEngine {
 
     async presentPaywall(): Promise<PaywallResult> {
       try {
+        // Unlike Purchases' calls, RevenueCatUI doesn't check for configure first: without it the app stops natively.
+        if (!(await Purchases.isConfigured())) return 'ERROR'
         const result = await RevenueCatUI.presentPaywallIfNeeded({
           requiredEntitlementIdentifier: listenEntitlement
         })

@@ -158,6 +158,7 @@ describe('revenuecat engine', () => {
 
   test('presentPaywall: maps each of the five values, an unknown value, and a throw', async () => {
     const engine = createRevenueCatEngine()
+    fakePurchases.isConfigured.mockResolvedValue(true)
 
     // 1. NOT_PRESENTED
     fakeRevenueCatUI.presentPaywallIfNeeded.mockResolvedValueOnce('NOT_PRESENTED')
@@ -189,6 +190,19 @@ describe('revenuecat engine', () => {
     // 7. Thrown error resolves 'ERROR'
     fakeRevenueCatUI.presentPaywallIfNeeded.mockRejectedValueOnce(new Error('UI presentation crashed'))
     expect(await engine.presentPaywall()).toBe('ERROR')
+  })
+
+  test('presentPaywall: resolves ERROR without opening the paywall while RevenueCat is not configured', async () => {
+    const engine = createRevenueCatEngine()
+
+    // RevenueCatUI stops the app natively when Purchases isn't configured, as in the Simulator run 36327720412.
+    fakePurchases.isConfigured.mockResolvedValueOnce(false)
+    expect(await engine.presentPaywall()).toBe('ERROR')
+
+    fakePurchases.isConfigured.mockRejectedValueOnce(new Error('no native module'))
+    expect(await engine.presentPaywall()).toBe('ERROR')
+
+    expect(fakeRevenueCatUI.presentPaywallIfNeeded).not.toHaveBeenCalled()
   })
 
   test('PRIV-4: no customer attribute setter calls anywhere in app/src', () => {
