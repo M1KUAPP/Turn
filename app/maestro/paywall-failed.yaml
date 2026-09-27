@@ -1,0 +1,47 @@
+appId: com.m1ku.turn
+name: Turn Listen failed purchase
+---
+# A failed Test Store purchase leaves Listen mode locked and says so (#59, PAY-5).
+- clearKeychain
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Restore Purchases
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
+- tapOn: Unlock Listen mode
+- extendedWaitUntil:
+    visible: Keep Listen mode on
+    timeout: 30000
+- waitForAnimationToEnd
+- tapOn:
+    text: Unlock Listen mode
+    index: 1
+- extendedWaitUntil:
+    visible: Test Store Purchase
+    timeout: 30000
+- tapOn: Test failed purchase
+- waitForAnimationToEnd
+- takeScreenshot: paywall-failed
+# RevenueCat's own error, if it shows one, then the paywall's close button.
+- runFlow:
+    when:
+      visible: OK
+    commands:
+      - tapOn: OK
+- takeScreenshot: paywall-failed-dismissed
+- tapOn: Close
+- extendedWaitUntil:
+    visible: "The purchase didn't go through. Listen mode is still locked."
+    timeout: 30000
+- assertVisible: Unlock Listen mode
+- takeScreenshot: paywall-failed-locked

@@ -8,7 +8,7 @@ import { consentWords } from '../consent/strings'
 import { rebuildGazetteer } from '../listen/gazetteer'
 import { runTagChecks } from '../listen/tag-checks'
 import { SPEECH_RATE_STEPS } from '../speech/voice-settings'
-import { useConsent, useTurn } from '../turn-context'
+import { useConsent, usePurchases, useTurn } from '../turn-context'
 import TurnText from './TurnText'
 
 type Row = {
@@ -44,6 +44,7 @@ export default function SettingsScreen() {
   const router = useRouter()
   const { ready, boldText } = useTurn()
   const { consent, state: consentState } = useConsent()
+  const { purchases, state: purchasesState } = usePurchases()
   // From AX1 a row's value goes under its label, as in iOS Settings, so neither squeezes the other to letters.
   const stacked = useWindowDimensions().fontScale >= 1.786
   const [voiceNote, setVoiceNote] = useState<string | null>(null)
@@ -163,7 +164,26 @@ export default function SettingsScreen() {
         { label: 'Phrase bank', open: () => router.push('/bank') }
       ]
     },
-    { title: 'Turn Listen', rows: [{ label: 'Unlock Listen mode' }, { label: 'Restore Purchases' }] },
+    {
+      title: 'Turn Listen',
+      rows: [
+        purchasesState.listen === true
+          ? { label: 'Unlocked' }
+          : {
+              label: 'Unlock Listen mode',
+              hint: 'Opens Turn Listen',
+              disabled: !purchases || purchasesState.busy,
+              action: purchases ? () => void purchases.openPaywall('settings') : undefined
+            },
+        {
+          label: 'Restore Purchases',
+          hint: 'Checks whether Listen mode is unlocked',
+          disabled: !purchases || purchasesState.busy,
+          action: purchases ? () => void purchases.restore() : undefined
+        }
+      ],
+      note: purchasesState.note ?? undefined
+    },
     {
       title: 'About',
       rows: [
