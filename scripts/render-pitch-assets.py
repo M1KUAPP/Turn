@@ -87,7 +87,7 @@ def hero(dark: bool) -> None:
 
 def aha() -> None:
     frames = []
-    for step in (0, 1, 2, 1, 0):
+    for step in (0, 1, 2, 2, 0):
         canvas = Image.new("RGB", (960, 540), BOARD)
         draw = ImageDraw.Draw(canvas)
         text(draw, (55, 32), "TURN", 36, BLUE, 700)
@@ -96,15 +96,20 @@ def aha() -> None:
         edge = "#0D318C" if step else BLUE
         draw.rounded_rectangle((55, 299, 905, 474), radius=28, fill=BLUE, outline=edge, width=7 + step * 3)
         text(draw, (91, 348), "It was hard", 67, "#FFFFFF", 700)
+        if step == 1:
+            draw.ellipse((779, 343, 859, 423), outline="#FFFFFF", width=8)
+            draw.ellipse((802, 366, 836, 400), fill="#FFFFFF")
         if step == 2:
-            draw.ellipse((817, 361, 842, 386), fill="#FFFFFF")
-            draw.arc((804, 348, 865, 410), 300, 60, fill="#FFFFFF", width=6)
+            draw.polygon(((755, 369), (772, 369), (790, 352), (790, 418), (772, 400), (755, 400)), fill="#FFFFFF")
+            draw.arc((786, 354, 837, 414), 295, 65, fill="#FFFFFF", width=7)
+            draw.arc((786, 337, 863, 431), 295, 65, fill="#FFFFFF", width=6)
+            text(draw, (758, 491), "SPEAKING", 28, BLUE, 700)
         frames.append(canvas.quantize(colors=128, method=Image.Quantize.FASTOCTREE))
     frames[0].save(
         OUT / "readme-aha.gif",
         save_all=True,
         append_images=frames[1:],
-        duration=[900, 320, 390, 320, 900],
+        duration=[900, 260, 550, 330, 900],
         loop=0,
         optimize=True,
         disposal=2,
