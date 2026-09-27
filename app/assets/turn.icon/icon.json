@@ -1,0 +1,60 @@
+{
+  "fill-specializations": [
+    {
+      "value": {
+        "solid": "extended-srgb:0.09020,0.27843,0.72157,1.00000"
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "solid": "extended-srgb:0.04314,0.08235,0.18824,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "Turn",
+      "layers": [
+        {
+          "name": "Turn",
+          "image-name": "mark.svg"
+        }
+      ]
+    },
+    {
+      "name": "Field",
+      "layers": [
+        {
+          "name": "Field",
+          "image-name": "field.svg",
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "extended-srgb:0.09020,0.27843,0.72157,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "extended-srgb:0.04314,0.08235,0.18824,1.00000"
+              }
+            }
+          ],
+          "hidden-specializations": [
+            {
+              "value": false
+            },
+            {
+              "appearance": "tinted",
+              "value": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "supported-platforms": {
+    "squares": ["iOS"]
+  }
+}
