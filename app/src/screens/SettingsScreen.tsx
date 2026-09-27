@@ -48,12 +48,20 @@ export default function SettingsScreen() {
   const stacked = useWindowDimensions().fontScale >= 1.786
   const [voiceNote, setVoiceNote] = useState<string | null>(null)
   const [, setVoiceRevision] = useState(0)
+  const [, setRelayRevision] = useState(0)
 
   useEffect(() => {
     const voiceSettings = ready?.voiceSettings
     if (!voiceSettings) return
     return voiceSettings.subscribe(() => setVoiceRevision((revision) => revision + 1))
   }, [ready?.voiceSettings])
+
+  useEffect(() => {
+    const unsubscribe = ready?.config.subscribe(() => setRelayRevision((revision) => revision + 1))
+    return () => {
+      unsubscribe?.()
+    }
+  }, [ready?.config])
 
   const checkNameTags = async () => {
     const finder = ready?.nameTagger
@@ -92,6 +100,7 @@ export default function SettingsScreen() {
   }
 
   const rateStep = ready?.voiceSettings.rateStep() ?? null
+  const relayStatus = ready?.config.status() ?? 'unreachable'
   const permissionDateParts = consentState.permissionDate?.split('-').map(Number)
   const permissionDate = permissionDateParts
     ? new Date(permissionDateParts[0], permissionDateParts[1] - 1, permissionDateParts[2]).toLocaleDateString()
@@ -161,7 +170,14 @@ export default function SettingsScreen() {
         { label: 'Privacy notice', open: () => router.push('/settings/privacy') },
         { label: 'Open-source licenses', open: () => router.push('/settings/licenses') },
         { label: 'Version', value: Application.nativeApplicationVersion ?? '—' },
-        { label: 'Relay status' },
+        {
+          label:
+            relayStatus === 'working'
+              ? 'Listen service: working'
+              : relayStatus === 'off'
+                ? 'Listen service: off for now'
+                : "Listen service: can't be reached"
+        },
         ...debugRows
       ]
     },
