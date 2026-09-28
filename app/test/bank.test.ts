@@ -937,3 +937,196 @@ describe('phrase storage and undo', () => {
     expect((await relaunchAfterCommit.phrases('care')).some((p) => p.id === target.id)).toBe(false)
   })
 })
+
+describe('starter review', () => {
+  test('the seed marks every starter phrase', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    const rows = await db.getAllAsync<{ id: string; category_id: string; reviewed: number }>(
+      'SELECT id, category_id, reviewed FROM phrase'
+    )
+    expect(rows.length).toBeGreaterThan(0)
+    expect(rows.every((row) => row.reviewed === 0)).toBe(true)
+
+    expect(rows.find((row) => row.id === 'yes')?.reviewed).toBe(0)
+    expect(rows.find((row) => row.id === 'no')?.reviewed).toBe(0)
+    expect(rows.find((row) => row.id === 'not-sure')?.reviewed).toBe(0)
+
+    const bodyPain = rows.filter((row) => row.category_id === 'body-pain')
+    expect(bodyPain.length).toBeGreaterThan(0)
+    expect(bodyPain.every((row) => row.reviewed === 0)).toBe(true)
+
+    expect(rows.find((row) => row.id === 'wait-im-typing')?.reviewed).toBe(0)
+    expect(rows.some((row) => row.category_id === 'typed')).toBe(false)
+  })
+
+  test('the walk runs the starter bank in position order', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    const expectedOrder = [
+      'quick',
+      'chat',
+      'care',
+      'body-pain',
+      'food',
+      'feelings',
+      'family',
+      'health',
+      'out-and-about',
+      'strip'
+    ]
+
+    for (const categoryId of expectedOrder) {
+      expect(await store.nextReviewCategoryId()).toBe(categoryId)
+      await store.reviewCategory(categoryId)
+    }
+
+    expect(await store.nextReviewCategoryId()).toBeNull()
+  })
+
+  test('reviewing a category clears only its own marks', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    await store.reviewCategory('quick')
+
+    const quickPhrases = await store.phrases('quick')
+    expect(quickPhrases.length).toBeGreaterThan(0)
+    expect(quickPhrases.every((p) => p.reviewed === 1)).toBe(true)
+
+    const carePhrases = await store.phrases('care')
+    expect(carePhrases.length).toBeGreaterThan(0)
+    expect(carePhrases.every((p) => p.reviewed === 0)).toBe(true)
+
+    expect(changes).toBe(1)
+  })
+
+  test('reviewing a spent or unknown category notifies nothing', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    await store.reviewCategory('quick')
+    await store.reviewCategory('quick')
+    await store.reviewCategory('typed')
+    await store.reviewCategory('missing')
+
+    expect(changes).toBe(1)
+  })
+
+  test('a typed phrase carries no mark', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    const typed = await store.saveTypedPhrase('Hello from typing')
+    expect(typed).not.toBeNull()
+    expect(typed?.reviewed).toBe(1)
+
+    const typedRow = await db.getFirstAsync<{ reviewed: number }>('SELECT reviewed FROM phrase WHERE id = ?', typed!.id)
+    expect(typedRow?.reviewed).toBe(1)
+
+    const categories = [
+      'quick',
+      'chat',
+      'care',
+      'body-pain',
+      'food',
+      'feelings',
+      'family',
+      'health',
+      'out-and-about',
+      'strip'
+    ]
+    for (const categoryId of categories) {
+      await store.reviewCategory(categoryId)
+    }
+
+    const state = await store.starterReviewState()
+    expect(state.pending).toBe(false)
+  })
+
+  test('editing a phrase clears only its own mark', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    const carePhrases = await store.phrases('care')
+    expect(carePhrases.length).toBeGreaterThan(1)
+    const target = carePhrases[0]
+    expect(target.reviewed).toBe(0)
+
+    await store.editPhrase(target.id, { text: 'Updated care phrase' })
+
+    const careAfter = await store.phrases('care')
+    const updated = careAfter.find((p) => p.id === target.id)
+    expect(updated?.reviewed).toBe(1)
+
+    const neighbours = careAfter.filter((p) => p.id !== target.id)
+    expect(neighbours.length).toBeGreaterThan(0)
+    expect(neighbours.every((p) => p.reviewed === 0)).toBe(true)
+  })
+
+  test('pending until every category is reviewed', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    expect(await store.starterReviewState()).toEqual({ pending: true, dismissed: false })
+
+    const gridCategories = [
+      'quick',
+      'chat',
+      'care',
+      'body-pain',
+      'food',
+      'feelings',
+      'family',
+      'health',
+      'out-and-about'
+    ]
+    for (const categoryId of gridCategories) {
+      await store.reviewCategory(categoryId)
+    }
+
+    expect(await store.starterReviewState()).toEqual({ pending: true, dismissed: false })
+
+    await store.reviewCategory('strip')
+
+    expect(await store.starterReviewState()).toEqual({ pending: false, dismissed: false })
+  })
+
+  test('Not now survives a relaunch', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    await store.dismissStarterReview()
+    expect(changes).toBe(1)
+    expect(await store.starterReviewState()).toEqual({ pending: true, dismissed: true })
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect(await next.starterReviewState()).toEqual({ pending: true, dismissed: true })
+  })
+})
