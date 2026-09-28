@@ -274,8 +274,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_package_dependencies_expo",
-      "community": 297,
-      "community_name": "expo",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "expo",
-      "community": 297,
-      "community_name": "expo",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo"
     },
     {
@@ -318,8 +318,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_package_dependencies_expo_audio",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 297,
+      "community_name": "expo",
       "norm_label": "expo-audio"
     },
     {
@@ -329,8 +329,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "expo_audio",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 297,
+      "community_name": "expo",
       "norm_label": "expo-audio"
     },
     {
@@ -5092,8 +5092,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "eval_src_agreement_alphaof",
-      "community": 12,
-      "community_name": "curves.ts",
+      "community": 286,
+      "community_name": "agreement.ts",
       "norm_label": "alphaof()"
     },
     {
@@ -6489,8 +6489,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "eval_src_score_linescore",
-      "community": 12,
-      "community_name": "curves.ts",
+      "community": 283,
+      "community_name": "calibration.ts",
       "norm_label": "linescore"
     },
     {
@@ -6566,8 +6566,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "eval_src_score_rowfor",
-      "community": 217,
-      "community_name": "score.ts",
+      "community": 227,
+      "community_name": "row.ts",
       "norm_label": "rowfor()"
     },
     {
@@ -10484,7 +10484,7 @@
       "label": "select_or_create_device()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L74",
+      "source_location": "L83",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -10499,7 +10499,7 @@
       "label": "choose_large_device()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L104",
+      "source_location": "L113",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -10514,7 +10514,7 @@
       "label": "choose_small_device()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L117",
+      "source_location": "L126",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -10529,7 +10529,7 @@
       "label": "run_combination()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L194",
+      "source_location": "L203",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -14314,17 +14314,6 @@
       "norm_label": "{ vars }"
     },
     {
-      "label": "GEMINI.md",
-      "file_type": "document",
-      "source_file": "GEMINI.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "gemini",
-      "community": 310,
-      "community_name": "GEMINI.md",
-      "norm_label": "gemini.md"
-    },
-    {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
@@ -16825,7 +16814,7 @@
       "label": "Environments and release",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1809",
+      "source_location": "L1810",
       "_origin": "ast",
       "id": "docs_trd_environments_and_release",
       "community": 106,
@@ -16836,7 +16825,7 @@
       "label": "Requirements traceability",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1855",
+      "source_location": "L1856",
       "_origin": "ast",
       "id": "docs_trd_requirements_traceability",
       "community": 106,
@@ -16847,7 +16836,7 @@
       "label": "Open technical questions",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1898",
+      "source_location": "L1899",
       "_origin": "ast",
       "id": "docs_trd_open_technical_questions",
       "community": 106,
@@ -16858,7 +16847,7 @@
       "label": "See also",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1937",
+      "source_location": "L1938",
       "_origin": "ast",
       "id": "docs_trd_see_also",
       "community": 106,
@@ -76457,7 +76446,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L104",
+      "source_location": "L113",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -76468,7 +76457,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L117",
+      "source_location": "L126",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -76479,7 +76468,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L194",
+      "source_location": "L203",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -76490,7 +76479,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L74",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -76523,7 +76512,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L185",
+      "source_location": "L194",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -76535,7 +76524,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L188",
+      "source_location": "L197",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -76547,7 +76536,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L272",
+      "source_location": "L281",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -76571,7 +76560,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L107",
+      "source_location": "L116",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -76583,7 +76572,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L133",
+      "source_location": "L142",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -86789,7 +86778,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1809",
+      "source_location": "L1810",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -86822,7 +86811,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1898",
+      "source_location": "L1899",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -86877,7 +86866,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1855",
+      "source_location": "L1856",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -86899,7 +86888,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1937",
+      "source_location": "L1938",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -120315,5 +120304,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ac938cec9d55045fd584ddd08bd2644085802fd2"
+  "built_at_commit": "1459cc42295bc94e7917da59146cfae556eff697"
 }

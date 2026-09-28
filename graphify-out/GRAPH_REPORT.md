@@ -2,18 +2,18 @@
 
 ## Corpus Check
 
-- 389 files · ~1,110,251 words
+- 389 files · ~1,110,455 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 4691 nodes · 6071 edges · 328 communities (306 shown, 22 thin omitted)
+- 4690 nodes · 6071 edges · 327 communities (305 shown, 22 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 39 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `ac938cec`
+- Built from commit: `1459cc42`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -369,7 +369,7 @@
 
 - None detected.
 
-## Communities (328 total, 22 thin omitted)
+## Communities (327 total, 22 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -418,8 +418,8 @@ Nodes (27): Add the public app link, Add your demo video, Add your technology ta
 
 ### Community 12 - "curves.ts"
 
-Cohesion: 0.17
-Nodes (19): alphaOf(), reliabilityPlot(), topPhrase(), colors, Curve, dashes, plot(), Point (+11 more)
+Cohesion: 0.19
+Nodes (17): reliabilityPlot(), topPhrase(), colors, Curve, dashes, plot(), Point, riskCoverage() (+9 more)
 
 ### Community 14 - "device.ts"
 
@@ -1428,8 +1428,8 @@ Nodes (20): All lines, Big buttons on yes-or-no, pain, and consent lines, Latenc
 
 ### Community 217 - "score.ts"
 
-Cohesion: 0.08
-Nodes (32): chooseCutOff(), crossValidate(), folds(), Ranker, BigButton, Called, Count, kindMatrix() (+24 more)
+Cohesion: 0.09
+Nodes (31): chooseCutOff(), crossValidate(), folds(), Ranker, BigButton, Called, Count, kindMatrix() (+23 more)
 
 ### Community 218 - "Tasks"
 
@@ -1479,7 +1479,7 @@ Nodes (10): AnalyzerInput, AVAudioConverter, AVAudioEngine, AVAudioFormat, AVAud
 ### Community 227 - "row.ts"
 
 Cohesion: 0.07
-Nodes (46): Bank, createTypedListenSession(), RankingData, RemoteRanker, Reply, ConfigPorts, createConfigClient(), defaultConfig (+38 more)
+Nodes (47): Bank, createTypedListenSession(), RankingData, RemoteRanker, Reply, ConfigPorts, createConfigClient(), defaultConfig (+39 more)
 
 ### Community 228 - "Tasks"
 
@@ -1494,7 +1494,7 @@ Nodes (13): compilerOptions, paths, strict, types, extends, include, node, expo 
 ### Community 230 - "dependencies"
 
 Cohesion: 0.12
-Nodes (17): dependencies, expo-audio, expo-build-properties, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
+Nodes (17): dependencies, expo, expo-build-properties, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
 
 ### Community 231 - "generate-ios-licenses.ts"
 
@@ -1738,8 +1738,8 @@ Nodes (4): NoticeSection, privacyNotices, selectPrivacyNotice(), PrivacyNoticeSc
 
 ### Community 283 - "calibration.ts"
 
-Cohesion: 0.22
-Nodes (15): across(), beyondReach(), Block, Bounds, brier, byScore(), consistencyBand(), fitAt() (+7 more)
+Cohesion: 0.20
+Nodes (16): across(), beyondReach(), Block, Bounds, brier, byScore(), consistencyBand(), fitAt() (+8 more)
 
 ### Community 284 - "Non-functional requirements"
 
@@ -1749,7 +1749,7 @@ Nodes (7): Accessibility, Availability, Compatibility, Non-functional requiremen
 ### Community 286 - "agreement.ts"
 
 Cohesion: 0.27
-Nodes (9): Agreement, agreementOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit, candidates() (+1 more)
+Nodes (10): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+2 more)
 
 ### Community 287 - "Offline privacy notice and licenses implementation plan"
 
