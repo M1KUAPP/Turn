@@ -27,6 +27,7 @@ import { createSpeechController } from './speech/controller'
 import { createVoiceSettings } from './speech/voice-settings'
 import { turnListen } from '../../modules/turn-listen/src'
 import { turnVoice } from '../../modules/turn-voice/src'
+import { createStatsStore, type StatsStore } from './stats/store'
 
 const accessibilityStore = createAccessibilityStore(nativeAccessibilitySource)
 
@@ -38,6 +39,7 @@ type Ready = {
   consent: ReturnType<typeof createConsentController>
   nameTagger: typeof turnListen
   config: ReturnType<typeof createConfigClient>
+  stats: StatsStore
   typesafeNamed: boolean
 }
 
@@ -127,6 +129,9 @@ export function TurnProvider({ children }: { children: ReactNode }) {
             policy: () => config.snapshot().policy
           }
         : undefined
+      const stats = createStatsStore({ now: Date.now, setting: bank.setting, setSetting: bank.setSetting })
+      await stats.load()
+      if (!active) return
       const typed = createTypedListenSession(bank, remote)
       await typed.ready
       const engine = await pickListenEngine(() => nativeListenEngine, expoEngine)
@@ -135,6 +140,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         engine,
         module: turnListen,
         now: Date.now,
+        stats,
         log: ({ endedAt, rankedAt, silenceWindowMs }) => {
           if (__DEV__) {
             console.info(`[listen] endedAt=${endedAt} rankedAt=${rankedAt} windowMs=${silenceWindowMs}`)
@@ -171,7 +177,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       unsubscribeConsent = consent.subscribe(() => {
         if (consent.snapshot().requestsBlocked) typed.cancelRemote()
       })
-      setReady({ bank, speech, voiceSettings, listen: liveListen, consent, nameTagger, config, typesafeNamed })
+      setReady({ bank, speech, voiceSettings, listen: liveListen, consent, nameTagger, config, stats, typesafeNamed })
       unsubscribeConfig = config.subscribe(() => {
         const named = config.typesafeNamed()
         setReady((current) => (current ? { ...current, typesafeNamed: named } : current))

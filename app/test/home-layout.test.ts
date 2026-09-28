@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { homeLayout, pageOffset, starterCardShown } from '../src/screens/home-layout'
+import { homeLayout, pageOffset, replyStat, starterCardShown } from '../src/screens/home-layout'
 
 describe('home layout', () => {
   test('keeps the row at 258 points with two columns on ordinary phones', () => {
@@ -134,5 +134,13 @@ describe('starter card', () => {
         reviewDismissed: false
       })
     ).toBe(false)
+  })
+  test('counts a reply for Stats on this phone only in Listen mode, against the line it answers', () => {
+    const held = { listening: true, composerMatching: false, newest: 4, answered: 3 }
+    expect(replyStat('row', held)).toEqual({ type: 'reply', from: 'row', seq: 3 })
+    expect(replyStat('grid', held)).toEqual({ type: 'reply', from: 'grid', seq: 4 })
+    expect(replyStat('row', { ...held, composerMatching: true })).toEqual({ type: 'reply', from: 'grid', seq: 4 })
+    expect(replyStat('row', { ...held, listening: false })).toBeNull()
+    expect(replyStat('grid', { ...held, listening: false })).toBeNull()
   })
 })
