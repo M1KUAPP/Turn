@@ -1804,8 +1804,9 @@ of these (`none` skips capture):
 - `small`: the iPhone SE at the default size and the largest text size.
 - `full`: all five combinations.
 
-Download `Turn-screenshots`; images are under `<device>/<size>-<appearance>/`,
-and `results.txt` records each flow.
+`flows` limits a run to the named flows, for a quick rerun. Download
+`Turn-screenshots`; images are under `<device>/<size>-<appearance>/`, and
+`results.txt` records each flow.
 
 ## Environments and release
 
