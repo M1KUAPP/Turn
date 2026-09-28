@@ -69,6 +69,41 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
   const notify = () => {
     for (const listener of listeners) listener()
   }
+  const seedStarterBank = async (tx: BankDatabase) => {
+    const seededAt = now().getTime()
+    for (const [position, category] of starter.categories.entries()) {
+      await tx.runAsync(
+        'INSERT INTO category (id, name, position, fixed) VALUES (?, ?, ?, ?)',
+        category.id,
+        category.name,
+        position,
+        Number(category.fixed)
+      )
+      for (const [phrasePosition, phrase] of category.phrases.entries()) {
+        await tx.runAsync(
+          'INSERT INTO phrase (id, category_id, text, position, fixed, reviewed, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+          phrase.id,
+          category.id,
+          phrase.text,
+          phrasePosition,
+          Number(phrase.fixed),
+          0,
+          seededAt
+        )
+      }
+    }
+    for (const [position, place] of starter.places.entries()) {
+      await tx.runAsync('INSERT INTO place (id, name, position) VALUES (?, ?, ?)', place.id, place.name, position)
+    }
+    for (const category of starter.categories) {
+      for (const phrase of category.phrases) {
+        for (const place of phrase.places) {
+          await tx.runAsync('INSERT INTO phrase_place (phrase_id, place_id) VALUES (?, ?)', phrase.id, place)
+        }
+      }
+    }
+    await tx.runAsync("INSERT INTO setting (key, value) VALUES ('starter_seeded', '1')")
+  }
 
   return {
     subscribe(listener: () => void) {
@@ -83,43 +118,26 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       const marker = await db.getFirstAsync<{ value: string }>("SELECT value FROM setting WHERE key = 'starter_seeded'")
       if (!marker) {
         await db.withExclusiveTransactionAsync(async (tx) => {
-          const seededAt = now().getTime()
-          for (const [position, category] of starter.categories.entries()) {
-            await tx.runAsync(
-              'INSERT INTO category (id, name, position, fixed) VALUES (?, ?, ?, ?)',
-              category.id,
-              category.name,
-              position,
-              Number(category.fixed)
-            )
-            for (const [phrasePosition, phrase] of category.phrases.entries()) {
-              await tx.runAsync(
-                'INSERT INTO phrase (id, category_id, text, position, fixed, reviewed, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                phrase.id,
-                category.id,
-                phrase.text,
-                phrasePosition,
-                Number(phrase.fixed),
-                0,
-                seededAt
-              )
-            }
-          }
-          for (const [position, place] of starter.places.entries()) {
-            await tx.runAsync('INSERT INTO place (id, name, position) VALUES (?, ?, ?)', place.id, place.name, position)
-          }
-          for (const category of starter.categories) {
-            for (const phrase of category.phrases) {
-              for (const place of phrase.places) {
-                await tx.runAsync('INSERT INTO phrase_place (phrase_id, place_id) VALUES (?, ?)', phrase.id, place)
-              }
-            }
-          }
-          await tx.runAsync("INSERT INTO setting (key, value) VALUES ('starter_seeded', '1')")
+          await seedStarterBank(tx)
         })
         notify()
       }
       await db.runAsync('DELETE FROM tap WHERE day < ?', localDay(now()) - 29)
+    },
+    async eraseAll(): Promise<void> {
+      await db.withExclusiveTransactionAsync(async (tx) => {
+        await tx.runAsync('DELETE FROM phrase_place')
+        await tx.runAsync('DELETE FROM tap')
+        await tx.runAsync('DELETE FROM phrase')
+        await tx.runAsync('DELETE FROM category')
+        await tx.runAsync('DELETE FROM place')
+        await tx.runAsync('DELETE FROM setting')
+        await seedStarterBank(tx)
+      })
+
+      stagedPhraseIds.clear()
+      stagedStack.length = 0
+      notify()
     },
     categories() {
       return db.getAllAsync<Category>(
