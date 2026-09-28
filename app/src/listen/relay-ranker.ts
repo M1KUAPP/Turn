@@ -1,12 +1,16 @@
 import type { LineAnswer, LineRequest } from '@turn/shared/relay'
 import { rankable, type Phrase } from '@turn/shared/shortlist'
 import type { createBankStore } from '../bank/store'
+import type { PurchasesStore } from '../purchases/engine'
 import type { createConfigClient } from '../relay/config'
 import { postLine, RelayLineError } from '../relay/line'
 import { fitRequest, tagRequest, type NameFinder } from './tags'
 
 type Bank = Pick<ReturnType<typeof createBankStore>, 'categories' | 'places' | 'rankingData'>
-type Config = Pick<ReturnType<typeof createConfigClient>, 'headers' | 'snapshot' | 'status' | 'lineResult'>
+type Config = Pick<
+  ReturnType<typeof createConfigClient>,
+  'headers' | 'snapshot' | 'status' | 'lineResult' | 'freeLines'
+>
 
 type Ports = {
   bank: Bank
@@ -16,6 +20,7 @@ type Ports = {
   relayUrl: string
   createId(): string
   request(url: string, init: RequestInit): Promise<Response>
+  purchases?: Pick<PurchasesStore, 'refreshNext' | 'refreshAnswered'>
 }
 
 export type RelayRankInput = {
@@ -68,7 +73,13 @@ export function createRelayRanker(ports: Ports) {
       throw new RelayLineError(503, 'jev_off')
     }
 
-    const lineRequest: LineRequest = fitRequest({ lineId: ports.createId(), seq, ...tagged })
+    const refresh = ports.purchases?.refreshNext() === true
+    const lineRequest: LineRequest = fitRequest({
+      lineId: ports.createId(),
+      seq,
+      ...tagged,
+      ...(refresh ? { refresh: true } : {})
+    })
     const headers = ports.config.headers()
     try {
       const answer = await postLine(
@@ -83,10 +94,17 @@ export function createRelayRanker(ports: Ports) {
         signal
       )
       ports.config.lineResult('working')
+      ports.config.freeLines(answer.freeLinesLeft)
+      if (refresh) ports.purchases?.refreshAnswered()
       return { ...answer, candidateOrder: lineRequest.candidates.map(({ id }) => id) }
     } catch (cause) {
       if (!signal.aborted) {
-        ports.config.lineResult(cause instanceof RelayLineError && cause.code === 'jev_off' ? 'off' : 'unreachable')
+        if (cause instanceof RelayLineError && cause.code === 'paywall') {
+          ports.config.lineResult('working')
+          ports.config.freeLines(0)
+        } else {
+          ports.config.lineResult(cause instanceof RelayLineError && cause.code === 'jev_off' ? 'off' : 'unreachable')
+        }
       }
       throw cause
     }
