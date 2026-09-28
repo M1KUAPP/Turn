@@ -597,10 +597,12 @@ points, about 13 characters of `title3-emphasized` inside 12-point padding.
 - **Short screens.** Where the space between the top bar and the screen's
   bottom is under 700 points, as on an iPhone SE, the row's slots and the
   grid's buttons take A11Y-1's 64 points, with phrases in `headline` inside
-  10-point padding and 8 points between slots, and the caption shows one line
-  of words. That leaves the grid's first row on screen at launch (SPEAK-1),
-  and the caption, the strip, the row, the tabs, and the grid scroll together
-  as one column between the top bar and the bottom bar.
+  10-point padding and 8 points between slots. Below AX1 the caption is one
+  48-point line: its note, or else its speaker label, then the newest words,
+  cut at the start. The tabs drop their 4-point margins. That leaves the grid's
+  first row on screen at launch (SPEAK-1), and the caption, the strip, the row,
+  the tabs, and the grid scroll together as one column between the top bar and
+  the bottom bar.
 - **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip,
   and the grid take one column each, and everything between the top bar and
   the bottom bar scrolls as one column, as on short screens. Apple advises
