@@ -23,8 +23,8 @@ import { listenStrings } from '../listen/strings'
 import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
 import { purchaseNotes } from '../purchases/store'
-import { useConsent, usePurchases } from '../turn-context'
-import { homeLayout, pageOffset, starterCardShown } from './home-layout'
+import { useConsent, usePurchases, useTurn } from '../turn-context'
+import { homeLayout, pageOffset, replyStat, starterCardShown } from './home-layout'
 import { listenControl } from './listen-control'
 import { useListenLight } from './listen-light'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
@@ -102,6 +102,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
   const router = useRouter()
   const { consent, state: consentState } = useConsent()
   const { purchases, state: purchasesState } = usePurchases()
+  const { ready } = useTurn()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [strip, setStrip] = useState<Phrase[]>([])
@@ -126,7 +127,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
   const minPhraseHeight = layout.short ? 64 : 78
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
   const controlHeight = Math.max(44, 22 * Math.min(fontScale, 2.82) + 16)
-  const captionHeight = Math.max(layout.short ? 56 : 86, 24 + 70 * fontScale)
+  const captionHeight = layout.captionHeight
   // From AX1 the column scrolls, so the caption grows to fit its label, note, and prompt rather than cutting them;
   // only the partner's words keep their two lines (DESIGN, A11Y-4).
   const captionGrows = fontScale >= 1.786
@@ -270,9 +271,20 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
     setTypeMatches([])
   }
 
+  const recordReply = (tapped: 'row' | 'grid') => {
+    const event = replyStat(tapped, {
+      listening: listening.active,
+      composerMatching: composerMode === 'speak',
+      newest: listening.row.seq,
+      answered: shownListening.row.answers
+    })
+    if (event) ready?.stats.record(event)
+  }
+
   const speakDraft = async () => {
     const text = draft.trim()
     if (!text) return
+    recordReply('grid')
     let phrase: Phrase | null = null
     try {
       phrase = await bank.saveTypedPhrase(text)
@@ -344,6 +356,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             }
           }}
           onPress={() => {
+            recordReply('grid')
             void speech.speak(item.text, item.id)
           }}
           style={({ pressed }) => ({
@@ -461,9 +474,10 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             height: captionGrows ? undefined : captionHeight,
             minHeight: captionHeight,
             marginHorizontal: 16,
-            marginTop: 4,
+            marginTop: layout.oneLineCaption ? 0 : 4,
             marginBottom: 8,
-            padding: 12,
+            paddingHorizontal: 12,
+            paddingVertical: layout.oneLineCaption ? 0 : 12,
             borderRadius: 12,
             borderWidth: 2,
             borderColor: colors.edge,
@@ -481,35 +495,11 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             onPress={() => setComposerMode('partner')}
             style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
           >
-            {(captionLabel || captionNote) && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: captionGrows ? 'wrap' : 'nowrap',
-                  alignItems: 'center',
-                  gap: 6
-                }}
-              >
-                {captionLabel && (
-                  <TurnText
-                    kind="subheadline"
-                    boldText={boldText}
-                    numberOfLines={captionGrows ? undefined : 1}
-                    style={{ color: colors['ink-secondary'], flexShrink: 1 }}
-                  >
-                    {captionLabel}
-                  </TurnText>
-                )}
-                {captionNote && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 4,
-                      flexShrink: 1,
-                      marginLeft: captionGrows ? 0 : 'auto'
-                    }}
-                  >
+            {layout.oneLineCaption ? (
+              // One line on short screens: the note, or else the speaker label, then the newest words.
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                {captionNote ? (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, maxWidth: '50%' }}>
                     <SymbolView
                       name={noteSymbol}
                       size={Math.round(13 * Math.min(fontScale, 2))}
@@ -519,29 +509,104 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                     <TurnText
                       kind="subheadline"
                       boldText={boldText}
-                      numberOfLines={captionGrows ? undefined : 1}
+                      numberOfLines={1}
                       style={{ color: colors['ink-secondary'], flexShrink: 1 }}
                     >
                       {captionNote}
                     </TurnText>
                   </View>
+                ) : (
+                  captionLabel && (
+                    <TurnText
+                      kind="subheadline"
+                      boldText={boldText}
+                      numberOfLines={1}
+                      style={{ color: colors['ink-secondary'], maxWidth: '50%' }}
+                    >
+                      {captionLabel}
+                    </TurnText>
+                  )
                 )}
+                <TurnText
+                  kind="title3"
+                  boldText={boldText}
+                  numberOfLines={1}
+                  ellipsizeMode="head"
+                  style={{ color: listening.active ? colors.ink : colors['ink-secondary'], flex: 1 }}
+                >
+                  {captionText}
+                </TurnText>
               </View>
-            )}
-            {!listening.active ? (
-              <TurnText kind="title3" boldText={boldText} numberOfLines={2} style={{ color: colors['ink-secondary'] }}>
-                {captionText}
-              </TurnText>
-            ) : captionOpening ? (
-              <TurnText kind="title2" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
-                {captionText}
-              </TurnText>
-            ) : captionGrows && !caption.words ? (
-              <TurnText kind="title3" boldText={boldText} style={{ color: colors.ink }}>
-                {captionText}
-              </TurnText>
             ) : (
-              <CaptionWords text={captionText} boldText={boldText} measure={Boolean(caption.words)} />
+              <>
+                {(captionLabel || captionNote) && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: captionGrows ? 'wrap' : 'nowrap',
+                      alignItems: 'center',
+                      gap: 6
+                    }}
+                  >
+                    {captionLabel && (
+                      <TurnText
+                        kind="subheadline"
+                        boldText={boldText}
+                        numberOfLines={captionGrows ? undefined : 1}
+                        style={{ color: colors['ink-secondary'], flexShrink: 1 }}
+                      >
+                        {captionLabel}
+                      </TurnText>
+                    )}
+                    {captionNote && (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          gap: 4,
+                          flexShrink: 1,
+                          marginLeft: captionGrows ? 0 : 'auto'
+                        }}
+                      >
+                        <SymbolView
+                          name={noteSymbol}
+                          size={Math.round(13 * Math.min(fontScale, 2))}
+                          tintColor={colors['ink-secondary']}
+                          accessible={false}
+                        />
+                        <TurnText
+                          kind="subheadline"
+                          boldText={boldText}
+                          numberOfLines={captionGrows ? undefined : 1}
+                          style={{ color: colors['ink-secondary'], flexShrink: 1 }}
+                        >
+                          {captionNote}
+                        </TurnText>
+                      </View>
+                    )}
+                  </View>
+                )}
+                {!listening.active ? (
+                  <TurnText
+                    kind="title3"
+                    boldText={boldText}
+                    numberOfLines={2}
+                    style={{ color: colors['ink-secondary'] }}
+                  >
+                    {captionText}
+                  </TurnText>
+                ) : captionOpening ? (
+                  <TurnText kind="title2" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+                    {captionText}
+                  </TurnText>
+                ) : captionGrows && !caption.words ? (
+                  <TurnText kind="title3" boldText={boldText} style={{ color: colors.ink }}>
+                    {captionText}
+                  </TurnText>
+                ) : (
+                  <CaptionWords text={captionText} boldText={boldText} measure={Boolean(caption.words)} />
+                )}
+              </>
             )}
             {listening.assetProgress !== null && (
               <View
@@ -641,17 +706,18 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           activePhraseId={speaking.activePhraseId}
           onInteractionChange={(pressed) => setTouchedRow(pressed ? listening : null)}
           onSpeak={(reply) => {
+            recordReply('row')
             void speech.speak(reply.text, reply.id)
           }}
         />
       </View>
       {!composerOpen && (
-        <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: tabHeight + 8 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: tabHeight + 2 * layout.tabMargin }}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator
-            style={{ flexGrow: 1, height: tabHeight + 8 }}
-            contentContainerStyle={{ paddingLeft: 16, paddingRight: 12, paddingVertical: 4, gap: 8 }}
+            style={{ flexGrow: 1, height: tabHeight + 2 * layout.tabMargin }}
+            contentContainerStyle={{ paddingLeft: 16, paddingRight: 12, paddingVertical: layout.tabMargin, gap: 8 }}
           >
             {categories.map((category) => {
               const selected = categoryId === category.id
@@ -966,13 +1032,13 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
               keyExtractor={(item) => item.id}
               renderItem={renderPhrase}
               numColumns={layout.gridColumns}
-              columnWrapperStyle={layout.gridColumns === 2 ? { gap: 12, alignItems: 'stretch' } : undefined}
+              columnWrapperStyle={layout.gridColumns === 2 ? { gap: layout.gridGap, alignItems: 'stretch' } : undefined}
               ListHeaderComponent={layout.wholeMiddleScroll ? middleHeader : null}
               contentContainerStyle={{
                 paddingHorizontal: 16,
                 paddingTop: layout.wholeMiddleScroll ? 8 : 4,
                 paddingBottom: 16,
-                gap: 12
+                gap: layout.gridGap
               }}
               onScroll={(event) => setOffset(event.nativeEvent.contentOffset.y)}
               scrollEventThrottle={100}
