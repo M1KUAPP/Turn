@@ -12,8 +12,12 @@ describe('bundled privacy notice', () => {
     expect(selectPrivacyNotice(true)).toBe(privacyNotices.named)
   })
 
-  test.each(['unnamed', 'named'] as const)('%s version covers the data inventory in plain words', (variant) => {
-    const copy = privacyNotices[variant].map((section) => `${section.title} ${section.body}`).join(' ')
+  test.each(['unnamed', 'named'] as const)('%s version covers the data inventory and contact', (variant) => {
+    const copy = privacyNotices[variant]
+      .map((section) => `${section.title} ${section.body} ${section.url ?? ''}`)
+      .join(' ')
+    const contact = privacyNotices[variant].find((section) => section.title === 'Questions')
+    expect(contact?.url).toBe('https://github.com/M1KUAPP/Turn/issues')
     for (const term of [
       /bank/i,
       /places/i,
@@ -24,6 +28,8 @@ describe('bundled privacy notice', () => {
       /transcript/i,
       /two minutes/i,
       /Cloudflare/i,
+      /network address/i,
+      /request count/i,
       /United States/i,
       /40/i,
       /category names/i,
@@ -34,7 +40,8 @@ describe('bundled privacy notice', () => {
       /telemetry/i,
       /abuse/i,
       /under 18/i,
-      /nearby/i
+      /nearby/i,
+      /github\.com\/M1KUAPP\/Turn\/issues/i
     ]) {
       expect(copy).toMatch(term)
     }
