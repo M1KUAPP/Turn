@@ -1795,9 +1795,16 @@ version.
 
 ### Simulator screenshots from CI
 
-In Actions, dispatch **iOS Simulator build** with `screenshots` set to `pr`
-or `full` (`none` skips capture). Download `Turn-screenshots`; images are
-under `<device>/<size>-<appearance>/`, and `results.txt` records each flow.
+In Actions, dispatch **iOS Simulator build** with `screenshots` set to one
+of these (`none` skips capture):
+
+- `pr`: the iPhone 16 at the default size and the largest text size.
+- `dark`: the iPhone 16 at the default size in dark mode.
+- `small`: the iPhone SE at the default size and the largest text size.
+- `full`: all five combinations.
+
+Download `Turn-screenshots`; images are under `<device>/<size>-<appearance>/`,
+and `results.txt` records each flow.
 
 ## Environments and release
 
