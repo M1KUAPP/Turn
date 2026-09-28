@@ -7,6 +7,23 @@ name: Consent not now
     visible: Listen
     timeout: 60000
 - waitForAnimationToEnd
+# A fresh install offers the starter card (BANK-10), whose Not now would also match below; set it aside first.
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Not now
+          centerElement: true
+          direction: DOWN
+          timeout: 60000
+- tapOn: Not now
+- scrollUntilVisible:
+    element: '.*Replies to your partner appear here\..*'
+    direction: UP
+    timeout: 60000
 - scrollUntilVisible:
     element: Listen
 - tapOn: Listen
