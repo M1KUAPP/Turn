@@ -22,3 +22,14 @@ export function homeLayout(width: number, height: number, fontScale: number) {
 export function pageOffset(offset: number, viewportHeight: number, contentHeight: number, direction: -1 | 1) {
   return Math.max(0, Math.min(contentHeight - viewportHeight, offset + direction * viewportHeight))
 }
+
+/** Whether the row offers the starter card (BANK-10): only on an idle Home, never over Listen mode, typing's matches, or the under-18 note. */
+export function starterCardShown(state: {
+  listening: boolean
+  composerOpen: boolean
+  under18: boolean
+  reviewPending: boolean
+  reviewDismissed: boolean
+}): boolean {
+  return !state.listening && !state.composerOpen && !state.under18 && state.reviewPending && !state.reviewDismissed
+}
