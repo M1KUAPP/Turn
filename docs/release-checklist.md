@@ -176,9 +176,9 @@ Every section below names its requirements in the order
 | PAY-1 | After 20 answered lines, the 21st opens the paywall.                             | `worker/test/count.test.ts`, "count down with each answered line, and the 21st gets 402 paywall (STATE-4)"; #53; #92                      | Fail      | —       |
 | PAY-2 | Close the paywall, then speak a phrase.                                          | #53                                                                                                                                       | Fail      | —       |
 | PAY-3 | The dashboard, and the paywall's price.                                          | #15, "rc offerings verify shows the product, USD 24.99 price, entitlement, and package linked"; #26                                       | Pass      | —       |
-| PAY-4 | Scenario 8.                                                                      | `worker/test/entitlement.test.ts`, "let a line with refresh skip a fresh no once a minute (PAY-4)"; #53                                   | Fail      | —       |
-| PAY-5 | Choose each failure outcome Test Store offers.                                   | #53                                                                                                                                       | Fail      | —       |
-| PAY-6 | Scenario 9.                                                                      | #53                                                                                                                                       | Fail      | —       |
+| PAY-4 | Scenario 8.                                                                      | `worker/test/entitlement.test.ts`, "let a line with refresh skip a fresh no once a minute (PAY-4)"; `paywall-buy.yaml`, 36476430301       | Pass      | e2f3b8f |
+| PAY-5 | Choose each failure outcome Test Store offers.                                   | `app/maestro/paywall-failed.yaml`: Test Store's failed purchase leaves Listen mode locked, with its note, in run 36476430301              | Pass      | e2f3b8f |
+| PAY-6 | Scenario 9.                                                                      | `app/maestro/paywall-buy.yaml`: buy with Test Store, then Restore Purchases says "Listen mode is unlocked.", in run 36476430301           | Pass      | e2f3b8f |
 | PAY-7 | A request with a fresh ID's 21st line and no purchase gets the paywall response. | `worker/test/entitlement.test.ts`, "answer a fresh ID's 21st line 402, then Jev's answer for a line with refresh after a purchase"        | Pass      | c0a1180 |
 | PAY-8 | The product's type in the dashboard on September 22.                             | #15, "a headless Test Store purchase for the setup-only user turn-setup-check-20260923 granted the listen entitlement with no expiration" | Pass      | —       |
 | PAY-9 | On September 25, buy in the Simulator build, or run 25 lines in it.              | `worker/wrangler.jsonc`, `SIMULATOR_UNLIMITED` is `"false"`; #59 and #53 decide how judges get past 20 lines                              | RELEASE-5 | —       |
@@ -187,7 +187,7 @@ Every section below names its requirements in the order
 
 | ID    | Check                     | Where                                                                                                                                                        | Result | Build           |
 | ----- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | --------------- |
-| SET-1 | Each entry opens.         | `app/maestro/settings.yaml`, `licenses.yaml`, `privacy.yaml`, `places.yaml` open the other entries; Turn Listen and Restore Purchases open nothing until #53 | Fail   | —               |
+| SET-1 | Each entry opens.         | `app/maestro/settings.yaml`, `licenses.yaml`, `privacy.yaml`, `places.yaml` open the rest; `paywall-buy.yaml` opens Unlock Listen mode and Restore Purchases | Pass   | e2f3b8f         |
 | SET-2 | Open it in Airplane Mode. | `app/maestro/privacy.yaml` opens it; its text is bundled in `app/src/content/privacy-notice.ts`, so it needs no network                                      | Pass   | run 36323630432 |
 
 ### Content requirements
@@ -275,7 +275,7 @@ Every section below names its requirements in the order
 | -------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------- |
 | METRIC-1 | Read the logs after a session. | `worker/test/logs.test.ts`, "holds one line per request and no text (METRIC-1, PRIV-2)"; #24, "wrangler tail showed one line for each of 4 requests"                                    | Pass   | c0a1180 |
 | METRIC-2 | Run it on a day's logs.        | `worker/test/summary.test.ts`, "counts lines answered, paywall responses, failures, each outcome, and input tokens"; #31, "On September 23, 2026 it read 85 log lines out of 85 events" | Pass   | c0a1180 |
-| METRIC-4 | After a purchase.              | #53                                                                                                                                                                                     | Fail   | —       |
+| METRIC-4 | After a purchase.              | Customer `0d608de2-7d84-412e-866a-d572a3dccd10`, from run 36476430301's Test Store purchase, holds `listen` (`rc customers show`)                                                       | Pass   | e2f3b8f |
 
 ### Submission requirements
 
