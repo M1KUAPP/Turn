@@ -1047,9 +1047,10 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **The privacy notice (SET-2).** Both versions, naming TypeSafe and not,
   ship inside the app as text, and Settings shows the one the cached
   configuration picks, with no network.
-- **Erase all data (SET-3).** After a confirmation, the app deletes the
-  SQLite file and the settings and loads the starter bank as on first
-  launch; the Keychain ID stays, since it holds the purchase.
+- **Erase all data (SET-3).** After a confirmation, the app deletes every
+  row of its SQLite database, settings included, loads the starter bank as on
+  first launch, and starts its controllers again from the empty settings; the
+  Keychain ID stays, since it holds the purchase.
 
 [design-composer]: /docs/DESIGN.md#the-composer
 
