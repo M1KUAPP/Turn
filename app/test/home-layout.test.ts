@@ -43,6 +43,19 @@ describe('home layout', () => {
     })
   })
 
+  test('gives short screens a one-line caption and tighter bands, so the grid starts on screen', () => {
+    expect(homeLayout(375, 667, 1)).toMatchObject({ oneLineCaption: true, captionHeight: 48, gridGap: 8, tabMargin: 0 })
+    expect(homeLayout(375, 667, 1.353)).toMatchObject({ oneLineCaption: true, captionHeight: 48 })
+    expect(homeLayout(393, 852, 1)).toMatchObject({
+      oneLineCaption: false,
+      captionHeight: 94,
+      gridGap: 12,
+      tabMargin: 4
+    })
+    expect(homeLayout(393, 852, 0.8)).toMatchObject({ captionHeight: 86 })
+    expect(homeLayout(375, 667, 1.786)).toMatchObject({ oneLineCaption: false, captionHeight: 24 + 70 * 1.786 })
+  })
+
   test('pages one visible screen and clamps at either end', () => {
     expect(pageOffset(0, 200, 650, 1)).toBe(200)
     expect(pageOffset(400, 200, 650, 1)).toBe(450)
