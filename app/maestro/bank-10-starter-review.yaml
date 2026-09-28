@@ -7,13 +7,8 @@ name: Starter bank review
     visible: Listen
     timeout: 60000
 - waitForAnimationToEnd
-# A fresh install's row holds the starter card (BANK-10); from AX1 the row is below the fold.
-- scrollUntilVisible:
-    element: 'The Turn team wrote these starter phrases\. Review them to make them yours\.'
-    direction: DOWN
-    timeout: 60000
-- takeScreenshot: bank-10-card
-# From AX1, center the buttons so a tap can't land on the bottom bar.
+# A fresh install's row holds the starter card (BANK-10). From AX1 the row is below the fold: center its buttons
+# straight from launch, since a centering swipe from a nearby position overshoots under the top bar.
 - runFlow:
     when:
       notVisible:
@@ -24,7 +19,17 @@ name: Starter bank review
           element: Review
           centerElement: true
           direction: DOWN
+          speed: 10
           timeout: 60000
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - assertVisible: 'The Turn team wrote these starter phrases\. Review them to make them yours\.'
+- assertVisible: Not now
+- takeScreenshot: bank-10-card
 - tapOn: Review
 # Review opens the first category left to review, Quick, with its marks.
 - extendedWaitUntil:
@@ -84,6 +89,7 @@ name: Starter bank review
           element: Not now
           centerElement: true
           direction: DOWN
+          speed: 10
           timeout: 60000
 - tapOn: Not now
 # The note sits at the top of the row's frame, above a centered Not now.
