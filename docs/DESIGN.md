@@ -1329,11 +1329,12 @@ replies from the row, out of all the replies (SET-4).
   line the row answers, for a reply from the row, and the newest line
   otherwise. Times over a minute are left out, and each median covers the
   last 200.
-- **The note,** under the group in `footnote` and `ink-secondary`: "These
-  counts stay on this phone."
-- **Reset.** A second group with one action row, "Reset stats", in `accent`.
-  It asks first, in a system alert with a destructive button, then shows
-  zeroes and "None yet". Erase all data resets them too.
+- **The note,** under the group in `subheadline` and `ink-secondary`, as
+  Settings' notes are: "These counts stay on this phone."
+- **Reset.** A second group with one action row, "Reset stats", in `ink`, as
+  Settings' other actions are. It asks first, in a system alert with a
+  destructive button, then shows zeroes and "None yet". Erase all data resets
+  them too.
 
 ### The phrase bank editor
 
