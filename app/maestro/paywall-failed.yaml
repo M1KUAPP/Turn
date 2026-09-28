@@ -23,9 +23,8 @@ name: Turn Listen failed purchase
     visible: Keep Listen mode on
     timeout: 30000
 - waitForAnimationToEnd
-- tapOn:
-    text: Unlock Listen mode
-    index: 1
+# The published paywall hides Settings' row of the same words, so this is the paywall's button.
+- tapOn: Unlock Listen mode
 - extendedWaitUntil:
     visible: Test Store Purchase
     timeout: 30000
