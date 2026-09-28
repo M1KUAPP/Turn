@@ -1,16 +1,16 @@
-# Graph Report - mr  (2026-09-28)
+# Graph Report - st  (2026-09-28)
 
 ## Corpus Check
-- 386 files · ~1,104,854 words
+- 386 files · ~1,104,876 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 4671 nodes · 6038 edges · 331 communities (309 shown, 22 thin omitted)
+- 4670 nodes · 6038 edges · 330 communities (308 shown, 22 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 39 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0042cfa7`
+- Built from commit: `6e864a46`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -304,7 +304,7 @@
 - Live transcription implementation plan
 - expo-application
 - relay/config.ts
-- expo-audio
+- expo
 - useTurn
 - HomeScreen.tsx
 - listen-lifecycle.test.ts
@@ -365,7 +365,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (331 total, 22 thin omitted)
+## Communities (330 total, 22 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 Cohesion: 0.05
@@ -1265,7 +1265,7 @@ Nodes (13): compilerOptions, paths, strict, types, extends, include, node, expo 
 
 ### Community 230 - "dependencies"
 Cohesion: 0.12
-Nodes (17): dependencies, expo, expo-build-properties, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
+Nodes (17): dependencies, expo-audio, expo-build-properties, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
 
 ### Community 231 - "generate-ios-licenses.ts"
 Cohesion: 0.22
