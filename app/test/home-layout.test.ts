@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { homeLayout, pageOffset } from '../src/screens/home-layout'
+import { homeLayout, pageOffset, starterCardShown } from '../src/screens/home-layout'
 
 describe('home layout', () => {
   test('keeps the row at 258 points with two columns on ordinary phones', () => {
@@ -47,5 +47,79 @@ describe('home layout', () => {
     expect(pageOffset(0, 200, 650, 1)).toBe(200)
     expect(pageOffset(400, 200, 650, 1)).toBe(450)
     expect(pageOffset(100, 200, 650, -1)).toBe(0)
+  })
+})
+
+describe('starter card', () => {
+  test('offered on an idle first launch', () => {
+    expect(
+      starterCardShown({
+        listening: false,
+        composerOpen: false,
+        under18: false,
+        reviewPending: true,
+        reviewDismissed: false
+      })
+    ).toBe(true)
+  })
+
+  test('not during Listen mode', () => {
+    expect(
+      starterCardShown({
+        listening: true,
+        composerOpen: false,
+        under18: false,
+        reviewPending: true,
+        reviewDismissed: false
+      })
+    ).toBe(false)
+  })
+
+  test("not over typing's matches", () => {
+    expect(
+      starterCardShown({
+        listening: false,
+        composerOpen: true,
+        under18: false,
+        reviewPending: true,
+        reviewDismissed: false
+      })
+    ).toBe(false)
+  })
+
+  test('not over the under-18 note', () => {
+    expect(
+      starterCardShown({
+        listening: false,
+        composerOpen: false,
+        under18: true,
+        reviewPending: true,
+        reviewDismissed: false
+      })
+    ).toBe(false)
+  })
+
+  test('gone after Not now', () => {
+    expect(
+      starterCardShown({
+        listening: false,
+        composerOpen: false,
+        under18: false,
+        reviewPending: true,
+        reviewDismissed: true
+      })
+    ).toBe(false)
+  })
+
+  test('gone once all are reviewed', () => {
+    expect(
+      starterCardShown({
+        listening: false,
+        composerOpen: false,
+        under18: false,
+        reviewPending: false,
+        reviewDismissed: false
+      })
+    ).toBe(false)
   })
 })
