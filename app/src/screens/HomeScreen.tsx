@@ -24,7 +24,7 @@ import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
 import { purchaseNotes } from '../purchases/store'
 import { useConsent, usePurchases } from '../turn-context'
-import { homeLayout, pageOffset } from './home-layout'
+import { homeLayout, pageOffset, starterCardShown } from './home-layout'
 import { listenControl } from './listen-control'
 import { useListenLight } from './listen-light'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
@@ -118,6 +118,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
   const [typeMatches, setTypeMatches] = useState<Phrase[]>([])
   const [touchedRow, setTouchedRow] = useState<TypedListenState | null>(null)
   const [startingListen, setStartingListen] = useState(false)
+  const [review, setReview] = useState({ pending: false, dismissed: false })
   const list = useRef<FlatList<Phrase>>(null)
   const composerContent = useRef<ScrollView>(null)
   const { width, height, fontScale } = useWindowDimensions()
@@ -221,8 +222,9 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         bank.phrases(categoryId),
         bank.phrases('strip'),
         bank.places(),
-        bank.selectedPlace()
-      ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace]) => {
+        bank.selectedPlace(),
+        bank.starterReviewState()
+      ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace, nextReview]) => {
         if (!alive) return
         setCategories(nextCategories)
         if (!nextCategories.some((category) => category.id === categoryId)) setCategoryId('quick')
@@ -230,6 +232,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         setStrip(nextStrip)
         setPlaces(nextPlaces)
         setSelectedPlace(nextPlace)
+        setReview(nextReview)
       })
     }
     read()
@@ -310,6 +313,15 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
       offset: pageOffset(offset, viewportHeight, contentHeight, direction),
       animated: false
     })
+  }
+
+  const startReview = () => {
+    void bank.nextReviewCategoryId().then((next) => {
+      if (next) router.push({ pathname: '/bank/[category]', params: { category: next } })
+    })
+  }
+  const dismissReview = () => {
+    void bank.dismissStarterReview()
   }
 
   const renderPhrase = ({ item }: { item: Phrase }) => {
@@ -585,6 +597,17 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           layout={layout}
           width={width}
           boldText={boldText}
+          starterCard={
+            starterCardShown({
+              listening: listening.active,
+              composerOpen: composerMode === 'speak',
+              under18: consentState.under18,
+              reviewPending: review.pending,
+              reviewDismissed: review.dismissed
+            })
+              ? { onReview: startReview, onDismiss: dismissReview }
+              : null
+          }
           emptyNote={
             composerMode === 'speak'
               ? 'Matching phrases appear here.'

@@ -48,6 +48,12 @@ export default function PhraseBankScreen() {
   }, [bank])
 
   useEffect(() => {
+    return () => {
+      void bank?.reviewCategory(categoryId)
+    }
+  }, [bank, categoryId])
+
+  useEffect(() => {
     if (!bank) return
     let active = true
 
