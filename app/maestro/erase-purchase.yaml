@@ -1,0 +1,55 @@
+appId: com.m1ku.turn
+name: Erase keeps Turn Listen
+---
+# Buy as paywall-buy.yaml does, then erase. The Keychain ID stays, so RevenueCat still finds the purchase (SET-3, #60).
+- runFlow: paywall-buy.yaml
+- scrollUntilVisible:
+    element: Erase all data
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 180000
+- extendedWaitUntil:
+    visible: Erase all data
+    timeout: 10000
+- tapOn: Erase all data
+- assertVisible: 'Erase all data\?'
+- tapOn: Erase
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    timeout: 60000
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Restore Purchases
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
+- extendedWaitUntil:
+    visible: Unlocked
+    timeout: 60000
+- takeScreenshot: erase-purchase-unlocked
+# In the running app RevenueCat stays configured, so relaunch: it then starts from the Keychain ID, which the erase kept.
+- launchApp
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Settings
+    timeout: 60000
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Restore Purchases
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
+- extendedWaitUntil:
+    visible: Unlocked
+    timeout: 60000
+- takeScreenshot: erase-purchase-relaunched
