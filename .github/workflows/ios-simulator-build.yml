@@ -31,6 +31,10 @@ on:
           - full
           - dark
           - small
+      flows:
+        description: 'Only these Maestro flows, space- or comma-separated without .yaml; every flow when empty'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -113,6 +117,7 @@ jobs:
         shell: bash
         env:
           SCREENSHOT_MODE: ${{ inputs.screenshots }}
+          FLOWS: ${{ inputs.flows }}
         run: |
           bash scripts/simulator-screenshots.sh \
             "$RUNNER_TEMP/turn-app/Turn.app" \
