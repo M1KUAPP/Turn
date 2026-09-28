@@ -184,7 +184,7 @@ export default function SettingsScreen() {
     {
       title: 'More',
       rows: [
-        { label: 'Stats on this phone' },
+        { label: 'Stats on this phone', open: () => router.push('/settings/stats') },
         {
           label: 'Erase all data',
           action: () =>
