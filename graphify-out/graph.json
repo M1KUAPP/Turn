@@ -274,8 +274,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_package_dependencies_expo",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 294,
+      "community_name": "expo",
       "norm_label": "expo"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "expo",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 294,
+      "community_name": "expo",
       "norm_label": "expo"
     },
     {
@@ -318,8 +318,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_package_dependencies_expo_audio",
-      "community": 294,
-      "community_name": "expo-audio",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo-audio"
     },
     {
@@ -329,8 +329,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "expo_audio",
-      "community": 294,
-      "community_name": "expo-audio",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo-audio"
     },
     {
@@ -14257,17 +14257,6 @@
       "community": 310,
       "community_name": "AGENTS.md",
       "norm_label": "agents.md"
-    },
-    {
-      "label": "CLAUDE.md",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "claude",
-      "community": 330,
-      "community_name": "CLAUDE.md",
-      "norm_label": "claude.md"
     },
     {
       "label": "screens/AGENTS.md",
@@ -119716,5 +119705,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0042cfa7ddfc75f497b57400331c7c93e493251d"
+  "built_at_commit": "6e864a46241b590f9db43d276c34c5cd727f127b"
 }
