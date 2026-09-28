@@ -29,6 +29,8 @@ on:
           - none
           - pr
           - full
+          - dark
+          - small
 
 permissions:
   contents: read
