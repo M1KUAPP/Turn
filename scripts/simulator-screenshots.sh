@@ -48,6 +48,15 @@ for flow_path in "$flow_dir"/*.yaml "$flow_dir"/*.yml; do
     flow_files+=("$flow_path")
   fi
 done
+# FLOWS, when set, keeps only the named flows (space- or comma-separated, without .yaml), for a quick rerun.
+if [[ -n "${FLOWS:-}" ]]; then
+  kept=()
+  for flow_path in "${flow_files[@]}"; do
+    flow_name="$(basename "$flow_path")"
+    [[ " ${FLOWS//,/ } " == *" ${flow_name%.*} "* ]] && kept+=("$flow_path")
+  done
+  flow_files=("${kept[@]}")
+fi
 if [[ ${#flow_files[@]} -eq 0 ]]; then
   printf 'No Maestro flows found in %s\n' "$flow_dir" >&2
   exit 2
