@@ -34,6 +34,17 @@ export const colors = Object.fromEntries(
   ])
 ) as Record<ColorName, ReturnType<typeof DynamicColorIOS>>
 
+/** React Navigation's theme colors, so native headers take DESIGN's tokens in every appearance rather than its light
+ * defaults (#115). */
+export const navigationColors = {
+  primary: colors.accent,
+  background: colors.board,
+  card: colors.surface,
+  text: colors.ink,
+  border: colors.edge,
+  notification: colors['no-edge']
+}
+
 export const typography = {
   'largeTitle-emphasized': {
     fontFamily: 'system-ui',
