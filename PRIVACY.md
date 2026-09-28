@@ -45,4 +45,4 @@ listening when other people are talking nearby.
 For questions about Turn’s data, contact the team through the public Issues
 page. Do not include personal or health details in a public issue.
 
-[https://github.com/M1KUAPP/Turn/issues](https://github.com/M1KUAPP/Turn/issues)
+[Turn Issues page](https://github.com/M1KUAPP/Turn/issues)
