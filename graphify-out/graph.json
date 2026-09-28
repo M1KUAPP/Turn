@@ -76,8 +76,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_app_config",
-      "community": 235,
-      "community_name": "engine-picker.ts",
+      "community": 300,
+      "community_name": "engine.ts",
       "norm_label": "app.config.ts"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_package_dependencies_expo",
-      "community": 342,
-      "community_name": "expo",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "expo",
-      "community": 342,
-      "community_name": "expo",
+      "community": 230,
+      "community_name": "dependencies",
       "norm_label": "expo"
     },
     {
@@ -362,8 +362,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_package_dependencies_expo_constants",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 310,
+      "community_name": "AGENTS.md",
       "norm_label": "expo-constants"
     },
     {
@@ -373,8 +373,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "expo_constants",
-      "community": 230,
-      "community_name": "dependencies",
+      "community": 310,
+      "community_name": "AGENTS.md",
       "norm_label": "expo-constants"
     },
     {
@@ -1594,8 +1594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_listen_engine",
-      "community": 300,
-      "community_name": "engine.ts",
+      "community": 235,
+      "community_name": "engine-picker.ts",
       "norm_label": "engine.ts"
     },
     {
@@ -1616,8 +1616,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_listen_engine_assetstatus",
-      "community": 300,
-      "community_name": "engine.ts",
+      "community": 235,
+      "community_name": "engine-picker.ts",
       "norm_label": "assetstatus"
     },
     {
@@ -1649,8 +1649,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_src_listen_engine_listenengineevents",
-      "community": 300,
-      "community_name": "engine.ts",
+      "community": 336,
+      "community_name": "listen-lifecycle.test.ts",
       "norm_label": "listenengineevents"
     },
     {
@@ -3772,8 +3772,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_test_config_test",
-      "community": 235,
-      "community_name": "engine-picker.ts",
+      "community": 300,
+      "community_name": "engine.ts",
       "norm_label": "app/test/config.test.ts"
     },
     {
@@ -3783,8 +3783,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_test_config_test_context",
-      "community": 235,
-      "community_name": "engine-picker.ts",
+      "community": 300,
+      "community_name": "engine.ts",
       "norm_label": "context"
     },
     {
@@ -10825,7 +10825,7 @@
       "label": "select_or_create_device()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L74",
+      "source_location": "L83",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -10840,7 +10840,7 @@
       "label": "choose_large_device()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L104",
+      "source_location": "L113",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -10855,7 +10855,7 @@
       "label": "choose_small_device()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L117",
+      "source_location": "L126",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -10870,7 +10870,7 @@
       "label": "run_combination()",
       "file_type": "code",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L194",
+      "source_location": "L203",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -14655,17 +14655,6 @@
       "norm_label": "{ vars }"
     },
     {
-      "label": "AGENTS.md",
-      "file_type": "document",
-      "source_file": "AGENTS.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "gemini",
-      "community": 310,
-      "community_name": "AGENTS.md",
-      "norm_label": "agents.md"
-    },
-    {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
@@ -14677,7 +14666,7 @@
       "norm_label": "claude.md"
     },
     {
-      "label": "screens/AGENTS.md",
+      "label": "AGENTS.md",
       "file_type": "document",
       "source_file": "app/src/screens/AGENTS.md",
       "source_location": "L1",
@@ -14685,7 +14674,7 @@
       "id": "app_src_screens_agents",
       "community": 236,
       "community_name": "screens/AGENTS.md",
-      "norm_label": "screens/agents.md"
+      "norm_label": "agents.md"
     },
     {
       "label": "Screen design",
@@ -17177,7 +17166,7 @@
       "label": "Environments and release",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1810",
+      "source_location": "L1811",
       "_origin": "ast",
       "id": "docs_trd_environments_and_release",
       "community": 106,
@@ -17188,7 +17177,7 @@
       "label": "Requirements traceability",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1856",
+      "source_location": "L1857",
       "_origin": "ast",
       "id": "docs_trd_requirements_traceability",
       "community": 106,
@@ -17199,7 +17188,7 @@
       "label": "Open technical questions",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1899",
+      "source_location": "L1900",
       "_origin": "ast",
       "id": "docs_trd_open_technical_questions",
       "community": 106,
@@ -17210,7 +17199,7 @@
       "label": "See also",
       "file_type": "document",
       "source_file": "docs/TRD.md",
-      "source_location": "L1938",
+      "source_location": "L1939",
       "_origin": "ast",
       "id": "docs_trd_see_also",
       "community": 106,
@@ -78041,7 +78030,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L104",
+      "source_location": "L113",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -78052,7 +78041,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L117",
+      "source_location": "L126",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -78063,7 +78052,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L194",
+      "source_location": "L203",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -78074,7 +78063,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L74",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_simulator_screenshots",
@@ -78107,7 +78096,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L185",
+      "source_location": "L194",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -78119,7 +78108,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L188",
+      "source_location": "L197",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -78131,7 +78120,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L272",
+      "source_location": "L281",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -78155,7 +78144,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L107",
+      "source_location": "L116",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -78167,7 +78156,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/simulator-screenshots.sh",
-      "source_location": "L133",
+      "source_location": "L142",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -88384,7 +88373,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1810",
+      "source_location": "L1811",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -88417,7 +88406,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1899",
+      "source_location": "L1900",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -88472,7 +88461,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1856",
+      "source_location": "L1857",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -88494,7 +88483,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/TRD.md",
-      "source_location": "L1938",
+      "source_location": "L1939",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_trd_turn_technical_requirements",
@@ -122075,5 +122064,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0b93046d8d5d62035b9e87d54de5b0690692c227"
+  "built_at_commit": "e5c5fa35040a38e3b85f40b8d0b231a82ca96b78"
 }

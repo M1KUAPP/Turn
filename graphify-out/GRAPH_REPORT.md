@@ -2,18 +2,18 @@
 
 ## Corpus Check
 
-- 399 files · ~1,118,726 words
+- 399 files · ~1,118,718 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 4740 nodes · 6176 edges · 344 communities (321 shown, 23 thin omitted)
+- 4739 nodes · 6176 edges · 343 communities (320 shown, 23 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 40 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `0b93046d`
+- Built from commit: `e5c5fa35`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -324,6 +324,7 @@
 - Listening and speaking on the phone
 - Turn pitch assets
 - expo-secure-store
+- AGENTS.md
 - expo-speech
 - expo-speech-recognition
 - expo-sqlite
@@ -352,7 +353,6 @@
 - listen-audio-session.test.ts
 - Erase all data implementation plan
 - bank.test.ts
-- expo
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -384,7 +384,7 @@
 
 - None detected.
 
-## Communities (344 total, 23 thin omitted)
+## Communities (343 total, 23 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
@@ -1509,7 +1509,7 @@ Nodes (13): compilerOptions, paths, strict, types, extends, include, node, expo 
 ### Community 230 - "dependencies"
 
 Cohesion: 0.12
-Nodes (17): dependencies, expo-build-properties, expo-constants, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
+Nodes (17): dependencies, expo, expo-build-properties, expo-linking, expo-splash-screen, expo-symbols, react-native, react-native-reanimated (+9 more)
 
 ### Community 231 - "generate-ios-licenses.ts"
 
@@ -1533,8 +1533,8 @@ Nodes (5): scripts, ios, start, test, typecheck
 
 ### Community 235 - "engine-picker.ts"
 
-Cohesion: 0.19
-Nodes (10): EngineChoice, EnginePicker, ListenEngine, available(), availableStatuses, engineChoices, pickEngine(), pickListenEngine() (+2 more)
+Cohesion: 0.27
+Nodes (10): AssetStatus, EngineChoice, EnginePicker, ListenEngine, available(), availableStatuses, engineChoices, pickEngine() (+2 more)
 
 ### Community 237 - "withBoardSplash.ts"
 
@@ -1828,8 +1828,8 @@ Nodes (7): Consent implementation plan, Rules, Task 1: The relay's ID, headers, 
 
 ### Community 300 - "engine.ts"
 
-Cohesion: 0.26
-Nodes (12): AssetStatus, EngineId, EngineState, ListenEngineEvents, ListenLine, createExpoEngine(), expoEngine, SpeechRecognitionModule (+4 more)
+Cohesion: 0.19
+Nodes (11): EngineId, EngineState, ListenLine, createExpoEngine(), expoEngine, SpeechRecognitionModule, context, createFakeSpeechModule() (+3 more)
 
 ### Community 301 - "turn-context.tsx"
 
@@ -1918,8 +1918,8 @@ Nodes (8): colorValues, appearances, contrast(), design, designColors, designTyp
 
 ### Community 336 - "listen-lifecycle.test.ts"
 
-Cohesion: 0.36
-Nodes (4): AppStateSource, bindListenLifecycle(), ListenSession, databases
+Cohesion: 0.31
+Nodes (5): ListenEngineEvents, AppStateSource, bindListenLifecycle(), ListenSession, databases
 
 ### Community 337 - "live-session.ts"
 
