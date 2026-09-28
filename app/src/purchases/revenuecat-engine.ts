@@ -12,6 +12,9 @@ export function createRevenueCatEngine(): PurchasesEngine {
     async configure({ apiKey, appUserID }: { apiKey: string; appUserID: string }): Promise<boolean> {
       try {
         if (await Purchases.isConfigured()) return true
+        // The SDK's own handler sends its errors, such as a backend 404, to console.error, which the Debug build
+        // judges run shows as a full-screen red box; every RevenueCat log goes to the device log instead (#133).
+        Purchases.setLogHandler((level, message) => console.log(`[RevenueCat] ${level}: ${message}`))
         Purchases.configure({ apiKey, appUserID })
         return true
       } catch {
