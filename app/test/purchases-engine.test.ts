@@ -6,6 +6,7 @@ const { fakePurchases, fakeRevenueCatUI } = vi.hoisted(() => {
   return {
     fakePurchases: {
       isConfigured: vi.fn(),
+      setLogHandler: vi.fn(),
       configure: vi.fn(),
       getCustomerInfo: vi.fn(),
       addCustomerInfoUpdateListener: vi.fn(),
@@ -78,6 +79,29 @@ describe('revenuecat engine', () => {
     expect(result).toBe(true)
     expect(fakePurchases.isConfigured).toHaveBeenCalledTimes(1)
     expect(fakePurchases.configure).toHaveBeenCalledWith({ apiKey: 'rc_key', appUserID: 'user_1' })
+  })
+
+  test('configure: first sends every RevenueCat log to console.log, never console.error, which shows a red box', async () => {
+    const engine = createRevenueCatEngine()
+    fakePurchases.isConfigured.mockResolvedValueOnce(false)
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+    await engine.configure({ apiKey: 'rc_key', appUserID: 'user_1' })
+    const handler = fakePurchases.setLogHandler.mock.calls[0][0] as (level: string, message: string) => void
+    handler('ERROR', 'API request failed with status code 404')
+    handler('WARN', 'Received unknown workflow trigger type')
+
+    expect(fakePurchases.setLogHandler.mock.invocationCallOrder[0]).toBeLessThan(
+      fakePurchases.configure.mock.invocationCallOrder[0]
+    )
+    expect(error).not.toHaveBeenCalled()
+    expect(warn).not.toHaveBeenCalled()
+    expect(log).toHaveBeenCalledWith('[RevenueCat] ERROR: API request failed with status code 404')
+    log.mockRestore()
+    error.mockRestore()
+    warn.mockRestore()
   })
 
   test('configure: resolves false when isConfigured or configure throws', async () => {
