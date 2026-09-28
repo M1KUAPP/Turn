@@ -20,9 +20,15 @@ name: Consent not now
           direction: DOWN
           timeout: 60000
 - tapOn: Not now
+# Dismissing the card can leave the list above or below the row, so look up, then down.
 - scrollUntilVisible:
     element: '.*Replies to your partner appear here\..*'
     direction: UP
+    timeout: 20000
+    optional: true
+- scrollUntilVisible:
+    element: '.*Replies to your partner appear here\..*'
+    direction: DOWN
     timeout: 60000
 - scrollUntilVisible:
     element: Listen
