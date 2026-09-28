@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native'
+import { Linking, ScrollView, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { selectPrivacyNotice } from '../content/privacy-notice'
 import { colors } from '../constants/theme'
@@ -17,16 +17,30 @@ export default function PrivacyNoticeScreen() {
             Loading notice…
           </TurnText>
         )}
-        {sections.map((section) => (
-          <View key={section.title} style={{ gap: 10 }}>
-            <TurnText kind="headline" boldText={boldText} accessibilityRole="header" style={{ color: colors.ink }}>
-              {section.title}
-            </TurnText>
-            <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-              {section.body}
-            </TurnText>
-          </View>
-        ))}
+        {sections.map((section) => {
+          const url = section.url
+          return (
+            <View key={section.title} style={{ gap: 10 }}>
+              <TurnText kind="headline" boldText={boldText} accessibilityRole="header" style={{ color: colors.ink }}>
+                {section.title}
+              </TurnText>
+              <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                {section.body}
+              </TurnText>
+              {url && (
+                <TurnText
+                  kind="body"
+                  boldText={boldText}
+                  accessibilityRole="link"
+                  onPress={() => void Linking.openURL(url)}
+                  style={{ color: colors.accent, textDecorationLine: 'underline' }}
+                >
+                  {url}
+                </TurnText>
+              )}
+            </View>
+          )
+        })}
       </ScrollView>
     </SafeAreaView>
   )
