@@ -18,6 +18,7 @@ export type RemoteRanker = {
     signal: AbortSignal
   }): Promise<LineAnswer & { candidateOrder?: readonly string[] }>
   policy?(): Policy
+  onPaywall?(): void
 }
 
 export type TypedListenState = {
@@ -164,6 +165,16 @@ export function createTypedListenSession(bank: Bank, remote?: RemoteRanker) {
         } catch (cause) {
           if (!currentLine(current, seq)) return
           if (remote.allowed() && !controller.signal.aborted) {
+            if (typeof cause === 'object' && cause !== null && 'code' in cause && cause.code === 'paywall') {
+              remote.onPaywall?.()
+              publish({
+                ...state,
+                row: clearRow(state.row),
+                answeringLine: null,
+                rankedOnPhone: false
+              })
+              return
+            }
             const off = typeof cause === 'object' && cause !== null && 'code' in cause && cause.code === 'jev_off'
             failures = [...failures, true].slice(-3)
             publish({ ...state, degraded: off || failures.filter(Boolean).length >= 2 })

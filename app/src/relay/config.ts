@@ -167,6 +167,22 @@ export function createConfigClient(ports: ConfigPorts) {
     }
   }
 
+  function freeLines(count: number | null): void {
+    if (count !== null && (typeof count !== 'number' || !Number.isSafeInteger(count) || count < 0)) {
+      return
+    }
+    if (current.freeLinesLeft === count) {
+      return
+    }
+    current = { ...current, freeLinesLeft: count }
+    try {
+      void ports.setSetting(configKey, JSON.stringify(current)).catch(() => {})
+    } catch {
+      // A failed save is ignored.
+    }
+    notify()
+  }
+
   return {
     headers,
     read,
@@ -175,6 +191,8 @@ export function createConfigClient(ports: ConfigPorts) {
     lineResult: setStatus,
     typesafeNamed: () => current.typesafeNamed,
     refresh,
+    freeLines,
+    userId: getUserId,
     subscribe(listener: () => void) {
       listeners.add(listener)
       return () => listeners.delete(listener)

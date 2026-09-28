@@ -221,4 +221,69 @@ describe('relay configuration client', () => {
     expect((await refreshing).typesafeNamed).toBe(false)
     expect(request).not.toHaveBeenCalled()
   })
+
+  test('freeLines sets the snapshot count, saves it, and notifies once', async () => {
+    const db = database()
+    const ports = clientPorts(db)
+    const client = createConfigClient(ports)
+    const notify = vi.fn()
+    client.subscribe(notify)
+
+    client.freeLines(7)
+    expect(client.snapshot().freeLinesLeft).toBe(7)
+    expect(notify).toHaveBeenCalledOnce()
+    await Promise.resolve()
+    expect(await ports.setting('relay_config')).toBe(JSON.stringify({ ...client.snapshot(), freeLinesLeft: 7 }))
+  })
+
+  test('the same freeLines count notifies no one and changes nothing', async () => {
+    const db = database()
+    const ports = clientPorts(db)
+    const client = createConfigClient(ports)
+    client.freeLines(7)
+    const notify = vi.fn()
+    client.subscribe(notify)
+
+    client.freeLines(7)
+    expect(notify).not.toHaveBeenCalled()
+    expect(client.snapshot().freeLinesLeft).toBe(7)
+  })
+
+  test('-1, 1.5, and NaN change nothing and notify no one in freeLines', async () => {
+    const db = database()
+    const ports = clientPorts(db)
+    const client = createConfigClient(ports)
+    const notify = vi.fn()
+    client.subscribe(notify)
+
+    client.freeLines(-1)
+    client.freeLines(1.5)
+    client.freeLines(Number.NaN)
+
+    expect(client.snapshot().freeLinesLeft).toBe(20)
+    expect(notify).not.toHaveBeenCalled()
+  })
+
+  test('null freeLines count is kept, saved, and notifies once', async () => {
+    const db = database()
+    const ports = clientPorts(db)
+    const client = createConfigClient(ports)
+    const notify = vi.fn()
+    client.subscribe(notify)
+
+    client.freeLines(null)
+    expect(client.snapshot().freeLinesLeft).toBeNull()
+    expect(notify).toHaveBeenCalledOnce()
+    await Promise.resolve()
+    expect(await ports.setting('relay_config')).toBe(JSON.stringify({ ...client.snapshot(), freeLinesLeft: null }))
+  })
+
+  test('userId returns the Keychain ID the headers use', async () => {
+    const db = database()
+    const storage = identityStorage(validId)
+    const client = createConfigClient(clientPorts(db, { storage }))
+
+    expect(await client.userId()).toBe(validId)
+    expect(client.headers()['X-Turn-User']).toBe(validId)
+  })
 })
