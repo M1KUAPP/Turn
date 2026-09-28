@@ -1,4 +1,4 @@
-export type NoticeSection = { title: string; body: string }
+export type NoticeSection = { title: string; body: string; url?: string }
 
 function notice(service: string): NoticeSection[] {
   return [
@@ -12,7 +12,7 @@ function notice(service: string): NoticeSection[] {
     },
     {
       title: 'Service records',
-      body: 'The relay keeps a hashed app ID and free-line count. Cloudflare request logs are kept for up to three days. The AI service may keep submitted text to make the service work, produce telemetry, monitor fraud or abuse, and meet legal duties. The submitted text is not used to train the decision model. Turn does not keep audio recordings or transcripts.'
+      body: 'The relay keeps a hashed app ID and free-line count. To limit abuse, it also keeps a salted hash of the network address used for each request and a request count. The count resets each minute; the relay record can remain until the relay is deleted. Cloudflare request logs are kept for up to three days. The AI service may keep submitted text to make the service work, produce telemetry, monitor fraud or abuse, and meet legal duties. The submitted text is not used to train the decision model. Turn does not keep audio recordings or transcripts.'
     },
     {
       title: 'Purchases',
@@ -21,6 +21,11 @@ function notice(service: string): NoticeSection[] {
     {
       title: 'Age and people nearby',
       body: 'Turn is for adults. Do not use Listen mode with a partner under 18. Pause listening when other people are talking nearby.'
+    },
+    {
+      title: 'Questions',
+      body: 'For questions about Turn’s data, contact the team through the public Issues page. Do not include personal or health details in a public issue.',
+      url: 'https://github.com/M1KUAPP/Turn/issues'
     }
   ]
 }

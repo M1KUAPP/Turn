@@ -5,9 +5,9 @@ Turn's privacy notice is also available in the app without a network connection.
 ## What stays on this iPhone
 
 Your phrase bank, places, tap counts, and settings stay on this iPhone until you
-erase them. Audio is never recorded, stored, or sent. A partner’s transcript is
-held in memory as a caption for at most two minutes, then forgotten. Turn keeps
-no transcript history.
+erase them. Audio is never recorded, stored, or sent. A partner’s transcript
+is held in memory as a caption for at most two minutes, then forgotten. Turn
+keeps no transcript history.
 
 ## What leaves in Listen mode
 
@@ -20,11 +20,13 @@ phrase can still reveal health details, such as a clinic visit or pain.
 
 ## Service records
 
-The relay keeps a hashed app ID and free-line count. Cloudflare request logs
-are kept for up to three days. The AI service may keep submitted text to make
-the service work, produce telemetry, monitor fraud or abuse, and meet legal
-duties. The submitted text is not used to train the decision model. Turn does
-not keep audio recordings or transcripts.
+The relay keeps a hashed app ID and free-line count. To limit abuse, it also
+keeps a salted hash of the network address used for each request and a request
+count. The count resets each minute; the relay record can remain until the
+relay is deleted. Cloudflare request logs are kept for up to three days. The
+AI service may keep submitted text to make the service work, produce telemetry,
+monitor fraud or abuse, and meet legal duties. The submitted text is not used
+to train the decision model. Turn does not keep audio recordings or transcripts.
 
 ## Purchases
 
@@ -40,6 +42,7 @@ listening when other people are talking nearby.
 
 ## Questions
 
-Contact the Turn team through the
-[public Issues page](https://github.com/M1KUAPP/Turn/issues). Do not include
-personal or health details in a public issue.
+For questions about Turn’s data, contact the team through the public Issues
+page. Do not include personal or health details in a public issue.
+
+[https://github.com/M1KUAPP/Turn/issues](https://github.com/M1KUAPP/Turn/issues)
