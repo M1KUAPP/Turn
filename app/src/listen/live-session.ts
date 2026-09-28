@@ -2,6 +2,7 @@ import type { EngineState, ListenEngine, ListenEngineEvents, ListenLine } from '
 import { listenStrings } from './strings'
 import { createTypedListenSession, type TypedListenState } from './typed-session'
 import type { TurnListen } from '../../../modules/turn-listen/src'
+import type { StatsStore } from '../stats/store'
 
 export const SILENCE_WINDOW_MS = 500
 const CAPTION_EXPIRY_MS = 120_000
@@ -37,6 +38,8 @@ export function createLiveListenSession(options: {
   now: () => number
   log: (entry: ListenLogEntry) => void
   place?: () => string | Promise<string>
+  /** Stats on this phone (#54); a session without it counts nothing. */
+  stats?: Pick<StatsStore, 'record'> | null
 }) {
   const { typed, engine, now, log } = options
   const module = options.module ?? null
