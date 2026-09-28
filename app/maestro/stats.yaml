@@ -1,0 +1,237 @@
+appId: com.m1ku.turn
+name: Stats on this phone
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# Home's middle content scrolls at AX5. Center the Listen control before tapping it.
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Listen
+          direction: DOWN
+          speed: 10
+      - tapOn: Listen
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Listen
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: '.*Tap here to type what they say\..*'
+      - tapOn: '.*Tap here to type what they say\..*'
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: '.*Tap here to type what they say\..*'
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'Are you tired?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+- extendedWaitUntil:
+    visible: '.*Are you tired\?.*'
+    timeout: 10000
+# The row answers the typed line; center it at AX5 so a bar cannot take the tap.
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: "I'm tired"
+      - tapOn: "I'm tired"
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: "I'm tired"
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - tapOn: "I'm tired"
+# Chat is a tab; Tell me more is in its grid, outside both the row and strip.
+- assertNotVisible: Tell me more
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Chat
+      - tapOn: Chat
+      - scrollUntilVisible:
+          element: Tell me more
+          direction: DOWN
+      - tapOn: Tell me more
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: Chat
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - tapOn: Chat
+      - scrollUntilVisible:
+          element: Tell me more
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - tapOn: Tell me more
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: End
+          direction: UP
+          speed: 10
+          timeout: 60000
+      - tapOn: End
+      - scrollUntilVisible:
+          element: Settings
+          direction: UP
+          speed: 10
+          timeout: 60000
+      - tapOn: Settings
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      # End and Settings are before the centered grid content, so scroll UP first.
+      - scrollUntilVisible:
+          element: End
+          centerElement: true
+          direction: UP
+          speed: 10
+          timeout: 60000
+      - tapOn: End
+      - scrollUntilVisible:
+          element: Settings
+          centerElement: true
+          direction: UP
+          speed: 10
+          timeout: 60000
+      - tapOn: Settings
+- scrollUntilVisible:
+    element: Stats on this phone
+    direction: DOWN
+    speed: 10
+    timeout: 180000
+- tapOn: Stats on this phone
+- scrollUntilVisible:
+    element: 'Partner lines, 1'
+    direction: UP
+    speed: 10
+    timeout: 180000
+- assertVisible: 'Partner lines, 1'
+- scrollUntilVisible:
+    element: 'Replies from the row, 1'
+    direction: DOWN
+    speed: 10
+    timeout: 180000
+- assertVisible: 'Replies from the row, 1'
+- scrollUntilVisible:
+    element: 'Replies from the grid or keyboard, 1'
+    direction: DOWN
+    speed: 10
+    timeout: 180000
+- assertVisible: 'Replies from the grid or keyboard, 1'
+- scrollUntilVisible:
+    element: 'Partner lines, 1'
+    direction: UP
+    speed: 10
+    timeout: 180000
+- takeScreenshot: stats-counts
+- scrollUntilVisible:
+    element: Reset stats
+    direction: DOWN
+    speed: 10
+    timeout: 180000
+- tapOn: Reset stats
+- assertVisible: Reset stats\?
+- tapOn: Reset
+- scrollUntilVisible:
+    element: 'Partner lines, 0'
+    direction: UP
+    speed: 10
+    timeout: 180000
+- assertVisible: 'Partner lines, 0'
+- scrollUntilVisible:
+    element: 'Time to the row, None yet'
+    direction: DOWN
+    speed: 10
+    timeout: 180000
+- assertVisible: 'Time to the row, None yet'
+- scrollUntilVisible:
+    element: 'Partner lines, 0'
+    direction: UP
+    speed: 10
+    timeout: 180000
+- takeScreenshot: stats-reset
