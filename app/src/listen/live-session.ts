@@ -44,6 +44,7 @@ export function createLiveListenSession(options: {
   const { typed, engine, now, log } = options
   const module = options.module ?? null
   const place = options.place ?? (() => '')
+  const stats = options.stats ?? null
   const listeners = new Set<() => void>()
   const rankedLines = new Set<string>()
   let typedState = typed.getSnapshot()
@@ -240,8 +241,13 @@ export function createLiveListenSession(options: {
 
     const previousSequence = typedState.row.seq
     pendingRanking = (async () => {
-      await typed.send(text, await place())
+      const linePlace = await place()
+      const sending = typed.send(text, linePlace)
+      const seq = typedState.row.seq
+      if (seq > previousSequence) stats?.record({ type: 'line', seq, endedAt: line.endedAt })
+      await sending
       if (disposed || !typedState.active || typedState.row.seq <= previousSequence) return
+      if (typedState.row.answers === seq) stats?.record({ type: 'row', seq })
       if (currentCaptionRevision === captionRevision) {
         rankedOnce = true
         captionNote = rankingNote()
@@ -525,8 +531,13 @@ export function createLiveListenSession(options: {
       rankedOnce = false
       const currentCaptionRevision = scheduleCaptionExpiry(endedAt)
       publish()
-      await typed.send(text, linePlace ?? (await place()))
+      const destination = linePlace ?? (await place())
+      const sending = typed.send(text, destination)
+      const seq = typedState.row.seq
+      if (seq > previousSequence) stats?.record({ type: 'line', seq, endedAt })
+      await sending
       if (disposed || !typedState.active || typedState.row.seq <= previousSequence) return
+      if (typedState.row.answers === seq) stats?.record({ type: 'row', seq })
       if (currentCaptionRevision === captionRevision) {
         rankedOnce = true
         captionNote = rankingNote()
