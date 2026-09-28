@@ -42,7 +42,7 @@ function Hairline() {
 
 export default function SettingsScreen() {
   const router = useRouter()
-  const { ready, boldText } = useTurn()
+  const { ready, boldText, eraseAll } = useTurn()
   const { consent, state: consentState } = useConsent()
   // From AX1 a row's value goes under its label, as in iOS Settings, so neither squeezes the other to letters.
   const stacked = useWindowDimensions().fontScale >= 1.786
@@ -181,7 +181,31 @@ export default function SettingsScreen() {
         ...debugRows
       ]
     },
-    { title: 'More', rows: [{ label: 'Stats on this phone' }, { label: 'Erase all data' }] }
+    {
+      title: 'More',
+      rows: [
+        { label: 'Stats on this phone' },
+        {
+          label: 'Erase all data',
+          action: () =>
+            Alert.alert(
+              'Erase all data?',
+              'This deletes your phrases, places, tap counts, and settings, and brings back the starter phrases.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Erase',
+                  style: 'destructive',
+                  onPress: async () => {
+                    await eraseAll()
+                    router.dismissTo('/')
+                  }
+                }
+              ]
+            )
+        }
+      ]
+    }
   ]
 
   return (
