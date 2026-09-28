@@ -36,6 +36,7 @@ export default function RootLayout() {
             <Stack.Screen name="settings/places" options={{ title: 'Places' }} />
             <Stack.Screen name="settings/voice" options={{ title: 'Voice' }} />
             <Stack.Screen name="settings/privacy" options={{ title: 'Privacy notice' }} />
+            <Stack.Screen name="settings/stats" options={{ title: 'Stats on this phone' }} />
             <Stack.Screen name="settings/licenses" options={{ title: 'Open-source licenses' }} />
             <Stack.Screen name="bank/index" options={{ title: 'Phrase bank' }} />
             <Stack.Screen name="bank/[category]" options={{ title: 'Phrases' }} />
