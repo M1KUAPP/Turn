@@ -6,6 +6,8 @@ import starterBank from '../src/content/starter-bank.json'
 import { createBankStore, type BankDatabase } from '../src/bank/store'
 import { createConfigClient } from '../src/relay/config'
 import { eraseAllData } from '../src/erase'
+import type { PurchasesEngine } from '../src/purchases/engine'
+import { createPurchasesStore } from '../src/purchases/store'
 
 const databases: DatabaseSync[] = []
 
@@ -131,5 +133,65 @@ describe('erase all data', () => {
     expect(secureStore.deleteItemAsync).not.toHaveBeenCalled()
     expect(storedId).toBe(firstId)
     expect(requestedIds).toEqual([firstId, firstId])
+  })
+
+  test('keeps a Turn Listen purchase through an erase, since RevenueCat starts again under the same user ID', async () => {
+    const bank = createBankStore(database(), starterBank)
+    await bank.initialize()
+
+    const ids = ['5f0e7a8e-3c2b-4d1a-9b6e-2f4c8d0a1b3c', 'c57c6e31-4536-4a02-9b7f-9e71e4907213']
+    let storedId: string | null = null
+    const config: Config = { jevOn: true, typesafeNamed: true, freeLinesLeft: 13, policy: startingPolicy }
+    const makeConfigClient = () =>
+      createConfigClient({
+        setting: bank.setting,
+        setSetting: bank.setSetting,
+        getItemAsync: async () => storedId,
+        setItemAsync: async (_key, value) => {
+          storedId = value
+        },
+        createId: () => ids.shift()!,
+        request: async () => Response.json(config),
+        relayUrl: 'https://relay.example/',
+        version: '0.1.0',
+        buildKind: 'simulator'
+      })
+    // RevenueCat's side: the app user IDs that hold listen, and the one the SDK was configured with.
+    const entitled = new Set<string>()
+    let configuredAs: string | null = null
+    const engine: PurchasesEngine = {
+      configure: async ({ appUserID }) => {
+        configuredAs = appUserID
+        return true
+      },
+      listenActive: async () => configuredAs !== null && entitled.has(configuredAs),
+      onListenChange: () => () => {},
+      restore: async () => null,
+      presentPaywall: async () => 'NOT_PRESENTED'
+    }
+    // What TurnProvider does at each start: RevenueCat starts under the relay's user ID.
+    const startPurchases = async () => {
+      const client = makeConfigClient()
+      await client.read()
+      const purchases = createPurchasesStore({ engine, config: client })
+      await purchases.start({ apiKey: 'test_key', appUserID: await client.userId() })
+      return purchases
+    }
+
+    const before = await startPurchases()
+    entitled.add(configuredAs!)
+    before.dispose()
+
+    await eraseAllData({
+      listen: { end: async () => {} },
+      speech: { stop: () => {} },
+      stats: { reset: async () => {} },
+      bank
+    })
+    const after = await startPurchases()
+
+    expect(configuredAs).toBe('5f0e7a8e-3c2b-4d1a-9b6e-2f4c8d0a1b3c')
+    expect(after.snapshot().listen).toBe(true)
+    after.dispose()
   })
 })
