@@ -1,19 +1,19 @@
-# Graph Report - p53 (2026-09-28)
+# Graph Report - p53 (2026-09-29)
 
 ## Corpus Check
 
-- 405 files · ~1,127,087 words
+- 406 files · ~1,127,759 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 7059 nodes · 12866 edges · 432 communities (346 shown, 86 thin omitted)
+- 7067 nodes · 12873 edges · 447 communities (361 shown, 86 thin omitted)
 - Extraction: 94% EXTRACTED · 5% INFERRED · 2% AMBIGUOUS · INFERRED: 606 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `7c8d192b`
+- Built from commit: `ce52ef20`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -368,14 +368,19 @@
 - Relay Check Job
 - Turn Icon Background
 - react-native-worklets
+- agreement.ts
+- How DESIGN.md Should Serve Agents for Turn
 - Guessling Idea
 - expo-crypto
+- Chorus Group-Caption Pipeline
 - expo-speech
+- Audio Session Category, Mode, and Options
 - expo-sqlite
 - expo-status-bar
 - react
 - react-native-safe-area-context
 - react-native-screens
+- Showing Suggestions and Doubt
 - Atkinson Hyperlegible Next
 - Bun Workspaces
 - RevenueCat CLI
@@ -443,6 +448,16 @@
 - CocoaPods
 - Prebuild
 - xcodebuild
+- limits.test.ts
+- Asking for and Finding Personal Voice
+- Phone SQLite Database
+- Turn privacy notice
+- Transcription Devices and Simulator
+- Pulsing Listening Light
+- App Icon and Launch Screen
+- Resizable iPhone Apps and iPhone Duo
+- Haptics While Listening or Speaking
+- expo
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -459,14 +474,14 @@
 
 ## Surprising Connections (you probably didn't know these)
 
-- `Xcode 27 Runner` --semantically_similar_to--> `Xcode 27 and iOS 27 SDK` [INFERRED] [semantically similar]
-  .github/workflows/ios-simulator-build.yml → docs/TRD.md
 - `Devpost Gallery of Consent and Privacy Screens` --references--> `Partner Consent and Edge Swipe Test` [INFERRED]
   assets/pitch/devpost-gallery-consent.png → app/maestro/consent-agree-swipe.yaml
 - `Before Listen Permission and Privacy Screen` --references--> `Typed Listen Test` [INFERRED]
   assets/pitch/listen-permission.png → app/maestro/listen.yaml
 - `Hosted decision model ranker` --conceptually_related_to--> `Jev` [AMBIGUOUS]
   eval/results-extras-risk-coverage.svg → worker/README.md
+- `Xcode 27 Runner` --semantically_similar_to--> `Xcode 27 and iOS 27 SDK` [INFERRED] [semantically similar]
+  .github/workflows/ios-simulator-build.yml → docs/TRD.md
 - `HomeScreen()` --indirect_call--> `event()` [INFERRED]
   app/src/screens/HomeScreen.tsx → worker/test/telemetry.test.ts
 
@@ -620,17 +635,17 @@
 - **Turn Privacy-Sensitive Data Flow** — docs_trd_iphone_app_component, docs_trd_turn_listen, docs_trd_phone_database, docs_trd_turn_relay, docs_trd_jev, docs_trd_revenuecat, docs_trd_user_durable_object_storage [EXTRACTED 1.00]
 - **Device and Video Validation Work** — docs_release_checklist_waiting, docs_release_checklist_video_build, docs_trd_speak_requirements, docs_trd_listen_requirements, docs_trd_priv_requirements, docs_trd_perf_requirements, docs_trd_release_requirements, docs_release_checklist_run_36323630432 [EXTRACTED 0.95]
 
-## Communities (432 total, 86 thin omitted)
+## Communities (447 total, 86 thin omitted)
 
 ### Community 0 - "Markdown style guide"
 
-Cohesion: 0.06
-Nodes (45): AssetStatus, EngineChoice, EngineId, EnginePicker, EngineState, ListenEngine, ListenEngineEvents, ListenLine (+37 more)
+Cohesion: 0.13
+Nodes (21): AssetStatus, EngineChoice, EngineId, EnginePicker, EngineState, ListenEngine, ListenLine, available() (+13 more)
 
 ### Community 1 - "scripts"
 
-Cohesion: 0.08
-Nodes (31): sharesNoWord(), labeled, bank, home, toRank, bank, fillerIds, fillers (+23 more)
+Cohesion: 0.12
+Nodes (23): bank, home, toRank, commonWords, Ranking, Context, isYesNo(), Phrase (+15 more)
 
 ### Community 2 - "Prizes"
 
@@ -640,17 +655,17 @@ Nodes (80): 3d website, AdLens, Aetherly, AI-Assisted Apps, Amble - Walk Togethe
 ### Community 3 - "Shipaton Sale: Deals, Discounts, and Free Tools for Builders"
 
 Cohesion: 0.06
-Nodes (55): alertWindow(), assess(), dollars(), Finding, fires(), formatAlert(), checkConfig(), checkLine() (+47 more)
+Nodes (56): Outcome, alertWindow(), assess(), dollars(), Finding, fires(), formatAlert(), checkConfig() (+48 more)
 
 ### Community 4 - "Andrej Karpathy Skills"
 
-Cohesion: 0.05
-Nodes (41): Next Gen Technology Research Notes, Live Activities documentation, Android Gemini Nano documentation, Apple Intelligence product page, Apple requirements research notes, Apple Developer releases, Cloudflare Agents WebSocket documentation, Cloudflare Durable Objects pricing documentation (+33 more)
+Cohesion: 0.04
+Nodes (63): Next Gen Technology Research Notes, Live Activities documentation, Gemini Nano through ML Kit GenAI APIs, Android Gemini Nano documentation, Android speech and vision, App Intents and Visual Intelligence, Apple Core Motion, Apple Intelligence product page (+55 more)
 
 ### Community 5 - "Shipaton 2025 recordings"
 
-Cohesion: 0.08
-Nodes (53): againstBand, beyondReach(), Block, Bounds, brier, byScore(), consistencyBand(), fitAt() (+45 more)
+Cohesion: 0.09
+Nodes (45): across(), againstBand, beyondReach(), Block, Bounds, brier, byScore(), consistencyBand() (+37 more)
 
 ### Community 6 - "Shipaton assets"
 
@@ -665,7 +680,7 @@ Nodes (56): Apol: Debate Smarter with AI, BJJ Evolve, Blinkist Style Paywall, #B
 ### Community 8 - "Completing the Devpost submission"
 
 Cohesion: 0.07
-Nodes (40): HomeRoute(), Category, Phrase, Place, ColorName, colors, colorValues, navigationColors (+32 more)
+Nodes (32): Category, Place, ColorName, colors, colorValues, navigationColors, textStyle(), typography (+24 more)
 
 ### Community 9 - "graphify.md"
 
@@ -694,18 +709,18 @@ Nodes (51): 120 Requests per Address per Minute, ADDRESS_LIMITER Binding, Relay 
 
 ### Community 14 - "shared/src/jev.ts"
 
-Cohesion: 0.06
-Nodes (42): Turn Rival Apps Evidence Notes, AAC Practice Notes, Motionsites Research Notes, Frontend Trends Research Notes, Guards Against Accidental Activation, Apple Guided Access Guide, Apple HIG Accessibility, Apple HIG Machine Learning Guidance (+34 more)
+Cohesion: 0.08
+Nodes (34): Turn Rival Apps Evidence Notes, AAC Practice Notes, Motionsites Research Notes, Frontend Trends Research Notes, Guards Against Accidental Activation, Apple Guided Access Guide, Apple HIG Accessibility, Apple iPhone Touch Accommodations Guide (+26 more)
 
 ### Community 15 - "Vibe Code an App: From Prompt to Real Store Launch"
 
 Cohesion: 0.08
-Nodes (35): helper, sentenceEmbedding, batched(), cosine(), Embed, embeddings(), qwen(), Vectors (+27 more)
+Nodes (32): helper, sentenceEmbedding, batched(), cosine(), Embed, embeddings(), qwen(), Vectors (+24 more)
 
 ### Community 16 - "Announcing Shipaton 2026: Ship an app, win big, join the fun"
 
-Cohesion: 0.06
-Nodes (50): Jev Pattern Notes, Apple Developer Account Basics, Apple iOS Capability Table, Eight-Day Build with Apple Accounts, Jev Text-Only Phone Perception, Simulator and Hardware Limits, TypeSafe Models Documentation, TypeSafe State Documentation (+42 more)
+Cohesion: 0.07
+Nodes (45): Jev Pattern Notes, Jev Text-Only Phone Perception, TypeSafe Models Documentation, TypeSafe State Documentation, TypeSafe System One Documentation, Apple Developer Agreement, Next Gen Category Video, Shipaton Next Gen Category Video (+37 more)
 
 ### Community 17 - "RevenueCat Shipaton 2026"
 
@@ -719,8 +734,8 @@ Nodes (12): iOS App Icon and Icon Composer, Apple Icon Composer Documentation, E
 
 ### Community 19 - "2024 Ship-a-ton Winners"
 
-Cohesion: 0.06
-Nodes (49): eraseAllData(), Bank, RankingData, RemoteRanker, Reply, ConfigPorts, createConfigClient(), defaultConfig (+41 more)
+Cohesion: 0.07
+Nodes (42): Bank, createTypedListenSession(), RankingData, RemoteRanker, Reply, ConfigPorts, createConfigClient(), defaultConfig (+34 more)
 
 ### Community 20 - "The late submitter's guide to getting through app review"
 
@@ -759,8 +774,8 @@ Nodes (44): Apple Embedding Ranker, Seven-Ranker Calibration Evaluation Architec
 
 ### Community 27 - "The judging process"
 
-Cohesion: 0.09
-Nodes (46): RevenueCat Expo Server Entitlement Checks, Next Gen Notes, Cloudflare Worker, Turn Consent and Privacy Controls, Expo 57 iOS Application Stack, Turn Failure Triggers and Fallbacks, Guessling Control, Jev (+38 more)
+Cohesion: 0.10
+Nodes (45): RevenueCat Expo Server Entitlement Checks, Cloudflare Worker, Turn Consent and Privacy Controls, Expo 57 iOS Application Stack, Turn Failure Triggers and Fallbacks, Guessling Control, Jev, Listen Entitlement with 20 Free Lines (+37 more)
 
 ### Community 28 - "Next Gen Award"
 
@@ -795,7 +810,7 @@ Nodes (41): check_md.py, err, slug, fact_scan.py, Shipaton 2026 Brief Plan, Pyth
 ### Community 34 - "How to win Shipaton part 4: pitching your app"
 
 Cohesion: 0.08
-Nodes (33): Availability Checks, Clean Build c0a1180, Compatibility Checks, Content Requirement Checks, Release Checklist Failures, Measurement Requirement Checks, Offline and Degraded State Checks, Release Checklist (+25 more)
+Nodes (35): Accessibility Checks, Clean Build c0a1180, Compatibility Checks, Content Requirement Checks, Release Checklist Failures, Measurement Requirement Checks, Offline and Degraded State Checks, Performance Checks (+27 more)
 
 ### Community 35 - "Ship Kit"
 
@@ -819,8 +834,8 @@ Nodes (40): Augmentative and Alternative Communication, AAC COMM2, Public AAC Co
 
 ### Community 39 - "Shipaton 2025 Winners"
 
-Cohesion: 0.09
-Nodes (40): App Store Connect Screenshot Specifications, Apple AVFAudio Recording Haptics Property, Apple HIG Playing Haptics, Apple In-App Purchase HIG, Apple iOS 27 Design Sources, Atkinson Hyperlegible Next Repository, Bundle Atkinson Hyperlegible Next for the Paywall, Devpost Gallery and Thumbnail Specifications (+32 more)
+Cohesion: 0.10
+Nodes (37): App Store Connect Screenshot Specifications, Apple In-App Purchase HIG, Apple iOS 27 Design Sources, Atkinson Hyperlegible Next Repository, Bundle Atkinson Hyperlegible Next for the Paywall, Devpost Gallery and Thumbnail Specifications, Devpost Submission Steps, Apple HIG Typography (+29 more)
 
 ### Community 40 - "From first app to WWDC winner: Leandro Tolaini’s Shipaton story"
 
@@ -829,8 +844,8 @@ Nodes (40): Relay CF-Connecting-IP and IPv6 Notes, Durable Object Requests and R
 
 ### Community 41 - "Shipaton IRL Events Around the World"
 
-Cohesion: 0.06
-Nodes (53): Address, Budget, Cached, Device, JevReply, LineReply, Terms, unlessAborted() (+45 more)
+Cohesion: 0.15
+Nodes (28): paid, activeEntitlements(), callsTo(), expectError(), expectRefused(), freeLinesLeft(), hang(), headers (+20 more)
 
 ### Community 42 - "Shipaton FAQ"
 
@@ -849,13 +864,13 @@ Nodes (39): Weak Live Address-Limit Backstop Result, Observed Rate-Limit Count L
 
 ### Community 45 - "How Rudrank Riyam won Shipaton’s Build in Public Award by sharing every step"
 
-Cohesion: 0.07
-Nodes (38): Agreement, agreementOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit, main() (+30 more)
+Cohesion: 0.10
+Nodes (26): main(), names(), rounded(), Category, checkLabels(), labelingFrom(), Labels, Line (+18 more)
 
 ### Community 46 - "Briefs that you could target"
 
 Cohesion: 0.07
-Nodes (25): AppStateSource, bindListenLifecycle(), ListenSession, PaywallDoor, PaywallResult, PurchasesEngine, PurchasesSnapshot, PurchasesStore (+17 more)
+Nodes (26): eraseAllData(), AppStateSource, bindListenLifecycle(), ListenSession, PaywallDoor, PaywallResult, PurchasesEngine, PurchasesSnapshot (+18 more)
 
 ### Community 47 - "Influencer Award - Nutrition & Healthy Eating: Abbey's Kitchen"
 
@@ -879,8 +894,8 @@ Nodes (36): Evidence for the Top Five Ideas, US Adult ADHD Prevalence Study, Aki
 
 ### Community 51 - "The Growth Loop Award"
 
-Cohesion: 0.07
-Nodes (48): Frontier Models Without Accessibility Guidance (COLM 2026), AAC Practice Research Notes 0022, Studies of AI-Generated Interfaces, AI Generators That Build Native Apps, AIMAC Accessibility Benchmark, App-Level Reduce Motion Flag, Apple Human Interface Guidelines: Materials, Apple Text Style Typography Tokens (+40 more)
+Cohesion: 0.08
+Nodes (42): Frontier Models Without Accessibility Guidance (COLM 2026), AAC Practice Research Notes 0022, Studies of AI-Generated Interfaces, AI Generators That Build Native Apps, AIMAC Accessibility Benchmark, App-Level Reduce Motion Flag, Apple Human Interface Guidelines: Materials, Apple Text Style Typography Tokens (+34 more)
 
 ### Community 52 - "Keep Them Coming Back Award"
 
@@ -919,8 +934,8 @@ Nodes (32): AI-Assisted App Development, Apple App Store, Best Game Award, Build
 
 ### Community 59 - "OneSignal boost award"
 
-Cohesion: 0.19
-Nodes (28): capital(), cell(), listOf(), table(), wrap(), bigButtonSection(), Calibration, calibrationSection() (+20 more)
+Cohesion: 0.15
+Nodes (34): riskCoverage(), amongTheEighty(), atCutOff(), capital(), cell(), listOf(), table(), wrap() (+26 more)
 
 ### Community 60 - "Kotlin multiplatform reach award"
 
@@ -959,8 +974,8 @@ Nodes (30): Apple NLEmbedding Documentation, Apple NLEmbedding Ranker, BM25 and 
 
 ### Community 67 - "HAMM Award (Help Apps Make Money)"
 
-Cohesion: 0.10
-Nodes (34): Dynamic Type Without Truncation, AAC Practice Research Notes 0022, Adult-Oriented Social Acceptability, Apple Predictive Text Guide, Color Coding and Backgrounds, Color, Grids, and Type on AAC Displays, Dark Mode, Contrast Polarity, and Glare, Dignity and Aesthetics (+26 more)
+Cohesion: 0.16
+Nodes (23): AAC Practice Research Notes 0022, Adult-Oriented Social Acceptability, Color Coding and Backgrounds, Color, Grids, and Type on AAC Displays, Dark Mode, Contrast Polarity, and Glare, Dignity and Aesthetics, AAC Interface Design Research Notes, Findings for DESIGN.md (+15 more)
 
 ### Community 68 - "Next Gen Award"
 
@@ -984,8 +999,8 @@ Nodes (29): adr-tools, Repository Code Review Skill, Code Review Spec Lookup, do
 
 ### Community 72 - "RevenueCat design award"
 
-Cohesion: 0.11
-Nodes (41): Guessling App Privacy Label, RevenueCat App User ID, Apple Subscription Offer Codes, configureRevenueCat, currentAppUserId, RevenueCat CustomerInfo, RevenueCat and Expo Research Notes, EAS Build Image macOS Tahoe 26.5 with Xcode 26.6 (+33 more)
+Cohesion: 0.15
+Nodes (28): Guessling App Privacy Label, RevenueCat App User ID, currentAppUserId, RevenueCat and Expo Research Notes, EAS Build Image macOS Tahoe 26.5 with Xcode 26.6, Expo Privacy Manifest Aggregation, Expo SDK 57, Guessling+ Entitlement (+20 more)
 
 ### Community 73 - "#buildinpublic award"
 
@@ -1004,8 +1019,8 @@ Nodes (28): Evaluation Notes Calibration Section, Paired Bootstrap for the Evalu
 
 ### Community 76 - "Buzziest launch award"
 
-Cohesion: 0.12
-Nodes (26): atCutOff(), categories, jev(), JevCall, relayModel(), Apple, commit(), main() (+18 more)
+Cohesion: 0.13
+Nodes (24): bank, categories, jev(), JevCall, jevLine(), relayModel(), git, home (+16 more)
 
 ### Community 77 - "HAMM award"
 
@@ -1029,13 +1044,13 @@ Nodes (27): Set-Valued Agreement Metrics, At Least Appropriate Reply Threshold, 
 
 ### Community 81 - "RevenueCat Shipaton 2026 brief"
 
-Cohesion: 0.11
-Nodes (26): BankDatabase, createBankStore(), localDay(), StarterBank, createLiveListenSession(), createTypedListenSession(), databases, configPort() (+18 more)
+Cohesion: 0.08
+Nodes (38): BankDatabase, createBankStore(), localDay(), Phrase, StarterBank, ListenEngineEvents, createLiveListenSession(), ListenLogEntry (+30 more)
 
 ### Community 82 - "Tasks"
 
 Cohesion: 0.10
-Nodes (28): Privacy Notice, Places Checks, The Phrase Bank, The Speaking Grid, App State Store, BANK-1 to BANK-10 Requirements, calls Table, category Table (+20 more)
+Nodes (26): Privacy Notice, Places Checks, The Phrase Bank, The Speaking Grid, App State Store, BANK-1 to BANK-10 Requirements, calls Table, CONSENT Permission Step (+18 more)
 
 ### Community 83 - "Next Gen idea evidence notes"
 
@@ -1089,8 +1104,8 @@ Nodes (24): Quick Category Review, Starter Bank Review Flow, Starter Phrase Card
 
 ### Community 93 - "Turn's relay and services research notes"
 
-Cohesion: 0.08
-Nodes (32): Bank, Config, createRelayRanker(), Ports, RelayRankInput, codePoints(), createNameMaps(), cut() (+24 more)
+Cohesion: 0.07
+Nodes (39): Bank, Config, createRelayRanker(), Ports, RelayRankInput, codePoints(), createNameMaps(), cut() (+31 more)
 
 ### Community 94 - "Turn's frontend trends research notes"
 
@@ -1124,13 +1139,13 @@ Nodes (24): ASHA Augmentative and Alternative Communication Practice Portal, ASH
 
 ### Community 100 - "Next Gen Award research notes"
 
-Cohesion: 0.13
-Nodes (22): alphaOf(), across(), reliabilityPlot(), up(), colors, Curve, dashes, plot() (+14 more)
+Cohesion: 0.08
+Nodes (38): chooseCutOff(), crossValidate(), AtCutOff, Ranker, BigButton, Called, Count, inTopSix() (+30 more)
 
 ### Community 101 - "motionsites.ai for Turn research notes"
 
 Cohesion: 0.17
-Nodes (15): listenStrings, homeLayout(), pageOffset(), replyStat(), starterCardShown(), HomeScreen(), Props, fadeTo() (+7 more)
+Nodes (14): listenStrings, homeLayout(), pageOffset(), replyStat(), starterCardShown(), HomeScreen(), Props, fadeTo() (+6 more)
 
 ### Community 102 - "Related materials for Shipaton 2026"
 
@@ -1139,8 +1154,8 @@ Nodes (23): Flowmino / Studious App Store Listing, Studient App Store Page, Camp
 
 ### Community 103 - "Tasks"
 
-Cohesion: 0.08
-Nodes (30): iOS Design Notes, Accessibility Nutrition Labels for Turn, Liquid Glass and Accessibility Settings, App Icon and Launch Screen, Apple Accessibility Nutrition Labels Overview, Apple HIG Accessibility, Apple HIG App Icons, Apple HIG Branding (+22 more)
+Cohesion: 0.11
+Nodes (23): iOS Design Notes, Expo SDK 57 and Xcode 27 Technology Notes, Accessibility Nutrition Labels for Turn, Liquid Glass and Accessibility Settings, Apple Accessibility Nutrition Labels Overview, Apple HIG Accessibility, Apple HIG Color, Apple HIG Materials (+15 more)
 
 ### Community 104 - "Daily puzzles research notes"
 
@@ -1149,13 +1164,13 @@ Nodes (23): Android, Apple App Store, Apple HealthKit, Apple Pencil, Shipaton 20
 
 ### Community 105 - "Shipaton 2026 idea"
 
-Cohesion: 0.15
-Nodes (26): fakeRelay(), ErrorCode, Outcome, fits(), isOn(), readConfig(), readPolicy(), wholeNumber() (+18 more)
+Cohesion: 0.17
+Nodes (19): fakeRelay(), ErrorCode, Budget, fits(), isOn(), readConfig(), readPolicy(), wholeNumber() (+11 more)
 
 ### Community 106 - "Turn technical requirements"
 
-Cohesion: 0.19
-Nodes (12): buildGazetteer(), GazetteerBank, GazetteerFinder, normalize(), rebuildGazetteer(), rebuilding, RebuildState, runTagChecks() (+4 more)
+Cohesion: 0.13
+Nodes (18): HomeRoute(), buildGazetteer(), GazetteerBank, GazetteerFinder, normalize(), rebuildGazetteer(), rebuilding, RebuildState (+10 more)
 
 ### Community 107 - "Next Gen ideation log"
 
@@ -1184,8 +1199,8 @@ Nodes (22): AI-Built App Workflow, Payout App Store Listing, Payout Case Study, 
 
 ### Community 112 - "Shipaton 2026 research notes"
 
-Cohesion: 0.08
-Nodes (37): Turn iOS Research Notes, npx expo run:ios, Building to an iPhone with a Free Account, Next-Gen Technology Notes, Turn iPhone Build, Apple Bundle Identifier Citation, Apple Developer Mode Citation, Apple Membership Comparison Citation (+29 more)
+Cohesion: 0.14
+Nodes (22): Turn iOS Research Notes, npx expo run:ios, Building to an iPhone with a Free Account, Next-Gen Technology Notes, Turn iPhone Build, Apple Bundle Identifier Citation, Apple Developer Mode Citation, Apple Membership Comparison Citation (+14 more)
 
 ### Community 113 - "Turn product"
 
@@ -1194,8 +1209,8 @@ Nodes (22): How a Jev Request Is Billed, TypeSafe choice(), Errors, Retries, and
 
 ### Community 114 - "Apple App Store review"
 
-Cohesion: 0.38
-Nodes (7): Cloudflare Workers Secrets Citation, Cloudflare Wrangler Commands Citation, Required Secrets and New-worker Deployment, Wrangler Changelog Citation, Wrangler New-worker Secret Ordering Discrepancy, Wrangler secret put Behavior, Wrangler Configuration and Deployment
+Cohesion: 0.13
+Nodes (22): Cloudflare Durable Objects Limits Citation, Cloudflare Durable Objects Pricing Citation, Cloudflare Workers Secrets Citation, Cloudflare Workers.dev Citation, Cloudflare Wrangler Commands Citation, Cloudflare and Wrangler Setup, Turn's Setup Research Notes, Cloudflare Durable Objects on the Free Plan (+14 more)
 
 ### Community 115 - "How Jev is used"
 
@@ -1234,13 +1249,13 @@ Nodes (21): Apple, Apple Music, How Rudrank Riyam won Shipaton's Build in Public
 
 ### Community 122 - "Screens"
 
-Cohesion: 0.20
-Nodes (21): Relay Abuse Limits, Address Durable Object, App User ID, Jev Credit Alert, Data Inventory, entitlement Table, Turn Evaluation System, Failure Modes (+13 more)
+Cohesion: 0.17
+Nodes (23): Availability Checks, Relay Abuse Limits, Address Durable Object, App User ID, AVAIL-1 to AVAIL-2 Requirements, Jev Credit Alert, Data Inventory, entitlement Table (+15 more)
 
 ### Community 123 - "Winning playbook"
 
-Cohesion: 0.16
-Nodes (13): AvailableVoice, createVoiceSettings(), PersonalVoice, PersonalVoiceAuthorization, rateStep(), SPEECH_RATE_STEPS, SpeechRateStep, systemDefault (+5 more)
+Cohesion: 0.13
+Nodes (15): VoiceScreen(), AvailableVoice, createVoiceSettings(), PersonalVoice, PersonalVoiceAuthorization, rateStep(), SPEECH_RATE_STEPS, SpeechRateStep (+7 more)
 
 ### Community 124 - "Monetization and paywall benchmarks"
 
@@ -1324,8 +1339,8 @@ Nodes (20): Apple Requirements for Guessling, Active offer limit conflict, Apple
 
 ### Community 140 - "Domain docs"
 
-Cohesion: 0.14
-Nodes (18): Timing a Conversation Depends On, expo-sqlite, expo-sqlite and FTS5, SQLite FTS5 bm25(), Libraries on September 22, 2026, Turn Local Keyword Ranker, MiniSearch, NLEmbedding (+10 more)
+Cohesion: 0.18
+Nodes (14): Timing a Conversation Depends On, Turn Local Keyword Ranker, MiniSearch, NLEmbedding, NLGazetteer, NLTagger, Swapping Names for Tags with NLTagger, On-Device Text Tools (+6 more)
 
 ### Community 141 - "Typography"
 
@@ -1374,13 +1389,13 @@ Nodes (6): RevenueCat Expo Notes, Phone Perception and Jev Pairing Synthesis, Ty
 
 ### Community 150 - "Judging process and criteria"
 
-Cohesion: 0.15
-Nodes (20): Cloudflare Workers Logs Documentation Citation, Cloudflare Workers Logs, Workers Observability API Token Permission, Telemetry Calculations Exactness, Cloudflare Account-owned Tokens Citation, Cloudflare API Limits Citation, Cloudflare Create API Token Citation, Cloudflare OpenAPI Schema Citation (+12 more)
+Cohesion: 0.16
+Nodes (18): Workers Observability API Token Permission, Telemetry Calculations Exactness, Cloudflare Account-owned Tokens Citation, Cloudflare API Limits Citation, Cloudflare Create API Token Citation, Cloudflare OpenAPI Schema Citation, Cloudflare Permissions Reference Citation, Cloudflare JavaScript SDK 7.1.0 Citation (+10 more)
 
 ### Community 151 - "Demo video and write-up"
 
 Cohesion: 0.12
-Nodes (17): dependencies, expo, expo-application, expo-audio, expo-router, expo-speech-recognition, expo-symbols, react-native-purchases (+9 more)
+Nodes (17): dependencies, expo-application, expo-audio, expo-router, expo-speech-recognition, expo-symbols, react-native-purchases, react-native-reanimated (+9 more)
 
 ### Community 152 - "Samsung Galaxy Store review"
 
@@ -1404,8 +1419,8 @@ Nodes (17): COMPA: Context-Aware AAC Phrase Suggestions, AI and Context-Aware Su
 
 ### Community 156 - "Round 9: scope, stack, and schedule"
 
-Cohesion: 0.13
-Nodes (28): Turn Services Research Notes, Cloudflare Workers process.env Citation, Cloudflare Vitest Test APIs Citation, Cloudflare Vitest Configuration Citation, Cloudflare Outbound Request Testing Citation, Console Logs with Invocation Logs Disabled, Turn's Relay Research Notes, Post-note Relay Testing Spike (+20 more)
+Cohesion: 0.20
+Nodes (17): Turn Services Research Notes, Cloudflare Workers process.env Citation, Cloudflare Vitest Test APIs Citation, Cloudflare Vitest Configuration Citation, Cloudflare Outbound Request Testing Citation, Cloudflare Workers Logs Documentation Citation, Console Logs with Invocation Logs Disabled, Turn's Relay Research Notes (+9 more)
 
 ### Community 157 - "Store and pitch assets"
 
@@ -1425,7 +1440,7 @@ Nodes (16): Native GitHub Blocking Dependencies, Wayfinding Child Tickets, Ticke
 ### Community 160 - "Tasks"
 
 Cohesion: 0.14
-Nodes (14): Accessibility Checks, Performance Checks, Video iPhone Build, Release Checklist Waiting Items, A11Y-1 to A11Y-8 Requirements, How Long the Jev Pin Lasts, Keychain Behavior After App Deletion, One Clock for Timings (+6 more)
+Nodes (10): Address, Cached, Device, JevReply, LineReply, Terms, unlessAborted(), Entitlement (+2 more)
 
 ### Community 161 - "Guessling product"
 
@@ -1474,8 +1489,8 @@ Nodes (14): Use Optional, Meaningful Haptics, Provide Full-Motion, Reduced-Motio
 
 ### Community 170 - "live-session.ts"
 
-Cohesion: 0.05
-Nodes (63): Addressee Detection, allowBluetoothHFP, Apple Foundation Models, Apple Live Captions and Name Recognition, Ava, Bardy, Bardy Privacy Policy, Bench Jev Jagged Edges (+55 more)
+Cohesion: 0.06
+Nodes (53): allowBluetoothHFP, Bardy Privacy Policy, Bench Jev Jagged Edges, Bench Hands-Free Lab Notebook Pipeline, bluetoothHighQualityRecording, Jev Calibration Evidence, California Penal Code Section 632, Campuswire (+45 more)
 
 ### Community 171 - "Motion and haptics for Turn"
 
@@ -1485,7 +1500,7 @@ Nodes (25): Automation Bias, Bench, Harm from a Wrong Bench Decision, Evidence t
 ### Community 172 - "Tasks"
 
 Cohesion: 0.16
-Nodes (16): Campuswire, Cosine-Similarity Office-Hours Grouping, CS50.ai, Duplicate-Question Embedding Methods, FERPA, Hivenotes, PARQR, Poll Everywhere (+8 more)
+Nodes (12): createNativeListenEngine(), nativeListenEngine, AssetStatus, EngineState, ListenEngineEvents, ListenLine, NameKind, NameSpan (+4 more)
 
 ### Community 173 - "Guessling design"
 
@@ -1669,8 +1684,8 @@ Nodes (11): Apple System Fonts, Findings for DESIGN.md, Dynamic Type, Use Apple'
 
 ### Community 210 - "Tasks"
 
-Cohesion: 0.10
-Nodes (24): AnalysisContext.contextualStrings, Audio Session Category, Mode, and Options, Custom Vocabulary Scope Conflict, AVAudioSession.CategoryOptions.defaultToSpeaker, Echo Cancellation with Voice Processing, Expo ios.infoPlist, expo-speech-recognition, expo-speech-recognition as the Fallback (+16 more)
+Cohesion: 0.14
+Nodes (14): AnalysisContext.contextualStrings, Custom Vocabulary Scope Conflict, Expo ios.infoPlist, expo-speech-recognition, Info.plist Keys and Config Plugins, NSMicrophoneUsageDescription, Speech Model Preinstallation Conflict, SFSpeechRecognizer (+6 more)
 
 ### Community 211 - "Tasks"
 
@@ -1679,8 +1694,8 @@ Nodes (13): Apple DeviceCheck Documentation, Apple DeviceCheck Private Key Docum
 
 ### Community 212 - "Turn's shortlist and row research notes"
 
-Cohesion: 0.20
-Nodes (11): App Intents and Visual Intelligence, Apple Core Motion, Apple Sound Analysis, Apple Vision requests, Cloudflare WebSocket backend with hibernating Durable Objects, Cloudflare Agents SDK and voice, HealthKit third-party data boundary, On-device translation (+3 more)
+Cohesion: 0.15
+Nodes (15): Apple Foundation Models, Apple Live Captions and Name Recognition, Ava, CDC Hearing Difficulty Data Brief 414, CHIME-6 Dinner-Party Captioning Evaluation, Chorus, Evidence that Chorus's Problem Matters, Live Transcribe (+7 more)
 
 ### Community 213 - "Turn's reply-labeling research notes"
 
@@ -1744,8 +1759,8 @@ Nodes (11): FreeTypeFont, Image, ImageDraw, aha(), font(), gallery(), hero(), Re
 
 ### Community 225 - "app/package.json"
 
-Cohesion: 0.27
-Nodes (12): GitHub Actions Checkout, GitHub Actions Download Artifact, GitHub Actions Upload Artifact, Build Job, iOS Simulator Build Workflow, Maestro CLI 2.10.0, Oven-Sh setup-bun Action, Screenshots Job (+4 more)
+Cohesion: 0.18
+Nodes (16): iOS Build Configuration, iOS Deployment Target 26, Stack and Repository, Xcode 27 and iOS 27 SDK, GitHub Actions Checkout, GitHub Actions Download Artifact, GitHub Actions Upload Artifact, Build Job (+8 more)
 
 ### Community 226 - ".startCapture"
 
@@ -1794,13 +1809,13 @@ Nodes (9): Configure Expo Audio for Ambient Sound, Short Sounds in Expo, Expo Au
 
 ### Community 235 - "listen/engine.ts"
 
-Cohesion: 0.27
-Nodes (11): AVAudioSession, Expo, Expo Speech, Recognition, SQLite, and MiniSearch Stack, Findings for the Product, PRD, and TRD, Natural Language Sentence Embeddings, Turn Should Configure Its Audio Session at Launch, Turn Should Mute Input While Speaking, Turn Library Evaluation (+3 more)
+Cohesion: 0.36
+Nodes (8): Expo, Expo Speech, Recognition, SQLite, and MiniSearch Stack, Findings for the Product, PRD, and TRD, Natural Language Sentence Embeddings, Turn Library Evaluation, Turn Should Use Autolinked Local Swift Modules, Turn Needs a Swift Personal Voice Module, Turn Should Use Sentence Embeddings for a Phrase Shortlist
 
 ### Community 236 - "screens/AGENTS.md"
 
-Cohesion: 0.15
-Nodes (20): Next-Gen Technology Notes, AVSpeechSynthesisVoice.init(identifier:), create-expo-module, Expo AsyncFunction, Expo Modules API, expo-modules-core, Expo Module.sendEvent(_:_:), Two Local Swift Modules in Expo (+12 more)
+Cohesion: 0.23
+Nodes (12): Next-Gen Technology Notes, create-expo-module, Expo AsyncFunction, Expo Modules API, expo-modules-core, Expo Module.sendEvent(_:_:), Two Local Swift Modules in Expo, iOS 26 APIs on SDK 57's Minimum iOS (+4 more)
 
 ### Community 237 - "withBoardSplash.ts"
 
@@ -1829,8 +1844,8 @@ Nodes (10): @cloudflare/vitest-plugin/types, ./worker-configuration.d.ts, compil
 
 ### Community 242 - "helpers.ts"
 
-Cohesion: 0.33
-Nodes (7): Gemini Nano through ML Kit GenAI APIs, Android speech and vision, Apple Intelligence device and language requirements, Foundation Models in iOS 27, iOS Live Activities, Private Cloud Compute, Student hardware, account, and build constraints
+Cohesion: 0.26
+Nodes (12): checkEntitlement(), isItem(), Item, Settings, builds, isLineRequest(), isList(), isRecord() (+4 more)
 
 ### Community 243 - "SelectedTranscriber"
 
@@ -1859,8 +1874,8 @@ Nodes (10): Analytics Engine EVENTS binding, Cloudflare Analytics Engine Getting
 
 ### Community 248 - "Turn's free lines research notes"
 
-Cohesion: 0.50
-Nodes (4): Expo iOS Simulator Guide, Jev Real-Time Claims and Limits, Technology Source Conflicts, TypeSafe API Reference
+Cohesion: 0.22
+Nodes (10): Apple Developer Account Basics, Apple iOS Capability Table, Expo iOS Simulator Guide, Eight-Day Build with Apple Accounts, Jev Real-Time Claims and Limits, Simulator and Hardware Limits, Technology Source Conflicts, TypeSafe API Reference (+2 more)
 
 ### Community 249 - "Turn's relay logs research notes"
 
@@ -1874,8 +1889,8 @@ Nodes (6): RevenueCat and Expo Research, Paywall Accessibility Behavior, Revenue
 
 ### Community 251 - "scripts/tsconfig.json"
 
-Cohesion: 0.50
-Nodes (4): Expo SDK 57, SDK 58, and Xcode 27 build path, Expo and React Native native module ecosystem, Swift bridge with Expo Modules, September 2026 platform versions
+Cohesion: 0.24
+Nodes (13): Apple Subscription Offer Codes, configureRevenueCat, RevenueCat CustomerInfo, Expo Development Build for RevenueCat, Expo Public Environment Variables, RevenueCat Offerings, Packages, and Purchases, Purchases.addCustomerInfoUpdateListener, Purchases.configure (+5 more)
 
 ### Community 252 - "Turn's relay"
 
@@ -1909,7 +1924,7 @@ Nodes (3): Cloudflare Workers AI Limits, Cloudflare Vectorize Limits, Workers AI
 
 ### Community 258 - "Calling Workers AI and Jev from Turn's evaluation"
 
-Cohesion: 0.33
+Cohesion: 0.38
 Nodes (4): NoticeSection, privacyNotices, selectPrivacyNotice(), PrivacyNoticeScreen()
 
 ### Community 259 - "eval/test/setup.ts"
@@ -1949,8 +1964,8 @@ Nodes (9): Turn iOS Sentence Embedding Notes, Center for Open Science Preregistr
 
 ### Community 267 - "accessibility/store.ts"
 
-Cohesion: 0.10
-Nodes (21): Expo SDK 57 and Xcode 27 Technology Notes, Fiannaca et al. 2017 AACrobat Study, Apple Translate Face-to-Face Guide, 45 CFR 46.116 Consent Requirements, Consent Notices People Read, Flory and Emanuel 2004 Informed Consent Communication Study, Jabbla Allora 3 Partner Display, Kane et al. 2017 AAC Partner Interaction Study (+13 more)
+Cohesion: 0.12
+Nodes (16): Fiannaca et al. 2017 AACrobat Study, Apple Hardware Indicator Guidance, Apple Translate Face-to-Face Guide, Showing Bystanders That a Device Listens, 45 CFR 46.116 Consent Requirements, Consent Notices People Read, Flory and Emanuel 2004 Informed Consent Communication Study, Jabbla Allora 3 Partner Display (+8 more)
 
 ### Community 268 - "relay-ranker.ts"
 
@@ -2014,8 +2029,8 @@ Nodes (8): Akinator Web Game and Animation Source, Apple Human Interface Guideli
 
 ### Community 280 - "DESIGN.md"
 
-Cohesion: 0.18
-Nodes (15): Next-Gen Evidence Notes, AVSpeechSynthesizer, DictationTranscriber, Ending the Partner's Line, Keeping Turn's Speech Out of the Transcript, expo-speech, expo-speech in SDK 57, SpeechAnalyzer.finalize(through:) (+7 more)
+Cohesion: 0.19
+Nodes (13): AVSpeechSynthesizer, Keeping Turn's Speech Out of the Transcript, expo-speech, expo-speech in SDK 57, expo-speech-recognition as the Fallback, expo-sqlite, expo-sqlite and FTS5, SQLite FTS5 bm25() (+5 more)
 
 ### Community 282 - "PrivacyNoticeScreen.tsx"
 
@@ -2187,6 +2202,11 @@ Nodes (3): setBoardSplash(), Storyboard, withBoardSplash()
 Cohesion: 0.40
 Nodes (5): Issue 54: Local Stats, METRIC-3 Measurement Requirements, North Star Reply Ratio, Stats on This Phone Implementation Plan, Stats on This Phone Feature
 
+### Community 321 - "react"
+
+Cohesion: 0.24
+Nodes (13): RevenueCat Active Entitlements Endpoint, Turn's Free Lines Research Notes, Live RevenueCat Purchase Check, One-time Purchase Entitlement, RevenueCat API v2 Documentation Citation, RevenueCat OpenAPI Documentation Citation, RevenueCat REST API v2 Specification Citation, Relay Entitlement Decision (+5 more)
+
 ### Community 322 - "react-native"
 
 Cohesion: 0.60
@@ -2307,10 +2327,80 @@ Nodes (3): Credit Alert Job, Credit Alert GitHub Issue, Credit Alert Workflow
 Cohesion: 0.67
 Nodes (3): Relay Check Job, Relay Health Tracking Issue 70, Relay Check Workflow
 
+### Community 349 - "agreement.ts"
+
+Cohesion: 0.26
+Nodes (11): Agreement, agreementOf(), alphaOf(), compareLabelings(), masiDistance(), Table, tableOf(), Unit (+3 more)
+
+### Community 350 - "How DESIGN.md Should Serve Agents for Turn"
+
+Cohesion: 0.17
+Nodes (12): Claude Code Memory Documentation, How DESIGN.md Should Serve Agents for Turn, Dynamic Type Without Truncation, Path-Scoped Agent Rules, Turn PRD Accessibility Requirements, Turn TRD Accessibility in the App, Turn DESIGN.md, Dynamic Type Layout (+4 more)
+
 ### Community 351 - "Guessling Idea"
 
 Cohesion: 0.18
 Nodes (14): Devpost Images and Video, App Store Screenshots, Guessling Idea at a Glance, Shipaton Prize Categories, Daily 20 Questions Game, Guessling Idea, Guessling App, Guessling Ideation Process (+6 more)
+
+### Community 353 - "Chorus Group-Caption Pipeline"
+
+Cohesion: 0.20
+Nodes (11): Addressee Detection, Chorus Group-Caption Pipeline, Deadline Extraction, DictationTranscriber, expo-speech-recognition, Name Spotting, NSDataDetector, Question Detection (+3 more)
+
+### Community 355 - "Audio Session Category, Mode, and Options"
+
+Cohesion: 0.25
+Nodes (11): Audio Session Category, Mode, and Options, AVAudioSession, AVAudioSession.CategoryOptions.defaultToSpeaker, Echo Cancellation with Voice Processing, Interruptions and Route Changes, Listen Mode Audio Policy, Listening and Speaking at Once, AVAudioSession.Category.playAndRecord (+3 more)
+
+### Community 361 - "Showing Suggestions and Doubt"
+
+Cohesion: 0.20
+Nodes (10): Apple HIG Machine Learning Guidance, Apple Predictive Text Guide, Whether to Show Confidence, Hohenstein et al. 2023 Smart Reply Perception Study, Kannan et al. 2016 Smart Reply Study, Mathur et al. 2026 Numeric Confidence Study, PAIR Trust and Explainability Guidance, Suggestion Placement and Confidence States (+2 more)
+
+### Community 437 - "limits.test.ts"
+
+Cohesion: 0.31
+Nodes (9): age(), claimedLines(), getConfig(), headersFor(), sha256(), userHash(), expectLimited(), from() (+1 more)
+
+### Community 438 - "Asking for and Finding Personal Voice"
+
+Cohesion: 0.33
+Nodes (9): AVSpeechSynthesisVoice.init(identifier:), Turn loadPersonalVoice Function, Personal Voice, Asking for and Finding Personal Voice, PersonalVoiceAuthorizationStatus, Personal Voice Device Support Conflict, Speaking a Personal Voice through expo-speech, AVSpeechSynthesisVoice.Traits.isPersonalVoice (+1 more)
+
+### Community 439 - "Phone SQLite Database"
+
+Cohesion: 0.39
+Nodes (8): category Table, Phone SQLite Database, Phrase Bank Editor, phrase_place Table, phrase Table, place Table, setting Table, tap Table
+
+### Community 440 - "Turn privacy notice"
+
+Cohesion: 0.25
+Nodes (7): Age and people nearby, Purchases, Questions, Service records, Turn privacy notice, What leaves in Listen mode, What stays on this iPhone
+
+### Community 441 - "Transcription Devices and Simulator"
+
+Cohesion: 0.38
+Nodes (7): Next-Gen Evidence Notes, DictationTranscriber, Ending the Partner's Line, SpeechAnalyzer.finalize(through:), SpeechDetector, Transcription Devices and Simulator, Turn Line End Policy
+
+### Community 442 - "Pulsing Listening Light"
+
+Cohesion: 0.33
+Nodes (6): Apple HIG Icons, Apple HIG SF Symbols, Apple Control Access to Hardware Features, Expo Symbols iOS Source, Pulsing Listening Light, SF Symbols for Turn
+
+### Community 443 - "App Icon and Launch Screen"
+
+Cohesion: 0.40
+Nodes (5): App Icon and Launch Screen, Apple HIG App Icons, Apple HIG Branding, Apple Icon Composer, Expo App Icon and Splash Screen Guide
+
+### Community 444 - "Resizable iPhone Apps and iPhone Duo"
+
+Cohesion: 0.50
+Nodes (4): Apple HIG Designing for iPhone Duo, Apple HIG Layout, Resizable iPhone Apps and iPhone Duo, WWDC26 Modernize Your UIKit App
+
+### Community 445 - "Haptics While Listening or Speaking"
+
+Cohesion: 0.67
+Nodes (3): Apple AVFAudio Recording Haptics Property, Apple HIG Playing Haptics, Haptics While Listening or Speaking
 
 ## Ambiguous Edges - Review These
 
@@ -2713,7 +2803,7 @@ Nodes (14): Devpost Images and Video, App Store Screenshots, Guessling Idea at a
 
 ## Knowledge Gaps
 
-- **2149 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2144 more)
+- **2155 isolated node(s):** `$schema`, `printWidth`, `singleQuote`, `semi`, `trailingComma` (+2150 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **86 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
