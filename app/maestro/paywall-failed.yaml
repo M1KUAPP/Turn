@@ -38,7 +38,8 @@ name: Turn Listen failed purchase
     commands:
       - tapOn: OK
 - takeScreenshot: paywall-failed-dismissed
-- tapOn: Close
+# The published paywall labels its close button ✕; the fallback's said Close.
+- tapOn: 'Close|✕'
 - extendedWaitUntil:
     visible: "The purchase didn't go through. Listen mode is still locked."
     timeout: 30000
