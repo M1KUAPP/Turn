@@ -22,8 +22,8 @@ import type { createLiveListenSession } from '../listen/live-session'
 import { listenStrings } from '../listen/strings'
 import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
-import { useConsent } from '../turn-context'
-import { homeLayout, pageOffset, starterCardShown } from './home-layout'
+import { useConsent, useTurn } from '../turn-context'
+import { homeLayout, pageOffset, replyStat, starterCardShown } from './home-layout'
 import { listenControl } from './listen-control'
 import { useListenLight } from './listen-light'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
@@ -100,6 +100,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
 export default function HomeScreen({ bank, speech, listen, boldText, reduceMotion }: Props) {
   const router = useRouter()
   const { consent, state: consentState } = useConsent()
+  const { ready } = useTurn()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [strip, setStrip] = useState<Phrase[]>([])
@@ -255,9 +256,20 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
     setTypeMatches([])
   }
 
+  const recordReply = (tapped: 'row' | 'grid') => {
+    const event = replyStat(tapped, {
+      listening: listening.active,
+      composerMatching: composerMode === 'speak',
+      newest: listening.row.seq,
+      answered: shownListening.row.answers
+    })
+    if (event) ready?.stats.record(event)
+  }
+
   const speakDraft = async () => {
     const text = draft.trim()
     if (!text) return
+    recordReply('grid')
     let phrase: Phrase | null = null
     try {
       phrase = await bank.saveTypedPhrase(text)
@@ -329,6 +341,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             }
           }}
           onPress={() => {
+            recordReply('grid')
             void speech.speak(item.text, item.id)
           }}
           style={({ pressed }) => ({
@@ -626,6 +639,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           activePhraseId={speaking.activePhraseId}
           onInteractionChange={(pressed) => setTouchedRow(pressed ? listening : null)}
           onSpeak={(reply) => {
+            recordReply('row')
             void speech.speak(reply.text, reply.id)
           }}
         />
