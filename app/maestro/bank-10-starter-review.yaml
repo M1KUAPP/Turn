@@ -93,9 +93,15 @@ name: Starter bank review
           timeout: 60000
 - tapOn: Not now
 # The note sits at the top of the row's frame, above a centered Not now.
+# Dismissing the card can leave the list above or below the row, so look up, then down.
 - scrollUntilVisible:
     element: '.*Replies to your partner appear here\..*'
     direction: UP
+    timeout: 20000
+    optional: true
+- scrollUntilVisible:
+    element: '.*Replies to your partner appear here\..*'
+    direction: DOWN
     timeout: 60000
 - assertNotVisible: Review
 - takeScreenshot: bank-10-not-now
