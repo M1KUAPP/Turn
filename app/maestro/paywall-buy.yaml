@@ -25,10 +25,8 @@ name: Turn Listen purchase
     timeout: 30000
 - waitForAnimationToEnd
 - takeScreenshot: paywall-open
-# Settings' row shares the button's words, and RevenueCat's sheet leaves it in the hierarchy under the paywall's.
-- tapOn:
-    text: Unlock Listen mode
-    index: 1
+# The published paywall hides Settings' row of the same words, so this is the paywall's button.
+- tapOn: Unlock Listen mode
 - extendedWaitUntil:
     visible: Test Store Purchase
     timeout: 30000
