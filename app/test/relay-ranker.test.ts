@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import type { LineAnswer, LineRequest } from '@turn/shared/relay'
 import { startingPolicy } from '@turn/shared/row'
 import type { Phrase } from '@turn/shared/shortlist'
@@ -21,10 +21,18 @@ const phrases: Phrase[] = Array.from({ length: 40 }, (_, i) => ({
   fixed: false
 }))
 
-function harness(onFindNames?: () => void, fullBank = phrases) {
+function harness(
+  onFindNames?: () => void,
+  fullBank = phrases,
+  options: {
+    purchases?: { refreshNext: () => boolean; refreshAnswered: () => void }
+    request?: (url: string, init: RequestInit) => Promise<Response>
+  } = {}
+) {
   let allowed = true
   let jevOn = true
   let status = 'unreachable'
+  const freeLines = vi.fn()
   const posts: LineRequest[] = []
   const rank = createRelayRanker({
     bank: {
@@ -38,8 +46,10 @@ function harness(onFindNames?: () => void, fullBank = phrases) {
       lineResult: (next) => {
         status = next
       },
+      freeLines,
       headers: () => ({ 'X-Turn-User': 'user', 'X-Turn-Version': '1', 'X-Turn-Build': 'device' })
     },
+    purchases: options.purchases,
     allowed: () => allowed,
     findNames: async (texts) => {
       onFindNames?.()
@@ -50,15 +60,17 @@ function harness(onFindNames?: () => void, fullBank = phrases) {
     },
     relayUrl: 'https://relay.example',
     createId: () => '5f0e7a8e-3c2b-4d1a-9b6e-2f4c8d0a1b3c',
-    request: async (_url, init) => {
+    request: async (url, init) => {
       const line = JSON.parse(String(init.body)) as LineRequest
       posts.push(line)
+      if (options.request) return options.request(url, init)
       return new Response(JSON.stringify(answer(line)), { status: 200 })
     }
   })
   return {
     rank,
     posts,
+    freeLines,
     status: () => status,
     setAllowed: (value: boolean) => (allowed = value),
     setJevOn: (value: boolean, confirmed = true) => {
@@ -138,5 +150,146 @@ describe('relay ranking preparation', () => {
     expect(posts[0].candidates[0].id).toBe('spare')
     expect(posts[0].candidates.some(({ id }) => id === 'yes')).toBe(false)
     expect(result.candidateOrder[0]).toBe('spare')
+  })
+
+  test('request carries refresh: true when purchases port says true, and omits refresh key otherwise', async () => {
+    const purchasesTrue = { refreshNext: vi.fn(() => true), refreshAnswered: vi.fn() }
+    const withTrue = harness(undefined, phrases, { purchases: purchasesTrue })
+    await withTrue.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 1,
+      signal: new AbortController().signal
+    })
+    expect(withTrue.posts[0]).toHaveProperty('refresh', true)
+
+    const withoutPort = harness()
+    await withoutPort.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 2,
+      signal: new AbortController().signal
+    })
+    expect(withoutPort.posts[0]).not.toHaveProperty('refresh')
+
+    const purchasesFalse = { refreshNext: vi.fn(() => false), refreshAnswered: vi.fn() }
+    const withFalse = harness(undefined, phrases, { purchases: purchasesFalse })
+    await withFalse.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 3,
+      signal: new AbortController().signal
+    })
+    expect(withFalse.posts[0]).not.toHaveProperty('refresh')
+  })
+
+  test('an answered line calls refreshAnswered once when it carried refresh and never otherwise', async () => {
+    const refreshAnsweredTrue = vi.fn()
+    const withRefresh = harness(undefined, phrases, {
+      purchases: { refreshNext: () => true, refreshAnswered: refreshAnsweredTrue }
+    })
+    await withRefresh.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 1,
+      signal: new AbortController().signal
+    })
+    expect(refreshAnsweredTrue).toHaveBeenCalledOnce()
+
+    const refreshAnsweredFalse = vi.fn()
+    const withoutRefresh = harness(undefined, phrases, {
+      purchases: { refreshNext: () => false, refreshAnswered: refreshAnsweredFalse }
+    })
+    await withoutRefresh.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 2,
+      signal: new AbortController().signal
+    })
+    expect(refreshAnsweredFalse).not.toHaveBeenCalled()
+  })
+
+  test("an answer's freeLinesLeft of 7 and of null reach freeLines", async () => {
+    const withSeven = harness(undefined, phrases, {
+      request: async (_url, init) => {
+        const line = JSON.parse(String(init.body)) as LineRequest
+        return new Response(JSON.stringify({ ...answer(line), freeLinesLeft: 7 }), { status: 200 })
+      }
+    })
+    await withSeven.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 1,
+      signal: new AbortController().signal
+    })
+    expect(withSeven.freeLines).toHaveBeenCalledWith(7)
+
+    const withNull = harness(undefined, phrases, {
+      request: async (_url, init) => {
+        const line = JSON.parse(String(init.body)) as LineRequest
+        return new Response(JSON.stringify({ ...answer(line), freeLinesLeft: null }), { status: 200 })
+      }
+    })
+    await withNull.rank({
+      line: 'Alice wants lunch',
+      place: 'clinic',
+      shortlist: phrases,
+      seq: 2,
+      signal: new AbortController().signal
+    })
+    expect(withNull.freeLines).toHaveBeenCalledWith(null)
+  })
+
+  test('a 402 paywall error rethrows with code paywall, reports working, and calls freeLines(0)', async () => {
+    const { rank, freeLines, status } = harness(undefined, phrases, {
+      request: async () =>
+        new Response(JSON.stringify({ error: 'paywall' }), {
+          status: 402,
+          headers: { 'Content-Type': 'application/json' }
+        })
+    })
+
+    await expect(
+      rank({
+        line: 'Alice wants lunch',
+        place: 'clinic',
+        shortlist: phrases,
+        seq: 1,
+        signal: new AbortController().signal
+      })
+    ).rejects.toMatchObject({ code: 'paywall', status: 402 })
+
+    expect(status()).toBe('working')
+    expect(freeLines).toHaveBeenCalledWith(0)
+  })
+
+  test('a failed line that carried refresh does not call refreshAnswered', async () => {
+    const refreshAnswered = vi.fn()
+    const { rank } = harness(undefined, phrases, {
+      purchases: { refreshNext: () => true, refreshAnswered },
+      request: async () =>
+        new Response(JSON.stringify({ error: 'paywall' }), {
+          status: 402,
+          headers: { 'Content-Type': 'application/json' }
+        })
+    })
+
+    await expect(
+      rank({
+        line: 'Alice wants lunch',
+        place: 'clinic',
+        shortlist: phrases,
+        seq: 1,
+        signal: new AbortController().signal
+      })
+    ).rejects.toThrow()
+
+    expect(refreshAnswered).not.toHaveBeenCalled()
   })
 })

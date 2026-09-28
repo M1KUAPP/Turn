@@ -243,6 +243,10 @@ run_combination() {
     flow_name=${flow_name%.*}
     artifacts_dir="$combination_dir/maestro-artifacts/$flow_name"
     mkdir -p "$artifacts_dir"
+    # Turn's own log during the flow, for errors a screenshot can't show, such as RevenueCat's.
+    xcrun simctl spawn "$device_id" log stream --style compact --level info \
+      --predicate 'process == "Turn"' >"$artifacts_dir/device.log" 2>&1 &
+    log_pid=$!
 
     # Maestro's driver can time out starting on a cold runner, before any step runs; only that gets one retry.
     for attempt in 1 2; do
@@ -257,6 +261,7 @@ run_combination() {
       flow_result=FAIL
       grep -q IOSDriverTimeoutException "$artifacts_dir/maestro-$attempt.log" || break
     done
+    kill "$log_pid" 2>/dev/null || true
     if [[ $flow_result == FAIL ]]; then
       failures=$((failures + 1))
     fi
