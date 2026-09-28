@@ -12,9 +12,16 @@ name: Turn Listen purchase
 - scrollUntilVisible:
     element: Settings
 - tapOn: Settings
+# After clearKeychain on a fresh Simulator, Turn's first Keychain read can take over a minute, and RevenueCat
+# starts only once Turn has that ID; the relay's status reads working from the same point (#133).
+- scrollUntilVisible:
+    element: 'Listen service: working'
+    direction: DOWN
+    speed: 20
+    timeout: 150000
 - scrollUntilVisible:
     element: Restore Purchases
-    direction: DOWN
+    direction: UP
     speed: 20
     visibilityPercentage: 50
     timeout: 60000
