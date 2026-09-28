@@ -11,6 +11,7 @@ import * as SQLite from 'expo-sqlite'
 import { nativeAccessibilitySource } from './accessibility/native'
 import { createAccessibilityStore } from './accessibility/store'
 import { createBankStore } from './bank/store'
+import { eraseAllData } from './erase'
 import starterBank from './content/starter-bank.json'
 import { createConsentController, type ConsentState } from './consent/controller'
 import { consentCard, permissionStep } from './consent/strings'
@@ -45,6 +46,7 @@ type Ready = {
 
 type TurnState = {
   ready: Ready | null
+  eraseAll(): Promise<void>
   error: string | null
   boldText: boolean
   fontScale: number
@@ -58,6 +60,19 @@ export function TurnProvider({ children }: { children: ReactNode }) {
   const accessibility = useSyncExternalStore(accessibilityStore.subscribe, accessibilityStore.getSnapshot)
   const [ready, setReady] = useState<Ready | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [generation, setGeneration] = useState(0)
+
+  const eraseAll = async () => {
+    if (!ready) return
+    await eraseAllData({
+      listen: ready.listen,
+      speech: ready.speech,
+      stats: ready.stats,
+      bank: ready.bank
+    })
+    setReady(null)
+    setGeneration((current) => current + 1)
+  }
 
   useEffect(() => {
     let active = true
@@ -211,12 +226,13 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       unsubscribeConsent?.()
       listen?.dispose()
     }
-  }, [])
+  }, [generation])
 
   return (
     <TurnContext.Provider
       value={{
         ready,
+        eraseAll,
         error,
         boldText: accessibility.boldText,
         fontScale: accessibility.fontScale,
