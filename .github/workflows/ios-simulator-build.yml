@@ -71,8 +71,9 @@ jobs:
     needs: build
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.screenshots != 'none' }}
     runs-on: xcode-27
-    # About 45 minutes per text size for the 21 flows, so a full run's five combinations need well over three hours.
-    timeout-minutes: 240
+    # About 47 minutes per combination for the 21 flows, so a full run's five combinations need about four hours;
+    # GitHub stops any job at six.
+    timeout-minutes: 330
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -105,6 +106,8 @@ jobs:
       - name: Capture Simulator screenshots
         id: capture
         continue-on-error: true
+        # Below the job's limit, so a run that overruns still uploads what it captured.
+        timeout-minutes: 310
         shell: bash
         env:
           SCREENSHOT_MODE: ${{ inputs.screenshots }}
