@@ -1129,4 +1129,61 @@ describe('starter review', () => {
     await next.initialize()
     expect(await next.starterReviewState()).toEqual({ pending: true, dismissed: true })
   })
+
+  test('erases all saved data, restores the starter bank, and clears staged deletions', async () => {
+    const db = database()
+    const freshDb = database()
+    const now = () => new Date(2026, 8, 23)
+    const store = createBankStore(db, starterBank, now)
+    const fresh = createBankStore(freshDb, starterBank, now)
+    await Promise.all([store.initialize(), fresh.initialize()])
+
+    const phrase = await store.saveTypedPhrase('A private phrase')
+    expect(phrase).not.toBeNull()
+    const office = await store.addPlace('Office')
+    await store.editPhrase(phrase!.id, { placeIds: [office.id] })
+    await store.recordTap(phrase!.id)
+    await store.choosePlace(office.id)
+    await store.setSetting('starter_review_dismissed', '1')
+    await store.setSetting('stats', '{"lines":1}')
+
+    const stagedPhrase = (await store.phrases('care'))[0]
+    await store.deletePhrase(stagedPhrase.id)
+    expect(store.hasStagedDeletes()).toBe(true)
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+
+    const snapshot = async (source: BankDatabase) => ({
+      categories: await source.getAllAsync<{ id: string; name: string; position: number; fixed: number }>(
+        'SELECT * FROM category ORDER BY id'
+      ),
+      phrases: await source.getAllAsync<Record<string, string | number>>('SELECT * FROM phrase ORDER BY id'),
+      places: await source.getAllAsync<{ id: string; name: string; position: number }>(
+        'SELECT * FROM place ORDER BY id'
+      ),
+      phrasePlaces: await source.getAllAsync<{ phrase_id: string; place_id: string }>(
+        'SELECT * FROM phrase_place ORDER BY phrase_id, place_id'
+      ),
+      taps: await source.getAllAsync<{ phrase_id: string; day: number; count: number }>(
+        'SELECT * FROM tap ORDER BY phrase_id, day'
+      ),
+      settings: await source.getAllAsync<{ key: string; value: string }>('SELECT * FROM setting ORDER BY key')
+    })
+
+    await store.eraseAll()
+
+    expect(changes).toBe(1)
+    expect(store.hasStagedDeletes()).toBe(false)
+    expect(await store.phrases('all')).toEqual(await fresh.phrases('all'))
+    expect(await snapshot(db)).toEqual(await snapshot(freshDb))
+    expect(await store.setting('starter_review_dismissed')).toBeNull()
+    expect(await store.setting('stats')).toBeNull()
+
+    await store.initialize()
+    expect(changes).toBe(1)
+    expect(await snapshot(db)).toEqual(await snapshot(freshDb))
+  })
 })

@@ -597,10 +597,12 @@ points, about 13 characters of `title3-emphasized` inside 12-point padding.
 - **Short screens.** Where the space between the top bar and the screen's
   bottom is under 700 points, as on an iPhone SE, the row's slots and the
   grid's buttons take A11Y-1's 64 points, with phrases in `headline` inside
-  10-point padding and 8 points between slots, and the caption shows one line
-  of words. That leaves the grid's first row on screen at launch (SPEAK-1),
-  and the caption, the strip, the row, the tabs, and the grid scroll together
-  as one column between the top bar and the bottom bar.
+  10-point padding and 8 points between slots. Below AX1 the caption is one
+  48-point line: its note, or else its speaker label, then the newest words,
+  cut at the start. The tabs drop their 4-point margins. That leaves the grid's
+  first row on screen at launch (SPEAK-1), and the caption, the strip, the row,
+  the tabs, and the grid scroll together as one column between the top bar and
+  the bottom bar.
 - **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip,
   and the grid take one column each, and everything between the top bar and
   the bottom bar scrolls as one column, as on short screens. Apple advises
@@ -1307,6 +1309,35 @@ order SET-1 gives:
 - **Last.** Stats on this phone (SET-4), then Erase all data (SET-3), whose
   confirmation is a system alert with a destructive button.
 
+### Stats on this phone
+
+`/settings/stats`, a native stack screen titled "Stats on this phone", holds
+the counts METRIC-3 names, so the team can read the north star in rehearsals:
+replies from the row, out of all the replies (SET-4).
+
+- **One group of five rows,** in Settings' row style, each a label with its
+  value in `ink-secondary`, on the right or, from AX1, under the label:
+  "Partner lines", "Replies from the row", "Replies from the grid or
+  keyboard", "Time to the row", and "Time to speech".
+- **Values.** Counts are whole numbers. The two times are medians in seconds
+  with one decimal, as "1.4 s", and read "None yet" before the first one.
+- **What counts.** A partner line counts when it ends, spoken or typed.
+  Replies count in Listen mode only: from the row, a slot or the big button;
+  from the grid or keyboard, a grid phrase, a phrase the composer matched, or
+  the composer's Speak. The strip and Repeat count as neither, since the
+  strip's phrases steer the talk rather than answer it, and Repeat says a
+  counted reply again.
+- **What a time measures.** From the end of the line a reply answers: the
+  line the row answers, for a reply from the row, and the newest line
+  otherwise. Times over a minute are left out, and each median covers the
+  last 200.
+- **The note,** under the group in `subheadline` and `ink-secondary`, as
+  Settings' notes are: "These counts stay on this phone."
+- **Reset.** A second group with one action row, "Reset stats", in `ink`, as
+  Settings' other actions are. It asks first, in a system alert with a
+  destructive button, then shows zeroes and "None yet". Erase all data resets
+  them too.
+
 ### The phrase bank editor
 
 `/bank/[category]`, a native stack screen for one category (BANK-2):
@@ -1425,6 +1456,8 @@ they say?", and the names of buttons and settings; these are the rest.
 | Personal Voice refused          | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                | VOICE-2                       |
 | Personal Voice unavailable      | "There's no Personal Voice Turn can use on this iPhone. If you've made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice." | VOICE-2                       |
 | Erase all data                  | "Erase all data?", its message, below, "Erase", and "Cancel"                                                                                                           | SET-3                         |
+| Stats on this phone             | "Partner lines", "Replies from the row", "Replies from the grid or keyboard", "Time to the row", "Time to speech", and "None yet"                                      | SET-4, METRIC-3               |
+| Stats' note and Reset           | "These counts stay on this phone." and "Reset stats"; its alert, "Reset stats?", "This sets the counts back to zero.", "Reset", and "Cancel"                           | SET-4                         |
 | Speech rate                     | "Slowest", "Slower", "Normal", "Faster", and "Fastest"                                                                                                                 | VOICE-3                       |
 | Listen mode's permission        | "Allowed on" and its date, with "Withdraw"; or "Not allowed", with "Allow"                                                                                             | CONSENT-1, CONSENT-3          |
 | After Withdraw                  | "Listen mode is off, and nothing more leaves this phone until you allow it again."                                                                                     | CONSENT-3                     |

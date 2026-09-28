@@ -11,6 +11,7 @@ import * as SQLite from 'expo-sqlite'
 import { nativeAccessibilitySource } from './accessibility/native'
 import { createAccessibilityStore } from './accessibility/store'
 import { createBankStore } from './bank/store'
+import { eraseAllData } from './erase'
 import starterBank from './content/starter-bank.json'
 import { createConsentController, type ConsentState } from './consent/controller'
 import { consentCard, permissionStep } from './consent/strings'
@@ -30,6 +31,7 @@ import { createSpeechController } from './speech/controller'
 import { createVoiceSettings } from './speech/voice-settings'
 import { turnListen } from '../../modules/turn-listen/src'
 import { turnVoice } from '../../modules/turn-voice/src'
+import { createStatsStore, type StatsStore } from './stats/store'
 
 const accessibilityStore = createAccessibilityStore(nativeAccessibilitySource)
 
@@ -42,11 +44,13 @@ type Ready = {
   nameTagger: typeof turnListen
   config: ReturnType<typeof createConfigClient>
   purchases: PurchasesStore
+  stats: StatsStore
   typesafeNamed: boolean
 }
 
 type TurnState = {
   ready: Ready | null
+  eraseAll(): Promise<void>
   error: string | null
   boldText: boolean
   fontScale: number
@@ -60,6 +64,19 @@ export function TurnProvider({ children }: { children: ReactNode }) {
   const accessibility = useSyncExternalStore(accessibilityStore.subscribe, accessibilityStore.getSnapshot)
   const [ready, setReady] = useState<Ready | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [generation, setGeneration] = useState(0)
+
+  const eraseAll = async () => {
+    if (!ready) return
+    await eraseAllData({
+      listen: ready.listen,
+      speech: ready.speech,
+      stats: ready.stats,
+      bank: ready.bank
+    })
+    setReady(null)
+    setGeneration((current) => current + 1)
+  }
 
   useEffect(() => {
     let active = true
@@ -149,6 +166,9 @@ export function TurnProvider({ children }: { children: ReactNode }) {
             }
           }
         : undefined
+      const stats = createStatsStore({ now: Date.now, setting: bank.setting, setSetting: bank.setSetting })
+      await stats.load()
+      if (!active) return
       const typed = createTypedListenSession(bank, remote)
       await typed.ready
       const engine = await pickListenEngine(() => nativeListenEngine, expoEngine)
@@ -157,6 +177,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         engine,
         module: turnListen,
         now: Date.now,
+        stats,
         log: ({ endedAt, rankedAt, silenceWindowMs }) => {
           if (__DEV__) {
             console.info(`[listen] endedAt=${endedAt} rankedAt=${rankedAt} windowMs=${silenceWindowMs}`)
@@ -202,6 +223,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         nameTagger,
         config,
         purchases,
+        stats,
         typesafeNamed
       })
       unsubscribeConfig = config.subscribe(() => {
@@ -238,12 +260,13 @@ export function TurnProvider({ children }: { children: ReactNode }) {
       purchasesRef?.dispose()
       listen?.dispose()
     }
-  }, [])
+  }, [generation])
 
   return (
     <TurnContext.Provider
       value={{
         ready,
+        eraseAll,
         error,
         boldText: accessibility.boldText,
         fontScale: accessibility.fontScale,

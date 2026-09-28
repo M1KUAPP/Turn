@@ -4,7 +4,7 @@ import { parse } from 'yaml'
 
 vi.mock('react-native', () => ({ DynamicColorIOS: (values: unknown) => values }))
 
-import { colorValues, colors, textStyle, typography } from '../src/constants/theme'
+import { colorValues, colors, navigationColors, textStyle, typography } from '../src/constants/theme'
 
 const design = readFileSync(new URL('../../docs/DESIGN.md', import.meta.url), 'utf8')
 const yamlBlocks = [...design.matchAll(/```yaml\n([\s\S]*?)\n```/g)].map((match) => parse(match[1]))
@@ -84,5 +84,19 @@ describe('Turn theme', () => {
         expect(ratio, `${foreground} on ${background} in ${appearance}`).toBeGreaterThanOrEqual(floor)
       }
     }
+  })
+  test("gives the navigation headers DESIGN's tokens in every appearance", () => {
+    expect(navigationColors).toEqual({
+      primary: colors.accent,
+      background: colors.board,
+      card: colors.surface,
+      text: colors.ink,
+      border: colors.edge,
+      notification: colors['no-edge']
+    })
+    const layout = readFileSync(new URL('../src/app/_layout.tsx', import.meta.url), 'utf8')
+    expect(layout).toMatch(/colors: navigationColors/)
+    expect(layout).toMatch(/scheme === 'dark' \? DarkTheme : DefaultTheme/)
+    expect(layout).toMatch(/<ThemeProvider value=\{navigationTheme\}>\s*<Stack/)
   })
 })
