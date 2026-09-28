@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  printf 'Usage: %s <Turn.app> <output-directory> <pr|full>\n' "$0" >&2
+  printf 'Usage: %s <Turn.app> <output-directory> <pr|full|dark|small>\n' "$0" >&2
   exit 2
 }
 
@@ -13,7 +13,7 @@ out_dir=$2
 mode=$3
 
 case "$mode" in
-  pr|full) ;;
+  pr|full|dark|small) ;;
   *) usage ;;
 esac
 
@@ -48,6 +48,15 @@ for flow_path in "$flow_dir"/*.yaml "$flow_dir"/*.yml; do
     flow_files+=("$flow_path")
   fi
 done
+# FLOWS, when set, keeps only the named flows (space- or comma-separated, without .yaml), for a quick rerun.
+if [[ -n "${FLOWS:-}" ]]; then
+  kept=()
+  for flow_path in "${flow_files[@]}"; do
+    flow_name="$(basename "$flow_path")"
+    [[ " ${FLOWS//,/ } " == *" ${flow_name%.*} "* ]] && kept+=("$flow_path")
+  done
+  flow_files=("${kept[@]}")
+fi
 if [[ ${#flow_files[@]} -eq 0 ]]; then
   printf 'No Maestro flows found in %s\n' "$flow_dir" >&2
   exit 2
@@ -182,10 +191,10 @@ choose_small_device() {
   return 1
 }
 
-if ! choose_large_device; then
+if [[ "$mode" != small ]] && ! choose_large_device; then
   exit 2
 fi
-if [[ "$mode" == full ]] && ! choose_small_device; then
+if [[ "$mode" == full || "$mode" == small ]] && ! choose_small_device; then
   exit 2
 fi
 
@@ -266,13 +275,18 @@ failures=0
 : >"$out_dir/results.txt"
 printf 'device\tcombination\tflow\tresult\n' >>"$out_dir/results.txt"
 
-run_combination "$LARGE_DEVICE_ID" "$LARGE_DEVICE_NAME" large light
-run_combination \
-  "$LARGE_DEVICE_ID" "$LARGE_DEVICE_NAME" \
-  accessibility-extra-extra-extra-large light
-
-if [[ "$mode" == full ]]; then
+# pr: iPhone 16 at the default size and AX5. dark: iPhone 16 dark. small: the iPhone SE at both sizes.
+# full: all five.
+if [[ "$mode" == pr || "$mode" == full ]]; then
+  run_combination "$LARGE_DEVICE_ID" "$LARGE_DEVICE_NAME" large light
+  run_combination \
+    "$LARGE_DEVICE_ID" "$LARGE_DEVICE_NAME" \
+    accessibility-extra-extra-extra-large light
+fi
+if [[ "$mode" == full || "$mode" == dark ]]; then
   run_combination "$LARGE_DEVICE_ID" "$LARGE_DEVICE_NAME" large dark
+fi
+if [[ "$mode" == full || "$mode" == small ]]; then
   run_combination "$SMALL_DEVICE_ID" "$SMALL_DEVICE_NAME" large light
   run_combination \
     "$SMALL_DEVICE_ID" "$SMALL_DEVICE_NAME" \

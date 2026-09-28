@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { homeLayout, pageOffset, starterCardShown } from '../src/screens/home-layout'
+import { homeLayout, pageOffset, replyStat, starterCardShown } from '../src/screens/home-layout'
 
 describe('home layout', () => {
   test('keeps the row at 258 points with two columns on ordinary phones', () => {
@@ -41,6 +41,19 @@ describe('home layout', () => {
       rowHeight: 984,
       wholeMiddleScroll: true
     })
+  })
+
+  test('gives short screens a one-line caption and tighter bands, so the grid starts on screen', () => {
+    expect(homeLayout(375, 667, 1)).toMatchObject({ oneLineCaption: true, captionHeight: 48, gridGap: 8, tabMargin: 0 })
+    expect(homeLayout(375, 667, 1.353)).toMatchObject({ oneLineCaption: true, captionHeight: 48 })
+    expect(homeLayout(393, 852, 1)).toMatchObject({
+      oneLineCaption: false,
+      captionHeight: 94,
+      gridGap: 12,
+      tabMargin: 4
+    })
+    expect(homeLayout(393, 852, 0.8)).toMatchObject({ captionHeight: 86 })
+    expect(homeLayout(375, 667, 1.786)).toMatchObject({ oneLineCaption: false, captionHeight: 24 + 70 * 1.786 })
   })
 
   test('pages one visible screen and clamps at either end', () => {
@@ -121,5 +134,13 @@ describe('starter card', () => {
         reviewDismissed: false
       })
     ).toBe(false)
+  })
+  test('counts a reply for Stats on this phone only in Listen mode, against the line it answers', () => {
+    const held = { listening: true, composerMatching: false, newest: 4, answered: 3 }
+    expect(replyStat('row', held)).toEqual({ type: 'reply', from: 'row', seq: 3 })
+    expect(replyStat('grid', held)).toEqual({ type: 'reply', from: 'grid', seq: 4 })
+    expect(replyStat('row', { ...held, composerMatching: true })).toEqual({ type: 'reply', from: 'grid', seq: 4 })
+    expect(replyStat('row', { ...held, listening: false })).toBeNull()
+    expect(replyStat('grid', { ...held, listening: false })).toBeNull()
   })
 })
