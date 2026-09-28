@@ -1,0 +1,149 @@
+appId: com.m1ku.turn
+name: Stats on this phone
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# Listen, End, and Settings sit in the top bar at every size, as in listen.yaml.
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- scrollUntilVisible:
+    element: '.*Tap here to type what they say\..*'
+- tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'Are you tired?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+- extendedWaitUntil:
+    visible: '.*Are you tired\?.*'
+    timeout: 10000
+# The bottom bar is back once the partner's composer closes, so the size check below reads it.
+- extendedWaitUntil:
+    visible: Repeat
+    timeout: 15000
+# A reply from the row. The AX check runs first: once a tap starts speech, Repeat becomes Stop,
+# which would also satisfy a later "not visible" check.
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: "I'm tired"
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - tapOn: "I'm tired"
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: "I'm tired"
+      - tapOn: "I'm tired"
+- extendedWaitUntil:
+    visible: Repeat
+    timeout: 15000
+# A reply from the keyboard, through the composer, as in bank-2-actions.yaml.
+- scrollUntilVisible:
+    element: Type
+    direction: DOWN
+- tapOn: Type
+- extendedWaitUntil:
+    visible: Type what to say
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Type what to say
+    direction: DOWN
+- inputText: Tell me more
+- scrollUntilVisible:
+    element: Speak
+    direction: DOWN
+- tapOn: Speak
+- scrollUntilVisible:
+    element: Close composer
+    direction: UP
+- tapOn: Close composer
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: End
+- tapOn: End
+- scrollUntilVisible:
+    element: '^Listen$'
+- scrollUntilVisible:
+    element: Settings
+    direction: UP
+- tapOn: Settings
+- scrollUntilVisible:
+    element: Stats on this phone
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 180000
+- tapOn: Stats on this phone
+- extendedWaitUntil:
+    visible: 'Partner lines, 1'
+    timeout: 10000
+- scrollUntilVisible:
+    element: 'Replies from the row, 1'
+    direction: DOWN
+    timeout: 60000
+- scrollUntilVisible:
+    element: 'Replies from the grid or keyboard, 1'
+    direction: DOWN
+    timeout: 60000
+- scrollUntilVisible:
+    element: 'Partner lines, 1'
+    direction: UP
+    timeout: 60000
+- takeScreenshot: stats-counts
+- scrollUntilVisible:
+    element: Reset stats
+    direction: DOWN
+    timeout: 60000
+- tapOn: Reset stats
+- assertVisible: Reset stats\?
+- tapOn: Reset
+- scrollUntilVisible:
+    element: 'Partner lines, 0'
+    direction: UP
+    timeout: 60000
+- scrollUntilVisible:
+    element: 'Time to the row, None yet'
+    direction: DOWN
+    timeout: 60000
+- scrollUntilVisible:
+    element: 'Partner lines, 0'
+    direction: UP
+    timeout: 60000
+- takeScreenshot: stats-reset
