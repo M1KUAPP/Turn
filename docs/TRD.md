@@ -370,6 +370,9 @@ carries these headers:
 | `X-Turn-Build`   | `device` or `simulator`, set at build time |
 | `Content-Type`   | `application/json`, for `POST`             |
 
+Every answer, errors included, carries `Cache-Control: no-store`, so iOS's
+URL cache keeps neither the request nor the answer on the phone (PRIV-1).
+
 `GET /v1/config` returns what the app caches at launch and when Listen mode
 starts: whether Jev is on, whether the texts name TypeSafe (CONSENT-7), the
 free lines this user has left, and the current policy. The Worker asks the
