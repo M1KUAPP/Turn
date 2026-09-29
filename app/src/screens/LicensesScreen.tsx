@@ -5,7 +5,7 @@ import iosLicenses from '../content/ios-licenses.json'
 import licenses from '../content/open-source-licenses.json'
 import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
-import { ScreenTitle, useListMetrics } from './ListGroup'
+import { ScreenTitle, useListMetrics, useScreenTitle } from './ListGroup'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
 
@@ -28,6 +28,7 @@ export default function LicensesScreen() {
   const [query, setQuery] = useState('')
   const [focused, setFocused] = useState(false)
   const [expanded, setExpanded] = useState<string | null>(null)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Licenses')
   const results = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase()
     return needle ? allLicenses.filter((entry) => entry.name.toLocaleLowerCase().includes(needle)) : allLicenses
@@ -36,6 +37,7 @@ export default function LicensesScreen() {
   return (
     <FlatList
       contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
       style={{ flex: 1, backgroundColor: colors.board }}
       data={results}
       keyExtractor={(entry) => `${entry.source}/${entry.name}@${entry.version ?? ''}`}
@@ -43,7 +45,7 @@ export default function LicensesScreen() {
       contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 48 }}
       ListHeaderComponent={
         <View style={{ gap: 12, paddingBottom: 16 }}>
-          <ScreenTitle title="Licenses" boldText={boldText} />
+          <ScreenTitle title="Licenses" boldText={boldText} onLayout={onTitleLayout} />
           <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}>
             Licenses for {allLicenses.length} packages and native libraries used to build and run Turn. Search by name.
           </TurnText>

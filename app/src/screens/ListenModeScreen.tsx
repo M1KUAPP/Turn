@@ -5,7 +5,7 @@ import { colors } from '../constants/theme'
 import { consentWords } from '../consent/strings'
 import { useConsent, useTurn } from '../turn-context'
 import Button from './Button'
-import { ListGroup, ListRow, ScreenTitle, tileTones } from './ListGroup'
+import { ListGroup, ListRow, ScreenTitle, tileTones, useScreenTitle } from './ListGroup'
 import { permissionDateText } from './SettingsScreen'
 import TurnText from './TurnText'
 
@@ -15,6 +15,7 @@ export default function ListenModeScreen() {
   const { fontScale } = useWindowDimensions()
   const { boldText } = useTurn()
   const { consent, state } = useConsent()
+  const { onTitleLayout, scrollProps } = useScreenTitle('Listen mode')
   const allowed = state.permissionAllowed
   const date = permissionDateText(state.permissionDate)
   const title = allowed ? [consentWords.allowedOn, date].filter(Boolean).join(' ') : consentWords.notAllowed
@@ -22,10 +23,11 @@ export default function ListenModeScreen() {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
       style={{ flex: 1, backgroundColor: colors.board }}
       contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 22 }}
     >
-      <ScreenTitle title="Listen mode" boldText={boldText} />
+      <ScreenTitle title="Listen mode" boldText={boldText} onLayout={onTitleLayout} />
       <View
         style={{
           gap: 10,

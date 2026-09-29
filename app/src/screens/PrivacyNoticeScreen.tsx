@@ -2,20 +2,22 @@ import { Linking, ScrollView, View } from 'react-native'
 import { selectPrivacyNotice } from '../content/privacy-notice'
 import { colors } from '../constants/theme'
 import { useTurn } from '../turn-context'
-import { ScreenTitle } from './ListGroup'
+import { ScreenTitle, useScreenTitle } from './ListGroup'
 import TurnText from './TurnText'
 
 export default function PrivacyNoticeScreen() {
   const { ready, error, boldText } = useTurn()
   const sections = ready || error ? selectPrivacyNotice(ready?.typesafeNamed ?? false) : []
+  const { onTitleLayout, scrollProps } = useScreenTitle('Privacy notice')
 
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
       style={{ flex: 1, backgroundColor: colors.board }}
       contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 48, gap: 24 }}
     >
-      <ScreenTitle title="Privacy notice" boldText={boldText} />
+      <ScreenTitle title="Privacy notice" boldText={boldText} onLayout={onTitleLayout} />
       {!ready && !error && (
         <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
           Loading notice…

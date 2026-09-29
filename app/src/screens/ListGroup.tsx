@@ -1,6 +1,16 @@
+import { useNavigation } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
-import { Children, Fragment, isValidElement, type ReactNode } from 'react'
-import { Pressable, Switch, useWindowDimensions, View, type ColorValue } from 'react-native'
+import { Children, Fragment, isValidElement, useEffect, useRef, useState, type ReactNode } from 'react'
+import {
+  Pressable,
+  Switch,
+  useWindowDimensions,
+  View,
+  type ColorValue,
+  type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent
+} from 'react-native'
 import { colors } from '../constants/theme'
 import type { SymbolName } from './category-style'
 import PressFill from './PressFill'
@@ -57,17 +67,49 @@ export function SymbolTile({ symbol, tone, size }: { symbol: SymbolName; tone: T
 
 /** A screen's title in `large-title`, in the content under iOS's bar, since the bar's own title can't take the
  * rounded face. */
-export function ScreenTitle({ title, boldText }: { title: string; boldText: boolean }) {
+export function ScreenTitle({
+  title,
+  boldText,
+  onLayout
+}: {
+  title: string
+  boldText: boolean
+  onLayout?: (event: LayoutChangeEvent) => void
+}) {
   return (
     <TurnText
       kind="large-title"
       boldText={boldText}
       accessibilityRole="header"
+      onLayout={onLayout}
       style={{ color: colors.ink, marginHorizontal: 4, marginBottom: -6 }}
     >
       {title}
     </TurnText>
   )
+}
+
+/** Hands the screen's title to the bar once its large title scrolls under it, as iOS's own large titles do, so a
+ * screen scrolled at a large text size still says where it is; until then the bar holds only the back button. */
+export function useScreenTitle(title: string) {
+  const navigation = useNavigation()
+  const [inBar, setInBar] = useState(false)
+  const titleHeight = useRef(0)
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: inBar ? title : () => <View /> })
+  }, [navigation, inBar, title])
+
+  return {
+    onTitleLayout: (event: LayoutChangeEvent) => {
+      titleHeight.current = event.nativeEvent.layout.height
+    },
+    scrollProps: {
+      scrollEventThrottle: 16,
+      onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) =>
+        setInBar(event.nativeEvent.contentOffset.y > titleHeight.current)
+    }
+  }
 }
 
 export function GroupHeader({ title, boldText }: { title: string; boldText: boolean }) {
