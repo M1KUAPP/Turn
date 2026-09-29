@@ -99,3 +99,6 @@ graphify-out/*
 !graphify-out/GRAPH_REPORT.md
 !graphify-out/graph.html
 !graphify-out/graph.json
+
+# archify diagram runs: candidates, viewers, and browser evidence
+.archify/
