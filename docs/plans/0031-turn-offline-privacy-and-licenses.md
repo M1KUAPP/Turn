@@ -8,7 +8,14 @@
 
 **Tech stack:** Expo SDK 57, Expo Router, SecureStore, Crypto, SQLite, Vitest, Bun.
 
-**Spec:** [Issue #44](https://github.com/RevenueCat-M1KU/RevenueCat/issues/44), [TRD data inventory](../TRD.md#data-inventory), [Settings design](../DESIGN.md#settings).
+**Spec:** [Issue #44](https://github.com/RevenueCat-M1KU/RevenueCat/issues/44), [TRD data inventory](/docs/TRD.md#data-inventory), [Settings design](/docs/DESIGN.md#settings).
+
+Contents:
+
+1.  [Task 1: Cache the relay's naming choice](#task-1-cache-the-relays-naming-choice)
+1.  [Task 2: Show the bundled notice](#task-2-show-the-bundled-notice)
+1.  [Task 3: Bundle and show dependency licenses](#task-3-bundle-and-show-dependency-licenses)
+1.  [Task 4: Verify and hand off](#task-4-verify-and-hand-off)
 
 ## Task 1: Cache the relay's naming choice
 

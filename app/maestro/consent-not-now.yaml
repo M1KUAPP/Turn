@@ -14,10 +14,12 @@ name: Consent not now
         text: Repeat
         rightOf: Type
     commands:
+      # Slowly, so centering stops with the button between the bars rather than under the top one.
       - scrollUntilVisible:
           element: Not now
           centerElement: true
           direction: DOWN
+          speed: 10
           timeout: 60000
 - tapOn: Not now
 # Dismissing the card can leave the list above or below the row, so look up, then down.
@@ -42,8 +44,11 @@ name: Consent not now
     element: Not now
 - tapOn: Not now
 - waitForAnimationToEnd
+# Centered, since a phrase that has just come into view can sit under the bottom bar, where a tap lands on the bar.
 - scrollUntilVisible:
     element: 'Yes'
+    centerElement: true
+    speed: 10
 - tapOn: 'Yes'
 - scrollUntilVisible:
     element: '^Listen$'

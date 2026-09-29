@@ -14,10 +14,12 @@ name: Consent step
         text: Repeat
         rightOf: Type
     commands:
+      # Slowly, so centering stops with the button between the bars rather than under the top one.
       - scrollUntilVisible:
           element: Not now
           centerElement: true
           direction: DOWN
+          speed: 10
           timeout: 60000
 - tapOn: Not now
 # Dismissing the card can leave the list above or below the row, so look up, then down.
