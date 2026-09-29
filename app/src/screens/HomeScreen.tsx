@@ -46,6 +46,8 @@ type Props = {
   listen: ReturnType<typeof createLiveListenSession>
   boldText: boolean
   reduceMotion: boolean
+  increaseContrast: boolean
+  reduceTransparency: boolean
 }
 
 /** The lamp's glow (DESIGN, elevation): while the microphone is on, a radial `listen-glow` at 30%, 560 by 420 points
@@ -59,7 +61,7 @@ function BoardGlow({ on, width, reduceMotion }: { on: boolean; width: number; re
       ? on
         ? 1
         : 0
-      : withTiming(on ? 1 : 0, { duration: 400, reduceMotion: ReduceMotion.System })
+      : withTiming(on ? 1 : 0, { duration: 400, reduceMotion: ReduceMotion.Never })
   }, [on, reduceMotion, opacity])
   const style = useAnimatedStyle(() => ({ opacity: opacity.value }))
   return (
@@ -80,7 +82,15 @@ function BoardGlow({ on, width, reduceMotion }: { on: boolean; width: number; re
   )
 }
 
-export default function HomeScreen({ bank, speech, listen, boldText, reduceMotion }: Props) {
+export default function HomeScreen({
+  bank,
+  speech,
+  listen,
+  boldText,
+  reduceMotion,
+  increaseContrast,
+  reduceTransparency
+}: Props) {
   const router = useRouter()
   const depth = useDepth()
   const { consent, state: consentState } = useConsent()
@@ -466,6 +476,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             fontScale={fontScale}
             boldText={boldText}
             reduceMotion={reduceMotion}
+            increaseContrast={increaseContrast}
             level={listening.inputLevel}
             model={model}
             onType={listening.active ? () => setComposerMode('partner') : null}
@@ -487,6 +498,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           fontScale={fontScale}
           boldText={boldText}
           reduceMotion={reduceMotion}
+          increaseContrast={increaseContrast}
           categories={categories}
           tinted={composerMode !== 'speak'}
           starterCard={
@@ -736,6 +748,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
               fontScale={fontScale}
               boldText={boldText}
               reduceMotion={reduceMotion}
+              reduceTransparency={reduceTransparency}
               speaking={speaking.speaking}
               canRepeat={Boolean(speaking.lastText)}
               canPageUp={offset > 0}

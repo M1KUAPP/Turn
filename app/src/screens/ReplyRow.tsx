@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { AccessibilityInfo, Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import Animated, {
   cancelAnimation,
   Easing,
@@ -12,7 +12,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { categoryColors, colors, typography } from '../constants/theme'
 import { categoryPalette, categorySymbol } from './category-palette'
-import { bigRing, bigSheen, useDepth, useSystemSetting } from './home-depth'
+import { bigRing, bigSheen, useDepth } from './home-depth'
 import { slotTextKind, type homeLayout } from './home-layout'
 import PhraseCard from './PhraseCard'
 import StarterReviewCard from './StarterReviewCard'
@@ -27,6 +27,7 @@ type Props = {
   fontScale: number
   boldText: boolean
   reduceMotion: boolean
+  increaseContrast: boolean
   categories: readonly Category[]
   // Replies to the partner's lines are Tinted; typing's matches stay Plain (DESIGN, the phrase button).
   tinted: boolean
@@ -42,7 +43,7 @@ type Props = {
 const easeOut = (duration: number) => ({
   duration,
   easing: Easing.out(Easing.cubic),
-  reduceMotion: ReduceMotion.System
+  reduceMotion: ReduceMotion.Never
 })
 
 const paletteFor = (reply: Reply, categories: readonly Category[]) =>
@@ -112,7 +113,7 @@ function ReplySlot({
       tint.value = withDelay(delay, withTiming(fill, easeOut(240)))
       return
     }
-    words.value = withDelay(delay, withTiming(0, { duration: 90, reduceMotion: ReduceMotion.System }))
+    words.value = withDelay(delay, withTiming(0, { duration: 90, reduceMotion: ReduceMotion.Never }))
     const timer = setTimeout(() => {
       if (pressing.current) return
       setShown(reply)
@@ -181,6 +182,7 @@ function BigReply({
   fontScale,
   boldText,
   reduceMotion,
+  increaseContrast,
   speaking,
   onInteractionChange,
   onSpeak
@@ -190,12 +192,12 @@ function BigReply({
   fontScale: number
   boldText: boolean
   reduceMotion: boolean
+  increaseContrast: boolean
   speaking: boolean
   onInteractionChange?: (pressed: boolean) => void
   onSpeak: (reply: Reply) => void
 }) {
   const depth = useDepth()
-  const increaseContrast = useSystemSetting(AccessibilityInfo.isDarkerSystemColorsEnabled, 'darkerSystemColorsChanged')
   const pressed = useSharedValue(0)
   const pressStyle = useAnimatedStyle(() => ({ opacity: pressed.value }))
   const category = categories.find((candidate) => candidate.id === reply.categoryId)
@@ -303,6 +305,7 @@ export default function ReplyRow({
   fontScale,
   boldText,
   reduceMotion,
+  increaseContrast,
   categories,
   tinted,
   slots = [],
@@ -384,6 +387,7 @@ export default function ReplyRow({
                 fontScale={fontScale}
                 boldText={boldText}
                 reduceMotion={reduceMotion}
+                increaseContrast={increaseContrast}
                 speaking={activePhraseId === shownBig.id}
                 onInteractionChange={onInteractionChange}
                 onSpeak={onSpeak}

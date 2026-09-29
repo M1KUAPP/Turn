@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { AccessibilityInfo, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 
 // Plan 0044's shadows as React Native 0.86 boxShadow strings, one set per appearance; the big reply's shows in light
 // only. The place menu's scrim is the frames' black wash, 12% in light and the raised shadow's 45% in dark.
@@ -27,24 +26,4 @@ export const bigRing = 'rgba(255,255,255,0.06)'
 
 export function useDepth() {
   return depth[useColorScheme() === 'dark' ? 'dark' : 'light']
-}
-
-/** An iOS accessibility setting, read at mount and followed as it changes. */
-export function useSystemSetting(
-  read: () => Promise<boolean>,
-  event: 'darkerSystemColorsChanged' | 'reduceTransparencyChanged'
-) {
-  const [on, setOn] = useState(false)
-  useEffect(() => {
-    let alive = true
-    void read().then((value) => {
-      if (alive) setOn(value)
-    })
-    const subscription = AccessibilityInfo.addEventListener(event, (value) => setOn(Boolean(value)))
-    return () => {
-      alive = false
-      subscription.remove()
-    }
-  }, [read, event])
-  return on
 }
