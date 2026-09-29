@@ -79,7 +79,7 @@ description: >-
 Every screen keeps these ten rules; each names the requirement or principle it serves and the test that shows it holds. The rest of this document says how.
 
 1.  **Nothing moves under a finger.** The strip, the row's six slots, and the grid keep their places and sizes whatever the row shows; only the words inside a slot change, and never while it's pressed (ROW-1, ROW-5, BANK-4). Test: the grid's first button and every slot's frame stay put through every state of the row.
-2.  **Phrases read at 7 to 1.** Phrase text reaches 7 to 1 against its fill in all four appearances, other text 4.5 to 1, and every button's edge 3 to 1 (A11Y-7). Test: `check_contrast.py` and the theme test.
+2.  **Phrases read at 7 to 1.** Phrase text reaches 7 to 1 against its fill in all four appearances, other text 4.5 to 1, and every button's edge 3 to 1 (A11Y-7). Test: the theme test.
 3.  **A word for every state.** Listening, paused, a note, a marked tab, and Yes, No, and Not sure each carry a word or a shape as well as a color (A11Y-6). Test: every screen in grayscale, through Color Filters.
 4.  **Text follows Dynamic Type.** Every text style follows one of Apple's up to AX5 and wraps; only the row may cut a phrase short, and only the caption the partner's words, and then VoiceOver gives the whole text (A11Y-4). Test: every screen at AX5.
 5.  **Targets for unsteady hands.** Phrase buttons in the row and the grid are at least 78 points tall, or 64 on short screens, the strip's at least 48, and every other control at least 44 by 44 (A11Y-1). Test: the Accessibility Inspector.
@@ -402,6 +402,7 @@ colors:
 [ios-grays]: /docs/research/0029-turn-ios-design.md#system-colors-and-grays
 [ms-contrast]: /docs/research/0026-turn-motionsites.md#text-contrast-143
 [aac-color]: /docs/research/0028-aac-design.md#color-coding-and-backgrounds
+[ios-light]: /docs/research/0029-turn-ios-design.md#a-pulsing-listening-light
 
 ### Contrast
 
@@ -479,7 +480,7 @@ Each category's fill and edge, checked the same way:
 | `category-out-edge`       | `surface`                 | Out and about's edge against the card       | 5.1:1  | 8.2:1  | 8.0:1                | 11.5:1              | 3:1      |
 | `category-out-edge`       | `category-out-fill`       | Out and about's edge against its fill       | 4.6:1  | 7.4:1  | 6.5:1                | 11.0:1              | 3:1      |
 
-- **One table, every pair.** Every text and background pair the components name is in these two tables, and `check_contrast.py` fails a component whose pair isn't; the theme test recomputes the same pairs from the code. The closest to a floor are the free lines' pill, `listen` on `listen-soft`, at 4.5 to 1 in light, and `edge` on `board` at 3.3 to 1 in light.
+- **One table, every pair.** Every text and background pair the components name is in these two tables, and the theme test recomputes each pair from the code in all four appearances. The closest to a floor are the free lines' pill, `listen` on `listen-soft`, at 4.5 to 1 in light, and `edge` on `board` at 3.3 to 1 in light.
 - **Edges count.** A category's edge is checked against the board, the surface, and its own fill, since a card's edge is what separates it from all three.
 - **The system decides the appearance.** Turn follows the iPhone's light or dark appearance, with `userInterfaceStyle: 'automatic'`, and offers no setting of its own: Apple says to "Avoid offering an app-specific appearance setting", and no one polarity suits every low-vision reader, since some read faster with light letters on dark ([AAC design notes][aac-polarity]).
 - **Light is the reference.** Dark text on a light background reads faster for most people and for both age groups studied, so the light appearance is the one this document draws and checks first ([AAC design notes][aac-polarity]).
@@ -1258,7 +1259,6 @@ The row's height and its six slots are fixed for the text size and the screen (R
 - **Announcing.** A changed row is announced once, as the number of replies: "3 replies", or "1 reply" for the big button (A11Y-2).
 
 [aac-cost]: /docs/research/0028-aac-design.md#what-prediction-displays-cost
-[ios-symbols]: /docs/research/0029-turn-ios-design.md#symbols-for-speaking-listening-and-answering
 [aac-stale]: /docs/research/0028-aac-design.md#stale-rows-empty-rows-and-targets-that-move
 
 ### The strip
@@ -1658,7 +1658,7 @@ Apple's Accessibility Nutrition Labels make a test plan even without a store lis
 - **Where.** An iPhone on iOS 26, and an iPhone 16 simulator on iOS 27 resized in Device Hub to 320, 375, 402, and 440 points wide.
 - **Settings.** Everything in [the test plan](#the-test-plan).
 - **Real words.** The longest starter phrase in a slot and in the grid, a 300-character partner line in the caption, and the strip at AX5.
-- **Colors.** After any color change, `check_contrast.py`, from the [design plan's appendix][plan-checks], still prints `OK`.
+- **Colors.** After any color change, the theme test still passes. v1's `check_contrast.py`, from the [design plan's appendix][plan-checks], rejects `accent-tag`'s alpha and the category colors no component names, which the Lint bullet allows, so it no longer runs.
 
 [plan-checks]: /docs/plans/0008-turn-design.md#appendix-check-scripts
 
@@ -1694,7 +1694,6 @@ Each has a safe default, which this document follows until someone decides.
 [aac-targets]: /docs/research/0028-aac-design.md#target-size-and-spacing-for-tremor-and-weakness
 [ios-glass-content]: /docs/research/0029-turn-ios-design.md#content-and-controls-on-glass
 [ft-nobans]: /docs/research/0027-turn-frontend-trends.md#bans-that-dont-suit-an-aac-app
-[ios-light]: /docs/research/0029-turn-ios-design.md#a-pulsing-listening-light
 [ios-resize]: /docs/research/0029-turn-ios-design.md#resizable-iphone-apps-and-iphone-duo
 [ms-app]: /docs/research/0026-turn-motionsites.md#the-native-iphone-app
 [trd-a11y]: /docs/TRD.md#accessibility-in-the-app
