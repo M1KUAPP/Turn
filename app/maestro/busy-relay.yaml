@@ -44,8 +44,8 @@ name: Busy relay
 - scrollUntilVisible:
     element: Send
 - tapOn: Send
-- scrollUntilVisible:
-    element: '.*Ranked on this phone.*Are you tired\?.*'
+- extendedWaitUntil:
+    visible: '.*Ranked on this phone.*Are you tired\?.*'
     timeout: 20000
 - assertNotVisible: '.*Listen mode is degraded.*'
 - takeScreenshot: busy-relay-first
@@ -56,8 +56,8 @@ name: Busy relay
 - scrollUntilVisible:
     element: Send
 - tapOn: Send
-- scrollUntilVisible:
-    element: '.*Listen mode is degraded.*Ranked on this phone.*Do you want some water\?.*'
+- extendedWaitUntil:
+    visible: '.*Listen mode is degraded.*Ranked on this phone.*Do you want some water\?.*'
     timeout: 20000
 - takeScreenshot: busy-relay-degraded
 - scrollUntilVisible:
