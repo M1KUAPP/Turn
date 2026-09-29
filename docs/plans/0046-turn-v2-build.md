@@ -13,14 +13,14 @@ Contents:
 
 ## Pull requests
 
-| Pull request            | Build order steps              | Branch                |
-| ----------------------- | ------------------------------ | --------------------- |
-| #165                    | 1, tokens with DESIGN.md v2    | `docs/design-v2`      |
-| Home                    | 2, 3, and Home's motion from 7 | `feat/166-v2-home`    |
-| Other screens           | 4, 6, and their motion from 7  | `feat/166-v2-screens` |
-| Paywall hand-off, issue | 5                              | none                  |
+| Pull request               | Build order steps               | Branch                        |
+| -------------------------- | ------------------------------- | ----------------------------- |
+| #165                       | 1, tokens with DESIGN.md v2     | `docs/design-v2`              |
+| #170                       | 5's hero, at 3x                 | `chore/166-paywall-hero`      |
+| Home and the other screens | 2, 3, 4, 6, and their motion, 7 | `claude/zealous-gates-5pc5pu` |
+| Paywall hand-off, #171     | 5                               | none                          |
 
-Home and the other screens branch from #165 and touch different files: `ReplyRow.tsx`, `StarterReviewCard.tsx`, the composers, `home-layout.ts`, and the listen control's files belong to Home, and `SheetHeader.tsx`, `SecondaryButton.tsx`, `_layout.tsx`, and every settings, bank, consent, and permission screen belong to the other screens.
+Home and the other screens were built on their own branches, `feat/166-v2-home` and `feat/166-v2-screens`, from #165, and touch different files: `ReplyRow.tsx`, `StarterReviewCard.tsx`, the composers, `home-layout.ts`, and the listen control's files belong to Home, and `SheetHeader.tsx`, `SecondaryButton.tsx`, `_layout.tsx`, and every settings, bank, consent, and permission screen belong to the other screens. One pull request merges both, since they conflict only in DESIGN.md's contrast table and each had its own category helper.
 
 ## Home
 
@@ -32,7 +32,7 @@ Frames 17 to 21 and 33 to 58, 61, and 28: the permission step's symbol rows, the
 
 ## Paywall
 
-RevenueCat's Paywalls editor needs a person signed in to RevenueCat's dashboard, so step 5 goes to an issue for the paywall's owner, with frame 25's parts, strings, and colors, and the hero exported from Figma at 3x.
+RevenueCat's Paywalls editor needs a person signed in to RevenueCat's dashboard, so step 5 goes to #171 for the paywall's owner, with frame 25's parts, strings, and colors, and the hero exported from Figma at 3x.
 
 ## Checks
 
@@ -50,6 +50,13 @@ RevenueCat's Paywalls editor needs a person signed in to RevenueCat's dashboard,
 - **Floors:** notes and details are `footnote`, 13 points, as the type table and the frames have them.
 - **Launch screen:** the board's v2 colors, as DESIGN.md's Launch section asks.
 - **Maestro:** labels stay. From AX1 the toolbar splits into rows, as v1's bar did, since seven flows gate on Repeat beside Type; a step that taps something it just scrolled to centers it first, since Maestro counts a row under a bar as on screen.
-- **The meter:** the engine turns the recognizer's volume into a voice on and off signal before the session sees it, so the bars spring to varied heights while the partner speaks rather than measuring a level.
+- **The meter:** the bars follow the recognizer's input level, which the live session publishes up to ten times a second. The native engine and typed Listen measure no level, so their bars lie flat.
 - **Frame 28:** "Listen mode is unlocked." stays the note Settings shows, with plan 0044's new line under it; a blocking confirmation would stop PAY-4's purchase from going on into Listen mode.
 - **Frames 02 and 11:** the row stays empty with its note while Listen mode is off, since there's no shortlist then; Paused clears the partner's words, as LISTEN-8 asks.
+- **Frame 13:** Under 18 shows Mic off, as DESIGN does.
+- **The suggested tab:** a 2.5-point edge in its category's color marks it.
+- **Consent and permission answers:** Allow and Not now, and They agreed and They said no, are equal pairs in one secondary style, side by side and stacked from AX1, since CONSENT-1 asks for equal weight; frames 17 and 18 draw them unequal.
+- **Destructive actions:** Erase all data, Reset stats, Withdraw, and Delete read in `ink`, since red belongs to No; only the system's alerts show their red.
+- **One category helper:** `category-style.ts` gives every screen a category's hue and symbol. Typed shows `keyboard` and a category the user adds shows `square.grid.2x2.fill`, in Home's reply tags as in the bank.
+- **Checks:** each screen passes DESIGN's [Checks before a screen ships](/docs/DESIGN.md#checks-before-a-screen-ships).
+- **Left out:** the word highlight while Turn speaks, plan 0044's open question 3, and the short-screen check, since Xcode 27 has no iPhone SE Simulator.
