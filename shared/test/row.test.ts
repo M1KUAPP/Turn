@@ -35,6 +35,23 @@ describe('applyAnswer', () => {
     expect(row.slots).toEqual([null, null, null, null, null, null])
   })
 
+  test('shows the big button only when it leads the next phrase at or above the floor by the margin (ROW-3)', () => {
+    expect(replay(answer(1, { water: 0.9, tea: 0.8 }))).toMatchObject({
+      big: null,
+      slots: ['water', 'tea', null, null, null, null]
+    })
+    expect(replay(answer(1, { water: 0.9, tea: 0.75 })).big).toBe('water')
+    expect(replay(answer(1, { water: 0.9, tea: 0.55 })).big).toBe('water')
+  })
+
+  test('gives "How was physio?" at Clinic both of its close replies, not a big button (#150)', () => {
+    const row = replay(answer(1, { 'it-went-well': 0.86, 'it-was-hard': 0.77, 'its-getting-worse': 0.69 }))
+    expect(row).toMatchObject({
+      big: null,
+      slots: ['it-went-well', 'it-was-hard', 'its-getting-worse', null, null, null]
+    })
+  })
+
   test('changes nothing when no phrase reaches the floor (ROW-3)', () => {
     const before = replay(answer(1, { water: 0.7, tea: 0.65 }))
     const after = applyAnswer(before, answer(2, { juice: 0.5, water: 0.4 }))

@@ -338,12 +338,13 @@ says how each is built.
   user's phrases, never the fixed buttons; the shortlist holds the phrases
   already in the row. Check: a captured request.
 - **ROW-3, Must.** One big button shows the top phrase when its probability
-  is above the big-button bar, the line isn't a yes-or-no question, and its
+  is above the big-button bar and leads the next phrase at or above the floor
+  by the margin, the line isn't a yes-or-no question, and its
   topic isn't one that never gets a big button, which starts as body and
   pain, and agreeing to or refusing care. Otherwise the row shows up to six
   phrases at or above the floor. Below the floor, the row doesn't change. Check:
-  replay recorded answers at 0.9, 0.7, and 0.5, and a pain line and a consent
-  line at 0.9.
+  replay recorded answers at 0.9, 0.7, and 0.5, two phrases at 0.9 and 0.8,
+  and a pain line and a consent line at 0.9.
 - **ROW-4, Must.** For a yes-or-no question, Yes, No, and Not sure take the
   first three slots in that order, phrases at or above the floor take the
   other three, and no big button shows. Check: scenario 2.
