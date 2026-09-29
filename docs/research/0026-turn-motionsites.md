@@ -1,13 +1,6 @@
 # motionsites.ai for Turn research notes
 
-What changed on motionsites.ai since the [earlier motionsites note][ms-note]
-of September 22, 2026, what its prompt corpus holds that is close to Turn, how
-the corpus's common patterns fare against WCAG 2.2, and which of them suit
-Turn's app, demo video, Devpost images, and README, for Turn's
-`docs/DESIGN.md`, beside three sibling notes on frontend trends, AAC design,
-and iOS design. Every source was read on September 23, 2026, so counts and
-page text are as of that date, and judgment starts with "Synthesis:". Facts
-the earlier note already holds are linked, not repeated.
+What changed on motionsites.ai since the [earlier motionsites note][ms-note] of September 22, 2026, what its prompt corpus holds that is close to Turn, how the corpus's common patterns fare against WCAG 2.2, and which of them suit Turn's app, demo video, Devpost images, and README, for Turn's `docs/DESIGN.md`, beside three sibling notes on frontend trends, AAC design, and iOS design. Every source was read on September 23, 2026, so counts and page text are as of that date, and judgment starts with "Synthesis:". Facts the earlier note already holds are linked, not repeated.
 
 Contents:
 
@@ -25,82 +18,29 @@ Contents:
 
 ## Findings for DESIGN.md
 
-Synthesis: each bullet condenses the section it links to, where the sources
-are.
+Synthesis: each bullet condenses the section it links to, where the sources are.
 
-- **Nothing on motionsites.ai is about AAC, speech, or disability.** The
-  nearest prompts are a voice-input template and two prosthetics pages, one
-  with its subtext at 2.22 to 1. Turn can borrow craft, but its rules come
-  from the PRD's [accessibility requirements][prd-a11y]. See
-  [Subjects close to Turn](#subjects-close-to-turn).
-- **Borrow the newest spec format, not the pages.** The best prompt near Turn
-  lists its motion inventory, exact copy, and acceptance checks; DESIGN.md
-  should too, with checks that name A11Y-1 to A11Y-8. See
-  [Layout and type in the closest prompts](#layout-and-type-in-the-closest-prompts).
-- **Set text tokens per theme from computed floors.** White text on `#0a0a0a`
-  clears 4.5 to 1 only from 45% opacity, black on white from 54%, and a gray
-  can pass in one theme and fail in the other. A prompt that claims 4.5 to 1
-  computes to 3.92 to 4.41, so every pair in DESIGN.md should carry its
-  measured ratio. See [Text contrast (1.4.3)](#text-contrast-143).
-- **Give every control a solid fill and a 3:1 edge.** Glass edges of white at
-  10% to 20% on near-black reach 1.25 to 1.77 to 1, and 3 to 1 needs 34%; the
-  row, grid, and strip need the edges [A11Y-7][prd-a11y] asks for. See
-  [Boundaries and states (1.4.11 and 1.4.1)](#boundaries-and-states-1411-and-141).
-- **Calm in copy, busy in motion: refuse the loops.** Eleven of 18 wellness
-  prompts loop a video or an infinite animation, none handles reduced motion,
-  and no background loop in the corpus can be paused. Turn should have no
-  ambient motion, and the listening light should hold still. See
-  [Motion (2.2.2 and 2.3.3)](#motion-222-and-233).
-- **Nothing moves under a finger, and nothing hides behind hover.**
-  Fade-and-rise entrances shift targets, and 67.5% of motionsites.ai prompts
-  style hover. The row may cross-fade a phrase inside its fixed slot, swapping
-  instantly under Reduce Motion, and every control needs pressed and focused
-  looks. See [The native iPhone app](#the-native-iphone-app).
-- **Size for Turn, not for landing pages.** Pill buttons estimate at a median
-  of 40 px, 22.6% of motionsites.ai prompts set text under 12 px, and 32.5%
-  scale text with the viewport. Take the shapes, and take sizes from Turn's
-  44 pt minimum, 64 pt row, and Dynamic Type. See
-  [Resize, reflow, and target size (1.4.4, 1.4.10, 2.5.8)](#resize-reflow-and-target-size-144-1410-258).
-- **Warm light fields are the corpus's calm, legible pattern.** Cream with
-  brown or near-black ink reaches 12.98 to 16.17 to 1, with one accent and no
-  violet, a fit for Turn's light theme once the accent has a text shade. See
-  [Color, imagery, and motion in the closest prompts](#color-imagery-and-motion-in-the-closest-prompts).
-- **Design pitch assets for how they're seen.** Devpost shows a thumbnail at
-  333 by 222 px and a portrait screenshot at 264 by 573 px, GitHub serves
-  light and dark images, and YouTube's automatic captions can misrepresent
-  speech. That calls for a typographic thumbnail, 3:2 composites, both-theme
-  README images, and captions written by hand. See
-  [What transfers to Turn, surface by surface](#what-transfers-to-turn-surface-by-surface).
-- **Skip the website.** No Next Gen item needs one, and the privacy notice
-  ships in the app and README. See [A one-page website](#a-one-page-website).
-- **Still take patterns, not media or fonts.** The terms still reserve all
-  rights, and prompts near Turn load commercial type from font mirrors. See
-  [License and terms][ms-note-license].
+- **Nothing on motionsites.ai is about AAC, speech, or disability.** The nearest prompts are a voice-input template and two prosthetics pages, one with its subtext at 2.22 to 1. Turn can borrow craft, but its rules come from the PRD's [accessibility requirements][prd-a11y]. See [Subjects close to Turn](#subjects-close-to-turn).
+- **Borrow the newest spec format, not the pages.** The best prompt near Turn lists its motion inventory, exact copy, and acceptance checks; DESIGN.md should too, with checks that name A11Y-1 to A11Y-8. See [Layout and type in the closest prompts](#layout-and-type-in-the-closest-prompts).
+- **Set text tokens per theme from computed floors.** White text on `#0a0a0a` clears 4.5 to 1 only from 45% opacity, black on white from 54%, and a gray can pass in one theme and fail in the other. A prompt that claims 4.5 to 1 computes to 3.92 to 4.41, so every pair in DESIGN.md should carry its measured ratio. See [Text contrast (1.4.3)](#text-contrast-143).
+- **Give every control a solid fill and a 3:1 edge.** Glass edges of white at 10% to 20% on near-black reach 1.25 to 1.77 to 1, and 3 to 1 needs 34%; the row, grid, and strip need the edges [A11Y-7][prd-a11y] asks for. See [Boundaries and states (1.4.11 and 1.4.1)](#boundaries-and-states-1411-and-141).
+- **Calm in copy, busy in motion: refuse the loops.** Eleven of 18 wellness prompts loop a video or an infinite animation, none handles reduced motion, and no background loop in the corpus can be paused. Turn should have no ambient motion, and the listening light should hold still. See [Motion (2.2.2 and 2.3.3)](#motion-222-and-233).
+- **Nothing moves under a finger, and nothing hides behind hover.** Fade-and-rise entrances shift targets, and 67.5% of motionsites.ai prompts style hover. The row may cross-fade a phrase inside its fixed slot, swapping instantly under Reduce Motion, and every control needs pressed and focused looks. See [The native iPhone app](#the-native-iphone-app).
+- **Size for Turn, not for landing pages.** Pill buttons estimate at a median of 40 px, 22.6% of motionsites.ai prompts set text under 12 px, and 32.5% scale text with the viewport. Take the shapes, and take sizes from Turn's 44 pt minimum, 64 pt row, and Dynamic Type. See [Resize, reflow, and target size (1.4.4, 1.4.10, 2.5.8)](#resize-reflow-and-target-size-144-1410-258).
+- **Warm light fields are the corpus's calm, legible pattern.** Cream with brown or near-black ink reaches 12.98 to 16.17 to 1, with one accent and no violet, a fit for Turn's light theme once the accent has a text shade. See [Color, imagery, and motion in the closest prompts](#color-imagery-and-motion-in-the-closest-prompts).
+- **Design pitch assets for how they're seen.** Devpost shows a thumbnail at 333 by 222 px and a portrait screenshot at 264 by 573 px, GitHub serves light and dark images, and YouTube's automatic captions can misrepresent speech. That calls for a typographic thumbnail, 3:2 composites, both-theme README images, and captions written by hand. See [What transfers to Turn, surface by surface](#what-transfers-to-turn-surface-by-surface).
+- **Skip the website.** No Next Gen item needs one, and the privacy notice ships in the app and README. See [A one-page website](#a-one-page-website).
+- **Still take patterns, not media or fonts.** The terms still reserve all rights, and prompts near Turn load commercial type from font mirrors. See [License and terms][ms-note-license].
 
 [ms-note-license]: /docs/research/0013-motionsites.md#license-and-terms
 
 ## Sources and method
 
-- **Site.** From 02:54 on September 23, 2026 (UTC+8), `curl` fetched, without
-  logging in, the home page, the 13 URLs in the [sitemap][ms-sitemap], two
-  more Academy lessons, the routes the earlier note found in the site's code,
-  and eleven policy paths, reading the server-rendered HTML and page code.
-- **Live listing.** The home page reads a `prompts` table with the public key
-  it ships ([ms-index-js]); the same anonymous read at 18:55 UTC on September
-  22 (02:55 on September 23, UTC+8), 15 hours after the earlier note's,
-  returned 529 rows of the page's 15 columns and no prompt text.
-- **Corpus.** The 813 folders, unchanged since September 18, were read in
-  place. Counts come from the [appendix](#appendix-analysis-script) script;
-  each regex was checked against a sample of its matches and narrowed where
-  it caught something else, such as `translateY` for translation or "design
-  language" for sign language.
-- **Close reading.** 27 prompts, none among the earlier note's 27, were read
-  in full ([The 27 prompts read in full](#the-27-prompts-read-in-full)).
-- **Other sources.** [WCAG 2.2][wcag22], a W3C Recommendation of December
-  12, 2024, with its Understanding documents, [errata][wcag-errata], and W3C's
-  [WCAG2ICT][wcag2ict] note; Devpost's help center and the Shipaton 2026
-  gallery and project pages, whose images were measured; GitHub Docs; and
-  YouTube Help. Two web searches located the Devpost article.
+- **Site.** From 02:54 on September 23, 2026 (UTC+8), `curl` fetched, without logging in, the home page, the 13 URLs in the [sitemap][ms-sitemap], two more Academy lessons, the routes the earlier note found in the site's code, and eleven policy paths, reading the server-rendered HTML and page code.
+- **Live listing.** The home page reads a `prompts` table with the public key it ships ([ms-index-js]); the same anonymous read at 18:55 UTC on September 22 (02:55 on September 23, UTC+8), 15 hours after the earlier note's, returned 529 rows of the page's 15 columns and no prompt text.
+- **Corpus.** The 813 folders, unchanged since September 18, were read in place. Counts come from the [appendix](#appendix-analysis-script) script; each regex was checked against a sample of its matches and narrowed where it caught something else, such as `translateY` for translation or "design language" for sign language.
+- **Close reading.** 27 prompts, none among the earlier note's 27, were read in full ([The 27 prompts read in full](#the-27-prompts-read-in-full)).
+- **Other sources.** [WCAG 2.2][wcag22], a W3C Recommendation of December 12, 2024, with its Understanding documents, [errata][wcag-errata], and W3C's [WCAG2ICT][wcag2ict] note; Devpost's help center and the Shipaton 2026 gallery and project pages, whose images were measured; GitHub Docs; and YouTube Help. Two web searches located the Devpost article.
 
 [ms-sitemap]: https://motionsites.ai/sitemap.xml
 
@@ -108,22 +48,11 @@ are.
 
 ### Changes since September 22
 
-- **Three new prompts.** The listing grew from 526 to 529 rows, all three
-  created on September 22: "Space Voyage" (Creative, free), "Avelon Drive"
-  (Cars), and "Golden Identity" (Agency), all heroes. September counts 52
-  prompts, and 180 of 529 are free (appendix).
-- **An archive prompt went live.** `397-space-voyage`, from the July 17
-  export, matches the new "Space Voyage" row, so the newest matched folder
-  is dated September 22, not August 30 as in
-  [How the corpus matches the live catalog][ms-note-match].
-- **Prices and plans.** Unchanged from the [price table][ms-note-prices]:
-  $129 for three months, $279 a year, and $399 for life beside a struck-out
-  $759 ([ms-unlimited]), from the same script files the earlier note cited
-  ([ms-unlimited-js]; [ms-dialog-js]).
-- **Terms.** Unchanged: `/terms`, `/privacy`, `/license`, `/refund`, and seven
-  more policy paths, `/accessibility` among them, return HTTP 404; the footer
-  still reads "All rights reserved" ([ms-home]); and the DESIGN.md page still
-  shows four "Coming soon" cards ([ms-design-md]).
+- **Three new prompts.** The listing grew from 526 to 529 rows, all three created on September 22: "Space Voyage" (Creative, free), "Avelon Drive" (Cars), and "Golden Identity" (Agency), all heroes. September counts 52 prompts, and 180 of 529 are free (appendix).
+- **An archive prompt went live.** `397-space-voyage`, from the July 17 export, matches the new "Space Voyage" row, so the newest matched folder is dated September 22, not August 30 as in [How the corpus matches the live catalog][ms-note-match].
+- **Prices and plans.** Unchanged from the [price table][ms-note-prices]: $129 for three months, $279 a year, and $399 for life beside a struck-out
+  $759 ([ms-unlimited]), from the same script files the earlier note cited ([ms-unlimited-js]; [ms-dialog-js]).
+- **Terms.** Unchanged: `/terms`, `/privacy`, `/license`, `/refund`, and seven more policy paths, `/accessibility` among them, return HTTP 404; the footer still reads "All rights reserved" ([ms-home]); and the DESIGN.md page still shows four "Coming soon" cards ([ms-design-md]).
 
 [ms-note-match]: /docs/research/0013-motionsites.md#how-the-corpus-matches-the-live-catalog
 [ms-note-prices]: /docs/research/0013-motionsites.md#prices-on-september-22-2026
@@ -135,33 +64,17 @@ are.
 
 ### What the catalog holds near Turn
 
-- **App prompts stopped in July.** The Apps page ([ms-apps]) lists rows typed
-  `mobile` ([ms-index-js]): 41 prompts, 9 free, 40 created in July 2026 and
-  one in May, none since July 31.
-- **Health and wellness arrived with July.** 22 rows carry a health or
-  wellness category: Wellness (9), Healthcare (4), Health (3), and one each of
-  Health App, Medicine, Medical, Med, Mindfulness, and Fitness, the earliest
-  on July 6, 2026 ("Stillmind", on July 2, is filed under Hero); 7 are in the
-  corpus.
-- **Nothing on disability or speech.** One row each is filed under AI
-  Assistant, AI App, and Communication, but no category, title, or id names
-  accessibility, assistive technology, AAC, voice, speech, hearing, or
-  captions; "SpeakUp Venture Hero" is a venture studio's page.
+- **App prompts stopped in July.** The Apps page ([ms-apps]) lists rows typed `mobile` ([ms-index-js]): 41 prompts, 9 free, 40 created in July 2026 and one in May, none since July 31.
+- **Health and wellness arrived with July.** 22 rows carry a health or wellness category: Wellness (9), Healthcare (4), Health (3), and one each of Health App, Medicine, Medical, Med, Mindfulness, and Fitness, the earliest on July 6, 2026 ("Stillmind", on July 2, is filed under Hero); 7 are in the corpus.
+- **Nothing on disability or speech.** One row each is filed under AI Assistant, AI App, and Communication, but no category, title, or id names accessibility, assistive technology, AAC, voice, speech, hearing, or captions; "SpeakUp Venture Hero" is a venture studio's page.
 
 [ms-apps]: https://motionsites.ai/apps
 
 ### Accessibility guidance on the site
 
-- **None in the pages.** No page mentions reduced motion, contrast, WCAG,
-  screen readers, or captions; "accessible" appears once, meaning available,
-  in "motion-first websites accessible to anyone" ([ms-motionsite]).
-- **The gallery autoplays.** Each catalog card plays its preview video muted
-  and looping ([ms-card-js]). Of the stylesheet and 13 scripts read, only the
-  Sonner toast library's code has a `prefers-reduced-motion` rule
-  ([ms-main-js]).
-- **The one public prompt.** The scroll lesson's prompt scrubs video with the
-  scroll, reveals blocks on scroll, sets 10 or 11 px labels, and has no
-  reduced-motion rule, though it gives alt text ([ms-lesson-scroll]).
+- **None in the pages.** No page mentions reduced motion, contrast, WCAG, screen readers, or captions; "accessible" appears once, meaning available, in "motion-first websites accessible to anyone" ([ms-motionsite]).
+- **The gallery autoplays.** Each catalog card plays its preview video muted and looping ([ms-card-js]). Of the stylesheet and 13 scripts read, only the Sonner toast library's code has a `prefers-reduced-motion` rule ([ms-main-js]).
+- **The one public prompt.** The scroll lesson's prompt scrubs video with the scroll, reveals blocks on scroll, sets 10 or 11 px labels, and has no reduced-motion rule, though it gives alt text ([ms-lesson-scroll]).
 
 [ms-motionsite]: https://motionsites.ai/motionsite
 [ms-card-js]: https://motionsites.ai/assets/PromptCard-CABYwf6z.js
@@ -170,18 +83,13 @@ are.
 
 ## The corpus through Turn's lens
 
-Counts are prompts with a match, in four groups: all 813, the 483 from
-motionsites.ai (numbered and `ms-`), the 88 whose subject is close to Turn,
-and the 41 about a mobile app; the corpus itself is described in the earlier
-note's [local prompt corpus][ms-note-corpus] section.
+Counts are prompts with a match, in four groups: all 813, the 483 from motionsites.ai (numbered and `ms-`), the 88 whose subject is close to Turn, and the 41 about a mobile app; the corpus itself is described in the earlier note's [local prompt corpus][ms-note-corpus] section.
 
 [ms-note-corpus]: /docs/research/0013-motionsites.md#the-local-prompt-corpus
 
 ### Subjects close to Turn
 
-A subject is judged from the title, the live category and type, Superdesign's
-category and tags, and the first 500 characters, where motionsites.ai prompts
-name the build ([What 27 prompts share][ms-note-27]).
+A subject is judged from the title, the live category and type, Superdesign's category and tags, and the first 500 characters, where motionsites.ai prompts name the build ([What 27 prompts share][ms-note-27]).
 
 | Subject                         | All 813    | motionsites.ai 483 |
 | ------------------------------- | ---------- | ------------------ |
@@ -196,17 +104,12 @@ name the build ([What 27 prompts share][ms-note-27]).
 | Mobile app                      | 41 (5.0%)  | 22 (4.6%)          |
 | Any of these                    | 88 (10.8%) | 49 (10.1%)         |
 
-- **Assistive.** Two prosthetics pages (`354-prosthetics-hero`;
-  `hx-hand-prosthesis-simulator`) and an ADHD-friendly planner
-  (`ms-adhd-planner`).
-- **Voice.** A 619-character 21st.dev template that installs a voice-input
-  component (`dev21-user_2rQ1QHrJyxpmWMHhqhANzWMc64n-ai-voice-input`); no
-  prompt designs speech output, captions, or a conversation.
+- **Assistive.** Two prosthetics pages (`354-prosthetics-hero`; `hx-hand-prosthesis-simulator`) and an ADHD-friendly planner (`ms-adhd-planner`).
+- **Voice.** A 619-character 21st.dev template that installs a voice-input component (`dev21-user_2rQ1QHrJyxpmWMHhqhANzWMc64n-ai-voice-input`); no prompt designs speech output, captions, or a conversation.
 
 ### Accessibility mentions
 
-The periods date the 384 matched folders by the live listing, as in the
-earlier note's [Dates and the newest prompts][ms-note-dates].
+The periods date the 384 matched folders by the live listing, as in the earlier note's [Dates and the newest prompts][ms-note-dates].
 
 | Mention                          | All 813     | motionsites.ai 483 | Close to Turn 88 | Mar–Apr 125 | May–Jun 191 | Jul–Aug 68 |
 | -------------------------------- | ----------- | ------------------ | ---------------- | ----------- | ----------- | ---------- |
@@ -223,12 +126,8 @@ earlier note's [Dates and the newest prompts][ms-note-dates].
 | Alt text                         | 49 (6.0%)   | 41 (8.5%)          | 7 (8.0%)         | 0.0%        | 13.1%       | 17.6%      |
 | Captions or subtitles for video  | 0           | 0                  | 0                | 0.0%        | 0.0%        | 0.0%       |
 
-- **Numbers only in Superdesign.** No motionsites.ai prompt states a contrast
-  ratio; the five that do are Superdesign prompts asking for 4.5 to 1
-  (`sup-claymorphism-mobile-app-pastel-habit-tracker-home`).
-- **Archive boilerplate.** 49 of the 54 motionsites.ai prompts that name
-  accessibility, and 27 of the 29 that ask for contrast, are archive texts in
-  the "premium" [working-prompt mode][ms-note-modes].
+- **Numbers only in Superdesign.** No motionsites.ai prompt states a contrast ratio; the five that do are Superdesign prompts asking for 4.5 to 1 (`sup-claymorphism-mobile-app-pastel-habit-tracker-home`).
+- **Archive boilerplate.** 49 of the 54 motionsites.ai prompts that name accessibility, and 27 of the 29 that ask for contrast, are archive texts in the "premium" [working-prompt mode][ms-note-modes].
 
 [ms-note-dates]: /docs/research/0013-motionsites.md#dates-and-the-newest-prompts
 [ms-note-modes]: /docs/research/0013-motionsites.md#working-prompt-modes
@@ -246,15 +145,11 @@ earlier note's [Dates and the newest prompts][ms-note-dates].
 | White text at reduced opacity           | 157 (19.3%) | 147 (30.4%)        | 23 (26.1%)       | 7 (17.1%)     |
 | White text under 45% opacity            | 38 (4.7%)   | 33 (6.8%)          | 7 (8.0%)         | 3 (7.3%)      |
 
-- **Sizes.** Tailwind names count at their pixel sizes (`text-xs` is 12 px),
-  other sizes as written, and sizes under 6 px are skipped as decoration. Of
-  the 365 motionsites.ai prompts that set sizes, 109 (29.9%) go under 12 px.
+- **Sizes.** Tailwind names count at their pixel sizes (`text-xs` is 12 px), other sizes as written, and sizes under 6 px are skipped as decoration. Of the 365 motionsites.ai prompts that set sizes, 109 (29.9%) go under 12 px.
 
 ### Color, video, and motion
 
-The earlier note's [background classifier][ms-note-bg] finds 286 dark, 124
-light, and 403 undetermined pages among all 813, and 39, 11, and 38 among the
-88 close prompts.
+The earlier note's [background classifier][ms-note-bg] finds 286 dark, 124 light, and 403 undetermined pages among all 813, and 39, 11, and 38 among the 88 close prompts.
 
 | Pattern                              | All 813     | motionsites.ai 483 | Close to Turn 88 | Mobile app 41 |
 | ------------------------------------ | ----------- | ------------------ | ---------------- | ------------- |
@@ -273,44 +168,24 @@ light, and 403 undetermined pages among all 813, and 39, 11, and 38 among the
 | Blur-in entrance                     | 42 (5.2%)   | 42 (8.7%)          | 3 (3.4%)         | 2 (4.9%)      |
 | Phone frame or Dynamic Island        | 18 (2.2%)   | 17 (3.5%)          | 18 (20.5%)       | 18 (43.9%)    |
 
-- **No pause for loops.** The six play or pause controls belong to two
-  music-player mockups, a timer, a demo video, a button that starts a video,
-  and hover zones; none pauses a background loop.
-- **Reduced motion spares the video.** Of 19 prompts that play video and
-  handle reduced motion, 3 stop or hide the video under it (`ms-cyber-layer`;
-  `ms-pet-diagnostics`; `ms-space-planet`), and `ms-real-time-alerts` exempts
-  its video on purpose as the "static stage".
-- **Calm subjects move.** Of 18 wellness prompts, 11 loop a video or an
-  infinite animation and none handles reduced motion; of 15 health or care
-  prompts, 9 loop and 1 handles it.
-- **Dots and hover.** In the matches read, a pulsing dot sits beside a label
-  such as "All systems operational"; 1 of the 19 prompts handles reduced
-  motion. Of 7 prompts that say content appears on hover, 1 offers a focus or
-  touch fallback.
+- **No pause for loops.** The six play or pause controls belong to two music-player mockups, a timer, a demo video, a button that starts a video, and hover zones; none pauses a background loop.
+- **Reduced motion spares the video.** Of 19 prompts that play video and handle reduced motion, 3 stop or hide the video under it (`ms-cyber-layer`; `ms-pet-diagnostics`; `ms-space-planet`), and `ms-real-time-alerts` exempts its video on purpose as the "static stage".
+- **Calm subjects move.** Of 18 wellness prompts, 11 loop a video or an infinite animation and none handles reduced motion; of 15 health or care prompts, 9 loop and 1 handles it.
+- **Dots and hover.** In the matches read, a pulsing dot sits beside a label such as "All systems operational"; 1 of the 19 prompts handles reduced motion. Of 7 prompts that say content appears on hover, 1 offers a focus or touch fallback.
 
 [ms-note-bg]: /docs/research/0013-motionsites.md#page-backgrounds-and-hex-colors
 
 ### Button sizes
 
-A rounded button class with padding, a text size, and no set height is
-estimated as Tailwind's line height plus twice its vertical padding, at the
-phone-width classes. 62 such strings in 39 motionsites.ai prompts give a
-median of 40 px, 39 under 44 px and none under 24 px; 27 of the 39 prompts go
-under 44 px. The close prompts give 23 strings, with a median of 44 px.
+A rounded button class with padding, a text size, and no set height is estimated as Tailwind's line height plus twice its vertical padding, at the phone-width classes. 62 such strings in 39 motionsites.ai prompts give a median of 40 px, 39 under 44 px and none under 24 px; 27 of the 39 prompts go under 44 px. The close prompts give 23 strings, with a median of 44 px.
 
 ## Accessibility of the common patterns
 
-WCAG 2.2 is written for web content; for native software, W3C's
-[WCAG2ICT][wcag2ict] says to "use platform-defined density-independent pixel
-measurements which approximate the CSS reference pixel", naming "points (pt)
-for iOS". Contrast uses WCAG's relative luminance, with its 0.04045
-threshold, and "(L1 + 0.05) / (L2 + 0.05)" ([wcag22]).
+WCAG 2.2 is written for web content; for native software, W3C's [WCAG2ICT][wcag2ict] says to "use platform-defined density-independent pixel measurements which approximate the CSS reference pixel", naming "points (pt) for iOS". Contrast uses WCAG's relative luminance, with its 0.04045 threshold, and "(L1 + 0.05) / (L2 + 0.05)" ([wcag22]).
 
 ### Text contrast (1.4.3)
 
-Text needs "a contrast ratio of at least 4.5:1", and large text 3 to 1
-([wcag22]); large is "approximately 18.5px and 24px" for 14 pt bold and 18 pt,
-and "4.499:1 would not meet the 4.5:1 threshold" ([u-contrast]).
+Text needs "a contrast ratio of at least 4.5:1", and large text 3 to 1 ([wcag22]); large is "approximately 18.5px and 24px" for 14 pt bold and 18 pt, and "4.499:1 would not meet the 4.5:1 threshold" ([u-contrast]).
 
 | White text at                     | 30%  | 40%  | 50%  | 60%  | 70%  | 80%   | 90%   |
 | --------------------------------- | ---- | ---- | ---- | ---- | ---- | ----- | ----- |
@@ -318,98 +193,40 @@ and "4.499:1 would not meet the 4.5:1 threshold" ([u-contrast]).
 | On `#000000`                      | 2.46 | 3.66 | 5.28 | 7.37 | 9.96 | 13.08 | 16.75 |
 | On glass, white/10 over `#0a0a0a` | 2.70 | 3.72 | 5.00 | 6.56 | 8.40 | 10.55 | 13.02 |
 
-- **Floors.** White text reaches 4.5 to 1 from 45% on `#0a0a0a`, 46% on
-  black, and 47% on that glass, and black text from 54% on white; 38 prompts
-  set white text below 45%.
-- **Grays flip between themes.** `#6b7280` gives 4.83 on white but 4.10 on
-  `#0a0a0a`; `#888888` gives 5.58 on `#0a0a0a` but 3.54 on white; `#9ca3af`
-  gives 7.80 and 2.54; `#666666` gives 3.45 and 5.74.
-- **Thin type.** Thin fonts "may be rendered by user agents with a much
-  fainter color" ([u-contrast]); 22.2% of motionsites.ai prompts use weights
-  of 100 to 300 (`ms-mind-body-healing` sets its muted lines light).
-- **Claims that don't compute.** The claymorphism prompt pairs each pastel
-  with a darker text shade for "contrast >= 4.5:1", but its sage, peach,
-  butter, and sky pairs give 4.41, 3.92, 4.09, and 4.41, and its muted text
-  2.98 (`sup-claymorphism-mobile-app-pastel-habit-tracker-home`). White on the
-  terracotta send button gives 4.48 (`sup-warm-terracotta-ai-chat-interface`).
-- **Text over video.** WCAG's failure F83 is "using background images that do
-  not provide sufficient contrast" ([u-contrast]). Over a white frame, white
-  text needs a black scrim of at least 54%; 40% gives 2.85, and white at 80%
-  under 60% gives 4.37. Close prompts use 10% to 30% (`454-wellbeing-os`;
-  `082-celestial-renewal`) or "No dark overlay" (`457-wellness-hero`).
-- **The disability page.** `354-prosthetics-hero` sets 13 px subtext in
-  `#9ca3af` on `#f0f0ee`, 2.22 to 1, and an 11.5 px blue link at 3.22.
-- Synthesis: opacity ranks text in the corpus, and it works only above a
-  floor that changes with the background; DESIGN.md should name solid text
-  tokens per theme, each with its ratio, and measure every claim.
+- **Floors.** White text reaches 4.5 to 1 from 45% on `#0a0a0a`, 46% on black, and 47% on that glass, and black text from 54% on white; 38 prompts set white text below 45%.
+- **Grays flip between themes.** `#6b7280` gives 4.83 on white but 4.10 on `#0a0a0a`; `#888888` gives 5.58 on `#0a0a0a` but 3.54 on white; `#9ca3af` gives 7.80 and 2.54; `#666666` gives 3.45 and 5.74.
+- **Thin type.** Thin fonts "may be rendered by user agents with a much fainter color" ([u-contrast]); 22.2% of motionsites.ai prompts use weights of 100 to 300 (`ms-mind-body-healing` sets its muted lines light).
+- **Claims that don't compute.** The claymorphism prompt pairs each pastel with a darker text shade for "contrast >= 4.5:1", but its sage, peach, butter, and sky pairs give 4.41, 3.92, 4.09, and 4.41, and its muted text 2.98 (`sup-claymorphism-mobile-app-pastel-habit-tracker-home`). White on the terracotta send button gives 4.48 (`sup-warm-terracotta-ai-chat-interface`).
+- **Text over video.** WCAG's failure F83 is "using background images that do not provide sufficient contrast" ([u-contrast]). Over a white frame, white text needs a black scrim of at least 54%; 40% gives 2.85, and white at 80% under 60% gives 4.37. Close prompts use 10% to 30% (`454-wellbeing-os`; `082-celestial-renewal`) or "No dark overlay" (`457-wellness-hero`).
+- **The disability page.** `354-prosthetics-hero` sets 13 px subtext in `#9ca3af` on `#f0f0ee`, 2.22 to 1, and an 11.5 px blue link at 3.22.
+- Synthesis: opacity ranks text in the corpus, and it works only above a floor that changes with the background; DESIGN.md should name solid text tokens per theme, each with its ratio, and measure every claim.
 
 [u-contrast]: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
 
 ### Boundaries and states (1.4.11 and 1.4.1)
 
-- **The criteria.** "Visual information required to identify user interface
-  components and states" needs 3 to 1 against adjacent colors, and "Color is
-  not used as the only visual means of conveying information" ([wcag22]).
-- **Edges, with a caveat.** A control identified by its text needs no drawn
-  boundary, but "it is a best practice to delineate the boundary of all
-  controls" for people with cognitive disabilities ([u-non-text]); Turn's
-  [A11Y-7][prd-a11y] asks for button edges at 3 to 1.
-- **Glass edges fail.** Against `#0a0a0a`, white edges at 5%, 10%, 15%, 20%,
-  and 30% give 1.10, 1.25, 1.47, 1.77, and 2.59; 3 to 1 needs 34%.
-  `445-vitara-hero`'s chips give 1.61, `214-innovation-summit`'s FAQ cards
-  1.50, and `333-place-saver`'s plan cards 1.36.
-- **Shape as well as color.** The claymorphism screen makes done and pending
-  "obviously distinct", a raised check against a ringed well, and the
-  champagne paywall marks Pro with checks and Free with dashes
-  (`sup-champagne-noir-paywall-65a2fd`); the pulsing dots read sit beside
-  labels, so the word holds the meaning.
+- **The criteria.** "Visual information required to identify user interface components and states" needs 3 to 1 against adjacent colors, and "Color is not used as the only visual means of conveying information" ([wcag22]).
+- **Edges, with a caveat.** A control identified by its text needs no drawn boundary, but "it is a best practice to delineate the boundary of all controls" for people with cognitive disabilities ([u-non-text]); Turn's [A11Y-7][prd-a11y] asks for button edges at 3 to 1.
+- **Glass edges fail.** Against `#0a0a0a`, white edges at 5%, 10%, 15%, 20%, and 30% give 1.10, 1.25, 1.47, 1.77, and 2.59; 3 to 1 needs 34%. `445-vitara-hero`'s chips give 1.61, `214-innovation-summit`'s FAQ cards 1.50, and `333-place-saver`'s plan cards 1.36.
+- **Shape as well as color.** The claymorphism screen makes done and pending "obviously distinct", a raised check against a ringed well, and the champagne paywall marks Pro with checks and Free with dashes (`sup-champagne-noir-paywall-65a2fd`); the pulsing dots read sit beside labels, so the word holds the meaning.
 
 [u-non-text]: https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html
 
 ### Motion (2.2.2 and 2.3.3)
 
-- **Pause, Stop, Hide.** Moving content that "(1) starts automatically, (2)
-  lasts more than five seconds, and (3) is presented in parallel with other
-  content" needs a way to pause, stop, or hide it ([wcag22]), because "Some
-  people with cognitive disabilities and attention deficits are distracted by
-  continuous movement" ([u-pause]).
-- **What doesn't count.** "Having an animation stop only so long as a user has
-  focus on it ... would not be considered a 'mechanism for the user to
-  pause'" ([u-pause]). Synthesis: the 6 prompts whose motion pauses only
-  while hovered fail the same way.
-- **The corpus.** Autoplaying video (275 prompts), infinite animation (156),
-  and marquees (67) run past five seconds unpaused, and
-  `455-wellness-balance` rotates a card every 3.5 seconds.
-- **Animation from Interactions.** At Level AAA, "Motion animation triggered by
-  interaction can be disabled"; parallax is "often non-essential", reactions
-  include "nausea, migraine headaches", and `prefers-reduced-motion` is a
-  sufficient technique ([u-animation]). The corpus has parallax in 77 prompts
-  and scroll-linked motion in 108 (`466-yoga-coach` follows the cursor).
-- **Opacity isn't motion; blur now is.** WCAG's definition excludes "changes
-  of color, blurring, or opacity", but a June 27, 2025 erratum amends it "to
-  not exclude blurring" ([wcag-errata]), bringing the 42 blur-in entrances
-  under 2.3.3; fades without movement stay outside it.
-- Synthesis: the corpus's reduced-motion rules switch off entrances and keep
-  the ambient loops, the part 2.2.2 is about.
+- **Pause, Stop, Hide.** Moving content that "(1) starts automatically, (2) lasts more than five seconds, and (3) is presented in parallel with other content" needs a way to pause, stop, or hide it ([wcag22]), because "Some people with cognitive disabilities and attention deficits are distracted by continuous movement" ([u-pause]).
+- **What doesn't count.** "Having an animation stop only so long as a user has focus on it ... would not be considered a 'mechanism for the user to pause'" ([u-pause]). Synthesis: the 6 prompts whose motion pauses only while hovered fail the same way.
+- **The corpus.** Autoplaying video (275 prompts), infinite animation (156), and marquees (67) run past five seconds unpaused, and `455-wellness-balance` rotates a card every 3.5 seconds.
+- **Animation from Interactions.** At Level AAA, "Motion animation triggered by interaction can be disabled"; parallax is "often non-essential", reactions include "nausea, migraine headaches", and `prefers-reduced-motion` is a sufficient technique ([u-animation]). The corpus has parallax in 77 prompts and scroll-linked motion in 108 (`466-yoga-coach` follows the cursor).
+- **Opacity isn't motion; blur now is.** WCAG's definition excludes "changes of color, blurring, or opacity", but a June 27, 2025 erratum amends it "to not exclude blurring" ([wcag-errata]), bringing the 42 blur-in entrances under 2.3.3; fades without movement stay outside it.
+- Synthesis: the corpus's reduced-motion rules switch off entrances and keep the ambient loops, the part 2.2.2 is about.
 
 ### Resize, reflow, and target size (1.4.4, 1.4.10, 2.5.8)
 
-- **Resize.** Text must scale "up to 200 percent without loss of content or
-  functionality" ([wcag22]), and "incorrect use of viewport units to resize
-  text" is failure F94 ([u-resize]). 32.5% of motionsites.ai prompts size text
-  with the viewport or `clamp()`, and 27.3% set a full-height section that
-  hides overflow, clipping text that grows.
-- **Reflow.** Content must work "at a width equivalent to 320 CSS pixels"
-  without two-way scrolling ([wcag22]; [u-reflow]). `ms-pet-diagnostics`
-  checks "No horizontal scrollbar" from 320 px, one of a handful of prompts
-  that test overflow at a phone width.
-- **Target size.** Targets need "at least 24 by 24 CSS pixels" ([wcag22]),
-  for people with "hand tremors, spasticity, and quadriplegia"; important
-  controls should aim for 2.5.5 ([u-target]). The corpus's buttons pass 24 px,
-  and 39 of 62 fall under 44 ([Button sizes](#button-sizes)).
-- Synthesis: 32 to 40 px buttons pass 2.5.8, but Turn's users are the people
-  it names, and the PRD asks for 44 pt controls and 64 pt row buttons
-  ([A11Y-1][prd-a11y]), so the corpus's sizes don't transfer.
+- **Resize.** Text must scale "up to 200 percent without loss of content or functionality" ([wcag22]), and "incorrect use of viewport units to resize text" is failure F94 ([u-resize]). 32.5% of motionsites.ai prompts size text with the viewport or `clamp()`, and 27.3% set a full-height section that hides overflow, clipping text that grows.
+- **Reflow.** Content must work "at a width equivalent to 320 CSS pixels" without two-way scrolling ([wcag22]; [u-reflow]). `ms-pet-diagnostics` checks "No horizontal scrollbar" from 320 px, one of a handful of prompts that test overflow at a phone width.
+- **Target size.** Targets need "at least 24 by 24 CSS pixels" ([wcag22]), for people with "hand tremors, spasticity, and quadriplegia"; important controls should aim for 2.5.5 ([u-target]). The corpus's buttons pass 24 px, and 39 of 62 fall under 44 ([Button sizes](#button-sizes)).
+- Synthesis: 32 to 40 px buttons pass 2.5.8, but Turn's users are the people it names, and the PRD asks for 44 pt controls and 64 pt row buttons ([A11Y-1][prd-a11y]), so the corpus's sizes don't transfer.
 
 [u-resize]: https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html
 [u-reflow]: https://www.w3.org/WAI/WCAG22/Understanding/reflow.html
@@ -419,91 +236,41 @@ and "4.499:1 would not meet the 4.5:1 threshold" ([u-contrast]).
 
 ### The 27 prompts read in full
 
-- **Health and care:** `049-aura-hero`, `206-health-portal`,
-  `445-vitara-hero`, `hx-medlio`, `ms-mind-body-healing`,
-  `ms-pet-diagnostics`, and `ms-wellness-device`.
-- **Calm and wellness:** `077-calm-hero`, `082-celestial-renewal`,
-  `404-stillmind`, `454-wellbeing-os`, `455-wellness-balance`,
-  `457-wellness-hero`, `466-yoga-coach`,
-  `sup-claymorphism-mobile-app-pastel-habit-tracker-home`, and
-  `sup-softly-digital-wellness-app`.
+- **Health and care:** `049-aura-hero`, `206-health-portal`, `445-vitara-hero`, `hx-medlio`, `ms-mind-body-healing`, `ms-pet-diagnostics`, and `ms-wellness-device`.
+- **Calm and wellness:** `077-calm-hero`, `082-celestial-renewal`, `404-stillmind`, `454-wellbeing-os`, `455-wellness-balance`, `457-wellness-hero`, `466-yoga-coach`, `sup-claymorphism-mobile-app-pastel-habit-tracker-home`, and `sup-softly-digital-wellness-app`.
 - **Assistive and cognitive:** `354-prosthetics-hero` and `ms-adhd-planner`.
-- **Voice, communication, and AI assistants:**
-  `dev21-user_2rQ1QHrJyxpmWMHhqhANzWMc64n-ai-voice-input`,
-  `145-email-landing-page`, `ms-ai-workflow-agents`, and
-  `sup-warm-terracotta-ai-chat-interface`.
-- **Phone apps and paywalls:** `094-coffee-rewards`, `214-innovation-summit`,
-  `333-place-saver`, `424-travel-journal`, and
-  `sup-champagne-noir-paywall-65a2fd`.
+- **Voice, communication, and AI assistants:** `dev21-user_2rQ1QHrJyxpmWMHhqhANzWMc64n-ai-voice-input`, `145-email-landing-page`, `ms-ai-workflow-agents`, and `sup-warm-terracotta-ai-chat-interface`.
+- **Phone apps and paywalls:** `094-coffee-rewards`, `214-innovation-summit`, `333-place-saver`, `424-travel-journal`, and `sup-champagne-noir-paywall-65a2fd`.
 
 ### Layout and type in the closest prompts
 
-- **One screen, one message.** A floating nav pill, a badge, a two-line
-  headline, one sentence, and one or two pill buttons on a single viewport
-  (`077-calm-hero`; `457-wellness-hero`; `ms-mind-body-healing`).
-- **Type.** A grotesk for everything and an expressive face for the headline
-  or one word in it: Instrument Serif, Playfair Display, Cormorant Garamond,
-  Fraunces, or Inria Serif; also a script logo (`082-celestial-renewal`),
-  condensed capitals (`466-yoga-coach`), and a rounded sans (claymorphism).
-- **Small print.** Tab and FAQ labels at 10 px (`424-travel-journal`;
-  `214-innovation-summit`), a 10.5 px badge and 12 px terms
-  (`333-place-saver`), an 8 px logo line (`206-health-portal`), and table text
-  down to 8.5 px (`ms-pet-diagnostics`).
-- **A spec with checks.** `ms-pet-diagnostics` has "no scroll, entrance, or
-  decorative animations", a "Total motion inventory", no video under reduced
-  motion, and acceptance checks. Synthesis: DESIGN.md should read like it.
+- **One screen, one message.** A floating nav pill, a badge, a two-line headline, one sentence, and one or two pill buttons on a single viewport (`077-calm-hero`; `457-wellness-hero`; `ms-mind-body-healing`).
+- **Type.** A grotesk for everything and an expressive face for the headline or one word in it: Instrument Serif, Playfair Display, Cormorant Garamond, Fraunces, or Inria Serif; also a script logo (`082-celestial-renewal`), condensed capitals (`466-yoga-coach`), and a rounded sans (claymorphism).
+- **Small print.** Tab and FAQ labels at 10 px (`424-travel-journal`; `214-innovation-summit`), a 10.5 px badge and 12 px terms (`333-place-saver`), an 8 px logo line (`206-health-portal`), and table text down to 8.5 px (`ms-pet-diagnostics`).
+- **A spec with checks.** `ms-pet-diagnostics` has "no scroll, entrance, or decorative animations", a "Total motion inventory", no video under reduced motion, and acceptance checks. Synthesis: DESIGN.md should read like it.
 
 ### Color, imagery, and motion in the closest prompts
 
-- **Dark over video, mostly.** 39 of the 88 close prompts are dark and 11
-  light; video sits behind 37, under light scrims or none. The imagery is
-  generated skies, water, woods, soft-lit people, and products.
-- **Warm light, when light.** `#321C04` on `#F6E4CF` gives 12.98 to 1
-  (`ms-adhd-planner`), and `#1A1A1A` on `#FAF6F0` 16.17
-  (`sup-warm-terracotta-ai-chat-interface`). Each keeps one accent and bans
-  violet; the terracotta gives 4.16 as text on cream, its deeper shade 5.18
-  on paper.
-- **Ambient motion.** Video that floats forever (`049-aura-hero`), an overlay
-  that bobs forever (`404-stillmind`), a pulsing "Breathe" button
-  (`sup-softly-digital-wellness-app`), shimmering headline text
-  (`145-email-landing-page`), and clouds on the scroll
-  (`082-celestial-renewal`).
-- **Reduced motion.** Four of the 27 handle it (`ms-pet-diagnostics`;
-  `333-place-saver`; `094-coffee-rewards`; `214-innovation-summit`).
+- **Dark over video, mostly.** 39 of the 88 close prompts are dark and 11 light; video sits behind 37, under light scrims or none. The imagery is generated skies, water, woods, soft-lit people, and products.
+- **Warm light, when light.** `#321C04` on `#F6E4CF` gives 12.98 to 1 (`ms-adhd-planner`), and `#1A1A1A` on `#FAF6F0` 16.17 (`sup-warm-terracotta-ai-chat-interface`). Each keeps one accent and bans violet; the terracotta gives 4.16 as text on cream, its deeper shade 5.18 on paper.
+- **Ambient motion.** Video that floats forever (`049-aura-hero`), an overlay that bobs forever (`404-stillmind`), a pulsing "Breathe" button (`sup-softly-digital-wellness-app`), shimmering headline text (`145-email-landing-page`), and clouds on the scroll (`082-celestial-renewal`).
+- **Reduced motion.** Four of the 27 handle it (`ms-pet-diagnostics`; `333-place-saver`; `094-coffee-rewards`; `214-innovation-summit`).
 
 ### Copy and tone in the closest prompts
 
-- **Calm in few words.** "Calm Your Mind" (`077-calm-hero`), "Your calm is
-  always within" (`457-wellness-hero`), and "No noise." beside four looping
-  videos (`ms-adhd-planner`); a focus app promises to "Rise above the chaos"
-  over an animation that never stops (`404-stillmind`).
-- **Trust lines.** Compliance badges (`049-aura-hero`), a YC badge
-  (`ms-ai-workflow-agents`), and "Terra can make mistakes"
-  (`sup-warm-terracotta-ai-chat-interface`).
-- **Paywalls.** "Premium, not pushy", ending with Terms, Privacy, and Restore
-  (`sup-champagne-noir-paywall-65a2fd`), or features, two plan cards, a badge,
-  and a full-width Subscribe button (`333-place-saver`).
-- **Disability.** The prosthetics hero addresses "people who keep fighting"
-  (`354-prosthetics-hero`).
+- **Calm in few words.** "Calm Your Mind" (`077-calm-hero`), "Your calm is always within" (`457-wellness-hero`), and "No noise." beside four looping videos (`ms-adhd-planner`); a focus app promises to "Rise above the chaos" over an animation that never stops (`404-stillmind`).
+- **Trust lines.** Compliance badges (`049-aura-hero`), a YC badge (`ms-ai-workflow-agents`), and "Terra can make mistakes" (`sup-warm-terracotta-ai-chat-interface`).
+- **Paywalls.** "Premium, not pushy", ending with Terms, Privacy, and Restore (`sup-champagne-noir-paywall-65a2fd`), or features, two plan cards, a badge, and a full-width Subscribe button (`333-place-saver`).
+- **Disability.** The prosthetics hero addresses "people who keep fighting" (`354-prosthetics-hero`).
 
 ### How they present a phone app
 
-- **HTML iPhones.** Frames 370 to 393 px wide with a drawn Dynamic Island,
-  status bar, and home indicator, two or three side by side on a stage that
-  scales to fit (`333-place-saver`; `214-innovation-summit`;
-  `424-travel-journal`).
-- **Shrunk to fit.** Screens scaled to 0.78 or 0.787, or content to 93%, put
-  labels at 8 to 10 px (`094-coffee-rewards`; `333-place-saver`;
-  `214-innovation-summit`); Superdesign instead draws a frameless 390 px
-  screen (`sup-claymorphism-mobile-app-pastel-habit-tracker-home`).
+- **HTML iPhones.** Frames 370 to 393 px wide with a drawn Dynamic Island, status bar, and home indicator, two or three side by side on a stage that scales to fit (`333-place-saver`; `214-innovation-summit`; `424-travel-journal`).
+- **Shrunk to fit.** Screens scaled to 0.78 or 0.787, or content to 93%, put labels at 8 to 10 px (`094-coffee-rewards`; `333-place-saver`; `214-innovation-summit`); Superdesign instead draws a frameless 390 px screen (`sup-claymorphism-mobile-app-pastel-habit-tracker-home`).
 
 ## What transfers to Turn, surface by surface
 
-Every bullet here is judgment. Turn's constraints come from its
-[product principles][product-principles], the PRD's
-[accessibility requirements][prd-a11y], and the TRD's
-[accessibility in the app][trd-a11y]; web-only techniques are in the earlier
-note's [Web-only patterns][ms-note-web].
+Every bullet here is judgment. Turn's constraints come from its [product principles][product-principles], the PRD's [accessibility requirements][prd-a11y], and the TRD's [accessibility in the app][trd-a11y]; web-only techniques are in the earlier note's [Web-only patterns][ms-note-web].
 
 [product-principles]: /docs/PRODUCT.md#product-principles
 [ms-note-web]: /docs/research/0013-motionsites.md#web-only-patterns
@@ -511,33 +278,17 @@ note's [Web-only patterns][ms-note-web].
 ### The native iPhone app
 
 - Synthesis: **fits.**
-  - Text tokens per theme with measured ratios, and the computed floors as the
-    faintest level allowed.
-  - A warm light theme and a near-black dark theme, each with one accent that
-    has a text shade and a fill shade.
-  - State shown by shape, icon, and word: the raised check and ringed well
-    suit the fixed buttons and the marked category tab ([ROW-9][prd-row]), and
-    a dot beside a word suits the listening light, which
-    [CONSENT-5][prd-consent] already labels "Listening".
+  - Text tokens per theme with measured ratios, and the computed floors as the faintest level allowed.
+  - A warm light theme and a near-black dark theme, each with one accent that has a text shade and a fill shade.
+  - State shown by shape, icon, and word: the raised check and ringed well suit the fixed buttons and the marked category tab ([ROW-9][prd-row]), and a dot beside a word suits the listening light, which [CONSENT-5][prd-consent] already labels "Listening".
   - Opaque buttons with 3:1 edges, exact copy, and a written motion inventory.
 - Synthesis: **doesn't fit.**
-  - Video, ambient loops, parallax, scroll-linked motion, marquees, cursor
-    effects, and hover reveals: an iPhone has no pointer, and loops are what
-    2.2.2 targets.
-  - Entrance rises and staggers on the row or the grid: even 8 px moves a
-    button a finger is heading for, against the fixed positions AAC relies on
-    ([AAC notes][aac-fixed]) and [ROW-1][prd-row]. A cross-fade inside a fixed
-    slot moves nothing; under Reduce Motion, the swap is instant.
-  - A light that pulses all session, the corpus's pulsing dot: a steady light
-    with its word says the same, and [A11Y-6][prd-a11y] already stops the
-    pulse under Reduce Motion.
-  - Blur-in text, glass edges, small tracked capitals, thin weights, and type
-    tied to screen width; Dynamic Type sets sizes ([A11Y-4][prd-a11y]).
-  - 32 to 40 px pills, hover-only actions where Turn uses named actions
-    ([A11Y-8][prd-a11y]), and splash counters or entrances that wait for
-    media, since speaking never waits ([SPEAK-5][prd-grid]).
-  - The corpus's shrink on press, to 0.95 or 0.98; a darker fill gives
-    feedback without changing the target under the finger.
+  - Video, ambient loops, parallax, scroll-linked motion, marquees, cursor effects, and hover reveals: an iPhone has no pointer, and loops are what 2.2.2 targets.
+  - Entrance rises and staggers on the row or the grid: even 8 px moves a button a finger is heading for, against the fixed positions AAC relies on ([AAC notes][aac-fixed]) and [ROW-1][prd-row]. A cross-fade inside a fixed slot moves nothing; under Reduce Motion, the swap is instant.
+  - A light that pulses all session, the corpus's pulsing dot: a steady light with its word says the same, and [A11Y-6][prd-a11y] already stops the pulse under Reduce Motion.
+  - Blur-in text, glass edges, small tracked capitals, thin weights, and type tied to screen width; Dynamic Type sets sizes ([A11Y-4][prd-a11y]).
+  - 32 to 40 px pills, hover-only actions where Turn uses named actions ([A11Y-8][prd-a11y]), and splash counters or entrances that wait for media, since speaking never waits ([SPEAK-5][prd-grid]).
+  - The corpus's shrink on press, to 0.95 or 0.98; a darker fill gives feedback without changing the target under the finger.
 
 [prd-consent]: /docs/PRD.md#permission-and-consent
 [aac-fixed]: /docs/research/0022-aac-practice.md#fixed-button-positions-and-motor-automaticity
@@ -545,24 +296,10 @@ note's [Web-only patterns][ms-note-web].
 
 ### The demo video
 
-- Synthesis: **fits.** Title cards in the corpus's rhythm, two short lines
-  with one emphasized word that fade and rise once, then rest; one accent;
-  and one script for voice, on-screen text, and captions ([pitch][idea-pitch]).
-- Synthesis: **doesn't fit.** Loops behind text, blur-in or letter-by-letter
-  reveals, shimmering gradients, and secondary lines in white at 40% to 60%.
-  HTML phone frames don't apply: the rules want footage "functioning on the
-  device" ([Next Gen notes][ng-submit]).
-- **Size.** Devpost embeds the player at 660 by 371 px ([dp-day-box]), about
-  a third of 1920 by 1080, so 36 px text shows near 12 px. Synthesis: size
-  on-screen text for the embed.
-- **Captions.** WCAG's captions "identify who is speaking and include
-  non-speech information" ([u-captions]); YouTube's automatic captions "might
-  misrepresent the spoken content due to mispronunciations, accents, dialects,
-  or background noise" ([yt-auto]), and its transcripts mark speakers with
-  ">>" and sounds in square brackets ([yt-transcript]). Synthesis: the demo
-  mixes a partner's speech with a synthetic voice, so upload a written caption
-  file naming the partner and Turn, and burn in the key exchange on a plate of
-  at least 54% black.
+- Synthesis: **fits.** Title cards in the corpus's rhythm, two short lines with one emphasized word that fade and rise once, then rest; one accent; and one script for voice, on-screen text, and captions ([pitch][idea-pitch]).
+- Synthesis: **doesn't fit.** Loops behind text, blur-in or letter-by-letter reveals, shimmering gradients, and secondary lines in white at 40% to 60%. HTML phone frames don't apply: the rules want footage "functioning on the device" ([Next Gen notes][ng-submit]).
+- **Size.** Devpost embeds the player at 660 by 371 px ([dp-day-box]), about a third of 1920 by 1080, so 36 px text shows near 12 px. Synthesis: size on-screen text for the embed.
+- **Captions.** WCAG's captions "identify who is speaking and include non-speech information" ([u-captions]); YouTube's automatic captions "might misrepresent the spoken content due to mispronunciations, accents, dialects, or background noise" ([yt-auto]), and its transcripts mark speakers with ">>" and sounds in square brackets ([yt-transcript]). Synthesis: the demo mixes a partner's speech with a synthetic voice, so upload a written caption file naming the partner and Turn, and burn in the key exchange on a plate of at least 54% black.
 
 [u-captions]: https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html
 [yt-auto]: https://support.google.com/youtube/answer/6373554
@@ -570,23 +307,11 @@ note's [Web-only patterns][ms-note-web].
 
 ### Devpost gallery images and thumbnail
 
-- **Devpost's rule.** The thumbnail "should be a JPG, PNG or GIF format, 5 MB
-  max file size. For best results, use a 3:2 ratio." ([dp-steps])
-- **Measured sizes.** The 2026 gallery shows each card's image at 333 by 222
-  px, cropped to 3:2, taking the first gallery image when no thumbnail is set
-  ([dp-gallery]). On a project page, images fit a box about 806 by 573 px: a
-  1800 by 1200 image shows at 806 by 537, a 1206 by 2622 screenshot at 264 by
-  573, each with its caption below ([dp-day-box]; [dp-portrait]).
-- **Required.** A 1179 by 2556 screenshot "WITHOUT device frames" and a 1024
-  px icon ([Next Gen notes][ng-submit]), which winners' marketing reuses
-  ([Devpost form notes][ship-form]).
-- Synthesis: **fits.** A typographic 3:2 thumbnail, the logline and one big
-  reply button on a solid field, legible at 333 px; 3:2 composites of two or
-  three phones side by side, each with a one-line caption; and the frameless
-  screenshot showing the row mid-answer, since it may stand alone.
-- Synthesis: **doesn't fit.** A phone screenshot as the thumbnail, which
-  crops to a sliver; an animated GIF thumbnail; and image text below the
-  contrast floors.
+- **Devpost's rule.** The thumbnail "should be a JPG, PNG or GIF format, 5 MB max file size. For best results, use a 3:2 ratio." ([dp-steps])
+- **Measured sizes.** The 2026 gallery shows each card's image at 333 by 222 px, cropped to 3:2, taking the first gallery image when no thumbnail is set ([dp-gallery]). On a project page, images fit a box about 806 by 573 px: a 1800 by 1200 image shows at 806 by 537, a 1206 by 2622 screenshot at 264 by 573, each with its caption below ([dp-day-box]; [dp-portrait]).
+- **Required.** A 1179 by 2556 screenshot "WITHOUT device frames" and a 1024 px icon ([Next Gen notes][ng-submit]), which winners' marketing reuses ([Devpost form notes][ship-form]).
+- Synthesis: **fits.** A typographic 3:2 thumbnail, the logline and one big reply button on a solid field, legible at 333 px; 3:2 composites of two or three phones side by side, each with a one-line caption; and the frameless screenshot showing the row mid-answer, since it may stand alone.
+- Synthesis: **doesn't fit.** A phone screenshot as the thumbnail, which crops to a sliver; an animated GIF thumbnail; and image text below the contrast floors.
 
 [dp-steps]: https://help.devpost.com/article/126-know-your-submission-steps
 [dp-gallery]: https://revenuecat-shipaton-2026.devpost.com/project-gallery
@@ -595,22 +320,11 @@ note's [Web-only patterns][ms-note-web].
 
 ### The README on GitHub
 
-- **Light and dark images.** Yes: "By using the HTML `<picture>` element with
-  the `prefers-color-scheme` media feature, you can add an image that changes
-  depending on whether a visitor is using light or dark mode", with a
-  fallback `<img>` ([gh-quickstart]).
-- **Alt text.** "Alt text is a short text equivalent of the information in
-  the image" ([gh-syntax]).
-- **Animated GIFs.** "By default, GitHub syncs with your system-level
-  preference for reduced motion" for animated `.gif` images ([gh-a11y]), and
-  stopping a GIF within five seconds is a sufficient technique for 2.2.2
-  ([u-pause]).
-- **Social preview.** "1280 by 640 pixels for best display", under 1 MB, and
-  PNGs with transparency work ([gh-social]).
-- Synthesis: a static hero in light and dark versions with two or three
-  phones; the logline and evaluation table as text, since WCAG prefers text to
-  images of text ([wcag22]); and the [pitch's][idea-pitch] "aha" clip as a
-  short GIF whose first frame tells the story, as many will see it paused.
+- **Light and dark images.** Yes: "By using the HTML `<picture>` element with the `prefers-color-scheme` media feature, you can add an image that changes depending on whether a visitor is using light or dark mode", with a fallback `<img>` ([gh-quickstart]).
+- **Alt text.** "Alt text is a short text equivalent of the information in the image" ([gh-syntax]).
+- **Animated GIFs.** "By default, GitHub syncs with your system-level preference for reduced motion" for animated `.gif` images ([gh-a11y]), and stopping a GIF within five seconds is a sufficient technique for 2.2.2 ([u-pause]).
+- **Social preview.** "1280 by 640 pixels for best display", under 1 MB, and PNGs with transparency work ([gh-social]).
+- Synthesis: a static hero in light and dark versions with two or three phones; the logline and evaluation table as text, since WCAG prefers text to images of text ([wcag22]); and the [pitch's][idea-pitch] "aha" clip as a short GIF whose first frame tells the story, as many will see it paused.
 
 [gh-quickstart]: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github
 [gh-syntax]: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
@@ -619,19 +333,10 @@ note's [Web-only patterns][ms-note-web].
 
 ### A one-page website
 
-- **What Next Gen asks for.** A description, a video, a licensed public
-  repository, an icon, and a screenshot, and no web page; a web-only app isn't
-  eligible ([Next Gen notes][ng-submit]). Judges "may choose to judge based
-  solely on the text description, images, and video"
-  ([Next Gen criteria][ng-criteria]).
-- **Privacy.** The notice ships in the app and reads offline
-  ([SET-2][prd-settings]), and the README covers it ([SUBMIT-2][prd-submit]);
-  RevenueCat asks for disclosures in a privacy policy, not on a web page
-  ([services notes][svc-rc-privacy]).
-- **Later.** A store release needs a privacy policy link in App Store Connect
-  and a support link ([best-practices notes][bp-privacy]).
-- Synthesis: a website would only repeat the README; after a store release,
-  one static page with the privacy notice and a support address will do.
+- **What Next Gen asks for.** A description, a video, a licensed public repository, an icon, and a screenshot, and no web page; a web-only app isn't eligible ([Next Gen notes][ng-submit]). Judges "may choose to judge based solely on the text description, images, and video" ([Next Gen criteria][ng-criteria]).
+- **Privacy.** The notice ships in the app and reads offline ([SET-2][prd-settings]), and the README covers it ([SUBMIT-2][prd-submit]); RevenueCat asks for disclosures in a privacy policy, not on a web page ([services notes][svc-rc-privacy]).
+- **Later.** A store release needs a privacy policy link in App Store Connect and a support link ([best-practices notes][bp-privacy]).
+- Synthesis: a website would only repeat the README; after a store release, one static page with the privacy notice and a support address will do.
 
 [ng-criteria]: /docs/research/0019-next-gen.md#next-gen-criteria-and-scoring
 [prd-settings]: /docs/PRD.md#settings
@@ -641,23 +346,12 @@ note's [Web-only patterns][ms-note-web].
 
 ## Conflicts between sources
 
-- **Claimed and computed contrast.** The claymorphism prompt claims 4.5 to 1
-  for pairs that compute to 3.92 to 4.41, and `077-calm-hero` claims "WCAG AAA
-  compliance" for text over a video no one can measure from the prompt.
-- **Flashing and vestibular.** `077-calm-hero` says its video "avoids rapid
-  flashing" out of care for vestibular disorders, but WCAG ties flashing to
-  seizures and motion to vestibular disorders ([u-pause]; [u-animation]).
-- **Blur.** WCAG 2.2's text excludes blurring from motion animation; the
-  June 27, 2025 erratum removes that ([wcag22]; [wcag-errata]).
-- **Reduced motion as a mechanism.** WCAG lets a mechanism be "provided by
-  either the platform or by user agents" ([wcag22]), which could admit an
-  operating system's Reduce Motion, but no sufficient technique for 2.2.2
-  relies on it ([u-pause]).
-- **Join totals.** Both joins give 385 folders and 359 rows, though this one
-  adds `397-space-voyage`, so an earlier match no longer holds.
-- **Files.** The brief for these notes says each folder has three files; 658
-  have `prompt.md` and 622 `working-prompt.md`
-  ([What each file holds][ms-note-files]).
+- **Claimed and computed contrast.** The claymorphism prompt claims 4.5 to 1 for pairs that compute to 3.92 to 4.41, and `077-calm-hero` claims "WCAG AAA compliance" for text over a video no one can measure from the prompt.
+- **Flashing and vestibular.** `077-calm-hero` says its video "avoids rapid flashing" out of care for vestibular disorders, but WCAG ties flashing to seizures and motion to vestibular disorders ([u-pause]; [u-animation]).
+- **Blur.** WCAG 2.2's text excludes blurring from motion animation; the June 27, 2025 erratum removes that ([wcag22]; [wcag-errata]).
+- **Reduced motion as a mechanism.** WCAG lets a mechanism be "provided by either the platform or by user agents" ([wcag22]), which could admit an operating system's Reduce Motion, but no sufficient technique for 2.2.2 relies on it ([u-pause]).
+- **Join totals.** Both joins give 385 folders and 359 rows, though this one adds `397-space-voyage`, so an earlier match no longer holds.
+- **Files.** The brief for these notes says each folder has three files; 658 have `prompt.md` and 622 `working-prompt.md` ([What each file holds][ms-note-files]).
 
 [ms-note-files]: /docs/research/0013-motionsites.md#what-each-file-holds
 
@@ -665,28 +359,16 @@ note's [Web-only patterns][ms-note-web].
 
 What the sources don't settle, as of September 23, 2026:
 
-- **No precedent.** No prompt designs AAC, speech output, captions, or a
-  conversation, so every Turn-specific judgment here is inference.
+- **No precedent.** No prompt designs AAC, speech output, captions, or a conversation, so every Turn-specific judgment here is inference.
 - **Which match dropped.** Without the earlier listing, it can't be named.
-- **Rendering.** Devpost documents only the thumbnail's ratio and limits, so
-  its sizes were measured on three projects; GitHub documents video
-  attachments for issues, pull requests, and comments, 10 MB on a free plan
-  ([gh-attach]), but not for READMEs, nor the README's rendered width.
-- **Coverage.** Contrast over video can't be computed from prompt text, so
-  the scrims assume a white frame; only 62 button strings allow an estimate;
-  and the previews, the MCP server, and pages behind a login went unread.
+- **Rendering.** Devpost documents only the thumbnail's ratio and limits, so its sizes were measured on three projects; GitHub documents video attachments for issues, pull requests, and comments, 10 MB on a free plan ([gh-attach]), but not for READMEs, nor the README's rendered width.
+- **Coverage.** Contrast over video can't be computed from prompt text, so the scrims assume a white frame; only 62 button strings allow an estimate; and the previews, the MCP server, and pages behind a login went unread.
 
 [gh-attach]: https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files
 
 ## Appendix: analysis script
 
-Python 3 with the standard library only, run with Python 3.14.7 as
-`python3 analyze_turn.py <prompts folder> [<live listing>.json]`; the JSON is
-the rows the home page reads ([Sources and method](#sources-and-method)). It
-adapts the earlier note's [script][ms-note-script], whose loader, join, and
-page-background steps it keeps, and reproduces that note's 286 dark, 124
-light, and 403 undetermined pages. Every corpus and listing count above
-comes from its run.
+Python 3 with the standard library only, run with Python 3.14.7 as `python3 analyze_turn.py <prompts folder> [<live listing>.json]`; the JSON is the rows the home page reads ([Sources and method](#sources-and-method)). It adapts the earlier note's [script][ms-note-script], whose loader, join, and page-background steps it keeps, and reproduces that note's 286 dark, 124 light, and 403 undetermined pages. Every corpus and listing count above comes from its run.
 
 ```python
 #!/usr/bin/env python3
@@ -1072,16 +754,9 @@ for g, v in GROUPS.items():
 
 ## See also
 
-- [motionsites.ai research notes][ms-note], which this note extends,
-  especially [What 27 prompts share][ms-note-27] and
-  [Patterns that carry over][ms-note-carry].
-- The sibling notes behind `docs/DESIGN.md`:
-  [frontend trends](/docs/research/0027-turn-frontend-trends.md),
-  [AAC design](/docs/research/0028-aac-design.md), and
-  [iOS design](/docs/research/0029-turn-ios-design.md).
-- The PRD's [accessibility requirements][prd-a11y] and [reply row][prd-row],
-  the TRD's [accessibility in the app][trd-a11y], the idea's
-  [pitch][idea-pitch], and the [Next Gen notes][ng-submit].
+- [motionsites.ai research notes][ms-note], which this note extends, especially [What 27 prompts share][ms-note-27] and [Patterns that carry over][ms-note-carry].
+- The sibling notes behind `docs/DESIGN.md`: [frontend trends](/docs/research/0027-turn-frontend-trends.md), [AAC design](/docs/research/0028-aac-design.md), and [iOS design](/docs/research/0029-turn-ios-design.md).
+- The PRD's [accessibility requirements][prd-a11y] and [reply row][prd-row], the TRD's [accessibility in the app][trd-a11y], the idea's [pitch][idea-pitch], and the [Next Gen notes][ng-submit].
 
 [ms-note-carry]: /docs/research/0013-motionsites.md#patterns-that-carry-over
 [ms-note]: /docs/research/0013-motionsites.md
