@@ -1,3 +1,5 @@
 .agents/
 .claude/
 docs/sources/
+docs/research/design/
+graphify-out/

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { bank, phrases, readRows } from './data'
 import { jevLine } from './jev'
-import { cell, table, wrap } from './prose'
+import { cell, table } from './prose'
 
 /** A partner line as recorded, in conversation order, with the id of the place where it was said. */
 export type RecordedLine = { text: string; place: string }
@@ -137,7 +137,7 @@ export function render(file: string, relay: string, { replayed, stopped }: Await
     `${plural(replayed.filter(({ row }) => row.big !== null).length, 'big button')}, and the phone ranked ` +
     `${plural(byPhone, 'line')}.`
   return [
-    wrap(`Replayed ${plural(replayed.length, 'line')} of \`${file}\` through ${relay}, as a new user.`),
+    `Replayed ${plural(replayed.length, 'line')} of \`${file}\` through ${relay}, as a new user.`,
     table(
       ['#', 'The partner said', 'Ranked by', 'The row', 'Slot changes', 'Held', 'Milliseconds'],
       replayed.map(({ line, seq, by, failure, row, changes, held, ms }) => [
@@ -153,13 +153,11 @@ export function render(file: string, relay: string, { replayed, stopped }: Await
     ...(stopped === undefined
       ? []
       : [
-          wrap(
-            `The relay answered 402 at line ${stopped}: the app would open the paywall there, so the replay stopped. ` +
-              "A relay whose SIMULATOR_UNLIMITED switch is on doesn't count a Simulator build's lines, which the " +
-              'replay sends as (PAY-9).'
-          )
+          `The relay answered 402 at line ${stopped}: the app would open the paywall there, so the replay stopped. ` +
+            "A relay whose SIMULATOR_UNLIMITED switch is on doesn't count a Simulator build's lines, which the " +
+            'replay sends as (PAY-9).'
         ]),
-    wrap(summary)
+    summary
   ].join('\n\n')
 }
 

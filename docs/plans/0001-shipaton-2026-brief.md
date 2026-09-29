@@ -1,25 +1,14 @@
 # Shipaton 2026 brief implementation plan
 
-> Written for obra/superpowers' `subagent-driven-development` and
-> `executing-plans` skills, which the repo replaced with mattpocock/skills
-> on September 22, 2026. The tasks below are done.
+> Written for obra/superpowers' `subagent-driven-development` and `executing-plans` skills, which the repo replaced with mattpocock/skills on September 22, 2026. The tasks below are done.
 
-**Goal:** Add `docs/BRIEF.md`, a concise, source-backed brief of RevenueCat
-Shipaton 2026 for the team and the agents working in this repo.
+**Goal:** Add `docs/BRIEF.md`, a concise, source-backed brief of RevenueCat Shipaton 2026 for the team and the agents working in this repo.
 
-**Architecture:** One new Markdown file distilled from
-[the research notes](/docs/research/0001-shipaton-2026.md), which cite every
-claim to `docs/sources/`. The brief keeps the facts a team acts on; the notes
-keep the per-claim citations and the long tables. Each task adds whole sections
-together with their `Contents:` entries, so every commit leaves a consistent
-document.
+**Architecture:** One new Markdown file distilled from [the research notes](/docs/research/0001-shipaton-2026.md), which cite every claim to `docs/sources/`. The brief keeps the facts a team acts on; the notes keep the per-claim citations and the long tables. Each task adds whole sections together with their `Contents:` entries, so every commit leaves a consistent document.
 
-**Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged,
-commitlint with Conventional Commits, the `gh` CLI, and Python 3 for the local
-checks in the [appendix](#appendix-check-scripts).
+**Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged, commitlint with Conventional Commits, the `gh` CLI, and Python 3 for the local checks in the [appendix](#appendix-check-scripts).
 
-**Spec:** No separate spec file. The user's goal directive and the
-[design](#design) below are the spec; facts come from the research notes.
+**Spec:** No separate spec file. The user's goal directive and the [design](#design) below are the spec; facts come from the research notes.
 
 Contents:
 
@@ -27,38 +16,29 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Frame, at a glance, and key dates](#task-1-frame-at-a-glance-and-key-dates)
+    1.  [Task 2: Eligibility and submission checklist](#task-2-eligibility-and-submission-checklist)
+    1.  [Task 3: Judging process and prizes](#task-3-judging-process-and-prizes)
+    1.  [Task 4: Rules to watch, resources, and perks](#task-4-rules-to-watch-resources-and-perks)
+    1.  [Task 5: Lessons from past winners and winning playbook](#task-5-lessons-from-past-winners-and-winning-playbook)
+    1.  [Task 6: Open questions](#task-6-open-questions)
+    1.  [Task 7: Whole-document review and graph refresh](#task-7-whole-document-review-and-graph-refresh)
+    1.  [Task 8: Pull request, review, and merge](#task-8-pull-request-review-and-merge)
 1.  [Appendix: check scripts](#appendix-check-scripts)
 
 ## Global constraints
 
-- Follow [the Markdown style guide](/docs/references/markdown-style.md), with a
-  `Contents:` list in lazy numbering (`1.  [Heading](#anchor)`) instead of a
-  `[TOC]` directive, as at the top of the Devpost source.
-- One H1; ATX headings with unique names and blank lines around them; prose
-  wrapped at 80 characters (links, tables, headings, and code blocks are
-  exempt); no trailing whitespace; `- ` bullets; a language on every fenced
-  code block.
-- Repo links use root paths such as `/docs/research/0001-shipaton-2026.md`. Long
-  or repeated links become reference links, defined before the next heading
-  after first use, or at the end of the document when used in several sections.
-- Facts come only from `docs/sources/`, through the research notes. Copy
-  figures verbatim. Label anything from the 2024 Ship-a-ton, Shipaton 2025, or
-  Shipyard with its edition. Use absolute dates, never "N days left".
-- Where sources conflict, state the authoritative value (the order is: the
-  official rules, then Devpost, then 2026 site pages, then 2026 blog posts,
-  then past editions) and list the conflict under Open questions.
-- Conventional Commits: lowercase subject, header of at most 100 characters,
-  no attribution lines.
-- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or
-  `.claude/`; they hold unrelated local changes.
+- Follow [the Markdown style guide](/docs/references/markdown-style.md), with a `Contents:` list in lazy numbering (`1.  [Heading](#anchor)`) instead of a `[TOC]` directive, as at the top of the Devpost source.
+- One H1; ATX headings with unique names and blank lines around them; prose wrapped at 80 characters (links, tables, headings, and code blocks are exempt); no trailing whitespace; `- ` bullets; a language on every fenced code block.
+- Repo links use root paths such as `/docs/research/0001-shipaton-2026.md`. Long or repeated links become reference links, defined before the next heading after first use, or at the end of the document when used in several sections.
+- Facts come only from `docs/sources/`, through the research notes. Copy figures verbatim. Label anything from the 2024 Ship-a-ton, Shipaton 2025, or Shipyard with its edition. Use absolute dates, never "N days left".
+- Where sources conflict, state the authoritative value (the order is: the official rules, then Devpost, then 2026 site pages, then 2026 blog posts, then past editions) and list the conflict under Open questions.
+- Conventional Commits: lowercase subject, header of at most 100 characters, no attribution lines.
+- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or `.claude/`; they hold unrelated local changes.
 
 ## Design
 
-`docs/BRIEF.md` serves a team deciding what to build and how to submit it. It
-answers, in order: what the event is, when things happen, who and which apps
-qualify, what to hand in, how entries are judged, what can be won, which rules
-are easy to break, where to get help, what has won before, how to win, and
-what is still unclear. Sections:
+`docs/BRIEF.md` serves a team deciding what to build and how to submit it. It answers, in order: what the event is, when things happen, who and which apps qualify, what to hand in, how entries are judged, what can be won, which rules are easy to break, where to get help, what has won before, how to win, and what is still unclear. Sections:
 
 1.  **At a glance**: the one-screen summary.
 1.  **Key dates**: a table of the dated milestones with time zones.
@@ -73,15 +53,11 @@ what is still unclear. Sections:
 1.  **Open questions**: conflicts and gaps to confirm with the organizers.
 1.  **See also**: the research notes and the key sources.
 
-Rejected alternatives: inline citations on every claim (noisy, and the
-research notes already carry them) and a link-only brief (the corpus is too
-large to skim, so the brief must stand alone).
+Rejected alternatives: inline citations on every claim (noisy, and the research notes already carry them) and a link-only brief (the corpus is too large to skim, so the brief must stand alone).
 
 ## Verification gate
 
-Every task runs this gate after writing and before committing. `CHECKS` is a
-directory holding the two scripts from the
-[appendix](#appendix-check-scripts).
+Every task runs this gate after writing and before committing. `CHECKS` is a directory holding the two scripts from the [appendix](#appendix-check-scripts).
 
 ```shell
 bunx prettier --write docs/BRIEF.md && bunx prettier --check docs/BRIEF.md
@@ -89,15 +65,9 @@ python3 "$CHECKS/check_md.py" . docs/BRIEF.md --contents
 python3 "$CHECKS/fact_scan.py" . docs/BRIEF.md
 ```
 
-- Prettier runs first because lint-staged rewrites staged files on commit;
-  the checks must see the committed form.
-- `check_md.py` must print `OK`. It enforces the style rules above, checks
-  that the `Contents:` list matches the H2 headings in order, and checks
-  anchors, local link targets, and reference-link definitions.
-- `fact_scan.py` lists figures that never appear in `docs/sources/`. Each
-  miss must be fixed, or explained in the commit message body when it is a
-  derived value (for example, a date computed from "one week before the
-  deadline").
+- Prettier runs first because lint-staged rewrites staged files on commit; the checks must see the committed form.
+- `check_md.py` must print `OK`. It enforces the style rules above, checks that the `Contents:` list matches the H2 headings in order, and checks anchors, local link targets, and reference-link definitions.
+- `fact_scan.py` lists figures that never appear in `docs/sources/`. Each miss must be fixed, or explained in the commit message body when it is a derived value (for example, a date computed from "one week before the deadline").
 
 Each task also has its own assertions, run as a failing test first:
 
@@ -115,10 +85,7 @@ check() { for p in "$@"; do grep -qE -- "$p" docs/BRIEF.md || echo "MISSING: $p"
 
 **Interfaces:**
 
-- Produces: the H1 `# RevenueCat Shipaton 2026 brief`, the intro, the
-  `Contents:` list, and the `## See also` section that every later task
-  extends. Later tasks insert their sections before `## See also` and add
-  their `Contents:` entries in the same order.
+- Produces: the H1 `# RevenueCat Shipaton 2026 brief`, the intro, the `Contents:` list, and the `## See also` section that every later task extends. Later tasks insert their sections before `## See also` and add their `Contents:` entries in the same order.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -134,32 +101,14 @@ Expected: eight `MISSING:` lines.
 
 Content, from research notes §§ Overview, Key dates and timeline:
 
-- Intro (2 sentences): what the brief is for; facts condensed from
-  `docs/sources/`, with citations in the research notes.
-- At a glance (bullets): RevenueCat's global mobile hackathon, online with
-  optional IRL events, entered on Devpost; the challenge (a brand-new app on
-  the App Store, Google Play Store, or Samsung Galaxy Store, first released
-  between August 1 and September 30, 2026, with the RevenueCat SDK powering at
-  least one in-app or web purchase or serving RevenueCat Ads); platforms iOS,
-  iPadOS, macOS, or Android; deadline "Wednesday, September 30, 2026 at 11:45
-  PM Pacific Time"; "over $700,000 in cash prizes" (the site says "$740k+"),
-  21 categories, Grand Prize $100,000; winners announced October 22, 2026;
-  contact `shipaton@revenuecat.com`.
-- Key dates (table: Date, Milestone): August 1 to September 30, 2026 window;
-  September 23, 2026 as the derived "at least one week before" store-review
-  target; September 30, 2026, 11:45 PM Pacific Time deadline; October 1
-  intake filtering; October 8–9 final selection; October 22, 2026
-  announcement; App Growth Annual "in October". Note the FAQ's warning to
-  check the deadline in local time and that the judging dates come from a
-  post that says "This process is subject to change".
-- See also: the research notes, the Devpost capture, and the official rules
-  URL `https://revenuecat-shipaton-2026.devpost.com/rules` (not captured).
+- Intro (2 sentences): what the brief is for; facts condensed from `docs/sources/`, with citations in the research notes.
+- At a glance (bullets): RevenueCat's global mobile hackathon, online with optional IRL events, entered on Devpost; the challenge (a brand-new app on the App Store, Google Play Store, or Samsung Galaxy Store, first released between August 1 and September 30, 2026, with the RevenueCat SDK powering at least one in-app or web purchase or serving RevenueCat Ads); platforms iOS, iPadOS, macOS, or Android; deadline "Wednesday, September 30, 2026 at 11:45 PM Pacific Time"; "over $700,000 in cash prizes" (the site says "$740k+"), 21 categories, Grand Prize $100,000; winners announced October 22, 2026; contact `shipaton@revenuecat.com`.
+- Key dates (table: Date, Milestone): August 1 to September 30, 2026 window; September 23, 2026 as the derived "at least one week before" store-review target; September 30, 2026, 11:45 PM Pacific Time deadline; October 1 intake filtering; October 8–9 final selection; October 22, 2026 announcement; App Growth Annual "in October". Note the FAQ's warning to check the deadline in local time and that the judging dates come from a post that says "This process is subject to change".
+- See also: the research notes, the Devpost capture, and the official rules URL `https://revenuecat-shipaton-2026.devpost.com/rules` (not captured).
 
 - [ ] **Step 3: Run the gate and the assertions**
 
-Run the [verification gate](#verification-gate), then the Step 1 `check`
-command. Expected: prettier passes, `OK`, no unexplained fact misses, and no
-`MISSING:` lines.
+Run the [verification gate](#verification-gate), then the Step 1 `check` command. Expected: prettier passes, `OK`, no unexplained fact misses, and no `MISSING:` lines.
 
 - [ ] **Step 4: Commit**
 
@@ -192,29 +141,10 @@ Expected: nine `MISSING:` lines.
 
 Content, from research notes §§ Eligibility rules, Submission requirements:
 
-- Eligibility, who: unlimited team size (one person flown to New York per
-  eligible prize); the Quebec and Brazil change and the Cuba, Iran, North
-  Korea, Crimea, and Russia exclusion; minors (students 13+) and teams with a
-  minor compete only for Next Gen, with guardian consent; RevenueCat and
-  sponsor employees enter Conflict of Interest.
-- Eligibility, apps: first store release inside the window; updates and
-  second-store launches don't count; the web-only exception; building and
-  promoting before August 1 is fine but publishing is not; must be live, not
-  in review; TestFlight or testing tracks don't count; downloadable in the US;
-  English; multiple apps allowed if "unique and substantially different"; web
-  apps are not eligible, but web purchases count as monetization.
-- Submission checklist (numbered, the submission guide's nine items):
-  project name and tagline; description; public store URL; public or unlisted
-  YouTube or Vimeo video with at most 2 minutes of essential footage; 1024 ×
-  1024 icon; a 1179 × 2556 screenshot without a device frame; RevenueCat
-  project ID; free trial or promo code; category-specific details. Then: the
-  bundle ID or package name check at intake; "Submitted and 5/5 steps done";
-  edits allowed until the deadline.
-- App review timing (subsection): submit for review at least one week ahead;
-  Apple can take up to 24 hours to show the app; new personal Google Play
-  accounts need 12 testers for 14 days; ship monetization in the first build
-  when there is no time for two reviews; no expedited review; review hygiene
-  (privacy policy, Terms of Use, reviewer account, Sign in with Apple).
+- Eligibility, who: unlimited team size (one person flown to New York per eligible prize); the Quebec and Brazil change and the Cuba, Iran, North Korea, Crimea, and Russia exclusion; minors (students 13+) and teams with a minor compete only for Next Gen, with guardian consent; RevenueCat and sponsor employees enter Conflict of Interest.
+- Eligibility, apps: first store release inside the window; updates and second-store launches don't count; the web-only exception; building and promoting before August 1 is fine but publishing is not; must be live, not in review; TestFlight or testing tracks don't count; downloadable in the US; English; multiple apps allowed if "unique and substantially different"; web apps are not eligible, but web purchases count as monetization.
+- Submission checklist (numbered, the submission guide's nine items): project name and tagline; description; public store URL; public or unlisted YouTube or Vimeo video with at most 2 minutes of essential footage; 1024 × 1024 icon; a 1179 × 2556 screenshot without a device frame; RevenueCat project ID; free trial or promo code; category-specific details. Then: the bundle ID or package name check at intake; "Submitted and 5/5 steps done"; edits allowed until the deadline.
+- App review timing (subsection): submit for review at least one week ahead; Apple can take up to 24 hours to show the app; new personal Google Play accounts need 12 testers for 14 days; ship monetization in the first build when there is no time for two reviews; no expedited review; review hygiene (privacy policy, Terms of Use, reviewer account, Sign in with Apple).
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -236,8 +166,7 @@ git commit -m "docs(brief): add eligibility and submission checklist"
 **Interfaces:**
 
 - Consumes: the Task 1 frame.
-- Produces: `## Judging process`, `## Prizes and categories`, and the
-  category reference links (`[cat-*]`, defined right after the table).
+- Produces: `## Judging process`, `## Prizes and categories`, and the category reference links (`[cat-*]`, defined right after the table).
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -251,25 +180,11 @@ Expected: seven `MISSING:` lines and the row-count miss.
 
 - [ ] **Step 2: Write the sections**
 
-Content, from research notes §§ Judging process and criteria, Prize
-categories and prize structure:
+Content, from research notes §§ Judging process and criteria, Prize categories and prize structure:
 
-- Judging process: the four stages (intake filtering on October 1; at least
-  two RevenueCat screeners scoring 1 to 5 per targeted category; judges
-  scoring and nominating, with "close to 100 apps" in the final round; final
-  selection on October 8–9 with a developer advocate downloading the app); no
-  early judging; no published weights or tie-breakers; the Grand Prize uses
-  revenue for the shortlist but "does not decide the winner"; the first two
-  minutes of video must carry the pitch, the app in use, the purchase or ad
-  flow, and the targeted categories.
-- Prizes: the Grand Prize bundle; 1st-place bundles (travel for the Grand
-  Prize and #BuildInPublic 1st, an invitation for other 1st places); 2nd and
-  3rd places get a blog post; categories are chosen in the Devpost
-  "Additional info" step, one Influencer Award per project, and only
-  categories whose questions are answered get judged.
-- Table (Category, Presenter, Cash for 1st / 2nd / 3rd, What it rewards), 21
-  rows with amounts from the Devpost prize list, which overrides the Devpost
-  summary's "$20,000" for sponsor categories.
+- Judging process: the four stages (intake filtering on October 1; at least two RevenueCat screeners scoring 1 to 5 per targeted category; judges scoring and nominating, with "close to 100 apps" in the final round; final selection on October 8–9 with a developer advocate downloading the app); no early judging; no published weights or tie-breakers; the Grand Prize uses revenue for the shortlist but "does not decide the winner"; the first two minutes of video must carry the pitch, the app in use, the purchase or ad flow, and the targeted categories.
+- Prizes: the Grand Prize bundle; 1st-place bundles (travel for the Grand Prize and #BuildInPublic 1st, an invitation for other 1st places); 2nd and 3rd places get a blog post; categories are chosen in the Devpost "Additional info" step, one Influencer Award per project, and only categories whose questions are answered get judged.
+- Table (Category, Presenter, Cash for 1st / 2nd / 3rd, What it rewards), 21 rows with amounts from the Devpost prize list, which overrides the Devpost summary's "$20,000" for sponsor categories.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -304,22 +219,10 @@ Expected: seven `MISSING:` lines.
 
 - [ ] **Step 2: Write the sections**
 
-Content, from research notes §§ Official rules and legal terms; Resources,
-perks, and programs:
+Content, from research notes §§ Official rules and legal terms; Resources, perks, and programs:
 
-- Rules to watch: read the uncaptured official rules; video length and
-  rights; no influencer likeness or brand without written consent; English;
-  "don't let AI write your whole description" (AI-built apps are welcome);
-  sponsor categories need a working integration, not a tag; the app must
-  match the video; winners' icons, screenshots, and videos become public
-  marketing; prize money goes to a bank account and attending New York is
-  optional; IP, tax, and disqualification terms are not in the corpus.
-- Resources and perks: Ship Kit (28 perks over five milestones, emailed;
-  support timing and contacts; a few high-value perks verbatim); the
-  resources page (Zero to Ship, SDK quickstart and codelabs, AI Toolkits);
-  the #ShipatonSale directory with a few deadline-relevant deals; the
-  remaining livestreams and the calendar; IRL events and hosting; Discord and
-  its channels; build-in-public partners; students; the media kit.
+- Rules to watch: read the uncaptured official rules; video length and rights; no influencer likeness or brand without written consent; English; "don't let AI write your whole description" (AI-built apps are welcome); sponsor categories need a working integration, not a tag; the app must match the video; winners' icons, screenshots, and videos become public marketing; prize money goes to a bank account and attending New York is optional; IP, tax, and disqualification terms are not in the corpus.
+- Resources and perks: Ship Kit (28 perks over five milestones, emailed; support timing and contacts; a few high-value perks verbatim); the resources page (Zero to Ship, SDK quickstart and codelabs, AI Toolkits); the #ShipatonSale directory with a few deadline-relevant deals; the remaining livestreams and the calendar; IRL events and hosting; Discord and its channels; build-in-public partners; students; the media kit.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -356,16 +259,8 @@ Expected: eight `MISSING:` lines.
 
 Content, from research notes §§ Past editions and winners, Winning playbook:
 
-- Lessons: a few labeled winners (2025 Grand Prize Payout; 2025
-  #BuildInPublic Gurwi; 2025 Buzziest Launch ReadHim; 2025 HAMM Vector Guard;
-  2024 Karo; 2024 Meshing; Shipyard 2026's "focus") and the recurring
-  patterns (specific problem, public building with visible feedback, numbers
-  in the write-up, monetization designed in, openly credited AI use, deep
-  sponsor-tool use).
-- Playbook (H3 per stage, each tip attributed with its edition): pick the
-  idea; build fast (4-8-24); grow after launch (100 paying customers as a
-  2025 target); pitch the submission (Story Circle, proof-first video,
-  logline template, two-minute limit for 2026).
+- Lessons: a few labeled winners (2025 Grand Prize Payout; 2025 #BuildInPublic Gurwi; 2025 Buzziest Launch ReadHim; 2025 HAMM Vector Guard; 2024 Karo; 2024 Meshing; Shipyard 2026's "focus") and the recurring patterns (specific problem, public building with visible feedback, numbers in the write-up, monetization designed in, openly credited AI use, deep sponsor-tool use).
+- Playbook (H3 per stage, each tip attributed with its edition): pick the idea; build fast (4-8-24); grow after launch (100 paying customers as a 2025 target); pitch the submission (Story Circle, proof-first video, logline template, two-minute limit for 2026).
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -399,13 +294,7 @@ Expected: four `MISSING:` lines.
 
 - [ ] **Step 2: Write the section**
 
-Content, from research notes §§ Conflicts and ambiguities, Gaps in the
-corpus: each item states the question, what the sources say, and the safe
-default. Cover the uncaptured official rules; multiple prizes per app; a
-working purchase versus a real transaction; the "$20,000" summary versus the
-prize list; six versus nine required items; the Funnel Vision measurement
-period; travel versus invitation; the two Discord links; company entries;
-public betas before August 1; and undated captures.
+Content, from research notes §§ Conflicts and ambiguities, Gaps in the corpus: each item states the question, what the sources say, and the safe default. Cover the uncaptured official rules; multiple prizes per app; a working purchase versus a real transaction; the "$20,000" summary versus the prize list; six versus nine required items; the Funnel Vision measurement period; travel versus invitation; the two Discord links; company entries; public betas before August 1; and undated captures.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -431,9 +320,7 @@ Expected: prettier passes, `OK`, and every fact-scan miss explained.
 
 - [ ] **Step 2: Independent fact check**
 
-Dispatch a fresh agent to check every claim in `docs/BRIEF.md` against
-`docs/sources/` and report each mismatch with the source line. Fix confirmed
-mismatches and commit them as `docs(brief): correct facts against sources`.
+Dispatch a fresh agent to check every claim in `docs/BRIEF.md` against `docs/sources/` and report each mismatch with the source line. Fix confirmed mismatches and commit them as `docs(brief): correct facts against sources`.
 
 - [ ] **Step 3: Refresh the knowledge graph**
 
@@ -443,8 +330,7 @@ git add graphify-out
 git commit -m "chore(graphify): refresh the graph"
 ```
 
-Expected: the graph picks up the new docs. Skip the commit if nothing
-changed.
+Expected: the graph picks up the new docs. Skip the commit if nothing changed.
 
 ### Task 8: Pull request, review, and merge
 
@@ -455,15 +341,11 @@ git push -u origin docs/brief
 gh pr create --base main --head docs/brief --title "docs: add Shipaton 2026 brief" --body-file "$CHECKS/pr-body.md"
 ```
 
-`pr-body.md` summarizes the brief, the research notes, the plan, and the
-checks run. No attribution lines.
+`pr-body.md` summarizes the brief, the research notes, the plan, and the checks run. No attribution lines.
 
 - [ ] **Step 2: Review and resolve, at most two rounds**
 
-Each round: review the PR diff (accuracy against `docs/sources/`, the style
-guide, internal consistency), apply the valid findings as small commits, run
-the gate, and push. Stop after round two even if minor nits remain, and list
-them in the PR.
+Each round: review the PR diff (accuracy against `docs/sources/`, the style guide, internal consistency), apply the valid findings as small commits, run the gate, and push. Stop after round two even if minor nits remain, and list them in the PR.
 
 - [ ] **Step 3: Merge and delete the branch**
 
