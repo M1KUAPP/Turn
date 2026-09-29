@@ -1,29 +1,14 @@
 # Shipaton 2026 context implementation plan
 
-> Written for obra/superpowers' `subagent-driven-development` and
-> `executing-plans` skills, which the repo replaced with mattpocock/skills
-> on September 22, 2026. The tasks below are done.
+> Written for obra/superpowers' `subagent-driven-development` and `executing-plans` skills, which the repo replaced with mattpocock/skills on September 22, 2026. The tasks below are done.
 
-**Goal:** Add `docs/CONTEXT.md`, the background a team needs to build a
-winning RevenueCat Shipaton 2026 entry: past winners in depth, primary-source
-best practices, and related materials.
+**Goal:** Add `docs/CONTEXT.md`, the background a team needs to build a winning RevenueCat Shipaton 2026 entry: past winners in depth, primary-source best practices, and related materials.
 
-**Architecture:** One new Markdown file distilled from three new research
-notes, each written from primary web sources with a citation for every claim:
-[past winners](/docs/research/0004-past-winners.md),
-[best practices](/docs/research/0002-best-practices.md), and
-[related materials](/docs/research/0003-related-materials.md). It complements
-[the brief](/docs/BRIEF.md): the brief says what the contest requires, and
-the context says what has worked and where the official docs live, linking to
-the brief instead of repeating it. Each task adds whole sections together
-with their `Contents:` entries, so every commit leaves a consistent document.
+**Architecture:** One new Markdown file distilled from three new research notes, each written from primary web sources with a citation for every claim: [past winners](/docs/research/0004-past-winners.md), [best practices](/docs/research/0002-best-practices.md), and [related materials](/docs/research/0003-related-materials.md). It complements [the brief](/docs/BRIEF.md): the brief says what the contest requires, and the context says what has worked and where the official docs live, linking to the brief instead of repeating it. Each task adds whole sections together with their `Contents:` entries, so every commit leaves a consistent document.
 
-**Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged,
-commitlint with Conventional Commits, the `gh` CLI, and Python 3 with curl for
-the local checks in the [appendix](#appendix-check-scripts).
+**Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged, commitlint with Conventional Commits, the `gh` CLI, and Python 3 with curl for the local checks in the [appendix](#appendix-check-scripts).
 
-**Spec:** No separate spec file. The user's goal directive and the
-[design](#design) below are the spec; facts come from the research notes.
+**Spec:** No separate spec file. The user's goal directive and the [design](#design) below are the spec; facts come from the research notes.
 
 Contents:
 
@@ -31,94 +16,57 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Frame, official rules, and see also](#task-1-frame-official-rules-and-see-also)
+    1.  [Task 2: Past winners](#task-2-past-winners)
+    1.  [Task 3: What wins each category](#task-3-what-wins-each-category)
+    1.  [Task 4: Monetization and store review](#task-4-monetization-and-store-review)
+    1.  [Task 5: Listing, retention, and pitch](#task-5-listing-retention-and-pitch)
+    1.  [Task 6: Related materials](#task-6-related-materials)
+    1.  [Task 7: Key takeaways and open questions](#task-7-key-takeaways-and-open-questions)
+    1.  [Task 8: Brief link, whole-document review, and graph refresh](#task-8-brief-link-whole-document-review-and-graph-refresh)
+    1.  [Task 9: Pull request, review, and merge](#task-9-pull-request-review-and-merge)
 1.  [Appendix: check scripts](#appendix-check-scripts)
 
 ## Global constraints
 
-- Follow [the Markdown style guide](/docs/references/markdown-style.md), with a
-  `Contents:` list in lazy numbering (`1.  [Heading](#anchor)`) instead of a
-  `[TOC]` directive, as in the brief.
-- One H1; ATX headings with unique names and blank lines around them; prose
-  wrapped at 80 characters (links, tables, headings, and code blocks are
-  exempt); no trailing whitespace; `- ` bullets; a language on every fenced
-  code block.
-- Repo links use root paths such as `/docs/BRIEF.md`. Long or repeated links
-  become reference links, defined before the next heading after first use, or
-  at the end of the document when used in several sections.
-- Facts come only from the research notes in `docs/research/` and from the
-  brief. Copy figures verbatim. Label facts from the 2024 Ship-a-ton, Shipaton
-  2025, or Shipyard 2026 with their edition. Date anything that changes (store
-  ratings, prices, policy versions, SDK versions) as of September 21, 2026.
-  Mark conclusions drawn across sources as synthesis. Use absolute dates,
-  never "N days left".
-- Don't repeat the brief. Rules, dates, eligibility, the submission checklist,
-  the judging stages, prizes, perks, and RevenueCat's own Shipaton tips live
-  there; link to its sections instead.
-- Where sources conflict, say which one governs and list the conflict under
-  Open questions. For contest rules the order is the official rules, Devpost,
-  2026 site pages, 2026 blog posts, then past editions; for store policy, the
-  store's own documentation governs.
-- Conventional Commits: lowercase subject, header of at most 100 characters,
-  no attribution lines.
-- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or
-  `.claude/`; they hold unrelated local changes.
+- Follow [the Markdown style guide](/docs/references/markdown-style.md), with a `Contents:` list in lazy numbering (`1.  [Heading](#anchor)`) instead of a `[TOC]` directive, as in the brief.
+- One H1; ATX headings with unique names and blank lines around them; prose wrapped at 80 characters (links, tables, headings, and code blocks are exempt); no trailing whitespace; `- ` bullets; a language on every fenced code block.
+- Repo links use root paths such as `/docs/BRIEF.md`. Long or repeated links become reference links, defined before the next heading after first use, or at the end of the document when used in several sections.
+- Facts come only from the research notes in `docs/research/` and from the brief. Copy figures verbatim. Label facts from the 2024 Ship-a-ton, Shipaton 2025, or Shipyard 2026 with their edition. Date anything that changes (store ratings, prices, policy versions, SDK versions) as of September 21, 2026. Mark conclusions drawn across sources as synthesis. Use absolute dates, never "N days left".
+- Don't repeat the brief. Rules, dates, eligibility, the submission checklist, the judging stages, prizes, perks, and RevenueCat's own Shipaton tips live there; link to its sections instead.
+- Where sources conflict, say which one governs and list the conflict under Open questions. For contest rules the order is the official rules, Devpost, 2026 site pages, 2026 blog posts, then past editions; for store policy, the store's own documentation governs.
+- Conventional Commits: lowercase subject, header of at most 100 characters, no attribution lines.
+- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or `.claude/`; they hold unrelated local changes.
 
 ## Design
 
-`docs/CONTEXT.md` serves a team that has read the brief and now has to decide
-what to build, how to monetize it, how to get it approved, and how to pitch
-it. It answers what has won before and why, what primary sources say works,
-and where the official material lives. Sections:
+`docs/CONTEXT.md` serves a team that has read the brief and now has to decide what to build, how to monetize it, how to get it approved, and how to pitch it. It answers what has won before and why, what primary sources say works, and where the official material lives. Sections:
 
-1.  **Key takeaways**: the points that most change what a team does, each
-    linking to its section. Written last.
-1.  **What the official rules add**: what the rules, read on Devpost during
-    the research, settle or change relative to the brief.
-1.  **Past winners**: per edition, the winners that matter for 2026
-    categories: what they built, how they made money, the evidence they
-    showed, and where they are now.
-1.  **What wins each category**: for each 2026 category with a precedent,
-    what past winners did beside what 2026 judges ask for; sponsor guidance
-    for the new categories.
-1.  **Monetization and paywalls**: RevenueCat's benchmark figures and paywall
-    guidance, and the product setup that lets judges test premium features.
-1.  **Getting through store review**: the Apple, Google Play, and Galaxy
-    Store rules that most often block a new subscription app, beyond the
-    timing already in the brief.
-1.  **Store listing and discoverability**: Apple and Google listing fields,
-    limits, and guidance.
-1.  **Retention and push notifications**: platform rules and OneSignal
-    guidance.
-1.  **Demo video and write-up**: Devpost's guidance lined up with the
-    Shipaton judging funnel.
-1.  **Related materials**: a curated directory of RevenueCat docs and SDKs,
-    category programs, store docs, sponsor docs, the creators behind the
-    Influencer Awards, and past-edition pages.
-1.  **Open questions**: conflicts and gaps the research could not settle,
-    each with a safe default.
+1.  **Key takeaways**: the points that most change what a team does, each linking to its section. Written last.
+1.  **What the official rules add**: what the rules, read on Devpost during the research, settle or change relative to the brief.
+1.  **Past winners**: per edition, the winners that matter for 2026 categories: what they built, how they made money, the evidence they showed, and where they are now.
+1.  **What wins each category**: for each 2026 category with a precedent, what past winners did beside what 2026 judges ask for; sponsor guidance for the new categories.
+1.  **Monetization and paywalls**: RevenueCat's benchmark figures and paywall guidance, and the product setup that lets judges test premium features.
+1.  **Getting through store review**: the Apple, Google Play, and Galaxy Store rules that most often block a new subscription app, beyond the timing already in the brief.
+1.  **Store listing and discoverability**: Apple and Google listing fields, limits, and guidance.
+1.  **Retention and push notifications**: platform rules and OneSignal guidance.
+1.  **Demo video and write-up**: Devpost's guidance lined up with the Shipaton judging funnel.
+1.  **Related materials**: a curated directory of RevenueCat docs and SDKs, category programs, store docs, sponsor docs, the creators behind the Influencer Awards, and past-edition pages.
+1.  **Open questions**: conflicts and gaps the research could not settle, each with a safe default.
 1.  **See also**: the brief and the research notes.
 
 Assumptions, stated because the goal directive rules out asking:
 
-- "Context" means background knowledge for the team and the agents in this
-  repo, not a glossary or agent instructions.
-- Research goes beyond `docs/sources/` to primary web sources, because the
-  captures cover past winners only briefly and best practices hardly at all.
-- The research is split into three notes, one per topic the request names,
-  written in parallel.
-- The brief gains one "See also" link to the context; nothing else in it
-  changes.
+- "Context" means background knowledge for the team and the agents in this repo, not a glossary or agent instructions.
+- Research goes beyond `docs/sources/` to primary web sources, because the captures cover past winners only briefly and best practices hardly at all.
+- The research is split into three notes, one per topic the request names, written in parallel.
+- The brief gains one "See also" link to the context; nothing else in it changes.
 
-Rejected alternatives: extending the brief (it would double in length and mix
-contest rules with advice), a link-only reading list (every reader would have
-to redo the research), and per-claim citations in the context (noisy, and the
-notes already carry them).
+Rejected alternatives: extending the brief (it would double in length and mix contest rules with advice), a link-only reading list (every reader would have to redo the research), and per-claim citations in the context (noisy, and the notes already carry them).
 
 ## Verification gate
 
-Every task runs this gate after writing and before committing. `CHECKS` is a
-directory holding the three scripts from the
-[appendix](#appendix-check-scripts).
+Every task runs this gate after writing and before committing. `CHECKS` is a directory holding the three scripts from the [appendix](#appendix-check-scripts).
 
 ```shell
 bunx prettier --write docs/CONTEXT.md && bunx prettier --check docs/CONTEXT.md
@@ -127,18 +75,10 @@ python3 "$CHECKS/fact_scan.py" . docs/CONTEXT.md docs/sources docs/research
 python3 "$CHECKS/check_links.py" docs/CONTEXT.md
 ```
 
-- Prettier runs first because lint-staged rewrites staged files on commit;
-  the checks must see the committed form.
-- `check_md.py` must print `OK`. It enforces the style rules above, checks
-  that the `Contents:` list matches the H2 headings in order, and checks
-  anchors, local link targets, and reference-link definitions.
-- `fact_scan.py` lists figures that appear in neither `docs/sources/` nor the
-  research notes. Each miss must be fixed, or explained in the commit message
-  body when it is a derived value.
-- `check_links.py` lists external links that don't return HTTP 2xx. Devpost
-  answers scripted requests with 403 and YouTube with 429, so open those by
-  hand (YouTube's oEmbed endpoint confirms that a video exists); any other
-  failure is a broken link to fix.
+- Prettier runs first because lint-staged rewrites staged files on commit; the checks must see the committed form.
+- `check_md.py` must print `OK`. It enforces the style rules above, checks that the `Contents:` list matches the H2 headings in order, and checks anchors, local link targets, and reference-link definitions.
+- `fact_scan.py` lists figures that appear in neither `docs/sources/` nor the research notes. Each miss must be fixed, or explained in the commit message body when it is a derived value.
+- `check_links.py` lists external links that don't return HTTP 2xx. Devpost answers scripted requests with 403 and YouTube with 429, so open those by hand (YouTube's oEmbed endpoint confirms that a video exists); any other failure is a broken link to fix.
 
 Each task also has its own assertions, run as a failing test first:
 
@@ -148,13 +88,7 @@ check() { for p in "$@"; do grep -qE -- "$p" docs/CONTEXT.md || echo "MISSING: $
 
 ## Tasks
 
-Sections appear in the document in the order of the [design](#design), not in
-task order: each task inserts its sections at their place and adds their
-`Contents:` entries in the same order. The notes are
-[past winners](/docs/research/0004-past-winners.md) (PW),
-[best practices](/docs/research/0002-best-practices.md) (BP),
-[related materials](/docs/research/0003-related-materials.md) (RM), and
-[Shipaton 2026](/docs/research/0001-shipaton-2026.md) (S26).
+Sections appear in the document in the order of the [design](#design), not in task order: each task inserts its sections at their place and adds their `Contents:` entries in the same order. The notes are [past winners](/docs/research/0004-past-winners.md) (PW), [best practices](/docs/research/0002-best-practices.md) (BP), [related materials](/docs/research/0003-related-materials.md) (RM), and [Shipaton 2026](/docs/research/0001-shipaton-2026.md) (S26).
 
 ### Task 1: Frame, official rules, and see also
 
@@ -164,9 +98,7 @@ task order: each task inserts its sections at their place and adds their
 
 **Interfaces:**
 
-- Produces: the H1 `# Shipaton 2026 context`, the intro, the `Contents:`
-  list, `## What the official rules add`, and `## See also`, which every later
-  task extends.
+- Produces: the H1 `# Shipaton 2026 context`, the intro, the `Contents:` list, `## What the official rules add`, and `## See also`, which every later task extends.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -180,29 +112,15 @@ Expected: seven `MISSING:` lines.
 
 - [ ] **Step 2: Write the sections**
 
-Content, from RM § Official rules and Devpost pages and RM § App Growth
-Annual and the Shippies:
+Content, from RM § Official rules and Devpost pages and RM § App Growth Annual and the Shippies:
 
-- Intro (3 sentences): what the context covers; the brief holds the rules,
-  dates, and prizes, so the context links to it; facts come from the notes,
-  with web sources read on September 21, 2026.
-- What the official rules add (bullets): the rules are headed "Updated
-  August 31, 2026" and prevail; the Submission Period from July 31, judging
-  to October 13, and "Winners announced: October 21st 2026" against the
-  brief's October 22; the Shippies on October 20 and App Growth Annual on
-  October 21, 2026; organizations may enter through a "Representative"; the
-  Grand Prize shortlist uses revenue "as reported in RevenueCat"; Galaxy
-  optimization is 20% of Best App for Galaxy; the tie-break; one Influencer
-  Award per project; travel only for the Grand Prize and the #BuildInPublic
-  first place; the category fields the rules ask for; 26,920 participants on
-  September 21, 2026.
+- Intro (3 sentences): what the context covers; the brief holds the rules, dates, and prizes, so the context links to it; facts come from the notes, with web sources read on September 21, 2026.
+- What the official rules add (bullets): the rules are headed "Updated August 31, 2026" and prevail; the Submission Period from July 31, judging to October 13, and "Winners announced: October 21st 2026" against the brief's October 22; the Shippies on October 20 and App Growth Annual on October 21, 2026; organizations may enter through a "Representative"; the Grand Prize shortlist uses revenue "as reported in RevenueCat"; Galaxy optimization is 20% of Best App for Galaxy; the tie-break; one Influencer Award per project; travel only for the Grand Prize and the #BuildInPublic first place; the category fields the rules ask for; 26,920 participants on September 21, 2026.
 - See also: the brief and the four research notes.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
-Run the [verification gate](#verification-gate), then the Step 1 `check`
-command. Expected: prettier passes, `OK`, no unexplained fact misses, no
-broken links, and no `MISSING:` lines.
+Run the [verification gate](#verification-gate), then the Step 1 `check` command. Expected: prettier passes, `OK`, no unexplained fact misses, no broken links, and no `MISSING:` lines.
 
 - [ ] **Step 4: Commit**
 
@@ -215,8 +133,7 @@ git commit -m "docs(context): add Shipaton 2026 context with the official rules"
 
 **Files:**
 
-- Modify: `docs/CONTEXT.md` (insert after the official rules; extend
-  `Contents:`)
+- Modify: `docs/CONTEXT.md` (insert after the official rules; extend `Contents:`)
 
 **Interfaces:**
 
@@ -234,19 +151,11 @@ Expected: six `MISSING:` lines.
 
 - [ ] **Step 2: Write the section**
 
-Content, from PW §§ Editions at a glance, Shipaton 2025 winners, Winner
-postmortems and interviews, Where past winners are now, Patterns across
-categories:
+Content, from PW §§ Editions at a glance, Shipaton 2025 winners, Winner postmortems and interviews, Where past winners are now, Patterns across categories:
 
 - A table of the three editions: dates, cash, participants, and gallery size.
-- Lessons, each labeled with its edition: Payout's numbers, speed, and
-  creator distribution, and the shortlist quote; only 10 of the 30 2025
-  write-ups gave numbers; story over polish; both past deadlines extended
-  for slow review; 12 of 27 timed 2025 videos ran past three minutes; most
-  write-ups kept Devpost's headings and were filed in the last days; AI tools
-  credited openly; first-time builders.
-- Where the winners are now: 28 of 30 still listed, five with more than 100
-  US ratings, and Payout's scale a year later.
+- Lessons, each labeled with its edition: Payout's numbers, speed, and creator distribution, and the shortlist quote; only 10 of the 30 2025 write-ups gave numbers; story over polish; both past deadlines extended for slow review; 12 of 27 timed 2025 videos ran past three minutes; most write-ups kept Devpost's headings and were filed in the last days; AI tools credited openly; first-time builders.
+- Where the winners are now: 28 of 30 still listed, five with more than 100 US ratings, and Payout's scale a year later.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -268,8 +177,7 @@ git commit -m "docs(context): add past winners"
 **Interfaces:**
 
 - Consumes: the Task 1 frame.
-- Produces: `## What wins each category`, with the H3s
-  `### Categories with a precedent` and `### Categories new in 2026`.
+- Produces: `## What wins each category`, with the H3s `### Categories with a precedent` and `### Categories new in 2026`.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -282,14 +190,7 @@ Expected: six `MISSING:` lines.
 
 - [ ] **Step 2: Write the section**
 
-Content, from PW § Patterns by 2026 category, RM §§ RevenueCat programs
-behind 2026 categories and Sponsor documentation, and the rules: one bullet
-per category, stating what 2026 judges ask for (linking to the brief's prize
-table) and what past winners or sponsor docs add. Categories with a
-precedent: Grand Prize, #BuildInPublic, HAMM, Design, Peace Prize, Keep Them
-Coming Back, Ship Kotlin Everywhere, Conflict of Interest, and the Influencer
-Awards (Shipyard). New in 2026: Catvertising, Best Game, Next Gen, Most Viral
-App, Best App for Galaxy, Idea to Income, Growth Loop, and Funnel Vision.
+Content, from PW § Patterns by 2026 category, RM §§ RevenueCat programs behind 2026 categories and Sponsor documentation, and the rules: one bullet per category, stating what 2026 judges ask for (linking to the brief's prize table) and what past winners or sponsor docs add. Categories with a precedent: Grand Prize, #BuildInPublic, HAMM, Design, Peace Prize, Keep Them Coming Back, Ship Kotlin Everywhere, Conflict of Interest, and the Influencer Awards (Shipyard). New in 2026: Catvertising, Best Game, Next Gen, Most Viral App, Best App for Galaxy, Idea to Income, Growth Loop, and Funnel Vision.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -306,14 +207,12 @@ git commit -m "docs(context): add what wins each category"
 
 **Files:**
 
-- Modify: `docs/CONTEXT.md` (insert after the categories; extend
-  `Contents:`)
+- Modify: `docs/CONTEXT.md` (insert after the categories; extend `Contents:`)
 
 **Interfaces:**
 
 - Consumes: the Task 1 frame.
-- Produces: `## Monetization and paywalls` and
-  `## Getting through store review`, with one H3 per store.
+- Produces: `## Monetization and paywalls` and `## Getting through store review`, with one H3 per store.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -326,19 +225,10 @@ Expected: seven `MISSING:` lines.
 
 - [ ] **Step 2: Write the sections**
 
-Content, from BP §§ Monetization and paywall benchmarks, Apple App Store
-review, Google Play review, and Samsung Galaxy Store review:
+Content, from BP §§ Monetization and paywall benchmarks, Apple App Store review, Google Play review, and Samsung Galaxy Store review:
 
-- Monetization: State of Subscription Apps 2026 medians (hard paywall versus
-  freemium, trial lengths, day-0 trials, common prices, early revenue);
-  paywall rules from RevenueCat, Apple, and Google; promo codes for judges;
-  a labeled synthesis for the deadline.
-- Store review: link the brief's review timing, then Apple (speed, first
-  purchase in one draft submission, Xcode 26, subscription screen, account
-  deletion and 4.8, US web links, screenshot sizes, privacy label), Google
-  Play (the 12-tester rule, review time, API level 36, subscriptions, app
-  content, license testers), and the Galaxy Store (seller status, review
-  phases, RevenueCat SDK limits).
+- Monetization: State of Subscription Apps 2026 medians (hard paywall versus freemium, trial lengths, day-0 trials, common prices, early revenue); paywall rules from RevenueCat, Apple, and Google; promo codes for judges; a labeled synthesis for the deadline.
+- Store review: link the brief's review timing, then Apple (speed, first purchase in one draft submission, Xcode 26, subscription screen, account deletion and 4.8, US web links, screenshot sizes, privacy label), Google Play (the 12-tester rule, review time, API level 36, subscriptions, app content, license testers), and the Galaxy Store (seller status, review phases, RevenueCat SDK limits).
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -360,8 +250,7 @@ git commit -m "docs(context): add monetization and store review guidance"
 **Interfaces:**
 
 - Consumes: the Task 1 frame.
-- Produces: `## Store listing and discoverability`,
-  `## Retention and push notifications`, and `## Demo video and write-up`.
+- Produces: `## Store listing and discoverability`, `## Retention and push notifications`, and `## Demo video and write-up`.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -374,15 +263,11 @@ Expected: six `MISSING:` lines.
 
 - [ ] **Step 2: Write the sections**
 
-Content, from BP §§ Store listing and discoverability, Retention and push
-notifications, Demo video and write-up:
+Content, from BP §§ Store listing and discoverability, Retention and push notifications, Demo video and write-up:
 
-- Listing: Apple and Google Play field limits, copy and policy rules, custom
-  product pages, and the Galaxy Store's required metadata.
-- Retention: Apple 4.5.4, permission prompts, OneSignal journeys and cadence,
-  the RevenueCat integration, and billing failures.
-- Pitch: Devpost's guidance, then a labeled synthesis that maps it to the
-  two-minute prescreen, the description list, and upload timing.
+- Listing: Apple and Google Play field limits, copy and policy rules, custom product pages, and the Galaxy Store's required metadata.
+- Retention: Apple 4.5.4, permission prompts, OneSignal journeys and cadence, the RevenueCat integration, and billing failures.
+- Pitch: Devpost's guidance, then a labeled synthesis that maps it to the two-minute prescreen, the description list, and upload timing.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -399,15 +284,12 @@ git commit -m "docs(context): add listing, retention, and pitch guidance"
 
 **Files:**
 
-- Modify: `docs/CONTEXT.md` (insert before open questions; extend
-  `Contents:`)
+- Modify: `docs/CONTEXT.md` (insert before open questions; extend `Contents:`)
 
 **Interfaces:**
 
 - Consumes: the Task 1 frame.
-- Produces: `## Related materials`, with H3s for RevenueCat setup and tools,
-  programs behind the 2026 categories, store documentation, sponsor
-  documentation, Influencer Award creators, and past-edition pages.
+- Produces: `## Related materials`, with H3s for RevenueCat setup and tools, programs behind the 2026 categories, store documentation, sponsor documentation, Influencer Award creators, and past-edition pages.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -420,14 +302,7 @@ Expected: five `MISSING:` lines.
 
 - [ ] **Step 2: Write the section**
 
-Content, from RM: a curated subset with one line per resource. RevenueCat
-quickstart, codelabs, `.md` docs for agents, current SDK versions, Test
-Store, launch checklist, charts, the project ID, and the AI Toolkit; RevenueCat
-Ads, Funnels and Stripe Projects, and the Galaxy guide; Apple, Google Play,
-and Galaxy Store documentation; sponsor docs; a table of the five creators'
-channels and brief videos, for audience research only; and a table of
-past-edition winner posts and galleries. Each H3 defines its reference links
-before the next heading.
+Content, from RM: a curated subset with one line per resource. RevenueCat quickstart, codelabs, `.md` docs for agents, current SDK versions, Test Store, launch checklist, charts, the project ID, and the AI Toolkit; RevenueCat Ads, Funnels and Stripe Projects, and the Galaxy guide; Apple, Google Play, and Galaxy Store documentation; sponsor docs; a table of the five creators' channels and brief videos, for audience research only; and a table of past-edition winner posts and galleries. Each H3 defines its reference links before the next heading.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -444,8 +319,7 @@ git commit -m "docs(context): add related materials"
 
 **Files:**
 
-- Modify: `docs/CONTEXT.md` (insert the takeaways first and the open
-  questions before see also; extend `Contents:`)
+- Modify: `docs/CONTEXT.md` (insert the takeaways first and the open questions before see also; extend `Contents:`)
 
 **Interfaces:**
 
@@ -463,20 +337,10 @@ Expected: five `MISSING:` lines.
 
 - [ ] **Step 2: Write the sections**
 
-Content, from the sections above and the Conflicts and Gaps sections of all
-three notes:
+Content, from the sections above and the Conflicts and Gaps sections of all three notes:
 
-- Key takeaways: about ten bullets, each ending with a link to its section:
-  Apple as the realistic store, the official rules, revenue versus story,
-  monetizing from day one, deep sponsor use, the two-minute video, two
-  screenshot sizes, slow review at the deadline, the AI Toolkit and Test
-  Store, and policy traps.
-- Open questions: each states the question, what the sources say, and a safe
-  default: prize limits (rules versus JetBrains), the Stripe Project ID, the
-  Replit preview URL, the Funnel Vision checkout and period, Sign in with
-  Apple, expedited review, dismissing a hard paywall on Google Play, the
-  Galaxy seller type, organization accounts on Google Play, RevenueCat Ads
-  access time, and self-reported winner figures.
+- Key takeaways: about ten bullets, each ending with a link to its section: Apple as the realistic store, the official rules, revenue versus story, monetizing from day one, deep sponsor use, the two-minute video, two screenshot sizes, slow review at the deadline, the AI Toolkit and Test Store, and policy traps.
+- Open questions: each states the question, what the sources say, and a safe default: prize limits (rules versus JetBrains), the Stripe Project ID, the Replit preview URL, the Funnel Vision checkout and period, Sign in with Apple, expedited review, dismissing a hard paywall on Google Play, the Galaxy seller type, organization accounts on Google Play, RevenueCat Ads access time, and self-reported winner figures.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -515,15 +379,11 @@ git commit -m "docs(brief): link the context document"
 
 - [ ] **Step 2: Run the gate on the whole document**
 
-Expected: prettier passes, `OK`, every fact-scan miss explained, and every
-failing link opened by hand.
+Expected: prettier passes, `OK`, every fact-scan miss explained, and every failing link opened by hand.
 
 - [ ] **Step 3: Independent fact check**
 
-Dispatch a fresh agent to check every claim in `docs/CONTEXT.md` against the
-research notes, and to spot-check the notes' most consequential claims
-against their primary sources. Fix confirmed mismatches and commit them as
-`docs(context): correct facts against the research notes`.
+Dispatch a fresh agent to check every claim in `docs/CONTEXT.md` against the research notes, and to spot-check the notes' most consequential claims against their primary sources. Fix confirmed mismatches and commit them as `docs(context): correct facts against the research notes`.
 
 - [ ] **Step 4: Refresh the knowledge graph**
 
@@ -533,8 +393,7 @@ git add graphify-out
 git commit -m "chore(graphify): refresh the graph"
 ```
 
-Expected: the graph picks up the new docs. Skip the commit if nothing
-changed.
+Expected: the graph picks up the new docs. Skip the commit if nothing changed.
 
 ### Task 9: Pull request, review, and merge
 
@@ -545,15 +404,11 @@ git push -u origin docs/context
 gh pr create --base main --head docs/context --title "docs: add Shipaton 2026 context" --body-file "$CHECKS/pr-body.md"
 ```
 
-`pr-body.md` summarizes the context, the three research notes, the plan, and
-the checks run. No attribution lines.
+`pr-body.md` summarizes the context, the three research notes, the plan, and the checks run. No attribution lines.
 
 - [ ] **Step 2: Review and resolve, at most two rounds**
 
-Each round: review the PR diff (accuracy against the notes and their
-sources, the style guide, overlap with the brief, internal consistency),
-apply the valid findings as small commits, run the gate, and push. Stop after
-round two even if minor nits remain, and list them in the PR.
+Each round: review the PR diff (accuracy against the notes and their sources, the style guide, overlap with the brief, internal consistency), apply the valid findings as small commits, run the gate, and push. Stop after round two even if minor nits remain, and list them in the PR.
 
 - [ ] **Step 3: Merge and delete the branch**
 
@@ -566,11 +421,7 @@ Rebase merging keeps the atomic commits and the linear history of `main`.
 
 ## Appendix: check scripts
 
-The scripts from the
-[brief plan's appendix](/docs/plans/0001-shipaton-2026-brief.md#appendix-check-scripts),
-with changes: `check_md.py` also checks the anchor in a link to another
-Markdown file and where each reference definition sits, and `fact_scan.py`
-takes the corpus directories as arguments. `check_links.py` is new.
+The scripts from the [brief plan's appendix](/docs/plans/0001-shipaton-2026-brief.md#appendix-check-scripts), with changes: `check_md.py` also checks the anchor in a link to another Markdown file and where each reference definition sits, and `fact_scan.py` takes the corpus directories as arguments. `check_links.py` is new.
 
 `check_md.py`:
 
