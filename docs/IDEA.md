@@ -223,7 +223,7 @@ The video, under two minutes on an iPhone:
 1.  **0:00–0:15:** a partner asks "How was physio?"; the row offers "It was hard"; a tap speaks it. On screen: "Turn: your own words, in time for your turn", the Next Gen Award, and one line of the problem, so it's named within 15 seconds.
 1.  **0:15–0:35:** the problem: aided speech at 8 to 10 words a minute against 125 to 185 spoken, and a reply typed too late.
 1.  **0:35–1:05:** how it works: the consent card and the listening light, a yes-or-no question answered with the fixed buttons, and the row holding steady while nothing speaks until the user taps.
-1.  **1:05–1:25:** why Jev: the evaluation's table, and "Jev never writes words: every phrase is the user's own."
+1.  **1:05–1:25:** why the hosted decision model: the evaluation's table, and "The model never writes words: every phrase is the user's own."
 1.  **1:25–1:45:** the purchase: the free lines run out, the paywall opens, a Test Store purchase unlocks Listen mode, and speaking stays free.
 1.  **1:45–1:55:** the repository, its license, the Simulator path, and the student team.
 
