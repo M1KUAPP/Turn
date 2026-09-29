@@ -364,35 +364,35 @@ colors:
 
 ### Color roles
 
-| Token             | Name                 | Role                                                                   |
-| ----------------- | -------------------- | ---------------------------------------------------------------------- |
-| `board`           | Table                | The home screen's background, and Settings' and the editor's           |
-| `surface`         | Card                 | Phrase buttons, the caption, tabs, list rows, and sheets' backgrounds  |
-| `surface-sunken`  | Card, sunken         | Degraded notes, paywall messages, and the consent card's switch block  |
-| `surface-pressed` | Card, pressed        | A card while a finger is on it                                         |
-| `ink`             | Ink black            | Phrases and every other text on cards and on the board                 |
-| `ink-secondary`   | Pencil               | Speaker labels, counts, placeholders, and notes                        |
-| `edge`            | Card edge            | The edge of every card and secondary button                            |
-| `hairline`        | Hairline             | Dividers in a list group, and the composer's top edge                  |
-| `accent`          | Marker blue          | The big button, Speak, links, and Type in the toolbar                  |
-| `accent-pressed`  | Marker blue, pressed | The big button and Speak while pressed                                 |
-| `on-accent`       | On blue              | Text and symbols on marker blue                                        |
-| `accent-soft`     | Blue wash            | The speaking slot, the starter card, and the place menu's current row  |
-| `accent-tag`      | Blue tag             | The big reply's category tag                                           |
-| `listen`          | Lamp orange          | The light while the microphone is on, and the caption's label and edge |
-| `on-listen`       | On orange            | "Listening" and its symbol                                             |
-| `listen-soft`     | Orange wash          | The free lines' pill, and a caption word as it arrives                 |
-| `listen-glow`     | Lamp glow            | The glow behind the board while listening, and the light's ring        |
-| `yes-fill`        | Yes                  | Yes's fill, in the row and in the Quick category                       |
-| `yes-edge`        | Yes, edge            | Yes's edge                                                             |
-| `no-fill`         | No                   | No's fill                                                              |
-| `no-edge`         | No, edge             | No's edge                                                              |
-| `unsure-fill`     | Not sure             | Not sure's fill                                                        |
-| `unsure-edge`     | Not sure, edge       | Not sure's edge                                                        |
-| `category-*-fill` | Category fill        | A live reply's fill in that category                                   |
-| `category-*-edge` | Category edge        | Each category's inked edge on its cards, and its tab's dot             |
+| Token             | Name                 | Role                                                                                                                                               |
+| ----------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `board`           | Table                | The home screen's background, and Settings' and the editor's                                                                                       |
+| `surface`         | Card                 | Phrase buttons, the caption, tabs, list rows, and sheets' backgrounds                                                                              |
+| `surface-sunken`  | Card, sunken         | Degraded notes, paywall messages, purchase notes, symbol buttons, and the consent card's switch block                                              |
+| `surface-pressed` | Card, pressed        | A card while a finger is on it                                                                                                                     |
+| `ink`             | Ink black            | Phrases and every other text on cards and on the board                                                                                             |
+| `ink-secondary`   | Pencil               | Speaker labels, counts, placeholders, and notes                                                                                                    |
+| `edge`            | Card edge            | The edge of every card and secondary button                                                                                                        |
+| `hairline`        | Hairline             | Dividers in a list group, and the composer's top edge                                                                                              |
+| `accent`          | Marker blue          | The big button, Speak, links, and Type in the toolbar                                                                                              |
+| `accent-pressed`  | Marker blue, pressed | The big button and Speak while pressed                                                                                                             |
+| `on-accent`       | On blue              | Text and symbols on marker blue                                                                                                                    |
+| `accent-soft`     | Blue wash            | The speaking slot, the starter card, and the place menu's current row                                                                              |
+| `accent-tag`      | Blue tag             | The big reply's category tag                                                                                                                       |
+| `listen`          | Lamp orange          | The light while the microphone is on, the caption's label and edge, and Listen mode's entry: the consent card's edge and the permission step's ear |
+| `on-listen`       | On orange            | "Listening" and its symbol                                                                                                                         |
+| `listen-soft`     | Orange wash          | The free lines' pill, a caption word as it arrives, the consent card's fact discs, and Listen mode's tiles                                         |
+| `listen-glow`     | Lamp glow            | The glow behind the board while listening, the light's ring, and the consent card's warm glow                                                      |
+| `yes-fill`        | Yes                  | Yes's fill, in the row and in the Quick category                                                                                                   |
+| `yes-edge`        | Yes, edge            | Yes's edge                                                                                                                                         |
+| `no-fill`         | No                   | No's fill                                                                                                                                          |
+| `no-edge`         | No, edge             | No's edge                                                                                                                                          |
+| `unsure-fill`     | Not sure             | Not sure's fill                                                                                                                                    |
+| `unsure-edge`     | Not sure, edge       | Not sure's edge                                                                                                                                    |
+| `category-*-fill` | Category fill        | A live reply's fill in that category                                                                                                               |
+| `category-*-edge` | Category edge        | Each category's inked edge on its cards, and its tab's dot                                                                                         |
 
-- **Four inks, fixed jobs.** Blue is Turn's own: its actions and the one reply it's sure of, never Yes or No. Yes and No own the green and red fills with a check and a cross, and the lamp owns the glowing orange. Some category hues come near those, so each of the three also carries its word and its shape, as rule 3 asks, and never its color alone.
+- **Four inks, fixed jobs.** Blue is Turn's own: its actions and the one reply it's sure of, never Yes or No. Yes and No own the green and red fills with a check and a cross, and the lamp owns the glowing orange, which also marks Listen mode's entry: the consent card's edge and glow, and the permission step's ear. Some category hues come near those, so each of the three also carries its word and its shape, as rule 3 asks, and never its color alone.
 - **A hue per category.** A category's color is worn as an inked edge on its cards and tab, and as a fill on a live reply, and a category the user adds takes the next hue after `out-and-about`, cycling from `chat`.
 - **Marker blue passes under white text.** Apple's system blue gives white text only 3.52 to 1, so every fill under white text is Turn's own ([Turn's iOS design notes][ios-grays]).
 - **The orange echoes iOS.** iOS shows an orange dot while an app uses the microphone, so the light's orange says the same thing, never the camera's green ([Turn's iOS design notes][ios-light]).
@@ -408,36 +408,41 @@ colors:
 
 Each ratio is WCAG 2.2's, truncated to one decimal so none is rounded up to pass. Phrases and all text on cards need 7 to 1, above A11Y-7's 4.5, since Apple asks custom colors to "strive for a contrast ratio of 7:1, especially in small text" ([AAC design notes][aac-polarity]); labels and notes need 4.5 to 1; and edges and fills that mark a control need 3 to 1 against what's next to them (A11Y-7).
 
-| Text or mark    | On                | Used for                                               | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| --------------- | ----------------- | ------------------------------------------------------ | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`           | `surface`         | Phrases, the caption, toolbar items, and text on cards | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
-| `ink`           | `surface-pressed` | A card under a finger                                  | 12.8:1 | 12.2:1 | 14.0:1               | 12.4:1              | 7:1      |
-| `ink`           | `board`           | Titles and text on the board                           | 15.1:1 | 16.5:1 | 18.3:1               | 19.5:1              | 7:1      |
-| `ink`           | `accent-soft`     | The speaking card and the starter card                 | 14.2:1 | 13.6:1 | 15.4:1               | 17.3:1              | 7:1      |
-| `ink`           | `listen-soft`     | A caption word as it arrives                           | 14.3:1 | 13.5:1 | 15.6:1               | 17.1:1              | 7:1      |
-| `ink`           | `yes-fill`        | Yes                                                    | 14.5:1 | 13.7:1 | 16.4:1               | 17.0:1              | 7:1      |
-| `ink`           | `no-fill`         | No, and "Something's wrong"                            | 13.8:1 | 14.6:1 | 14.9:1               | 18.0:1              | 7:1      |
-| `ink`           | `unsure-fill`     | Not sure                                               | 13.9:1 | 13.3:1 | 14.8:1               | 16.5:1              | 7:1      |
-| `on-accent`     | `accent`          | The big reply, Type, Speak, and primary buttons        | 8.4:1  | 7.6:1  | 10.8:1               | 12.1:1              | 7:1      |
-| `on-accent`     | `accent-pressed`  | The same, pressed                                      | 10.8:1 | 9.5:1  | 13.4:1               | 15.1:1              | 7:1      |
-| `surface`       | `ink`             | The selected tab, and Stop                             | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
-| `on-listen`     | `listen`          | "Listening" and its symbol                             | 5.4:1  | 9.0:1  | 7.4:1                | 12.0:1              | 4.5:1    |
-| `listen`        | `surface`         | The caption's label while hearing                      | 5.3:1  | 7.8:1  | 7.4:1                | 10.0:1              | 4.5:1    |
-| `listen`        | `listen-soft`     | The free lines' pill                                   | 4.5:1  | 7.2:1  | 5.5:1                | 9.8:1               | 4.5:1    |
-| `ink-secondary` | `surface`         | Labels, counts, and placeholders on cards              | 7.3:1  | 7.6:1  | 11.7:1               | 12.0:1              | 4.5:1    |
-| `ink-secondary` | `board`           | Notes and group headers on the board                   | 6.6:1  | 8.6:1  | 10.2:1               | 13.4:1              | 4.5:1    |
-| `ink-secondary` | `surface-sunken`  | Notes in pills                                         | 5.9:1  | 8.9:1  | 8.6:1                | 13.9:1              | 4.5:1    |
-| `accent`        | `surface`         | Links                                                  | 8.2:1  | 6.8:1  | 10.8:1               | 10.1:1              | 4.5:1    |
-| `accent`        | `board`           | The big reply's fill against the board                 | 7.3:1  | 7.6:1  | 9.4:1                | 11.3:1              | 3:1      |
-| `edge`          | `board`           | Card edges against the board                           | 3.3:1  | 4.9:1  | 8.5:1                | 11.5:1              | 3:1      |
-| `edge`          | `surface`         | Card edges against the card                            | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
-| `yes-edge`      | `board`           | Yes's edge against the board                           | 4.7:1  | 8.7:1  | 7.2:1                | 12.3:1              | 3:1      |
-| `yes-edge`      | `yes-fill`        | Yes's edge against its fill                            | 4.5:1  | 7.2:1  | 6.5:1                | 10.8:1              | 3:1      |
-| `no-edge`       | `board`           | No's edge against the board                            | 5.7:1  | 7.3:1  | 7.9:1                | 10.3:1              | 3:1      |
-| `no-edge`       | `no-fill`         | No's edge against its fill                             | 5.2:1  | 6.5:1  | 6.4:1                | 9.5:1               | 3:1      |
-| `unsure-edge`   | `board`           | Not sure's edge against the board                      | 5.1:1  | 6.7:1  | 8.5:1                | 11.7:1              | 3:1      |
-| `unsure-edge`   | `unsure-fill`     | Not sure's edge against its fill                       | 4.7:1  | 5.4:1  | 6.8:1                | 9.9:1               | 3:1      |
-| `listen`        | `board`           | The light against the board                            | 4.7:1  | 8.8:1  | 6.4:1                | 11.2:1              | 3:1      |
+| Text or mark    | On                | Used for                                                             | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| --------------- | ----------------- | -------------------------------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`           | `surface`         | Phrases, the caption, toolbar items, and text on cards               | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `ink`           | `surface-pressed` | A card under a finger                                                | 12.8:1 | 12.2:1 | 14.0:1               | 12.4:1              | 7:1      |
+| `ink`           | `board`           | Titles and text on the board                                         | 15.1:1 | 16.5:1 | 18.3:1               | 19.5:1              | 7:1      |
+| `ink`           | `accent-soft`     | The speaking card and the starter card                               | 14.2:1 | 13.6:1 | 15.4:1               | 17.3:1              | 7:1      |
+| `ink`           | `listen-soft`     | A caption word as it arrives                                         | 14.3:1 | 13.5:1 | 15.6:1               | 17.1:1              | 7:1      |
+| `ink`           | `yes-fill`        | Yes                                                                  | 14.5:1 | 13.7:1 | 16.4:1               | 17.0:1              | 7:1      |
+| `ink`           | `no-fill`         | No, and "Something's wrong"                                          | 13.8:1 | 14.6:1 | 14.9:1               | 18.0:1              | 7:1      |
+| `ink`           | `unsure-fill`     | Not sure                                                             | 13.9:1 | 13.3:1 | 14.8:1               | 16.5:1              | 7:1      |
+| `ink`           | `surface-sunken`  | Symbol buttons, Read aloud, the switch block, and notes' first lines | 13.5:1 | 17.2:1 | 15.4:1               | 20.2:1              | 7:1      |
+| `on-accent`     | `accent`          | The big reply, Type, Speak, and primary buttons                      | 8.4:1  | 7.6:1  | 10.8:1               | 12.1:1              | 7:1      |
+| `on-accent`     | `accent-pressed`  | The same, pressed                                                    | 10.8:1 | 9.5:1  | 13.4:1               | 15.1:1              | 7:1      |
+| `surface`       | `ink`             | The selected tab, and Stop                                           | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `on-listen`     | `listen`          | "Listening" and its symbol                                           | 5.4:1  | 9.0:1  | 7.4:1                | 12.0:1              | 4.5:1    |
+| `listen`        | `surface`         | The caption's label while hearing                                    | 5.3:1  | 7.8:1  | 7.4:1                | 10.0:1              | 4.5:1    |
+| `listen`        | `listen-soft`     | The free lines' pill                                                 | 4.5:1  | 7.2:1  | 5.5:1                | 9.8:1               | 4.5:1    |
+| `ink-secondary` | `surface`         | Labels, counts, and placeholders on cards                            | 7.3:1  | 7.6:1  | 11.7:1               | 12.0:1              | 4.5:1    |
+| `ink-secondary` | `board`           | Notes and group headers on the board                                 | 6.6:1  | 8.6:1  | 10.2:1               | 13.4:1              | 4.5:1    |
+| `ink-secondary` | `surface-sunken`  | Notes in pills                                                       | 5.9:1  | 8.9:1  | 8.6:1                | 13.9:1              | 4.5:1    |
+| `ink-secondary` | `surface-pressed` | A row's value while pressed                                          | 5.6:1  | 6.3:1  | 7.8:1                | 8.5:1               | 4.5:1    |
+| `accent`        | `surface`         | Links                                                                | 8.2:1  | 6.8:1  | 10.8:1               | 10.1:1              | 4.5:1    |
+| `accent`        | `board`           | The big reply's fill against the board                               | 7.3:1  | 7.6:1  | 9.4:1                | 11.3:1              | 3:1      |
+| `accent`        | `board`           | The permission step's privacy link                                   | 7.3:1  | 7.6:1  | 9.4:1                | 11.3:1              | 4.5:1    |
+| `accent`        | `accent-soft`     | Voice and purchase tiles' symbols                                    | 6.9:1  | 6.3:1  | 7.9:1                | 10.0:1              | 3:1      |
+| `edge`          | `board`           | Card edges against the board                                         | 3.3:1  | 4.9:1  | 8.5:1                | 11.5:1              | 3:1      |
+| `edge`          | `surface`         | Card edges against the card                                          | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
+| `edge`          | `surface-sunken`  | Symbol buttons' edges against their fill                             | 3.0:1  | 5.1:1  | 7.1:1                | 11.9:1              | 3:1      |
+| `yes-edge`      | `board`           | Yes's edge against the board                                         | 4.7:1  | 8.7:1  | 7.2:1                | 12.3:1              | 3:1      |
+| `yes-edge`      | `yes-fill`        | Yes's edge against its fill                                          | 4.5:1  | 7.2:1  | 6.5:1                | 10.8:1              | 3:1      |
+| `no-edge`       | `board`           | No's edge against the board                                          | 5.7:1  | 7.3:1  | 7.9:1                | 10.3:1              | 3:1      |
+| `no-edge`       | `no-fill`         | No's edge against its fill                                           | 5.2:1  | 6.5:1  | 6.4:1                | 9.5:1               | 3:1      |
+| `unsure-edge`   | `board`           | Not sure's edge against the board                                    | 5.1:1  | 6.7:1  | 8.5:1                | 11.7:1              | 3:1      |
+| `unsure-edge`   | `unsure-fill`     | Not sure's edge against its fill                                     | 4.7:1  | 5.4:1  | 6.8:1                | 9.9:1               | 3:1      |
+| `listen`        | `board`           | The light against the board                                          | 4.7:1  | 8.8:1  | 6.4:1                | 11.2:1              | 3:1      |
 
 Each category's fill and edge, checked the same way:
 
@@ -709,7 +714,7 @@ Turn lays out by the width it's given, not by the device, since an app built wit
 - **No word on glass.** Each toolbar item sits on its own solid pill, so its label keeps its contrast at every point of the Liquid Glass slider, which Turn can't read; and nothing scrolls under the capsule.
 - **The system's glass elsewhere.** Bars, sheets, alerts, and switches turn to glass by themselves, and Xcode 27 ignores `UIDesignRequiresCompatibility`, so an app can no longer opt out ([Turn's iOS design notes][ios-key]). Settings' and the editor's navigation bars, the permission step's sheet, RevenueCat's paywall sheet, alerts, and the under-18 switch show it ([Turn's iOS design notes][ios-chrome]). The home screen has no navigation bar, and the composer above the keyboard is solid, like every other place that holds words.
 - **Nothing glass behind words.** Phrases, the caption, notes, and the consent card are content, where Apple says not to use glass ([Turn's iOS design notes][ios-glass-content]).
-- **Sheets that hold reading text set a background.** Expo Router makes a form sheet's header and content transparent where glass is available, so the permission step sets `headerTransparent: false` and a `surface` background ([Turn's iOS design notes][ios-glass-expo]).
+- **Sheets that hold reading text set a background.** Expo Router makes a form sheet's header and content transparent where glass is available, so the permission step sets `headerTransparent: false` and the `board` background every sheet takes ([Turn's iOS design notes][ios-glass-expo]).
 - **The lamp's glow is behind everything.** While listening, a radial gradient in `listen-glow` at 30%, 560 by 420 points, centered near the Listen control, washes the top of the board, through `experimental_backgroundImage` or an exported ellipse.
 - **Every glass setting leaves the words readable.** Reduce Transparency and the Liquid Glass slider, from clear to tinted, change only the toolbar and the system's chrome; Increase Contrast also moves Turn's own colors to their `-hc` values ([Turn's iOS design notes][ios-glass-settings]).
 
@@ -1329,9 +1334,12 @@ A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point
 
 - **Primary.** `button-primary`: a marker-blue capsule, 56 points tall, its word in `button`, `on-accent`; at most one to a screen.
 - **Secondary.** `button-secondary`: a card capsule with an `edge`.
+- **Actions that delete, reset, or withdraw** read in `ink` on a secondary button or row, as Settings' other actions do: red belongs to No, so only the system's own alerts show their destructive red.
+- **A press** changes the fill and draws the 2.5 edge over the laid-out 1.5, so nothing under a finger moves or grows.
 - **Equal pairs.** "Allow" and "Not now", and "They agreed" and "They said no", are two secondary buttons of one size and style, side by side, stacked from AX1: Apple marks a preferred choice by "style — not size", and neither of these is preferred ([Turn's iOS design notes][ios-hig-changes]).
-- **Lists.** Settings and the editor use inset groups on the board: rows at least 56 points tall in a `surface` group with a 1.5 `edge` and hairline dividers, each with a 32-point symbol tile colored by meaning, with `body` text and `link` for links. The tile is `accent` for voice and purchase, `listen` for Listen mode, and the category's color for places and the bank.
-- **Symbol buttons.** At least 44 by 44 points, each with a label.
+- **Lists.** Settings and the editor use inset groups on the board: rows at least 56 points tall in a `surface` group with a 1.5 `edge` and hairline dividers, each with a 32-point symbol tile in `chip` corners colored by meaning, with `body` text, values in `ink-secondary`, and `link` for links. The tile is `accent` on `accent-soft` for voice and purchase, `ink` on `listen-soft` for Listen mode, the category's edge on its fill for the bank and Out and about's for places, and `ink` on `surface-sunken` for the rest. From AX1 the tile sits above the row's words, so a long word keeps the row's width.
+- **Symbol buttons.** At least 44 by 44 points, each with a label, on `surface-sunken` with a 1.5 `edge`.
+- **Sheets.** On the `board`, with a grabber, the title in `title`, and a 44-point close; the sheet's buttons stay pinned above the keyboard, stacked from AX1.
 
 [ios-hig-changes]: /docs/research/0029-turn-ios-design.md#hig-changes-since-june-2025
 
@@ -1402,9 +1410,9 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 ### The permission step
 
-`/permission`, a form sheet at full height, since it's for reading, on a `surface` background (CONSENT-1):
+`/permission`, a form sheet at full height, since it's for reading, on the `board`, as every sheet is (CONSENT-1):
 
-- A title in `title`, then short paragraphs in `body` that say what leaves the phone with each partner line (ROW-2), that names Turn recognizes are swapped for tags, to whom it goes, that audio and the rest of the bank never leave, and that the service may keep data to monitor its service.
+- A title in `title` beside a 44-point close that means Not now, the ear on a `listen` disc, then a paragraph in `body` that says what leaves the phone with each partner line and to whom it goes (ROW-2), and the rest as facts beside symbol tiles: that names Turn recognizes are swapped for tags, that audio and the rest of the bank never leave, and that the service may keep data to monitor its service.
 - A link to the privacy notice, which reads with no network (SET-2).
 - "Allow" and "Not now" as an equal pair at the bottom.
 - Every word is text, never an image, so Accessibility Reader and VoiceOver read it ([Turn's iOS design notes][ios-reader]).
@@ -1417,8 +1425,9 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 - **The lead**, one sentence in the partner's terms, in `partner-card-title`.
 - **The facts** CONSENT-4 lists, one to a line, in `partner-line-small`: what the phone does with their words, where the words go and why, that no audio is recorded, and that listening can be paused at any time.
-- **The switch** "My partner is under 18" in a list row (CONSENT-6).
-- **Read aloud**, a secondary button that speaks the lead and the facts in the chosen voice on the user's tap, since talking one to one beats a written notice and guests want to be told by the owner ([AAC design notes][aac-consent]). It's the design's addition to CONSENT-4, which says what the card holds but not how a partner who can't read it learns it.
+- **The card** is a `surface` panel in `big` corners with a 1.5 `listen` edge, the raised shadow, and the lamp's warm glow behind it, headed by the ear on a `listen` disc; each fact sits beside a symbol on a `listen-soft` disc.
+- **The switch** "My partner is under 18" in a `surface-sunken` block, with "Turn never listens to someone under 18." under it, or "Listen mode stays off for this partner." once it's on (CONSENT-6).
+- **Read aloud**, a secondary pill at the card's top that speaks the lead and the facts in the chosen voice on the user's tap, since talking one to one beats a written notice and guests want to be told by the owner ([AAC design notes][aac-consent]). It's the design's addition to CONSENT-4, which says what the card holds but not how a partner who can't read it learns it.
 - **"They agreed" and "They said no"**, an equal pair at the bottom, within a thumb's reach; the microphone starts only after "They agreed".
 - **One decision.** The card asks one question, and besides its two answers it holds only the under-18 switch and Read aloud, so the partner can answer at a glance ([AAC design notes][aac-consent]).
 
@@ -1429,33 +1438,33 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 `/settings`, a native stack screen with grouped lists on the board, in the order SET-1 gives:
 
-- **Voice.** The voice, with a preview for each; the speech rate as a list of five steps, each chosen with one tap, since a slider needs a drag (A11Y-5); and Personal Voice, with VOICE-2's explanation when iOS says no.
-- **Listen mode.** Its permission, with Withdraw (CONSENT-3), and the under-18 switch (CONSENT-6).
-- **Your words.** Places and the phrase bank.
-- **Turn Listen.** "Unlock Listen mode", which opens the paywall, or "Unlocked"; and Restore Purchases (PAY-6).
-- **About.** The privacy notice, the open-source licenses, and the version with the relay's status.
+- **Voice.** The voice and the speech rate, each opening the Voice screen: Personal Voice first, with VOICE-2's explanation in a sheet when iOS says no; the voices, each tile its preview; and the speech rate as a segmented control of five steps, each chosen with one tap, since a slider needs a drag (A11Y-5).
+- **Listen mode.** Its permission and the relay's status. The permission opens the Listen mode screen, `/settings/listen`: the permission's words, Withdraw or Allow (CONSENT-3), the privacy notice, and the under-18 switch, "Asked on the consent card each time" (CONSENT-6).
+- **Your words.** Places and the phrase bank, each with its count.
+- **Turn Listen.** "Unlock Listen mode", which opens the paywall, with the free lines left under it, as "12 of 20 free lines left", or "Unlocked"; and Restore Purchases (PAY-6). A purchase or restore's note follows in a `surface-sunken` pill, and "Listen mode is unlocked." takes "Turn Listen is yours on this phone. Speaking stays free, as always." under it.
+- **About.** The privacy notice, the open-source licenses, and the version.
 - **Last.** Stats on this phone (SET-4), then Erase all data (SET-3), whose confirmation is a system alert with a destructive button.
 
 ### Stats on this phone
 
 `/settings/stats`, a native stack screen titled "Stats on this phone", holds the counts METRIC-3 names, so the team can read the north star in rehearsals: replies from the row, out of all the replies (SET-4).
 
-- **One group of five rows,** in Settings' row style, each a label with its value in `ink-secondary`, on the right or, from AX1, under the label: "Partner lines", "Replies from the row", "Replies from the grid or keyboard", "Time to the row", and "Time to speech".
+- **Five cards with big numbers,** two to a row and one from AX1, each a `surface` card with the card shadow, a symbol tile, its value in `large-title`, and its label in `footnote` and `ink-secondary`: "Partner lines", "Replies from the row", "Replies from the grid or keyboard", "Time to the row", and "Time to speech". A time's "None yet" is in `ink-secondary`.
 - **Values.** Counts are whole numbers. The two times are medians in seconds with one decimal, as "1.4 s", and read "None yet" before the first one.
 - **What counts.** A partner line counts when it ends, spoken or typed. Replies count in Listen mode only: from the row, a slot or the big button; from the grid or keyboard, a grid phrase, a phrase the composer matched, or the composer's Speak. The strip and Repeat count as neither, since the strip's phrases steer the talk rather than answer it, and Repeat says a counted reply again.
 - **What a time measures.** From the end of the line a reply answers: the line the row answers, for a reply from the row, and the newest line otherwise. Times over a minute are left out, and each median covers the last 200.
-- **The note,** under the group in `footnote` and `ink-secondary`, as Settings' notes are: "These counts stay on this phone."
-- **Reset.** A second group with one action row, "Reset stats", in `ink`, as Settings' other actions are. It asks first, in a system alert with a destructive button, then shows zeroes and "None yet". Erase all data resets them too.
+- **The note,** under the cards in `footnote` and `ink-secondary`, as Settings' notes are: "These counts stay on this phone."
+- **Reset.** A secondary button, "Reset stats", in `ink`, as Settings' other actions are. It asks first, in a system alert with a destructive button, then shows zeroes and "None yet". Erase all data resets them too.
 
 ### The phrase bank editor
 
 `/bank/[category]`, a native stack screen for one category (BANK-2):
 
-- **Rows.** Each phrase in `body`, wrapped, with its places under it in `footnote`; a starter phrase nobody has reviewed shows "Starter" (BANK-10).
+- **Rows.** Each phrase in `phrase` on a card with its category's edge, as the grid shows it, wrapped, with its places under it in `footnote`; a starter phrase nobody has reviewed shows "Starter" in `caption` (BANK-10).
 - **Order without dragging.** In edit mode, each row shows Move up and Move down; Edit, Move, and Delete are also named accessibility actions (A11Y-8).
 - **Delete and Undo.** A deleted phrase hides, and an Undo bar stays at the bottom until the user leaves the editor, with no timer (BANK-9, A11Y-5).
 - **What can't be deleted.** Yes, No, Not sure, and the body and pain category offer no Delete (BANK-5).
-- **Adding or editing.** A sheet with the phrase field, which stops at 200 characters and counts down near the end (BANK-3), its category, and its places.
+- **Adding or editing.** A sheet with the phrase field, which stops at 200 characters and counts down near the end (BANK-3), and rows for its category and its places, each opening its chooser in the sheet's place; its Delete asks first.
 
 ### The first launch
 
@@ -1496,44 +1505,46 @@ The launch screen is the `board` color in each appearance, with no image, since 
 
 The PRD fixes the strip's phrases, the Quick category's, "Listening", "Allow", "Not now", "They agreed", "They said no", "My partner is under 18", "What did they say?", and the names of buttons and settings; these are the rest.
 
-| Where                           | Words                                                                                                                                                                  | For                           |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| The Listen control              | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                     | PAY-1, PAY-2                  |
-| Paused, and its End             | "Paused" and "End"                                                                                                                                                     | CONSENT-5                     |
-| Under 18                        | "Mic off"                                                                                                                                                              | CONSENT-6                     |
-| The caption, out of Listen mode | "Listen mode is off."                                                                                                                                                  | LISTEN-1                      |
-| The caption, while hearing      | "They're saying"                                                                                                                                                       | LISTEN-1                      |
-| The caption, after a line       | "They said"                                                                                                                                                            | LISTEN-1                      |
-| The caption, when the row holds | "Still answering “How was physio?”"                                                                                                                                    | ROW-3                         |
-| Notes                           | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                                                                               | STATE-1 to STATE-3, CONSENT-6 |
-| No live transcription           | "Live transcription isn't available here. Tap here to type what they say."                                                                                             | LISTEN-9                      |
-| The speech model                | "Getting Apple's English speech model", with its progress                                                                                                              | LISTEN-1                      |
-| The empty row                   | "Replies to your partner appear here."                                                                                                                                 | ROW-1                         |
-| The empty row, under 18         | "Listen mode is off for this partner."                                                                                                                                 | CONSENT-6                     |
-| A changed row, to VoiceOver     | "3 replies", or "1 reply"                                                                                                                                              | A11Y-2                        |
-| The composer                    | "Type what to say", "Speak", and "Replying to “How was physio?”"                                                                                                       | SPEAK-3                       |
-| The partner's composer          | "Send"                                                                                                                                                                 | LISTEN-4                      |
-| The tabs and the bottom bar     | "All"; "Type", "Repeat", "Stop", "Up", and "Down"                                                                                                                      | ROW-9, SPEAK-1                |
-| The permission step             | Its title, "Before Listen mode starts", and its body, below                                                                                                            | CONSENT-1                     |
-| The consent card                | Its lead and facts, below, and "Read aloud"                                                                                                                            | CONSENT-4                     |
-| The paywall                     | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"                                                                    | PAY-2                         |
-| After a purchase                | "Listen mode is unlocked."                                                                                                                                             | PAY-4                         |
-| A purchase that fails           | "The purchase didn't go through. Listen mode is still locked."                                                                                                         | PAY-5                         |
-| Restore, with nothing to find   | "No purchase found for this phone. Listen mode is still locked."                                                                                                       | PAY-6                         |
-| Restore, when it can't check    | "Turn couldn't check for a purchase. Listen mode hasn't changed."                                                                                                      | PAY-6                         |
-| Personal Voice refused          | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                | VOICE-2                       |
-| Personal Voice unavailable      | "There's no Personal Voice Turn can use on this iPhone. If you've made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice." | VOICE-2                       |
-| Erase all data                  | "Erase all data?", its message, below, "Erase", and "Cancel"                                                                                                           | SET-3                         |
-| Stats on this phone             | "Partner lines", "Replies from the row", "Replies from the grid or keyboard", "Time to the row", "Time to speech", and "None yet"                                      | SET-4, METRIC-3               |
-| Stats' note and Reset           | "These counts stay on this phone." and "Reset stats"; its alert, "Reset stats?", "This sets the counts back to zero.", "Reset", and "Cancel"                           | SET-4                         |
-| Speech rate                     | "Slowest", "Slower", "Normal", "Faster", and "Fastest"                                                                                                                 | VOICE-3                       |
-| Listen mode's permission        | "Allowed on" and its date, with "Withdraw"; or "Not allowed", with "Allow"                                                                                             | CONSENT-1, CONSENT-3          |
-| After Withdraw                  | "Listen mode is off, and nothing more leaves this phone until you allow it again."                                                                                     | CONSENT-3                     |
-| The relay's status              | "Listen service: working", "Listen service: can't be reached", or "Listen service: off for now"                                                                        | SET-1, STATE-3                |
-| Deleting a category             | "Where should its phrases go?"                                                                                                                                         | BANK-2                        |
-| Undo                            | "Deleted." and "Undo"                                                                                                                                                  | BANK-9                        |
-| The starter card                | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"                                                                  | BANK-10                       |
-| A starter phrase                | "Starter"                                                                                                                                                              | BANK-10                       |
+| Where                           | Words                                                                                                                                                                        | For                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| The Listen control              | "Listen", and "20 free" counting down; "Unlock" once none are left                                                                                                           | PAY-1, PAY-2                  |
+| Paused, and its End             | "Paused" and "End"                                                                                                                                                           | CONSENT-5                     |
+| Under 18                        | "Mic off"                                                                                                                                                                    | CONSENT-6                     |
+| The caption, out of Listen mode | "Listen mode is off."                                                                                                                                                        | LISTEN-1                      |
+| The caption, while hearing      | "They're saying"                                                                                                                                                             | LISTEN-1                      |
+| The caption, after a line       | "They said"                                                                                                                                                                  | LISTEN-1                      |
+| The caption, when the row holds | "Still answering “How was physio?”"                                                                                                                                          | ROW-3                         |
+| Notes                           | "Ranked on this phone"; "Listen mode is degraded"; "Listen mode is off for this partner"                                                                                     | STATE-1 to STATE-3, CONSENT-6 |
+| No live transcription           | "Live transcription isn't available here. Tap here to type what they say."                                                                                                   | LISTEN-9                      |
+| The speech model                | "Getting Apple's English speech model", with its progress                                                                                                                    | LISTEN-1                      |
+| The empty row                   | "Replies to your partner appear here."                                                                                                                                       | ROW-1                         |
+| The empty row, under 18         | "Listen mode is off for this partner."                                                                                                                                       | CONSENT-6                     |
+| A changed row, to VoiceOver     | "3 replies", or "1 reply"                                                                                                                                                    | A11Y-2                        |
+| The composer                    | "Type what to say", "Speak", and "Replying to “How was physio?”"                                                                                                             | SPEAK-3                       |
+| The partner's composer          | "Send"                                                                                                                                                                       | LISTEN-4                      |
+| The tabs and the bottom bar     | "All"; "Type", "Repeat", "Stop", "Up", and "Down"                                                                                                                            | ROW-9, SPEAK-1                |
+| The permission step             | Its title, "Before Listen mode starts", and its body, below                                                                                                                  | CONSENT-1                     |
+| The consent card                | Its lead and facts, below, and "Read aloud"                                                                                                                                  | CONSENT-4                     |
+| The paywall                     | "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode"                                                                          | PAY-2                         |
+| After a purchase                | "Listen mode is unlocked."                                                                                                                                                   | PAY-4                         |
+| A purchase that fails           | "The purchase didn't go through. Listen mode is still locked."                                                                                                               | PAY-5                         |
+| Restore, with nothing to find   | "No purchase found for this phone. Listen mode is still locked."                                                                                                             | PAY-6                         |
+| Restore, when it can't check    | "Turn couldn't check for a purchase. Listen mode hasn't changed."                                                                                                            | PAY-6                         |
+| Personal Voice refused          | "Turn can't use your Personal Voice. In iOS Settings, allow apps to request to use it, then try again."                                                                      | VOICE-2                       |
+| Personal Voice unavailable      | "There's no Personal Voice Turn can use on this iPhone. If you've made one, allow apps to request to use it in iOS Settings; until then, Turn keeps the system voice."       | VOICE-2                       |
+| Erase all data                  | "Erase all data?", its message, below, "Erase", and "Cancel"                                                                                                                 | SET-3                         |
+| Stats on this phone             | "Partner lines", "Replies from the row", "Replies from the grid or keyboard", "Time to the row", "Time to speech", and "None yet"                                            | SET-4, METRIC-3               |
+| Stats' note and Reset           | "These counts stay on this phone." and "Reset stats"; its alert, "Reset stats?", "This sets the counts back to zero.", "Reset", and "Cancel"                                 | SET-4                         |
+| Speech rate                     | "Slowest", "Slower", "Normal", "Faster", and "Fastest"                                                                                                                       | VOICE-3                       |
+| Listen mode's permission        | "Allowed on" and its date, with "Withdraw"; or "Not allowed", with "Allow"                                                                                                   | CONSENT-1, CONSENT-3          |
+| The under-18 switch             | "Turn never listens to someone under 18.", or "Listen mode stays off for this partner." once it's on, on the consent card; "Asked on the consent card each time" in Settings | CONSENT-6                     |
+| Unlock Listen mode's count      | "12 of 20 free lines left", counting down                                                                                                                                    | PAY-1                         |
+| After Withdraw                  | "Listen mode is off, and nothing more leaves this phone until you allow it again."                                                                                           | CONSENT-3                     |
+| The relay's status              | "Listen service: working", "Listen service: can't be reached", or "Listen service: off for now"                                                                              | SET-1, STATE-3                |
+| Deleting a category             | "Where should its phrases go?"                                                                                                                                               | BANK-2                        |
+| Undo                            | "Deleted." and "Undo"                                                                                                                                                        | BANK-9                        |
+| The starter card                | "The Turn team wrote these starter phrases. Review them to make them yours.", "Review", and "Not now"                                                                        | BANK-10                       |
+| A starter phrase                | "Starter"                                                                                                                                                                    | BANK-10                       |
 
 The longer texts, where `{service}` is as above:
 
