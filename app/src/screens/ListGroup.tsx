@@ -22,8 +22,7 @@ export type TileTone = { fill: ColorValue; ink: ColorValue }
 export const tileTones = {
   accent: { fill: colors['accent-soft'], ink: colors.accent },
   listen: { fill: colors['listen-soft'], ink: colors.ink },
-  neutral: { fill: colors['surface-sunken'], ink: colors.ink },
-  danger: { fill: colors['no-fill'], ink: colors['no-edge'] }
+  neutral: { fill: colors['surface-sunken'], ink: colors.ink }
 } satisfies Record<string, TileTone>
 
 // Tiles and symbols grow with the text only so far, so a large label keeps its room; labels wrap under values
@@ -34,20 +33,18 @@ export function useListMetrics() {
   return {
     stacked: fontScale >= 1.786,
     tile: Math.round(32 * grow),
-    tileSymbol: Math.round(18 * grow),
     mark: Math.round(15 * Math.min(fontScale, 1.6))
   }
 }
 
-export function SymbolTile({ symbol, tone, size }: { symbol: SymbolName; tone: TileTone; size?: number }) {
-  const metrics = useListMetrics()
-  const tile = size ?? metrics.tile
+export function SymbolTile({ symbol, tone }: { symbol: SymbolName; tone: TileTone }) {
+  const { tile } = useListMetrics()
   return (
     <View
       style={{
         width: tile,
         height: tile,
-        borderRadius: Math.round(tile * 0.31),
+        borderRadius: 14,
         borderCurve: 'continuous',
         alignItems: 'center',
         justifyContent: 'center',
@@ -160,7 +157,7 @@ export function TileLead({ symbol, tone, children }: { symbol?: SymbolName; tone
 }
 
 /** An inset group: a `surface` panel with a 1.5 `edge` and hairline dividers that start where the text does. */
-export function ListGroup({ children, tiles = true }: { children: ReactNode; tiles?: boolean }) {
+export function ListGroup({ children }: { children: ReactNode }) {
   const { tile, stacked } = useListMetrics()
   const rows = Children.toArray(children).filter(isValidElement)
   return (
@@ -180,7 +177,7 @@ export function ListGroup({ children, tiles = true }: { children: ReactNode; til
             <View
               style={{
                 height: 1,
-                marginLeft: tiles && !stacked ? 16 + tile + 12 : 16,
+                marginLeft: stacked ? 16 : 16 + tile + 12,
                 backgroundColor: colors.hairline
               }}
             />
@@ -202,7 +199,6 @@ type ListRowProps = {
   onPress?: () => void
   chevron?: boolean
   checked?: boolean
-  destructive?: boolean
   disabled?: boolean
   toggle?: { value: boolean; onValueChange: (value: boolean) => void; disabled?: boolean }
   accessibilityLabel?: string
@@ -221,7 +217,6 @@ export function ListRow({
   onPress,
   chevron = false,
   checked,
-  destructive = false,
   disabled = false,
   toggle,
   accessibilityLabel,
@@ -230,7 +225,9 @@ export function ListRow({
 }: ListRowProps) {
   const { stacked, mark } = useListMetrics()
   const enabled = !!onPress && !disabled
-  const labelColor = destructive ? colors['no-edge'] : enabled || !onPress ? colors.ink : colors['ink-secondary']
+  const labelColor = enabled || !onPress ? colors.ink : colors['ink-secondary']
+  // A row's subtitle is its value to VoiceOver, unless the row names one.
+  const spokenValue = accessibilityValue ?? subtitle
 
   const text = (
     <View
@@ -282,13 +279,14 @@ export function ListRow({
         </View>
         <Switch
           accessibilityLabel={accessibilityLabel ?? label}
-          accessibilityHint={accessibilityHint}
+          accessibilityHint={accessibilityHint ?? subtitle}
           accessibilityState={{ disabled: !!toggle.disabled, checked: toggle.value }}
           value={toggle.value}
           onValueChange={toggle.onValueChange}
           disabled={toggle.disabled}
           trackColor={{ false: colors.edge, true: colors.accent }}
           thumbColor={colors.surface}
+          style={{ minWidth: 64, minHeight: 44 }}
         />
       </View>
     )
@@ -300,7 +298,7 @@ export function ListRow({
       accessibilityRole={staticText ? 'text' : 'button'}
       // Named explicitly: left to iOS, a trailing symbol adds its own name, such as "Forward".
       accessibilityLabel={accessibilityLabel ?? (value ? `${label}, ${value}` : label)}
-      accessibilityValue={accessibilityValue ? { text: accessibilityValue } : undefined}
+      accessibilityValue={spokenValue ? { text: spokenValue } : undefined}
       accessibilityHint={accessibilityHint}
       accessibilityState={staticText ? undefined : { disabled: !enabled, selected: !!checked }}
       disabled={!enabled}

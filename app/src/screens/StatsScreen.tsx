@@ -5,6 +5,7 @@ import { formatSeconds } from '../stats/store'
 import { useTurn } from '../turn-context'
 import Button from './Button'
 import type { SymbolName } from './category-style'
+import { useShadow } from './depth'
 import { ScreenTitle, SymbolTile, tileTones, useScreenTitle, type TileTone } from './ListGroup'
 import TurnText from './TurnText'
 
@@ -19,6 +20,7 @@ export default function StatsScreen() {
 // One card per count, with its number large (SET-4, METRIC-3); from AX1 the cards take one column.
 function StatCard({ card, boldText }: { card: Card; boldText: boolean }) {
   const none = card.value === formatSeconds(null)
+  const cardShadow = useShadow('card')
   return (
     <View
       accessible
@@ -32,7 +34,8 @@ function StatCard({ card, boldText }: { card: Card; boldText: boolean }) {
         borderCurve: 'continuous',
         borderWidth: 1.5,
         borderColor: colors.edge,
-        backgroundColor: colors.surface
+        backgroundColor: colors.surface,
+        boxShadow: cardShadow
       }}
     >
       <SymbolTile symbol={card.symbol} tone={card.tone} />
@@ -103,7 +106,6 @@ function StatsContent({
       </TurnText>
       <View style={{ marginTop: 10 }}>
         <Button
-          variant="destructive"
           label="Reset stats"
           boldText={boldText}
           onPress={() =>

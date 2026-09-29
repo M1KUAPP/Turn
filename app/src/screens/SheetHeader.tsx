@@ -39,12 +39,14 @@ export default function SheetHeader({ title, boldText, onClose, closeLabel = 'Ca
             alignItems: 'center',
             justifyContent: 'center',
             alignSelf: 'flex-start',
+            borderWidth: 1.5,
+            borderColor: colors.edge,
             backgroundColor: colors['surface-sunken']
           }}
         >
           {({ pressed }) => (
             <>
-              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={22} />
+              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={20.5} />
               <SymbolView
                 name="xmark"
                 size={Math.round(16 * Math.min(fontScale, 1.4))}

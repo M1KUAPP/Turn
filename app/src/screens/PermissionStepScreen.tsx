@@ -23,6 +23,7 @@ export default function PermissionStepScreen() {
   const { fontScale } = useWindowDimensions()
   const symbolSize = (base: number) => Math.round(base * Math.min(fontScale, 2.6))
   const disc = Math.round(40 * Math.min(fontScale, 1.5))
+  const stacked = fontScale >= 1.786
   const [lead, ...facts] = step.paragraphs
   const glow = useShadow('glow')
 
@@ -103,15 +104,22 @@ export default function PermissionStepScreen() {
           )}
         </Pressable>
       </ScrollView>
-      <View style={{ paddingHorizontal: 20, paddingTop: 8, gap: 10 }}>
+      {/* Allow and Not now carry equal weight (CONSENT-1): one size and style side by side, stacked from AX1. */}
+      <View style={{ flexDirection: stacked ? 'column' : 'row', paddingHorizontal: 20, paddingTop: 8, gap: 12 }}>
         <Button
-          variant="primary"
           label={step.allow}
           boldText={boldText}
           disabled={disabled}
           onPress={() => void consent?.allow()}
+          style={stacked ? undefined : { flex: 1 }}
         />
-        <Button label={step.notNow} boldText={boldText} disabled={disabled} onPress={() => consent?.notNow()} />
+        <Button
+          label={step.notNow}
+          boldText={boldText}
+          disabled={disabled}
+          onPress={() => consent?.notNow()}
+          style={stacked ? undefined : { flex: 1 }}
+        />
       </View>
     </SafeAreaView>
   )
