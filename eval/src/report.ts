@@ -19,7 +19,7 @@ import { foldCount } from './cut-off'
 import { amongTheEighty, linesFrom, phrases, root, type Line } from './data'
 import { atCutOff, embeddingModel, embeddings, qwen, qwenInstruction, qwenModel, workersAi } from './embeddings'
 import { jev, relayModel, type JevCall } from './jev'
-import { capital, cell, listOf, table, wrap } from './prose'
+import { capital, cell, listOf, table } from './prose'
 import { keyword, place } from './rankers'
 import { reranker, rerankerModel } from './reranker'
 import {
@@ -58,23 +58,20 @@ const provenance = (labeled: readonly Line[]) => {
   return [
     '## Who wrote the data',
     [
-      wrap(`- **These lines:** ${writers}, and ${labelers} labeled their acceptable replies.`, '  '),
-      wrap(
-        "- **The 80 lines, their labels, and the bank,** as the TRD's evaluation data records: at the team's " +
-          'direction, Claude subagents wrote the 80 lines and the starter bank on September 23, 2026. Two wrote 40 ' +
-          'lines each from a brief that showed no phrase of the bank, as claude-a and claude-b; a third wrote the ' +
-          'bank without seeing the lines, and a fourth read every phrase. Two more, claude-c and claude-d, then ' +
-          "labeled every line's replies, each alone and from a brief that set no quota. Their labels left too few " +
-          'lines with no reply, so claude-f wrote 20 more lines meant to have none from a brief that showed no ' +
-          'list of the bank\'s phrases, only the labeling rules, which name the fixed buttons and "I don\'t know"; ' +
-          'of the 80 lines, it saw only the five that its first draft repeated, quoted back as situations to ' +
-          'avoid. claude-g and claude-h labeled the new lines among the 80 by the same rules; 12 of them replaced ' +
-          "lines with a reply, so that 16 lines have none. claude-c's labeling, with claude-g's for the new lines, " +
-          'is the one the evaluation scores. Text a language model wrote or labeled may suit a ranker built on ' +
-          'one, and two labelings by one model show consistency rather than correctness. On that date, no ' +
-          'teammate had yet read the bank or labeled a line, and no clinic had reviewed the bank.',
-        '  '
-      )
+      `- **These lines:** ${writers}, and ${labelers} labeled their acceptable replies.`,
+      "- **The 80 lines, their labels, and the bank,** as the TRD's evaluation data records: at the team's " +
+        'direction, Claude subagents wrote the 80 lines and the starter bank on September 23, 2026. Two wrote 40 ' +
+        'lines each from a brief that showed no phrase of the bank, as claude-a and claude-b; a third wrote the ' +
+        'bank without seeing the lines, and a fourth read every phrase. Two more, claude-c and claude-d, then ' +
+        "labeled every line's replies, each alone and from a brief that set no quota. Their labels left too few " +
+        'lines with no reply, so claude-f wrote 20 more lines meant to have none from a brief that showed no ' +
+        'list of the bank\'s phrases, only the labeling rules, which name the fixed buttons and "I don\'t know"; ' +
+        'of the 80 lines, it saw only the five that its first draft repeated, quoted back as situations to ' +
+        'avoid. claude-g and claude-h labeled the new lines among the 80 by the same rules; 12 of them replaced ' +
+        "lines with a reply, so that 16 lines have none. claude-c's labeling, with claude-g's for the new lines, " +
+        'is the one the evaluation scores. Text a language model wrote or labeled may suit a ranker built on ' +
+        'one, and two labelings by one model show consistency rather than correctness. On that date, no ' +
+        'teammate had yet read the bank or labeled a line, and no clinic had reviewed the bank.'
     ].join('\n')
   ]
 }
@@ -115,11 +112,9 @@ const gapLine = (scores: readonly LineScore<Line>[], names: readonly string[], n
     'no clear difference': "there's no clear difference"
   }
   return [
-    wrap(
-      `${capital(naming.jev)} minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, ` +
-        `with a 95% paired interval of ${points(low)} to ${points(high)}` +
-        `${verdict ? `, so ${says[gap.verdict]}` : ''}.`
-    )
+    `${capital(naming.jev)} minus embeddings in top 6: ${difference > 0 ? '+' : ''}${points(difference)} points, ` +
+      `with a 95% paired interval of ${points(low)} to ${points(high)}` +
+      `${verdict ? `, so ${says[gap.verdict]}` : ''}.`
   ]
 }
 
@@ -131,13 +126,13 @@ const groupSections = (
   naming: Naming
 ) => {
   const lower = name[0].toLowerCase() + name.slice(1)
-  if (scores.length === 0) return [`## ${name}`, wrap(`There are no lines ${about}.`)]
+  if (scores.length === 0) return [`## ${name}`, `There are no lines ${about}.`]
   const summary = summarize(scores)
   const ranking =
     summary.recall.n === 0
       ? ['None of them has an acceptable phrase besides Yes, No, and Not sure.']
       : [
-          wrap(`On the ${summary.recall.n} with an acceptable phrase besides Yes, No, and Not sure:`),
+          `On the ${summary.recall.n} with an acceptable phrase besides Yes, No, and Not sure:`,
           table(
             ['Ranker', 'Top 1', 'Top 6', 'Mean reciprocal rank'],
             [
@@ -153,7 +148,7 @@ const groupSections = (
               })
             ]
           ),
-          wrap(`The shortlist's recall at 40: ${rate(summary.recall)}.`),
+          `The shortlist's recall at 40: ${rate(summary.recall)}.`,
           ...gapLine(scores, names, naming, verdict)
         ]
   const capitalized = outcomes.map((outcome) => outcome[0].toUpperCase() + outcome.slice(1))
@@ -175,7 +170,7 @@ const groupSections = (
   )
   return [
     `## ${name}`,
-    wrap(`On the ${summary.lines} lines ${about}.`),
+    `On the ${summary.lines} lines ${about}.`,
     `### Ranking on ${lower}`,
     ...ranking,
     `### The row on ${lower}`,
@@ -218,12 +213,12 @@ const bigButtonSection = (scores: readonly LineScore<Line>[], naming: Naming) =>
   const text = (id: string) => phrases.find((phrase) => phrase.id === id)?.text ?? id
   const which = 'a line its writer marked yes-or-no, or on one about pain or consent, in any of its answers'
   if (shown.length === 0) {
-    return ['## Big buttons on yes-or-no, pain, and consent lines', wrap(`No ranker showed a big button on ${which}.`)]
+    return ['## Big buttons on yes-or-no, pain, and consent lines', `No ranker showed a big button on ${which}.`]
   }
   const wrong = shown.filter(({ right }) => !right).length
   return [
     '## Big buttons on yes-or-no, pain, and consent lines',
-    wrap(`Every big button a ranker showed on ${which} (EVAL-5): ${shown.length}, ${wrong} of them wrong.`),
+    `Every big button a ranker showed on ${which} (EVAL-5): ${shown.length}, ${wrong} of them wrong.`,
     table(
       ['Ranker', 'Line', 'The partner said', 'Big button', 'Right or wrong', 'Answers'],
       shown.map(({ ranker, line, phrase, right, answers }) => [
@@ -249,11 +244,9 @@ const kindSection = (scores: readonly LineScore<Line>[], naming: Naming) => {
   const { counts, right } = kindMatrix(scores, 'jev')
   return [
     '## The question kind',
-    wrap(
-      `${capital(naming.jev)}'s most likely kind of question against its writer's, on all ${scores.length} lines: ` +
-        `right on ${rate(right)}. Each row is the writer's kind, and each column ${naming.jev}'s, or a tie when ` +
-        'two kinds share the top.'
-    ),
+    `${capital(naming.jev)}'s most likely kind of question against its writer's, on all ${scores.length} lines: ` +
+      `right on ${rate(right)}. Each row is the writer's kind, and each column ${naming.jev}'s, or a tie when ` +
+      'two kinds share the top.',
     table(
       ["Writer's kind", ...kinds.map((kind) => kindNames[kind]), 'Tie'],
       kinds.map((kind) => [
@@ -275,13 +268,11 @@ const curveSection = (count: number, curves: readonly Curve[], image: string) =>
   return [
     '## Risk and coverage',
     `![Risk against coverage for each ranker](${image})`,
-    wrap(
-      `Each ranker's risk against its coverage on all ${count} lines, as its threshold falls through its top ` +
-        'scores: a line is covered when its top phrase reaches the threshold, and right when one of its first six ' +
-        "phrases at or above it is acceptable; the fixed buttons and the big button don't count. place and keyword " +
-        'score each phrase 1 or 0, so each makes one point. The table gives the risk at the first point that covers ' +
-        'at least each share of the lines, and at what coverage.'
-    ),
+    `Each ranker's risk against its coverage on all ${count} lines, as its threshold falls through its top ` +
+      'scores: a line is covered when its top phrase reaches the threshold, and right when one of its first six ' +
+      "phrases at or above it is acceptable; the fixed buttons and the big button don't count. place and keyword " +
+      'score each phrase 1 or 0, so each makes one point. The table gives the risk at the first point that covers ' +
+      'at least each share of the lines, and at what coverage.',
     table(
       ['Ranker', ...shares.map((share) => percent(share))],
       curves.map(([name, points]) => [
@@ -305,14 +296,12 @@ const cutOffSection = (cutOffs: Readonly<Record<string, readonly number[]>>, fol
     counts[held] === 0 ? 'no lines' : cutOff === Infinity ? 'hold all' : cutOff.toPrecision(3)
   return [
     '## The cut-offs for holding',
-    wrap(
-      'The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable ' +
-        `reply: folds 1 to 5 held ${listOf(counts.map(String))} lines. For each ranker below, each fold's lines ` +
-        "were scored at the cut-off, of the six highest scores of each of the other four folds' lines, that made the " +
-        'most of those lines right, a tie going to the higher; "hold all" is one above every score. A line whose top ' +
-        "phrase falls short of its cut-off shows no phrase: the row holds, unless the phone's yes-or-no rule brings " +
-        'the fixed buttons.'
-    ),
+    'The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable ' +
+      `reply: folds 1 to 5 held ${listOf(counts.map(String))} lines. For each ranker below, each fold's lines ` +
+      "were scored at the cut-off, of the six highest scores of each of the other four folds' lines, that made the " +
+      'most of those lines right, a tie going to the higher; "hold all" is one above every score. A line whose top ' +
+      "phrase falls short of its cut-off shows no phrase: the row holds, unless the phone's yes-or-no rule brings " +
+      'the fixed buttons.',
     table(
       ['Ranker', ...counts.map((_, held) => `Fold ${held + 1}`)],
       Object.entries(cutOffs).map(([name, values]) => [name, ...values.map(value)])
@@ -356,33 +345,29 @@ const calibrationSection = ({ reliability: fit, brier: result, image, beyondReac
   return [
     `## ${capital(naming.jev)}'s calibration`,
     `![Reliability of ${naming.jev}'s top phrase](${image})`,
-    wrap(
-      `Each line's top phrase in ${naming.jev}'s first timed ranking, ties broken as the row breaks them, against ` +
-        `whether it's acceptable, on all ${forecasts.length} lines: ${acceptable} of them are. Of the ` +
-        `${forecasts.length}, ${beyondReach} have no acceptable phrase among their 40, so their top phrase is wrong ` +
-        'whatever its score. The line is the ' +
-        "pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, " +
-        "never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated " +
-        "ranker's fit would follow the diagonal. At each score, the band holds 90% of the fits from 9,999 resamples " +
-        "of the lines, each outcome drawn as its score says, as a calibrated ranker's would be. It holds them at " +
-        "each score apart, so even a calibrated ranker's fit would lie outside it at about one score in ten. The " +
-        'table gives each block, with the number of its scores where the fit lies outside the band.'
-    ),
+    `Each line's top phrase in ${naming.jev}'s first timed ranking, ties broken as the row breaks them, against ` +
+      `whether it's acceptable, on all ${forecasts.length} lines: ${acceptable} of them are. Of the ` +
+      `${forecasts.length}, ${beyondReach} have no acceptable phrase among their 40, so their top phrase is wrong ` +
+      'whatever its score. The line is the ' +
+      "pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, " +
+      "never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated " +
+      "ranker's fit would follow the diagonal. At each score, the band holds 90% of the fits from 9,999 resamples " +
+      "of the lines, each outcome drawn as its score says, as a calibrated ranker's would be. It holds them at " +
+      "each score apart, so even a calibrated ranker's fit would lie outside it at about one score in ten. The " +
+      'table gives each block, with the number of its scores where the fit lies outside the band.',
     calibrationTable(fit),
-    wrap(
-      `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
-        `one that isn't, is ${threePlaces(score)}, with a 95% bootstrap interval of ${threePlaces(low)} to ` +
-        `${threePlaces(high)}; lower is better. Always forecasting the share acceptable, ${acceptable} of ` +
-        `${forecasts.length}, would score ${threePlaces(uncertainty)}` +
-        (Number.isNaN(skill)
-          ? ', which leaves no skill score, since every line is right or none is. '
-          : `, so the skill score, 1 minus the Brier score over that, is ${threePlaces(skill)}: above 0 beats ` +
-            'that constant forecast, and below 0 does worse. ') +
-        `CORP's decomposition gives a miscalibration ` +
-        `of ${threePlaces(miscalibration)} and a discrimination of ${threePlaces(discrimination)}: before rounding, ` +
-        'the Brier score is the miscalibration, minus the discrimination, plus that score of always forecasting ' +
-        'the share.'
-    )
+    `The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for ` +
+      `one that isn't, is ${threePlaces(score)}, with a 95% bootstrap interval of ${threePlaces(low)} to ` +
+      `${threePlaces(high)}; lower is better. Always forecasting the share acceptable, ${acceptable} of ` +
+      `${forecasts.length}, would score ${threePlaces(uncertainty)}` +
+      (Number.isNaN(skill)
+        ? ', which leaves no skill score, since every line is right or none is. '
+        : `, so the skill score, 1 minus the Brier score over that, is ${threePlaces(skill)}: above 0 beats ` +
+          'that constant forecast, and below 0 does worse. ') +
+      `CORP's decomposition gives a miscalibration ` +
+      `of ${threePlaces(miscalibration)} and a discrimination of ${threePlaces(discrimination)}: before rounding, ` +
+      'the Brier score is the miscalibration, minus the discrimination, plus that score of always forecasting ' +
+      'the share.'
   ]
 }
 
@@ -440,7 +425,7 @@ const render = (
       ...[50, 95, 100].map((q) => percentile(samples, q).toFixed(3))
     ])
   )
-  // Each section starts with its heading, which the contents list.
+  // Each section starts with its heading, which the contents list with the section's subheadings nested under it.
   const sections = [
     provenance(labeled),
     ...groups.map((group) =>
@@ -458,32 +443,28 @@ const render = (
     ...(Object.keys(cutOffs).length > 0 ? [cutOffSection(cutOffs, fold)] : []),
     [
       '## Latency',
-      wrap(
-        'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
-          "ranker's ranking, its network trip included. The apple ranker's time is this Mac's, through a pipe to its " +
-          "Swift helper, not the phone's."
-      ),
+      'Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ' +
+        "ranker's ranking, its network trip included. The apple ranker's time is this Mac's, through a pipe to its " +
+        "Swift helper, not the phone's.",
       latency
     ]
   ]
-  const headings = sections.map(([heading]) => heading.replace(/^## /, ''))
+  const headings = sections.flat().filter((block) => /^#{2,3} /.test(block))
   return (
     [
       "# Turn's evaluation",
       [
         `- **Run:** ${run}.`,
-        wrap(`- **Lines:** the ${labeled.length} in \`${file}\`.`, '  '),
+        `- **Lines:** the ${labeled.length} in \`${file}\`.`,
         "- **Bank:** the app's own, `app/src/content/starter-bank.json`.",
-        wrap(models(pin, calls, naming, apple), '  ')
+        models(pin, calls, naming, apple)
       ].join('\n'),
-      wrap(
-        'Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that ' +
-          "share a word with the line, then, since a fresh bank has no taps, the place's phrases in the bank's " +
-          "order, then the rest in the bank's order. Each ranker orders those 40, and the row's rules turn " +
-          "its ranking into what the user would see. The place's first eight phrases are always among the 40, so " +
-          "the place ranker's top 1 and top 6 never depend on the line, though which of its later phrases are " +
-          'among them can.'
-      ),
+      'Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that ' +
+        "share a word with the line, then, since a fresh bank has no taps, the place's phrases in the bank's " +
+        "order, then the rest in the bank's order. Each ranker orders those 40, and the row's rules turn " +
+        "its ranking into what the user would see. The place's first eight phrases are always among the 40, so " +
+        "the place ranker's top 1 and top 6 never depend on the line, though which of its later phrases are " +
+        'among them can.',
       [
         "- **Rankers:** place gives the place's phrases in the bank's order; keyword, the phone's own ranking by " +
           'shared words; embeddings, the cosine between the line and each phrase; ' +
@@ -507,11 +488,15 @@ const render = (
           "the subsets' intervals carry no verdict, since more intervals would make a false one likelier.",
         `- **${capital(naming.jev)}'s answers** vary a little from call to call, so each line is scored from the ` +
           'first of the three timed passes, and the big buttons come from all four answers, the warm-up included.'
-      ]
-        .map((item) => wrap(item, '  '))
-        .join('\n'),
+      ].join('\n'),
       'Contents:',
-      headings.map((heading) => `1.  [${heading}](#${slug(heading)})`).join('\n'),
+      headings
+        .map((heading) => {
+          const level = heading.indexOf(' ')
+          const text = heading.slice(level + 1)
+          return `${' '.repeat(4 * (level - 2))}1.  [${text}](#${slug(text)})`
+        })
+        .join('\n'),
       ...sections.flat()
     ].join('\n\n') + '\n'
   )

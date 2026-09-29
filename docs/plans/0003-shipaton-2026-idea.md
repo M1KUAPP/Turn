@@ -1,108 +1,83 @@
 # Shipaton 2026 idea implementation plan
 
-> Written for obra/superpowers' `subagent-driven-development` and
-> `executing-plans` skills, which the repo replaced with mattpocock/skills
-> on September 22, 2026. The tasks below are done.
+> Written for obra/superpowers' `subagent-driven-development` and `executing-plans` skills, which the repo replaced with mattpocock/skills on September 22, 2026. The tasks below are done.
 
-**Goal:** Add `docs/IDEA.md`: the app a team will build and ship for
-RevenueCat Shipaton 2026 by September 30, 2026, chosen through ten rounds of
-ideation, with Jev built into the project.
+**Goal:** Add `docs/IDEA.md`: the app a team will build and ship for RevenueCat Shipaton 2026 by September 30, 2026, chosen through ten rounds of ideation, with Jev built into the project.
 
-**Architecture:** Two new research notes, on [Jev](/docs/research/0005-jev.md)
-and the [2026 project gallery](/docs/research/0006-gallery-2026.md), join the
-[brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) as the inputs to ten
-rounds of ideation. Each round is one task and one commit, logged in
-`docs/research/0007-ideation.md`. `docs/IDEA.md` then states the chosen idea and
-how to ship it, linking to the brief, the context, and the log instead of
-repeating them. Each task on the idea adds whole sections with their `Contents:`
-entries, so every commit leaves a consistent document.
+**Architecture:** Two new research notes, on [Jev](/docs/research/0005-jev.md) and the [2026 project gallery](/docs/research/0006-gallery-2026.md), join the [brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) as the inputs to ten rounds of ideation. Each round is one task and one commit, logged in `docs/research/0007-ideation.md`. `docs/IDEA.md` then states the chosen idea and how to ship it, linking to the brief, the context, and the log instead of repeating them. Each task on the idea adds whole sections with their `Contents:` entries, so every commit leaves a consistent document.
 
-**Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged,
-commitlint with Conventional Commits, the `gh` CLI, Python 3 with curl for the
-local checks in the [appendix](#appendix-check-scripts), and subagents for the
-rounds that need independent views.
+**Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged, commitlint with Conventional Commits, the `gh` CLI, Python 3 with curl for the local checks in the [appendix](#appendix-check-scripts), and subagents for the rounds that need independent views.
 
-**Spec:** No separate spec file. The user's goal directive and the
-[design](#design) below are the spec.
+**Spec:** No separate spec file. The user's goal directive and the [design](#design) below are the spec.
 
 Contents:
 
 1.  [Global constraints](#global-constraints)
 1.  [Design](#design)
+    1.  [Sections of the idea](#sections-of-the-idea)
+    1.  [Ten rounds of ideation](#ten-rounds-of-ideation)
+    1.  [Rubric](#rubric)
+    1.  [Assumptions](#assumptions)
+    1.  [Rejected alternatives](#rejected-alternatives)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research notes](#task-1-research-notes)
+    1.  [Task 2: Round 1, constraints and rubric](#task-2-round-1-constraints-and-rubric)
+    1.  [Task 3: Round 2, thirty candidates](#task-3-round-2-thirty-candidates)
+    1.  [Task 4: Round 3, screening](#task-4-round-3-screening)
+    1.  [Task 5: Round 4, scoring](#task-5-round-4-scoring)
+    1.  [Task 6: Round 5, evidence](#task-6-round-5-evidence)
+    1.  [Task 7: Round 6, red team](#task-7-round-6-red-team)
+    1.  [Task 8: Round 7, the choice](#task-8-round-7-the-choice)
+    1.  [Task 9: Round 8, monetization](#task-9-round-8-monetization)
+    1.  [Task 10: Round 9, scope, stack, and schedule](#task-10-round-9-scope-stack-and-schedule)
+    1.  [Task 11: Round 10, pitch test](#task-11-round-10-pitch-test)
+    1.  [Task 12: Frame, at a glance, and see also](#task-12-frame-at-a-glance-and-see-also)
+    1.  [Task 13: Problem, audience, and the app](#task-13-problem-audience-and-the-app)
+    1.  [Task 14: How Jev fits](#task-14-how-jev-fits)
+    1.  [Task 15: Monetization and categories](#task-15-monetization-and-categories)
+    1.  [Task 16: Build plan](#task-16-build-plan)
+    1.  [Task 17: Launch, pitch, and risks](#task-17-launch-pitch-and-risks)
+    1.  [Task 18: The rounds and the assumptions](#task-18-the-rounds-and-the-assumptions)
+    1.  [Task 19: Pointers, whole-document review, and graph refresh](#task-19-pointers-whole-document-review-and-graph-refresh)
+    1.  [Task 20: Pull request, review, and merge](#task-20-pull-request-review-and-merge)
 1.  [Appendix: check scripts](#appendix-check-scripts)
 
 ## Global constraints
 
-- Follow [the Markdown style guide](/docs/references/markdown-style.md), with a
-  `Contents:` list in lazy numbering (`1.  [Heading](#anchor)`) instead of a
-  `[TOC]` directive, as in the brief and the context.
-- One H1; ATX headings with unique names and blank lines around them; prose
-  wrapped at 80 characters (links, tables, headings, and code blocks are
-  exempt); no trailing whitespace; `- ` bullets; a language on every fenced
-  code block. Never start a wrapped line with a number and a period, which
-  Prettier reads as a list item.
-- Repo links use root paths such as `/docs/BRIEF.md`. Long or repeated links
-  become reference links, defined before the next heading after first use, or
-  at the end of the document when used in several sections.
-- Facts come from the brief, the context, and the notes in `docs/research/`.
-  Jev is described only as the [Jev notes](/docs/research/0005-jev.md) describe
-  it. New facts found during ideation, such as competing apps and their
-  prices, go into a research note with a source for each.
-- Don't repeat the brief or the context. `docs/IDEA.md` links to their
-  sections for rules, dates, the submission checklist, judging, prizes, store
-  review, and benchmarks, and says only what they mean for this app.
-- Absolute dates only. Anything that changes, such as prices, ratings,
-  versions, and counts, is dated as of September 22, 2026.
-- Every choice the goal directive left open is an assumption, stated in the
-  log and in `docs/IDEA.md`.
+- Follow [the Markdown style guide](/docs/references/markdown-style.md), with a `Contents:` list in lazy numbering (`1.  [Heading](#anchor)`) instead of a `[TOC]` directive, as in the brief and the context.
+- One H1; ATX headings with unique names and blank lines around them; prose wrapped at 80 characters (links, tables, headings, and code blocks are exempt); no trailing whitespace; `- ` bullets; a language on every fenced code block. Never start a wrapped line with a number and a period, which Prettier reads as a list item.
+- Repo links use root paths such as `/docs/BRIEF.md`. Long or repeated links become reference links, defined before the next heading after first use, or at the end of the document when used in several sections.
+- Facts come from the brief, the context, and the notes in `docs/research/`. Jev is described only as the [Jev notes](/docs/research/0005-jev.md) describe it. New facts found during ideation, such as competing apps and their prices, go into a research note with a source for each.
+- Don't repeat the brief or the context. `docs/IDEA.md` links to their sections for rules, dates, the submission checklist, judging, prizes, store review, and benchmarks, and says only what they mean for this app.
+- Absolute dates only. Anything that changes, such as prices, ratings, versions, and counts, is dated as of September 22, 2026.
+- Every choice the goal directive left open is an assumption, stated in the log and in `docs/IDEA.md`.
 - Use they/them for any person whose pronouns aren't stated.
-- Conventional Commits: lowercase subject, header of at most 100 characters,
-  body lines of at most 100 characters, no attribution lines.
-- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or
-  `.claude/`; they hold unrelated local changes.
+- Conventional Commits: lowercase subject, header of at most 100 characters, body lines of at most 100 characters, no attribution lines.
+- Stage explicit paths only. Never stage `skills-lock.json`, `.agents/`, or `.claude/`; they hold unrelated local changes.
 
 ## Design
 
-`docs/IDEA.md` serves the team, and the agents in this repo, from September
-22 to September 30, 2026. It says what to build, for whom, why it can win,
-where Jev fits, how it makes money, which categories to enter, what to ship
-by when, how to launch and pitch it, and what could go wrong.
+`docs/IDEA.md` serves the team, and the agents in this repo, from September 22 to September 30, 2026. It says what to build, for whom, why it can win, where Jev fits, how it makes money, which categories to enter, what to ship by when, how to launch and pitch it, and what could go wrong.
 
 ### Sections of the idea
 
-1.  **At a glance**: name, logline, store, price, categories, Jev's role, and
-    the key dates, on one screen.
-1.  **Problem and audience**: who has the problem, what it costs them, and
-    the evidence from the category brief, the gallery, and the competitor
-    scan.
-1.  **What the app does**: the core loop, the screens, the "aha" moment, and
-    what the first version leaves out.
-1.  **How Jev fits**: the job Jev does, the integration points, the data
-    that leaves the device and the consent for it, and the fallback when Jev
-    is unavailable.
-1.  **Monetization**: the paywall moment, packages and prices, the trial, and
-    the codes that give judges free access until October 13.
-1.  **Categories to enter**: the primary and secondary categories, each
-    mapped to what its judges ask for and the proof the entry will carry, and
-    the categories left out, with the reason.
-1.  **Build plan**: stack, architecture, the first version's scope, a
-    day-by-day schedule to September 30, and the review-safety checklist.
-1.  **Launch and pitch**: the first-user channels, the numbers to report,
-    the two-minute video beats, and the write-up outline.
-1.  **Risks**: the top risks, each with a mitigation and the trigger for a
-    fallback.
-1.  **How the idea was chosen**: one line per ideation round, linking to the
-    log.
-1.  **Assumptions and open questions**: what was assumed because the goal
-    directive rules out asking, and open items with safe defaults.
+1.  **At a glance**: name, logline, store, price, categories, Jev's role, and the key dates, on one screen.
+1.  **Problem and audience**: who has the problem, what it costs them, and the evidence from the category brief, the gallery, and the competitor scan.
+1.  **What the app does**: the core loop, the screens, the "aha" moment, and what the first version leaves out.
+1.  **How Jev fits**: the job Jev does, the integration points, the data that leaves the device and the consent for it, and the fallback when Jev is unavailable.
+1.  **Monetization**: the paywall moment, packages and prices, the trial, and the codes that give judges free access until October 13.
+1.  **Categories to enter**: the primary and secondary categories, each mapped to what its judges ask for and the proof the entry will carry, and the categories left out, with the reason.
+1.  **Build plan**: stack, architecture, the first version's scope, a day-by-day schedule to September 30, and the review-safety checklist.
+1.  **Launch and pitch**: the first-user channels, the numbers to report, the two-minute video beats, and the write-up outline.
+1.  **Risks**: the top risks, each with a mitigation and the trigger for a fallback.
+1.  **How the idea was chosen**: one line per ideation round, linking to the log.
+1.  **Assumptions and open questions**: what was assumed because the goal directive rules out asking, and open items with safe defaults.
 1.  **See also**: the brief, the context, the log, and the research notes.
 
 ### Ten rounds of ideation
 
-Each round asks one question, records its method and output, and ends with a
-decision the next round builds on. The funnel goes from wide to narrow.
+Each round asks one question, records its method and output, and ends with a decision the next round builds on. The funnel goes from wide to narrow.
 
 | Round | Question                                               | Method                                                                                                 | Output                           |
 | ----- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | -------------------------------- |
@@ -119,8 +94,7 @@ decision the next round builds on. The funnel goes from wide to narrow.
 
 ### Rubric
 
-Each idea scores 1 to 5 on each criterion. The weighted total is the sum of
-weight × score ÷ 5, out of 100.
+Each idea scores 1 to 5 on each criterion. The weighted total is the sum of weight × score ÷ 5, out of 100.
 
 | Criterion        | Weight | A 5 means                                                                                |
 | ---------------- | ------ | ---------------------------------------------------------------------------------------- |
@@ -136,40 +110,24 @@ weight × score ÷ 5, out of 100.
 
 Stated because the goal directive rules out asking:
 
-- The team is one to three people starting from no code on September 22,
-  2026, with an active Apple Developer Program membership.
-- The team has no Google Play account with production access and no Galaxy
-  Store seller status.
-- The team is not all students (Next Gen) and not RevenueCat or sponsor staff
-  (Conflict of Interest).
-- "10-round ideation" means ten sequential rounds, each with its own question
-  and decision, from wide to narrow.
-- The launch budget is small, so paid campaigns with a daily minimum, such as
-  Noise's $50, are out.
-- "Include Jev in this project" means Jev makes a decision users rely on in
-  the shipped app, not only in the build tooling. Jev returns choices,
-  scores, and yes-or-no probabilities, never text, and has no mobile SDK, so
-  the app calls it through a thin backend that holds the key.
-- The team can get a Jev API key on September 22, 2026. Jev is in early
-  access, so a key is the first thing to request.
-- TypeSafe's agreement bars announcing the customer relationship without
-  consent, so the team asks TypeSafe before naming Jev in the Devpost
-  write-up.
+- The team is one to three people starting from no code on September 22, 2026, with an active Apple Developer Program membership.
+- The team has no Google Play account with production access and no Galaxy Store seller status.
+- The team is not all students (Next Gen) and not RevenueCat or sponsor staff (Conflict of Interest).
+- "10-round ideation" means ten sequential rounds, each with its own question and decision, from wide to narrow.
+- The launch budget is small, so paid campaigns with a daily minimum, such as Noise's $50, are out.
+- "Include Jev in this project" means Jev makes a decision users rely on in the shipped app, not only in the build tooling. Jev returns choices, scores, and yes-or-no probabilities, never text, and has no mobile SDK, so the app calls it through a thin backend that holds the key.
+- The team can get a Jev API key on September 22, 2026. Jev is in early access, so a key is the first thing to request.
+- TypeSafe's agreement bars announcing the customer relationship without consent, so the team asks TypeSafe before naming Jev in the Devpost write-up.
 
 ### Rejected alternatives
 
-- Refining one idea ten times: it locks in the first idea before comparing
-  any.
-- Ten rounds of free brainstorming without a rubric: the choice would have no
-  traceable reason.
-- Putting the whole log in `docs/IDEA.md`: it would mix the decision with how
-  it was made and triple the document's length.
+- Refining one idea ten times: it locks in the first idea before comparing any.
+- Ten rounds of free brainstorming without a rubric: the choice would have no traceable reason.
+- Putting the whole log in `docs/IDEA.md`: it would mix the decision with how it was made and triple the document's length.
 
 ## Verification gate
 
-Every task runs this gate on each file it changes, after writing and before
-committing. `CHECKS` is a directory holding the three scripts from the
-[appendix](#appendix-check-scripts), and `DOC` is the changed file.
+Every task runs this gate on each file it changes, after writing and before committing. `CHECKS` is a directory holding the three scripts from the [appendix](#appendix-check-scripts), and `DOC` is the changed file.
 
 ```shell
 bunx prettier --write "$DOC" && bunx prettier --check "$DOC"
@@ -178,23 +136,12 @@ python3 "$CHECKS/fact_scan.py" . "$DOC" docs/sources docs/research
 python3 "$CHECKS/check_links.py" "$DOC"
 ```
 
-- Prettier runs first because lint-staged rewrites staged files on commit;
-  the checks must see the committed form.
-- `check_md.py` must print `OK`. It enforces the style rules above, checks
-  that the `Contents:` list matches the H2 headings in order, and checks
-  anchors, local link targets, and reference-link definitions.
-- `fact_scan.py` lists figures found neither in `docs/sources/` nor in
-  another research note; a file never counts as its own evidence. In
-  `docs/IDEA.md`, fix every miss. In the log, the round's own outputs, such
-  as weights, scores, and prices it sets, are expected misses, and the commit
-  body names them. The research notes cite web sources, so for them the scan
-  is informational.
-- `check_links.py` lists external links that don't return HTTP 2xx. Devpost
-  answers scripted requests with 403 and YouTube with 429, so open those by
-  hand; any other failure is a broken link to fix.
+- Prettier runs first because lint-staged rewrites staged files on commit; the checks must see the committed form.
+- `check_md.py` must print `OK`. It enforces the style rules above, checks that the `Contents:` list matches the H2 headings in order, and checks anchors, local link targets, and reference-link definitions.
+- `fact_scan.py` lists figures found neither in `docs/sources/` nor in another research note; a file never counts as its own evidence. In `docs/IDEA.md`, fix every miss. In the log, the round's own outputs, such as weights, scores, and prices it sets, are expected misses, and the commit body names them. The research notes cite web sources, so for them the scan is informational.
+- `check_links.py` lists external links that don't return HTTP 2xx. Devpost answers scripted requests with 403 and YouTube with 429, so open those by hand; any other failure is a broken link to fix.
 
-Each task on `docs/IDEA.md` or the log also has its own assertions, run as a
-failing test first:
+Each task on `docs/IDEA.md` or the log also has its own assertions, run as a failing test first:
 
 ```shell
 check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" || echo "MISSING: $p"; done; }
@@ -202,24 +149,17 @@ check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" || echo "MISSING:
 
 ## Tasks
 
-The inputs are the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md),
-the [Jev notes](/docs/research/0005-jev.md), and the
-[gallery notes](/docs/research/0006-gallery-2026.md). Every subagent prompt
-below also carries the repo rule: run `graphify query "<question>"` before
-grepping or reading repo files. Subagents write no repo file unless their prompt
-names one, and never run git.
+The inputs are the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), the [Jev notes](/docs/research/0005-jev.md), and the [gallery notes](/docs/research/0006-gallery-2026.md). Every subagent prompt below also carries the repo rule: run `graphify query "<question>"` before grepping or reading repo files. Subagents write no repo file unless their prompt names one, and never run git.
 
 ### Task 1: Research notes
 
 **Files:**
 
-- Create: `docs/research/0005-jev.md` and `docs/research/0006-gallery-2026.md`,
-  written by two background research agents from primary sources.
+- Create: `docs/research/0005-jev.md` and `docs/research/0006-gallery-2026.md`, written by two background research agents from primary sources.
 
 - [ ] **Step 1: Check both notes**
 
-Run the gate on each. Expected: prettier passes, `OK`, and every failing link
-opened by hand.
+Run the gate on each. Expected: prettier passes, `OK`, and every failing link opened by hand.
 
 - [ ] **Step 2: Commit each note on its own**
 
@@ -238,9 +178,7 @@ git commit -m "docs(research): map the 2026 project gallery"
 
 **Interfaces:**
 
-- Produces: the H1 `# Shipaton 2026 ideation log`, the intro, the `Contents:`
-  list, and `## Round 1: constraints and rubric`. Later rounds cite its hard
-  constraints as C1, C2, and so on, and score against its rubric.
+- Produces: the H1 `# Shipaton 2026 ideation log`, the intro, the `Contents:` list, and `## Round 1: constraints and rubric`. Later rounds cite its hard constraints as C1, C2, and so on, and score against its rubric.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -254,20 +192,11 @@ Expected: five `MISSING:` lines.
 
 - [ ] **Step 2: Write the section**
 
-- Intro: the log records the ten rounds behind `docs/IDEA.md`, run on
-  September 22, 2026 from the brief, the context, the Jev notes, and the
-  gallery notes, from wide to narrow.
-- Hard constraints, numbered C1 onward, each with its source section: the App
-  Store as the only store in time; in review by September 24; Jev in the
-  product, as its notes describe it; a real RevenueCat purchase in the first
-  build; free judge access until October 13; nothing that slows review (an
-  account only if needed, no third-party login, permission before personal
-  data goes to a third-party AI, no user-generated feed); at most one
-  Influencer Award and no creator likeness.
+- Intro: the log records the ten rounds behind `docs/IDEA.md`, run on September 22, 2026 from the brief, the context, the Jev notes, and the gallery notes, from wide to narrow.
+- Hard constraints, numbered C1 onward, each with its source section: the App Store as the only store in time; in review by September 24; Jev in the product, as its notes describe it; a real RevenueCat purchase in the first build; free judge access until October 13; nothing that slows review (an account only if needed, no third-party login, permission before personal data goes to a third-party AI, no user-generated feed); at most one Influencer Award and no creator likeness.
 - Assumptions: those in the [design](#assumptions).
 - The [rubric](#rubric) and how totals are computed.
-- Decision: Round 3 screens with the constraints, and Rounds 4 and 10 score
-  with the rubric.
+- Decision: Round 3 screens with the constraints, and Rounds 4 and 10 score with the rubric.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -284,19 +213,15 @@ git commit -m "docs(ideation): set the constraints and rubric (round 1)"
 
 **Files:**
 
-- Modify: `docs/research/0007-ideation.md` (append Round 2 and its entry in
-  `Contents:`)
+- Modify: `docs/research/0007-ideation.md` (append Round 2 and its entry in `Contents:`)
 
 - [ ] **Step 1: Dispatch three generator subagents in parallel**
 
 One lens each:
 
 - **A, creator briefs:** the five Influencer Award briefs, two ideas each.
-- **B, RevenueCat and sponsor categories an App Store-only app can enter:**
-  HAMM, Design, Peace Prize, Best Game, Keep Them Coming Back, Growth Loop,
-  Funnel Vision, Idea to Income, and #BuildInPublic.
-- **C, Jev first:** ideas that start from what Jev does best, aimed at the
-  gallery's open spaces.
+- **B, RevenueCat and sponsor categories an App Store-only app can enter:** HAMM, Design, Peace Prize, Best Game, Keep Them Coming Back, Growth Loop, Funnel Vision, Idea to Income, and #BuildInPublic.
+- **C, Jev first:** ideas that start from what Jev does best, aimed at the gallery's open spaces.
 
 ```text
 You are generating app ideas for a team entering RevenueCat Shipaton 2026, a
@@ -337,9 +262,7 @@ For each idea, return exactly these fields:
 
 - [ ] **Step 2: Merge and log**
 
-Number the 30 ideas, merge duplicates (keep the stronger version and note the
-merge), and add `## Round 2: thirty candidates` with a table of number, name,
-logline, lens, primary category, and Jev's job.
+Number the 30 ideas, merge duplicates (keep the stronger version and note the merge), and add `## Round 2: thirty candidates` with a table of number, name, logline, lens, primary category, and Jev's job.
 
 - [ ] **Step 3: Run the gate and the assertions**
 
@@ -362,17 +285,11 @@ git commit -m "docs(ideation): generate thirty candidates (round 2)"
 
 - [ ] **Step 1: Screen**
 
-Mark each candidate pass or fail against C1 onward, naming the first
-constraint it fails. Every survivor goes to Round 4, where Category fit and
-Differentiation weigh crowding idea by idea; gallery cluster sizes are too
-coarse to trim by. If fewer than eight pass, relax no constraint; instead
-rescue failed ideas that one named change would fix.
+Mark each candidate pass or fail against C1 onward, naming the first constraint it fails. Every survivor goes to Round 4, where Category fit and Differentiation weigh crowding idea by idea; gallery cluster sizes are too coarse to trim by. If fewer than eight pass, relax no constraint; instead rescue failed ideas that one named change would fix.
 
 - [ ] **Step 2: Log, check, and commit**
 
-Add `## Round 3: screening` with a table of number, name, result, and reason,
-then run the gate and
-`check docs/research/0007-ideation.md '^## Round 3: screening$' 'Survivors'`.
+Add `## Round 3: screening` with a table of number, name, result, and reason, then run the gate and `check docs/research/0007-ideation.md '^## Round 3: screening$' 'Survivors'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -387,13 +304,11 @@ git commit -m "docs(ideation): screen the candidates (round 3)"
 
 - [ ] **Step 1: Score the survivors**
 
-Score each survivor from 1 to 5 on every rubric criterion, with a one-line
-reason per score.
+Score each survivor from 1 to 5 on every rubric criterion, with a one-line reason per score.
 
 - [ ] **Step 2: Dispatch a blind scorer**
 
-Give it the survivors' names, loglines, core loops, Jev jobs, money, and
-categories, but not your scores:
+Give it the survivors' names, loglines, core loops, Jev jobs, money, and categories, but not your scores:
 
 ```text
 You are scoring app ideas for a RevenueCat Shipaton 2026 entry. Read the
@@ -412,15 +327,11 @@ sum of weight × score ÷ 5), then a one-line judgment per idea.
 
 - [ ] **Step 3: Reconcile and rank**
 
-Average the two scores per criterion. Where they differ by two or more,
-settle the score with a stated reason. Rank by weighted total; ties go to
-buildability. The top five go on.
+Average the two scores per criterion. Where they differ by two or more, settle the score with a stated reason. Rank by weighted total; ties go to buildability. The top five go on.
 
 - [ ] **Step 4: Log, check, and commit**
 
-Add `## Round 4: scoring` with a table of name, the seven averaged scores,
-the total, and the rank, then run the gate and
-`check docs/research/0007-ideation.md '^## Round 4: scoring$' 'Top five'`.
+Add `## Round 4: scoring` with a table of name, the seven averaged scores, the total, and the rank, then run the gate and `check docs/research/0007-ideation.md '^## Round 4: scoring$' 'Top five'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -468,9 +379,7 @@ git commit -m "docs(research): gather evidence for the top five ideas"
 
 - [ ] **Step 3: Log, check, and commit the round**
 
-Add `## Round 5: evidence` with the evidence for and against each idea, any
-score the evidence moves (with the reason), and the top three. Run the gate
-and `check docs/research/0007-ideation.md '^## Round 5: evidence$' 'Top three'`.
+Add `## Round 5: evidence` with the evidence for and against each idea, any score the evidence moves (with the reason), and the top three. Run the gate and `check docs/research/0007-ideation.md '^## Round 5: evidence$' 'Top three'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -485,8 +394,7 @@ git commit -m "docs(ideation): weigh the evidence for the top five (round 5)"
 
 - [ ] **Step 1: Dispatch the red-team subagent**
 
-Give it each finalist's pitch paragraph, core loop, Jev job, money,
-categories, and planned video beats:
+Give it each finalist's pitch paragraph, core loop, Jev job, money, categories, and planned video beats:
 
 ```text
 You are a skeptical panel reviewing three RevenueCat Shipaton 2026 finalists
@@ -507,9 +415,7 @@ its odds. Be adversarial and don't praise.
 
 - [ ] **Step 2: Log, check, and commit**
 
-Add `## Round 6: red team` with the panel's scores, the failure modes, and
-which fixes are accepted or rejected, with reasons. Run the gate and
-`check docs/research/0007-ideation.md '^## Round 6: red team$' 'Accepted'`.
+Add `## Round 6: red team` with the panel's scores, the failure modes, and which fixes are accepted or rejected, with reasons. Run the gate and `check docs/research/0007-ideation.md '^## Round 6: red team$' 'Accepted'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -524,20 +430,11 @@ git commit -m "docs(ideation): red-team the finalists (round 6)"
 
 - [ ] **Step 1: Choose and sharpen**
 
-Re-score the finalists with the accepted fixes, charging buildability half
-a point for each fix's extra work. The highest total wins, but totals within
-3 points count as a tie, because the two Round 4 scorers differed by that
-much on single ideas; the red team's ranking breaks a tie, since
-buildability already carries a fifth of the total. Borrow the runners-up's
-best parts where they fit.
-Name the app: at most 30 characters, with no exact match among App Store
-titles found through Apple's iTunes Search API on September 22, 2026.
+Re-score the finalists with the accepted fixes, charging buildability half a point for each fix's extra work. The highest total wins, but totals within 3 points count as a tie, because the two Round 4 scorers differed by that much on single ideas; the red team's ranking breaks a tie, since buildability already carries a fifth of the total. Borrow the runners-up's best parts where they fit. Name the app: at most 30 characters, with no exact match among App Store titles found through Apple's iTunes Search API on September 22, 2026.
 
 - [ ] **Step 2: Log, check, and commit**
 
-Add `## Round 7: the choice` with the re-scores, the decision, what was
-borrowed, and the name. Run the gate and
-`check docs/research/0007-ideation.md '^## Round 7: the choice$' 'Decision'`.
+Add `## Round 7: the choice` with the re-scores, the decision, what was borrowed, and the name. Run the gate and `check docs/research/0007-ideation.md '^## Round 7: the choice$' 'Decision'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -552,17 +449,11 @@ git commit -m "docs(ideation): choose the idea (round 7)"
 
 - [ ] **Step 1: Design**
 
-From the context's
-[monetization section](/docs/CONTEXT.md#monetization-and-paywalls): the
-paywall moment, what stays free, the packages and prices within the common
-ranges, the trial length given the deadline, and the offer codes that give
-judges a free month or longer.
+From the context's [monetization section](/docs/CONTEXT.md#monetization-and-paywalls): the paywall moment, what stays free, the packages and prices within the common ranges, the trial length given the deadline, and the offer codes that give judges a free month or longer.
 
 - [ ] **Step 2: Log, check, and commit**
 
-Add `## Round 8: monetization`. Run the gate and
-`check docs/research/0007-ideation.md '^## Round 8: monetization$' 'October
-13'`.
+Add `## Round 8: monetization`. Run the gate and `check docs/research/0007-ideation.md '^## Round 8: monetization$' 'October 13'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -577,11 +468,7 @@ git commit -m "docs(ideation): design the monetization (round 8)"
 
 - [ ] **Step 1: Cut and schedule**
 
-The first version's scope as must, should, and won't; the stack, with the
-RevenueCat SDK versions from the context and Jev's integration from its
-notes; the data flow, including what goes to Jev and the consent for it; a
-day-by-day schedule from September 22 to 30 with the review submission by
-September 24; and the review-safety checklist from the context.
+The first version's scope as must, should, and won't; the stack, with the RevenueCat SDK versions from the context and Jev's integration from its notes; the data flow, including what goes to Jev and the consent for it; a day-by-day schedule from September 22 to 30 with the review submission by September 24; and the review-safety checklist from the context.
 
 - [ ] **Step 2: Log, check, and commit**
 
@@ -604,16 +491,11 @@ git commit -m "docs(ideation): cut the scope and set the schedule (round 9)"
 
 - [ ] **Step 1: Test the pitch**
 
-Write the logline in the brief's format, the two-minute video beats with
-times, the write-up outline, and a first answer for each category; re-score
-the idea on the rubric; and set go and no-go triggers, such as the date by
-which the app must be approved before the fallback applies.
+Write the logline in the brief's format, the two-minute video beats with times, the write-up outline, and a first answer for each category; re-score the idea on the rubric; and set go and no-go triggers, such as the date by which the app must be approved before the fallback applies.
 
 - [ ] **Step 2: Log, check, and commit**
 
-Add `## Round 10: pitch test`. Run the gate and
-`check docs/research/0007-ideation.md '^## Round 10: pitch test$' 'Final
-score'`.
+Add `## Round 10: pitch test`. Run the gate and `check docs/research/0007-ideation.md '^## Round 10: pitch test$' 'Final score'`.
 
 ```shell
 git add docs/research/0007-ideation.md
@@ -628,8 +510,7 @@ git commit -m "docs(ideation): test the pitch (round 10)"
 
 **Interfaces:**
 
-- Produces: the H1 `# Shipaton 2026 idea`, the intro, the `Contents:` list,
-  `## At a glance`, and `## See also`, which later tasks extend.
+- Produces: the H1 `# Shipaton 2026 idea`, the intro, the `Contents:` list, `## At a glance`, and `## See also`, which later tasks extend.
 
 - [ ] **Step 1: Write the failing assertions**
 
@@ -642,15 +523,9 @@ Expected: four `MISSING:` lines.
 
 - [ ] **Step 2: Write the sections**
 
-- Intro (at most 3 sentences): the app in one line; it was chosen through ten
-  rounds of ideation logged in `docs/research/0007-ideation.md`; the brief and
-  the context hold the rules and background, so this document links to them.
-- At a glance: name, logline, store, price, primary and secondary
-  categories, Jev's job, and the dates that matter: in review by September
-  24, Devpost submitted before September 30 at 11:45 PM PT, and judge access
-  until October 13.
-- See also: the brief, the context, the ideation log, and the Jev, gallery,
-  and evidence notes.
+- Intro (at most 3 sentences): the app in one line; it was chosen through ten rounds of ideation logged in `docs/research/0007-ideation.md`; the brief and the context hold the rules and background, so this document links to them.
+- At a glance: name, logline, store, price, primary and secondary categories, Jev's job, and the dates that matter: in review by September 24, Devpost submitted before September 30 at 11:45 PM PT, and judge access until October 13.
+- See also: the brief, the context, the ideation log, and the Jev, gallery, and evidence notes.
 
 - [ ] **Step 3: Run the gate and the assertions, then commit**
 
@@ -667,8 +542,7 @@ git commit -m "docs(idea): add the Shipaton 2026 idea at a glance"
 
 - [ ] **Step 1: Write the sections, then check**
 
-`## Problem and audience` and `## What the app does`, from Rounds 2, 5,
-and 7. Assertions:
+`## Problem and audience` and `## What the app does`, from Rounds 2, 5, and 7. Assertions:
 
 ```shell
 check docs/IDEA.md '^## Problem and audience$' '^## What the app does$'
@@ -689,10 +563,7 @@ git commit -m "docs(idea): describe the problem and the app"
 
 - [ ] **Step 1: Write the section, then check**
 
-`## How Jev fits`, from the Jev notes and Rounds 7 and 9: Jev's job, the
-integration points, what data goes to Jev and the consent screen for it, and
-the fallback. Assertions:
-`check docs/IDEA.md '^## How Jev fits$' '5\.1\.2'`.
+`## How Jev fits`, from the Jev notes and Rounds 7 and 9: Jev's job, the integration points, what data goes to Jev and the consent screen for it, and the fallback. Assertions: `check docs/IDEA.md '^## How Jev fits$' '5\.1\.2'`.
 
 - [ ] **Step 2: Commit**
 
@@ -709,8 +580,7 @@ git commit -m "docs(idea): explain how Jev fits"
 
 - [ ] **Step 1: Write the sections, then check**
 
-`## Monetization` from Round 8, and `## Categories to enter` from Rounds 1, 6,
-and 7, with the categories left out and why. Assertions:
+`## Monetization` from Round 8, and `## Categories to enter` from Rounds 1, 6, and 7, with the categories left out and why. Assertions:
 
 ```shell
 check docs/IDEA.md '^## Monetization$' '^## Categories to enter$' 'October 13'
@@ -731,9 +601,7 @@ git commit -m "docs(idea): add monetization and the categories to enter"
 
 - [ ] **Step 1: Write the section, then check**
 
-`## Build plan` from Round 9: stack, architecture, scope, the day-by-day
-schedule, and the review-safety checklist. Assertions:
-`check docs/IDEA.md '^## Build plan$' 'September 24' 'September 30'`.
+`## Build plan` from Round 9: stack, architecture, scope, the day-by-day schedule, and the review-safety checklist. Assertions: `check docs/IDEA.md '^## Build plan$' 'September 24' 'September 30'`.
 
 - [ ] **Step 2: Commit**
 
@@ -750,8 +618,7 @@ git commit -m "docs(idea): add the build plan"
 
 - [ ] **Step 1: Write the sections, then check**
 
-`## Launch and pitch` from Round 10, and `## Risks` from Rounds 6 and 10.
-Assertions: `check docs/IDEA.md '^## Launch and pitch$' '^## Risks$'`.
+`## Launch and pitch` from Round 10, and `## Risks` from Rounds 6 and 10. Assertions: `check docs/IDEA.md '^## Launch and pitch$' '^## Risks$'`.
 
 - [ ] **Step 2: Commit**
 
@@ -768,9 +635,7 @@ git commit -m "docs(idea): add the launch plan, pitch, and risks"
 
 - [ ] **Step 1: Write the sections, then check**
 
-`## How the idea was chosen`, one line per round with a link to its section
-of the log, and `## Assumptions and open questions`, each open question with
-a safe default. Assertions:
+`## How the idea was chosen`, one line per round with a link to its section of the log, and `## Assumptions and open questions`, each open question with a safe default. Assertions:
 
 ```shell
 check docs/IDEA.md '^## How the idea was chosen$' '^## Assumptions and open questions$' \
@@ -788,8 +653,7 @@ git commit -m "docs(idea): trace the ten rounds and state the assumptions"
 
 **Files:**
 
-- Modify: `docs/BRIEF.md` and `docs/CONTEXT.md` (one line each in
-  `## See also`)
+- Modify: `docs/BRIEF.md` and `docs/CONTEXT.md` (one line each in `## See also`)
 - Modify: `graphify-out/` (generated)
 
 - [ ] **Step 1: Link the idea from the brief and the context**
@@ -810,15 +674,11 @@ git commit -m "docs: link the idea from the brief and the context"
 
 - [ ] **Step 2: Run the gate on every new file**
 
-Expected: prettier passes, `OK`, every fact-scan miss fixed or named, and
-every failing link opened by hand.
+Expected: prettier passes, `OK`, every fact-scan miss fixed or named, and every failing link opened by hand.
 
 - [ ] **Step 3: Independent fact check**
 
-Dispatch a fresh agent to check every claim in `docs/IDEA.md` against the
-brief, the context, the log, and the research notes, and to spot-check the
-Jev notes against docs.typesafe.ai. Fix confirmed mismatches and commit them
-as `docs(idea): correct facts against the notes`.
+Dispatch a fresh agent to check every claim in `docs/IDEA.md` against the brief, the context, the log, and the research notes, and to spot-check the Jev notes against docs.typesafe.ai. Fix confirmed mismatches and commit them as `docs(idea): correct facts against the notes`.
 
 - [ ] **Step 4: Refresh the knowledge graph**
 
@@ -839,16 +699,11 @@ git push -u origin docs/idea
 gh pr create --base main --head docs/idea --title "docs: add the Shipaton 2026 idea" --body-file "$CHECKS/pr-body-idea.md"
 ```
 
-The body summarizes the idea, the ten rounds, the research notes, the plan,
-and the checks run. No attribution lines.
+The body summarizes the idea, the ten rounds, the research notes, the plan, and the checks run. No attribution lines.
 
 - [ ] **Step 2: Review and resolve, at most two rounds**
 
-Each round: a fresh reviewer checks the PR diff for accuracy against the
-notes, the style guide, overlap with the brief and the context, internal
-consistency, and whether the idea follows from the rounds. Apply the valid
-findings as small commits, run the gate, push, and post the round's summary
-as a PR comment. Stop after round two and list any remaining nits in the PR.
+Each round: a fresh reviewer checks the PR diff for accuracy against the notes, the style guide, overlap with the brief and the context, internal consistency, and whether the idea follows from the rounds. Apply the valid findings as small commits, run the gate, push, and post the round's summary as a PR comment. Stop after round two and list any remaining nits in the PR.
 
 - [ ] **Step 3: Merge and delete the branch**
 
@@ -861,11 +716,7 @@ Rebase merging keeps the atomic commits and the linear history of `main`.
 
 ## Appendix: check scripts
 
-The scripts from the
-[context plan's appendix](/docs/plans/0002-shipaton-2026-context.md#appendix-check-scripts),
-with two changes: `fact_scan.py` no longer counts the scanned file as
-its own evidence, and `check_md.py` flags placeholders only as whole
-words.
+The scripts from the [context plan's appendix](/docs/plans/0002-shipaton-2026-context.md#appendix-check-scripts), with two changes: `fact_scan.py` no longer counts the scanned file as its own evidence, and `check_md.py` flags placeholders only as whole words.
 
 `check_md.py`:
 
