@@ -41,7 +41,7 @@ export default function VoiceScreen() {
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
       <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 16 }}>
-        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
           Choose a voice or preview how it sounds.
         </TurnText>
         <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
@@ -107,7 +107,7 @@ export default function VoiceScreen() {
                       backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.accent }}>
+                    <TurnText kind="label" boldText={boldText} style={{ color: colors.accent }}>
                       Preview
                     </TurnText>
                   </Pressable>
@@ -117,7 +117,7 @@ export default function VoiceScreen() {
           })}
         </View>
         {note && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {note}
           </TurnText>
         )}
