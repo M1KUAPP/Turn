@@ -662,7 +662,7 @@ final class ListenEngine {
     }
 
     if isFinal {
-      finalizedText += text
+      finalizedText += Self.repaired(final: text, volatile: volatileText)
       volatileText = ""
     } else {
       volatileText = text
@@ -672,15 +672,14 @@ final class ListenEngine {
     let nextText = currentText()
     guard nextText != renderedText else { return }
     renderedText = nextText
-    onPartial(nextText)
-    if !voiceActive {
+    onPartial(Self.lineText(nextText))
+    if !voiceActive, Self.hasWords(nextText) {
       scheduleSilenceLineEnd()
     }
   }
 
   private func scheduleSilenceLineEnd() {
-    guard !lineFinalizing,
-          !currentText().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+    guard !lineFinalizing, Self.hasWords(currentText()) else {
       return
     }
     silenceTask?.cancel()
@@ -709,15 +708,15 @@ final class ListenEngine {
     try await finalize(analyzer, through: boundary)
     await waitForSettledResults(through: boundary)
 
-    let line = finalizedText.trimmingCharacters(in: .whitespacesAndNewlines)
-    if publishLine, !line.isEmpty {
+    let line = Self.lineText(finalizedText)
+    if publishLine, Self.hasWords(line) {
       onLine(line, endedAt, Self.silenceWindowMs)
     }
 
     finalizedText = ""
     renderedText = currentText()
     if !volatileText.isEmpty {
-      onPartial(renderedText)
+      onPartial(Self.lineText(renderedText))
     }
   }
 
@@ -819,6 +818,47 @@ final class ListenEngine {
     }
     timeline.advance(frameCount: frames, sampleRate: analyzerFormat.sampleRate)
     inputBuilder.yield(AnalyzerInput(buffer: silence))
+  }
+
+  /// Whether text holds a letter or a digit, so the transcriber's lone "." never makes a line.
+  private static func hasWords(_ text: String) -> Bool {
+    text.unicodeScalars.contains { CharacterSet.alphanumerics.contains($0) }
+  }
+
+  /// After a silence, the transcriber's final pass can turn a line's first words into punctuation (". of stuffy in here")
+  /// or lose the line (",......."), though its volatile pass heard them, so the volatile words fill them back in.
+  private static func repaired(final: String, volatile: String) -> String {
+    let heard = words(in: volatile)
+    let kept = words(in: final)
+    // A final with no words lost the line, unless the volatile text is a single word's start, such as "L".
+    guard !kept.isEmpty else {
+      guard heard.count >= 2 else { return final }
+      return volatile.first?.isWhitespace == true ? volatile : " " + volatile
+    }
+    guard heard.count > 1 else { return final }
+    // The final lost the volatile's first words when its own pick up partway through them and match on to the end
+    // of either, two words at least.
+    let heardWords = heard.map { $0.lowercased() }
+    let keptWords = kept.map { $0.lowercased() }
+    for start in 1..<heard.count {
+      let overlap = min(keptWords.count, heardWords.count - start)
+      if overlap < 2 { break }
+      if heardWords[start..<start + overlap].elementsEqual(keptWords[..<overlap]) {
+        return " " + heard[..<start].joined(separator: " ") + " " + lineText(final)
+      }
+    }
+    return final
+  }
+
+  private static func words(in text: String) -> [String] {
+    text.split { !($0.isLetter || $0.isNumber || $0 == "'" || $0 == "\u{2019}") }.map(String.init)
+  }
+
+  /// A line without the punctuation the transcriber puts before its first word after a silence, such as ". ".
+  private static func lineText(_ text: String) -> String {
+    let leading = CharacterSet.punctuationCharacters.union(.whitespacesAndNewlines)
+    let words = text.unicodeScalars.drop { leading.contains($0) }
+    return String(String.UnicodeScalarView(words)).trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
   private static func rmsLevel(of buffer: AVAudioPCMBuffer) -> Double {

@@ -452,6 +452,15 @@ reports only errors, so Turn sets its own rule
   Apple's sample does, and treats text as settled once the analyzer's
   `resultsFinalizationTime` passes its end, not only when a result arrives
   with `isFinal`.
+- **Lost words.** After a silence, the final pass can turn a line's first
+  words into punctuation, as in ". of stuffy in here", or drop the line,
+  though the volatile pass heard them. So a final whose words pick up partway
+  through the volatile text's, and match on from there, takes the words
+  before them from the volatile text; a final with no words takes the
+  volatile text whole when it has two words or more; and a line drops the
+  punctuation before its first word. Text without a letter or a digit, such as
+  the lone "." the transcriber hears in a silence, is never a line and never
+  reaches the relay.
 - **The silence rule.** When the tapped audio has stayed below a speech level,
   and no new words have arrived, for the window, the module calls
   `finalize(through: nil)` and reports the settled text as one line (LISTEN-2).
