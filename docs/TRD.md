@@ -638,6 +638,7 @@ on answer(a)
   if not showFixed and fresh is empty:
     keep the row as it is, answering its earlier line              # ROW-3
   else if not showFixed and fresh[0] > P.bigAbove
+          and fresh[0] beats fresh[1], if any, by P.margin
           and topic is not in P.noBigTopics
           and the phone didn't rank the line:                      # STATE-1
     show fresh[0] as the big button and remember it                # ROW-3
@@ -665,9 +666,12 @@ on answer(a)
   doesn't score counts as 0.
 - **A hold** leaves the row answering its earlier line, and the row records
   which, so the caption can say which line the replies still answer.
-- **The big button** fills the row's fixed area; the six slots underneath
-  keep their phrases for the next answer (ROW-1). Its phrase goes back in
-  after the fixed buttons take their slots, so Yes can't cover it.
+- **The big button** fills the row's fixed area; the six slots underneath keep
+  their phrases for the next answer (ROW-1). It hides the other replies, so a
+  second phrase within the margin of the top one, such as "It was hard" beside
+  "It went well" for "How was physio?", shares the slots instead. Its phrase
+  goes back in after the fixed buttons take their slots, so Yes can't cover
+  it.
 - **The fixed buttons** hold their slots by their phrase ids, `yes`, `no`,
   and `not-sure`, so the app speaks and counts them like any phrase.
 - **Ties** go by the answer's order: the shortlist's for Jev's answers, so
