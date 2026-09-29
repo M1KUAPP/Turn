@@ -49,7 +49,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
       {visibleTail ? (
         <>
           <TurnText
-            kind="title3"
+            kind="partner-line-small"
             boldText={boldText}
             numberOfLines={1}
             ellipsizeMode="head"
@@ -57,12 +57,12 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
           >
             …{visibleTail.first}
           </TurnText>
-          <TurnText kind="title3" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+          <TurnText kind="partner-line-small" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
             {visibleTail.second}
           </TurnText>
         </>
       ) : (
-        <TurnText kind="title3" boldText={boldText} numberOfLines={2} style={{ color: colors.ink }}>
+        <TurnText kind="partner-line-small" boldText={boldText} numberOfLines={2} style={{ color: colors.ink }}>
           {text}
         </TurnText>
       )}
@@ -73,7 +73,7 @@ function CaptionWords({ text, boldText, measure }: { text: string; boldText: boo
           style={{ position: 'absolute', left: 0, right: 0, top: 0, opacity: 0 }}
         >
           <TurnText
-            kind="title3"
+            kind="partner-line-small"
             boldText={boldText}
             onTextLayout={({ nativeEvent }) => {
               const lines = nativeEvent.lines
@@ -371,7 +371,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           })}
         >
           <TurnText
-            kind={layout.short ? 'headline' : 'title3-emphasized'}
+            kind={layout.short ? 'button' : 'phrase'}
             boldText={boldText}
             style={{ color: colors.ink, paddingRight: 24 }}
           >
@@ -433,7 +433,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           />
         )}
         <TurnText
-          kind="subheadline-emphasized"
+          kind="phrase-strip"
           boldText={boldText}
           style={{
             color: colors.ink,
@@ -507,7 +507,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                       accessible={false}
                     />
                     <TurnText
-                      kind="subheadline"
+                      kind="footnote"
                       boldText={boldText}
                       numberOfLines={1}
                       style={{ color: colors['ink-secondary'], flexShrink: 1 }}
@@ -518,7 +518,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                 ) : (
                   captionLabel && (
                     <TurnText
-                      kind="subheadline"
+                      kind="label"
                       boldText={boldText}
                       numberOfLines={1}
                       style={{ color: colors['ink-secondary'], maxWidth: '50%' }}
@@ -528,7 +528,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                   )
                 )}
                 <TurnText
-                  kind="title3"
+                  kind="partner-line-small"
                   boldText={boldText}
                   numberOfLines={1}
                   ellipsizeMode="head"
@@ -550,7 +550,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                   >
                     {captionLabel && (
                       <TurnText
-                        kind="subheadline"
+                        kind="label"
                         boldText={boldText}
                         numberOfLines={captionGrows ? undefined : 1}
                         style={{ color: colors['ink-secondary'], flexShrink: 1 }}
@@ -575,7 +575,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                           accessible={false}
                         />
                         <TurnText
-                          kind="subheadline"
+                          kind="footnote"
                           boldText={boldText}
                           numberOfLines={captionGrows ? undefined : 1}
                           style={{ color: colors['ink-secondary'], flexShrink: 1 }}
@@ -588,7 +588,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                 )}
                 {!listening.active ? (
                   <TurnText
-                    kind="title3"
+                    kind="partner-line-small"
                     boldText={boldText}
                     numberOfLines={2}
                     style={{ color: colors['ink-secondary'] }}
@@ -596,11 +596,11 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                     {captionText}
                   </TurnText>
                 ) : captionOpening ? (
-                  <TurnText kind="title2" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
+                  <TurnText kind="title" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
                     {captionText}
                   </TurnText>
                 ) : captionGrows && !caption.words ? (
-                  <TurnText kind="title3" boldText={boldText} style={{ color: colors.ink }}>
+                  <TurnText kind="partner-line-small" boldText={boldText} style={{ color: colors.ink }}>
                     {captionText}
                   </TurnText>
                 ) : (
@@ -630,7 +630,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
               onPress={() => void listen.endLine()}
               style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
             >
-              <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+              <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
                 Done
               </TurnText>
             </Pressable>
@@ -643,7 +643,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                 onPress={() => listen.clear()}
                 style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
               >
-                <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
                   Clear
                 </TurnText>
               </Pressable>
@@ -744,7 +744,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                   }}
                 >
                   <TurnText
-                    kind="subheadline-emphasized"
+                    kind="label"
                     boldText={boldText}
                     style={{ color: selected ? colors.surface : colors.ink, fontWeight: suggested ? '700' : '600' }}
                   >
@@ -791,7 +791,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             }}
           >
             <TurnText
-              kind="subheadline-emphasized"
+              kind="label"
               boldText={boldText}
               style={{ color: categoryId === 'all' ? colors.surface : colors.ink }}
             >
@@ -963,7 +963,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             </TurnText>
             {control.detail && (
               <TurnText
-                kind="subheadline"
+                kind="footnote"
                 boldText={boldText}
                 style={{ color: colors['ink-secondary'], fontVariant: ['tabular-nums'] }}
               >

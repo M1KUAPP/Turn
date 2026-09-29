@@ -34,7 +34,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
       <View
         style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, flexShrink: 0 }}
       >
-        <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
+        <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
           What did they say?
         </TurnText>
         <Pressable
@@ -77,7 +77,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
       <View
         style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexShrink: 0 }}
       >
-        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
+        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], flex: 1 }}>
           {text.length >= 450 ? `${500 - text.length} characters left` : ''}
         </TurnText>
         <Pressable
@@ -99,7 +99,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           })}
         >
           <TurnText
-            kind="headline"
+            kind="button"
             boldText={boldText}
             style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
           >
