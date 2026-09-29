@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react'
 import { Alert, ScrollView, useWindowDimensions, View } from 'react-native'
 import { categoryColors, colors } from '../constants/theme'
 import { consentWords } from '../consent/strings'
+import { purchaseNotes } from '../purchases/store'
 import { rebuildGazetteer } from '../listen/gazetteer'
 import { runTagChecks } from '../listen/tag-checks'
 import { SPEECH_RATE_STEPS } from '../speech/voice-settings'
 import { useConsent, usePurchases, useTurn } from '../turn-context'
-import { GroupHeader, ListGroup, ListRow, ScreenTitle, tileTones } from './ListGroup'
+import { GroupHeader, ListGroup, ListRow, ScreenTitle, tileTones, useScreenTitle } from './ListGroup'
 import TurnText from './TurnText'
 
 /** The date Listen mode was allowed, in the phone's short form: "9/29/2026". */
@@ -18,9 +19,14 @@ export function permissionDateText(permissionDate: string | null): string | unde
   return parts ? new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString() : undefined
 }
 
-// A purchase or restore outcome, as a calm note with no alarm color (PAY-4 to PAY-6).
+// Plan 0044's line under "Listen mode is unlocked." (frame 28).
+const unlockedDetail = 'Turn Listen is yours on this phone. Speaking stays free, as always.'
+
+// A purchase or restore outcome, as a calm note with no alarm color (PAY-4 to PAY-6). Each line stays its own text,
+// so VoiceOver and the flows read the outcome's words as they are.
 function PurchaseNote({ note, boldText }: { note: string; boldText: boolean }) {
   const { fontScale } = useWindowDimensions()
+  const unlocked = note === purchaseNotes.unlocked
   return (
     <View
       style={{
@@ -36,16 +42,27 @@ function PurchaseNote({ note, boldText }: { note: string; boldText: boolean }) {
       }}
     >
       <SymbolView
-        name="info.circle"
+        name={unlocked ? 'checkmark.circle' : 'info.circle'}
         size={Math.round(15 * Math.min(fontScale, 2.6))}
         weight="semibold"
-        tintColor={colors['ink-secondary']}
+        tintColor={unlocked ? colors.ink : colors['ink-secondary']}
         accessible={false}
         style={{ marginTop: 1 }}
       />
-      <TurnText kind="footnote" boldText={boldText} style={{ flex: 1, color: colors['ink-secondary'] }}>
-        {note}
-      </TurnText>
+      <View style={{ flex: 1, gap: 2 }}>
+        <TurnText
+          kind="footnote"
+          boldText={boldText}
+          style={{ color: unlocked ? colors.ink : colors['ink-secondary'] }}
+        >
+          {note}
+        </TurnText>
+        {unlocked && (
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+            {unlockedDetail}
+          </TurnText>
+        )}
+      </View>
     </View>
   )
 }
@@ -56,6 +73,7 @@ export default function SettingsScreen() {
   const { state: consentState } = useConsent()
   const { purchases, state: purchasesState } = usePurchases()
   const [counts, setCounts] = useState<{ phrases: number; places: number } | null>(null)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Settings')
   const [, setVoiceRevision] = useState(0)
   const [, setRelayRevision] = useState(0)
 
@@ -140,10 +158,11 @@ export default function SettingsScreen() {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
       style={{ flex: 1, backgroundColor: colors.board }}
       contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 22 }}
     >
-      <ScreenTitle title="Settings" boldText={boldText} />
+      <ScreenTitle title="Settings" boldText={boldText} onLayout={onTitleLayout} />
       <View>
         <GroupHeader title="Voice" boldText={boldText} />
         <ListGroup>
