@@ -204,7 +204,8 @@ today; only the family, weight, and some sizes change.
 
 - **Spacing:** 8 between bands, 12 inside the row and the grid, 16 from the
   screen edge, as v1. The toolbar floats 2 points above the home indicator's
-  34-point area; the grid scrolls under it.
+  34-point area; the grid ends 8 points above the toolbar, so nothing
+  scrolls under it.
 - **Radii:** chip 14, card 20, panel (caption, groups) 24, big reply 28,
   sheet 34, capsules half their height. Nested shapes stay concentric.
 - **Edges:** 1.5 points by default, in the category's edge color on phrase
@@ -223,7 +224,9 @@ today; only the family, weight, and some sizes change.
   expo-glass-effect where `isLiquidGlassAvailable()`, `surface` at 82% plus
   `BlurView` otherwise, and opaque `surface` when
   `AccessibilityInfo.isReduceTransparencyEnabled()`. Never fade a `GlassView`
-  with `opacity`.
+  with `opacity`. The glass is the capsule only: every item sits on its own
+  solid pill, since Turn can't read the Liquid Glass slider and a label on
+  clear glass could fall under 4.5:1.
 - **The listening glow:** a radial gradient, `listen-glow` at 30% (light) to
   transparent, 560 by 420 points centered near the Listen control, behind
   everything. Use `experimental_backgroundImage: 'radial-gradient(...)'`, or
@@ -245,7 +248,7 @@ today.
 | `Place chip`        | one                                           | `HomeScreen.tsx`                        | Place symbol + name + `chevron.down`.                                                                                                                                                                                                                                               |
 | `Icon button`       | one                                           | `HomeScreen.tsx`                        | 44 round; Settings uses `gearshape.fill`.                                                                                                                                                                                                                                           |
 | `Tab`               | Selected, not                                 | `HomeScreen.tsx`                        | 10-point category dot. Selected fills with `ink` and turns the label `surface`. "All" is pinned right, outside the scroll.                                                                                                                                                          |
-| `Toolbar`           | Speaking false, true                          | `HomeScreen.tsx`                        | 370 by 64 floating capsule; items are 84 by 52, symbol above label. Type is an `accent` pill. While speaking, Repeat becomes Stop on an `ink` pill.                                                                                                                                 |
+| `Toolbar`           | Speaking false, true                          | `HomeScreen.tsx`                        | 370 by 64 floating glass capsule; items are 84 by 52 solid pills, symbol above label: Type on `accent`, Repeat, Up, and Down on `surface` with a `hairline` edge, and, while speaking, Stop on `ink`. No label sits on the glass itself.                                            |
 | `Button`            | Primary, Secondary, Destructive, Plain        | `SecondaryButton.tsx`, screens          | 56 tall capsules.                                                                                                                                                                                                                                                                   |
 | `List row`          | Chevron, Toggle, Value, None                  | `SettingsScreen.tsx` and other lists    | 32-point symbol tile, 56 minimum; rows sit in a `surface` group with a 1.5 `edge` and hairline dividers.                                                                                                                                                                            |
 | `Sheet header`      | one                                           | `SheetHeader.tsx`                       | Grabber, rounded title, 44 close. Sheets use `board`, never glass.                                                                                                                                                                                                                  |
