@@ -1,53 +1,17 @@
 import { useRouter } from 'expo-router'
-import { useWindowDimensions, Pressable, ScrollView, View } from 'react-native'
+import { SymbolView } from 'expo-symbols'
+import { Pressable, ScrollView, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors } from '../constants/theme'
 import { useConsent, useTurn } from '../turn-context'
+import Button from './Button'
+import type { SymbolName } from './category-style'
+import { useShadow } from './depth'
+import SheetHeader from './SheetHeader'
 import TurnText from './TurnText'
 
-function SecondaryButton({
-  label,
-  boldText,
-  disabled,
-  onPress,
-  equalPair
-}: {
-  label: string
-  boldText: boolean
-  disabled: boolean
-  onPress: () => void
-  equalPair: boolean
-}) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      accessibilityState={{ disabled }}
-      disabled={disabled}
-      onPress={onPress}
-      style={({ pressed }) => ({
-        minWidth: 44,
-        minHeight: 52,
-        flex: equalPair ? 1 : undefined,
-        justifyContent: 'center',
-        borderRadius: 12,
-        borderWidth: 2,
-        borderColor: colors.edge,
-        backgroundColor: pressed && !disabled ? colors['surface-pressed'] : colors.surface,
-        paddingHorizontal: 16,
-        paddingVertical: 10
-      })}
-    >
-      <TurnText
-        kind="body"
-        boldText={boldText}
-        style={{ color: disabled ? colors['ink-secondary'] : colors.ink, textAlign: 'center' }}
-      >
-        {label}
-      </TurnText>
-    </Pressable>
-  )
-}
+// The facts after the first paragraph, in plan 0044's order: names swapped for tags, what stays, what the service keeps.
+const factSymbols: SymbolName[] = ['person.text.rectangle', 'lock.fill', 'info.circle']
 
 export default function PermissionStepScreen() {
   const router = useRouter()
@@ -56,59 +20,94 @@ export default function PermissionStepScreen() {
   const step = state.step
   const disabled = consent === null
   const { fontScale } = useWindowDimensions()
-  const stacked = fontScale >= 1.786
+  const symbolSize = (base: number) => Math.round(base * Math.min(fontScale, 2.6))
+  const disc = Math.round(40 * Math.min(fontScale, 1.5))
+  const [lead, ...facts] = step.paragraphs
+  const glow = useShadow('glow')
 
   return (
-    <SafeAreaView edges={['left', 'right', 'top', 'bottom']} style={{ flex: 1, backgroundColor: colors.surface }}>
+    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
+      <SheetHeader title={step.title} boldText={boldText} closeLabel="Close" onClose={() => consent?.notNow()} />
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 24, paddingBottom: 20, gap: 20 }}
+        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16, gap: 14 }}
       >
-        <TurnText kind="title" boldText={boldText} style={{ color: colors.ink }}>
-          {step.title}
-        </TurnText>
-        <View style={{ gap: 14 }}>
-          {step.paragraphs.map((paragraph, index) => (
-            <TurnText key={index} kind="body" boldText={boldText} style={{ color: colors.ink }}>
-              {paragraph}
-            </TurnText>
-          ))}
+        <View
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: 28,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.listen,
+            boxShadow: glow
+          }}
+        >
+          <SymbolView name="ear" size={28} weight="semibold" tintColor={colors['on-listen']} accessible={false} />
         </View>
+        <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+          {lead}
+        </TurnText>
+        {facts.map((fact, index) => (
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 14 }}>
+            <View
+              style={{
+                width: disc,
+                height: disc,
+                borderRadius: disc / 2,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: colors['accent-soft']
+              }}
+            >
+              <SymbolView
+                name={factSymbols[index] ?? 'info.circle'}
+                size={Math.round(disc / 2)}
+                weight="semibold"
+                tintColor={colors.accent}
+                accessible={false}
+              />
+            </View>
+            <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
+              {fact}
+            </TurnText>
+          </View>
+        ))}
         <Pressable
           accessibilityRole="link"
           accessibilityLabel={step.privacyNotice}
           onPress={() => router.push('/settings/privacy')}
           style={({ pressed }) => ({
-            minWidth: 44,
             minHeight: 44,
-            justifyContent: 'center',
+            flexDirection: 'row',
+            alignItems: 'center',
             alignSelf: 'flex-start',
-            backgroundColor: pressed ? colors['surface-pressed'] : undefined,
-            borderRadius: 8,
-            paddingHorizontal: 8
+            gap: 6,
+            borderRadius: 12,
+            backgroundColor: pressed ? colors['surface-pressed'] : undefined
           })}
         >
-          <TurnText kind="body" boldText={boldText} style={{ color: colors.accent, textDecorationLine: 'underline' }}>
+          <SymbolView
+            name="checkmark.shield.fill"
+            size={symbolSize(18)}
+            weight="semibold"
+            tintColor={colors.accent}
+            accessible={false}
+          />
+          <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.accent }}>
             {step.privacyNotice}
           </TurnText>
         </Pressable>
-        <View style={{ flexGrow: 1 }} />
-        <View style={{ flexDirection: stacked ? 'column' : 'row', gap: 12 }}>
-          <SecondaryButton
-            label={step.allow}
-            boldText={boldText}
-            disabled={disabled}
-            equalPair={!stacked}
-            onPress={() => void consent?.allow()}
-          />
-          <SecondaryButton
-            label={step.notNow}
-            boldText={boldText}
-            disabled={disabled}
-            equalPair={!stacked}
-            onPress={() => consent?.notNow()}
-          />
-        </View>
       </ScrollView>
+      <View style={{ paddingHorizontal: 20, paddingTop: 8, gap: 10 }}>
+        <Button
+          variant="primary"
+          label={step.allow}
+          boldText={boldText}
+          disabled={disabled}
+          onPress={() => void consent?.allow()}
+        />
+        <Button label={step.notNow} boldText={boldText} disabled={disabled} onPress={() => consent?.notNow()} />
+      </View>
     </SafeAreaView>
   )
 }
