@@ -12,6 +12,7 @@ import {
   ListGroup,
   ListRow,
   ScreenTitle,
+  useScreenTitle,
   SymbolTile,
   tileTones,
   useListMetrics
@@ -32,6 +33,7 @@ export default function VoiceScreen() {
   const [rateStep, setRateStep] = useState<SpeechRateStep | null>(null)
   const [note, setNote] = useState<string | null>(null)
   const [personalNote, setPersonalNote] = useState<string | null>(null)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Voice')
 
   useEffect(() => {
     if (!voiceSettings) return
@@ -66,10 +68,11 @@ export default function VoiceScreen() {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
       style={{ flex: 1, backgroundColor: colors.board }}
       contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 22 }}
     >
-      <ScreenTitle title="Voice" boldText={boldText} />
+      <ScreenTitle title="Voice" boldText={boldText} onLayout={onTitleLayout} />
       <View>
         <GroupHeader title="Voice" boldText={boldText} />
         <ListGroup>
