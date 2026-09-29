@@ -449,9 +449,10 @@ reports only errors, so Turn sets its own rule
 ([iPhone build notes][ios-line-end]):
 
 - **Results.** `turn-listen` keeps a volatile and a finalized transcript, as
-  Apple's sample does, and treats text as settled once the analyzer's
-  `resultsFinalizationTime` passes its end, not only when a result arrives
-  with `isFinal`.
+  Apple's sample does, and treats a line as settled once finalizing leaves no
+  words volatile, since after a silence the analyzer's
+  `resultsFinalizationTime` can stop at the last word, short of the point
+  finalized through.
 - **Lost words.** After a silence, the final pass can turn a line's first
   words into punctuation, as in ". of stuffy in here", or drop the line,
   though the volatile pass heard them. So a final whose words pick up partway
@@ -461,13 +462,17 @@ reports only errors, so Turn sets its own rule
   punctuation before its first word. Text without a letter or a digit, such as
   the lone "." the transcriber hears in a silence, is never a line and never
   reaches the relay.
-- **The silence rule.** When the tapped audio has stayed below a speech level,
-  and no new words have arrived, for the window, the module calls
-  `finalize(through: nil)` and reports the settled text as one line (LISTEN-2).
-  The window starts at 0.5 seconds, the evaluation notes' budget for detecting
-  the end of a turn, and the [replay test](#testing) tunes it against two pulls:
-  a longer window slows the row (PERF-1), and a shorter one cuts the partner off
-  (PERF-5) ([evaluation notes][eval-latency]).
+- **The silence rule.** The window starts when the tapped audio falls below a
+  speech level after at least 0.3 seconds above it, or when words arrive from a
+  partner too quiet to reach it. Results trail the audio by a second or more, so
+  words the transcriber reports late, for audio from before the level fell,
+  don't restart it; words from after do. When the window passes, the module
+  finalizes through the audio so far, which delivers the words even when none
+  had arrived, and reports them as one line once settled (LISTEN-2). The window
+  starts at 0.5 seconds, the evaluation notes' budget for detecting the end of a
+  turn, and the [replay test](#testing) tunes it against two pulls: a longer
+  window slows the row (PERF-1), and a shorter one cuts the partner off (PERF-5)
+  ([evaluation notes][eval-latency]).
 - **Manual ends.** Done ends a spoken line at once, the same way, and a
   typed line ends when the user sends it (LISTEN-4).
 - **Length.** The app keeps a line's last 300 characters once its names are
