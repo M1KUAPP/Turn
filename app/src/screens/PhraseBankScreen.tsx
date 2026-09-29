@@ -1,11 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { KeyboardAvoidingView, Modal, Pressable, ScrollView, TextInput, View } from 'react-native'
+import { Alert, Modal, Pressable, ScrollView, TextInput, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { SymbolView } from 'expo-symbols'
 import type { Category, Phrase, Place } from '../bank/store'
-import { colors, textStyle } from '../constants/theme'
+import { categoryColors, colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
-import SheetHeader from './SheetHeader'
+import Button from './Button'
+import { categoryHue, categorySymbol, placeSymbol } from './category-style'
+import { useShadow } from './depth'
+import IconButton from './IconButton'
+import { GroupNote, ListGroup, ListRow, ScreenTitle } from './ListGroup'
+import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
 import TurnText from './TurnText'
 
 type Editor = {
@@ -16,8 +22,13 @@ type Editor = {
   isFixed?: boolean
 }
 
+const placeTone = { fill: categoryColors['out-and-about'].fill, ink: categoryColors['out-and-about'].edge }
+
 export default function PhraseBankScreen() {
   const navigation = useNavigation()
+  const { fontScale } = useWindowDimensions()
+  const cardShadow = useShadow('card')
+  const undoShadow = useShadow('raised')
   const { ready, boldText } = useTurn()
   const bank = ready?.bank
   const { category: categoryParam, editPhraseId } = useLocalSearchParams<{
@@ -34,6 +45,8 @@ export default function PhraseBankScreen() {
   const [placeMap, setPlaceMap] = useState<Record<string, string[]>>({})
   const [editMode, setEditMode] = useState(false)
   const [editor, setEditor] = useState<Editor | null>(null)
+  const [picker, setPicker] = useState<'category' | 'places' | null>(null)
+  const [focused, setFocused] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [hasUndo, setHasUndo] = useState(false)
@@ -122,23 +135,48 @@ export default function PhraseBankScreen() {
 
   // Configure navigation header
   useEffect(() => {
+    const openAdd = () => {
+      setError(null)
+      setEditor({ id: null, text: '', categoryId, placeIds: [] })
+    }
     navigation.setOptions({
       title: categoryName || (isStrip ? 'Conversation strip' : 'Phrases'),
-      // A native bar button, like the back button beside it: iOS keeps it at bar size and shows it in the Large
+      // Native bar buttons, like the back button beside them: iOS keeps them at bar size and shows them in the Large
       // Content Viewer at accessibility sizes, where a React view in the bar grew past the title.
       unstable_headerRightItems: isStrip
         ? undefined
-        : () => [
-            {
-              type: 'button',
-              label: editMode ? 'Done' : 'Edit',
-              variant: editMode ? 'done' : 'plain',
-              tintColor: colors.accent,
-              onPress: () => setEditMode((prev) => !prev)
-            }
-          ]
+        : () =>
+            editMode
+              ? [
+                  {
+                    type: 'button',
+                    label: 'Done',
+                    variant: 'prominent',
+                    tintColor: colors.accent,
+                    onPress: () => setEditMode(false)
+                  }
+                ]
+              : [
+                  {
+                    type: 'button',
+                    label: 'Edit',
+                    accessibilityLabel: 'Edit',
+                    icon: { type: 'sfSymbol', name: 'arrow.up.arrow.down' },
+                    tintColor: colors.ink,
+                    onPress: () => setEditMode(true)
+                  },
+                  {
+                    type: 'button',
+                    label: 'Add phrase',
+                    accessibilityLabel: 'Add phrase',
+                    icon: { type: 'sfSymbol', name: 'plus' },
+                    variant: 'prominent',
+                    tintColor: colors.accent,
+                    onPress: openAdd
+                  }
+                ]
     })
-  }, [navigation, categoryName, isStrip, editMode])
+  }, [navigation, categoryName, isStrip, editMode, categoryId])
 
   const move = (id: string, direction: -1 | 1) => {
     if (!bank) return
@@ -148,6 +186,22 @@ export default function PhraseBankScreen() {
   const deletePhrase = (id: string) => {
     if (!bank) return
     void bank.deletePhrase(id).catch((cause) => setError(String(cause)))
+  }
+
+  // A deleted phrase can come back with Undo until the user leaves the editor (BANK-9). Edit mode's Delete acts at
+  // once, as its Undo bar follows; the sheet's Delete asks first, as frames 47 and 48 have it.
+  const confirmDelete = (phrase: { id: string; text: string }, then?: () => void) => {
+    Alert.alert(`Delete “${phrase.text}”?`, 'It leaves your phrase bank and the grid. You can undo right after.', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: () => {
+          then?.()
+          deletePhrase(phrase.id)
+        }
+      }
+    ])
   }
 
   const openEdit = async (phrase: Phrase) => {
@@ -161,6 +215,12 @@ export default function PhraseBankScreen() {
       placeIds: pPlaces,
       isFixed: phrase.fixed === 1
     })
+  }
+
+  const closeEditor = () => {
+    setEditor(null)
+    setPicker(null)
+    setError(null)
   }
 
   const save = async () => {
@@ -186,6 +246,9 @@ export default function PhraseBankScreen() {
   }
 
   const placeNameMap = new Map(places.map((p) => [p.id, p.name]))
+  const ids = categories.map((category) => category.id)
+  const hue = categoryHue(categoryId, ids)
+  const glyph = Math.round(18 * Math.min(fontScale, 1.6))
 
   if (!bank) {
     return (
@@ -197,11 +260,23 @@ export default function PhraseBankScreen() {
     )
   }
 
+  const editorCategory = categories.find((c) => c.id === editor?.categoryId)
+  const editorPlaces = (editor?.placeIds ?? []).map((id) => placeNameMap.get(id)).filter(Boolean)
+  const editorPhrase = phrases.find((p) => p.id === editor?.id)
+  const editorCanDelete = !!editorPhrase && !isStrip && editorPhrase.fixed !== 1
+
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 24, gap: 10 }}
+      >
+        <View style={{ marginBottom: 6 }}>
+          <ScreenTitle title={categoryName || (isStrip ? 'Conversation strip' : 'Phrases')} boldText={boldText} />
+        </View>
         {phrases.length === 0 && (
-          <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+          <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, marginHorizontal: 4 }}>
             No phrases in this category yet.
           </TurnText>
         )}
@@ -223,221 +298,170 @@ export default function PhraseBankScreen() {
           ]
 
           return (
-            <View
-              key={phrase.id}
-              style={{
-                padding: 12,
-                gap: 8,
-                borderRadius: 12,
-                backgroundColor: colors.surface,
-                borderWidth: 2,
-                borderColor: colors.edge
-              }}
-            >
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={phrase.text}
-                accessibilityValue={phraseDetails ? { text: phraseDetails } : undefined}
-                accessibilityActions={actions}
-                onAccessibilityAction={(event) => {
-                  if (event.nativeEvent.actionName === 'edit') void openEdit(phrase)
-                  if (event.nativeEvent.actionName === 'move-up') move(phrase.id, -1)
-                  if (event.nativeEvent.actionName === 'move-down') move(phrase.id, 1)
-                  if (event.nativeEvent.actionName === 'delete') deletePhrase(phrase.id)
+            <View key={phrase.id} style={{ borderRadius: 20, boxShadow: cardShadow }}>
+              <View
+                style={{
+                  borderRadius: 20,
+                  borderCurve: 'continuous',
+                  borderWidth: 1.5,
+                  borderColor: hue.edge,
+                  backgroundColor: colors.surface,
+                  overflow: 'hidden'
                 }}
-                onPress={() => void openEdit(phrase)}
-                style={{ minHeight: 44, justifyContent: 'center', gap: 4 }}
               >
-                <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                  {phrase.text}
-                </TurnText>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                  {placesText ? (
-                    <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                      {placesText}
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={phrase.text}
+                  accessibilityValue={phraseDetails ? { text: phraseDetails } : undefined}
+                  accessibilityHint="Opens the phrase to edit it."
+                  accessibilityActions={actions}
+                  onAccessibilityAction={(event) => {
+                    if (event.nativeEvent.actionName === 'edit') void openEdit(phrase)
+                    if (event.nativeEvent.actionName === 'move-up') move(phrase.id, -1)
+                    if (event.nativeEvent.actionName === 'move-down') move(phrase.id, 1)
+                    if (event.nativeEvent.actionName === 'delete') deletePhrase(phrase.id)
+                  }}
+                  onPress={() => void openEdit(phrase)}
+                  style={({ pressed }) => ({
+                    minHeight: 61,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 12,
+                    paddingLeft: 16,
+                    paddingRight: editMode ? 16 : 8,
+                    paddingVertical: 9.5,
+                    backgroundColor: pressed ? colors['surface-pressed'] : undefined
+                  })}
+                >
+                  <View style={{ flex: 1, gap: 2 }}>
+                    <TurnText kind="phrase" boldText={boldText} style={{ color: colors.ink }}>
+                      {phrase.text}
                     </TurnText>
-                  ) : null}
-                  {phrase.reviewed === 0 && (
+                    {(phrase.reviewed === 0 || !!placesText) && (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          alignItems: 'center',
+                          columnGap: 10,
+                          rowGap: 2
+                        }}
+                      >
+                        {phrase.reviewed === 0 && (
+                          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                            <SymbolView
+                              name="text.book.closed"
+                              size={Math.round(12 * Math.min(fontScale, 2.6))}
+                              weight="semibold"
+                              tintColor={colors['ink-secondary']}
+                              accessible={false}
+                            />
+                            <TurnText kind="caption" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                              Starter
+                            </TurnText>
+                          </View>
+                        )}
+                        {placesText ? (
+                          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                            {placesText}
+                          </TurnText>
+                        ) : null}
+                      </View>
+                    )}
+                  </View>
+                  {!editMode && (
                     <View
                       style={{
-                        paddingHorizontal: 8,
-                        paddingVertical: 2,
-                        borderRadius: 6,
-                        backgroundColor: colors.board,
-                        borderWidth: 1,
-                        borderColor: colors.edge
-                      }}
-                    >
-                      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        Starter
-                      </TurnText>
-                    </View>
-                  )}
-                </View>
-              </Pressable>
-
-              {editMode && !isStrip && (
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 }}>
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel="Move up"
-                    accessibilityState={{ disabled: !canMoveUp }}
-                    disabled={!canMoveUp}
-                    onPress={() => move(phrase.id, -1)}
-                    style={({ pressed }) => ({
-                      minHeight: 44,
-                      minWidth: 64,
-                      paddingHorizontal: 12,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 2,
-                      borderColor: colors.edge,
-                      borderRadius: 22,
-                      backgroundColor: canMoveUp && pressed ? colors['surface-pressed'] : colors.surface
-                    })}
-                  >
-                    <TurnText
-                      kind="label"
-                      boldText={boldText}
-                      style={{ color: canMoveUp ? colors.ink : colors['ink-secondary'] }}
-                    >
-                      Move up
-                    </TurnText>
-                  </Pressable>
-
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel="Move down"
-                    accessibilityState={{ disabled: !canMoveDown }}
-                    disabled={!canMoveDown}
-                    onPress={() => move(phrase.id, 1)}
-                    style={({ pressed }) => ({
-                      minHeight: 44,
-                      minWidth: 64,
-                      paddingHorizontal: 12,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 2,
-                      borderColor: colors.edge,
-                      borderRadius: 22,
-                      backgroundColor: canMoveDown && pressed ? colors['surface-pressed'] : colors.surface
-                    })}
-                  >
-                    <TurnText
-                      kind="label"
-                      boldText={boldText}
-                      style={{ color: canMoveDown ? colors.ink : colors['ink-secondary'] }}
-                    >
-                      Move down
-                    </TurnText>
-                  </Pressable>
-
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel="Edit"
-                    onPress={() => void openEdit(phrase)}
-                    style={({ pressed }) => ({
-                      minHeight: 44,
-                      minWidth: 64,
-                      paddingHorizontal: 12,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 2,
-                      borderColor: colors.edge,
-                      borderRadius: 22,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                    })}
-                  >
-                    <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
-                      Edit
-                    </TurnText>
-                  </Pressable>
-
-                  {canDelete && (
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityLabel="Delete"
-                      onPress={() => deletePhrase(phrase.id)}
-                      style={({ pressed }) => ({
-                        minHeight: 44,
-                        minWidth: 64,
-                        paddingHorizontal: 12,
+                        width: 44,
+                        height: 44,
+                        borderRadius: 22,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        borderWidth: 2,
-                        borderColor: colors.edge,
-                        borderRadius: 22,
-                        backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                      })}
+                        backgroundColor: colors['surface-sunken']
+                      }}
                     >
-                      <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
-                        Delete
-                      </TurnText>
-                    </Pressable>
+                      <SymbolView
+                        name="pencil"
+                        size={glyph}
+                        weight="semibold"
+                        tintColor={colors.ink}
+                        accessible={false}
+                      />
+                    </View>
                   )}
-                </View>
-              )}
+                </Pressable>
+
+                {/* Edit mode's buttons sit under the phrase, one tap each, never a drag (A11Y-5, A11Y-8). */}
+                {editMode && !isStrip && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      gap: 10,
+                      paddingHorizontal: 16,
+                      paddingBottom: 12
+                    }}
+                  >
+                    <IconButton
+                      symbol="chevron.up"
+                      label="Move up"
+                      disabled={!canMoveUp}
+                      onPress={() => move(phrase.id, -1)}
+                    />
+                    <IconButton
+                      symbol="chevron.down"
+                      label="Move down"
+                      disabled={!canMoveDown}
+                      onPress={() => move(phrase.id, 1)}
+                    />
+                    <IconButton symbol="pencil" label="Edit" onPress={() => void openEdit(phrase)} />
+                    {canDelete && (
+                      <IconButton
+                        symbol="trash"
+                        label="Delete"
+                        tint={colors['no-edge']}
+                        onPress={() => deletePhrase(phrase.id)}
+                      />
+                    )}
+                  </View>
+                )}
+              </View>
             </View>
           )
         })}
 
-        {error && !editor && (
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            {error}
-          </TurnText>
-        )}
-
-        {!isStrip && (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Add phrase"
-            onPress={() => {
-              setError(null)
-              setEditor({
-                id: null,
-                text: '',
-                categoryId,
-                placeIds: []
-              })
-            }}
-            style={({ pressed }) => ({
-              minHeight: 52,
-              borderRadius: 26,
-              backgroundColor: pressed ? colors['accent-pressed'] : colors.accent,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 8
-            })}
-          >
-            <TurnText kind="button" boldText={boldText} style={{ color: colors['on-accent'] }}>
-              Add phrase
-            </TurnText>
-          </Pressable>
-        )}
+        {error && !editor && <GroupNote boldText={boldText}>{error}</GroupNote>}
       </ScrollView>
 
-      {/* Undo bar stays at the bottom while any deletion is staged. It sits under the list rather than over it,
-          and from AX1 Undo wraps to its own line, so nothing it covers or holds goes out of reach. */}
+      {/* The Undo bar stays at the bottom while any deletion is staged, with no timer (BANK-9, A11Y-5). It sits under
+          the list rather than over it, and from AX1 Undo wraps to its own line, so nothing goes out of reach. */}
       {hasUndo && (
         <View
           style={{
-            minHeight: 56,
+            marginHorizontal: 16,
+            marginBottom: 8,
+            minHeight: 60,
             flexDirection: 'row',
             flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'space-between',
             columnGap: 12,
             rowGap: 8,
-            paddingHorizontal: 16,
+            paddingLeft: 20,
+            paddingRight: 8,
             paddingVertical: 8,
-            borderTopWidth: 2,
-            borderTopColor: colors.edge,
-            backgroundColor: colors.surface
+            borderRadius: 30,
+            borderCurve: 'continuous',
+            backgroundColor: colors.ink,
+            boxShadow: undoShadow
           }}
         >
-          <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.ink }}>
-            Phrase deleted
-          </TurnText>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flexShrink: 1 }}>
+            <SymbolView name="trash" size={glyph} weight="semibold" tintColor={colors.surface} accessible={false} />
+            <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.surface }}>
+              Phrase deleted
+            </TurnText>
+          </View>
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Undo"
@@ -446,17 +470,22 @@ export default function PhraseBankScreen() {
             }}
             style={({ pressed }) => ({
               minHeight: 44,
-              minWidth: 64,
+              flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center',
-              paddingHorizontal: 14,
+              gap: 6,
+              paddingHorizontal: 16,
               borderRadius: 22,
-              borderWidth: 2,
-              borderColor: colors.edge,
               backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
             })}
           >
-            <TurnText kind="button" boldText={boldText} style={{ color: colors.accent }}>
+            <SymbolView
+              name="arrow.uturn.backward"
+              size={glyph}
+              weight="semibold"
+              tintColor={colors.ink}
+              accessible={false}
+            />
+            <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
               Undo
             </TurnText>
           </Pressable>
@@ -464,181 +493,204 @@ export default function PhraseBankScreen() {
       )}
 
       {/* Add or Edit phrase sheet */}
-      <Modal
-        visible={!!editor}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => {
-          setEditor(null)
-          setError(null)
-        }}
-      >
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
-          <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
-            <SheetHeader
-              title={editor?.id ? 'Edit phrase' : 'Add phrase'}
+      <Modal visible={!!editor} animationType="slide" presentationStyle="pageSheet" onRequestClose={closeEditor}>
+        <SheetBody>
+          <SheetHeader title={editor?.id ? 'Edit phrase' : 'Add phrase'} boldText={boldText} onClose={closeEditor} />
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 4, paddingBottom: 16, gap: 16 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={{ gap: 8 }}>
+              <TurnText
+                kind="label"
+                boldText={boldText}
+                style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+              >
+                Phrase
+              </TurnText>
+              <TextInput
+                autoFocus
+                accessibilityLabel="Phrase"
+                accessibilityHint="Type the phrase you want to say, up to 200 characters."
+                maxLength={200}
+                multiline
+                editable={!editor?.isFixed}
+                value={editor?.text ?? ''}
+                onChangeText={(text) =>
+                  setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
+                }
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+                selectionColor={colors.accent}
+                scrollEnabled
+                style={{
+                  ...textStyle('body', boldText),
+                  minHeight: 56,
+                  maxHeight: 180,
+                  paddingHorizontal: 18,
+                  paddingTop: 16,
+                  paddingBottom: 16,
+                  borderWidth: focused ? 2.5 : 1.5,
+                  borderColor: focused ? colors.accent : colors.edge,
+                  borderRadius: 24,
+                  borderCurve: 'continuous',
+                  color: colors.ink,
+                  backgroundColor: colors.surface,
+                  textAlignVertical: 'top'
+                }}
+              />
+              {!!editor && editor.text.length >= 180 && (
+                <TurnText
+                  kind="footnote"
+                  boldText={boldText}
+                  style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+                >
+                  {200 - editor.text.length} characters left
+                </TurnText>
+              )}
+              {editor?.isFixed && (
+                <TurnText
+                  kind="footnote"
+                  boldText={boldText}
+                  style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+                >
+                  Yes, No, and Not sure cannot be renamed.
+                </TurnText>
+              )}
+            </View>
+
+            {((!editor?.isFixed && !isStrip) || places.length > 0) && (
+              <ListGroup>
+                {!editor?.isFixed && !isStrip && editorCategory ? (
+                  <ListRow
+                    label="Category"
+                    boldText={boldText}
+                    symbol={categorySymbol(editorCategory.id)}
+                    tone={{
+                      fill: categoryHue(editorCategory.id, ids).fill,
+                      ink: categoryHue(editorCategory.id, ids).edge
+                    }}
+                    value={editorCategory.name}
+                    accessibilityLabel="Category"
+                    accessibilityValue={editorCategory.name}
+                    chevron
+                    onPress={() => setPicker('category')}
+                  />
+                ) : null}
+                {places.length > 0 ? (
+                  <ListRow
+                    label="Places"
+                    boldText={boldText}
+                    symbol="mappin.and.ellipse"
+                    tone={placeTone}
+                    value={editorPlaces.length > 0 ? editorPlaces.join(', ') : 'Any place'}
+                    accessibilityLabel="Places"
+                    accessibilityValue={editorPlaces.length > 0 ? editorPlaces.join(', ') : 'Any place'}
+                    chevron
+                    onPress={() => setPicker('places')}
+                  />
+                ) : null}
+              </ListGroup>
+            )}
+
+            {error && (
+              <TurnText
+                kind="footnote"
+                boldText={boldText}
+                style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+              >
+                {error}
+              </TurnText>
+            )}
+          </ScrollView>
+          <SheetActions>
+            {editorCanDelete && editorPhrase ? (
+              <Button
+                variant="destructive"
+                label="Delete"
+                boldText={boldText}
+                onPress={() => confirmDelete(editorPhrase, closeEditor)}
+              />
+            ) : null}
+            <Button
+              variant="primary"
+              label="Save"
               boldText={boldText}
-              canSave={!!editor?.text.trim() && !saving}
-              onCancel={() => {
-                setEditor(null)
-                setError(null)
-              }}
-              onSave={() => void save()}
+              disabled={!editor?.text.trim() || saving}
+              onPress={() => void save()}
             />
+          </SheetActions>
 
-            <ScrollView
-              style={{ flex: 1 }}
-              contentContainerStyle={{ gap: 20, paddingBottom: 16 }}
-              keyboardShouldPersistTaps="handled"
-            >
-              <View style={{ gap: 8 }}>
-                <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                  Phrase
-                </TurnText>
-                <TextInput
-                  autoFocus
-                  accessibilityLabel="Phrase"
-                  accessibilityHint="Type the phrase you want to say, up to 200 characters."
-                  maxLength={200}
-                  multiline
-                  editable={!editor?.isFixed}
-                  value={editor?.text ?? ''}
-                  onChangeText={(text) =>
-                    setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
-                  }
-                  selectionColor={colors.accent}
-                  scrollEnabled
-                  style={{
-                    ...textStyle('body', boldText),
-                    minHeight: 78,
-                    maxHeight: 180,
-                    padding: 12,
-                    borderWidth: 2,
-                    borderColor: colors.edge,
-                    borderRadius: 12,
-                    color: colors.ink,
-                    backgroundColor: colors.surface,
-                    textAlignVertical: 'top'
-                  }}
-                />
-                {!!editor && editor.text.length >= 180 && (
-                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                    {200 - editor.text.length} characters left
-                  </TurnText>
-                )}
-                {editor?.isFixed && (
-                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                    Yes, No, and Not sure cannot be renamed.
-                  </TurnText>
-                )}
-              </View>
-
-              {/* Category selector (if not fixed and not strip) */}
-              {!editor?.isFixed && !isStrip && (
-                <View style={{ gap: 8 }}>
-                  <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                    Category
-                  </TurnText>
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
-                    {categories.map((cat) => {
-                      const selected = editor?.categoryId === cat.id
-                      return (
-                        <Pressable
-                          key={cat.id}
-                          accessibilityRole="button"
-                          accessibilityLabel={cat.name}
-                          accessibilityState={{ selected }}
-                          onPress={() => setEditor((current) => (current ? { ...current, categoryId: cat.id } : null))}
-                          style={({ pressed }) => ({
-                            minHeight: 44,
-                            paddingHorizontal: 16,
-                            borderRadius: 22,
-                            borderWidth: 2,
-                            borderColor: colors.edge,
-                            backgroundColor: selected
-                              ? colors.ink
-                              : pressed
-                                ? colors['surface-pressed']
-                                : colors.surface,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          })}
-                        >
-                          <TurnText
-                            kind="label"
+          {/* The category and places choosers, each its own sheet over the phrase's (frames 51 and 52). */}
+          <Modal
+            visible={picker !== null}
+            animationType="slide"
+            presentationStyle="pageSheet"
+            onRequestClose={() => setPicker(null)}
+          >
+            <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
+              <SheetHeader
+                title={picker === 'category' ? 'Category' : 'Places'}
+                boldText={boldText}
+                closeLabel="Close"
+                onClose={() => setPicker(null)}
+              />
+              <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 16 }}>
+                <ListGroup>
+                  {picker === 'category'
+                    ? categories.map((category) => {
+                        const tone = categoryHue(category.id, ids)
+                        return (
+                          <ListRow
+                            key={category.id}
+                            label={category.name}
                             boldText={boldText}
-                            style={{ color: selected ? colors.surface : colors.ink }}
-                          >
-                            {cat.name}
-                          </TurnText>
-                        </Pressable>
-                      )
-                    })}
-                  </ScrollView>
-                </View>
-              )}
-
-              {/* Places selector */}
-              {places.length > 0 && (
-                <View style={{ gap: 8 }}>
-                  <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                    Places
-                  </TurnText>
-                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-                    {places.map((place) => {
-                      const selected = editor?.placeIds.includes(place.id) ?? false
-                      return (
-                        <Pressable
-                          key={place.id}
-                          accessibilityRole="checkbox"
-                          accessibilityLabel={place.name}
-                          accessibilityState={{ selected, checked: selected }}
-                          onPress={() => {
-                            setEditor((current) => {
-                              if (!current) return null
-                              const nextPlaces = selected
-                                ? current.placeIds.filter((p) => p !== place.id)
-                                : [...current.placeIds, place.id]
-                              return { ...current, placeIds: nextPlaces }
-                            })
-                          }}
-                          style={({ pressed }) => ({
-                            minHeight: 44,
-                            paddingHorizontal: 16,
-                            borderRadius: 22,
-                            borderWidth: 2,
-                            borderColor: colors.edge,
-                            backgroundColor: selected
-                              ? colors.ink
-                              : pressed
-                                ? colors['surface-pressed']
-                                : colors.surface,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          })}
-                        >
-                          <TurnText
-                            kind="label"
+                            symbol={categorySymbol(category.id)}
+                            tone={{ fill: tone.fill, ink: tone.edge }}
+                            checked={editor?.categoryId === category.id}
+                            onPress={() => {
+                              setEditor((current) => (current ? { ...current, categoryId: category.id } : null))
+                              setPicker(null)
+                            }}
+                          />
+                        )
+                      })
+                    : places.map((place) => {
+                        const on = editor?.placeIds.includes(place.id) ?? false
+                        return (
+                          <ListRow
+                            key={place.id}
+                            label={place.name}
                             boldText={boldText}
-                            style={{ color: selected ? colors.surface : colors.ink }}
-                          >
-                            {place.name}
-                          </TurnText>
-                        </Pressable>
-                      )
-                    })}
-                  </View>
-                </View>
+                            symbol={placeSymbol(place.id)}
+                            tone={placeTone}
+                            checked={on}
+                            onPress={() =>
+                              setEditor((current) => {
+                                if (!current) return null
+                                const nextPlaces = on
+                                  ? current.placeIds.filter((p) => p !== place.id)
+                                  : [...current.placeIds, place.id]
+                                return { ...current, placeIds: nextPlaces }
+                              })
+                            }
+                          />
+                        )
+                      })}
+                </ListGroup>
+                {picker === 'places' && (
+                  <GroupNote boldText={boldText}>At these places, the row offers this phrase first.</GroupNote>
+                )}
+              </ScrollView>
+              {picker === 'places' && (
+                <SheetActions>
+                  <Button variant="primary" label="Done" boldText={boldText} onPress={() => setPicker(null)} />
+                </SheetActions>
               )}
-
-              {error && (
-                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                  {error}
-                </TurnText>
-              )}
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
+            </SafeAreaView>
+          </Modal>
+        </SheetBody>
       </Modal>
     </SafeAreaView>
   )

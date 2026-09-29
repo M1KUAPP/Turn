@@ -1,133 +1,225 @@
-import { useWindowDimensions, Pressable, ScrollView, Switch, View } from 'react-native'
+import { SymbolView } from 'expo-symbols'
+import { Pressable, ScrollView, Switch, useColorScheme, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors } from '../constants/theme'
+import { colors, colorValues } from '../constants/theme'
 import { useConsent, useTurn } from '../turn-context'
+import Button from './Button'
+import type { SymbolName } from './category-style'
+import { useShadow } from './depth'
 import TurnText from './TurnText'
 
-function SecondaryButton({
-  label,
-  boldText,
-  disabled,
-  onPress,
-  equalPair = false
-}: {
-  label: string
-  boldText: boolean
-  disabled: boolean
-  onPress: () => void
-  equalPair?: boolean
-}) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      accessibilityState={{ disabled }}
-      disabled={disabled}
-      onPress={onPress}
-      style={({ pressed }) => ({
-        minWidth: 44,
-        minHeight: 52,
-        flex: equalPair ? 1 : undefined,
-        justifyContent: 'center',
-        borderRadius: 12,
-        borderWidth: 2,
-        borderColor: colors.edge,
-        backgroundColor: pressed && !disabled ? colors['surface-pressed'] : colors.surface,
-        paddingHorizontal: 16,
-        paddingVertical: 10
-      })}
-    >
-      <TurnText
-        kind="body"
-        boldText={boldText}
-        style={{ color: disabled ? colors['ink-secondary'] : colors.ink, textAlign: 'center' }}
-      >
-        {label}
-      </TurnText>
-    </Pressable>
-  )
+// CONSENT-4's facts in order: text on this phone, where the words go, no audio, pause any time.
+const factSymbols: SymbolName[] = ['iphone', 'arrow.left.arrow.right', 'mic.slash.fill', 'pause.circle.fill']
+
+// The lamp's warm glow behind the card: `listen-glow` at 30% fading out, an ellipse from plan 0044's frame.
+function glowGradient(dark: boolean) {
+  const hex = colorValues['listen-glow'][dark ? 'dark' : 'light']
+  const [r, g, b] = [1, 3, 5].map((index) => Number.parseInt(hex.slice(index, index + 2), 16))
+  return `radial-gradient(ellipse closest-side, rgba(${r},${g},${b},0.3), rgba(${r},${g},${b},0))`
 }
 
 export default function ConsentCardScreen() {
   const { fontScale } = useWindowDimensions()
+  const dark = useColorScheme() === 'dark'
+  const cardShadow = useShadow('raised')
   const { boldText } = useTurn()
   const { consent, state } = useConsent()
   const card = state.card
   const disabled = consent === null
-  const stackedAnswers = fontScale >= 1.786
+  const disc = Math.round(40 * Math.min(fontScale, 1.5))
 
   return (
-    <SafeAreaView edges={['left', 'right', 'top', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12, gap: 16 }}>
-        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ gap: 20, paddingBottom: 8 }}>
-          <TurnText kind="partner-card-title" boldText={boldText} style={{ color: colors.ink }}>
-            {card.lead}
-          </TurnText>
-          <View style={{ gap: 16 }}>
-            {card.facts.map((fact, index) => (
-              <TurnText key={index} kind="partner-line-small" boldText={boldText} style={{ color: colors.ink }}>
-                {fact}
-              </TurnText>
-            ))}
-          </View>
+    <View style={{ flex: 1, backgroundColor: colors.board }}>
+      <View
+        pointerEvents="none"
+        style={{
+          position: 'absolute',
+          left: -120,
+          top: -160,
+          width: 640,
+          height: 460,
+          experimental_backgroundImage: glowGradient(dark)
+        }}
+      />
+      <SafeAreaView edges={['left', 'right', 'top', 'bottom']} style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            marginHorizontal: 16,
+            marginTop: 8,
+            marginBottom: 12,
+            borderRadius: 28,
+            boxShadow: cardShadow
+          }}
+        >
           <View
             style={{
-              minHeight: 64,
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 16,
-              borderRadius: 12,
-              borderWidth: 1,
-              borderColor: colors.edge,
+              flex: 1,
+              borderRadius: 28,
+              borderCurve: 'continuous',
+              borderWidth: 1.5,
+              borderColor: colors.listen,
               backgroundColor: colors.surface,
-              paddingHorizontal: 16,
-              paddingVertical: 10
+              overflow: 'hidden'
             }}
           >
-            {/* The switch carries the label, so VoiceOver and Voice Control find one element, as in iOS. */}
-            <TurnText
-              kind="body"
-              boldText={boldText}
-              accessibilityElementsHidden
-              style={{ flex: 1, color: disabled ? colors['ink-secondary'] : colors.ink }}
-            >
-              {card.under18}
-            </TurnText>
-            <Switch
-              accessibilityLabel={card.under18}
-              accessibilityState={{ disabled, checked: state.under18 }}
-              value={state.under18}
-              onValueChange={(on) => void consent?.setUnder18(on)}
-              disabled={disabled}
-              trackColor={{ false: colors.edge, true: colors.accent }}
-              thumbColor={colors.surface}
-              style={{ minWidth: 64, minHeight: 44 }}
-            />
+            <ScrollView contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 22, paddingBottom: 16, gap: 16 }}>
+              <View
+                style={{
+                  minHeight: 100,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  alignContent: 'center',
+                  justifyContent: 'space-between',
+                  gap: 12
+                }}
+              >
+                <View
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 24,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: colors.listen
+                  }}
+                >
+                  <SymbolView
+                    name="ear"
+                    size={24}
+                    weight="semibold"
+                    tintColor={colors['on-listen']}
+                    accessible={false}
+                  />
+                </View>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={card.readAloud}
+                  accessibilityState={{ disabled }}
+                  disabled={disabled}
+                  onPress={() => void consent?.readAloud()}
+                  style={({ pressed }) => ({
+                    minHeight: 44,
+                    flexShrink: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 6,
+                    paddingHorizontal: 12,
+                    paddingVertical: 8,
+                    borderRadius: 22,
+                    backgroundColor: pressed ? colors['surface-pressed'] : colors['surface-sunken']
+                  })}
+                >
+                  <SymbolView
+                    name="speaker.wave.2.fill"
+                    size={Math.round(18 * Math.min(fontScale, 2.6))}
+                    weight="semibold"
+                    tintColor={colors.ink}
+                    accessible={false}
+                  />
+                  <TurnText kind="label" boldText={boldText} style={{ flexShrink: 1, color: colors.ink }}>
+                    {card.readAloud}
+                  </TurnText>
+                </Pressable>
+              </View>
+              <TurnText
+                kind="partner-card-title"
+                boldText={boldText}
+                accessibilityRole="header"
+                style={{ color: colors.ink }}
+              >
+                {card.lead}
+              </TurnText>
+              <View style={{ gap: 12 }}>
+                {card.facts.map((fact, index) => (
+                  <View key={index} style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 14 }}>
+                    <View
+                      style={{
+                        width: disc,
+                        height: disc,
+                        borderRadius: disc / 2,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: colors['listen-soft']
+                      }}
+                    >
+                      <SymbolView
+                        name={factSymbols[index] ?? 'info.circle'}
+                        size={Math.round(disc / 2)}
+                        weight="semibold"
+                        tintColor={colors.ink}
+                        accessible={false}
+                      />
+                    </View>
+                    <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
+                      {fact}
+                    </TurnText>
+                  </View>
+                ))}
+              </View>
+              <View
+                style={{
+                  minHeight: 80,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 12,
+                  paddingHorizontal: 16,
+                  paddingVertical: 12,
+                  borderRadius: 20,
+                  borderCurve: 'continuous',
+                  backgroundColor: colors['surface-sunken']
+                }}
+              >
+                {/* The switch carries the label, so VoiceOver and Voice Control find one element, as in iOS. */}
+                <View
+                  style={{ flex: 1, gap: 2 }}
+                  accessibilityElementsHidden
+                  importantForAccessibility="no-hide-descendants"
+                >
+                  <TurnText
+                    kind="body"
+                    boldText={boldText}
+                    style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
+                  >
+                    {card.under18}
+                  </TurnText>
+                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                    {state.under18 ? card.under18Off : card.under18Never}
+                  </TurnText>
+                </View>
+                <Switch
+                  accessibilityLabel={card.under18}
+                  accessibilityHint={state.under18 ? card.under18Off : card.under18Never}
+                  accessibilityState={{ disabled, checked: state.under18 }}
+                  value={state.under18}
+                  onValueChange={(on) => void consent?.setUnder18(on)}
+                  disabled={disabled}
+                  trackColor={{ false: colors.edge, true: colors.accent }}
+                  thumbColor={colors.surface}
+                />
+              </View>
+            </ScrollView>
+            {/* The answers stay pinned within a thumb's reach; above them the card scrolls at large sizes. The mic
+                stays off for a partner under 18, so agreeing then takes Turn's own blue, not the lamp's orange. */}
+            <View style={{ paddingHorizontal: 24, paddingBottom: 22, paddingTop: 0, gap: 16 }}>
+              <Button
+                variant={state.under18 ? 'primary' : 'listen'}
+                label={card.agreed}
+                boldText={boldText}
+                disabled={disabled}
+                onPress={() => void consent?.partnerAgreed()}
+              />
+              <Button
+                label={card.declined}
+                boldText={boldText}
+                disabled={disabled}
+                onPress={() => consent?.partnerDeclined()}
+              />
+            </View>
           </View>
-          <SecondaryButton
-            label={card.readAloud}
-            boldText={boldText}
-            disabled={disabled}
-            onPress={() => void consent?.readAloud()}
-          />
-        </ScrollView>
-        <View style={{ flexDirection: stackedAnswers ? 'column' : 'row', gap: 12 }}>
-          <SecondaryButton
-            label={card.agreed}
-            boldText={boldText}
-            disabled={disabled}
-            equalPair={!stackedAnswers}
-            onPress={() => void consent?.partnerAgreed()}
-          />
-          <SecondaryButton
-            label={card.declined}
-            boldText={boldText}
-            disabled={disabled}
-            equalPair={!stackedAnswers}
-            onPress={() => consent?.partnerDeclined()}
-          />
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   )
 }
