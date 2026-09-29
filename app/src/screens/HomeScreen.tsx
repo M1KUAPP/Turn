@@ -894,7 +894,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         })}
       >
         <SymbolView name="mappin.and.ellipse" size={symbolSize(18)} tintColor={colors.ink} accessible={false} />
-        <TurnText kind="button" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
+        <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
           {selectedPlace?.name ?? 'Place'}
         </TurnText>
       </Pressable>
@@ -958,7 +958,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             <SymbolView name={control.symbol} size={symbolSize(18)} tintColor={listenInk} accessible={false} />
           </Animated.View>
           <View>
-            <TurnText kind="button" boldText={boldText} style={{ color: listenInk }}>
+            <TurnText kind="headline" boldText={boldText} style={{ color: listenInk }}>
               {listenWord}
             </TurnText>
             {control.detail && (
@@ -994,7 +994,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
               backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
             })}
           >
-            <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
+            <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
               End
             </TurnText>
           </Pressable>
@@ -1107,7 +1107,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                     }}
                   >
                     <SymbolView name={icon} size={barIcon} tintColor={colors.ink} accessible={false} />
-                    <TurnText kind="button" boldText={boldText}>
+                    <TurnText kind="headline" boldText={boldText}>
                       {label}
                     </TurnText>
                   </View>
@@ -1157,7 +1157,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                             accessible={false}
                           />
                           <TurnText
-                            kind="button"
+                            kind="headline"
                             boldText={boldText}
                             style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
                           >
