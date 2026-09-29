@@ -1,16 +1,79 @@
-# Turn
+<a id="readme-top"></a>
 
-For adults who can't rely on speech, Turn helps them answer in conversation by
-listening to what the other person says and offering replies in their own saved
-words, so they can take their turn before the conversation moves on.
+<!-- PROJECT LOGO -->
 
-## Evaluation
+<br />
+<div align="center">
+  <a href="https://github.com/M1KUAPP/Turn">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/pitch/readme-hero-dark.png">
+      <img src="assets/pitch/readme-hero-light.png" alt="Turn app icon beside the Listen consent screen and a conversation where How was physio? has It was hard ready to say.">
+    </picture>
+  </a>
 
-On September 23, 2026, at commit [`8ea25eb`][evaluation-commit], the team
-evaluated 80 partner lines with a hosted decision model pinned to version 1.13.0.
-The table measures the 64 lines with an acceptable saved reply beyond the fixed
-Yes, No, and Not sure buttons. Top 1 and top 6 are the shares with an acceptable
-phrase in those positions; chance is a random order of the same shortlist.
+  <h3>Turn</h3>
+
+  <p>
+    Your own words, in time for your turn.
+    <br />
+    <a href="https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0-preview.1"><strong>Try the Simulator preview »</strong></a>
+    &middot;
+    <a href="eval/results.md">Evaluation</a>
+    &middot;
+    <a href="PRIVACY.md">Privacy notice</a>
+    <br />
+  </p>
+
+[![Expo][Expo.dev]][Expo-url]
+[![React Native][ReactNative.dev]][ReactNative-url]
+[![TypeScript][TypeScript.org]][TypeScript-url]
+[![Swift][Swift.org]][Swift-url]
+[![Cloudflare Workers][Workers.dev]][Workers-url]
+[![RevenueCat][RevenueCat.com]][RevenueCat-url]
+[![Bun][Bun.sh]][Bun-url]
+
+</div>
+
+<!-- TABLE OF CONTENTS -->
+
+## Table of Contents
+
+<details>
+  <summary>Expand</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#tech-stack">Tech Stack</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+Turn is an augmentative and alternative communication (AAC) app for iPhone, for adults who can read and tap but can't rely on their speech, such as people living with ALS or recovering from a stroke. It speaks their saved phrases and typed words aloud. In Listen mode, when a conversation partner finishes speaking, a row above the grid offers the person's own saved phrases that answer what was said, so they can reply before the conversation moves on.
+
+A hosted decision model chooses which of the person's phrases answer each line, and whether any do. It never writes a word, and nothing speaks until the person taps. Speaking is always free; Turn Listen, a one-time purchase through RevenueCat, keeps Listen mode on after 20 free partner lines. Turn was built for RevenueCat's Shipaton 2026.
+
+On September 23, 2026, at commit [`8ea25eb`](https://github.com/M1KUAPP/Turn/commit/8ea25eb), the team evaluated 80 partner lines with the hosted decision model pinned to version 1.13.0. On the 64 lines with an acceptable saved reply besides Yes, No, and Not sure:
 
 | Ranker                | Top 1                        | Top 6                      | Mean reciprocal rank |
 | --------------------- | ---------------------------- | -------------------------- | -------------------- |
@@ -20,118 +83,196 @@ phrase in those positions; chance is a random order of the same shortlist.
 | embeddings            | 14 of 64, 22% (14% to 33%)   | 29 of 64, 45% (34% to 57%) | 0.34                 |
 | hosted decision model | 43 of 64, 67% (55% to 77%)   | 48 of 64, 75% (63% to 84%) | 0.72                 |
 
-The hosted decision model's top 6 led embeddings by 29.7 percentage points;
-the 95% paired interval was 17.2 to 42.2 points. See the [full report],
-including uncertainty, risk, coverage, and latency. The lines, starter bank,
-and acceptable-reply labels were written by Claude subagents at the team's
-direction. `claude-a`, `claude-b`, and `claude-f` wrote the 80 lines; separate
-subagents wrote and reviewed the starter bank; `claude-c` and `claude-g` supplied
-the labels scored here. No clinic or teammate had reviewed the bank or labels
-when this evaluation ran. The [full report] records each writer's and labeler's
-role. These model-written labels may favor a model-based ranker.
+The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% paired interval of 17.2 to 42.2. Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. When it ran, no teammate had read the bank or labeled a line, and no clinic had reviewed the bank; text a language model wrote or labeled may suit a ranker built on one. The [evaluation report](eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
 
-[evaluation-commit]: https://github.com/M1KUAPP/Turn/commit/8ea25eb
-[full report]: /eval/results.md
+<p align="right"><a href="#readme-top">&uarr;</a></p>
 
-## See Turn
+### Screenshots
 
-![Turn's speaking grid in light mode](/assets/pitch/readme-hero-light.png)
+|     Speaking grid      |     Partner consent     | Suggested replies |
+| :--------------------: | :---------------------: | :---------------: |
+|      [SCREENSHOT]      |      [SCREENSHOT]       |   [SCREENSHOT]    |
+| **Phrase bank editor** | **Turn Listen paywall** |   **Settings**    |
+|      [SCREENSHOT]      |      [SCREENSHOT]       |   [SCREENSHOT]    |
 
-The grid speaks saved phrases at a tap. Listen mode offers the person's own
-phrases after a partner speaks or types a line.
+<p align="right"><a href="#readme-top">&uarr;</a></p>
 
-![A partner line becoming a suggested reply](/assets/pitch/readme-aha.gif)
+### How It Works
 
-## Try Turn on an iOS 27 Simulator
+The steps below follow the Simulator preview, where the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech.
 
-Use a Mac with Xcode 27 and the iOS 27 Simulator runtime. Download
-[`Turn.app.zip` from the Simulator preview][simulator-release], unzip it, boot
-an iOS 27 Simulator, and install the app:
+1. **Pick a place.** The first launch opens the speaking grid with about 150 starter phrases in categories. Choose **Clinic** as the place at the top of the grid.
 
-```shell
-unzip Turn.app.zip
-xcrun simctl install booted Turn.app
-xcrun simctl launch booted com.m1ku.turn
-```
+   [SCREENSHOT]
 
-The preview is a Debug build from commit [`9aec571`][preview-commit], with its
-JavaScript embedded. On the home screen, tap **Home** at the top and choose
-**Clinic**. Tap **Listen**, then **Allow** and **They agreed** on the permission
-screens. Tap **Tap here to type what they say**, enter **How was physio?**, and
-tap **Send**. **It was hard** appears among the suggested replies; tap it to
-hear it in a system voice. Live transcription needs a physical iPhone.
+2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank.
 
-To build the current source instead, install Bun, clone this repository, and
-run:
+   [SCREENSHOT]
 
-```shell
-bun install --frozen-lockfile
-cd app
-EXPO_PUBLIC_BUILD_KIND=simulator bunx expo run:ios --device
-```
+3. **Start Listen mode.** Tap **Listen**, then **Allow** to let Turn send your phrases and the partner's words to the hosted decision model. Show the partner the consent card and tap **They agreed**.
 
-Select an iOS 27 Simulator when prompted and leave Metro running for this
-source build. The preview zip runs without Metro.
+   [SCREENSHOT]
 
-[simulator-release]: https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0-preview.1
-[preview-commit]: https://github.com/M1KUAPP/Turn/commit/9aec5713bcf665ea7290bfd4be1b087fba69d80d
+4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it.
 
-## Test Store purchase
+   [SCREENSHOT]
 
-Turn Listen is a one-time Test Store purchase; speaking from the grid stays
-free. To try the purchase, open **Settings**, tap **Unlock Listen mode**, then
-**Unlock Listen mode** on the paywall and **Test valid purchase** in Test Store.
-The first 20 answered partner lines are free; without a purchase, the 21st
-line opens the paywall. **Restore Purchases** in Settings refreshes the status. A
-reinstall may reset the free-line count or purchase in Test Store, so check
-**Restore Purchases** after reinstalling.
+5. **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
 
-## Privacy
+   [SCREENSHOT]
 
-In the app, open **Settings → About → Privacy notice**. Its text is bundled
-with the app and reads without a network connection. Phrases, places, and tap
-counts stay on the phone. After permission and the partner's agreement, the
-phone sends each partner line, the current place, category names, and up to 40
-candidate phrases through the Cloudflare relay to a hosted decision model.
-Audio is not sent or stored. The
-[privacy notice source] explains name tags, service records, purchases, and the
-under-18 restriction.
+<p align="right"><a href="#readme-top">&uarr;</a></p>
 
-[privacy notice source]: /app/src/content/privacy-notice.ts
+### Features
 
-## Run with your own keys
+- **A speaking grid of your own words.** Saved phrases in categories you can rename and reorder, about 150 editable starter phrases, and typed replies that join the bank.
+- **Your voice.** Speaks in your Personal Voice, if you made one in iOS, or a system voice.
+- **Replies from what the partner said.** One big button when Turn is confident, up to six replies otherwise, and no change when nothing fits. Yes, No, and Not sure come first for a yes-or-no question and always keep their places.
+- **A steady row.** A reply keeps its slot until a new one wins by a clear margin, and the grid never reorders itself.
+- **A conversation strip.** Five fixed phrases that manage the conversation, such as "Wait, I'm typing" and "Sorry, say that again".
+- **Listening that's agreed and visible.** Your permission before any phrase leaves the phone, the partner's consent card each time listening starts, a light while it listens, and a switch that keeps a partner under 18 from being heard.
+- **Private by default.** No accounts. The phrase bank stays on the phone, names become tags before a line leaves it, and no audio is recorded. The [privacy notice](PRIVACY.md) is also in the app, under **Settings** and **About**.
+- **Useful offline.** Without a network, or when the model service is slow or down, the phone ranks phrases itself and says Listen mode is degraded.
+- **Speech is never sold.** The grid, typing, saved phrases, and Personal Voice are free; Turn Listen is sold once.
 
-The app config includes the team's public Test Store key and relay address for
-judging. To use your own relay and RevenueCat project, copy
-[`worker/.dev.vars.example`](/worker/.dev.vars.example) to `worker/.dev.vars`
-and fill in its three required secret values. The file is ignored by Git.
-Set your RevenueCat project and entitlement IDs in
-[`worker/wrangler.jsonc`](/worker/wrangler.jsonc), then start the local relay:
+<p align="right"><a href="#readme-top">&uarr;</a></p>
 
-```shell
-cd worker
-bunx wrangler dev
-```
+### Architecture
 
-In a second terminal, set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and
-your public Test Store key in `app/.env`, following
-[`app/.env.example`](/app/.env.example), then build the app as above. Keep secret
-keys in the relay; the app needs only the public Test Store key. The current
-`main` build sends typed partner lines through the relay when it is available.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/architecture-dark.svg">
+  <img src="assets/readme/architecture-light.svg" alt="Turn's architecture. On the iPhone, transcription passes the partner's line to the Turn app, which reads the phrase bank in SQLite and posts the line to a relay on Cloudflare Workers. The relay's per-user Durable Object counts the line, checks the listen entitlement with RevenueCat past the free lines, and asks the hosted decision model to rank 40 phrases. The person taps a reply, and the app speaks it to the partner.">
+</picture>
 
-To run the evaluation with your own hosted-model and Cloudflare Workers AI
-credentials, use the environment variable names documented in
-[`eval/src/report.ts`](/eval/src/report.ts). It also needs a Mac with Swift.
-Run it from a clean commit; it makes paid model calls and writes a separate
-report and plots:
+A partner's line becomes text on the iPhone, through Apple's SpeechAnalyzer or, where it isn't available, Expo's speech recognition. The app picks a shortlist of 40 phrases from the bank, swaps names for tags, and posts the line to the relay. The relay checks the request and a per-address rate limit, then the user's Durable Object counts the line, checks the `listen` entitlement with RevenueCat once the 20 free lines are used, and asks the hosted decision model to score the shortlist. When the relay fails or is switched off, the app ranks the shortlist on the phone.
 
-```shell
-bun run eval --unnamed --out eval/your-results.md
-```
+The diagram was made with [archify](https://github.com/tt-a1i/archify) and tinted with Turn's color tokens.
 
-Answers can vary between runs. The committed [evaluation report](/eval/results.md)
-is the September 23 run, not a promise that a rerun has identical numbers.
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+### Tech Stack
+
+- **App:** Expo SDK 57, React Native 0.86, React 19.2, TypeScript, Expo Router, expo-sqlite, expo-speech, and expo-speech-recognition.
+- **Native modules:** Swift Expo modules for on-device transcription with SpeechAnalyzer ([`turn-listen`](modules/turn-listen)) and Personal Voice ([`turn-voice`](modules/turn-voice)).
+- **Purchases:** RevenueCat's `react-native-purchases` and `react-native-purchases-ui`, with the Test Store, and its REST API v2 on the relay.
+- **Relay:** a Cloudflare Worker with SQLite-backed Durable Objects, in [`worker`](worker).
+- **Shared code:** the shortlist and the relay's types in [`shared`](shared), with MiniSearch for the phone's own ranking.
+- **Evaluation:** Bun scripts in [`eval`](eval), with Workers AI embeddings and Apple's sentence embeddings through Swift.
+- **Tooling:** Bun workspaces, Vitest, Prettier, Husky with commitlint, and Maestro flows.
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+Install the Simulator preview to try Turn, or build it from source. Live transcription needs a physical iPhone; the Simulator build takes typed partner lines.
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+### Prerequisites
+
+- A Mac with Xcode 27 and the iOS 27 Simulator runtime.
+- To build from source: [Bun](https://bun.sh) 1.4.2 and CocoaPods.
+- To run your own relay: a Cloudflare account, a RevenueCat project with a `listen` entitlement, and an API key for the hosted decision model.
+- To run the evaluation: the hosted decision model's key, Cloudflare Workers AI credentials, and Swift.
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+### Installation
+
+1. **The Simulator preview.** Download `Turn.app.zip` from the [Simulator preview release](https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0-preview.1), boot an iOS 27 Simulator, and install it. It embeds its JavaScript, so it runs without Metro.
+
+   ```shell
+   unzip Turn.app.zip
+   xcrun simctl install booted Turn.app
+   xcrun simctl launch booted com.m1ku.turn
+   ```
+
+2. **From source.** Clone the repository, install, and run the app on a Simulator. Leave Metro running.
+
+   ```shell
+   git clone https://github.com/M1KUAPP/Turn.git
+   cd Turn
+   bun install --frozen-lockfile
+   cd app
+   bun run ios
+   ```
+
+   For a physical iPhone, set `EXPO_PUBLIC_BUILD_KIND=device` and run `bunx expo run:ios --device`, with your own signing team.
+
+3. **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`worker/.dev.vars.example`](worker/.dev.vars.example) to `worker/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`worker/wrangler.jsonc`](worker/wrangler.jsonc). Then start the relay:
+
+   ```shell
+   cd worker
+   bunx wrangler dev --port 8787
+   ```
+
+   In [`app/.env`](app/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
+
+4. **The evaluation.** Set the environment variables that [`eval/src/report.ts`](eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
+
+   ```shell
+   bun run eval --unnamed --out eval/your-results.md
+   ```
+
+Run `bun run test` and `bun run typecheck` from the repository root to check a change.
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+<!-- ROADMAP -->
+
+## Roadmap
+
+See [open issues](https://github.com/M1KUAPP/Turn/issues) for a full list of proposed features (and known issues).
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+<!-- CONTRIBUTING -->
+
+## Team
+
+<a href="https://github.com/M1KUAPP/Turn/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=M1KUAPP/Turn" alt="Team" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+<!-- LICENSE -->
 
 ## License
 
-Turn's source is available under the [MIT license](/LICENSE).
+See [LICENSE](LICENSE) for more information.
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- [RevenueCat Shipaton 2026](https://www.shipaton.com)
+- [archify](https://github.com/tt-a1i/archify)
+- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/), the font in the banner ([OFL](assets/pitch/fonts/OFL.txt))
+- [Shields.io](https://shields.io)
+- [contrib.rocks](https://contrib.rocks)
+
+<p align="right"><a href="#readme-top">&uarr;</a></p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[Expo.dev]: https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white
+[Expo-url]: https://expo.dev/
+[ReactNative.dev]: https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[ReactNative-url]: https://reactnative.dev/
+[TypeScript.org]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Swift.org]: https://img.shields.io/badge/Swift-F05138?style=for-the-badge&logo=swift&logoColor=white
+[Swift-url]: https://www.swift.org/
+[Workers.dev]: https://img.shields.io/badge/Cloudflare_Workers-F38020?style=for-the-badge&logo=cloudflareworkers&logoColor=white
+[Workers-url]: https://workers.cloudflare.com/
+[RevenueCat.com]: https://img.shields.io/badge/RevenueCat-F2545B?style=for-the-badge&logo=revenuecat&logoColor=white
+[RevenueCat-url]: https://www.revenuecat.com/
+[Bun.sh]: https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white
+[Bun-url]: https://bun.sh/
