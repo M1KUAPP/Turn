@@ -52,3 +52,9 @@ export function replyStat(
   if (tapped === 'row' && !state.composerMatching) return { type: 'reply', from: 'row', seq: state.answered }
   return { type: 'reply', from: 'grid', seq: state.newest }
 }
+
+/** The tab Home keeps selected once it reads the bank (#152): All, or a category the bank still has; Quick once the
+ * selected category is deleted. */
+export function selectedTab(categoryId: string, categories: { id: string }[]): string {
+  return categoryId === 'all' || categories.some((category) => category.id === categoryId) ? categoryId : 'quick'
+}
