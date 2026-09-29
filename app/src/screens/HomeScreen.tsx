@@ -25,7 +25,7 @@ import type { createSpeechController } from '../speech/controller'
 import { useConsent, usePurchases, useTurn } from '../turn-context'
 import Caption from './Caption'
 import { captionView } from './caption-view'
-import { categoryPalette, placeSymbol } from './category-palette'
+import { categoryHue, placeSymbol } from './category-style'
 import CategoryTabs from './CategoryTabs'
 import { useDepth } from './home-depth'
 import { homeLayout, modelSecondsLeft, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
@@ -229,7 +229,8 @@ export default function HomeScreen({
             ? modelSecondsLeft(modelStart.current, { at: Date.now(), progress: listening.assetProgress })
             : null
         }
-  const paletteFor = (id: string) => categoryPalette(id, categories)
+  const categoryIds = categories.map((category) => category.id)
+  const paletteFor = (id: string) => categoryHue(id, categoryIds)
 
   useEffect(() => {
     if (listening.assetProgress === null) modelStart.current = null

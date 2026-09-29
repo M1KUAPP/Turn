@@ -11,7 +11,7 @@ import Animated, {
   withTiming
 } from 'react-native-reanimated'
 import { categoryColors, colors, typography } from '../constants/theme'
-import { categoryPalette, categorySymbol } from './category-palette'
+import { categoryHue, categorySymbol } from './category-style'
 import { bigRing, bigSheen, useDepth } from './home-depth'
 import { slotTextKind, type homeLayout } from './home-layout'
 import PhraseCard, { speakingRoom } from './PhraseCard'
@@ -47,7 +47,12 @@ const easeOut = (duration: number) => ({
 })
 
 const paletteFor = (reply: Reply, categories: readonly Category[]) =>
-  reply.categoryId ? categoryPalette(reply.categoryId, categories) : categoryColors.quick
+  reply.categoryId
+    ? categoryHue(
+        reply.categoryId,
+        categories.map((category) => category.id)
+      )
+    : categoryColors.quick
 
 function ReplySlot({
   reply,
