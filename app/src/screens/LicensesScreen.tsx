@@ -106,7 +106,7 @@ export default function LicensesScreen() {
               <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
                 {item.name} {item.version ?? ''}
               </TurnText>
-              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                 {item.license}
               </TurnText>
               {open && item.text && (

@@ -77,11 +77,7 @@ function ReplySlot({
   const tokens = shown ? phraseColorTokensForId(shown.id) : null
   const length = shown?.text.length ?? 0
   const textKind =
-    length > Math.floor(width / 3)
-      ? 'subheadline-emphasized'
-      : short || length > Math.floor(width / 5)
-        ? 'headline'
-        : 'title3-emphasized'
+    length > Math.floor(width / 3) ? 'phrase-strip' : short || length > Math.floor(width / 5) ? 'button' : 'phrase'
   return (
     <Animated.View style={{ width, height, opacity }}>
       {shown && (
@@ -181,12 +177,12 @@ export default function ReplyRow({
           })}
         >
           <TurnText
-            kind="title1-emphasized"
+            kind="phrase-big"
             boldText={boldText}
             numberOfLines={4}
             ellipsizeMode="tail"
             adjustsFontSizeToFit
-            minimumFontScale={typography['title3-emphasized'].fontSize / typography['title1-emphasized'].fontSize}
+            minimumFontScale={typography.phrase.fontSize / typography['phrase-big'].fontSize}
             style={{ color: colors['on-accent'] }}
           >
             {bigButton.text}
@@ -230,11 +226,7 @@ export default function ReplyRow({
             paddingHorizontal: 12
           }}
         >
-          <TurnText
-            kind="subheadline"
-            boldText={boldText}
-            style={{ color: colors['ink-secondary'], textAlign: 'center' }}
-          >
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], textAlign: 'center' }}>
             {emptyNote ?? 'Replies to your partner appear here.'}
           </TurnText>
         </View>
