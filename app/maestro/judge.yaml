@@ -1,0 +1,70 @@
+appId: com.m1ku.turn
+name: Judge scenario
+# PRD scenario 10, COMPAT-2: at the clinic, type the partner's line and hear
+# the ranked reply.
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# The scenario happens at the clinic, whose phrases all reach Jev. The place
+# button opens an action sheet of the places.
+- tapOn: Home
+- tapOn: Clinic
+- waitForAnimationToEnd
+- assertVisible: Clinic
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- scrollUntilVisible:
+    element: '.*Tap here to type what they say\..*'
+- tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'How was physio?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+- scrollUntilVisible:
+    element: '.*How was physio\?.*'
+- assertVisible: '.*How was physio\?.*'
+# The grid under the category tabs can hold "It was hard" too, so the row's
+# copy is the one above the All tab. Jev answers in well under a second, and
+# at AX5 the row starts below the screen, so scrolling is the wait.
+- scrollUntilVisible:
+    element:
+      text: It was hard
+      above: All
+    timeout: 60000
+- takeScreenshot: judge-row
+- tapOn:
+    text: It was hard
+    above: All
+- takeScreenshot: judge-spoken
+- scrollUntilVisible:
+    element: End
+- tapOn: End
+- scrollUntilVisible:
+    element: '^Listen$'
+- assertVisible: '^Listen$'
