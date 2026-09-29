@@ -54,3 +54,14 @@ const starterPlaceSymbols: Record<string, SymbolName> = {
 export function placeSymbol(id: string): SymbolName {
   return Object.prototype.hasOwnProperty.call(starterPlaceSymbols, id) ? starterPlaceSymbols[id] : 'mappin.and.ellipse'
 }
+
+const fixedReplyTokens = {
+  yes: { fill: 'yes-fill', edge: 'yes-edge' },
+  no: { fill: 'no-fill', edge: 'no-edge' },
+  'not-sure': { fill: 'unsure-fill', edge: 'unsure-edge' }
+} as const
+
+/** Yes, No, and Not sure's own fill and edge tokens, which they keep in the row and in Quick; null for other phrases. */
+export function phraseColorTokensForId(id: string) {
+  return fixedReplyTokens[id as keyof typeof fixedReplyTokens] ?? null
+}

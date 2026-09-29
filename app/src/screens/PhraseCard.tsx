@@ -15,7 +15,7 @@ import Animated, {
   type SharedValue
 } from 'react-native-reanimated'
 import { colors } from '../constants/theme'
-import { phraseColorTokensForId } from './category-palette'
+import { phraseColorTokensForId } from './category-style'
 import { useDepth } from './home-depth'
 import TurnText from './TurnText'
 
