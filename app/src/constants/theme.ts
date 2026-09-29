@@ -40,8 +40,8 @@ export const colorValues = {
   'category-family-edge': { light: '#6444C4', dark: '#A78BF2', 'light-hc': '#4C2FA3', 'dark-hc': '#C9B6F8' },
   'category-health-fill': { light: '#D4EEF0', dark: '#0F2A2D', 'light-hc': '#C3E7EA', 'dark-hc': '#0A2023' },
   'category-health-edge': { light: '#15707B', dark: '#4FC3CF', 'light-hc': '#0C5760', 'dark-hc': '#8CDCE3' },
-  'category-out-fill': { light: '#EEF3D2', dark: '#232A10', 'light-hc': '#E4ECBE', 'dark-hc': '#1A200A' },
-  'category-out-edge': { light: '#5C7412', dark: '#A8C24A', 'light-hc': '#445709', 'dark-hc': '#C7DB85' }
+  'category-out-and-about-fill': { light: '#EEF3D2', dark: '#232A10', 'light-hc': '#E4ECBE', 'dark-hc': '#1A200A' },
+  'category-out-and-about-edge': { light: '#5C7412', dark: '#A8C24A', 'light-hc': '#445709', 'dark-hc': '#C7DB85' }
 } as const
 
 type ColorName = keyof typeof colorValues
@@ -68,7 +68,7 @@ export const categoryColors = {
   feelings: { fill: colors['category-feelings-fill'], edge: colors['category-feelings-edge'] },
   family: { fill: colors['category-family-fill'], edge: colors['category-family-edge'] },
   health: { fill: colors['category-health-fill'], edge: colors['category-health-edge'] },
-  'out-and-about': { fill: colors['category-out-fill'], edge: colors['category-out-edge'] }
+  'out-and-about': { fill: colors['category-out-and-about-fill'], edge: colors['category-out-and-about-edge'] }
 }
 
 /** React Navigation's theme colors, so native headers take DESIGN's tokens in every appearance rather than its light

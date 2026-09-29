@@ -348,12 +348,12 @@ colors:
     dark: '#4FC3CF'
     light-hc: '#0C5760'
     dark-hc: '#8CDCE3'
-  category-out-fill:
+  category-out-and-about-fill:
     light: '#EEF3D2'
     dark: '#232A10'
     light-hc: '#E4ECBE'
     dark-hc: '#1A200A'
-  category-out-edge:
+  category-out-and-about-edge:
     light: '#5C7412'
     dark: '#A8C24A'
     light-hc: '#445709'
@@ -393,7 +393,7 @@ colors:
 | `category-*-edge` | Category edge        | Each category's inked edge on its cards, and its tab's dot             |
 
 - **Four inks, fixed jobs.** Blue is Turn's own: its actions and the one reply it's sure of, never Yes or No. Yes and No own the green and red fills with a check and a cross, and the lamp owns the glowing orange. Some category hues come near those, so each of the three also carries its word and its shape, as rule 3 asks, and never its color alone.
-- **A hue per category.** A category's color is worn as an inked edge on its cards and tab, and as a fill on a live reply, and a category the user adds takes the next hue after `out`, cycling from `chat`.
+- **A hue per category.** A category's color is worn as an inked edge on its cards and tab, and as a fill on a live reply, and a category the user adds takes the next hue after `out-and-about`, cycling from `chat`.
 - **Marker blue passes under white text.** Apple's system blue gives white text only 3.52 to 1, so every fill under white text is Turn's own ([Turn's iOS design notes][ios-grays]).
 - **The orange echoes iOS.** iOS shows an orange dot while an app uses the microphone, so the light's orange says the same thing, never the camera's green ([Turn's iOS design notes][ios-light]).
 - **Solid, never faint.** No text takes its color from opacity: white text at under 45% opacity fails 4.5 to 1 on near-black, and a gray that passes in one appearance can fail in the other ([motionsites notes][ms-contrast]). The one wash, `accent-tag`, paints the big reply's category tag: that appearance's `on-accent` at 18, 16, 22, and 20 percent, written as eight-digit hex. It's a fill over `accent`, never a text color, so the `big-tag` component names the `accent` fill it sits on.
@@ -441,44 +441,44 @@ Each ratio is WCAG 2.2's, truncated to one decimal so none is rounded up to pass
 
 Each category's fill and edge, checked the same way:
 
-| Text or mark              | On                        | Used for                                    | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| ------------------------- | ------------------------- | ------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`                     | `category-quick-fill`     | A live reply in Quick                       | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
-| `category-quick-edge`     | `board`                   | Quick's edge against the board              | 3.3:1  | 4.9:1  | 8.5:1                | 11.5:1              | 3:1      |
-| `category-quick-edge`     | `surface`                 | Quick's edge against the card               | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
-| `category-quick-edge`     | `category-quick-fill`     | Quick's edge against its fill               | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
-| `ink`                     | `category-chat-fill`      | A live reply in Chat                        | 14.2:1 | 13.6:1 | 15.8:1               | 17.3:1              | 7:1      |
-| `category-chat-edge`      | `board`                   | Chat's edge against the board               | 5.1:1  | 7.1:1  | 7.4:1                | 11.3:1              | 3:1      |
-| `category-chat-edge`      | `surface`                 | Chat's edge against the card                | 5.7:1  | 6.3:1  | 8.5:1                | 10.1:1              | 3:1      |
-| `category-chat-edge`      | `category-chat-fill`      | Chat's edge against its fill                | 4.8:1  | 5.8:1  | 6.4:1                | 10.0:1              | 3:1      |
-| `ink`                     | `category-care-fill`      | A live reply in Care and help               | 14.3:1 | 13.7:1 | 16.1:1               | 17.0:1              | 7:1      |
-| `category-care-edge`      | `board`                   | Care and help's edge against the board      | 4.8:1  | 8.3:1  | 7.1:1                | 12.2:1              | 3:1      |
-| `category-care-edge`      | `surface`                 | Care and help's edge against the card       | 5.4:1  | 7.4:1  | 8.2:1                | 10.9:1              | 3:1      |
-| `category-care-edge`      | `category-care-fill`      | Care and help's edge against its fill       | 4.6:1  | 6.8:1  | 6.3:1                | 10.6:1              | 3:1      |
-| `ink`                     | `category-body-pain-fill` | A live reply in Body and pain               | 13.6:1 | 14.5:1 | 14.6:1               | 18.0:1              | 7:1      |
-| `category-body-pain-edge` | `board`                   | Body and pain's edge against the board      | 5.5:1  | 6.9:1  | 7.8:1                | 10.3:1              | 3:1      |
-| `category-body-pain-edge` | `surface`                 | Body and pain's edge against the card       | 6.1:1  | 6.1:1  | 9.0:1                | 9.2:1               | 3:1      |
-| `category-body-pain-edge` | `category-body-pain-fill` | Body and pain's edge against its fill       | 4.9:1  | 6.1:1  | 6.2:1                | 9.5:1               | 3:1      |
-| `ink`                     | `category-food-fill`      | A live reply in Food and drink              | 14.6:1 | 13.4:1 | 16.3:1               | 17.0:1              | 7:1      |
-| `category-food-edge`      | `board`                   | Food and drink's edge against the board     | 4.6:1  | 8.9:1  | 6.8:1                | 12.3:1              | 3:1      |
-| `category-food-edge`      | `surface`                 | Food and drink's edge against the card      | 5.2:1  | 7.9:1  | 7.8:1                | 11.0:1              | 3:1      |
-| `category-food-edge`      | `category-food-fill`      | Food and drink's edge against its fill      | 4.4:1  | 7.2:1  | 6.1:1                | 10.8:1              | 3:1      |
-| `ink`                     | `category-feelings-fill`  | A live reply in Feelings                    | 14.0:1 | 13.6:1 | 15.4:1               | 17.1:1              | 7:1      |
-| `category-feelings-edge`  | `board`                   | Feelings's edge against the board           | 4.3:1  | 7.6:1  | 6.5:1                | 10.9:1              | 3:1      |
-| `category-feelings-edge`  | `surface`                 | Feelings's edge against the card            | 4.8:1  | 6.7:1  | 7.4:1                | 9.8:1               | 3:1      |
-| `category-feelings-edge`  | `category-feelings-fill`  | Feelings's edge against its fill            | 4.0:1  | 6.2:1  | 5.4:1                | 9.6:1               | 3:1      |
-| `ink`                     | `category-family-fill`    | A live reply in Family and friends          | 13.5:1 | 14.3:1 | 14.6:1               | 17.8:1              | 7:1      |
-| `category-family-edge`    | `board`                   | Family and friends's edge against the board | 5.7:1  | 6.7:1  | 8.1:1                | 10.7:1              | 3:1      |
-| `category-family-edge`    | `surface`                 | Family and friends's edge against the card  | 6.4:1  | 6.0:1  | 9.3:1                | 9.6:1               | 3:1      |
-| `category-family-edge`    | `category-family-fill`    | Family and friends's edge against its fill  | 5.2:1  | 5.8:1  | 6.5:1                | 9.8:1               | 3:1      |
-| `ink`                     | `category-health-fill`    | A live reply in Health                      | 14.2:1 | 13.4:1 | 15.9:1               | 16.8:1              | 7:1      |
-| `category-health-edge`    | `board`                   | Health's edge against the board             | 5.0:1  | 8.9:1  | 7.2:1                | 12.5:1              | 3:1      |
-| `category-health-edge`    | `surface`                 | Health's edge against the card              | 5.6:1  | 7.9:1  | 8.2:1                | 11.2:1              | 3:1      |
-| `category-health-edge`    | `category-health-fill`    | Health's edge against its fill              | 4.7:1  | 7.2:1  | 6.2:1                | 10.8:1              | 3:1      |
-| `ink`                     | `category-out-fill`       | A live reply in Out and about               | 15.1:1 | 13.2:1 | 17.0:1               | 16.7:1              | 7:1      |
-| `category-out-edge`       | `board`                   | Out and about's edge against the board      | 4.6:1  | 9.3:1  | 7.0:1                | 12.9:1              | 3:1      |
-| `category-out-edge`       | `surface`                 | Out and about's edge against the card       | 5.1:1  | 8.2:1  | 8.0:1                | 11.5:1              | 3:1      |
-| `category-out-edge`       | `category-out-fill`       | Out and about's edge against its fill       | 4.6:1  | 7.4:1  | 6.5:1                | 11.0:1              | 3:1      |
+| Text or mark                  | On                            | Used for                                    | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| ----------------------------- | ----------------------------- | ------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`                         | `category-quick-fill`         | A live reply in Quick                       | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `category-quick-edge`         | `board`                       | Quick's edge against the board              | 3.3:1  | 4.9:1  | 8.5:1                | 11.5:1              | 3:1      |
+| `category-quick-edge`         | `surface`                     | Quick's edge against the card               | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
+| `category-quick-edge`         | `category-quick-fill`         | Quick's edge against its fill               | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
+| `ink`                         | `category-chat-fill`          | A live reply in Chat                        | 14.2:1 | 13.6:1 | 15.8:1               | 17.3:1              | 7:1      |
+| `category-chat-edge`          | `board`                       | Chat's edge against the board               | 5.1:1  | 7.1:1  | 7.4:1                | 11.3:1              | 3:1      |
+| `category-chat-edge`          | `surface`                     | Chat's edge against the card                | 5.7:1  | 6.3:1  | 8.5:1                | 10.1:1              | 3:1      |
+| `category-chat-edge`          | `category-chat-fill`          | Chat's edge against its fill                | 4.8:1  | 5.8:1  | 6.4:1                | 10.0:1              | 3:1      |
+| `ink`                         | `category-care-fill`          | A live reply in Care and help               | 14.3:1 | 13.7:1 | 16.1:1               | 17.0:1              | 7:1      |
+| `category-care-edge`          | `board`                       | Care and help's edge against the board      | 4.8:1  | 8.3:1  | 7.1:1                | 12.2:1              | 3:1      |
+| `category-care-edge`          | `surface`                     | Care and help's edge against the card       | 5.4:1  | 7.4:1  | 8.2:1                | 10.9:1              | 3:1      |
+| `category-care-edge`          | `category-care-fill`          | Care and help's edge against its fill       | 4.6:1  | 6.8:1  | 6.3:1                | 10.6:1              | 3:1      |
+| `ink`                         | `category-body-pain-fill`     | A live reply in Body and pain               | 13.6:1 | 14.5:1 | 14.6:1               | 18.0:1              | 7:1      |
+| `category-body-pain-edge`     | `board`                       | Body and pain's edge against the board      | 5.5:1  | 6.9:1  | 7.8:1                | 10.3:1              | 3:1      |
+| `category-body-pain-edge`     | `surface`                     | Body and pain's edge against the card       | 6.1:1  | 6.1:1  | 9.0:1                | 9.2:1               | 3:1      |
+| `category-body-pain-edge`     | `category-body-pain-fill`     | Body and pain's edge against its fill       | 4.9:1  | 6.1:1  | 6.2:1                | 9.5:1               | 3:1      |
+| `ink`                         | `category-food-fill`          | A live reply in Food and drink              | 14.6:1 | 13.4:1 | 16.3:1               | 17.0:1              | 7:1      |
+| `category-food-edge`          | `board`                       | Food and drink's edge against the board     | 4.6:1  | 8.9:1  | 6.8:1                | 12.3:1              | 3:1      |
+| `category-food-edge`          | `surface`                     | Food and drink's edge against the card      | 5.2:1  | 7.9:1  | 7.8:1                | 11.0:1              | 3:1      |
+| `category-food-edge`          | `category-food-fill`          | Food and drink's edge against its fill      | 4.4:1  | 7.2:1  | 6.1:1                | 10.8:1              | 3:1      |
+| `ink`                         | `category-feelings-fill`      | A live reply in Feelings                    | 14.0:1 | 13.6:1 | 15.4:1               | 17.1:1              | 7:1      |
+| `category-feelings-edge`      | `board`                       | Feelings's edge against the board           | 4.3:1  | 7.6:1  | 6.5:1                | 10.9:1              | 3:1      |
+| `category-feelings-edge`      | `surface`                     | Feelings's edge against the card            | 4.8:1  | 6.7:1  | 7.4:1                | 9.8:1               | 3:1      |
+| `category-feelings-edge`      | `category-feelings-fill`      | Feelings's edge against its fill            | 4.0:1  | 6.2:1  | 5.4:1                | 9.6:1               | 3:1      |
+| `ink`                         | `category-family-fill`        | A live reply in Family and friends          | 13.5:1 | 14.3:1 | 14.6:1               | 17.8:1              | 7:1      |
+| `category-family-edge`        | `board`                       | Family and friends's edge against the board | 5.7:1  | 6.7:1  | 8.1:1                | 10.7:1              | 3:1      |
+| `category-family-edge`        | `surface`                     | Family and friends's edge against the card  | 6.4:1  | 6.0:1  | 9.3:1                | 9.6:1               | 3:1      |
+| `category-family-edge`        | `category-family-fill`        | Family and friends's edge against its fill  | 5.2:1  | 5.8:1  | 6.5:1                | 9.8:1               | 3:1      |
+| `ink`                         | `category-health-fill`        | A live reply in Health                      | 14.2:1 | 13.4:1 | 15.9:1               | 16.8:1              | 7:1      |
+| `category-health-edge`        | `board`                       | Health's edge against the board             | 5.0:1  | 8.9:1  | 7.2:1                | 12.5:1              | 3:1      |
+| `category-health-edge`        | `surface`                     | Health's edge against the card              | 5.6:1  | 7.9:1  | 8.2:1                | 11.2:1              | 3:1      |
+| `category-health-edge`        | `category-health-fill`        | Health's edge against its fill              | 4.7:1  | 7.2:1  | 6.2:1                | 10.8:1              | 3:1      |
+| `ink`                         | `category-out-and-about-fill` | A live reply in Out and about               | 15.1:1 | 13.2:1 | 17.0:1               | 16.7:1              | 7:1      |
+| `category-out-and-about-edge` | `board`                       | Out and about's edge against the board      | 4.6:1  | 9.3:1  | 7.0:1                | 12.9:1              | 3:1      |
+| `category-out-and-about-edge` | `surface`                     | Out and about's edge against the card       | 5.1:1  | 8.2:1  | 8.0:1                | 11.5:1              | 3:1      |
+| `category-out-and-about-edge` | `category-out-and-about-fill` | Out and about's edge against its fill       | 4.6:1  | 7.4:1  | 6.5:1                | 11.0:1              | 3:1      |
 
 - **One table, every pair.** Every text and background pair the components name is in these two tables, and the theme test recomputes each pair from the code in all four appearances. The closest to a floor are the free lines' pill, `listen` on `listen-soft`, at 4.5 to 1 in light, and `edge` on `board` at 3.3 to 1 in light.
 - **Edges count.** A category's edge is checked against the board, the surface, and its own fill, since a card's edge is what separates it from all three.
@@ -602,7 +602,7 @@ typography:
 - **Never shrunk by code.** No text sets `allowFontScaling={false}`, `maxFontSizeMultiplier`, or a fixed height, and only the row's slots and the caption set `numberOfLines`; see [the row](#the-row) and [the caption](#the-caption).
 - **Bold Text.** React Native's font code ignores the setting, so one hook swaps each token to its Bold Text weight on `boldTextChanged`, for system text too, since nothing says it thickens by itself ([Turn's iOS design notes][ios-bold]).
 - **Left, sentence case, upright.** Text is left-aligned, so each line starts where the last one did, which helps readers who lose part of their visual field after a stroke ([AAC design notes][aac-type]); in sentence case, since capitals read slower; never in italics; and never in a weight under Regular ([trends notes][ft-type]).
-- **Floors.** Nothing is under 15 points at the default size except the toolbar's labels and small pills, at 12, and legal lines, at 13; reading slows below about 13 characters a line, so the row and the grid lose columns before a phrase gets narrower ([AAC design notes][aac-type]).
+- **Floors.** Nothing is under 15 points at the default size except the toolbar's labels and small pills, at 12, and notes, details, and legal lines in `footnote`, at 13; reading slows below about 13 characters a line, so the row and the grid lose columns before a phrase gets narrower ([AAC design notes][aac-type]).
 - **Figures.** The free lines' count uses tabular figures, `fontVariant: ['tabular-nums']`, so it doesn't shift as it falls.
 - **Pitch type.** Apple's license lets SF Pro appear only as the running app draws it, in screenshots and recordings of Turn. The video's titles, the Devpost thumbnail, the gallery's captions, and text in the README's images are set in Atkinson Hyperlegible Next, under the SIL Open Font License ([Turn's iOS design notes][ios-pitch-fonts]).
 
@@ -692,7 +692,7 @@ Turn lays out by the width it's given, not by the device, since an app built wit
 
 - **Short screens.** Where the space between the top bar and the screen's bottom is under 700 points, as on an iPhone SE, the row's slots and the grid's buttons take A11Y-1's 64 points, with phrases at `button`'s rounded size inside 10-point padding and 8 points between slots. Below AX1 the caption is one 48-point line: its note, or else its speaker label, then the newest words, cut at the start. The tabs drop their 4-point margins. That leaves the grid's first row on screen at launch (SPEAK-1), and the caption, the strip, the row, the tabs, and the grid scroll together as one column between the top bar and the bottom bar.
 - **From AX1.** When the font scale reaches 1.786, at AX1, the row, the strip, and the grid take one column each, and everything between the top bar and the bottom bar scrolls as one column, as on short screens. Apple advises fewer columns as text grows ([Turn's iOS design notes][ios-dt-turn]).
-- **Heights follow the text size and the screen, never the content.** A slot's height is two lines of `phrase` at the current size plus its padding, and never less than 78 points, or 64 on short screens; so at AX5 a slot is 154 points tall, and the row holds its height whatever it shows.
+- **Heights follow the text size and the screen, never the content.** A slot's height is two lines of `phrase` at the current size plus its padding, and never less than 78 points, or 64 on short screens; so at AX5 a slot is 165 points tall, and the row holds its height whatever it shows.
 
 [ios-dt-turn]: /docs/research/0029-turn-ios-design.md#dynamic-type-sizes-for-turns-styles
 
@@ -747,7 +747,7 @@ rounded:
 
 ## Components
 
-Each component below is written for the light appearance. For every pair of text and background colors, one component also appears as `-dark`, `-light-hc`, and `-dark-hc`, naming that appearance's colors, so the linter checks all four; edges appear the same way, and every other property is the light entry's. Heights and padding name the spacing tokens. The format has no border property, so each edge color is a component of its own, whose `height` holds the edge's thickness. A phrase card's edge and its Tinted fill come from its category, so `phrase-tinted` and `category-edge-out` name the last category as the sample and each category supplies its own.
+Each component below is written for the light appearance. For every pair of text and background colors, one component also appears as `-dark`, `-light-hc`, and `-dark-hc`, naming that appearance's colors, so the linter checks all four; edges appear the same way, and every other property is the light entry's. Heights and padding name the spacing tokens. The format has no border property, so each edge color is a component of its own, whose `height` holds the edge's thickness. A phrase card's edge and its Tinted fill come from its category, so `phrase-tinted` and `category-edge-out-and-about` name the last category as the sample and each category supplies its own.
 
 ```yaml
 components:
@@ -766,14 +766,14 @@ components:
     padding: '{spacing.md}'
     height: '{spacing.slot}'
   phrase-tinted:
-    backgroundColor: '{colors.category-out-fill.light}'
+    backgroundColor: '{colors.category-out-and-about-fill.light}'
     textColor: '{colors.ink.light}'
     typography: '{typography.phrase}'
     rounded: '{rounded.card}'
     padding: '{spacing.md}'
     height: '{spacing.slot}'
-  category-edge-out:
-    backgroundColor: '{colors.category-out-edge.light}'
+  category-edge-out-and-about:
+    backgroundColor: '{colors.category-out-and-about-edge.light}'
     height: '{spacing.edge-width}'
   phrase-speaking:
     backgroundColor: '{colors.accent-soft.light}'
@@ -945,7 +945,7 @@ components:
     backgroundColor: '{colors.edge.light}'
     height: '{spacing.edge-width}'
   category-edge:
-    backgroundColor: '{colors.category-out-edge.light}'
+    backgroundColor: '{colors.category-out-and-about-edge.light}'
     height: '{spacing.edge-width}'
   yes-edge:
     backgroundColor: '{colors.yes-edge.light}'
@@ -978,26 +978,26 @@ components:
     backgroundColor: '{colors.surface-pressed.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
   phrase-tinted-dark:
-    backgroundColor: '{colors.category-out-fill.dark}'
+    backgroundColor: '{colors.category-out-and-about-fill.dark}'
     textColor: '{colors.ink.dark}'
-  category-edge-out-dark:
-    backgroundColor: '{colors.category-out-edge.dark}'
+  category-edge-out-and-about-dark:
+    backgroundColor: '{colors.category-out-and-about-edge.dark}'
   phrase-speaking-dark:
     backgroundColor: '{colors.accent-soft.dark}'
     textColor: '{colors.ink.dark}'
   phrase-tinted-light-hc:
-    backgroundColor: '{colors.category-out-fill.light-hc}'
+    backgroundColor: '{colors.category-out-and-about-fill.light-hc}'
     textColor: '{colors.ink.light-hc}'
-  category-edge-out-light-hc:
-    backgroundColor: '{colors.category-out-edge.light-hc}'
+  category-edge-out-and-about-light-hc:
+    backgroundColor: '{colors.category-out-and-about-edge.light-hc}'
   phrase-speaking-light-hc:
     backgroundColor: '{colors.accent-soft.light-hc}'
     textColor: '{colors.ink.light-hc}'
   phrase-tinted-dark-hc:
-    backgroundColor: '{colors.category-out-fill.dark-hc}'
+    backgroundColor: '{colors.category-out-and-about-fill.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
-  category-edge-out-dark-hc:
-    backgroundColor: '{colors.category-out-edge.dark-hc}'
+  category-edge-out-and-about-dark-hc:
+    backgroundColor: '{colors.category-out-and-about-edge.dark-hc}'
   phrase-speaking-dark-hc:
     backgroundColor: '{colors.accent-soft.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
@@ -1206,11 +1206,11 @@ components:
   edge-dark-hc:
     backgroundColor: '{colors.edge.dark-hc}'
   category-edge-dark:
-    backgroundColor: '{colors.category-out-edge.dark}'
+    backgroundColor: '{colors.category-out-and-about-edge.dark}'
   category-edge-light-hc:
-    backgroundColor: '{colors.category-out-edge.light-hc}'
+    backgroundColor: '{colors.category-out-and-about-edge.light-hc}'
   category-edge-dark-hc:
-    backgroundColor: '{colors.category-out-edge.dark-hc}'
+    backgroundColor: '{colors.category-out-and-about-edge.dark-hc}'
   yes-edge-dark:
     backgroundColor: '{colors.yes-edge.dark}'
   yes-edge-light-hc:
@@ -1252,7 +1252,7 @@ The row's height and its six slots are fixed for the text size and the screen (R
 - **Filling.** Replies fill slots from the first, as ROW-5 moves them; an empty slot shows the board, with no frame, so it doesn't look like a button. When all six are empty, the first two slots' space shows a note in `label`, `ink-secondary`: "Replies to your partner appear here.", or, with the under-18 switch on, "Listen mode is off for this partner." (CONSENT-6). Until the starter phrases are reviewed, the empty row holds their invitation instead, on `accent-soft` ([the first launch](#the-first-launch)).
 - **A phrase too long for its slot.** A slot holds two lines of `phrase`; a longer phrase steps down to `button`'s size, still two lines, and past that ends with an ellipsis. VoiceOver reads the whole phrase, a tap speaks the whole phrase, and the grid shows it whole (A11Y-4). Phrases short enough to fit, with their key words first, choose faster ([AAC design notes][aac-cost]).
 - **The big button.** When ROW-3 shows one, it fills the frame of all six slots: marker blue, `big` corners, 16-point padding, the phrase in `phrase-big`, `on-accent`, left-aligned at the top, and the reply's category as a tag at its top left on `accent-tag`. The speaker mark `speaker.wave.2.fill` sits bottom-right at 75%; a white radial sheen and a faint ring are decoration, and both are hidden under Increase Contrast. A phrase too long for the frame at that size steps down to `phrase`'s size, and past that ends with an ellipsis, as a slot's does, with the whole phrase in VoiceOver and speech (A11Y-4). It's still just a phrase: no label, no badge, and it speaks only on a tap (ROW-6). Its phrase moves to the first free slot afterward if it stays at or above the floor (ROW-5).
-- **Yes, No, and Not sure.** In slots 1 to 3 for a yes-or-no question (ROW-4), as `yes`, `no`, and `unsure`: the word in `phrase`, `ink`, on its tint, inside a 2.5-point edge of its color, with a 40-point disc in the edge color carrying `checkmark`, `xmark`, or `questionmark.circle` in `surface`. The Quick category shows them the same way.
+- **Yes, No, and Not sure.** In slots 1 to 3 for a yes-or-no question (ROW-4), as `yes`, `no`, and `unsure`: the word in `phrase-yes-no`, or `phrase` for Not sure, `ink`, on its tint, inside a 2.5-point edge of its color, with a 40-point disc in the edge color carrying `checkmark`, `xmark`, or `questionmark.circle` in `surface`. The Quick category shows them the same way.
 - **A row that holds.** When a line gets no phrase above the floor, nothing in the row changes (ROW-3), and the caption says which line the replies still answer, rather than dimming them ([AAC design notes][aac-stale]).
 - **No confidence shown.** No percentages, bars, sparkles, or badges: the row's three states, one big button, up to six phrases, or no change, already say how sure Turn is, as Apple's and Google's guides advise ([AAC design notes][aac-confidence]).
 - **The press guard.** A new answer that would change a slot waits while a finger is on it, and lands when the finger lifts ([AAC design notes][aac-stale]).
@@ -1313,7 +1313,7 @@ A chip in the top bar with the place's symbol, its name, and `chevron.down`. A t
 
 ### The bottom bar
 
-A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point area, with four items 84 by 52, each a symbol above its label in `caption` on a solid pill: `toolbar-item`, a `surface` pill with a `hairline` edge, unless a bullet below names another:
+A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point area, with four items 84 by 52, each a symbol above its label in `caption` on a solid pill: `toolbar-item`, a `surface` pill with a 1.5-point `edge`, since a button's edge reaches 3 to 1 (rule 2), unless a bullet below names another:
 
 - **Type** (`keyboard`) opens the composer (SPEAK-1, SPEAK-3), on an `accent` pill.
 - **Repeat** (`arrow.counterclockwise`) says the last spoken text again (SPEAK-6), and becomes **Stop** (`stop.fill`) on an `ink` pill while Turn speaks (SPEAK-2), in the same place.
@@ -1640,7 +1640,7 @@ Apple's Accessibility Nutrition Labels make a test plan even without a store lis
 
 - **Read the rules first.** The [rules that don't bend](#rules-that-dont-bend) come before any token; then read the section for the screen at hand. The tokens are the values to use, and the prose says how to apply them.
 - **Where values live.** Colors, in all four appearances, type, spacing, corners, and components are in the `yaml` blocks, each top-level key in one block; motion is in its table.
-- **Lint.** `bunx @google/design.md@0.4.0 lint docs/DESIGN.md` checks the tokens and prints JSON. Read `summary.warnings`, not the exit code, since a contrast failure is only a warning ([trends notes][ft-linter]). This file allows two warning classes: `missing-primary`, which the linter raises because it looks for a single `primary` value and Turn's colors hold four; and `orphaned-tokens`, 68 of them: the eight category colors this file lists but cannot reference, since a component takes one color pair and the nine categories are nine pairs, so `phrase-tinted` and `category-edge-out` name the last as the sample and the other eight follow it; and `accent-tag`'s four values, a fill no component can name, as [Color roles](#color-roles) says. `bunx @google/design.md@0.4.0 spec` prints the format; pin the version, since the format is alpha.
+- **Lint.** `bunx @google/design.md@0.4.0 lint docs/DESIGN.md` checks the tokens and prints JSON. Read `summary.warnings`, not the exit code, since a contrast failure is only a warning ([trends notes][ft-linter]). This file allows two warning classes: `missing-primary`, which the linter raises because it looks for a single `primary` value and Turn's colors hold four; and `orphaned-tokens`, 68 of them: the eight category colors this file lists but cannot reference, since a component takes one color pair and the nine categories are nine pairs, so `phrase-tinted` and `category-edge-out-and-about` name the last as the sample and the other eight follow it; and `accent-tag`'s four values, a fill no component can name, as [Color roles](#color-roles) says. `bunx @google/design.md@0.4.0 spec` prints the format; pin the version, since the format is alpha.
 - **Generators.** Use AI generators for sketches only; their output starts over from these tokens and rules ([trends notes][ft-generators]).
 - **Pointing agents here.** Once `app/` exists, a rule scoped to its screen files can point agents to this file, rather than an import that loads it into every session ([trends notes][ft-agents]).
 
