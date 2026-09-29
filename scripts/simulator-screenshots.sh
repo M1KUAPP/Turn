@@ -208,12 +208,15 @@ flush_dns() {
   sudo killall -HUP mDNSResponder
 }
 block_relay() {
-  printf '127.0.0.1 %s\n::1 %s\n' "$relay_host" "$relay_host" | sudo tee -a /etc/hosts >/dev/null
+  # The leading newline keeps the first entry off the file's last line, when it has no newline of its own.
+  printf '\n127.0.0.1 %s\n::1 %s\n' "$relay_host" "$relay_host" | sudo tee -a /etc/hosts >/dev/null
   trap unblock_relay EXIT
   flush_dns
+  dscacheutil -q host -a name "$relay_host" || true
 }
 unblock_relay() {
-  sudo sed -i '' "/ ${relay_host//./\\.}\$/d" /etc/hosts
+  local host_pattern=${relay_host//./\\.}
+  sudo sed -i '' -e "/^127\.0\.0\.1 $host_pattern\$/d" -e "/^::1 $host_pattern\$/d" /etc/hosts
   trap - EXIT
   flush_dns
 }
