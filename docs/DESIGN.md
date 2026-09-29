@@ -673,22 +673,22 @@ typography:
 
 | Token                | Used for                                     | `dynamicTypeRamp` | With Bold Text |
 | -------------------- | -------------------------------------------- | ----------------- | -------------- |
-| `phrase-big`         | The big reply                                | `largeTitle`      | 800            |
-| `phrase-yes-no`      | Yes and No                                   | `title1`          | 800            |
-| `phrase`             | Row slots, grid phrases, and Not sure        | `title2`          | 700            |
-| `phrase-strip`       | The conversation strip                       | `subheadline`     | 600            |
-| `partner-card-title` | The consent card's question                  | `title1`          | 600            |
-| `partner-line`       | The caption's words                          | `title1`          | 500            |
-| `partner-line-small` | Partner words in the composers               | `title3`          | 500            |
-| `large-title`        | Screen titles, and the paywall's title       | `largeTitle`      | 800            |
-| `title`              | Sheet and card titles                        | `title2`          | 700            |
-| `button`             | Buttons and capsules                         | `headline`        | 700            |
-| `headline`           | Row titles in headers                        | `headline`        | 600            |
-| `body`               | Settings, the permission step, and body text | `body`            | 400            |
-| `callout`            | The paywall's promises                       | `callout`         | 500            |
-| `label`              | Tabs, caption labels, and group headers      | `subheadline`     | 600            |
-| `footnote`           | Notes, details, and legal lines              | `footnote`        | 400            |
-| `caption`            | Toolbar labels, "Starter", and small pills   | `caption1`        | 600            |
+| `phrase-big`         | The big reply                                | `largeTitle`      | 900            |
+| `phrase-yes-no`      | Yes and No                                   | `title1`          | 900            |
+| `phrase`             | Row slots, grid phrases, and Not sure        | `title2`          | 800            |
+| `phrase-strip`       | The conversation strip                       | `subheadline`     | 700            |
+| `partner-card-title` | The consent card's question                  | `title1`          | 700            |
+| `partner-line`       | The caption's words                          | `title1`          | 600            |
+| `partner-line-small` | Partner words in the composers               | `title3`          | 600            |
+| `large-title`        | Screen titles, and the paywall's title       | `largeTitle`      | 900            |
+| `title`              | Sheet and card titles                        | `title2`          | 800            |
+| `button`             | Buttons and capsules                         | `headline`        | 800            |
+| `headline`           | Row titles in headers                        | `headline`        | 700            |
+| `body`               | Settings, the permission step, and body text | `body`            | 600            |
+| `callout`            | The paywall's promises                       | `callout`         | 600            |
+| `label`              | Tabs, caption labels, and group headers      | `subheadline`     | 700            |
+| `footnote`           | Notes, details, and legal lines              | `footnote`        | 600            |
+| `caption`            | Toolbar labels, "Starter", and small pills   | `caption1`        | 700            |
 
 - **Two voices, two typefaces.** The partner's words, and the words addressed
   to the partner, are set in the serif; everything the user says or taps is
