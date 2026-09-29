@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Alert, Modal, Pressable, ScrollView, TextInput, useWindowDimensions, View } from 'react-native'
+import { Alert, Keyboard, Modal, Pressable, ScrollView, TextInput, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
@@ -10,7 +10,7 @@ import Button from './Button'
 import { categoryHue, categorySymbol, placeSymbol } from './category-style'
 import { useShadow } from './depth'
 import IconButton from './IconButton'
-import { GroupNote, ListGroup, ListRow, ScreenTitle } from './ListGroup'
+import { GroupNote, ListGroup, ListRow, ScreenTitle, useScreenTitle } from './ListGroup'
 import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
@@ -51,6 +51,8 @@ export default function PhraseBankScreen() {
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [hasUndo, setHasUndo] = useState(false)
+  const title = categoryName || (isStrip ? 'Conversation strip' : 'Phrases')
+  const { onTitleLayout, scrollProps } = useScreenTitle(title)
 
   const handledInitialEdit = useRef(false)
 
@@ -270,11 +272,12 @@ export default function PhraseBankScreen() {
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
+        {...scrollProps}
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 24, gap: 10 }}
       >
         <View style={{ marginBottom: 6 }}>
-          <ScreenTitle title={categoryName || (isStrip ? 'Conversation strip' : 'Phrases')} boldText={boldText} />
+          <ScreenTitle title={title} boldText={boldText} onLayout={onTitleLayout} />
         </View>
         {phrases.length === 0 && (
           <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, marginHorizontal: 4 }}>
@@ -503,143 +506,153 @@ export default function PhraseBankScreen() {
       )}
 
       {/* Add or Edit phrase sheet */}
-      <Modal visible={!!editor} animationType="slide" presentationStyle="pageSheet" onRequestClose={closeEditor}>
+      <Modal
+        visible={!!editor}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={picker ? () => setPicker(null) : closeEditor}
+      >
         <SheetBody>
-          <SheetHeader title={editor?.id ? 'Edit phrase' : 'Add phrase'} boldText={boldText} onClose={closeEditor} />
-          <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 4, paddingBottom: 16, gap: 16 }}
-            keyboardShouldPersistTaps="handled"
-          >
-            <View style={{ gap: 8 }}>
-              <TurnText
-                kind="label"
-                boldText={boldText}
-                style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
-              >
-                Phrase
-              </TurnText>
-              <TextInput
-                autoFocus
-                accessibilityLabel="Phrase"
-                accessibilityHint="Type the phrase you want to say, up to 200 characters."
-                maxLength={200}
-                multiline
-                editable={!editor?.isFixed}
-                value={editor?.text ?? ''}
-                onChangeText={(text) =>
-                  setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
-                }
-                onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
-                selectionColor={colors.accent}
-                scrollEnabled
-                style={{
-                  ...textStyle('body', boldText),
-                  minHeight: 56,
-                  maxHeight: 180,
-                  paddingHorizontal: 18,
-                  paddingTop: 16,
-                  paddingBottom: 16,
-                  borderWidth: focused ? 2.5 : 1.5,
-                  borderColor: focused ? colors.accent : colors.edge,
-                  borderRadius: 24,
-                  borderCurve: 'continuous',
-                  color: colors.ink,
-                  backgroundColor: colors.surface,
-                  textAlignVertical: 'top'
-                }}
-              />
-              {!!editor && editor.text.length >= 180 && (
+          {/* The form stays mounted while a chooser takes the sheet's place, so its words survive the trip. */}
+          <View style={{ flex: 1, display: picker ? 'none' : 'flex' }}>
+            <SheetHeader title={editor?.id ? 'Edit phrase' : 'Add phrase'} boldText={boldText} onClose={closeEditor} />
+            <ScrollView
+              style={{ flex: 1 }}
+              contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 4, paddingBottom: 16, gap: 16 }}
+              keyboardShouldPersistTaps="handled"
+            >
+              <View style={{ gap: 8 }}>
+                <TurnText
+                  kind="label"
+                  boldText={boldText}
+                  style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+                >
+                  Phrase
+                </TurnText>
+                <TextInput
+                  autoFocus
+                  accessibilityLabel="Phrase"
+                  accessibilityHint="Type the phrase you want to say, up to 200 characters."
+                  maxLength={200}
+                  multiline
+                  editable={!editor?.isFixed}
+                  value={editor?.text ?? ''}
+                  onChangeText={(text) =>
+                    setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
+                  }
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
+                  selectionColor={colors.accent}
+                  scrollEnabled
+                  style={{
+                    ...textStyle('body', boldText),
+                    minHeight: 56,
+                    maxHeight: 180,
+                    paddingHorizontal: 18,
+                    paddingTop: 16,
+                    paddingBottom: 16,
+                    borderWidth: focused ? 2.5 : 1.5,
+                    borderColor: focused ? colors.accent : colors.edge,
+                    borderRadius: 24,
+                    borderCurve: 'continuous',
+                    color: colors.ink,
+                    backgroundColor: colors.surface,
+                    textAlignVertical: 'top'
+                  }}
+                />
+                {!!editor && editor.text.length >= 180 && (
+                  <TurnText
+                    kind="footnote"
+                    boldText={boldText}
+                    style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+                  >
+                    {200 - editor.text.length} characters left
+                  </TurnText>
+                )}
+                {editor?.isFixed && (
+                  <TurnText
+                    kind="footnote"
+                    boldText={boldText}
+                    style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
+                  >
+                    Yes, No, and Not sure cannot be renamed.
+                  </TurnText>
+                )}
+              </View>
+
+              {((!editor?.isFixed && !isStrip) || places.length > 0) && (
+                <ListGroup>
+                  {!editor?.isFixed && !isStrip && editorCategory ? (
+                    <ListRow
+                      label="Category"
+                      boldText={boldText}
+                      symbol={categorySymbol(editorCategory.id)}
+                      tone={{
+                        fill: categoryHue(editorCategory.id, ids).fill,
+                        ink: categoryHue(editorCategory.id, ids).edge
+                      }}
+                      value={editorCategory.name}
+                      accessibilityLabel="Category"
+                      accessibilityValue={editorCategory.name}
+                      chevron
+                      onPress={() => {
+                        Keyboard.dismiss()
+                        setPicker('category')
+                      }}
+                    />
+                  ) : null}
+                  {places.length > 0 ? (
+                    <ListRow
+                      label="Places"
+                      boldText={boldText}
+                      symbol="mappin.and.ellipse"
+                      tone={placeTone}
+                      value={editorPlaces.length > 0 ? editorPlaces.join(', ') : 'Any place'}
+                      accessibilityLabel="Places"
+                      accessibilityValue={editorPlaces.length > 0 ? editorPlaces.join(', ') : 'Any place'}
+                      chevron
+                      onPress={() => {
+                        Keyboard.dismiss()
+                        setPicker('places')
+                      }}
+                    />
+                  ) : null}
+                </ListGroup>
+              )}
+
+              {error && (
                 <TurnText
                   kind="footnote"
                   boldText={boldText}
                   style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
                 >
-                  {200 - editor.text.length} characters left
+                  {error}
                 </TurnText>
               )}
-              {editor?.isFixed && (
-                <TurnText
-                  kind="footnote"
+            </ScrollView>
+            <SheetActions>
+              {editorCanDelete && editorPhrase ? (
+                <Button
+                  variant="destructive"
+                  label="Delete"
                   boldText={boldText}
-                  style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
-                >
-                  Yes, No, and Not sure cannot be renamed.
-                </TurnText>
-              )}
-            </View>
-
-            {((!editor?.isFixed && !isStrip) || places.length > 0) && (
-              <ListGroup>
-                {!editor?.isFixed && !isStrip && editorCategory ? (
-                  <ListRow
-                    label="Category"
-                    boldText={boldText}
-                    symbol={categorySymbol(editorCategory.id)}
-                    tone={{
-                      fill: categoryHue(editorCategory.id, ids).fill,
-                      ink: categoryHue(editorCategory.id, ids).edge
-                    }}
-                    value={editorCategory.name}
-                    accessibilityLabel="Category"
-                    accessibilityValue={editorCategory.name}
-                    chevron
-                    onPress={() => setPicker('category')}
-                  />
-                ) : null}
-                {places.length > 0 ? (
-                  <ListRow
-                    label="Places"
-                    boldText={boldText}
-                    symbol="mappin.and.ellipse"
-                    tone={placeTone}
-                    value={editorPlaces.length > 0 ? editorPlaces.join(', ') : 'Any place'}
-                    accessibilityLabel="Places"
-                    accessibilityValue={editorPlaces.length > 0 ? editorPlaces.join(', ') : 'Any place'}
-                    chevron
-                    onPress={() => setPicker('places')}
-                  />
-                ) : null}
-              </ListGroup>
-            )}
-
-            {error && (
-              <TurnText
-                kind="footnote"
-                boldText={boldText}
-                style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}
-              >
-                {error}
-              </TurnText>
-            )}
-          </ScrollView>
-          <SheetActions>
-            {editorCanDelete && editorPhrase ? (
+                  onPress={() => confirmDelete(editorPhrase, closeEditor)}
+                />
+              ) : null}
               <Button
-                variant="destructive"
-                label="Delete"
+                variant="primary"
+                label="Save"
                 boldText={boldText}
-                onPress={() => confirmDelete(editorPhrase, closeEditor)}
+                disabled={!editor?.text.trim() || saving}
+                onPress={() => void save()}
               />
-            ) : null}
-            <Button
-              variant="primary"
-              label="Save"
-              boldText={boldText}
-              disabled={!editor?.text.trim() || saving}
-              onPress={() => void save()}
-            />
-          </SheetActions>
+            </SheetActions>
+          </View>
 
-          {/* The category and places choosers, each its own sheet over the phrase's (frames 51 and 52). */}
-          <Modal
-            visible={picker !== null}
-            animationType="slide"
-            presentationStyle="pageSheet"
-            onRequestClose={() => setPicker(null)}
-          >
-            <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
+          {/* The category and places choosers take the phrase sheet's place, as frames 51 and 52 draw them, rather
+              than a second sheet on top, whose dismissal would swallow the next tap. */}
+          {picker && (
+            <View style={{ flex: 1 }}>
               <SheetHeader
                 title={picker === 'category' ? 'Category' : 'Places'}
                 boldText={boldText}
@@ -698,8 +711,8 @@ export default function PhraseBankScreen() {
                   <Button variant="primary" label="Done" boldText={boldText} onPress={() => setPicker(null)} />
                 </SheetActions>
               )}
-            </SafeAreaView>
-          </Modal>
+            </View>
+          )}
         </SheetBody>
       </Modal>
     </SafeAreaView>

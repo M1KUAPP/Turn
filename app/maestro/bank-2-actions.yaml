@@ -207,7 +207,7 @@ name: Phrase bank actions and category limit
       text: Phrase
       below: Phrase
 - waitForAnimationToEnd
-# The places are chosen in their own sheet, under its Places title.
+# The places are chosen in their own sheet, whose Done sits under its Places title.
 - tapOn: Places
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -228,7 +228,7 @@ name: Phrase bank actions and category limit
     below: Places
 - tapOn:
     text: Done
-    below: 'At these places, the row offers this phrase first\.'
+    below: Places
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Save
@@ -285,6 +285,10 @@ name: Phrase bank actions and category limit
     speed: 10
 - tapOn:
     text: Chat
+    below: 'Choose where its phrases will go\.'
+# Choosing a category marks it, and Delete then moves the phrases there and deletes (frame 61).
+- tapOn:
+    text: Delete
     below: 'Choose where its phrases will go\.'
 - waitForAnimationToEnd
 - assertNotVisible: Flow category
@@ -385,7 +389,7 @@ name: Phrase bank actions and category limit
     below: Places
 - tapOn:
     text: Done
-    below: 'At these places, the row offers this phrase first\.'
+    below: Places
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: Save
