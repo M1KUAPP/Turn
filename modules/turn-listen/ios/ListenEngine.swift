@@ -8,6 +8,9 @@ final class ListenEngine {
   private static let silenceWindowMs = 500
   private static let silenceWindowNanoseconds: UInt64 = 500_000_000
   private static let resultFinalizationTimeoutNanoseconds: UInt64 = 1_000_000_000
+  private static let silenceFlushSeconds = 0.25
+  private static let silenceFlushLimitSeconds = 3.0
+  private static let minimumVoiceSeconds = 0.3
   private static let voiceRmsThreshold = 0.015
 
   private struct ResultWaiter {
@@ -89,7 +92,13 @@ final class ListenEngine {
   private var tapInstalled = false
   private var capturing = false
   private var voiceActive = false
+  // How long the partner's voice has been above the speech level since the last line ended, and where in the audio it
+  // last fell.
+  private var voicedSeconds = 0.0
+  private var voiceEndedAt = CMTime.zero
+  private var silenceWindowPending = false
   private var lineFinalizing = false
+  private var finalizeReturned = false
   private var finalizedText = ""
   private var volatileText = ""
   private var latestResultsFinalizationTime = CMTime.zero
@@ -245,6 +254,14 @@ final class ListenEngine {
     removeCapture()
     silenceTask?.cancel()
     silenceTask = nil
+    silenceWindowPending = false
+    // A line already finalizing waits for audio past its boundary, which no longer comes.
+    var flushed = 0.0
+    while lineFinalizing, flushed < Self.silenceFlushLimitSeconds {
+      flushSilence()
+      flushed += Self.silenceFlushSeconds
+      try? await Task.sleep(nanoseconds: 20_000_000)
+    }
     do {
       try await finishCurrentAudio(publishLine: false)
       clearTranscript()
@@ -461,6 +478,7 @@ final class ListenEngine {
           for try await result in transcriber.results {
             self?.receiveResult(
               text: String(result.text.characters),
+              range: result.range,
               finalizationTime: result.resultsFinalizationTime,
               isFinal: result.isFinal
             )
@@ -475,6 +493,7 @@ final class ListenEngine {
           for try await result in transcriber.results {
             self?.receiveResult(
               text: String(result.text.characters),
+              range: result.range,
               finalizationTime: result.resultsFinalizationTime,
               isFinal: result.isFinal
             )
@@ -529,6 +548,7 @@ final class ListenEngine {
 
     input.installTap(onBus: 0, bufferSize: 4096, format: microphoneFormat) { [weak self] buffer, _ in
       let level = Self.rmsLevel(of: buffer)
+      let seconds = Double(buffer.frameLength) / buffer.format.sampleRate
       do {
         let converted = try Self.convertBuffer(
           buffer,
@@ -541,7 +561,7 @@ final class ListenEngine {
         )
         inputBuilder.yield(AnalyzerInput(buffer: converted))
         Task { @MainActor [weak self] in
-          self?.receiveAudioLevel(level)
+          self?.receiveAudioLevel(level, seconds: seconds)
         }
       } catch {
         let reason = String(describing: error)
@@ -626,17 +646,20 @@ final class ListenEngine {
     }
   }
 
-  private func receiveAudioLevel(_ level: Double) {
+  private func receiveAudioLevel(_ level: Double, seconds: Double) {
     guard capturing else { return }
     if level >= Self.voiceRmsThreshold {
+      voicedSeconds += seconds
       if !voiceActive {
         voiceActive = true
         onVoice(true)
       }
       silenceTask?.cancel()
       silenceTask = nil
+      silenceWindowPending = false
     } else if voiceActive {
       voiceActive = false
+      voiceEndedAt = timeline.end
       onVoice(false)
       scheduleSilenceLineEnd()
     }
@@ -644,6 +667,7 @@ final class ListenEngine {
 
   private func receiveResult(
     text: String,
+    range: CMTimeRange,
     finalizationTime: CMTime,
     isFinal: Bool
   ) {
@@ -652,7 +676,7 @@ final class ListenEngine {
     }
 
     if isFinal {
-      finalizedText += text
+      finalizedText += Self.repaired(final: text, volatile: volatileText)
       volatileText = ""
     } else {
       volatileText = text
@@ -662,18 +686,23 @@ final class ListenEngine {
     let nextText = currentText()
     guard nextText != renderedText else { return }
     renderedText = nextText
-    onPartial(nextText)
-    if !voiceActive {
+    onPartial(Self.lineText(nextText))
+    // Results trail the audio by a second or more, so words heard before the voice fell don't restart the window;
+    // only words after it, or words from a partner too quiet to pass the speech level, do.
+    if !voiceActive, Self.hasWords(nextText),
+       !silenceWindowPending || CMTimeCompare(CMTimeRangeGetEnd(range), voiceEndedAt) > 0 {
       scheduleSilenceLineEnd()
     }
   }
 
   private func scheduleSilenceLineEnd() {
-    guard !lineFinalizing,
-          !currentText().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+    // The voice falling ends a line even before its words arrive, since finalizing then delivers them, unless it rose
+    // too briefly to be speech: finalizing just before a line can cost the line its first words.
+    guard !lineFinalizing, voicedSeconds >= Self.minimumVoiceSeconds || Self.hasWords(currentText()) else {
       return
     }
     silenceTask?.cancel()
+    silenceWindowPending = true
     silenceTask = Task { @MainActor [weak self] in
       do {
         try await Task.sleep(nanoseconds: Self.silenceWindowNanoseconds)
@@ -681,6 +710,7 @@ final class ListenEngine {
         return
       }
       guard let self, !self.voiceActive, !self.lineFinalizing else { return }
+      self.silenceWindowPending = false
       do {
         try await self.finishCurrentAudio(publishLine: true)
       } catch {
@@ -696,23 +726,26 @@ final class ListenEngine {
 
     let endedAt = Date().timeIntervalSince1970 * 1_000
     let boundary = timeline.end
-    try await analyzer.finalize(through: boundary)
+    try await finalize(analyzer, through: boundary)
     await waitForSettledResults(through: boundary)
 
-    let line = finalizedText.trimmingCharacters(in: .whitespacesAndNewlines)
-    if publishLine, !line.isEmpty {
+    let line = Self.lineText(finalizedText)
+    if publishLine, Self.hasWords(line) {
       onLine(line, endedAt, Self.silenceWindowMs)
     }
 
+    if !voiceActive { voicedSeconds = 0 }
     finalizedText = ""
     renderedText = currentText()
     if !volatileText.isEmpty {
-      onPartial(renderedText)
+      onPartial(Self.lineText(renderedText))
     }
   }
 
   private func waitForSettledResults(through boundary: CMTime) async {
-    guard !currentText().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+    // Finalizing delivers the settled text, whose finalization time can stay short of the boundary after a silence,
+    // so only words still volatile are waited for.
+    guard Self.hasWords(volatileText),
           CMTimeCompare(latestResultsFinalizationTime, boundary) < 0 else {
       return
     }
@@ -739,7 +772,7 @@ final class ListenEngine {
   private func resumeSettledWaiters() {
     let settled = Array(resultWaiters.keys.filter { id in
       guard let waiter = resultWaiters[id] else { return false }
-      return CMTimeCompare(latestResultsFinalizationTime, waiter.through) >= 0
+      return CMTimeCompare(latestResultsFinalizationTime, waiter.through) >= 0 || !Self.hasWords(volatileText)
     })
     for id in settled {
       resumeResultWaiter(id)
@@ -760,6 +793,8 @@ final class ListenEngine {
     finalizedText = ""
     volatileText = ""
     renderedText = ""
+    voicedSeconds = 0
+    silenceWindowPending = false
     for id in Array(resultWaiters.keys) {
       resumeResultWaiter(id)
     }
@@ -774,6 +809,82 @@ final class ListenEngine {
     for id in Array(resultWaiters.keys) {
       resumeResultWaiter(id)
     }
+  }
+
+  /// The analyzer finalizes only once audio passes the boundary, and on the phone only once another buffer follows that
+  /// audio, so with capture stopped the module gives it silence a quarter second at a time until it returns.
+  private func finalize(_ analyzer: SpeechAnalyzer, through boundary: CMTime) async throws {
+    guard !capturing else {
+      try await analyzer.finalize(through: boundary)
+      return
+    }
+    finalizeReturned = false
+    let finalizing = Task { [weak self] in
+      defer { self?.finalizeReturned = true }
+      try await analyzer.finalize(through: boundary)
+    }
+    var flushed = 0.0
+    while !finalizeReturned, flushed < Self.silenceFlushLimitSeconds {
+      flushSilence()
+      flushed += Self.silenceFlushSeconds
+      try? await Task.sleep(nanoseconds: 20_000_000)
+    }
+    // Past the limit, the finalize returns once capture starts again.
+    if finalizeReturned { try await finalizing.value }
+  }
+
+  /// Gives the analyzer silence past the audio it has, so a finalize can return once capture stops.
+  private func flushSilence() {
+    guard let inputBuilder, let analyzerFormat else { return }
+    let frames = AVAudioFrameCount(Self.silenceFlushSeconds * analyzerFormat.sampleRate)
+    guard let silence = AVAudioPCMBuffer(pcmFormat: analyzerFormat, frameCapacity: frames) else { return }
+    silence.frameLength = frames
+    for buffer in UnsafeMutableAudioBufferListPointer(silence.mutableAudioBufferList) {
+      if let data = buffer.mData { memset(data, 0, Int(buffer.mDataByteSize)) }
+    }
+    timeline.advance(frameCount: frames, sampleRate: analyzerFormat.sampleRate)
+    inputBuilder.yield(AnalyzerInput(buffer: silence))
+  }
+
+  /// Whether text holds a letter or a digit, so the transcriber's lone "." never makes a line.
+  private static func hasWords(_ text: String) -> Bool {
+    text.unicodeScalars.contains { CharacterSet.alphanumerics.contains($0) }
+  }
+
+  /// After a silence, the transcriber's final pass can turn a line's first words into punctuation (". of stuffy in here")
+  /// or lose the line (",......."), though its volatile pass heard them, so the volatile words fill them back in.
+  private static func repaired(final: String, volatile: String) -> String {
+    let heard = words(in: volatile)
+    let kept = words(in: final)
+    // A final with no words lost the line, unless the volatile text is a single word's start, such as "L".
+    guard !kept.isEmpty else {
+      guard heard.count >= 2 else { return final }
+      return volatile.first?.isWhitespace == true ? volatile : " " + volatile
+    }
+    guard heard.count > 1 else { return final }
+    // The final lost the volatile's first words when its own pick up partway through them and match on to the end
+    // of either, two words at least.
+    let heardWords = heard.map { $0.lowercased() }
+    let keptWords = kept.map { $0.lowercased() }
+    for start in 1..<heard.count {
+      let overlap = min(keptWords.count, heardWords.count - start)
+      if overlap < 2 { break }
+      if heardWords[start..<start + overlap].elementsEqual(keptWords[..<overlap]) {
+        return " " + heard[..<start].joined(separator: " ") + " " + lineText(final)
+      }
+    }
+    return final
+  }
+
+  private static func words(in text: String) -> [String] {
+    text.split { !($0.isLetter || $0.isNumber || $0 == "'" || $0 == "\u{2019}") }.map(String.init)
+  }
+
+  /// A line without the punctuation the transcriber puts before its first word after a silence, such as ". ".
+  private static func lineText(_ text: String) -> String {
+    let leading = CharacterSet.punctuationCharacters.union(.whitespacesAndNewlines)
+    let words = text.unicodeScalars.drop { leading.contains($0) }
+    return String(String.UnicodeScalarView(words)).trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
   private static func rmsLevel(of buffer: AVAudioPCMBuffer) -> Double {
