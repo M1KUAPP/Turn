@@ -466,6 +466,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             fontScale={fontScale}
             boldText={boldText}
             reduceMotion={reduceMotion}
+            voice={listening.voiceActive}
             model={model}
             onType={listening.active ? () => setComposerMode('partner') : null}
             onDone={() => void listen.endLine()}
@@ -628,6 +629,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           disabled={listenControlDisabled}
           boldText={boldText}
           fontScale={fontScale}
+          reduceMotion={reduceMotion}
           fill={oneControlColumn}
           height={oneControlColumn ? controlHeight : 44}
           onPress={() => {
