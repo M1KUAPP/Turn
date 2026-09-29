@@ -52,8 +52,8 @@ function session(
   }
 }
 
-/** Home's states for checking against the design's frames in a dev bundle, or one built with
- * EXPO_PUBLIC_HOME_PREVIEW=1, chosen by the route's `preview` parameter, as in `turn:///?preview=hearing`. */
+/** Home's states for checking against the design's frames in a dev bundle, chosen by the route's `preview` parameter,
+ * as in `turn:///?preview=hearing`. */
 export function homePreview(name: string | undefined, live: LiveListenSnapshot): Preview | null {
   const said = { label: listenStrings.said, words: 'How was physio?' }
   switch (name) {
