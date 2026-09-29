@@ -24,13 +24,25 @@
     <br />
   </p>
 
+[![Release][release-shield]][release-url]
+[![License][license-shield]][license-url]
+[![Last commit][last-commit-shield]][last-commit-url]
+[![Issues][issues-shield]][issues-url]
+[![Contributors][contributors-shield]][contributors-url]
+[![iOS 26+][ios-shield]][ios-url]
+[![RevenueCat Shipaton 2026][shipaton-shield]][shipaton-url]
+
 [![Expo][Expo.dev]][Expo-url]
 [![React Native][ReactNative.dev]][ReactNative-url]
+[![React][React.dev]][React-url]
 [![TypeScript][TypeScript.org]][TypeScript-url]
 [![Swift][Swift.org]][Swift-url]
+[![SQLite][SQLite.org]][SQLite-url]
 [![Cloudflare Workers][Workers.dev]][Workers-url]
 [![RevenueCat][RevenueCat.com]][RevenueCat-url]
 [![Bun][Bun.sh]][Bun-url]
+[![Vitest][Vitest.dev]][Vitest-url]
+[![Prettier][Prettier.io]][Prettier-url]
 
 </div>
 
@@ -262,6 +274,28 @@ See [LICENSE](LICENSE) for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
+[release-shield]: https://img.shields.io/github/v/release/M1KUAPP/Turn?include_prereleases&style=for-the-badge
+[release-url]: https://github.com/M1KUAPP/Turn/releases
+[license-shield]: https://img.shields.io/github/license/M1KUAPP/Turn?style=for-the-badge
+[license-url]: LICENSE
+[last-commit-shield]: https://img.shields.io/github/last-commit/M1KUAPP/Turn?style=for-the-badge
+[last-commit-url]: https://github.com/M1KUAPP/Turn/commits/main
+[issues-shield]: https://img.shields.io/github/issues/M1KUAPP/Turn?style=for-the-badge
+[issues-url]: https://github.com/M1KUAPP/Turn/issues
+[contributors-shield]: https://img.shields.io/github/contributors/M1KUAPP/Turn?style=for-the-badge
+[contributors-url]: https://github.com/M1KUAPP/Turn/graphs/contributors
+[ios-shield]: https://img.shields.io/badge/iOS-26%2B-000000?style=for-the-badge&logo=apple&logoColor=white
+[ios-url]: https://www.apple.com/ios/
+[shipaton-shield]: https://img.shields.io/badge/RevenueCat_Shipaton-2026-F2545B?style=for-the-badge&logo=revenuecat&logoColor=white
+[shipaton-url]: https://www.shipaton.com
+[React.dev]: https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://react.dev/
+[SQLite.org]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white
+[SQLite-url]: https://www.sqlite.org/
+[Vitest.dev]: https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white
+[Vitest-url]: https://vitest.dev/
+[Prettier.io]: https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black
+[Prettier-url]: https://prettier.io/
 [Expo.dev]: https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white
 [Expo-url]: https://expo.dev/
 [ReactNative.dev]: https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
