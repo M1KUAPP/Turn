@@ -13,6 +13,11 @@ const RING_MS = 1600
 // Three 1.6-second rings take 4.8 seconds, inside the five seconds a line (DESIGN, motion).
 const RINGS_PER_LINE = 3
 
+// Reduce Motion comes from the TRD's accessibility store alone, so Reanimated must not also apply the setting it
+// read at launch, as its animations do by default.
+const ring = () =>
+  withTiming(1, { duration: RING_MS, easing: Easing.out(Easing.quad), reduceMotion: ReduceMotion.Never })
+
 // DESIGN's light: while the partner's words arrive, a ring grows from the light, scale 1 to 1.8, and fades from 60% to
 // nothing, once every 1.6 seconds for at most five seconds a line. Reduce Motion, from the TRD's accessibility store,
 // shows the light alone.
@@ -23,13 +28,7 @@ export function useListenLight(wordsArriving: boolean, reduceMotion: boolean) {
     progress.value = 1
     if (reduceMotion || !wordsArriving) return
     progress.value = 0
-    progress.value = withRepeat(
-      withTiming(1, { duration: RING_MS, easing: Easing.out(Easing.quad), reduceMotion: ReduceMotion.System }),
-      RINGS_PER_LINE,
-      false,
-      undefined,
-      ReduceMotion.System
-    )
+    progress.value = withRepeat(ring(), RINGS_PER_LINE, false, undefined, ReduceMotion.Never)
   }, [wordsArriving, reduceMotion, progress])
 
   return useAnimatedStyle(() => ({
