@@ -542,9 +542,11 @@ says how each is built.
 
 ### Performance
 
-- **PERF-1, Must.** The row is drawn within 1.0 second of the end of the
-  partner's speech at the median, and within 2.0 seconds at the 95th
-  percentile, on Wi-Fi in the United States. The user's own time to choose
+- **PERF-1, Must.** The row is drawn within 2.0 seconds of the end of the
+  partner's speech at the median, and within 2.5 seconds at the 95th
+  percentile, on Wi-Fi in the United States. The half-second window that ends
+  a line, the transcriber's finalizing, and the relay's round trip leave 1.0
+  second out of reach (#153). The user's own time to choose
   is measured apart. Check: timings from at least 50 replayed lines.
 - **PERF-2, Must.** Speech starts within 300 milliseconds of a tap for 95%
   of taps. Check: timings from 50 taps.
