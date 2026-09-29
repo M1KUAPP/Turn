@@ -1,41 +1,58 @@
 import { useEffect, useState } from 'react'
-import {
-  ActionSheetIOS,
-  Alert,
-  KeyboardAvoidingView,
-  Modal,
-  Pressable,
-  ScrollView,
-  TextInput,
-  View
-} from 'react-native'
+import { Alert, Modal, Pressable, ScrollView, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useRouter } from 'expo-router'
+import { useNavigation, useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import type { Category } from '../bank/store'
 import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
-import SheetHeader from './SheetHeader'
+import Button from './Button'
+import { categoryHue, categorySymbol } from './category-style'
+import IconButton from './IconButton'
+import {
+  GroupHeader,
+  GroupNote,
+  ListGroup,
+  ListRow,
+  ScreenTitle,
+  useScreenTitle,
+  TileLead,
+  tileTones,
+  useListMetrics
+} from './ListGroup'
+import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 type Editor = { id: string | null; name: string }
 
 export default function CategoriesScreen() {
   const router = useRouter()
+  const navigation = useNavigation()
   const { ready, boldText } = useTurn()
+  const { tile, mark, stacked } = useListMetrics()
   const bank = ready?.bank
   const [categories, setCategories] = useState<Category[]>([])
+  const [counts, setCounts] = useState<Record<string, number>>({})
+  const [editMode, setEditMode] = useState(false)
   const [editor, setEditor] = useState<Editor | null>(null)
+  const [deleting, setDeleting] = useState<Category | null>(null)
+  const [destination, setDestination] = useState<string | null>(null)
+  const [focused, setFocused] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Phrase bank')
 
   useEffect(() => {
     if (!bank) return
     let active = true
     const read = () => {
-      void bank.categories().then((nextCategories) => {
+      void Promise.all([bank.categories(), bank.phrases('all')]).then(([nextCategories, phrases]) => {
         if (!active) return
         setCategories(nextCategories)
+        const nextCounts: Record<string, number> = {}
+        for (const phrase of phrases) nextCounts[phrase.category_id] = (nextCounts[phrase.category_id] ?? 0) + 1
+        setCounts(nextCounts)
       })
     }
     read()
@@ -46,6 +63,50 @@ export default function CategoriesScreen() {
     }
   }, [bank])
 
+  // Count check: at most 12 categories counting strip and counting Typed even before it exists
+  const hasTyped = categories.some((c) => c.id === 'typed')
+  const atCategoryLimit = hasTyped ? categories.length >= 11 : categories.length >= 10
+
+  useEffect(() => {
+    navigation.setOptions({
+      // Native bar buttons, like the back button beside them, so iOS keeps them at bar size at every text size.
+      unstable_headerRightItems: () =>
+        editMode
+          ? [
+              {
+                type: 'button',
+                label: 'Done',
+                variant: 'prominent',
+                tintColor: colors.accent,
+                onPress: () => setEditMode(false)
+              }
+            ]
+          : [
+              {
+                type: 'button',
+                label: 'Edit',
+                accessibilityLabel: 'Edit',
+                icon: { type: 'sfSymbol', name: 'arrow.up.arrow.down' },
+                tintColor: colors.ink,
+                onPress: () => setEditMode(true)
+              },
+              {
+                type: 'button',
+                label: 'Add category',
+                accessibilityLabel: 'Add category',
+                icon: { type: 'sfSymbol', name: 'plus' },
+                variant: 'prominent',
+                tintColor: colors.accent,
+                disabled: !bank || atCategoryLimit,
+                onPress: () => {
+                  setError(null)
+                  setEditor({ id: null, name: '' })
+                }
+              }
+            ]
+    })
+  }, [navigation, editMode, bank, atCategoryLimit])
+
   const move = (id: string, direction: -1 | 1) => {
     if (!bank) return
     void bank.moveCategory(id, direction).catch((cause) => setError(String(cause)))
@@ -55,7 +116,6 @@ export default function CategoriesScreen() {
     if (!bank) return
     try {
       const phrases = await bank.phrases(category.id)
-      const otherCategories = categories.filter((c) => c.id !== category.id)
       if (phrases.length === 0) {
         Alert.alert(`Delete ${category.name}?`, 'This category is empty.', [
           { text: 'Cancel', style: 'cancel' },
@@ -68,25 +128,24 @@ export default function CategoriesScreen() {
           }
         ])
       } else {
-        const options = [...otherCategories.map((c) => c.name), 'Cancel']
-        ActionSheetIOS.showActionSheetWithOptions(
-          {
-            title: `Delete ${category.name}?`,
-            message: 'Choose where its phrases will go.',
-            options,
-            cancelButtonIndex: otherCategories.length
-          },
-          (index) => {
-            if (index < otherCategories.length) {
-              const destination = otherCategories[index]
-              void bank.deleteCategory(category.id, destination.id).catch((cause) => setError(String(cause)))
-            }
-          }
-        )
+        setDestination(categories.find((c) => c.id !== category.id)?.id ?? null)
+        setDeleting(category)
       }
     } catch (cause) {
       setError(String(cause))
     }
+  }
+
+  const deleteInto = () => {
+    if (!bank || !deleting || !destination) return
+    const doomed = deleting
+    setDeleting(null)
+    void bank.deleteCategory(doomed.id, destination).catch((cause) => setError(String(cause)))
+  }
+
+  const closeEditor = () => {
+    setEditor(null)
+    setError(null)
   }
 
   const save = async () => {
@@ -104,10 +163,6 @@ export default function CategoriesScreen() {
     }
   }
 
-  // Count check: at most 12 categories counting strip and counting Typed even before it exists
-  const hasTyped = categories.some((c) => c.id === 'typed')
-  const atCategoryLimit = hasTyped ? categories.length >= 11 : categories.length >= 10
-
   if (!bank) {
     return (
       <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board, padding: 16 }}>
@@ -118,249 +173,306 @@ export default function CategoriesScreen() {
     )
   }
 
+  const ids = categories.map((category) => category.id)
+
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 16 }}>
-        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-          Categories organize your phrases. Move categories here to change the tab order.
-        </TurnText>
-
-        {categories.map((category, index) => {
-          const isQuick = category.id === 'quick'
-          const isBelowQuick = index === 1
-          const isBodyPain = category.id === 'body-pain'
-
-          const canMoveUp = !isQuick && !isBelowQuick && index > 0
-          const canMoveDown = !isQuick && index < categories.length - 1
-          const canDelete = !isQuick && !isBodyPain
-
-          const actions = [
-            { name: 'open', label: 'Open' },
-            ...(canMoveUp ? [{ name: 'move-up', label: 'Move up' }] : []),
-            ...(canMoveDown ? [{ name: 'move-down', label: 'Move down' }] : []),
-            { name: 'rename', label: 'Rename' },
-            ...(canDelete ? [{ name: 'delete', label: 'Delete' }] : [])
-          ]
-
-          return (
-            <View
-              key={category.id}
-              style={{
-                padding: 12,
-                gap: 8,
-                borderRadius: 12,
-                backgroundColor: colors.surface,
-                borderWidth: 2,
-                borderColor: colors.edge
-              }}
-            >
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={category.name}
-                accessibilityHint="Opens this category's phrases."
-                accessibilityActions={actions}
-                onAccessibilityAction={(event) => {
-                  if (event.nativeEvent.actionName === 'open') router.push(`/bank/${category.id}`)
-                  if (event.nativeEvent.actionName === 'move-up') move(category.id, -1)
-                  if (event.nativeEvent.actionName === 'move-down') move(category.id, 1)
-                  if (event.nativeEvent.actionName === 'rename') {
-                    setError(null)
-                    setEditor({ id: category.id, name: category.name })
-                  }
-                  if (event.nativeEvent.actionName === 'delete') void confirmDelete(category)
-                }}
-                onPress={() => router.push(`/bank/${category.id}`)}
-                style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-              >
-                <View style={{ flex: 1, justifyContent: 'center' }}>
-                  <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-                    {category.name}
-                  </TurnText>
-                </View>
-                <SymbolView name="chevron.right" size={15} tintColor={colors['ink-secondary']} accessible={false} />
-              </Pressable>
-
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-                {[
-                  { label: 'Move up', offered: canMoveUp, action: () => move(category.id, -1) },
-                  { label: 'Move down', offered: canMoveDown, action: () => move(category.id, 1) },
-                  {
-                    label: 'Rename',
-                    offered: true,
-                    action: () => {
-                      setError(null)
-                      setEditor({ id: category.id, name: category.name })
-                    }
-                  },
-                  { label: 'Delete', offered: canDelete, action: () => void confirmDelete(category) }
-                ]
-                  .filter(({ offered }) => offered)
-                  .map(({ label, action }) => (
-                    <Pressable
-                      key={label}
-                      accessibilityRole="button"
-                      accessibilityLabel={label}
-                      onPress={action}
-                      style={({ pressed }) => ({
-                        minHeight: 44,
-                        minWidth: 64,
-                        paddingHorizontal: 12,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderWidth: 2,
-                        borderColor: colors.edge,
-                        borderRadius: 22,
-                        backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                      })}
-                    >
-                      <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
-                        {label}
-                      </TurnText>
-                    </Pressable>
-                  ))}
-              </View>
-            </View>
-          )
-        })}
-
-        {/* The strip shows last, apart, as a row that opens its phrases */}
-        <View style={{ marginTop: 8, gap: 8 }}>
-          <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 4 }}>
-            Conversation strip
+    <>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        {...scrollProps}
+        style={{ flex: 1, backgroundColor: colors.board }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 22 }}
+      >
+        <View style={{ gap: 8 }}>
+          <ScreenTitle title="Phrase bank" boldText={boldText} onLayout={onTitleLayout} />
+          <TurnText
+            kind="footnote"
+            boldText={boldText}
+            style={{ color: colors['ink-secondary'], marginHorizontal: 4, marginTop: 6 }}
+          >
+            Categories organize your phrases. Move categories here to change the tab order.
           </TurnText>
+        </View>
+
+        {/* The strip comes first, apart, as a row that opens its phrases */}
+        <View
+          style={{
+            borderRadius: 24,
+            borderCurve: 'continuous',
+            borderWidth: 1.5,
+            borderColor: colors.edge,
+            backgroundColor: colors.surface,
+            overflow: 'hidden'
+          }}
+        >
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Conversation strip"
             accessibilityValue={{ text: 'Phrases always visible above the grid' }}
             accessibilityHint="Opens its phrases."
             onPress={() => router.push('/bank/strip')}
-            style={({ pressed }) => ({
-              minHeight: 52,
+            style={{
+              minHeight: 62,
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: 16,
-              borderRadius: 12,
-              backgroundColor: pressed ? colors['surface-pressed'] : colors.surface,
-              borderWidth: 2,
-              borderColor: colors.edge
-            })}
+              gap: 12,
+              paddingHorizontal: 16,
+              paddingVertical: 10
+            }}
           >
-            <View style={{ gap: 4 }}>
-              <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-                Conversation strip
-              </TurnText>
-              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                Phrases always visible above the grid
-              </TurnText>
-            </View>
-            <SymbolView name="chevron.right" size={15} tintColor={colors['ink-secondary']} accessible={false} />
+            {({ pressed }) => (
+              <>
+                <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                <TileLead symbol={categorySymbol('strip')} tone={tileTones.neutral}>
+                  <View style={{ gap: 2 }}>
+                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                      Conversation strip
+                    </TurnText>
+                    <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                      Phrases always visible above the grid
+                    </TurnText>
+                  </View>
+                </TileLead>
+                <SymbolView
+                  name="chevron.right"
+                  size={mark}
+                  weight="semibold"
+                  tintColor={colors['ink-secondary']}
+                  accessible={false}
+                />
+              </>
+            )}
           </Pressable>
         </View>
 
-        {error && !editor && (
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            {error}
-          </TurnText>
-        )}
+        <View>
+          <GroupHeader title="Categories" boldText={boldText} />
+          <ListGroup>
+            {categories.map((category, index) => {
+              const isQuick = category.id === 'quick'
+              const isBelowQuick = index === 1
+              const isBodyPain = category.id === 'body-pain'
 
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Add category"
-          accessibilityState={{ disabled: atCategoryLimit }}
-          disabled={atCategoryLimit}
-          onPress={() => {
-            setError(null)
-            setEditor({ id: null, name: '' })
-          }}
-          style={({ pressed }) => ({
-            minHeight: 52,
-            borderRadius: 26,
-            borderWidth: atCategoryLimit ? 2 : 0,
-            borderColor: colors.edge,
-            backgroundColor: atCategoryLimit ? colors.surface : pressed ? colors['accent-pressed'] : colors.accent,
-            alignItems: 'center',
-            justifyContent: 'center'
-          })}
-        >
-          <TurnText
-            kind="headline"
-            boldText={boldText}
-            style={{ color: atCategoryLimit ? colors['ink-secondary'] : colors['on-accent'] }}
-          >
-            Add category
-          </TurnText>
-        </Pressable>
+              const canMoveUp = !isQuick && !isBelowQuick && index > 0
+              const canMoveDown = !isQuick && index < categories.length - 1
+              const canDelete = !isQuick && !isBodyPain
 
-        {atCategoryLimit && (
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            You can have up to 12 categories.
-          </TurnText>
-        )}
+              const actions = [
+                { name: 'open', label: 'Open' },
+                ...(canMoveUp ? [{ name: 'move-up', label: 'Move up' }] : []),
+                ...(canMoveDown ? [{ name: 'move-down', label: 'Move down' }] : []),
+                { name: 'rename', label: 'Rename' },
+                ...(canDelete ? [{ name: 'delete', label: 'Delete' }] : [])
+              ]
+              const hue = categoryHue(category.id, ids)
+              const count = counts[category.id] ?? 0
+
+              return (
+                <View key={category.id}>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={category.name}
+                    accessibilityValue={{ text: `${count} ${count === 1 ? 'phrase' : 'phrases'}` }}
+                    accessibilityHint="Opens this category's phrases."
+                    accessibilityActions={actions}
+                    onAccessibilityAction={(event) => {
+                      if (event.nativeEvent.actionName === 'open') router.push(`/bank/${category.id}`)
+                      if (event.nativeEvent.actionName === 'move-up') move(category.id, -1)
+                      if (event.nativeEvent.actionName === 'move-down') move(category.id, 1)
+                      if (event.nativeEvent.actionName === 'rename') {
+                        setError(null)
+                        setEditor({ id: category.id, name: category.name })
+                      }
+                      if (event.nativeEvent.actionName === 'delete') void confirmDelete(category)
+                    }}
+                    onPress={() => router.push(`/bank/${category.id}`)}
+                    style={{
+                      minHeight: 56,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 12,
+                      paddingHorizontal: 16,
+                      paddingVertical: 10
+                    }}
+                  >
+                    {({ pressed }) => (
+                      <>
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                        <TileLead symbol={categorySymbol(category.id)} tone={{ fill: hue.fill, ink: hue.edge }}>
+                          <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                            {category.name}
+                          </TurnText>
+                        </TileLead>
+                        <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          {count}
+                        </TurnText>
+                        <SymbolView
+                          name="chevron.right"
+                          size={mark}
+                          weight="semibold"
+                          tintColor={colors['ink-secondary']}
+                          accessible={false}
+                        />
+                      </>
+                    )}
+                  </Pressable>
+
+                  {/* Edit mode's buttons sit under the name, one tap each, never a drag (A11Y-5, A11Y-8). */}
+                  {editMode && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        gap: 10,
+                        paddingLeft: stacked ? 16 : 16 + tile + 12,
+                        paddingRight: 16,
+                        paddingBottom: 12
+                      }}
+                    >
+                      {canMoveUp && (
+                        <IconButton symbol="chevron.up" label="Move up" onPress={() => move(category.id, -1)} />
+                      )}
+                      {canMoveDown && (
+                        <IconButton symbol="chevron.down" label="Move down" onPress={() => move(category.id, 1)} />
+                      )}
+                      <IconButton
+                        symbol="pencil"
+                        label="Rename"
+                        onPress={() => {
+                          setError(null)
+                          setEditor({ id: category.id, name: category.name })
+                        }}
+                      />
+                      {canDelete && (
+                        <IconButton symbol="trash" label="Delete" onPress={() => void confirmDelete(category)} />
+                      )}
+                    </View>
+                  )}
+                </View>
+              )
+            })}
+          </ListGroup>
+          {atCategoryLimit && <GroupNote boldText={boldText}>You can have up to 12 categories.</GroupNote>}
+          {error && !editor && <GroupNote boldText={boldText}>{error}</GroupNote>}
+        </View>
       </ScrollView>
+      <Modal visible={!!editor} animationType="slide" presentationStyle="pageSheet" onRequestClose={closeEditor}>
+        <SheetBody>
+          <SheetHeader
+            title={editor?.id ? 'Rename category' : 'Add category'}
+            boldText={boldText}
+            onClose={closeEditor}
+          />
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 16, gap: 12 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <TextInput
+              autoFocus
+              accessibilityLabel="Category name"
+              maxLength={40}
+              value={editor?.name ?? ''}
+              onChangeText={(name) =>
+                setEditor((current) => (current ? { ...current, name: name.slice(0, 40) } : null))
+              }
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              placeholder="Category name"
+              placeholderTextColor={colors['ink-secondary']}
+              selectionColor={colors.accent}
+              style={{
+                ...textStyle('body', boldText),
+                minHeight: 56,
+                paddingHorizontal: 18,
+                paddingVertical: 14,
+                borderWidth: focused ? 2.5 : 1.5,
+                borderColor: focused ? colors.accent : colors.edge,
+                borderRadius: 24,
+                borderCurve: 'continuous',
+                color: colors.ink,
+                backgroundColor: colors.surface
+              }}
+            />
+            {!editor?.id && (
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                New categories take the next color in the set.
+              </TurnText>
+            )}
+            {!!editor && editor.name.length >= 35 && (
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                {40 - editor.name.length} characters left
+              </TurnText>
+            )}
+            {error && (
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                {error}
+              </TurnText>
+            )}
+          </ScrollView>
+          <SheetActions>
+            <Button
+              variant="primary"
+              label="Save"
+              boldText={boldText}
+              disabled={!editor?.name.trim() || saving}
+              onPress={() => void save()}
+            />
+          </SheetActions>
+        </SheetBody>
+      </Modal>
 
+      {/* Deleting a category that holds phrases asks where they go: a tap chooses the category, and Delete moves the
+          phrases there and deletes, so one stray tap can't delete (frame 61). */}
       <Modal
-        visible={!!editor}
+        visible={!!deleting}
         animationType="slide"
         presentationStyle="pageSheet"
-        onRequestClose={() => {
-          setEditor(null)
-          setError(null)
-        }}
+        onRequestClose={() => setDeleting(null)}
       >
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
-          <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
-            <SheetHeader
-              title={editor?.id ? 'Rename category' : 'Add category'}
+        <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
+          <SheetHeader
+            title={`Delete ${deleting?.name ?? ''}?`}
+            boldText={boldText}
+            onClose={() => setDeleting(null)}
+          />
+          <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 24, gap: 16 }}>
+            <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, marginHorizontal: 4 }}>
+              Choose where its phrases will go.
+            </TurnText>
+            <ListGroup>
+              {categories
+                .filter((category) => category.id !== deleting?.id)
+                .map((category) => {
+                  const hue = categoryHue(category.id, ids)
+                  return (
+                    <ListRow
+                      key={category.id}
+                      label={category.name}
+                      boldText={boldText}
+                      symbol={categorySymbol(category.id)}
+                      tone={{ fill: hue.fill, ink: hue.edge }}
+                      checked={destination === category.id}
+                      onPress={() => setDestination(category.id)}
+                    />
+                  )
+                })}
+            </ListGroup>
+          </ScrollView>
+          <SheetActions>
+            <Button label="Cancel" boldText={boldText} onPress={() => setDeleting(null)} />
+            <Button
+              label="Delete"
               boldText={boldText}
-              canSave={!!editor?.name.trim() && !saving}
-              onCancel={() => {
-                setEditor(null)
-                setError(null)
-              }}
-              onSave={() => void save()}
+              disabled={!destination}
+              accessibilityHint={`Moves its phrases to ${
+                categories.find((c) => c.id === destination)?.name ?? ''
+              } and deletes ${deleting?.name ?? ''}.`}
+              onPress={deleteInto}
             />
-            <ScrollView
-              style={{ flex: 1 }}
-              contentContainerStyle={{ gap: 20, paddingBottom: 16 }}
-              keyboardShouldPersistTaps="handled"
-            >
-              <TextInput
-                autoFocus
-                accessibilityLabel="Category name"
-                maxLength={40}
-                value={editor?.name ?? ''}
-                onChangeText={(name) =>
-                  setEditor((current) => (current ? { ...current, name: name.slice(0, 40) } : null))
-                }
-                placeholder="Category name"
-                placeholderTextColor={colors['ink-secondary']}
-                selectionColor={colors.accent}
-                style={{
-                  ...textStyle('body', boldText),
-                  minHeight: 52,
-                  padding: 12,
-                  borderWidth: 2,
-                  borderColor: colors.edge,
-                  borderRadius: 12,
-                  color: colors.ink,
-                  backgroundColor: colors.surface
-                }}
-              />
-              {!!editor && editor.name.length >= 35 && (
-                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                  {40 - editor.name.length} characters left
-                </TurnText>
-              )}
-              {error && (
-                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                  {error}
-                </TurnText>
-              )}
-            </ScrollView>
-          </KeyboardAvoidingView>
+          </SheetActions>
         </SafeAreaView>
       </Modal>
-    </SafeAreaView>
+    </>
   )
 }
