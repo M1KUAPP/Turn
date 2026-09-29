@@ -34,8 +34,7 @@ Figures are quoted from each edition's Devpost overview and project gallery; "Ga
 - Both past Shipatons moved the deadline at the last minute. In 2024: "we're extending the deadline for submissions by 1 extra day!" ([dp-2024-updates]). In 2025, because "App Review has been moving a little slower than usual this week", "the official Shipaton deadline has now been extended by 12 hours. Submissions will close Wednesday, October 1st at 12:00 PM Pacific Time." ([dp-2025-extension]). Synthesis: plan for slow review in the final week rather than for an extension.
 - Shipyard 2026 was built for creators, not stores: apps shipped via "TestFlight or Google Play Internal Testing", with a "Demo video (2–3 minutes)", a "Written proposal (1–2 pages)" covering problem, solution, "Monetization strategy", and roadmap, plus "Technical documentation" and a "Developer bio" ([dp-shipyard]).
 - Shipyard's criteria were weighted: "Audience Fit (30%)", "User Experience (25%)", "Monetization Potential (20%)", "Innovation (15%)", "Technical Quality (10%)". Creators "review the top 10–15 submissions for their brief and select a winner" ([dp-shipyard]).
-- Shipyard prizes: "$20,000 per winning app" plus a "RevenueCat Runner-Up draw!"
-  of "$5,000 in cash" for "5 winners" among entries with "a full, eligible submission"; winners also got "Mention of winning submissions by creators on their channels" ([dp-shipyard]).
+- Shipyard prizes: "$20,000 per winning app" plus a "RevenueCat Runner-Up draw!" of "$5,000 in cash" for "5 winners" among entries with "a full, eligible submission"; winners also got "Mention of winning submissions by creators on their channels" ([dp-shipyard]).
 
 ### Judges who carry over to 2026
 
@@ -240,16 +239,12 @@ Connor Burd, Payout's builder and a 2026 judge:
 
 - He entered 2024 too: "I'm still salty that at the 2024 @RevenueCat ship-a-ton apps made 'over $40,000 in revenue' and I didn't place top 3 for Most Likely to Make Money Award with half of the total revenue coming from my app." ([connor-x-2024]) RevenueCat had framed that award as "this isn't just how much money did they make on launch because that's obviously a very short-term thing" (auto-captions) ([yt-ceremony-2024]).
 - Launch: "Payout launched in I guess a I think it was August 2nd, day two of the ship a ton" (auto-captions) ([yt-subclub-connor]); "Day 1 of new app ends at $290 MRR." ([connor-x-day1]).
-- His running claims on X: "Nice revenue building for Payout from exclusively organic posts. Time to start paid ads" (Aug 29, 2025) ([connor-x-organic]); "$10K MRR from an entirely AI generated app, built in 14 days" (Sep 7)
-  ([connor-x-10k]); "hits $20K MRR in 50 days. zero dollars in ad spend." (Sep 24) ([connor-x-20k]); "Now at 60K MRR in 4 months btw" (Dec 5) ([connor-x-60k]); and "Any app studios looking to acquire Payout?" at "$100K/mo" and "160,000+ installs" (Jan 21, 2026) ([connor-x-acquire]).
+- His running claims on X: "Nice revenue building for Payout from exclusively organic posts. Time to start paid ads" (Aug 29, 2025) ([connor-x-organic]); "$10K MRR from an entirely AI generated app, built in 14 days" (Sep 7) ([connor-x-10k]); "hits $20K MRR in 50 days. zero dollars in ad spend." (Sep 24) ([connor-x-20k]); "Now at 60K MRR in 4 months btw" (Dec 5) ([connor-x-60k]); and "Any app studios looking to acquire Payout?" at "$100K/mo" and "160,000+ installs" (Jan 21, 2026) ([connor-x-acquire]).
 - Distribution came from a creator partner. On RevenueCat's Sub Club Live: "our only distribution channel in the beginning was influencers"; the influencer, Casper Capital, is "my partner on the app", and "we're just equal partners 50/50 on the app" (auto-captions) ([yt-subclub-connor]). His studio's case study: "Casper Capital wanted to monetize his 10M+ audience with a finance app. We designed, built, and launched Payout in just two weeks." ([burd-case])
-- Paid ads came later and big: of a month he names as May, he says "we spent I think somewhere maybe around $150,000 on ads that month" (auto-captions)
-  ([yt-subclub-connor]). RevenueCat's promo for the episode: "grew Payout from
-  $0 to $80K MRR in 4 months" and "The contrarian take: paid channels matter more than UGC." ([subclub-x])
+- Paid ads came later and big: of a month he names as May, he says "we spent I think somewhere maybe around $150,000 on ads that month" (auto-captions) ([yt-subclub-connor]). RevenueCat's promo for the episode: "grew Payout from $0 to $80K MRR in 4 months" and "The contrarian take: paid channels matter more than UGC." ([subclub-x])
 - Monetization: "pretty much all of my apps are are hard paywall. I don't launch anything without it." (auto-captions) ([yt-subclub-connor]). On another podcast: "pretty much at maximum 15% of our revenue will come from Android" (interview on Superwall's channel, auto-captions) ([yt-superwall-connor]).
 - The co-founder's accounting: "$217k revenue / ~ $54k App + Play Store fees / ~ $26k marketing / + $65k Revenuecat grand prize / = $202k kept between me & cofounder (approx)" (Jan 2, 2026) ([casper-x-217k]).
-- Today his site says "Payout hit $100K MRR in 5 months, completely
-  bootstrapped, without hiring anyone" and "has now generated over $1M in revenue" ([busdownbonnor]).
+- Today his site says "Payout hit $100K MRR in 5 months, completely bootstrapped, without hiring anyone" and "has now generated over $1M in revenue" ([busdownbonnor]).
 
 Camilo Peñalver, Gurwi's founder and a 2026 judge:
 
@@ -257,10 +252,7 @@ Camilo Peñalver, Gurwi's founder and a 2026 judge:
 - "But the real traction came from the Spanish-speaking audience"; other creators' videos plus his pitch "added up to more than four million views" ([camilo-post]). English ads failed: "I spent $30 for only 542 impressions" (Sep 1, 2025) ([camilo-x-ads]).
 - The paywall change that mattered: "Inviting users optionally to subscribe after registration gave us 50 new trials in just one single day." (Sep 20, 2025) ([camilo-x-trials])
 - The win fed itself. "After winning I published a video announcing the victory", which reached a journalist at La W; the resulting video "surpassed 800,000 views" ([camilo-post]). By Nov 3, 2025: "We surpassed 25,000 users and climbed back to the top 2 on iOS in Colombia. We currently have 439 active trials and 319 subscriptions." ([camilo-x-25k])
-- "With all this impact, Gurwi achieved more than $19,000 dollars in sales in
-  2025 and more than 1,300 reviews with an average rating of 4.8 stars, despite
-  still being a project of promises, with only 5 classes"; his chart is
-  captioned "$12,322 dollars came in in November alone"; the figure "is what users paid and not what went into our pockets" ([camilo-post]).
+- "With all this impact, Gurwi achieved more than $19,000 dollars in sales in 2025 and more than 1,300 reviews with an average rating of 4.8 stars, despite still being a project of promises, with only 5 classes"; his chart is captioned "$12,322 dollars came in in November alone"; the figure "is what users paid and not what went into our pockets" ([camilo-post]).
 - Then: "Gurwi won us $15,000 at the Shipaton and went on to make over $22,000 in sales. But I had lost faith in the project." (Jun 6, 2026) ([camilo-x-22k]). He later won a Shipyard runner-up prize with Clatri ([camilo-x-clatri]).
 
 Other judges:
@@ -289,19 +281,11 @@ The repo notes already cover these interviews' posting cadence; the details belo
 
 - ReadHim's video: "within just 10 days post launch, we generated nearly 6 million organic views for our app and crossed over $1,000 in monthly recurring revenue"; "neither Joseph nor I are an iOS pro. I build software for drones, and Joseph sells ice machines on Tik Tok shop" (auto-captions) ([yt-readhim]).
 - Shutter Declutter's video: "I did a preorder system to get some initial downloads. I put up signs in the city… Since the launch, I was featured on The Verge. I started posting on social media regularly and even went viral a few times." ([yt-shutter])
-- Voicetree's blog post, the one judges praised, shows the OneSignal setup: segments keyed to RevenueCat states such as "[RC] Cancelled Trial"; a feedback email that unlocks "an extended paid trial ($5 for the first month)"; "a
-  discounted offer for the next year" for churned users; and a push prompt only
-  after "more than 3 sessions" ([rsapps-blog]). It promised "In the next post,
-  we'll be sharing metrics, results, and iterations"; that post has not appeared
-  ([rsapps-blog]). The press kit lists "weekly(~$4.99), monthly (~$14.99),
-  yearly (~69.99$)" and "a small team of 2 mobile developers based in Tallinn, Estonia" ([rsapps-press]).
+- Voicetree's blog post, the one judges praised, shows the OneSignal setup: segments keyed to RevenueCat states such as "[RC] Cancelled Trial"; a feedback email that unlocks "an extended paid trial ($5 for the first month)"; "a discounted offer for the next year" for churned users; and a push prompt only after "more than 3 sessions" ([rsapps-blog]). It promised "In the next post, we'll be sharing metrics, results, and iterations"; that post has not appeared ([rsapps-blog]). The press kit lists "weekly(~$4.99), monthly (~$14.99), yearly (~69.99$)" and "a small team of 2 mobile developers based in Tallinn, Estonia" ([rsapps-press]).
 - Tomo Japan's three Medium posts: "I finished barely a week before the final deadline" and was "hoping to get hired as an iOS Engineer soon (and I did, shortly after, thanks in part to the hackathon!)" ([tomo-medium-1]); "My monetization strategy is simple: offer a Tomo Lifetime Pro User upgrade" ([tomo-medium-2]); "it was the Twitter community that pointed me toward Supabase", and "I managed three distinct accounts" on TikTok ([tomo-medium-3]).
 - Echo Reminder: an April 2026 update says "The first thing I want to try out is App Store search optimization" and "second thing is I do want to try UGC uh TikTok marketing" (auto-captions) ([yt-echo-update]); the app is no longer listed ([as-echo]).
 - Friendy+ explained its 3rd place in a Mandarin video: judges from marketing and developer relations "想要故事" ("want stories"); "我不覺得我們的 App 有什麼酷炫之處" ("I don't think our app has anything flashy"); and "最後其實是 800 多組 然後評審就才十幾個" ("in the end there were 800-some entries and only a dozen or so judges") (auto-captions; my translation) ([yt-friendy-win]). The six-part build series is a public playlist ([yt-friendy-playlist]).
-- Camp Notes' blog: "placed 5th… winning $5,000"; "The Build in Public award…
-  might have been a better fit" ([jw-5th]); "I've only had 4 users start a trial
-  since I launched on September 6th" ([jw-paywall]); a month-one table shows
-  Camp Notes at "4" subscribers and "$10" MRR ([jw-month1]).
+- Camp Notes' blog: "placed 5th… winning $5,000"; "The Build in Public award… might have been a better fit" ([jw-5th]); "I've only had 4 users start a trial since I launched on September 6th" ([jw-paywall]); a month-one table shows Camp Notes at "4" subscribers and "$10" MRR ([jw-month1]).
 - MaestLog's talk slides say "短期間(3週間)のAIでの開発が評価された" ("building with AI in a short time, three weeks, is what was recognized") and "モバイルアプリ開発経験なし" ("no mobile app development experience") ([oikon-deck]).
 - MemoLune's builder, on note.com: "応募したのは2週間前" ("I applied only two weeks before") ([note-memolune-1]) and "辛うじて賞はもらえたものの、商用アプリの壁は、想像したよりも、ずっと高かった" ("I barely won a prize, but the wall for a commercial app was far higher than I imagined") ([note-memolune-2]).
 - Momental: "Day 4: Momental is now available on the Google Play Store"; "I've never released an app so quickly and with so few features." ([krueger-bsky]). Its changelog adds "Faster paywall load times and a simpler upgrade screen" (v2.0.0, May 2026) and "Tinnitus Relief" (v2.3.0, June 2026) ([momental-changelog]). JetBrains quotes him: "Sharing one codebase for Android and iOS gave me so much more time to focus on user feedback" ([jetbrains-blog]).
@@ -412,8 +396,7 @@ Each bullet is my synthesis from the evidence cited above; each category opens w
 
 - Synthesis: the winning write-up led with post-launch numbers across users, revenue, paid subscriptions, and reach: "17,000+ users", "$30,017 revenue", "1750+ paid subscriptions", "500,000 X impressions about the app" ([dp-payout]).
 - Synthesis: it shipped fast and then worked pricing and search: "Shipped v1 in 10 days", "A/B testing pricing", and "high value keywords" ([dp-payout]). Its listing now shows ten price points from $4.99 to $59.99, most labeled weekly or annual ([as-payout]).
-- Synthesis: the other big 2025 traction claims won growth-flavored categories: ReadHim's "$1100 in Monthly Recurring Revenue" and Shutter Declutter's "over
-  1,000 paying subscribers" (Buzziest Launch), and Voicetree's "about $2k in revenue" (OneSignal Boost) ([dp-readhim]; [dp-shutter]; [dp-voicetree]).
+- Synthesis: the other big 2025 traction claims won growth-flavored categories: ReadHim's "$1100 in Monthly Recurring Revenue" and Shutter Declutter's "over 1,000 paying subscribers" (Buzziest Launch), and Voicetree's "about $2k in revenue" (OneSignal Boost) ([dp-readhim]; [dp-shutter]; [dp-voicetree]).
 - Synthesis: the winner had distribution before it had an app: an influencer co-founder, "our only distribution channel in the beginning", then paid ads ([yt-subclub-connor]); RevenueCat's ceremony credited shipping "right away" plus "paid marketing" ([yt-ceremony-2025]).
 - Synthesis: revenue earns a shortlist, not the prize: "based on the revenue we build a short list of the apps that we then judge in the final stage" ([yt-howtowin]). In 2024 Connor's app did not place in the money award despite, by his account, "half of the total revenue" ([connor-x-2024]).
 - Synthesis: the momentum lasted. Payout has 11,329 US ratings and "100K+" Play downloads a year later ([as-payout]; [gp-payout]), and its builder now judges ([dp-2026]).
@@ -434,8 +417,7 @@ Each bullet is my synthesis from the evidence cited above; each category opens w
 2026 wants "a well-crafted paywall, thoughtful pricing and packaging, strong conversion, and monetization that genuinely fits the product" ([rc-cat-hamm]); precedents are 2025's HAMM and 2024's Most Likely to Make Money.
 
 - Synthesis: each winner had a one-line model story tied to its purpose: Vector Guard's "1:50 Justice Model" ([dp-vectorguard]); Napkinmatic's credits, coins, and subscriptions, with coins earned by sharing ([dp-napkinmatic]); Karo's gated collaboration and AI behind a Blinkist-style paywall ([rc-2024-winners]).
-- Synthesis: entry prices were concrete and low: "$2.99" for Vector Guard
-  ([dp-vectorguard]) and "$1.99/month, $0.99/week or a $19.99 lifetime option" for Zerocam Mono ([rc-2024-winners]).
+- Synthesis: entry prices were concrete and low: "$2.99" for Vector Guard ([dp-vectorguard]) and "$1.99/month, $0.99/week or a $19.99 lifetime option" for Zerocam Mono ([rc-2024-winners]).
 - Synthesis: no 2025 HAMM winner's public write-up cites revenue, and Kigaru's never discusses pricing ([dp-kigaru]), so the model was likely argued in the private form fields (see [Gaps](#gaps)).
 - Synthesis: paywall tactics from other winners fit HAMM's wording: goal-specific paywall copy (SkillMe, [dp-skillme]); a trial in onboarding plus "a 50% off offer" win-back (Remy, [dp-remy]); a paywall right after sign-up, which "gave us 50 new trials in just one single day" (Gurwi, [dp-gurwi]; [camilo-x-trials]); a hard paywall on every app (Payout's builder, [yt-subclub-connor]); and Remote Config experiments (Friendy+, [dp-friendy]).
 
@@ -509,8 +491,7 @@ Both sides are quoted; none of these changes a 2026 rule.
 - 2024 deadline. The announcement said submissions closed "September 18th" ([rc-2024-announce]); the rules say "Thursday, September 19, 2024 (11:45 pm Pacific Time)" ([dp-2024-rules]). An update explains the change: "we're extending the deadline for submissions by 1 extra day!" ([dp-2024-updates]).
 - 2024 participation prize. The overview lists "Participation Prize 500 winners" ([dp-2024]); the rules list "Exclusive swag" with a quantity of "100" ([dp-2024-rules]).
 - 2025 Grand Prize criteria. Devpost: "Goes to the app that releases early and iterates to grow their app the fastest" ([dp-2025]). The winners post: "Innovation", "Execution", "Feasibility", "Integration" ([rc-2025-winners]).
-- 2025 prize amounts and naming. The overview's "All Other Categories (except OneSignal Boost)" pays "1st Place: $15,000", but the prize list pays the "1st
-  Place: Kotlin Multiplatform Reach Award" "$20,000 in cash", with five places like OneSignal ([dp-2025]). The same page calls it both "Kotlin Multiplatform Boost Award" and "Kotlin Multiplatform Reach Award" ([dp-2025]).
+- 2025 prize amounts and naming. The overview's "All Other Categories (except OneSignal Boost)" pays "1st Place: $15,000", but the prize list pays the "1st Place: Kotlin Multiplatform Reach Award" "$20,000 in cash", with five places like OneSignal ([dp-2025]). The same page calls it both "Kotlin Multiplatform Boost Award" and "Kotlin Multiplatform Reach Award" ([dp-2025]).
 - Shipyard size. "more than 900 builders" ([rc-shipyard-winners]) and "900+ builders" ([rc-x-shipyard]) versus "almost 900 submissions" ([dp-shipyard-update]), a gallery of "857" ([dp-shipyard-gallery]), and "7057" participants ([dp-shipyard]).
 - Shipyard runner-up prizes. Devpost calls them a "RevenueCat Runner-Up draw!" that eligible entries are "entered into" ([dp-shipyard]); the winners update says "Selected from the judge and creators' shortlist, these five participants have won $5,000" ([dp-shipyard-update]), and Camilo wrote that Clatri "was selected" ([camilo-x-clatri]).
 - Shipyard brief 7. "Josh from VisualFaktory" ([rc-shipyard-winners]) and "Josh (VisualFaktory)" ([dp-shipyard]) versus the prize "Creator Brief - Josh @VisualPolitik/VisualEconomic" ([dp-shipyard]) and the rules' "Creator Brief VisualPolitik / VisualEconomik (#7)" ([dp-shipyard-rules]).
@@ -521,10 +502,8 @@ Both sides are quoted; none of these changes a 2026 rule.
 - Remy Reminders' first release. The write-up says "there is currently an iOS version that's live on the App Store, which is version 1.0.0" ([dp-remy]); the current listing's history starts with 1.0.0 on Mar 9, 2026, under "Sam Beckman Pty Ltd" ([as-remy]). Synthesis: the app was probably republished under the creator's account.
 - How Payout was built. The write-up: "entirely written using Claude Code and Cursor" and "Shipped v1 in 10 days" ([dp-payout]). Connor on X: "built in 14 days" (Sep 7, 2025) ([connor-x-10k]) and "built in 10 days, vibecoded with GPT 4.1" (May 9, 2026) ([connor-x-gpt]); his studio: "launched Payout in just two weeks" ([burd-case]).
 - Payout's ad spend. "Time to start paid ads" (Aug 29, 2025) ([connor-x-organic]) versus "zero dollars in ad spend" (Sep 24, 2025) ([connor-x-20k]); at the ceremony RevenueCat credited "a whole bunch of different paid marketing uh campaigns" (auto-captions) ([yt-ceremony-2025]), while Connor later said "our only distribution channel in the beginning was influencers" (auto-captions) ([yt-subclub-connor]).
-- Vector Guard's price. "$2.99 premium subscription" ([rc-2025-winners];
-  [dp-vectorguard]) and "($2.99 a month)" ([ento-today]) versus today's listing, "Premium Monthly $4.99" and "Premium Annual $39.99" ([as-vectorguard]).
-- Zerocam Mono's prices. "$1.99/month, $0.99/week or a $19.99 lifetime option"
-  in 2024 ([rc-2024-winners]) versus four items from $1.99 to $26.00 on today's listing ([as-zerocam]).
+- Vector Guard's price. "$2.99 premium subscription" ([rc-2025-winners]; [dp-vectorguard]) and "($2.99 a month)" ([ento-today]) versus today's listing, "Premium Monthly $4.99" and "Premium Annual $39.99" ([as-vectorguard]).
+- Zerocam Mono's prices. "$1.99/month, $0.99/week or a $19.99 lifetime option" in 2024 ([rc-2024-winners]) versus four items from $1.99 to $26.00 on today's listing ([as-zerocam]).
 - Crystal Abyss's monetization. "RevenueCat for monetization and premium level unlocking" ([dp-crystalabyss]) versus "No ads, no in-app purchases" ([crystal-site]); the listing shows "Free" ([as-crystalabyss]).
 - MaestLog's monetization. "Premium subscribers monthly access an expanding feature set" ([dp-maestlog]) versus a single "Ad Removal $2.99" item today ([as-maestlog]).
 - How judges review. RevenueCat: "Reviewing means going through submission videos and descriptions, and downloading and testing the apps." ([rc-judge-2026]). A 2025 winner's guess: "他們可能基本上就是不會下載 就是看一下你的影片" ("they probably basically won't download; they'll just watch your video") (auto-captions) ([yt-friendy-win]).

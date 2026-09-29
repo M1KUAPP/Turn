@@ -565,8 +565,7 @@ What each item needs, from the sections above; "Not stated" means no source cove
 - **Model languages.** Apple's AFM 3 post evaluates locales it calls "our remaining supported global locales", where "AFIHHMPRTU refers to Arabic, Finnish, Indonesian, Hebrew, Hindi, Malay, Polish, Russian, Thai, and Ukrainian." ([ml-afm3]) None of those ten is among the 16 languages that Apple Intelligence lists for users ([nr-ios27]).
 - **Simulator audio.** Expo lists "Audio Input" as unavailable in the Simulator ([expo-ios-sim]), Xcode lets a simulator use the Mac's microphone ([xcode-sim-env]), and the `expo-speech-recognition` maintainer says recognition fails on iOS 26.4 simulators but "You can use an older simulator (v26.0 / v26.1) which should work okay." ([gh-expo-speech-145])
 - **Package minimums.** `@react-native-ai/apple` requires "iOS 26+" as a whole ([gh-rn-ai-apple]), while its embeddings page asks only for iOS 17 ([gh-rn-ai-embeddings]).
-- **Workers AI prices.** The pricing page rounds Whisper to "$0.0005" per
-  audio minute ([cf-ai-pricing]), while the model page gives "$0.000453 per audio minute" ([cf-whisper]).
+- **Workers AI prices.** The pricing page rounds Whisper to "$0.0005" per audio minute ([cf-ai-pricing]), while the model page gives "$0.000453 per audio minute" ([cf-whisper]).
 - **GenAI API stability.** The ML Kit GenAI terms bar services marked "Preview" or "Experimental Access" from production ([mlkit-genai-terms]), while the APIs are labeled beta or alpha ([mlkit-prompt]; [mlkit-speech]); no page says whether those labels count.
 - **Jev latency.** The Jev notes list TypeSafe's three figures, "about 100 ms", "150ms", and "70ms-500ms" ([jev-conflicts]).
 

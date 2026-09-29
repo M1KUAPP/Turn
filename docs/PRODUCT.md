@@ -64,8 +64,7 @@ For adults who can't rely on speech, and the people they talk with, Turn is the 
 
 The alternatives, and how Turn differs from each; the [evidence notes][ev-rivals] have the prices, ratings, and quotes:
 
-- **Text AAC apps with saved phrases,** such as Proloquo4Text at $119.99 and
-  Predictable at $159.99, speak typed text and saved phrases with prediction from the user's typing. None ranks phrases by what the partner just said; Turn adds the partner's line as context.
+- **Text AAC apps with saved phrases,** such as Proloquo4Text at $119.99 and Predictable at $159.99, speak typed text and saved phrases with prediction from the user's typing. None ranks phrases by what the partner just said; Turn adds the partner's line as context.
 - **Apple's Live Speech** is free and built in: it speaks typed text and saved phrases, in Personal Voice too. Turn is for the moments when typing or scrolling is too slow for the conversation.
 - **Rejoin Voice,** the closest rival, released July 12, 2026, listens and offers three generated replies, "written in your style"; speech is free, and listening costs $12.99 a month or $99.99. Turn offers only phrases the user saved, and sells listening once.
 - **Vocable AAC** listens to caregivers and offers generated responses, for free. **Spoken** tailors AI word prediction to the people and places a user names. Both write words the user didn't save.

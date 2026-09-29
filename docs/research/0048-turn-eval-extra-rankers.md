@@ -36,8 +36,7 @@ Contents:
 - **Score, per FlagEmbedding.** The `AbsReranker` constructor takes `normalize: bool = False`, "If true, normalize the result.", and its `max_length` ("Maximum length.") defaults to 512 ([fe-abs]). The encoder-only reranker's `compute_score_single_gpu` then runs `if normalize: all_scores = [sigmoid(score) for score in all_scores]` ([fe-base]).
 - **Limits.** The model's JSON lists only a price, with no `context_window` or `max_input_tokens` ([cf-rr-json]). Its task is "Text Classification" ([cf-rr-json]), and "Rate limits are default per task type"; text classification allows "2000 requests per minute" ([cf-limits]).
 - **Price.** "$0.00311 per M input tokens" ([cf-rr]).
-- Synthesis: one call with 40 short phrases is about 1,000 tokens if each pair counts as line plus phrase, or $0.000003. Even at 512 tokens a pair,
-  40 pairs cost $0.00006, and 80 lines under $0.01.
+- Synthesis: one call with 40 short phrases is about 1,000 tokens if each pair counts as line plus phrase, or $0.000003. Even at 512 tokens a pair, 40 pairs cost $0.00006, and 80 lines under $0.01.
 - Synthesis: a sigmoid can't change the ranking, and the cross-validated hold cut-off works on either scale if the scale stays fixed. Record whether any score falls outside [0, 1], which would show raw logits. Sort by `score` yourself, map `id` back to the phrase, and fail unless each index from 0 to n - 1 appears once.
 
 [cf-rr]: https://developers.cloudflare.com/workers-ai/models/bge-reranker-base/
