@@ -19,6 +19,9 @@ export function permissionDateText(permissionDate: string | null): string | unde
   return parts ? new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString() : undefined
 }
 
+// PAY-1's free partner lines for each app user ID.
+const freeLineAllowance = 20
+
 // Plan 0044's line under "Listen mode is unlocked." (frame 28).
 const unlockedDetail = 'Turn Listen is yours on this phone. Speaking stays free, as always.'
 
@@ -216,17 +219,6 @@ export default function SettingsScreen() {
         <GroupHeader title="Your words" boldText={boldText} />
         <ListGroup>
           <ListRow
-            label="Phrase bank"
-            boldText={boldText}
-            symbol="text.book.closed"
-            tone={{ fill: categoryColors.feelings.fill, ink: categoryColors.feelings.edge }}
-            value={counts ? String(counts.phrases) : undefined}
-            accessibilityLabel="Phrase bank"
-            accessibilityValue={counts ? `${counts.phrases} phrases` : undefined}
-            chevron
-            onPress={() => router.push('/bank')}
-          />
-          <ListRow
             label="Places"
             boldText={boldText}
             symbol="mappin.and.ellipse"
@@ -236,6 +228,17 @@ export default function SettingsScreen() {
             accessibilityValue={counts ? `${counts.places} places` : undefined}
             chevron
             onPress={() => router.push('/settings/places')}
+          />
+          <ListRow
+            label="Phrase bank"
+            boldText={boldText}
+            symbol="text.book.closed"
+            tone={{ fill: categoryColors.feelings.fill, ink: categoryColors.feelings.edge }}
+            value={counts ? String(counts.phrases) : undefined}
+            accessibilityLabel="Phrase bank"
+            accessibilityValue={counts ? `${counts.phrases} phrases` : undefined}
+            chevron
+            onPress={() => router.push('/bank')}
           />
         </ListGroup>
       </View>
@@ -250,6 +253,11 @@ export default function SettingsScreen() {
               label="Unlock Listen mode"
               boldText={boldText}
               symbol="lock.fill"
+              subtitle={
+                typeof purchasesState.freeLinesLeft === 'number'
+                  ? `${purchasesState.freeLinesLeft} of ${freeLineAllowance} free lines left`
+                  : undefined
+              }
               chevron
               disabled={busy}
               accessibilityHint="Opens Turn Listen"
@@ -320,8 +328,7 @@ export default function SettingsScreen() {
             label="Erase all data"
             boldText={boldText}
             symbol="trash"
-            tone={tileTones.danger}
-            destructive
+            tone={tileTones.neutral}
             onPress={eraseEverything}
           />
         </ListGroup>

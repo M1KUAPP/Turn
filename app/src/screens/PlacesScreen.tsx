@@ -231,9 +231,7 @@ export default function PlacesScreen() {
             )}
           </ScrollView>
           <SheetActions>
-            {editor?.id ? (
-              <Button variant="destructive" label="Delete" boldText={boldText} onPress={confirmDelete} />
-            ) : null}
+            {editor?.id ? <Button label="Delete" boldText={boldText} onPress={confirmDelete} /> : null}
             <Button
               variant="primary"
               label="Save"
