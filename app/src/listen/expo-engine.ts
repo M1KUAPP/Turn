@@ -141,6 +141,8 @@ export function createExpoEngine(
       lastVoiceActive = isVoiceActive
       currentEvents.onVoice(isVoiceActive)
     }
+    // The module reports -2 to 10, where below 0 is inaudible, so 0 to 10 becomes the level's 0 to 1.
+    currentEvents.onLevel(Math.min(1, Math.max(0, event.value / 10)))
   })
 
   module.addListener('error', (event) => {
