@@ -34,11 +34,11 @@ beforeAll(async () => {
 })
 
 /** The report's section under a heading, up to the next heading of the same level or higher. */
-const section = (heading: string) => {
+const section = (heading: string, text = report) => {
   const level = heading.indexOf(' ')
-  const start = report.indexOf(`\n${heading}\n`)
+  const start = text.indexOf(`\n${heading}\n`)
   expect(start, heading).toBeGreaterThanOrEqual(0)
-  const rest = report.slice(start + heading.length + 2)
+  const rest = text.slice(start + heading.length + 2)
   const end = rest.search(new RegExp(`^#{1,${level}} `, 'm'))
   return end < 0 ? rest : rest.slice(0, end)
 }
@@ -298,27 +298,30 @@ test('lists the five cut-offs of each ranker whose scores need one, each chosen 
   expect(report).toContain('1.  [The cut-offs for holding](#the-cut-offs-for-holding)')
 })
 
-test('lists every big button on a yes-or-no, pain, or consent line, and whether it was right (EVAL-5)', () => {
-  const shown = section('## Big buttons on yes-or-no, pain, and consent lines')
-  // The stand-in calls fixture-2 an open question and scores the phrase sharing "hurt" 0.9; on the yes-or-no lines it
-  // brings the fixed buttons instead, and no other ranker shows a big button.
-  expect(shown).toMatch(prose('or on one about pain or consent, in any of its answers (EVAL-5): 1, 1 of them wrong.'))
-  expect(cells(shown, 'jev')).toEqual([
-    'fixture-2',
-    'Where does it hurt the most?',
-    'Is this going to hurt?',
-    'wrong',
-    '4 of 4'
-  ])
-})
-
-test("escapes a pipe in a line's text, so the big buttons' table keeps its columns", async () => {
+/** Reports on fixture-2, the pain line, alone, with its text replaced. */
+async function reportOnPainLine(text: string) {
   const dir = mkdtempSync(join(tmpdir(), 'turn-eval-'))
-  const pain = readFileSync(fixture, 'utf8').split('\n')[1].replace('hurt the most', 'hurt | the most')
+  const pain = readFileSync(fixture, 'utf8').split('\n')[1].replace('Where does it hurt the most?', text)
   writeFileSync(join(dir, 'lines.jsonl'), pain)
   fakeServices()
   await main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
-  expect(readFileSync(join(dir, 'results.md'), 'utf8')).toContain('| Where does it hurt \\| the most? |')
+  return readFileSync(join(dir, 'results.md'), 'utf8')
+}
+
+test('lists every big button on a yes-or-no, pain, or consent line, and whether it was right (EVAL-5)', async () => {
+  // The stand-in scores 0.9 each phrase sharing a word with the line. On the fixture's lines, phrases sharing "the" or
+  // "does" tie, so no big button leads by the margin (ROW-3).
+  expect(section('## Big buttons on yes-or-no, pain, and consent lines')).toMatch(
+    prose('No ranker showed a big button on a line its writer marked yes-or-no, or on one about pain or consent')
+  )
+  // Only "Is this going to hurt?" shares a word with "Hurt?", so it leads, and the stand-in calls the line open.
+  const shown = section('## Big buttons on yes-or-no, pain, and consent lines', await reportOnPainLine('Hurt?'))
+  expect(shown).toMatch(prose('or on one about pain or consent, in any of its answers (EVAL-5): 1, 1 of them wrong.'))
+  expect(cells(shown, 'jev')).toEqual(['fixture-2', 'Hurt?', 'Is this going to hurt?', 'wrong', '4 of 4'])
+})
+
+test("escapes a pipe in a line's text, so the big buttons' table keeps its columns", async () => {
+  expect(await reportOnPainLine('Hurt? | Ow.')).toMatch(/\| Hurt\? \\\| Ow\. +\|/)
 })
 
 test("gives Jev's question kind against its writer's, as accuracy and a confusion matrix", () => {
