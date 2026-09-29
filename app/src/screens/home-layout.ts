@@ -5,7 +5,7 @@ export function homeLayout(width: number, height: number, fontScale: number) {
   const rowGap = short ? 8 : 12
   const slotHeight = Math.max(
     short ? 64 : 78,
-    Math.ceil(2 * (short ? 22 : 25) * Math.min(fontScale, 2.6) + (short ? 20 : 24))
+    Math.ceil(2 * (short ? 22 : 27) * Math.min(fontScale, 2.6) + (short ? 20 : 24))
   )
   // Short screens below AX1 give the caption one 48-point line, the grid 8 points between buttons, and the tabs no
   // margins, so the grid's first row is on screen at launch (SPEAK-1).

@@ -236,11 +236,7 @@ export default function SettingsScreen() {
     >
       {sections.map((section) => (
         <View key={section.title} style={{ gap: 8 }}>
-          <TurnText
-            kind="subheadline-emphasized"
-            boldText={boldText}
-            style={{ color: colors['ink-secondary'], marginLeft: 16 }}
-          >
+          <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 16 }}>
             {section.title}
           </TurnText>
           <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
@@ -309,7 +305,7 @@ export default function SettingsScreen() {
                         {row.label}
                       </TurnText>
                       {row.value && (
-                        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                           {row.value}
                         </TurnText>
                       )}
@@ -381,7 +377,7 @@ export default function SettingsScreen() {
                       {row.label}
                     </TurnText>
                     {row.value && (
-                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                         {row.value}
                       </TurnText>
                     )}
@@ -396,7 +392,7 @@ export default function SettingsScreen() {
             })}
           </View>
           {section.note && (
-            <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 16 }}>
+            <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 16 }}>
               {section.note}
             </TurnText>
           )}

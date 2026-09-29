@@ -28,7 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-audio',
     'expo-secure-store',
     ['expo-build-properties', { ios: { enableSceneSupport: true } }],
-    ['./plugins/withBoardSplash', { backgroundColor: '#F2F2F7' }],
+    ['./plugins/withBoardSplash', { backgroundColor: '#F4EFE7' }],
     [
       'expo-speech-recognition',
       {
@@ -38,7 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           "Turn uses speech recognition only in Listen mode, after your partner agrees, to turn their words into text when this iPhone can't do it by itself."
       }
     ],
-    ['expo-splash-screen', { backgroundColor: '#F2F2F7', dark: { backgroundColor: '#000000' } }]
+    ['expo-splash-screen', { backgroundColor: '#F4EFE7', dark: { backgroundColor: '#15120F' } }]
   ],
   extra: {
     relayUrl: process.env.EXPO_PUBLIC_RELAY_URL ?? 'https://turn-relay.m1ku-turn.workers.dev',
