@@ -52,10 +52,7 @@ name: Voice
     text: Samantha
     selected: true
 - takeScreenshot: voice-samantha-selected
-- swipe:
-    start: '1%, 50%'
-    end: '80%, 50%'
-- waitForAnimationToEnd
+# The speech rate sits on the Voice screen, under the voices.
 - scrollUntilVisible:
     element: Slowest
 - tapOn: Slowest
@@ -114,6 +111,8 @@ name: Voice
 - scrollUntilVisible:
     element: '.*Voice, Samantha.*'
 - assertVisible: '.*Voice, Samantha.*'
+- tapOn: '.*Voice, Samantha.*'
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Fastest
 - assertVisible:

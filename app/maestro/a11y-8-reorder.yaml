@@ -16,6 +16,8 @@ name: Phrase bank reorder controls
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
 - waitForAnimationToEnd
+# The categories' Move buttons show in edit mode.
+- tapOn: Edit
 - scrollUntilVisible:
     element:
       text: Move down
@@ -89,17 +91,16 @@ name: Phrase bank reorder controls
     text: I have something to say
     above: "I don't know"
 - takeScreenshot: a11y-8-reorder-phrase-moved
+# Add phrase sits in the bar, so the nearest Move up under the phrase is its own.
 - scrollUntilVisible:
     element:
       text: Move up
       below: "I don't know"
-      above: Add phrase
     direction: DOWN
     speed: 10
 - tapOn:
     text: Move up
     below: "I don't know"
-    above: Add phrase
 - scrollUntilVisible:
     element:
       text: "I don't know"
