@@ -27,8 +27,8 @@ type Props = {
   fontScale: number
   boldText: boolean
   reduceMotion: boolean
-  // The partner's voice is on, which the meter follows.
-  voice: boolean
+  // The partner's loudness, 0 to 1, which the meter follows.
+  level: number
   model: { progress: number; secondsLeft: number | null } | null
   onType: (() => void) | null
   onDone: () => void
@@ -179,10 +179,10 @@ function Bar({ level }: { level: SharedValue<number> }) {
   return <Animated.View style={[{ width: 3, borderRadius: 1.5, backgroundColor: colors.listen }, style]} />
 }
 
-// The meter (plan 0044's motion): the session reports whether the partner's voice is on, not its level, so while it's
-// on the five bars spring toward varied heights 15 times a second, and they settle flat when it stops. The heights
-// live in shared values, so the meter never re-renders React.
-function Meter({ voice }: { voice: boolean }) {
+// The meter (plan 0044's motion): the five bars spring to the partner's level each time the session publishes it, up to
+// ten times a second, each to its own share of the height, and settle flat in silence. An engine that measures no level
+// leaves them flat. Reduce Motion hides the meter.
+function Meter({ level }: { level: number }) {
   const bars = [
     useSharedValue(FLAT),
     useSharedValue(FLAT),
@@ -191,25 +191,11 @@ function Meter({ voice }: { voice: boolean }) {
     useSharedValue(FLAT)
   ]
   useEffect(() => {
-    if (!voice) {
-      bars.forEach((bar) => {
-        bar.value = withSpring(FLAT, spring)
-      })
-      return
-    }
-    let tick = 0
-    const step = () => {
-      bars.forEach((bar, index) => {
-        const swing = (Math.sin(tick * 1.3 + index * 2.1) + 1) / 2
-        bar.value = withSpring(FLAT + (METER_HEIGHT - FLAT) * peaks[index] * (0.35 + 0.65 * swing), spring)
-      })
-      tick += 1
-    }
-    step()
-    const timer = setInterval(step, 1000 / 15)
-    return () => clearInterval(timer)
+    bars.forEach((bar, index) => {
+      bar.value = withSpring(FLAT + (METER_HEIGHT - FLAT) * peaks[index] * level, spring)
+    })
     // The five shared values are stable for the meter's life.
-  }, [voice])
+  }, [level])
   return (
     <View accessible={false} style={{ flexDirection: 'row', alignItems: 'center', gap: 2.5, height: METER_HEIGHT }}>
       {bars.map((bar, index) => (
@@ -227,7 +213,7 @@ export default function Caption({
   fontScale,
   boldText,
   reduceMotion,
-  voice,
+  level,
   model,
   onType,
   onDone,
@@ -377,7 +363,7 @@ export default function Caption({
             {view.label}
           </TurnText>
         )}
-        {view.lineOpen && !reduceMotion && <Meter voice={voice} />}
+        {view.lineOpen && !reduceMotion && <Meter level={level} />}
       </View>
       <View style={{ marginTop: 4 }}>
         <CaptionWords
