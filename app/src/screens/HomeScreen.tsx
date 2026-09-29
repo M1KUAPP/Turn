@@ -466,7 +466,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             fontScale={fontScale}
             boldText={boldText}
             reduceMotion={reduceMotion}
-            voice={listening.voiceActive}
+            level={listening.inputLevel}
             model={model}
             onType={listening.active ? () => setComposerMode('partner') : null}
             onDone={() => void listen.endLine()}

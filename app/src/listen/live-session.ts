@@ -5,6 +5,8 @@ import type { TurnListen } from '../../../modules/turn-listen/src'
 import type { StatsStore } from '../stats/store'
 
 export const SILENCE_WINDOW_MS = 500
+// The input level reaches the snapshot at most this often, as fast as the recognizer measures it.
+const LEVEL_INTERVAL_MS = 100
 const CAPTION_EXPIRY_MS = 120_000
 
 /** Whether a line holds a letter or a digit: the transcriber can hear a lone "." in a silence, which is no line. */
@@ -32,8 +34,9 @@ export type LiveListenSnapshot = TypedListenState & {
   phase: EngineState
   assetProgress: number | null
   rankedOnce: boolean
-  /** True while the engine hears the partner's voice above the silence level, which the caption's meter follows. */
-  voiceActive: boolean
+  /** The partner's loudness, 0 to 1, while the engine listens and measures it, which the caption's meter follows. The
+   * expo-speech-recognition engine measures it; Turn's own engine and typed Listen mode don't, so it stays 0. */
+  inputLevel: number
 }
 
 export function createLiveListenSession(options: {
@@ -65,6 +68,8 @@ export function createLiveListenSession(options: {
   let openLineWords = ''
   let lineConsumed = false
   let voiceActive = false
+  let inputLevel = 0
+  let levelAt = Number.NEGATIVE_INFINITY
   let ignoreNextEngineLine = false
   let engineInitialized = false
   let engineCapturing = false
@@ -109,9 +114,12 @@ export function createLiveListenSession(options: {
     accessibilityLabel: captionWords || captionLabel
   })
 
+  // Only while the engine listens; a paused, stopped, or failed engine shows silence.
+  const level = () => (typedState.active && engineCapturing && phase === 'listening' ? inputLevel : 0)
+
   const publish = () => {
     if (disposed) return
-    snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce, voiceActive }
+    snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce, inputLevel: level() }
     for (const listener of listeners) listener()
   }
 
@@ -161,6 +169,7 @@ export function createLiveListenSession(options: {
     openLineWords = ''
     lineConsumed = false
     voiceActive = false
+    inputLevel = 0
     ignoreNextEngineLine = false
     lineEnding = null
     captionLabel = listenStrings.off
@@ -362,9 +371,7 @@ export function createLiveListenSession(options: {
     },
     onVoice(active) {
       if (disposed || !typedState.active || !engineCapturing) return
-      const changed = voiceActive !== active
       voiceActive = active
-      if (changed) publish()
       if (active) {
         if (!lineOpen) {
           lineConsumed = false
@@ -379,6 +386,14 @@ export function createLiveListenSession(options: {
           void endOpenLine().catch(() => setUnavailable())
         }, SILENCE_WINDOW_MS)
       }
+    },
+    onLevel(next) {
+      if (disposed || !typedState.active || !engineCapturing || phase !== 'listening') return
+      const at = now()
+      if (next === inputLevel || at - levelAt < LEVEL_INTERVAL_MS) return
+      inputLevel = next
+      levelAt = at
+      publish()
     }
   }
 
@@ -388,7 +403,7 @@ export function createLiveListenSession(options: {
     publish()
   })
 
-  snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce, voiceActive }
+  snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce, inputLevel: level() }
 
   return {
     ready: typed.ready,
@@ -411,6 +426,7 @@ export function createLiveListenSession(options: {
       lineOpen = false
       lineConsumed = false
       voiceActive = false
+      inputLevel = 0
       ignoreNextEngineLine = false
       captionLabel = listenStrings.listening
       captionWords = ''
@@ -491,6 +507,7 @@ export function createLiveListenSession(options: {
       lineEnding = null
       openLineWords = ''
       voiceActive = false
+      inputLevel = 0
       ignoreNextEngineLine = false
       if (captionLabel === listenStrings.saying || captionLabel === listenStrings.listening) {
         captionLabel = listenStrings.listening
@@ -572,6 +589,7 @@ export function createLiveListenSession(options: {
       openLineWords = ''
       lineConsumed = false
       voiceActive = false
+      inputLevel = 0
       ignoreNextEngineLine = false
       lineEnding = null
       rankedLines.clear()

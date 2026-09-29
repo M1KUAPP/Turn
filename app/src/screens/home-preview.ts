@@ -47,7 +47,7 @@ function session(
     phase: 'listening',
     assetProgress: null,
     rankedOnce: true,
-    voiceActive: false,
+    inputLevel: 0,
     ...extra
   }
 }
@@ -61,7 +61,7 @@ export function homePreview(name: string | undefined, live: LiveListenSnapshot):
       return { listening: session({ label: listenStrings.listening }, null) }
     case 'hearing':
       return {
-        listening: session({ label: listenStrings.saying, words: 'How was phys' }, six, { voiceActive: true })
+        listening: session({ label: listenStrings.saying, words: 'How was phys' }, six, { inputLevel: 0.6 })
       }
     case 'replies':
       return { listening: session(said, six) }
