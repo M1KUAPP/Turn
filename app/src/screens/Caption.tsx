@@ -160,7 +160,10 @@ export default function Caption({
   const lit = useNewestWord(view.kind === 'words' ? view.words : '', view.lineOpen, reduceMotion)
   const [labelRow, setLabelRow] = useState({ y: 0, height: 20 })
   const [pill, setPill] = useState({ width: 0, height: 32 })
-  const edgeWidth = view.micOn ? 2.5 : 1.5
+  // The lamp: an orange edge and glow while the session opens and while the partner speaks (frames 03, 04); once
+  // they've said their line, the panel rests on its usual edge while the capsule stays lit.
+  const lamp = view.micOn && (view.kind === 'opening' || view.lineOpen)
+  const edgeWidth = lamp ? 2.5 : 1.5
   const scale = Math.min(fontScale, 2)
   const accessibilityLabel =
     view.kind === 'model' && model
@@ -329,9 +332,9 @@ export default function Caption({
         marginHorizontal: 16,
         borderRadius: oneLine ? 20 : 24,
         borderWidth: edgeWidth,
-        borderColor: view.micOn ? colors.listen : colors.edge,
+        borderColor: lamp ? colors.listen : colors.edge,
         backgroundColor: colors.surface,
-        boxShadow: view.micOn ? listeningGlow : depth.card
+        boxShadow: lamp ? listeningGlow : depth.card
       }}
     >
       <Pressable
