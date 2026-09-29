@@ -8,6 +8,7 @@ import Button from './Button'
 import type { SymbolName } from './category-style'
 import { useShadow } from './depth'
 import SheetHeader from './SheetHeader'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 // The facts after the first paragraph, in plan 0044's order: names swapped for tags, what stays, what the service keeps.
@@ -76,26 +77,30 @@ export default function PermissionStepScreen() {
           accessibilityRole="link"
           accessibilityLabel={step.privacyNotice}
           onPress={() => router.push('/settings/privacy')}
-          style={({ pressed }) => ({
+          style={{
             minHeight: 44,
             flexDirection: 'row',
             alignItems: 'center',
             alignSelf: 'flex-start',
             gap: 6,
-            borderRadius: 12,
-            backgroundColor: pressed ? colors['surface-pressed'] : undefined
-          })}
+            borderRadius: 12
+          }}
         >
-          <SymbolView
-            name="checkmark.shield.fill"
-            size={symbolSize(18)}
-            weight="semibold"
-            tintColor={colors.accent}
-            accessible={false}
-          />
-          <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.accent }}>
-            {step.privacyNotice}
-          </TurnText>
+          {({ pressed }) => (
+            <>
+              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={12} />
+              <SymbolView
+                name="checkmark.shield.fill"
+                size={symbolSize(18)}
+                weight="semibold"
+                tintColor={colors.accent}
+                accessible={false}
+              />
+              <TurnText kind="headline" boldText={boldText} style={{ flexShrink: 1, color: colors.accent }}>
+                {step.privacyNotice}
+              </TurnText>
+            </>
+          )}
         </Pressable>
       </ScrollView>
       <View style={{ paddingHorizontal: 20, paddingTop: 8, gap: 10 }}>

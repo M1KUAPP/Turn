@@ -6,6 +6,7 @@ import licenses from '../content/open-source-licenses.json'
 import { colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
 import { ScreenTitle, useListMetrics } from './ListGroup'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 type LicenseEntry = {
@@ -107,39 +108,43 @@ export default function LicensesScreen() {
               accessibilityState={item.text ? { expanded: open } : undefined}
               disabled={!item.text}
               onPress={() => setExpanded(open ? null : key)}
-              style={({ pressed }) => ({
+              style={{
                 minHeight: 56,
                 paddingHorizontal: 16,
                 paddingVertical: 12,
-                gap: 8,
-                backgroundColor: pressed ? colors['surface-pressed'] : undefined
-              })}
+                gap: 8
+              }}
             >
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                <View style={{ flex: 1, gap: 2 }}>
-                  <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                    {item.name} · {item.license}
-                  </TurnText>
-                  {item.version ? (
-                    <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                      {item.version}
+              {({ pressed }) => (
+                <>
+                  <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <View style={{ flex: 1, gap: 2 }}>
+                      <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                        {item.name} · {item.license}
+                      </TurnText>
+                      {item.version ? (
+                        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          {item.version}
+                        </TurnText>
+                      ) : null}
+                    </View>
+                    {item.text && (
+                      <SymbolView
+                        name={open ? 'chevron.down' : 'chevron.right'}
+                        size={mark}
+                        weight="semibold"
+                        tintColor={colors['ink-secondary']}
+                        accessible={false}
+                      />
+                    )}
+                  </View>
+                  {open && item.text && (
+                    <TurnText kind="footnote" boldText={boldText} style={{ color: colors.ink }}>
+                      {item.text}
                     </TurnText>
-                  ) : null}
-                </View>
-                {item.text && (
-                  <SymbolView
-                    name={open ? 'chevron.down' : 'chevron.right'}
-                    size={mark}
-                    weight="semibold"
-                    tintColor={colors['ink-secondary']}
-                    accessible={false}
-                  />
-                )}
-              </View>
-              {open && item.text && (
-                <TurnText kind="footnote" boldText={boldText} style={{ color: colors.ink }}>
-                  {item.text}
-                </TurnText>
+                  )}
+                </>
               )}
             </Pressable>
           </View>

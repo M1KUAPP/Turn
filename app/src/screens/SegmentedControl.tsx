@@ -1,6 +1,7 @@
 import { Pressable, useWindowDimensions, View } from 'react-native'
 import { colors } from '../constants/theme'
 import { useShadow } from './depth'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 type Option<T> = { label: string; value: T }
@@ -46,7 +47,7 @@ export default function SegmentedControl<T>({
             accessibilityState={{ selected: on, disabled }}
             disabled={disabled}
             onPress={() => onSelect(option.value)}
-            style={({ pressed }) => ({
+            style={{
               flex: stacked ? undefined : 1,
               minHeight: 44,
               alignItems: stacked ? 'flex-start' : 'center',
@@ -55,17 +56,22 @@ export default function SegmentedControl<T>({
               paddingVertical: 6,
               borderRadius: 20,
               borderCurve: 'continuous',
-              backgroundColor: on ? colors.surface : pressed ? colors['surface-pressed'] : undefined,
+              backgroundColor: on ? colors.surface : undefined,
               boxShadow: on ? pillShadow : undefined
-            })}
+            }}
           >
-            <TurnText
-              kind="label"
-              boldText={boldText}
-              style={{ color: on ? colors.ink : colors['ink-secondary'], textAlign: stacked ? 'left' : 'center' }}
-            >
-              {option.label}
-            </TurnText>
+            {({ pressed }) => (
+              <>
+                <PressFill pressed={pressed && !on} color={colors['surface-pressed']} radius={20} />
+                <TurnText
+                  kind="label"
+                  boldText={boldText}
+                  style={{ color: on ? colors.ink : colors['ink-secondary'], textAlign: stacked ? 'left' : 'center' }}
+                >
+                  {option.label}
+                </TurnText>
+              </>
+            )}
           </Pressable>
         )
       })}

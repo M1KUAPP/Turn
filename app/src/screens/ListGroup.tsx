@@ -3,6 +3,7 @@ import { Children, Fragment, isValidElement, type ReactNode } from 'react'
 import { Pressable, Switch, useWindowDimensions, View, type ColorValue } from 'react-native'
 import { colors } from '../constants/theme'
 import type { SymbolName } from './category-style'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 /** A tile's fill and symbol color, by what its row means (DESIGN, buttons and lists). */
@@ -233,25 +234,33 @@ export function ListRow({
       accessibilityState={staticText ? undefined : { disabled: !enabled, selected: !!checked }}
       disabled={!enabled}
       onPress={onPress}
-      style={({ pressed }) => [
-        rowStyle,
-        { backgroundColor: pressed && enabled ? colors['surface-pressed'] : undefined }
-      ]}
+      style={rowStyle}
     >
-      {symbol && <SymbolTile symbol={symbol} tone={tone} />}
-      {text}
-      {checked && (
-        <SymbolView name="checkmark" size={mark + 3} weight="semibold" tintColor={colors.accent} accessible={false} />
-      )}
-      {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
-      {chevron && enabled && (
-        <SymbolView
-          name="chevron.right"
-          size={mark}
-          weight="semibold"
-          tintColor={colors['ink-secondary']}
-          accessible={false}
-        />
+      {({ pressed }) => (
+        <>
+          <PressFill pressed={pressed && enabled} color={colors['surface-pressed']} />
+          {symbol && <SymbolTile symbol={symbol} tone={tone} />}
+          {text}
+          {checked && (
+            <SymbolView
+              name="checkmark"
+              size={mark + 3}
+              weight="semibold"
+              tintColor={colors.accent}
+              accessible={false}
+            />
+          )}
+          {/* A chevron marks a row that opens a screen, not one that acts in place, as iOS does. */}
+          {chevron && enabled && (
+            <SymbolView
+              name="chevron.right"
+              size={mark}
+              weight="semibold"
+              tintColor={colors['ink-secondary']}
+              accessible={false}
+            />
+          )}
+        </>
       )}
     </Pressable>
   )
