@@ -63,7 +63,7 @@ export default function PermissionStepScreen() {
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 24, paddingBottom: 20, gap: 20 }}
       >
-        <TurnText kind="title2" boldText={boldText} style={{ color: colors.ink }}>
+        <TurnText kind="title" boldText={boldText} style={{ color: colors.ink }}>
           {step.title}
         </TurnText>
         <View style={{ gap: 14 }}>

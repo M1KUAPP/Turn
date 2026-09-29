@@ -37,8 +37,8 @@ describe('home layout', () => {
       rowColumns: 1,
       stripColumns: 1,
       gridColumns: 1,
-      slotHeight: 154,
-      rowHeight: 984,
+      slotHeight: 165,
+      rowHeight: 1050,
       wholeMiddleScroll: true
     })
   })

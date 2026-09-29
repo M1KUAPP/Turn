@@ -253,7 +253,7 @@ export default function PhraseBankScreen() {
                 </TurnText>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                   {placesText ? (
-                    <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                    <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                       {placesText}
                     </TurnText>
                   ) : null}
@@ -297,7 +297,7 @@ export default function PhraseBankScreen() {
                     })}
                   >
                     <TurnText
-                      kind="subheadline-emphasized"
+                      kind="label"
                       boldText={boldText}
                       style={{ color: canMoveUp ? colors.ink : colors['ink-secondary'] }}
                     >
@@ -324,7 +324,7 @@ export default function PhraseBankScreen() {
                     })}
                   >
                     <TurnText
-                      kind="subheadline-emphasized"
+                      kind="label"
                       boldText={boldText}
                       style={{ color: canMoveDown ? colors.ink : colors['ink-secondary'] }}
                     >
@@ -348,7 +348,7 @@ export default function PhraseBankScreen() {
                       backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
                     })}
                   >
-                    <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                    <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
                       Edit
                     </TurnText>
                   </Pressable>
@@ -370,7 +370,7 @@ export default function PhraseBankScreen() {
                         backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
                       })}
                     >
-                      <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                      <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
                         Delete
                       </TurnText>
                     </Pressable>
@@ -382,7 +382,7 @@ export default function PhraseBankScreen() {
         })}
 
         {error && !editor && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
           </TurnText>
         )}
@@ -409,7 +409,7 @@ export default function PhraseBankScreen() {
               marginTop: 8
             })}
           >
-            <TurnText kind="headline" boldText={boldText} style={{ color: colors['on-accent'] }}>
+            <TurnText kind="button" boldText={boldText} style={{ color: colors['on-accent'] }}>
               Add phrase
             </TurnText>
           </Pressable>
@@ -456,7 +456,7 @@ export default function PhraseBankScreen() {
               backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
             })}
           >
-            <TurnText kind="headline" boldText={boldText} style={{ color: colors.accent }}>
+            <TurnText kind="button" boldText={boldText} style={{ color: colors.accent }}>
               Undo
             </TurnText>
           </Pressable>
@@ -492,7 +492,7 @@ export default function PhraseBankScreen() {
               keyboardShouldPersistTaps="handled"
             >
               <View style={{ gap: 8 }}>
-                <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   Phrase
                 </TurnText>
                 <TextInput
@@ -522,12 +522,12 @@ export default function PhraseBankScreen() {
                   }}
                 />
                 {!!editor && editor.text.length >= 180 && (
-                  <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                     {200 - editor.text.length} characters left
                   </TurnText>
                 )}
                 {editor?.isFixed && (
-                  <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                     Yes, No, and Not sure cannot be renamed.
                   </TurnText>
                 )}
@@ -536,11 +536,7 @@ export default function PhraseBankScreen() {
               {/* Category selector (if not fixed and not strip) */}
               {!editor?.isFixed && !isStrip && (
                 <View style={{ gap: 8 }}>
-                  <TurnText
-                    kind="subheadline-emphasized"
-                    boldText={boldText}
-                    style={{ color: colors['ink-secondary'] }}
-                  >
+                  <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                     Category
                   </TurnText>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
@@ -569,7 +565,7 @@ export default function PhraseBankScreen() {
                           })}
                         >
                           <TurnText
-                            kind="subheadline-emphasized"
+                            kind="label"
                             boldText={boldText}
                             style={{ color: selected ? colors.surface : colors.ink }}
                           >
@@ -585,11 +581,7 @@ export default function PhraseBankScreen() {
               {/* Places selector */}
               {places.length > 0 && (
                 <View style={{ gap: 8 }}>
-                  <TurnText
-                    kind="subheadline-emphasized"
-                    boldText={boldText}
-                    style={{ color: colors['ink-secondary'] }}
-                  >
+                  <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                     Places
                   </TurnText>
                   <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
@@ -626,7 +618,7 @@ export default function PhraseBankScreen() {
                           })}
                         >
                           <TurnText
-                            kind="subheadline-emphasized"
+                            kind="label"
                             boldText={boldText}
                             style={{ color: selected ? colors.surface : colors.ink }}
                           >
@@ -640,7 +632,7 @@ export default function PhraseBankScreen() {
               )}
 
               {error && (
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {error}
                 </TurnText>
               )}
