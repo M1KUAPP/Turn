@@ -8,6 +8,8 @@ final class ListenEngine {
   private static let silenceWindowMs = 500
   private static let silenceWindowNanoseconds: UInt64 = 500_000_000
   private static let resultFinalizationTimeoutNanoseconds: UInt64 = 1_000_000_000
+  private static let silenceFlushSeconds = 0.25
+  private static let silenceFlushLimitSeconds = 3.0
   private static let voiceRmsThreshold = 0.015
 
   private struct ResultWaiter {
@@ -90,6 +92,7 @@ final class ListenEngine {
   private var capturing = false
   private var voiceActive = false
   private var lineFinalizing = false
+  private var finalizeReturned = false
   private var finalizedText = ""
   private var volatileText = ""
   private var latestResultsFinalizationTime = CMTime.zero
@@ -245,6 +248,13 @@ final class ListenEngine {
     removeCapture()
     silenceTask?.cancel()
     silenceTask = nil
+    // A line already finalizing waits for audio past its boundary, which no longer comes.
+    var flushed = 0.0
+    while lineFinalizing, flushed < Self.silenceFlushLimitSeconds {
+      flushSilence()
+      flushed += Self.silenceFlushSeconds
+      try? await Task.sleep(nanoseconds: 20_000_000)
+    }
     do {
       try await finishCurrentAudio(publishLine: false)
       clearTranscript()
@@ -696,7 +706,7 @@ final class ListenEngine {
 
     let endedAt = Date().timeIntervalSince1970 * 1_000
     let boundary = timeline.end
-    try await analyzer.finalize(through: boundary)
+    try await finalize(analyzer, through: boundary)
     await waitForSettledResults(through: boundary)
 
     let line = finalizedText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -774,6 +784,41 @@ final class ListenEngine {
     for id in Array(resultWaiters.keys) {
       resumeResultWaiter(id)
     }
+  }
+
+  /// The analyzer finalizes only once audio passes the boundary, and on the phone only once another buffer follows that
+  /// audio, so with capture stopped the module gives it silence a quarter second at a time until it returns.
+  private func finalize(_ analyzer: SpeechAnalyzer, through boundary: CMTime) async throws {
+    guard !capturing else {
+      try await analyzer.finalize(through: boundary)
+      return
+    }
+    finalizeReturned = false
+    let finalizing = Task { [weak self] in
+      defer { self?.finalizeReturned = true }
+      try await analyzer.finalize(through: boundary)
+    }
+    var flushed = 0.0
+    while !finalizeReturned, flushed < Self.silenceFlushLimitSeconds {
+      flushSilence()
+      flushed += Self.silenceFlushSeconds
+      try? await Task.sleep(nanoseconds: 20_000_000)
+    }
+    // Past the limit, the finalize returns once capture starts again.
+    if finalizeReturned { try await finalizing.value }
+  }
+
+  /// Gives the analyzer silence past the audio it has, so a finalize can return once capture stops.
+  private func flushSilence() {
+    guard let inputBuilder, let analyzerFormat else { return }
+    let frames = AVAudioFrameCount(Self.silenceFlushSeconds * analyzerFormat.sampleRate)
+    guard let silence = AVAudioPCMBuffer(pcmFormat: analyzerFormat, frameCapacity: frames) else { return }
+    silence.frameLength = frames
+    for buffer in UnsafeMutableAudioBufferListPointer(silence.mutableAudioBufferList) {
+      if let data = buffer.mData { memset(data, 0, Int(buffer.mDataByteSize)) }
+    }
+    timeline.advance(frameCount: frames, sampleRate: analyzerFormat.sampleRate)
+    inputBuilder.yield(AnalyzerInput(buffer: silence))
   }
 
   private static func rmsLevel(of buffer: AVAudioPCMBuffer) -> Double {
