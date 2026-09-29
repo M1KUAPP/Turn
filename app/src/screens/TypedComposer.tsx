@@ -1,6 +1,7 @@
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
+import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
 
 type Props = {
@@ -32,6 +33,7 @@ export default function TypedComposer({
   const maxInputHeight = lineHeight * 4 + 30
   const disabled = !speaking && !text.trim()
   const symbol = Math.round(17 * Math.min(fontScale, 2.6))
+  const press = usePress()
 
   return (
     <View
@@ -120,27 +122,34 @@ export default function TypedComposer({
           accessibilityLabel={speaking ? 'Stop' : 'Speak'}
           accessibilityState={{ disabled }}
           disabled={disabled}
+          onPressIn={press.onPressIn}
+          onPressOut={press.onPressOut}
           onPress={speaking ? onStop : onSpeak}
-          style={({ pressed }) => ({
+          style={{
             minWidth: 96,
             minHeight: 56,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             gap: 6,
-            paddingHorizontal: disabled ? 14.5 : 16,
-            borderRadius: 999,
-            borderWidth: disabled ? 1.5 : 0,
-            borderColor: colors.edge,
-            backgroundColor: disabled
-              ? colors.surface
-              : speaking
-                ? colors.ink
-                : pressed
-                  ? colors['accent-pressed']
-                  : colors.accent
-          })}
+            paddingHorizontal: 16,
+            borderRadius: 999
+          }}
         >
+          <Layer
+            fill={disabled ? colors.surface : speaking ? colors.ink : colors.accent}
+            edge={disabled ? colors.edge : undefined}
+            edgeWidth={1.5}
+            radius={999}
+          />
+          {/* Pressed, Speak's `accent` turns `accent-pressed` and Stop's `ink` turns `ink-secondary`. */}
+          {!disabled && (
+            <Layer
+              fill={speaking ? colors['ink-secondary'] : colors['accent-pressed']}
+              radius={999}
+              style={press.style}
+            />
+          )}
           <SymbolView
             name={speaking ? 'stop.fill' : 'speaker.wave.2.fill'}
             size={symbol}

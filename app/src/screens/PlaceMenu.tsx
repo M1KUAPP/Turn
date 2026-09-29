@@ -4,6 +4,7 @@ import type { Place } from '../bank/store'
 import { colors } from '../constants/theme'
 import { placeSymbol } from './category-palette'
 import { useDepth } from './home-depth'
+import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
 
 type Props = {
@@ -16,6 +17,62 @@ type Props = {
   onChoose: (id: string) => void
   onEdit: () => void
   onClose: () => void
+}
+
+// One row of the menu: a place, or Edit places. Pressed, it turns `surface-pressed` and fades back over 120 ms.
+function MenuRow({
+  label,
+  symbol,
+  size,
+  current,
+  place,
+  boldText,
+  onPress
+}: {
+  label: string
+  symbol: ReturnType<typeof placeSymbol> | 'pencil'
+  size: number
+  current: boolean
+  // False for Edit places, which chooses nothing.
+  place: boolean
+  boldText: boolean
+  onPress: () => void
+}) {
+  const press = usePress()
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={place ? { selected: current } : undefined}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
+      onPress={onPress}
+      style={{
+        minHeight: 52,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        paddingHorizontal: 18,
+        paddingVertical: 8
+      }}
+    >
+      <Layer fill={current ? colors['accent-soft'] : colors.surface} radius={0} />
+      <Layer fill={colors['surface-pressed']} radius={0} style={press.style} />
+      <SymbolView name={symbol} size={size} weight="semibold" tintColor={colors.ink} accessible={false} />
+      <TurnText kind={current ? 'headline' : 'body'} boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
+        {label}
+      </TurnText>
+      {current && (
+        <SymbolView
+          name="checkmark"
+          size={Math.round(size * 0.9)}
+          weight="semibold"
+          tintColor={colors.ink}
+          accessible={false}
+        />
+      )}
+    </Pressable>
+  )
 }
 
 /** The place picker's menu (plan 0044, frame 24): a raised `surface` menu under the chip, the current place on
@@ -36,45 +93,6 @@ export default function PlaceMenu({
   const left = anchor ? Math.max(16, Math.min(anchor.x, width - 16 - menuWidth)) : 16
   const top = anchor ? anchor.y + anchor.height + 8 : 0
   const symbol = Math.round(20 * Math.min(fontScale, 2.6))
-
-  const row = (key: string, label: string, name: Parameters<typeof placeSymbol>[0] | null, current: boolean) => (
-    <Pressable
-      key={key}
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      accessibilityState={name ? { selected: current } : undefined}
-      onPress={() => (name === null ? onEdit() : onChoose(key))}
-      style={({ pressed }) => ({
-        minHeight: 52,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
-        paddingHorizontal: 18,
-        paddingVertical: 8,
-        backgroundColor: pressed ? colors['surface-pressed'] : current ? colors['accent-soft'] : colors.surface
-      })}
-    >
-      <SymbolView
-        name={name === null ? 'pencil' : placeSymbol(name)}
-        size={symbol}
-        weight="semibold"
-        tintColor={colors.ink}
-        accessible={false}
-      />
-      <TurnText kind={current ? 'headline' : 'body'} boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
-        {label}
-      </TurnText>
-      {current && (
-        <SymbolView
-          name="checkmark"
-          size={Math.round(symbol * 0.9)}
-          weight="semibold"
-          tintColor={colors.ink}
-          accessible={false}
-        />
-      )}
-    </Pressable>
-  )
 
   return (
     <Modal visible={anchor !== null} transparent animationType="none" onRequestClose={onClose}>
@@ -99,9 +117,28 @@ export default function PlaceMenu({
           }}
         >
           <ScrollView bounces={false} style={{ borderRadius: 24 }} contentContainerStyle={{ paddingVertical: 6 }}>
-            {places.map((place) => row(place.id, place.name, place.id, place.id === selectedId))}
+            {places.map((place) => (
+              <MenuRow
+                key={place.id}
+                label={place.name}
+                symbol={placeSymbol(place.id)}
+                size={symbol}
+                current={place.id === selectedId}
+                place
+                boldText={boldText}
+                onPress={() => onChoose(place.id)}
+              />
+            ))}
             <View style={{ height: 1, backgroundColor: colors.hairline }} />
-            {row('edit-places', 'Edit places', null, false)}
+            <MenuRow
+              label="Edit places"
+              symbol="pencil"
+              size={symbol}
+              current={false}
+              place={false}
+              boldText={boldText}
+              onPress={onEdit}
+            />
           </ScrollView>
         </View>
       )}
