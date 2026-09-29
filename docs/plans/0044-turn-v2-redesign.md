@@ -1,30 +1,14 @@
 # Turn v2 redesign handoff plan
 
-> **For kymil4, and any agent helping:** rebuild Turn's screens from the v2
-> Figma file. Build in the order under [Build order](#build-order). The
-> features, strings the PRD fixes, and Maestro-visible labels don't change;
-> the look, layout details, and motion do.
+> **For kymil4, and any agent helping:** rebuild Turn's screens from the v2 Figma file. Build in the order under [Build order](#build-order). The features, strings the PRD fixes, and Maestro-visible labels don't change; the look, layout details, and motion do.
 
-**Goal:** Every existing screen gets the v2 "Warm Voice" look and the UX
-fixes below, with the same features, before the Devpost entry (#69, due Wed
-Sep 30, 11:45 PM PT). The team lead judged v1 "too plain"; v2 gives Turn a
-warm, premium identity without breaking any accessibility rule.
+**Goal:** Every existing screen gets the v2 "Warm Voice" look and the UX fixes below, with the same features, before the Devpost entry (#69, due Wed Sep 30, 11:45 PM PT). The team lead judged v1 "too plain"; v2 gives Turn a warm, premium identity without breaking any accessibility rule.
 
-**Figma:** Build from the locked design: [v2 · Screens][locked-screens]
-(62 frames) and [v2 · System][locked-system] (the component library), both
-view-only to anyone with the link. The [v2 source file][v2-file] holds
-🎨 Foundations, 📝 Handoff, and the tokens in four modes. One amendment since
-the lock: the toolbar, every item on its own solid pill, and the grid ending 8
-points above it ([Size, shape, and depth](#size-shape-and-depth)). The
-🧪 Companion page is an experiment outside the build order.
+**Figma:** Build from the locked design: [v2 · Screens][locked-screens] (62 frames) and [v2 · System][locked-system] (the component library), both view-only to anyone with the link. The [v2 source file][v2-file] holds 🎨 Foundations, 📝 Handoff, and the tokens in four modes. One amendment since the lock: the toolbar, every item on its own solid pill, and the grid ending 8 points above it ([Size, shape, and depth](#size-shape-and-depth)). The 🧪 Companion page is an experiment outside the build order.
 
-**Tech stack:** Expo SDK 57, React Native 0.86, react-native-reanimated 4.5,
-expo-symbols, react-native-purchases-ui. Two optional native additions:
-expo-glass-effect and expo-haptics.
+**Tech stack:** Expo SDK 57, React Native 0.86, react-native-reanimated 4.5, expo-symbols, react-native-purchases-ui. Two optional native additions: expo-glass-effect and expo-haptics.
 
-**Spec:** [Design](/docs/DESIGN.md) (its rules still hold; this plan
-replaces its colors, type, shapes, depth, and motion);
-[research note](/docs/research/0051-turn-redesign.md) for the sources.
+**Spec:** [Design](/docs/DESIGN.md) (its rules still hold; this plan replaces its colors, type, shapes, depth, and motion); [research note](/docs/research/0051-turn-redesign.md) for the sources.
 
 [v2-file]: https://www.figma.com/design/VNzApYUFQ7VZxSZ0Lnz5dv
 [locked-screens]: https://www.figma.com/design/9KvXsgbqCOro2VHGpfk9mR?node-id=27-4
@@ -49,54 +33,24 @@ Contents:
 
 ## Decisions
 
-- **Same features, full UI and UX.** The user chose this on Sep 29: new
-  visual identity, layouts, and motion on every existing screen, no new
-  features.
-- **The hard rules stay.** Phrase buttons 78 points (64 on short screens),
-  strip 48, controls 44; phrase text 7:1, other text 4.5:1, button edges
-  3:1, in all four appearances; Dynamic Type to AX5; only a tap speaks;
-  nothing moves under a finger; a word or shape for every state; no AI
-  badges. [Checks](#checks) has the evidence.
-- **The whiteboard goes.** v1's reference, "a whiteboard and four markers",
-  banned decoration, gradients, and motion. v2 keeps its discipline (color
-  has jobs) and drops its austerity.
-- **System fonts, no bundled fonts.** `ui-rounded` (SF Pro Rounded),
-  `ui-serif` (New York), and `system-ui` (SF Pro). Figma can't render Apple's
-  fonts through its plugin runtime, so the file shows Nunito, Newsreader, and
-  Inter in their place; metrics differ slightly, so trust the app's wrapping.
-- **The v2 file lives in AlaskanTuna's team.** The team file sits on Figma's
-  Starter plan, whose MCP cap (20 calls a month) ran out on Sep 29, and whose
-  one-mode variables can't hold Light and Dark. The v2 file has real Light,
-  Dark, Light HC, and Dark HC modes, so every frame and swatch flips.
-- **The paywall stays RevenueCat's.** Rebuild frame 25 in the Paywalls
-  editor from its parts; a custom in-app paywall is out of scope.
+- **Same features, full UI and UX.** The user chose this on Sep 29: new visual identity, layouts, and motion on every existing screen, no new features.
+- **The hard rules stay.** Phrase buttons 78 points (64 on short screens), strip 48, controls 44; phrase text 7:1, other text 4.5:1, button edges 3:1, in all four appearances; Dynamic Type to AX5; only a tap speaks; nothing moves under a finger; a word or shape for every state; no AI badges. [Checks](#checks) has the evidence.
+- **The whiteboard goes.** v1's reference, "a whiteboard and four markers", banned decoration, gradients, and motion. v2 keeps its discipline (color has jobs) and drops its austerity.
+- **System fonts, no bundled fonts.** `ui-rounded` (SF Pro Rounded), `ui-serif` (New York), and `system-ui` (SF Pro). Figma can't render Apple's fonts through its plugin runtime, so the file shows Nunito, Newsreader, and Inter in their place; metrics differ slightly, so trust the app's wrapping.
+- **The v2 file lives in AlaskanTuna's team.** The team file sits on Figma's Starter plan, whose MCP cap (20 calls a month) ran out on Sep 29, and whose one-mode variables can't hold Light and Dark. The v2 file has real Light, Dark, Light HC, and Dark HC modes, so every frame and swatch flips.
+- **The paywall stays RevenueCat's.** Rebuild frame 25 in the Paywalls editor from its parts; a custom in-app paywall is out of scope.
 
 ## The direction
 
-**Warm Voice.** The reference: a warm table, your own cards on it, and a
-lamp that shows when the phone is listening.
+**Warm Voice.** The reference: a warm table, your own cards on it, and a lamp that shows when the phone is listening.
 
-1.  **Color means something.** Each category owns a hue, worn as an inked
-    edge on the grid and the shortlist and as a fill on a live reply. Green,
-    red, and gray belong to Yes, No, and Not sure; ultramarine to Turn's own
-    actions and its one confident reply; orange to listening, and nothing
-    else.
-1.  **Two voices, two typefaces.** The partner's words, and words addressed
-    to the partner (the consent card), are set in the serif. Everything the
-    user says or taps is rounded bold.
-1.  **Depth you can press.** Cards sit on the board with soft two-layer
-    shadows and 1.5-point inked edges. A press darkens the fill and thickens
-    the edge; the card never moves or scales.
-1.  **The lamp.** Listening lights the Listen control orange, gives the
-    caption an orange edge and glow, and washes the top of the board with a
-    warm radial glow. Paused and off states drop it.
-1.  **Glass for chrome, solid for words.** The floating bottom toolbar is
-    glass; phrases, the caption, notes, and the consent card sit on solid
-    fills.
+1.  **Color means something.** Each category owns a hue, worn as an inked edge on the grid and the shortlist and as a fill on a live reply. Green, red, and gray belong to Yes, No, and Not sure; ultramarine to Turn's own actions and its one confident reply; orange to listening, and nothing else.
+1.  **Two voices, two typefaces.** The partner's words, and words addressed to the partner (the consent card), are set in the serif. Everything the user says or taps is rounded bold.
+1.  **Depth you can press.** Cards sit on the board with soft two-layer shadows and 1.5-point inked edges. A press darkens the fill and thickens the edge; the card never moves or scales.
+1.  **The lamp.** Listening lights the Listen control orange, gives the caption an orange edge and glow, and washes the top of the board with a warm radial glow. Paused and off states drop it.
+1.  **Glass for chrome, solid for words.** The floating bottom toolbar is glass; phrases, the caption, notes, and the consent card sit on solid fills.
 
-Explorations: three concepts (Warm Voice, Night Studio, Bold Blocks) are on
-the 🧭 page. v2 is Warm Voice, with Night Studio's premium dark mode and Bold
-Blocks' big Yes and No symbols.
+Explorations: three concepts (Warm Voice, Night Studio, Bold Blocks) are on the 🧭 page. v2 is Warm Voice, with Night Studio's premium dark mode and Bold Blocks' big Yes and No symbols.
 
 ## What changes from v1
 
@@ -118,11 +72,7 @@ Blocks' big Yes and No symbols.
 
 ## Color tokens
 
-Every token keeps v1's four-appearance pattern, `DynamicColorIOS` in
-`app/src/constants/theme.ts`. Keep the code's token names and change their
-values; Figma's `ink-2` is the code's `ink-secondary`. Add the new ones:
-`surface-sunken`, `hairline`, `accent-soft`, `accent-tag`, `listen-soft`, and
-`listen-glow`.
+Every token keeps v1's four-appearance pattern, `DynamicColorIOS` in `app/src/constants/theme.ts`. Keep the code's token names and change their values; Figma's `ink-2` is the code's `ink-secondary`. Add the new ones: `surface-sunken`, `hairline`, `accent-soft`, `accent-tag`, `listen-soft`, and `listen-glow`.
 
 | Token             | Light         | Dark          | Light HC      | Dark HC       |
 | ----------------- | ------------- | ------------- | ------------- | ------------- |
@@ -150,13 +100,7 @@ values; Figma's `ink-2` is the code's `ink-secondary`. Add the new ones:
 | `unsure-fill`     | `#ECE6DD`     | `#2A2621`     | `#E0D8CC`     | `#221E1A`     |
 | `unsure-edge`     | `#6B6357`     | `#A39A8C`     | `#4A433A`     | `#D0C8BB`     |
 
-Category colors are new: two tokens per category, `category-<id>-fill` and
-`category-<id>-edge`, each with the four appearances, keyed by the starter
-bank's category IDs (`app/src/content/starter-bank.json`); a
-`categoryColors` map from ID to its pair keeps lookups simple. A category the user adds
-takes the next hue after `out`, cycling from `chat`. The conversation strip
-uses `surface` and `edge`, except "Something's wrong", which uses `no-fill`
-and `no-edge`.
+Category colors are new: two tokens per category, `category-<id>-fill` and `category-<id>-edge`, each with the four appearances, keyed by the starter bank's category IDs (`app/src/content/starter-bank.json`); a `categoryColors` map from ID to its pair keeps lookups simple. A category the user adds takes the next hue after `out`, cycling from `chat`. The conversation strip uses `surface` and `edge`, except "Something's wrong", which uses `no-fill` and `no-edge`.
 
 | Category                      | Symbol                              | Fill (L / D)          | Edge (L / D)          | Fill HC (L / D)       | Edge HC (L / D)       |
 | ----------------------------- | ----------------------------------- | --------------------- | --------------------- | --------------------- | --------------------- |
@@ -172,8 +116,7 @@ and `no-edge`.
 
 ## Type
 
-All styles keep `dynamicTypeRamp` and `boldTextWeight`, as `theme.ts` does
-today; only the family, weight, and some sizes change.
+All styles keep `dynamicTypeRamp` and `boldTextWeight`, as `theme.ts` does today; only the family, weight, and some sizes change.
 
 | Style                | `fontFamily` | Weight | Size / line | Ramp          | Used for                               |
 | -------------------- | ------------ | ------ | ----------- | ------------- | -------------------------------------- |
@@ -194,49 +137,26 @@ today; only the family, weight, and some sizes change.
 | `footnote`           | `system-ui`  | 400    | 13 / 18     | `footnote`    | Notes, details                         |
 | `caption`            | `system-ui`  | 600    | 12 / 16     | `caption1`    | Toolbar labels, "Starter", small pills |
 
-- **Check `ui-rounded` and `ui-serif` on the first build.** React Native maps
-  these generic names to Apple's system designs on iOS; if either falls back
-  to SF Pro, the fix is one line per style.
-- **A slot fits less.** Rounded bold 22 is wider than v1's semibold 20, so a
-  slot shows about 24 characters in two lines instead of 28; the slot height
-  rule (two lines plus padding, never under 78) is unchanged.
+- **Check `ui-rounded` and `ui-serif` on the first build.** React Native maps these generic names to Apple's system designs on iOS; if either falls back to SF Pro, the fix is one line per style.
+- **A slot fits less.** Rounded bold 22 is wider than v1's semibold 20, so a slot shows about 24 characters in two lines instead of 28; the slot height rule (two lines plus padding, never under 78) is unchanged.
 
 ## Size, shape, and depth
 
-- **Spacing:** 8 between bands, 12 inside the row and the grid, 16 from the
-  screen edge, as v1. The toolbar floats 2 points above the home indicator's
-  34-point area; the grid ends 8 points above the toolbar, so nothing
-  scrolls under it.
-- **Radii:** chip 14, card 20, panel (caption, groups) 24, big reply 28,
-  sheet 34, capsules half their height. Nested shapes stay concentric.
-- **Edges:** 1.5 points by default, in the category's edge color on phrase
-  cards and `edge` elsewhere; 2.5 for pressed, speaking, Yes, No, Not sure,
-  the listening caption, and focus.
+- **Spacing:** 8 between bands, 12 inside the row and the grid, 16 from the screen edge, as v1. The toolbar floats 2 points above the home indicator's 34-point area; the grid ends 8 points above the toolbar, so nothing scrolls under it.
+- **Radii:** chip 14, card 20, panel (caption, groups) 24, big reply 28, sheet 34, capsules half their height. Nested shapes stay concentric.
+- **Edges:** 1.5 points by default, in the category's edge color on phrase cards and `edge` elsewhere; 2.5 for pressed, speaking, Yes, No, Not sure, the listening caption, and focus.
 - **Shadows** (React Native 0.86 `boxShadow` strings):
-  - Card, light: `0 1px 2px rgba(30,26,21,.06), 0 6px 16px rgba(30,26,21,.07)`;
-    dark: `0 1px 2px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.35)`.
-  - Raised (toolbar, sheets), light:
-    `0 2px 4px rgba(30,26,21,.08), 0 14px 32px rgba(30,26,21,.12)`; dark:
-    `0 2px 4px rgba(0,0,0,.5), 0 14px 32px rgba(0,0,0,.45)`.
+  - Card, light: `0 1px 2px rgba(30,26,21,.06), 0 6px 16px rgba(30,26,21,.07)`; dark: `0 1px 2px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.35)`.
+  - Raised (toolbar, sheets), light: `0 2px 4px rgba(30,26,21,.08), 0 14px 32px rgba(30,26,21,.12)`; dark: `0 2px 4px rgba(0,0,0,.5), 0 14px 32px rgba(0,0,0,.45)`.
   - Listening glow: `0 0 18px 2px rgba(255,138,61,.55)`.
   - Big reply: `0 10px 28px rgba(36,56,201,.35)`, light only.
   - Avoid the `filter` prop's drop shadow: it clips children.
-- **Glass:** only the floating toolbar, with `GlassView` from
-  expo-glass-effect where `isLiquidGlassAvailable()`, `surface` at 82% plus
-  `BlurView` otherwise, and opaque `surface` when
-  `AccessibilityInfo.isReduceTransparencyEnabled()`. Never fade a `GlassView`
-  with `opacity`. The glass is the capsule only: every item sits on its own
-  solid pill, since Turn can't read the Liquid Glass slider and a label on
-  clear glass could fall under 4.5:1.
-- **The listening glow:** a radial gradient, `listen-glow` at 30% (light) to
-  transparent, 560 by 420 points centered near the Listen control, behind
-  everything. Use `experimental_backgroundImage: 'radial-gradient(...)'`, or
-  export the Figma ellipse as a PNG if the radial form isn't supported.
+- **Glass:** only the floating toolbar, with `GlassView` from expo-glass-effect where `isLiquidGlassAvailable()`, `surface` at 82% plus `BlurView` otherwise, and opaque `surface` when `AccessibilityInfo.isReduceTransparencyEnabled()`. Never fade a `GlassView` with `opacity`. The glass is the capsule only: every item sits on its own solid pill, since Turn can't read the Liquid Glass slider and a label on clear glass could fall under 4.5:1.
+- **The listening glow:** a radial gradient, `listen-glow` at 30% (light) to transparent, 560 by 420 points centered near the Listen control, behind everything. Use `experimental_backgroundImage: 'radial-gradient(...)'`, or export the Figma ellipse as a PNG if the radial form isn't supported.
 
 ## Components
 
-Each row names the Figma component (🧩 page) and the file that renders it
-today.
+Each row names the Figma component (🧩 page) and the file that renders it today.
 
 | Figma component     | Variants                                      | Code today                              | Notes                                                                                                                                                                                                                                                                               |
 | ------------------- | --------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -259,43 +179,18 @@ today.
 
 ## Screens
 
-The 📱 page keeps v1's numbers, and every v1 frame has a v2 frame; 06d,
-16, 32, and 59 add Dark and Increase Contrast versions of the busiest
-states.
+The 📱 page keeps v1's numbers, and every v1 frame has a v2 frame; 06d, 16, 32, and 59 add Dark and Increase Contrast versions of the busiest states.
 
-- **Home (01 to 16, 32, 59, 60):** first launch shows the starter card in
-  the row's frame on `accent-soft`; Listen off keeps the shortlist Plain;
-  replies arrive Tinted; the big reply replaces the six slots; yes-or-no
-  puts the three fixed buttons first; speaking marks the slot and turns
-  Repeat into Stop; degraded and "ranked on this phone" add the note pill to
-  the caption; paused shows Paused and End; under 18 shows Mic off; 60 shows
-  the speech model's progress in the caption's place.
-- **Listen entry (17 to 20):** the permission step is a sheet with the
-  service's facts as symbol rows; the consent card is a partner-facing card
-  with an orange edge and a warm glow, "They agreed" in `listen`, "They said
-  no" secondary, and the under-18 switch in a sunken block.
-- **Composers (22, 23):** the composer docks above the keyboard on `surface`
-  with a hairline; "Replying to" sets the partner's line in the serif; Speak
-  is `accent`, Send is `ink`.
-- **Place menu (24):** a raised `surface` menu under the chip; the current
-  place sits on `accent-soft` with a check.
-- **Paywall and purchase (25 to 31):** build 25 in RevenueCat's editor: a
-  product-scene image (export the "Hero · Listen mode in use" frame at 3x),
-  the title, the subtitle, three promise rows (symbol tiles), the package
-  card with a 2.5 `accent` edge, the purchase button, Restore Purchases, and
-  the legal row. Failure and restore notes are calm `surface-sunken` pills,
-  with no alarm color. 28 is Turn's own confirmation after a purchase.
-- **Settings and the rest (33 to 58, 61):** inset groups with symbol tiles
-  colored by meaning (accent for voice and purchase, listen for Listen
-  mode, category colors for places and the bank); stats as cards with big
-  numbers; the category editor moves rows with Move up and Move down
-  buttons, never drag.
+- **Home (01 to 16, 32, 59, 60):** first launch shows the starter card in the row's frame on `accent-soft`; Listen off keeps the shortlist Plain; replies arrive Tinted; the big reply replaces the six slots; yes-or-no puts the three fixed buttons first; speaking marks the slot and turns Repeat into Stop; degraded and "ranked on this phone" add the note pill to the caption; paused shows Paused and End; under 18 shows Mic off; 60 shows the speech model's progress in the caption's place.
+- **Listen entry (17 to 20):** the permission step is a sheet with the service's facts as symbol rows; the consent card is a partner-facing card with an orange edge and a warm glow, "They agreed" in `listen`, "They said no" secondary, and the under-18 switch in a sunken block.
+- **Composers (22, 23):** the composer docks above the keyboard on `surface` with a hairline; "Replying to" sets the partner's line in the serif; Speak is `accent`, Send is `ink`.
+- **Place menu (24):** a raised `surface` menu under the chip; the current place sits on `accent-soft` with a check.
+- **Paywall and purchase (25 to 31):** build 25 in RevenueCat's editor: a product-scene image (export the "Hero · Listen mode in use" frame at 3x), the title, the subtitle, three promise rows (symbol tiles), the package card with a 2.5 `accent` edge, the purchase button, Restore Purchases, and the legal row. Failure and restore notes are calm `surface-sunken` pills, with no alarm color. 28 is Turn's own confirmation after a purchase.
+- **Settings and the rest (33 to 58, 61):** inset groups with symbol tiles colored by meaning (accent for voice and purchase, listen for Listen mode, category colors for places and the bank); stats as cards with big numbers; the category editor moves rows with Move up and Move down buttons, never drag.
 
 ## Motion
 
-Motion is feedback, never decoration. Every animation below uses
-Reanimated with `ReduceMotion.System`, and each row says what Reduce Motion
-shows instead.
+Motion is feedback, never decoration. Every animation below uses Reanimated with `ReduceMotion.System`, and each row says what Reduce Motion shows instead.
 
 | Moment            | What moves                                                                                    | Timing                                                                             | Reduce Motion                                                 |
 | ----------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
@@ -309,102 +204,52 @@ shows instead.
 | Speaking          | The slot's waveform symbol animates; Repeat cross-fades to Stop                               | SF Symbol `variableColor.iterative`; 150 ms                                        | Static symbol                                                 |
 | Sheets and alerts | System                                                                                        | System                                                                             | System                                                        |
 
-Optional, if there's time: highlight the word being spoken in the speaking
-slot, from `AVSpeechSynthesizer`'s range callbacks (expo-speech's
-`onBoundary` where it fires), as Speechify and Apple Music's lyrics do.
+Optional, if there's time: highlight the word being spoken in the speaking slot, from `AVSpeechSynthesizer`'s range callbacks (expo-speech's `onBoundary` where it fires), as Speechify and Apple Music's lyrics do.
 
-Haptics, optional (expo-haptics): a selection tap when speech starts. iOS
-suppresses haptics while the microphone records, so no state may depend on
-one.
+Haptics, optional (expo-haptics): a selection tap when speech starts. iOS suppresses haptics while the microphone records, so no state may depend on one.
 
 ## Icons
 
-Use `SymbolView` from expo-symbols, weight semibold, in the text's color.
-The Figma components are named `Icon/<SF Symbol>`; the stand-in drawings are
-Lucide's.
+Use `SymbolView` from expo-symbols, weight semibold, in the text's color. The Figma components are named `Icon/<SF Symbol>`; the stand-in drawings are Lucide's.
 
-- **Home:** `gearshape.fill`, place symbols (`house.fill`, `stethoscope`,
-  `bag.fill`, `figure.walk`), `chevron.down`, `ear`, `pause.fill`,
-  `lock.fill`, `mic.slash.fill`, `waveform`, `xmark`, `checkmark`,
-  `questionmark.circle`, `speaker.wave.2.fill`, `keyboard`,
-  `arrow.counterclockwise`, `stop.fill`, `chevron.up`, `iphone`,
-  `wifi.slash`, `text.book.closed`.
-- **Listen entry and paywall:** `ear`, `person.text.rectangle`,
-  `lock.fill`, `info.circle`, `checkmark.shield.fill`, `iphone`,
-  `arrow.left.arrow.right`, `mic.slash.fill`, `pause.circle.fill`,
-  `speaker.wave.2.fill`, `progress.indicator`, `checkmark`.
-- **Settings and lists:** `slider.horizontal.3`, `globe`,
-  `mappin.and.ellipse`, `arrow.counterclockwise`, `doc.text`,
-  `chart.bar.fill`, `trash`, `person.wave.2.fill`, `plus`, `pencil`,
-  `arrow.up.arrow.down`, `arrow.uturn.backward`, `hand.raised`,
-  `person.crop.circle.badge.xmark`, and each category's symbol.
+- **Home:** `gearshape.fill`, place symbols (`house.fill`, `stethoscope`, `bag.fill`, `figure.walk`), `chevron.down`, `ear`, `pause.fill`, `lock.fill`, `mic.slash.fill`, `waveform`, `xmark`, `checkmark`, `questionmark.circle`, `speaker.wave.2.fill`, `keyboard`, `arrow.counterclockwise`, `stop.fill`, `chevron.up`, `iphone`, `wifi.slash`, `text.book.closed`.
+- **Listen entry and paywall:** `ear`, `person.text.rectangle`, `lock.fill`, `info.circle`, `checkmark.shield.fill`, `iphone`, `arrow.left.arrow.right`, `mic.slash.fill`, `pause.circle.fill`, `speaker.wave.2.fill`, `progress.indicator`, `checkmark`.
+- **Settings and lists:** `slider.horizontal.3`, `globe`, `mappin.and.ellipse`, `arrow.counterclockwise`, `doc.text`, `chart.bar.fill`, `trash`, `person.wave.2.fill`, `plus`, `pencil`, `arrow.up.arrow.down`, `arrow.uturn.backward`, `hand.raised`, `person.crop.circle.badge.xmark`, and each category's symbol.
 
 ## New and changed strings
 
-Every string the PRD fixes, and every label a Maestro flow taps, is
-unchanged. These are new, in DESIGN's tone:
+Every string the PRD fixes, and every label a Maestro flow taps, is unchanged. These are new, in DESIGN's tone:
 
 - Starter card: "Starter phrases" above the existing text.
-- Paywall: "Replies from your own phrases as your partner finishes", "Paid
-  once. No subscription.", "Speaking, typing, and your phrases stay free",
-  and "One payment, yours to keep" under Turn Listen.
-- After a purchase: "Turn Listen is yours on this phone. Speaking stays
-  free, as always." under "Listen mode is unlocked.", and "Done".
+- Paywall: "Replies from your own phrases as your partner finishes", "Paid once. No subscription.", "Speaking, typing, and your phrases stay free", and "One payment, yours to keep" under Turn Listen.
+- After a purchase: "Turn Listen is yours on this phone. Speaking stays free, as always." under "Listen mode is unlocked.", and "Done".
 - Processing: "Unlocking".
-- Speech model: "62%, about a minute. Speaking works now." (the percentage
-  and time are live).
-- Places: "Pick a place on Home with one tap. Turn never reads your
-  location." Phrase places: "At these places, the row offers this phrase
-  first." New category: "New categories take the next color in the set."
-- Consent card: "Turn never listens to someone under 18." under the switch
-  (and "Listen mode stays off for this partner." once it's on).
-- Delete alerts: "Your phrases stay in the bank. They just stop being tied
-  to Clinic." and "It leaves your phrase bank and the grid. You can undo
-  right after."
+- Speech model: "62%, about a minute. Speaking works now." (the percentage and time are live).
+- Places: "Pick a place on Home with one tap. Turn never reads your location." Phrase places: "At these places, the row offers this phrase first." New category: "New categories take the next color in the set."
+- Consent card: "Turn never listens to someone under 18." under the switch (and "Listen mode stays off for this partner." once it's on).
+- Delete alerts: "Your phrases stay in the bank. They just stop being tied to Clinic." and "It leaves your phrase bank and the grid. You can undo right after."
 
 ## Build order
 
 Each step is shippable on its own, so stop wherever the clock runs out.
 
-1.  **Tokens** in `theme.ts`: the colors above, the category tokens, and
-    the type table. Most screens change with this step alone.
-    `app/test/theme.test.ts` requires `theme.ts`'s colors, type, and contrast
-    pairs to equal DESIGN.md's, so land the v2 DESIGN.md from branch
-    `docs/design-v2` in the same PR as the new `theme.ts`, not before.
-1.  **Home, still:** top bar, caption states, strip, phrase card states,
-    Yes No Not sure, big reply, tabs with dots, and the floating toolbar.
-1.  **Home, listening:** the board glow, Listening control, caption edge and
-    meter, and the reply arrival motion.
+1.  **Tokens** in `theme.ts`: the colors above, the category tokens, and the type table. Most screens change with this step alone. `app/test/theme.test.ts` requires `theme.ts`'s colors, type, and contrast pairs to equal DESIGN.md's, so land the v2 DESIGN.md from branch `docs/design-v2` in the same PR as the new `theme.ts`, not before.
+1.  **Home, still:** top bar, caption states, strip, phrase card states, Yes No Not sure, big reply, tabs with dots, and the floating toolbar.
+1.  **Home, listening:** the board glow, Listening control, caption edge and meter, and the reply arrival motion.
 1.  **Consent card and permission step.**
 1.  **Paywall** in RevenueCat's editor (WhiteAvocad0 owns it, #26).
-1.  **Settings, voice, places, phrase bank, stats:** list rows with symbol
-    tiles and inset groups.
+1.  **Settings, voice, places, phrase bank, stats:** list rows with symbol tiles and inset groups.
 1.  **Motion polish,** then the optional word highlight and haptics.
 
 ## Checks
 
-- **Contrast:** every pair in the tables was computed with WCAG 2.2's
-  relative luminance for all four appearances, truncated to one decimal,
-  with no failures: `ink` on every fill is 12.2:1 or more (13.2:1 on the
-  category fills); the big reply's text is 8.4:1 in light and 7.6:1 in dark;
-  `ink-2` is 5.9:1 or more; `listen` on `listen-soft` is 4.5:1; and every
-  edge is 3.3:1 or more against the board, the surface, and its own fill.
-  DESIGN.md's [contrast tables](/docs/DESIGN.md#contrast) on the
-  `docs/design-v2` branch list every pair.
-- **Dynamic Type:** layouts follow v1's rules: one column from AX1, the area
-  between the bars scrolls as one column, and heights follow the text.
-- **Maestro:** labels are unchanged, but positions move (the toolbar
-  floats, "All" is pinned, the strip's rows differ). Run the `pr` flows
-  before merging the Home work.
-- **Figma evidence:** 🎨 Foundations shows every token in all four modes;
-  frames 16, 32, and 59 show Home in Dark, Light HC, and Dark HC.
+- **Contrast:** every pair in the tables was computed with WCAG 2.2's relative luminance for all four appearances, truncated to one decimal, with no failures: `ink` on every fill is 12.2:1 or more (13.2:1 on the category fills); the big reply's text is 8.4:1 in light and 7.6:1 in dark; `ink-2` is 5.9:1 or more; `listen` on `listen-soft` is 4.5:1; and every edge is 3.3:1 or more against the board, the surface, and its own fill. DESIGN.md's [contrast tables](/docs/DESIGN.md#contrast) on the `docs/design-v2` branch list every pair.
+- **Dynamic Type:** layouts follow v1's rules: one column from AX1, the area between the bars scrolls as one column, and heights follow the text.
+- **Maestro:** labels are unchanged, but positions move (the toolbar floats, "All" is pinned, the strip's rows differ). Run the `pr` flows before merging the Home work.
+- **Figma evidence:** 🎨 Foundations shows every token in all four modes; frames 16, 32, and 59 show Home in Dark, Light HC, and Dark HC.
 
 ## Open questions
 
-1.  **Sharing the v2 file.** The team file is view-only to anyone with the
-    link. Only 🎨 Foundations, 📝 Handoff, and inspecting the tokens in all
-    four modes need view access to the v2 file, which its owner shares.
-1.  **The app icon.** v2 concepts are on the 🧭 page; #56's icon stays until
-    the team picks one.
-1.  **Word highlight while speaking** depends on range callbacks from the
-    voice path, including Personal Voice.
+1.  **Sharing the v2 file.** The team file is view-only to anyone with the link. Only 🎨 Foundations, 📝 Handoff, and inspecting the tokens in all four modes need view access to the v2 file, which its owner shares.
+1.  **The app icon.** v2 concepts are on the 🧭 page; #56's icon stays until the team picks one.
+1.  **Word highlight while speaking** depends on range callbacks from the voice path, including Personal Voice.
