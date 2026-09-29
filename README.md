@@ -24,18 +24,45 @@ The hosted decision model's top 6 led embeddings by 29.7 percentage points;
 the 95% paired interval was 17.2 to 42.2 points. See the [full report],
 including uncertainty, risk, coverage, and latency. The lines, starter bank,
 and acceptable-reply labels were written by Claude subagents at the team's
-direction; no clinic or teammate had reviewed them when this evaluation ran.
-The report records each writer's and labeler's role. The results describe this
-dataset, whose model-written labels may favor a model-based ranker.
+direction. `claude-a`, `claude-b`, and `claude-f` wrote the 80 lines; separate
+subagents wrote and reviewed the starter bank; `claude-c` and `claude-g` supplied
+the labels scored here. No clinic or teammate had reviewed the bank or labels
+when this evaluation ran. The [full report] records each writer's and labeler's
+role. These model-written labels may favor a model-based ranker.
 
-[evaluation-commit]: https://github.com/RevenueCat-M1KU/RevenueCat/commit/8ea25eb
+[evaluation-commit]: https://github.com/M1KUAPP/Turn/commit/8ea25eb
 [full report]: /eval/results.md
+
+## See Turn
+
+![Turn's speaking grid in light mode](/assets/pitch/readme-hero-light.png)
+
+The grid speaks saved phrases at a tap. Listen mode offers the person's own
+phrases after a partner speaks or types a line.
+
+![A partner line becoming a suggested reply](/assets/pitch/readme-aha.gif)
 
 ## Try Turn on an iOS 27 Simulator
 
-Use a Mac with Xcode 27, an iOS 27 Simulator runtime, and Bun. Install Xcode's
-command-line tools and select Xcode as the active developer directory. From a
-clone of this repository:
+Use a Mac with Xcode 27 and the iOS 27 Simulator runtime. Download
+[`Turn.app.zip` from the Simulator preview][simulator-release], unzip it, boot
+an iOS 27 Simulator, and install the app:
+
+```shell
+unzip Turn.app.zip
+xcrun simctl install booted Turn.app
+xcrun simctl launch booted com.m1ku.turn
+```
+
+The preview is a Debug build from commit [`9aec571`][preview-commit], with its
+JavaScript embedded. On the home screen, tap **Home** at the top and choose
+**Clinic**. Tap **Listen**, then **Allow** and **They agreed** on the permission
+screens. Tap **Tap here to type what they say**, enter **How was physio?**, and
+tap **Send**. **It was hard** appears among the suggested replies; tap it to
+hear it in a system voice. Live transcription needs a physical iPhone.
+
+To build the current source instead, install Bun, clone this repository, and
+run:
 
 ```shell
 bun install --frozen-lockfile
@@ -43,43 +70,30 @@ cd app
 EXPO_PUBLIC_BUILD_KIND=simulator bunx expo run:ios --device
 ```
 
-Select an iOS 27 Simulator when prompted and leave Metro running for this Debug
-build. On the home screen, tap **Listen**, tap the caption's **Tap here to type
-what they say**, enter **How was physio?**, and tap **Send**. Tap a reply to
-hear it in a system voice. The current `main` branch ranks typed lines on the
-phone; [relay-backed replies] and the [standalone Simulator release] are still
-in progress. Live transcription needs a physical iPhone.
+Select an iOS 27 Simulator when prompted and leave Metro running for this
+source build. The preview zip runs without Metro.
 
-When the standalone release is published, its zip will contain `Turn.app`.
-After unzipping it, boot an iOS 27 Simulator and install it with:
-
-```shell
-xcrun simctl install booted Turn.app
-```
-
-[relay-backed replies]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/48
-[standalone Simulator release]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/63
+[simulator-release]: https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0-preview.1
+[preview-commit]: https://github.com/M1KUAPP/Turn/commit/9aec5713bcf665ea7290bfd4be1b087fba69d80d
 
 ## Test Store purchase
 
 Turn Listen is a one-time Test Store purchase; speaking from the grid stays
-free. The [purchase flow] is still being connected to the app, so the current
-`main` build cannot complete a purchase. Once that flow lands, 20 answered
-partner lines are free; the next line opens the paywall. A successful Test Store
-purchase unlocks Listen mode, and **Settings → Turn Listen → Restore Purchases**
-refreshes its status. A reinstall may reset the free-line count or purchase in
-Test Store, so use **Restore Purchases** to check the current status.
-
-[purchase flow]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/53
+free. To try the purchase, open **Settings**, tap **Unlock Listen mode**, then
+**Unlock Listen mode** on the paywall and **Test valid purchase** in Test Store.
+The first 20 answered partner lines are free; without a purchase, the 21st
+line opens the paywall. **Restore Purchases** in Settings refreshes the status. A
+reinstall may reset the free-line count or purchase in Test Store, so check
+**Restore Purchases** after reinstalling.
 
 ## Privacy
 
 In the app, open **Settings → About → Privacy notice**. Its text is bundled
 with the app and reads without a network connection. Phrases, places, and tap
-counts stay on the phone. Once relay-backed Listen mode is available, after
-permission and the partner's agreement, the phone sends each partner line, the
-current place, category names, and up to 40 candidate phrases through the
-Cloudflare relay to a hosted decision model. Audio is not sent or stored. The
+counts stay on the phone. After permission and the partner's agreement, the
+phone sends each partner line, the current place, category names, and up to 40
+candidate phrases through the Cloudflare relay to a hosted decision model.
+Audio is not sent or stored. The
 [privacy notice source] explains name tags, service records, purchases, and the
 under-18 restriction.
 
@@ -103,7 +117,7 @@ In a second terminal, set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and
 your public Test Store key in `app/.env`, following
 [`app/.env.example`](/app/.env.example), then build the app as above. Keep secret
 keys in the relay; the app needs only the public Test Store key. The current
-`main` build does not yet call the relay from typed Listen mode.
+`main` build sends typed partner lines through the relay when it is available.
 
 To run the evaluation with your own hosted-model and Cloudflare Workers AI
 credentials, use the environment variable names documented in
