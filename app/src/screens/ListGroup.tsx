@@ -95,9 +95,31 @@ export function GroupNote({ children, boldText }: { children: ReactNode; boldTex
   )
 }
 
+/** A row's tile and words: side by side, or from AX1 the tile above, so a long word keeps the row's width and
+ * never breaks. */
+export function TileLead({ symbol, tone, children }: { symbol?: SymbolName; tone: TileTone; children: ReactNode }) {
+  const { stacked } = useListMetrics()
+  if (!symbol) return <View style={{ flex: 1 }}>{children}</View>
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: stacked ? 'column' : 'row',
+        alignItems: stacked ? 'stretch' : 'center',
+        gap: stacked ? 8 : 12
+      }}
+    >
+      <View style={{ alignSelf: stacked ? 'flex-start' : undefined }}>
+        <SymbolTile symbol={symbol} tone={tone} />
+      </View>
+      <View style={{ flex: stacked ? undefined : 1 }}>{children}</View>
+    </View>
+  )
+}
+
 /** An inset group: a `surface` panel with a 1.5 `edge` and hairline dividers that start where the text does. */
 export function ListGroup({ children, tiles = true }: { children: ReactNode; tiles?: boolean }) {
-  const { tile } = useListMetrics()
+  const { tile, stacked } = useListMetrics()
   const rows = Children.toArray(children).filter(isValidElement)
   return (
     <View
@@ -113,7 +135,13 @@ export function ListGroup({ children, tiles = true }: { children: ReactNode; til
       {rows.map((row, index) => (
         <Fragment key={row.key ?? index}>
           {index > 0 && (
-            <View style={{ height: 1, marginLeft: tiles ? 16 + tile + 12 : 16, backgroundColor: colors.hairline }} />
+            <View
+              style={{
+                height: 1,
+                marginLeft: tiles && !stacked ? 16 + tile + 12 : 16,
+                backgroundColor: colors.hairline
+              }}
+            />
           )}
           {row}
         </Fragment>
@@ -204,10 +232,11 @@ export function ListRow({
   if (toggle) {
     return (
       <View style={rowStyle}>
-        {symbol && <SymbolTile symbol={symbol} tone={tone} />}
         {/* The switch carries the label, so VoiceOver and Voice Control find one element, as in iOS. */}
         <View style={{ flex: 1 }} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-          {text}
+          <TileLead symbol={symbol} tone={tone}>
+            {text}
+          </TileLead>
         </View>
         <Switch
           accessibilityLabel={accessibilityLabel ?? label}
@@ -239,8 +268,9 @@ export function ListRow({
       {({ pressed }) => (
         <>
           <PressFill pressed={pressed && enabled} color={colors['surface-pressed']} />
-          {symbol && <SymbolTile symbol={symbol} tone={tone} />}
-          {text}
+          <TileLead symbol={symbol} tone={tone}>
+            {text}
+          </TileLead>
           {checked && (
             <SymbolView
               name="checkmark"

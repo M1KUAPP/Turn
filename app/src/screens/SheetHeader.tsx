@@ -60,7 +60,8 @@ export default function SheetHeader({ title, boldText, onClose, closeLabel = 'Ca
   )
 }
 
-/** A sheet's buttons, pinned under its content so they stay above the keyboard; stacked from AX1, first on top. */
+/** A sheet's buttons, pinned under its content so they stay above the keyboard; from AX1 they stack, the last, the
+ * sheet's main button, on top. */
 export function SheetActions({ children }: { children: ReactNode }) {
   const stacked = useWindowDimensions().fontScale >= 1.786
   const buttons = Children.toArray(children)
