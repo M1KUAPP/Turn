@@ -199,6 +199,38 @@ describe('live partner session', () => {
     await live.dispose()
   })
 
+  test("publishes the partner's voice for the meter while capture runs, and drops it when capture stops", async () => {
+    const fake = fakeEngine()
+    const { live } = await session({ engine: fake.engine })
+    const listener = vi.fn()
+    live.subscribe(listener)
+    await live.start()
+    expect(live.getSnapshot().voiceActive).toBe(false)
+
+    fake.voice(true)
+    expect(live.getSnapshot().voiceActive).toBe(true)
+    const published = listener.mock.calls.length
+    fake.voice(true)
+    expect(listener).toHaveBeenCalledTimes(published)
+    fake.voice(false)
+    expect(live.getSnapshot().voiceActive).toBe(false)
+
+    fake.voice(true)
+    await live.pause()
+    expect(live.getSnapshot().voiceActive).toBe(false)
+    fake.voice(true)
+    expect(live.getSnapshot().voiceActive).toBe(false)
+    await live.dispose()
+  })
+
+  test('typed Listen mode has no voice to follow', async () => {
+    const { live } = await session({ engine: null })
+    await live.start()
+    await live.send('How was physio?')
+    expect(live.getSnapshot().voiceActive).toBe(false)
+    await live.dispose()
+  })
+
   test('never sends or counts a line with no letters or digits, spoken or typed', async () => {
     const fake = fakeEngine()
     const { live, typed } = await session({ engine: fake.engine })
