@@ -3,51 +3,15 @@
 - **Run:** September 24, 2026, at commit `1b3ff03`.
 - **Lines:** the 80 in `eval/lines.jsonl`.
 - **Bank:** the app's own, `app/src/content/starter-bank.json`.
-- **Models:** The hosted decision model, pinned to version 1.13.0 by
-  `worker/wrangler.jsonc`, which answered as version 1.13.0 on all 320 calls;
-  Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling,
-  `@cf/baai/bge-reranker-base`, and `@cf/qwen/qwen3-embedding-0.6b`, with the
-  instruction "Given what a conversation partner just said, retrieve the reply
-  that answers it"; and Apple's English sentence embedding at revision 1, of 512
-  numbers, on macOS 27.0 (Build 26A428).
+- **Models:** The hosted decision model, pinned to version 1.13.0 by `worker/wrangler.jsonc`, which answered as version 1.13.0 on all 320 calls; Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling, `@cf/baai/bge-reranker-base`, and `@cf/qwen/qwen3-embedding-0.6b`, with the instruction "Given what a conversation partner just said, retrieve the reply that answers it"; and Apple's English sentence embedding at revision 1, of 512 numbers, on macOS 27.0 (Build 26A428).
 
-Each line is scored alone, from an empty row. The app picks its shortlist of 40:
-up to 24 phrases that share a word with the line, then, since a fresh bank has
-no taps, the place's first eight phrases in the bank's order, then the rest in
-the bank's order. Each ranker orders those 40, and the row's rules turn its
-ranking into what the user would see. The place's first eight phrases are always
-among the 40, so the place ranker's top 1 and top 6 never depend on the line,
-though which of its later phrases are among them can.
+Each line is scored alone, from an empty row. The app picks its shortlist of 40: up to 24 phrases that share a word with the line, then, since a fresh bank has no taps, the place's first eight phrases in the bank's order, then the rest in the bank's order. Each ranker orders those 40, and the row's rules turn its ranking into what the user would see. The place's first eight phrases are always among the 40, so the place ranker's top 1 and top 6 never depend on the line, though which of its later phrases are among them can.
 
-- **Rankers:** place gives the place's phrases in the bank's order; keyword, the
-  phone's own ranking by shared words; embeddings, the cosine between the line
-  and each phrase; hosted decision model, the relay's request as the hosted
-  decision model answers it, which the row's rules take with their starting
-  policy: a floor of 0.6, a big button above 0.85, and a margin of 0.15;
-  reranker, the cross-encoder's score for the line and each phrase; qwen3, the
-  cosine between the line, embedded as a query under its instruction, and each
-  phrase; and apple, the cosine between the line and each phrase in Apple's
-  sentence embedding, computed on a Mac as the phone would. Like embeddings, the
-  last three take the phone's yes-or-no rule and bring no big button, and each
-  of the four shows no phrase below its own cut-off, which five-fold
-  cross-validation sets.
-- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first
-  or among the first six. A ranker ranks only the phrases it scores above 0, so
-  keyword ranks none on a line that shares no word. Chance is a random order of
-  the same phrases. The mean reciprocal rank is a mean of ranks, not a rate, so
-  it has no interval.
-- **The row:** coverage is the share of lines where the row changes, and risk
-  the share of those rows that are wrong. Always holding is right on every line
-  with no acceptable reply.
-- **Intervals:** every rate in the ranking's and the row's tables carries its
-  95% Wilson interval. The hosted decision model minus embeddings in top 6
-  carries a 95% paired bootstrap interval, from 9,999 resamples of the same
-  lines drawn from a committed seed, and the hosted decision model trails only
-  when the whole interval on all lines lies below zero; the subsets' intervals
-  carry no verdict, since more intervals would make a false one likelier.
-- **The hosted decision model's answers** vary a little from call to call, so
-  each line is scored from the first of the three timed passes, and the big
-  buttons come from all four answers, the warm-up included.
+- **Rankers:** place gives the place's phrases in the bank's order; keyword, the phone's own ranking by shared words; embeddings, the cosine between the line and each phrase; hosted decision model, the relay's request as the hosted decision model answers it, which the row's rules take with their starting policy: a floor of 0.6, a big button above 0.85, and a margin of 0.15; reranker, the cross-encoder's score for the line and each phrase; qwen3, the cosine between the line, embedded as a query under its instruction, and each phrase; and apple, the cosine between the line and each phrase in Apple's sentence embedding, computed on a Mac as the phone would. Like embeddings, the last three take the phone's yes-or-no rule and bring no big button, and each of the four shows no phrase below its own cut-off, which five-fold cross-validation sets.
+- **Ranking:** top 1 and top 6 count the lines with an acceptable phrase first or among the first six. A ranker ranks only the phrases it scores above 0, so keyword ranks none on a line that shares no word. Chance is a random order of the same phrases. The mean reciprocal rank is a mean of ranks, not a rate, so it has no interval.
+- **The row:** coverage is the share of lines where the row changes, and risk the share of those rows that are wrong. Always holding is right on every line with no acceptable reply.
+- **Intervals:** every rate in the ranking's and the row's tables carries its 95% Wilson interval. The hosted decision model minus embeddings in top 6 carries a 95% paired bootstrap interval, from 9,999 resamples of the same lines drawn from a committed seed, and the hosted decision model trails only when the whole interval on all lines lies below zero; the subsets' intervals carry no verdict, since more intervals would make a false one likelier.
+- **The hosted decision model's answers** vary a little from call to call, so each line is scored from the first of the three timed passes, and the big buttons come from all four answers, the warm-up included.
 
 Contents:
 
@@ -65,25 +29,8 @@ Contents:
 
 ## Who wrote the data
 
-- **These lines:** claude-a wrote 35, claude-b wrote 33, and claude-f wrote 12,
-  and claude-c and claude-g labeled their acceptable replies.
-- **The 80 lines, their labels, and the bank,** as the TRD's evaluation data
-  records: at the team's direction, Claude subagents wrote the 80 lines and the
-  starter bank on September 23, 2026. Two wrote 40 lines each from a brief that
-  showed no phrase of the bank, as claude-a and claude-b; a third wrote the bank
-  without seeing the lines, and a fourth read every phrase. Two more, claude-c
-  and claude-d, then labeled every line's replies, each alone and from a brief
-  that set no quota. Their labels left too few lines with no reply, so claude-f
-  wrote 20 more lines meant to have none from a brief that showed no list of the
-  bank's phrases, only the labeling rules, which name the fixed buttons and "I
-  don't know"; of the 80 lines, it saw only the five that its first draft
-  repeated, quoted back as situations to avoid. claude-g and claude-h labeled
-  the new lines among the 80 by the same rules; 12 of them replaced lines with a
-  reply, so that 16 lines have none. claude-c's labeling, with claude-g's for
-  the new lines, is the one the evaluation scores. Text a language model wrote
-  or labeled may suit a ranker built on one, and two labelings by one model show
-  consistency rather than correctness. On that date, no teammate had yet read
-  the bank or labeled a line, and no clinic had reviewed the bank.
+- **These lines:** claude-a wrote 35, claude-b wrote 33, and claude-f wrote 12, and claude-c and claude-g labeled their acceptable replies.
+- **The 80 lines, their labels, and the bank,** as the TRD's evaluation data records: at the team's direction, Claude subagents wrote the 80 lines and the starter bank on September 23, 2026. Two wrote 40 lines each from a brief that showed no phrase of the bank, as claude-a and claude-b; a third wrote the bank without seeing the lines, and a fourth read every phrase. Two more, claude-c and claude-d, then labeled every line's replies, each alone and from a brief that set no quota. Their labels left too few lines with no reply, so claude-f wrote 20 more lines meant to have none from a brief that showed no list of the bank's phrases, only the labeling rules, which name the fixed buttons and "I don't know"; of the 80 lines, it saw only the five that its first draft repeated, quoted back as situations to avoid. claude-g and claude-h labeled the new lines among the 80 by the same rules; 12 of them replaced lines with a reply, so that 16 lines have none. claude-c's labeling, with claude-g's for the new lines, is the one the evaluation scores. Text a language model wrote or labeled may suit a ranker built on one, and two labelings by one model show consistency rather than correctness. On that date, no teammate had yet read the bank or labeled a line, and no clinic had reviewed the bank.
 
 ## All lines
 
@@ -106,8 +53,7 @@ On the 64 with an acceptable phrase besides Yes, No, and Not sure:
 
 The shortlist's recall at 40: 58 of 64, 91% (81% to 96%).
 
-The hosted decision model minus embeddings in top 6: +29.7 points, with a 95%
-paired interval of 17.2 to 42.2, so the hosted decision model leads embeddings.
+The hosted decision model minus embeddings in top 6: +29.7 points, with a 95% paired interval of 17.2 to 42.2, so the hosted decision model leads embeddings.
 
 ### The row on all lines
 
@@ -143,8 +89,7 @@ On the 37 with an acceptable phrase besides Yes, No, and Not sure:
 
 The shortlist's recall at 40: 32 of 37, 86% (72% to 94%).
 
-The hosted decision model minus embeddings in top 6: +29.7 points, with a 95%
-paired interval of 13.5 to 45.9.
+The hosted decision model minus embeddings in top 6: +29.7 points, with a 95% paired interval of 13.5 to 45.9.
 
 ### The row on yes-or-no lines
 
@@ -180,8 +125,7 @@ On the 17 with an acceptable phrase besides Yes, No, and Not sure:
 
 The shortlist's recall at 40: 16 of 17, 94% (73% to 99%).
 
-The hosted decision model minus embeddings in top 6: +17.6 points, with a 95%
-paired interval of -5.9 to 41.2.
+The hosted decision model minus embeddings in top 6: +17.6 points, with a 95% paired interval of -5.9 to 41.2.
 
 ### The row on pain and consent lines
 
@@ -198,8 +142,7 @@ paired interval of -5.9 to 41.2.
 
 ## Lines that share no word with a reply
 
-On the 49 lines that share no word with an acceptable reply, as the phone
-matches words.
+On the 49 lines that share no word with an acceptable reply, as the phone matches words.
 
 ### Ranking on lines that share no word with a reply
 
@@ -218,8 +161,7 @@ On the 49 with an acceptable phrase besides Yes, No, and Not sure:
 
 The shortlist's recall at 40: 43 of 49, 88% (76% to 94%).
 
-The hosted decision model minus embeddings in top 6: +38.8 points, with a 95%
-paired interval of 24.5 to 53.1.
+The hosted decision model minus embeddings in top 6: +38.8 points, with a 95% paired interval of 24.5 to 53.1.
 
 ### The row on lines that share no word with a reply
 
@@ -236,8 +178,7 @@ paired interval of 24.5 to 53.1.
 
 ## Big buttons on yes-or-no, pain, and consent lines
 
-Every big button a ranker showed on a line its writer marked yes-or-no, or on
-one about pain or consent, in any of its answers (EVAL-5): 1, 0 of them wrong.
+Every big button a ranker showed on a line its writer marked yes-or-no, or on one about pain or consent, in any of its answers (EVAL-5): 1, 0 of them wrong.
 
 | Ranker                | Line    | The partner said                                         | Big button    | Right or wrong | Answers |
 | --------------------- | ------- | -------------------------------------------------------- | ------------- | -------------- | ------- |
@@ -245,10 +186,7 @@ one about pain or consent, in any of its answers (EVAL-5): 1, 0 of them wrong.
 
 ## The question kind
 
-The hosted decision model's most likely kind of question against its writer's,
-on all 80 lines: right on 80 of 80, 100% (95% to 100%). Each row is the writer's
-kind, and each column the hosted decision model's, or a tie when two kinds share
-the top.
+The hosted decision model's most likely kind of question against its writer's, on all 80 lines: right on 80 of 80, 100% (95% to 100%). Each row is the writer's kind, and each column the hosted decision model's, or a tie when two kinds share the top.
 
 | Writer's kind  | Yes or no | Either or | Open | Not a question | Tie |
 | -------------- | --------- | --------- | ---- | -------------- | --- |
@@ -261,18 +199,7 @@ the top.
 
 ![Reliability of the hosted decision model's top phrase](results-extras-reliability.svg)
 
-Each line's top phrase in the hosted decision model's first timed ranking, ties
-broken as the row breaks them, against whether it's acceptable, on all 80 lines:
-43 of them are. Of the 80, 22 have no acceptable phrase among their 40, so their
-top phrase is wrong whatever its score. The line is the pool-adjacent-violators
-fit, as CORP's reliability diagram draws it: the share acceptable at each score,
-never falling as the score rises, with scores the lines can't tell apart pooled
-into a block. A calibrated ranker's fit would follow the diagonal. At each
-score, the band holds 90% of the fits from 9,999 resamples of the lines, each
-outcome drawn as its score says, as a calibrated ranker's would be. It holds
-them at each score apart, so even a calibrated ranker's fit would lie outside it
-at about one score in ten. The table gives each block, with the number of its
-scores where the fit lies outside the band.
+Each line's top phrase in the hosted decision model's first timed ranking, ties broken as the row breaks them, against whether it's acceptable, on all 80 lines: 43 of them are. Of the 80, 22 have no acceptable phrase among their 40, so their top phrase is wrong whatever its score. The line is the pool-adjacent-violators fit, as CORP's reliability diagram draws it: the share acceptable at each score, never falling as the score rises, with scores the lines can't tell apart pooled into a block. A calibrated ranker's fit would follow the diagonal. At each score, the band holds 90% of the fits from 9,999 resamples of the lines, each outcome drawn as its score says, as a calibrated ranker's would be. It holds them at each score apart, so even a calibrated ranker's fit would lie outside it at about one score in ten. The table gives each block, with the number of its scores where the fit lies outside the band.
 
 | Scores       | Lines | Acceptable | Fitted share | Outside the band |
 | ------------ | ----- | ---------- | ------------ | ---------------- |
@@ -283,26 +210,13 @@ scores where the fit lies outside the band.
 | 0.67 to 0.82 | 23    | 14         | 0.61         | 6 of 13 scores   |
 | 0.83 to 0.95 | 21    | 21         | 1.00         | 0 of 13 scores   |
 
-The Brier score, the mean of the squared gap between the top score and 1 for an
-acceptable phrase or 0 for one that isn't, is 0.211, with a 95% bootstrap
-interval of 0.170 to 0.254; lower is better. Always forecasting the share
-acceptable, 43 of 80, would score 0.249, so the skill score, 1 minus the Brier
-score over that, is 0.151: above 0 beats that constant forecast, and below 0
-does worse. CORP's decomposition gives a miscalibration of 0.069 and a
-discrimination of 0.107: before rounding, the Brier score is the miscalibration,
-minus the discrimination, plus that score of always forecasting the share.
+The Brier score, the mean of the squared gap between the top score and 1 for an acceptable phrase or 0 for one that isn't, is 0.211, with a 95% bootstrap interval of 0.170 to 0.254; lower is better. Always forecasting the share acceptable, 43 of 80, would score 0.249, so the skill score, 1 minus the Brier score over that, is 0.151: above 0 beats that constant forecast, and below 0 does worse. CORP's decomposition gives a miscalibration of 0.069 and a discrimination of 0.107: before rounding, the Brier score is the miscalibration, minus the discrimination, plus that score of always forecasting the share.
 
 ## Risk and coverage
 
 ![Risk against coverage for each ranker](results-extras-risk-coverage.svg)
 
-Each ranker's risk against its coverage on all 80 lines, as its threshold falls
-through its top scores: a line is covered when its top phrase reaches the
-threshold, and right when one of its first six phrases at or above it is
-acceptable; the fixed buttons and the big button don't count. place and keyword
-score each phrase 1 or 0, so each makes one point. The table gives the risk at
-the first point that covers at least each share of the lines, and at what
-coverage.
+Each ranker's risk against its coverage on all 80 lines, as its threshold falls through its top scores: a line is covered when its top phrase reaches the threshold, and right when one of its first six phrases at or above it is acceptable; the fixed buttons and the big button don't count. place and keyword score each phrase 1 or 0, so each makes one point. The table gives the risk at the first point that covers at least each share of the lines, and at what coverage.
 
 | Ranker                | 20%         | 40%         | 60%         | 80%         | 100%        |
 | --------------------- | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -316,13 +230,7 @@ coverage.
 
 ## The cut-offs for holding
 
-The lines went into five folds, from one seeded shuffle, each with its share of
-the lines with no acceptable reply: folds 1 to 5 held 16, 16, 16, 16, and 16
-lines. For each ranker below, each fold's lines were scored at the cut-off, of
-the six highest scores of each of the other four folds' lines, that made the
-most of those lines right, a tie going to the higher; "hold all" is one above
-every score. A line whose top phrase falls short of its cut-off shows no phrase:
-the row holds, unless the phone's yes-or-no rule brings the fixed buttons.
+The lines went into five folds, from one seeded shuffle, each with its share of the lines with no acceptable reply: folds 1 to 5 held 16, 16, 16, 16, and 16 lines. For each ranker below, each fold's lines were scored at the cut-off, of the six highest scores of each of the other four folds' lines, that made the most of those lines right, a tie going to the higher; "hold all" is one above every score. A line whose top phrase falls short of its cut-off shows no phrase: the row holds, unless the phone's yes-or-no rule brings the fixed buttons.
 
 | Ranker     | Fold 1 | Fold 2 | Fold 3 | Fold 4 | Fold 5 |
 | ---------- | ------ | ------ | ------ | ------ | ------ |
@@ -333,10 +241,7 @@ the row holds, unless the phone's yes-or-no rule brings the fixed buttons.
 
 ## Latency
 
-Milliseconds per line over three passes, after a warm-up pass: the app picking
-the shortlist, then each ranker's ranking, its network trip included. The apple
-ranker's time is this Mac's, through a pipe to its Swift helper, not the
-phone's.
+Milliseconds per line over three passes, after a warm-up pass: the app picking the shortlist, then each ranker's ranking, its network trip included. The apple ranker's time is this Mac's, through a pipe to its Swift helper, not the phone's.
 
 | Step                  | Median   | 95th percentile | Maximum   |
 | --------------------- | -------- | --------------- | --------- |

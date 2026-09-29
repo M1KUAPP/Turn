@@ -1,12 +1,6 @@
 # Release checklist
 
-This is RELEASE-1's checklist: one row for every Must requirement in
-[the product requirements](/docs/PRD.md), with the check it names, where that
-check runs, its result, and the build it ran on. At the team lead's direction
-it stands in for RELEASE-1's sign-off (#65), and every failure is listed. It
-covers `main` at `c0a1180`, its test suites, and the CI runs that build and
-drive the app in the Simulator; the video iPhone's rows ran on `606d822`'s
-Debug build on September 29, and those that #147 to #153 fixed on `d5386ca`'s.
+This is RELEASE-1's checklist: one row for every Must requirement in [the product requirements](/docs/PRD.md), with the check it names, where that check runs, its result, and the build it ran on. At the team lead's direction it stands in for RELEASE-1's sign-off (#65), and every failure is listed. It covers `main` at `c0a1180`, its test suites, and the CI runs that build and drive the app in the Simulator; the video iPhone's rows ran on `606d822`'s Debug build on September 29, and those that #147 to #153 fixed on `d5386ca`'s.
 
 Contents:
 
@@ -27,33 +21,15 @@ Contents:
 | RELEASE-4       | 7    |
 | RELEASE-5       | 3    |
 
-The 115 rows are the PRD's 115 Musts, the five release criteria among them.
-The Simulator rows come from [run 36323630432], all 42 flows passing on
-`c0a1180`. The video iPhone's come from #92, #128, #136, #61, #62, and #55, on
-an iPhone 15 Pro Max with iOS 27.0, and those that #147 to #153 fixed from a
-Debug build of `d5386ca`; PERF-1, PERF-3, and PERF-4 ran on
-production JavaScript from Metro, as the TRD asks, and PERF-2 on the Debug
-build's. RELEASE-1 waits on #119's two rows; `RELEASE-4` and `RELEASE-5` rows
-run before the Devpost deadline and through judging, outside RELEASE-1.
+The 115 rows are the PRD's 115 Musts, the five release criteria among them. The Simulator rows come from [run 36323630432], all 42 flows passing on `c0a1180`. The video iPhone's come from #92, #128, #136, #61, #62, and #55, on an iPhone 15 Pro Max with iOS 27.0, and those that #147 to #153 fixed from a Debug build of `d5386ca`; PERF-1, PERF-3, and PERF-4 ran on production JavaScript from Metro, as the TRD asks, and PERF-2 on the Debug build's. RELEASE-1 waits on #119's two rows; `RELEASE-4` and `RELEASE-5` rows run before the Devpost deadline and through judging, outside RELEASE-1.
 
 ## Failures
 
-- **The paywall: PAY-1, PAY-2, STATE-4, and COMPAT-2.** The relay counts the
-  free lines and answers the 21st with `402`. #133's Simulator flows pass the
-  purchase rows, PAY-4 to PAY-6, SET-1, and METRIC-4; these four wait on #53.
-- **Teammate reads that didn't happen: CONTENT-1, CONTENT-3, and
-  CONTENT-4.** Their checks ask a teammate to read the starter phrases, to
-  compare both versions of the consent texts with the requirements, and to
-  compare the privacy notice with the TRD's data inventory. #75 and #76 closed
-  as not planned. Tests check what a script can:
-  `eval/test/starter-bank.test.ts`, `app/test/consent-strings.test.ts`, and
-  `app/test/privacy-notice.test.ts`.
-- **Checked nowhere: STATE-2.** No test or flow blocks the relay's address
-  for scenario 7; unit tests cover the degraded note.
-- **One slow cold launch: PERF-3 and BANK-7.** One of ten launches at 2,156
-  phrases took 2.11 s, loading its JavaScript from Metro.
-- **No Personal Voice on the video iPhone: VOICE-2 and COMPAT-3.** iOS takes
-  hours to make one, so only Turn's note and the system voice were seen.
+- **The paywall: PAY-1, PAY-2, STATE-4, and COMPAT-2.** The relay counts the free lines and answers the 21st with `402`. #133's Simulator flows pass the purchase rows, PAY-4 to PAY-6, SET-1, and METRIC-4; these four wait on #53.
+- **Teammate reads that didn't happen: CONTENT-1, CONTENT-3, and CONTENT-4.** Their checks ask a teammate to read the starter phrases, to compare both versions of the consent texts with the requirements, and to compare the privacy notice with the TRD's data inventory. #75 and #76 closed as not planned. Tests check what a script can: `eval/test/starter-bank.test.ts`, `app/test/consent-strings.test.ts`, and `app/test/privacy-notice.test.ts`.
+- **Checked nowhere: STATE-2.** No test or flow blocks the relay's address for scenario 7; unit tests cover the degraded note.
+- **One slow cold launch: PERF-3 and BANK-7.** One of ten launches at 2,156 phrases took 2.11 s, loading its JavaScript from Metro.
+- **No Personal Voice on the video iPhone: VOICE-2 and COMPAT-3.** iOS takes hours to make one, so only Turn's note and the system voice were seen.
 
 ## Waiting
 
@@ -61,8 +37,7 @@ run before the Devpost deadline and through judging, outside RELEASE-1.
 
 ## Checks by area
 
-Every section below names its requirements in the order
-[the product requirements](/docs/PRD.md) lists them.
+Every section below names its requirements in the order [the product requirements](/docs/PRD.md) lists them.
 
 ### The speaking grid
 
@@ -276,8 +251,7 @@ Every section below names its requirements in the order
 
 ### Release criteria
 
-These five are the release criteria themselves, and they count among the 115
-Musts.
+These five are the release criteria themselves, and they count among the 115 Musts.
 
 | ID        | Check                                      | Where                                                                                                                                                          | Result          | Build           |
 | --------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------- |
@@ -290,12 +264,8 @@ Musts.
 ## See also
 
 - [Product requirements](/docs/PRD.md): the Musts this checklist records.
-- [Technical requirements](/docs/TRD.md): how the first version is built, its
-  [requirements traceability](/docs/TRD.md#requirements-traceability), its
-  [testing](/docs/TRD.md#testing), and its
-  [environments and release](/docs/TRD.md#environments-and-release).
-- [The evaluation](/eval/results.md) and
-  [the second run](/eval/results-extras.md).
+- [Technical requirements](/docs/TRD.md): how the first version is built, its [requirements traceability](/docs/TRD.md#requirements-traceability), its [testing](/docs/TRD.md#testing), and its [environments and release](/docs/TRD.md#environments-and-release).
+- [The evaluation](/eval/results.md) and [the second run](/eval/results-extras.md).
 - [The relay's configuration](/worker/wrangler.jsonc).
 - #65, which this checklist is written for.
 

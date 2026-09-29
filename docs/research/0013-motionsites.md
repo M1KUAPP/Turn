@@ -1,13 +1,6 @@
 # motionsites.ai research notes
 
-What motionsites.ai sells and on what terms, what a local corpus of 813
-prompts holds (483 of them from motionsites.ai), which design patterns recur
-across them, and which of those patterns suit a native iPhone game. These
-notes are the motionsites.ai part of the research behind the
-[Guessling design](/docs/archive/guessling-design.md), now archived, made for
-Shipaton's Best Game category. Every source was read on September 22, 2026,
-so prices, counts, and page text are as of that date, and judgment starts
-with "Synthesis:".
+What motionsites.ai sells and on what terms, what a local corpus of 813 prompts holds (483 of them from motionsites.ai), which design patterns recur across them, and which of those patterns suit a native iPhone game. These notes are the motionsites.ai part of the research behind the [Guessling design](/docs/archive/guessling-design.md), now archived, made for Shipaton's Best Game category. Every source was read on September 22, 2026, so prices, counts, and page text are as of that date, and judgment starts with "Synthesis:".
 
 Contents:
 
@@ -49,42 +42,14 @@ Contents:
 
 ## Sources and method
 
-- **Site pages.** The home page, the 13 URLs in its sitemap ([ms-sitemap]),
-  two more lessons that the Academy links, and 11 routes that appear only
-  in the site's JavaScript, such as `/mcp`, `/request`, `/motionsite`,
-  `/design-md`, and `/templates`, were fetched with `curl`. The pages are
-  rendered on the server, so their text was read from the HTML; values that
-  change with a control, such as prompt-pack prices, were read in the page
-  code served that day ([ms-unlimited-js]; [ms-dialog-js]).
-- **Policy pages.** No page and no sitemap entry links a terms, license,
-  privacy, or refund page, and `/terms`, `/license`, `/privacy`, `/refund`,
-  `/terms-of-service`, `/privacy-policy`, `/pricing`, and `/faq` returned
-  HTTP 404. The robots file allows every crawler ([ms-robots]).
-- **Search.** The web search tool's quota for this session was spent, and
-  `site:motionsites.ai` queries sent to Bing and DuckDuckGo with `curl`
-  returned unrelated results or a bot check, so no search results for the
-  domain were read.
-- **Live listing.** The home page fills its grid by reading a `prompts`
-  table from the site's Supabase backend with the public key the page
-  ships. That read, repeated once at 04:05 UTC, returned 526 rows of the
-  columns the page asks for (title, category, type, `is_free`,
-  `created_at`, and preview URLs) and no prompt text. These rows date the
-  corpus; these notes call them the live listing.
-- **Corpus.** The 813 folders under
-  `/Users/yk/Projects/playground.repository/motionsitesai.repository/`
-  `motionsitesai/prompts` were read in place and never written to. Corpus
-  facts cite a folder name; counts come from the script in
-  [Appendix: analysis script](#appendix-analysis-script), run with the
-  corpus and the live listing, and are marked "appendix".
-- **Close reading.** 27 prompts were read in full, chosen across the five
-  prefixes, the site's categories, and dates up to the newest; they're
-  listed in [What 27 prompts share](#what-27-prompts-share).
-- **Paid content.** The prompts may be paid content, so these notes quote
-  at most a few words of any prompt and describe the rest in their own
-  words.
-- **Native side.** React Native 0.86's style reference, Expo SDK 57's
-  module pages, and Reanimated 4's docs were read to judge what transfers
-  to the app.
+- **Site pages.** The home page, the 13 URLs in its sitemap ([ms-sitemap]), two more lessons that the Academy links, and 11 routes that appear only in the site's JavaScript, such as `/mcp`, `/request`, `/motionsite`, `/design-md`, and `/templates`, were fetched with `curl`. The pages are rendered on the server, so their text was read from the HTML; values that change with a control, such as prompt-pack prices, were read in the page code served that day ([ms-unlimited-js]; [ms-dialog-js]).
+- **Policy pages.** No page and no sitemap entry links a terms, license, privacy, or refund page, and `/terms`, `/license`, `/privacy`, `/refund`, `/terms-of-service`, `/privacy-policy`, `/pricing`, and `/faq` returned HTTP 404. The robots file allows every crawler ([ms-robots]).
+- **Search.** The web search tool's quota for this session was spent, and `site:motionsites.ai` queries sent to Bing and DuckDuckGo with `curl` returned unrelated results or a bot check, so no search results for the domain were read.
+- **Live listing.** The home page fills its grid by reading a `prompts` table from the site's Supabase backend with the public key the page ships. That read, repeated once at 04:05 UTC, returned 526 rows of the columns the page asks for (title, category, type, `is_free`, `created_at`, and preview URLs) and no prompt text. These rows date the corpus; these notes call them the live listing.
+- **Corpus.** The 813 folders under `/Users/yk/Projects/playground.repository/motionsitesai.repository/` `motionsitesai/prompts` were read in place and never written to. Corpus facts cite a folder name; counts come from the script in [Appendix: analysis script](#appendix-analysis-script), run with the corpus and the live listing, and are marked "appendix".
+- **Close reading.** 27 prompts were read in full, chosen across the five prefixes, the site's categories, and dates up to the newest; they're listed in [What 27 prompts share](#what-27-prompts-share).
+- **Paid content.** The prompts may be paid content, so these notes quote at most a few words of any prompt and describe the rest in their own words.
+- **Native side.** React Native 0.86's style reference, Expo SDK 57's module pages, and Reanimated 4's docs were read to judge what transfers to the app.
 
 [ms-sitemap]: https://motionsites.ai/sitemap.xml
 [ms-robots]: https://motionsites.ai/robots.txt
@@ -93,44 +58,13 @@ Contents:
 
 ### The product and its catalog
 
-- **What it is.** The page title is "MotionSites AI — Official Premium AI
-  Website Prompts", and the description says "Beautiful Website Prompts for
-  Lovable, Bolt, Cursor, and Claude. Build Stunning 3d Websites With AI.
-  Just copy, paste, and launch" ([ms-home]).
-- **What a prompt is.** Each design is a card with a video or image
-  preview, and "Copy full prompt" copies the long text specification behind
-  it; some cards add "Open in Bolt", "Open in Google AI Studio", "Open in
-  Kimi", "Download from GitHub", or "Download assets" ([ms-dialog-js]). A
-  lesson sums up the contents: "MotionSites prompts contain the layout,
-  styling, fonts, animations, responsive behavior, dependencies, and exact
-  content needed to recreate the design." ([ms-lesson-ai])
-- **Catalog.** Landing pages and "Blocks & components to help you build &
-  launch premium AI websites faster" ([ms-sections]); "premium app design
-  prompts" for "web & mobile apps" ([ms-apps]); "Animated Backgrounds",
-  whose cards offer "Copy URL" for the video itself ([ms-backgrounds]);
-  "Handcrafted Animated Gradients" ([ms-gradients]); and templates with
-  "Open in Lovable" and "Open in Bolt" buttons ([ms-templates]).
-- **DESIGN.md files.** A page offers "Drop-in DESIGN.md blueprints to guide
-  your AI builds with taste and consistency", but its four cards read
-  "Coming soon", and its code says "This DESIGN.md requires an active plan."
-  ([ms-design-md])
-- **Other offers.** An MCP server "Included in all paid plans" ([ms-mcp]);
-  custom private prompts ([ms-request]); a creator program, "Get paid for
-  designs you've already created" ([ms-submit]), and "free lifetime access"
-  for builders whose tagged design MotionSites accepts ([ms-lesson-3d]);
-  affiliates at "40% commission per referral" ([ms-affiliates]); and free
-  video lessons "Powered by Design Rocket" ([ms-academy]).
-- **Size.** The about page claims "500 Prompts available", "1,000 Prompts
-  coming", "50,000 Total websites built", and "100,000 Users", and says
-  "Launched in 2026" ([ms-motionsite]); the MCP page offers "500+ Premium
-  Website Design Prompts" ([ms-mcp]). The live listing held 526 prompts,
-  created from March 1 to September 21, 2026, 49 of them in September
-  (appendix). The build and user counts couldn't be checked.
-- **Thesis.** "Most AI-generated websites follow the same formula:
-  oversized headings, glowing gradients, generic cards, and layouts you've
-  already seen everywhere." And: "But motion alone isn't enough. It still
-  needs good typography, spacing, structure, and restraint."
-  ([ms-motionsite])
+- **What it is.** The page title is "MotionSites AI — Official Premium AI Website Prompts", and the description says "Beautiful Website Prompts for Lovable, Bolt, Cursor, and Claude. Build Stunning 3d Websites With AI. Just copy, paste, and launch" ([ms-home]).
+- **What a prompt is.** Each design is a card with a video or image preview, and "Copy full prompt" copies the long text specification behind it; some cards add "Open in Bolt", "Open in Google AI Studio", "Open in Kimi", "Download from GitHub", or "Download assets" ([ms-dialog-js]). A lesson sums up the contents: "MotionSites prompts contain the layout, styling, fonts, animations, responsive behavior, dependencies, and exact content needed to recreate the design." ([ms-lesson-ai])
+- **Catalog.** Landing pages and "Blocks & components to help you build & launch premium AI websites faster" ([ms-sections]); "premium app design prompts" for "web & mobile apps" ([ms-apps]); "Animated Backgrounds", whose cards offer "Copy URL" for the video itself ([ms-backgrounds]); "Handcrafted Animated Gradients" ([ms-gradients]); and templates with "Open in Lovable" and "Open in Bolt" buttons ([ms-templates]).
+- **DESIGN.md files.** A page offers "Drop-in DESIGN.md blueprints to guide your AI builds with taste and consistency", but its four cards read "Coming soon", and its code says "This DESIGN.md requires an active plan." ([ms-design-md])
+- **Other offers.** An MCP server "Included in all paid plans" ([ms-mcp]); custom private prompts ([ms-request]); a creator program, "Get paid for designs you've already created" ([ms-submit]), and "free lifetime access" for builders whose tagged design MotionSites accepts ([ms-lesson-3d]); affiliates at "40% commission per referral" ([ms-affiliates]); and free video lessons "Powered by Design Rocket" ([ms-academy]).
+- **Size.** The about page claims "500 Prompts available", "1,000 Prompts coming", "50,000 Total websites built", and "100,000 Users", and says "Launched in 2026" ([ms-motionsite]); the MCP page offers "500+ Premium Website Design Prompts" ([ms-mcp]). The live listing held 526 prompts, created from March 1 to September 21, 2026, 49 of them in September (appendix). The build and user counts couldn't be checked.
+- **Thesis.** "Most AI-generated websites follow the same formula: oversized headings, glowing gradients, generic cards, and layouts you've already seen everywhere." And: "But motion alone isn't enough. It still needs good typography, spacing, structure, and restraint." ([ms-motionsite])
 
 [ms-sections]: https://motionsites.ai/sections
 [ms-apps]: https://motionsites.ai/apps
@@ -142,17 +76,9 @@ Contents:
 
 ### Free and paid prompts
 
-- **Share.** 179 of the 526 live prompts (34.0%) are marked free
-  (appendix).
-- **Copy limits.** A visitor who copies too many sees "You've reached your
-  free copy limit." and "Create an account or upgrade to keep
-  downloading."; a paid prompt opens with a plan or a pack credit ("Use 1
-  prompt credit?") ([ms-dialog-js]). Through the MCP server, "Free accounts
-  can open 3 free prompts — paid plans unlock all 500+." ([ms-mcp])
-- **Fair use.** The three-month plan caps copies at "Fair use: 3 prompt
-  copies / Day" ([ms-unlimited]), and the prompt dialog counts down the
-  "daily prompt copies left" and adds "Re-opening this prompt later today
-  is free." ([ms-dialog-js])
+- **Share.** 179 of the 526 live prompts (34.0%) are marked free (appendix).
+- **Copy limits.** A visitor who copies too many sees "You've reached your free copy limit." and "Create an account or upgrade to keep downloading."; a paid prompt opens with a plan or a pack credit ("Use 1 prompt credit?") ([ms-dialog-js]). Through the MCP server, "Free accounts can open 3 free prompts — paid plans unlock all 500+." ([ms-mcp])
+- **Fair use.** The three-month plan caps copies at "Fair use: 3 prompt copies / Day" ([ms-unlimited]), and the prompt dialog counts down the "daily prompt copies left" and adds "Re-opening this prompt later today is free." ([ms-dialog-js])
 
 ### Prices on September 22, 2026
 
@@ -165,116 +91,45 @@ Contents:
 | Custom hero section | $99, beside a struck-through $599   | "One-time payment"                                                  | [ms-request]      |
 | Custom landing page | $249, beside a struck-through $1499 | "Landing page (5–6 sections)"; "One-time payment"                   | [ms-request]      |
 
-- **What every plan includes.** "Access to Apps", "Animated Backgrounds",
-  "Access to sections", "40+ Lovable Templates", "Motionsites MCP",
-  "Community Access", "For personal & client work", and "Priority
-  support"; lifetime adds "Lifetime updates" and "Early access". "The
-  currency for your membership billing will be in USD." ([ms-unlimited])
-- **Offers in the code.** The page code also holds a "Founding Members
-  Sale" countdown for the $399 price and a $199 "Upgrade to Lifetime" for
-  three-month members ([ms-unlimited-js]).
-- **The pitch.** "A single freelance landing page typically costs
-  $500–$2,000." ([ms-unlimited])
+- **What every plan includes.** "Access to Apps", "Animated Backgrounds", "Access to sections", "40+ Lovable Templates", "Motionsites MCP", "Community Access", "For personal & client work", and "Priority support"; lifetime adds "Lifetime updates" and "Early access". "The currency for your membership billing will be in USD." ([ms-unlimited])
+- **Offers in the code.** The page code also holds a "Founding Members Sale" countdown for the $399 price and a $199 "Upgrade to Lifetime" for three-month members ([ms-unlimited-js]).
+- **The pitch.** "A single freelance landing page typically costs $500–$2,000." ([ms-unlimited])
 
 ### AI builders the prompts target
 
-- **Named builders.** The description names "Lovable, Bolt, Cursor, and
-  Claude" ([ms-home]); the pricing FAQ says to paste a prompt "into AI
-  builders like Lovable, Cursor, Bolt, Claude, v0, or Replit"
-  ([ms-unlimited]); custom prompts work in "Cursor, Claude, ChatGPT, Codex,
-  Lovable, Google AI Studio and any other tool that accepts a text prompt"
-  ([ms-request]); and a lesson pastes into "Claude Code, Cursor, Bolt,
-  Lovable, or another AI website builder" ([ms-lesson-ms]).
-- **MCP.** "One command. No API key. Works with Claude, Cursor and Codex."
-  The page gives setup steps for Claude Code, Cursor, and Codex and a
-  custom connector for Claude Desktop and the web, and "Ask your agent for
-  a design and it pulls real MotionSites prompts." ([ms-mcp])
-- **Target stack.** A lesson's prompt "is designed for React, TypeScript,
-  Tailwind CSS, and Framer Motion" ([ms-lesson-ai]), which matches the
-  corpus (see [Stack mentions](#stack-mentions)).
-- **How to use one.** "Choose a design → copy the prompt → paste it into an
-  AI builder → refine the result." And: "Small, specific instructions
-  usually work better than asking the AI to redesign the entire page."
-  ([ms-lesson-ai]) Of two more lessons, one turns a single image into a 3D
-  model with AI tools and animates it with Three.js in Claude's Code mode
-  ([ms-lesson-3d]), and the other keeps text out of the background video,
-  since "The headline, navigation, and other interface elements should
-  remain editable website content" ([ms-lesson-scroll]). The Academy's
-  video titles follow new models, such as "Build This Scroll Website with
-  NEW Grok 4.5" ([ms-academy]).
+- **Named builders.** The description names "Lovable, Bolt, Cursor, and Claude" ([ms-home]); the pricing FAQ says to paste a prompt "into AI builders like Lovable, Cursor, Bolt, Claude, v0, or Replit" ([ms-unlimited]); custom prompts work in "Cursor, Claude, ChatGPT, Codex, Lovable, Google AI Studio and any other tool that accepts a text prompt" ([ms-request]); and a lesson pastes into "Claude Code, Cursor, Bolt, Lovable, or another AI website builder" ([ms-lesson-ms]).
+- **MCP.** "One command. No API key. Works with Claude, Cursor and Codex." The page gives setup steps for Claude Code, Cursor, and Codex and a custom connector for Claude Desktop and the web, and "Ask your agent for a design and it pulls real MotionSites prompts." ([ms-mcp])
+- **Target stack.** A lesson's prompt "is designed for React, TypeScript, Tailwind CSS, and Framer Motion" ([ms-lesson-ai]), which matches the corpus (see [Stack mentions](#stack-mentions)).
+- **How to use one.** "Choose a design → copy the prompt → paste it into an AI builder → refine the result." And: "Small, specific instructions usually work better than asking the AI to redesign the entire page." ([ms-lesson-ai]) Of two more lessons, one turns a single image into a 3D model with AI tools and animates it with Three.js in Claude's Code mode ([ms-lesson-3d]), and the other keeps text out of the background video, since "The headline, navigation, and other interface elements should remain editable website content" ([ms-lesson-scroll]). The Academy's video titles follow new models, such as "Build This Scroll Website with NEW Grok 4.5" ([ms-academy]).
 
 [ms-lesson-scroll]: https://motionsites.ai/lesson/build-scroll-animated-website-with-ai
 
 ### License and terms
 
-- **No terms page.** No license, terms, privacy, or refund page exists (see
-  [Sources and method](#sources-and-method)), and the footer reads only
-  "© Motionsites AI 2026. All rights reserved" ([ms-home]).
-- **The only grant.** Every plan lists "For personal & client work", set in
-  bold ([ms-unlimited]; [ms-unlimited-js]).
-- **Custom prompts.** A request buys "a private, custom prompt built only
-  for you and never published" ([ms-request]).
-- **Unanswered.** Nothing says whether a buyer may share, publish, or
-  resell prompt text, whether code built from a prompt carries any
-  restriction, or whether the videos and images a prompt points to may ship
-  in a product.
-- Synthesis: A plan covers building sites from prompts, for oneself and for
-  clients; nothing grants redistribution, and "All rights reserved" argues
-  against it. Guessling should take patterns, not text or media: no prompt
-  text in the repo, and no video, image, or font that a prompt points to in
-  the app, the store page, or the web pages.
+- **No terms page.** No license, terms, privacy, or refund page exists (see [Sources and method](#sources-and-method)), and the footer reads only "© Motionsites AI 2026. All rights reserved" ([ms-home]).
+- **The only grant.** Every plan lists "For personal & client work", set in bold ([ms-unlimited]; [ms-unlimited-js]).
+- **Custom prompts.** A request buys "a private, custom prompt built only for you and never published" ([ms-request]).
+- **Unanswered.** Nothing says whether a buyer may share, publish, or resell prompt text, whether code built from a prompt carries any restriction, or whether the videos and images a prompt points to may ship in a product.
+- Synthesis: A plan covers building sites from prompts, for oneself and for clients; nothing grants redistribution, and "All rights reserved" argues against it. Guessling should take patterns, not text or media: no prompt text in the repo, and no video, image, or font that a prompt points to in the app, the store page, or the web pages.
 
 ## The local prompt corpus
 
-The corpus holds 483 motionsites.ai prompts and 330 from three other
-libraries in one folder layout. Counts come from the appendix unless a
-folder is named.
+The corpus holds 483 motionsites.ai prompts and 330 from three other libraries in one folder layout. Counts come from the appendix unless a folder is named.
 
 ### What each file holds
 
-- **metadata.json.** In all 813 folders, a `record` shaped like a catalog
-  row (`id`, `title`, `category`, `page_type`, `sort_order`, `is_free`,
-  `types`, and preview URLs; numbered folders add `type`, `created_at`, and
-  `row_span`) and a `workingPrompt` object. Numbered folders also hold
-  `result`, whose `prompt_text` is the text an export captured, next to an
-  empty `sections` list and null `error` and `code` (`003-3`).
-- **prompt.md.** In 658 folders, the prompt as captured. Set against
-  `result.prompt_text` in the 276 numbered folders that have a prompt.md,
-  and ignoring whitespace, it's the same text in 208; the same text, which
-  the export wraps in a title, ID, and category header or a closing
-  "Generated by MotionSites Export Tool" line, in 57 (`017-aethera-studio`);
-  another version of the prompt in 9; and a reconstruction in 2. In
-  `336-portal`, the export describes a streaming-site hero and prompt.md a
-  password-manager hero.
-- **working-prompt.md.** In 622 folders, the text meant for use. Where both
-  files exist (467 folders), the two are byte-identical; in 155 numbered
-  folders it's the only text.
-- **Which file counts.** The script reads working-prompt.md and falls back
-  to prompt.md, so each folder contributes one text.
+- **metadata.json.** In all 813 folders, a `record` shaped like a catalog row (`id`, `title`, `category`, `page_type`, `sort_order`, `is_free`, `types`, and preview URLs; numbered folders add `type`, `created_at`, and `row_span`) and a `workingPrompt` object. Numbered folders also hold `result`, whose `prompt_text` is the text an export captured, next to an empty `sections` list and null `error` and `code` (`003-3`).
+- **prompt.md.** In 658 folders, the prompt as captured. Set against `result.prompt_text` in the 276 numbered folders that have a prompt.md, and ignoring whitespace, it's the same text in 208; the same text, which the export wraps in a title, ID, and category header or a closing "Generated by MotionSites Export Tool" line, in 57 (`017-aethera-studio`); another version of the prompt in 9; and a reconstruction in 2. In `336-portal`, the export describes a streaming-site hero and prompt.md a password-manager hero.
+- **working-prompt.md.** In 622 folders, the text meant for use. Where both files exist (467 folders), the two are byte-identical; in 155 numbered folders it's the only text.
+- **Which file counts.** The script reads working-prompt.md and falls back to prompt.md, so each folder contributes one text.
 
 ### Working-prompt modes
 
-- **Two modes.** `workingPrompt.mode` is "original" in 658 folders and
-  "premium" in 155, all of them numbered.
-- **Premium.** These carry `note: "Unlocked prompt from archive."`,
-  `file: "working-prompt.md"`, and a `generatedAt` in the same second of
-  July 17, 2026 as the numbered records' `created_at`. Of the 155 texts, 93
-  open with front matter that names a `motionitems` image bucket and sets
-  `premium` to true in 44 and false in 49 (`006-3d-animation-hero`), 58 read
-  as full prompts (`133-duolingo-styleguide`), and 4 are one-line summaries
-  under 300 characters (`014-acreage-farming`).
-- **Recovered.** `recovered: true` appears on the 276 numbered folders in
-  original mode and nowhere else. The metadata doesn't define it; since
-  prompt.md there is the captured text, it reads as "the original text was
-  recovered", which is an inference.
-- **Reconstructions.** Two of those folders say they aren't originals:
-  `389-slam-dunk-hero` and `459-wisa-space-hero` open as a "Reconstructed
-  Working Prompt", "not the original paid prompt", built from "public
-  MotionSites title, category, and preview media metadata". Their captured
-  text only pointed to Google AI Studio.
-- Synthesis: working-prompt.md is the file to analyze, but the premium
-  texts came from an archive rather than the site, so they may not match
-  what MotionSites sells today; 58 of them match a live prompt.
+- **Two modes.** `workingPrompt.mode` is "original" in 658 folders and "premium" in 155, all of them numbered.
+- **Premium.** These carry `note: "Unlocked prompt from archive."`, `file: "working-prompt.md"`, and a `generatedAt` in the same second of July 17, 2026 as the numbered records' `created_at`. Of the 155 texts, 93 open with front matter that names a `motionitems` image bucket and sets `premium` to true in 44 and false in 49 (`006-3d-animation-hero`), 58 read as full prompts (`133-duolingo-styleguide`), and 4 are one-line summaries under 300 characters (`014-acreage-farming`).
+- **Recovered.** `recovered: true` appears on the 276 numbered folders in original mode and nowhere else. The metadata doesn't define it; since prompt.md there is the captured text, it reads as "the original text was recovered", which is an inference.
+- **Reconstructions.** Two of those folders say they aren't originals: `389-slam-dunk-hero` and `459-wisa-space-hero` open as a "Reconstructed Working Prompt", "not the original paid prompt", built from "public MotionSites title, category, and preview media metadata". Their captured text only pointed to Google AI Studio.
+- Synthesis: working-prompt.md is the file to analyze, but the premium texts came from an archive rather than the site, so they may not match what MotionSites sells today; 58 of them match a live prompt.
 
 ### Folder prefixes and counts
 
@@ -286,87 +141,37 @@ folder is named.
 | `hx-`    | 93      | HorizonX: `[HorizonX]` titles, category "HorizonX Library", previews on cdn.horizonx.so              | prompt.md only                            |
 | `dev21-` | 93      | 21st.dev: `[21st.dev]` titles, category "21st.dev Registry", ids start "21st-", previews on 21st.dev | prompt.md only                            |
 
-- **Numbering.** A numbered folder's number is its record's `sort_order`,
-  which runs roughly alphabetically from `003-3` to `470-lysian-hero`, with
-  37 numbers unused. The other prefixes' `sort_order` values start at 803
-  (`ms-`), 1000 (`hx-`), 2000 (`dev21-`), and 3000 (`sup-`).
-- **21st.dev confirmed.** Besides the metadata, every `dev21-` prompt names
-  a registry install for its component, `npx shadcn@latest add` followed by
-  a `https://21st.dev/r/` address (`dev21-arifuzzamanmoin-heximage`).
-- **Templates, not specs.** Every `hx-` prompt is one template of about 850
-  characters filled with a title and a one-line concept, and it names
-  glassmorphism, "Framer Motion or GSAP", and four builders (`hx-all-in-one`;
-  `hx-legion-age`). Every `dev21-` prompt is a template of about 580
-  characters around the install line (`dev21-xubohuah-particle-text-effect`).
-- **Superdesign's format.** `sup-` prompts are JSON with `summary`,
-  `style`, `layout_and_structure`, `special_ui_components`, and
-  `special_notes`; 139 records add `originalCategory`, `tags`,
-  `deslop_score`, and `visual_score`, and 74 of those 139 have a
-  `deslop_score` of 8 or 9, the highest values present
-  (`sup-acid-yellow-neo-brutalist-mega-footer`).
-- **Length.** Median prompts run 8,947 characters in `ms-`, 7,350 in
-  numbered folders, 6,115 in `sup-`, 846 in `hx-`, and 579 in `dev21-`.
+- **Numbering.** A numbered folder's number is its record's `sort_order`, which runs roughly alphabetically from `003-3` to `470-lysian-hero`, with 37 numbers unused. The other prefixes' `sort_order` values start at 803 (`ms-`), 1000 (`hx-`), 2000 (`dev21-`), and 3000 (`sup-`).
+- **21st.dev confirmed.** Besides the metadata, every `dev21-` prompt names a registry install for its component, `npx shadcn@latest add` followed by a `https://21st.dev/r/` address (`dev21-arifuzzamanmoin-heximage`).
+- **Templates, not specs.** Every `hx-` prompt is one template of about 850 characters filled with a title and a one-line concept, and it names glassmorphism, "Framer Motion or GSAP", and four builders (`hx-all-in-one`; `hx-legion-age`). Every `dev21-` prompt is a template of about 580 characters around the install line (`dev21-xubohuah-particle-text-effect`).
+- **Superdesign's format.** `sup-` prompts are JSON with `summary`, `style`, `layout_and_structure`, `special_ui_components`, and `special_notes`; 139 records add `originalCategory`, `tags`, `deslop_score`, and `visual_score`, and 74 of those 139 have a `deslop_score` of 8 or 9, the highest values present (`sup-acid-yellow-neo-brutalist-mega-footer`).
+- **Length.** Median prompts run 8,947 characters in `ms-`, 7,350 in numbered folders, 6,115 in `sup-`, 846 in `hx-`, and 579 in `dev21-`.
 
 ### How the corpus matches the live catalog
 
-- **Coverage.** 385 folders match a live prompt by id or title, covering
-  359 distinct live prompts, 68% of 526. The other 26 repeat a design
-  another folder holds: `003-3` and `086-clearinvoice-saas-hero` are one
-  live prompt, whose id is "3" and title "ClearInvoice SaaS Hero".
-- **Free flags disagree.** The site marks 239 of the matched folders paid
-  and 146 free, but their records say `is_free: true` in all but 3.
-- **Placeholders.** Every numbered record has `category: "Premium"` and a
-  `created_at` in one second of July 17, 2026, so the site's own dates and
-  categories come from the live listing.
-- **What's missing.** The newest matched prompt was created on August 30,
-  2026 (`ms-space-planet`), so none of the 49 September prompts is in the
-  corpus, and 97 archive folders match no live prompt: removed, renamed, or
-  never listed.
-- **The other libraries.** No `sup-`, `hx-`, or `dev21-` title appears in
-  the live listing, and nothing records how they joined the corpus.
+- **Coverage.** 385 folders match a live prompt by id or title, covering 359 distinct live prompts, 68% of 526. The other 26 repeat a design another folder holds: `003-3` and `086-clearinvoice-saas-hero` are one live prompt, whose id is "3" and title "ClearInvoice SaaS Hero".
+- **Free flags disagree.** The site marks 239 of the matched folders paid and 146 free, but their records say `is_free: true` in all but 3.
+- **Placeholders.** Every numbered record has `category: "Premium"` and a `created_at` in one second of July 17, 2026, so the site's own dates and categories come from the live listing.
+- **What's missing.** The newest matched prompt was created on August 30, 2026 (`ms-space-planet`), so none of the 49 September prompts is in the corpus, and 97 archive folders match no live prompt: removed, renamed, or never listed.
+- **The other libraries.** No `sup-`, `hx-`, or `dev21-` title appears in the live listing, and nothing records how they joined the corpus.
 
 ## Quantitative analysis
 
-Counts are prompts with at least one match, out of all 813 and out of the
-483 motionsites.ai prompts (numbered and `ms-`), since the templated `hx-`
-and `dev21-` texts skew the totals. Every regex is case-insensitive, except
-a part marked `(?-i:...)`; each was checked by reading a sample of its
-matches and narrowed where it caught page copy, such as "cut through the
-noise". The exact regexes are in the appendix; all counts here are from its
-run.
+Counts are prompts with at least one match, out of all 813 and out of the 483 motionsites.ai prompts (numbered and `ms-`), since the templated `hx-` and `dev21-` texts skew the totals. Every regex is case-insensitive, except a part marked `(?-i:...)`; each was checked by reading a sample of its matches and narrowed where it caught page copy, such as "cut through the noise". The exact regexes are in the appendix; all counts here are from its run.
 
 ### Metadata fields
 
-- **Category.** All 431 numbered records say "Premium", every `sup-` record
-  "Superdesign Canvas", `hx-` "HorizonX Library", and `dev21-` "21st.dev
-  Registry"; only `ms-` records carry the site's categories, led by SaaS
-  (10), Landing Page (8), and Hero Section (7). Superdesign's
-  `originalCategory` is led by "Design Systems & Styles" (14), then
-  "Animations & Backgrounds", "Components", "Forms & Contact", and "Pricing
-  Pages" (12 each).
-- **Page type.** "landing" in 432 records (the 431 numbered and one `ms-`),
-  "hero" in 43, and one value per other library: "superdesign",
-  "horizonx", and "21st_dev".
-- **Types and tags.** Numbered records have none. `ms-` records list
-  "MotionSites", "React", "Tailwind", and "Framer Motion"; `hx-` "HorizonX",
-  "Vibecoding", "React", and "Tailwind"; `dev21-` "21st.dev", the author,
-  and "shadcn". Superdesign's `tags` add words such as "landing page",
-  "responsive", "saas", "editorial", and "cream".
-- **Free flag.** `is_free` is true in 810 of 813 records (99.6%); the three
-  exceptions are `ms-` folders.
-- **Created.** `created_at` falls in July 2026 in all 431 numbered records,
-  one export second, and is missing from the other 382.
-- **Previews.** 223 records (27.4%) have a `video_preview_url`: all 93
-  `hx-`, 69 `dev21-`, 41 `ms-`, 20 `sup-`, and no numbered record. 598 have
-  an image preview.
-- **Site types.** In the live listing, the matched folders are mostly
-  "hero" (275 of 385), then "features" (35) and "mobile" (21).
+- **Category.** All 431 numbered records say "Premium", every `sup-` record "Superdesign Canvas", `hx-` "HorizonX Library", and `dev21-` "21st.dev Registry"; only `ms-` records carry the site's categories, led by SaaS (10), Landing Page (8), and Hero Section (7). Superdesign's `originalCategory` is led by "Design Systems & Styles" (14), then "Animations & Backgrounds", "Components", "Forms & Contact", and "Pricing Pages" (12 each).
+- **Page type.** "landing" in 432 records (the 431 numbered and one `ms-`), "hero" in 43, and one value per other library: "superdesign", "horizonx", and "21st_dev".
+- **Types and tags.** Numbered records have none. `ms-` records list "MotionSites", "React", "Tailwind", and "Framer Motion"; `hx-` "HorizonX", "Vibecoding", "React", and "Tailwind"; `dev21-` "21st.dev", the author, and "shadcn". Superdesign's `tags` add words such as "landing page", "responsive", "saas", "editorial", and "cream".
+- **Free flag.** `is_free` is true in 810 of 813 records (99.6%); the three exceptions are `ms-` folders.
+- **Created.** `created_at` falls in July 2026 in all 431 numbered records, one export second, and is missing from the other 382.
+- **Previews.** 223 records (27.4%) have a `video_preview_url`: all 93 `hx-`, 69 `dev21-`, 41 `ms-`, 20 `sup-`, and no numbered record. 598 have an image preview.
+- **Site types.** In the live listing, the matched folders are mostly "hero" (275 of 385), then "features" (35) and "mobile" (21).
 
 ### Dates and the newest prompts
 
-- **By month.** The live catalog grew by 63 prompts in March 2026, 39 in
-  April, 80 in May, 109 in June, 98 in July, 88 in August, and 49 in
-  September through the 21st.
+- **By month.** The live catalog grew by 63 prompts in March 2026, 39 in April, 80 in May, 109 in June, 98 in July, 88 in August, and 49 in September through the 21st.
 - **By period.** For the 385 matched folders, dated by the live listing:
 
 | Pattern                         | Mar–Apr (126) | May–Jun (191) | Jul–Aug (68) |
@@ -383,20 +188,9 @@ run.
 | Phone frame or Dynamic Island   | 0%            | 0%            | 24%          |
 | Median length in characters     | 4,259         | 7,457         | 9,402        |
 
-- **Newest in the corpus.** `ms-space-planet` (August 30, 2026),
-  `ms-quantum-lucid` (August 27), `113-cyberpunk-reveal` and
-  `179-future-state` (August 25), `ms-scaling-platform` (August 23), and
-  `ms-palomar-labs` (August 21).
-- **Newest on the site.** All 49 September prompts are heroes, most often
-  filed under "Creative" (7), "3D" (4), and "Portfolio" (4), with titles
-  such as "Future 3D Portfolio" and "Particle Field"; none is in the
-  corpus, so only their metadata was read.
-- Synthesis: The catalog moved from React, Tailwind, and Framer Motion
-  pages with HLS video and liquid glass in March and April toward longer,
-  stricter specs by August: single HTML files, exact tokens, "do not"
-  lists, reduced-motion and accessibility rules, and phone-frame app
-  screens. That shift is the newest thing here, and the part that suits a
-  design document.
+- **Newest in the corpus.** `ms-space-planet` (August 30, 2026), `ms-quantum-lucid` (August 27), `113-cyberpunk-reveal` and `179-future-state` (August 25), `ms-scaling-platform` (August 23), and `ms-palomar-labs` (August 21).
+- **Newest on the site.** All 49 September prompts are heroes, most often filed under "Creative" (7), "3D" (4), and "Portfolio" (4), with titles such as "Future 3D Portfolio" and "Particle Field"; none is in the corpus, so only their metadata was read.
+- Synthesis: The catalog moved from React, Tailwind, and Framer Motion pages with HLS video and liquid glass in March and April toward longer, stricter specs by August: single HTML files, exact tokens, "do not" lists, reduced-motion and accessibility rules, and phone-frame app screens. That shift is the newest thing here, and the part that suits a design document.
 
 ### Stack mentions
 
@@ -433,22 +227,12 @@ lucide-react                   lucide
 shadcn                         shadcn
 ```
 
-- **How matched.** Next.js counts only as a framework statement (a version,
-  "App Router", or a `next/` import), since service copy mentions it;
-  framer-motion counts as the name, a `motion/react` import, a lowercase
-  `"motion":` dependency, or a `motion.div`-style element.
-- **Templates inflate the totals.** All 93 `hx-` prompts name React,
-  Tailwind, and "Framer Motion or GSAP", and all 93 `dev21-` prompts name
-  React, Tailwind, and shadcn, which is why GSAP and shadcn look larger
-  among all 813 (`hx-all-in-one`; `dev21-arifuzzamanmoin-heximage`).
+- **How matched.** Next.js counts only as a framework statement (a version, "App Router", or a `next/` import), since service copy mentions it; framer-motion counts as the name, a `motion/react` import, a lowercase `"motion":` dependency, or a `motion.div`-style element.
+- **Templates inflate the totals.** All 93 `hx-` prompts name React, Tailwind, and "Framer Motion or GSAP", and all 93 `dev21-` prompts name React, Tailwind, and shadcn, which is why GSAP and shadcn look larger among all 813 (`hx-all-in-one`; `dev21-arifuzzamanmoin-heximage`).
 
 ### Font families
 
-- **How matched.** Families named in Google Fonts `family=` parameters,
-  plus the first family in each CSS `font-family` or JavaScript
-  `fontFamily` declaration, without generic families, CSS variables, or
-  icon fonts. The second column counts prompts that name the family
-  anywhere, which catches prose such as "Font: Inter".
+- **How matched.** Families named in Google Fonts `family=` parameters, plus the first family in each CSS `font-family` or JavaScript `fontFamily` declaration, without generic families, CSS variables, or icon fonts. The second column counts prompts that name the family anywhere, which catches prose such as "Font: Inter".
 
 | Family               | Declared   | Named anywhere |
 | -------------------- | ---------- | -------------- |
@@ -478,30 +262,13 @@ shadcn                         shadcn
 | Plus Jakarta Sans    | 3 (0.4%)   | 12 (1.5%)      |
 | TT Firs Neue         | 3 (0.4%)   | 3 (0.4%)       |
 
-- **Where fonts come from.** 167 prompts (20.5%) load Google Fonts, 65 (all
-  from motionsites.ai, 13.5% of 483) load from `db.onlinewebfonts.com`, 8
-  use Fontshare, and 29 declare `@font-face`. The families from the font
-  mirror include Helvetica Neue and Helvetica Now (`ms-palomar-labs`;
-  `456-wellness-companion`) and Cooper and Futura cuts.
-- Synthesis: Inter for interface text with Instrument Serif for display is
-  the house pairing, and that ubiquity is a reason for Guessling to choose
-  its own. Families such as Helvetica Now and Futura are sold under
-  commercial licenses, so a copy served by a font mirror shouldn't reach a
-  shipped app.
+- **Where fonts come from.** 167 prompts (20.5%) load Google Fonts, 65 (all from motionsites.ai, 13.5% of 483) load from `db.onlinewebfonts.com`, 8 use Fontshare, and 29 declare `@font-face`. The families from the font mirror include Helvetica Neue and Helvetica Now (`ms-palomar-labs`; `456-wellness-companion`) and Cooper and Futura cuts.
+- Synthesis: Inter for interface text with Instrument Serif for display is the house pairing, and that ubiquity is a reason for Guessling to choose its own. Families such as Helvetica Now and Futura are sold under commercial licenses, so a copy served by a font mirror shouldn't reach a shipped app.
 
 ### Page backgrounds and hex colors
 
-- **How matched.** Four steps, each used only when the one before can't
-  decide: a page-level color (a `body` or `html` background, prose such as
-  "page background", or the background class on a `min-h-screen`
-  wrapper); a stated theme ("dark mode", "light theme", and the like, when
-  only one kind appears); text colors, when white text outnumbers dark text
-  two to one or the reverse, with at least three uses; and the first CSS or
-  labeled background color. A color is dark below 50% HLS lightness, and
-  tints under 50% alpha are skipped.
-- **Checks.** Where a page-level color or a stated theme exists, the
-  text-color step agrees with it in 67 of 75 prompts and the
-  first-background step in 88 of 97.
+- **How matched.** Four steps, each used only when the one before can't decide: a page-level color (a `body` or `html` background, prose such as "page background", or the background class on a `min-h-screen` wrapper); a stated theme ("dark mode", "light theme", and the like, when only one kind appears); text colors, when white text outnumbers dark text two to one or the reverse, with at least three uses; and the first CSS or labeled background color. A color is dark below 50% HLS lightness, and tints under 50% alpha are skipped.
+- **Checks.** Where a page-level color or a stated theme exists, the text-color step agrees with it in 67 of 75 prompts and the first-background step in 88 of 97.
 
 | Page         | All 813     | Numbered and `ms-` (483) |
 | ------------ | ----------- | ------------------------ |
@@ -509,15 +276,8 @@ shadcn                         shadcn
 | Light        | 124 (15.3%) | 87 (18.0%)               |
 | Undetermined | 403 (49.6%) | 145 (30.0%)              |
 
-- **Stated themes.** 109 prompts say dark and 43 say light. The
-  undetermined group holds 185 of the 186 `hx-` and `dev21-` templates, none
-  of which names a hex color, and Superdesign leans lighter than
-  motionsites.ai, with 37 light and 34 dark `sup-` prompts.
-- **Hex colors.** 551 prompts use at least one of 1,885 distinct hex
-  colors (three-digit values expanded, alpha dropped). Pure white and
-  black lead, then near-blacks, then grays and accents from Tailwind's
-  default palette, such as `#3b82f6`, which `006-3d-animation-hero` labels
-  "Tailwind Blue-500":
+- **Stated themes.** 109 prompts say dark and 43 say light. The undetermined group holds 185 of the 186 `hx-` and `dev21-` templates, none of which names a hex color, and Superdesign leans lighter than motionsites.ai, with 37 light and 34 dark `sup-` prompts.
+- **Hex colors.** 551 prompts use at least one of 1,885 distinct hex colors (three-digit values expanded, alpha dropped). Pure white and black lead, then near-blacks, then grays and accents from Tailwind's default palette, such as `#3b82f6`, which `006-3d-animation-hero` labels "Tailwind Blue-500":
 
 | Hex       | Prompts     | Hex       | Prompts   |
 | --------- | ----------- | --------- | --------- |
@@ -532,13 +292,7 @@ shadcn                         shadcn
 | `#6b7280` | 21 (2.6%)   | `#666666` | 13 (1.6%) |
 | `#0f172a` | 19 (2.3%)   | `#94a3b8` | 13 (1.6%) |
 
-- **Accents.** A prompt usually carries one signature accent: a pale
-  chartreuse (`251-luxury-focus`), a lime (`005-3d-studio-pricing`), a cyan
-  (`ms-quantum-lucid`; `ms-space-planet`), or an acid yellow
-  (`sup-acid-yellow-neo-brutalist-mega-footer`). Two prompts ban the usual
-  AI palette outright, with "NO purple/violet anywhere" (`251-luxury-focus`)
-  and "avoid generic indigo or violet" palettes
-  (`sup-acid-yellow-neo-brutalist-mega-footer`).
+- **Accents.** A prompt usually carries one signature accent: a pale chartreuse (`251-luxury-focus`), a lime (`005-3d-studio-pricing`), a cyan (`ms-quantum-lucid`; `ms-space-planet`), or an acid yellow (`sup-acid-yellow-neo-brutalist-mega-footer`). Two prompts ban the usual AI palette outright, with "NO purple/violet anywhere" (`251-luxury-focus`) and "avoid generic indigo or violet" palettes (`sup-acid-yellow-neo-brutalist-mega-footer`).
 
 ### Technique counts
 
@@ -598,18 +352,9 @@ Blend modes                          mix-blend|blend-mode
 Blur-in entrance                     blur\(\s*0(?:\.0+)?(?:px)?\s*\)
 ```
 
-- **Narrowed.** "Noise" and "grain" count only beside texture words, so
-  copy such as "No noise." doesn't; "magnetic" counts only beside
-  interaction words, so a card's "magnetic stripe" and a product called
-  "Magnetic Amber" don't; "ticker" after "GSAP" is an API, not a
-  marquee; springs need spring physics, not a "spring-like" curve; and
-  "aurora" needs an effect word, so "aurora skies" in copy doesn't count.
-- **Still broad.** "3D" also counts the word in copy, such as a service
-  called "3D Modeling"; "gradient" counts any mention; and "spotlight"
-  catches one "Product Spotlight" section.
-- **Templates again.** All 93 `hx-` templates name glassmorphism,
-  which is why liquid glass is as common among all 813 as among the 483
-  (`hx-all-in-one`).
+- **Narrowed.** "Noise" and "grain" count only beside texture words, so copy such as "No noise." doesn't; "magnetic" counts only beside interaction words, so a card's "magnetic stripe" and a product called "Magnetic Amber" don't; "ticker" after "GSAP" is an API, not a marquee; springs need spring physics, not a "spring-like" curve; and "aurora" needs an effect word, so "aurora skies" in copy doesn't count.
+- **Still broad.** "3D" also counts the word in copy, such as a service called "3D Modeling"; "gradient" counts any mention; and "spotlight" catches one "Product Spotlight" section.
+- **Templates again.** All 93 `hx-` templates name glassmorphism, which is why liquid glass is as common among all 813 as among the 483 (`hx-all-in-one`).
 
 ### Design language in numbers
 
@@ -620,210 +365,76 @@ Blur-in entrance                     blur\(\s*0(?:\.0+)?(?:px)?\s*\)
 | Uppercase with letter spacing on the same line    | 272 (33.5%) | 191 (39.5%)              |
 | Serif and italic within 60 characters on one line | 91 (11.2%)  | 73 (15.1%)               |
 
-- **Opacity steps.** `text-white/70` (81 prompts) and `/80` (74) lead, then
-  `/60` (53), `/90` (36), `/50` (35), and `/40` (30).
-- **Contrast.** White at a given opacity over `#0a0a0a` gives 2.6 to 1 at
-  30%, 3.8 at 40%, 5.3 at 50%, 7.3 at 60%, 9.8 at 70%, and 12.6 at 80%, so
-  50% is the lowest step that clears the TRD's 4.5 to 1 on near-black
-  ([trd-a11y]).
-- **Headings.** Of the 483 motionsites.ai prompts, 45.8% have a heading
-  about the stack or setup, 45.3% about fonts, 45.3% about layout, 44.3%
-  about assets or media, 42.0% about global CSS, 40.2% about animation,
-  35.6% about responsive rules, 31.7% about colors or tokens, 22.8% about
-  rules or notes, and 4.1% about accessibility. The most common headings
-  are "Typography" (80) and "Color Palette" (74).
+- **Opacity steps.** `text-white/70` (81 prompts) and `/80` (74) lead, then `/60` (53), `/90` (36), `/50` (35), and `/40` (30).
+- **Contrast.** White at a given opacity over `#0a0a0a` gives 2.6 to 1 at 30%, 3.8 at 40%, 5.3 at 50%, 7.3 at 60%, 9.8 at 70%, and 12.6 at 80%, so 50% is the lowest step that clears the TRD's 4.5 to 1 on near-black ([trd-a11y]).
+- **Headings.** Of the 483 motionsites.ai prompts, 45.8% have a heading about the stack or setup, 45.3% about fonts, 45.3% about layout, 44.3% about assets or media, 42.0% about global CSS, 40.2% about animation, 35.6% about responsive rules, 31.7% about colors or tokens, 22.8% about rules or notes, and 4.1% about accessibility. The most common headings are "Typography" (80) and "Color Palette" (74).
 
 ## What 27 prompts share
 
 The 27 prompts read in full:
 
-- **Newest from motionsites.ai, August 2026:** `ms-space-planet`,
-  `ms-quantum-lucid`, `113-cyberpunk-reveal`, `179-future-state`,
-  `ms-palomar-labs`, and `ms-agent-wave`.
-- **App screens:** `267-mood-tracker`, `456-wellness-companion`,
-  `ms-church-community`, and `050-aurora-onboard`.
-- **Heroes, pages, and sections:** `237-liquid-glass-agency`,
-  `091-codercrest-hero`, `251-luxury-focus`, `005-3d-studio-pricing`,
-  `468-zenith-footer`, and `ms-fun-404-page`.
-- **Archive texts:** `006-3d-animation-hero`, `133-duolingo-styleguide`,
-  and `014-acreage-farming`.
-- **Superdesign:**
-  `sup-modal-design-success-celebration-pastel-legibility-fixed`,
-  `sup-cream-and-sky-playful-saas-pricing`,
-  `sup-account-setup-flow-goals-interests-card-based`, and
-  `sup-acid-yellow-neo-brutalist-mega-footer`.
-- **Templates:** `hx-all-in-one`, `hx-legion-age`,
-  `dev21-arifuzzamanmoin-heximage`, and
-  `dev21-xubohuah-particle-text-effect`.
+- **Newest from motionsites.ai, August 2026:** `ms-space-planet`, `ms-quantum-lucid`, `113-cyberpunk-reveal`, `179-future-state`, `ms-palomar-labs`, and `ms-agent-wave`.
+- **App screens:** `267-mood-tracker`, `456-wellness-companion`, `ms-church-community`, and `050-aurora-onboard`.
+- **Heroes, pages, and sections:** `237-liquid-glass-agency`, `091-codercrest-hero`, `251-luxury-focus`, `005-3d-studio-pricing`, `468-zenith-footer`, and `ms-fun-404-page`.
+- **Archive texts:** `006-3d-animation-hero`, `133-duolingo-styleguide`, and `014-acreage-farming`.
+- **Superdesign:** `sup-modal-design-success-celebration-pastel-legibility-fixed`, `sup-cream-and-sky-playful-saas-pricing`, `sup-account-setup-flow-goals-interests-card-based`, and `sup-acid-yellow-neo-brutalist-mega-footer`.
+- **Templates:** `hx-all-in-one`, `hx-legion-age`, `dev21-arifuzzamanmoin-heximage`, and `dev21-xubohuah-particle-text-effect`.
 
 ### Prompt structure
 
-- **Order.** A motionsites.ai prompt opens with one line that names the
-  build and the stack, then runs in a stable order: stack and
-  dependencies, fonts, colors or tokens, exact asset URLs, global CSS, the
-  page's layers, one block per component with exact classes, sizes, and
-  copy, animations with keyframes, durations, curves, and delays,
-  responsive rules per breakpoint, and closing rules (`179-future-state`;
-  `267-mood-tracker`; `ms-agent-wave`). The heading counts in
-  [Design language in numbers](#design-language-in-numbers) bear this out.
-- **Newest shapes.** The August prompts add banner sections and closing
-  checks: `ms-quantum-lucid` runs from "FONT" and "MEDIA" to "DO / DO NOT",
-  and `ms-space-planet` numbers twelve sections from "CONCEPT" to
-  "ACCEPTANCE CHECKS".
-- **Archive shape.** An archive text opens with a "System Role &
-  Instructions" preamble and then a numbered specification, from
-  "Technical Architecture & Stack" to "SEO & Accessibility"
-  (`006-3d-animation-hero`).
-- **Superdesign's shape.** JSON with a summary, a style block, layout
-  parts, special components, and special notes
-  (`sup-cream-and-sky-playful-saas-pricing`).
-- **No improvising.** Specs forbid invented copy, buttons, gradients, and
-  overlays (`ms-palomar-labs`) and list what not to add
-  (`ms-quantum-lucid`).
+- **Order.** A motionsites.ai prompt opens with one line that names the build and the stack, then runs in a stable order: stack and dependencies, fonts, colors or tokens, exact asset URLs, global CSS, the page's layers, one block per component with exact classes, sizes, and copy, animations with keyframes, durations, curves, and delays, responsive rules per breakpoint, and closing rules (`179-future-state`; `267-mood-tracker`; `ms-agent-wave`). The heading counts in [Design language in numbers](#design-language-in-numbers) bear this out.
+- **Newest shapes.** The August prompts add banner sections and closing checks: `ms-quantum-lucid` runs from "FONT" and "MEDIA" to "DO / DO NOT", and `ms-space-planet` numbers twelve sections from "CONCEPT" to "ACCEPTANCE CHECKS".
+- **Archive shape.** An archive text opens with a "System Role & Instructions" preamble and then a numbered specification, from "Technical Architecture & Stack" to "SEO & Accessibility" (`006-3d-animation-hero`).
+- **Superdesign's shape.** JSON with a summary, a style block, layout parts, special components, and special notes (`sup-cream-and-sky-playful-saas-pricing`).
+- **No improvising.** Specs forbid invented copy, buttons, gradients, and overlays (`ms-palomar-labs`) and list what not to add (`ms-quantum-lucid`).
 
 ### Type pairings
 
-- **The house pairing.** A grotesk sans for body and interface text, with
-  Instrument Serif, usually italic, for headlines or for one or two words
-  in them: Inter with Instrument Serif (`ms-agent-wave`, where the serif
-  words are also a muted gray), Barlow with Instrument Serif
-  (`237-liquid-glass-agency`), and Manrope with Instrument Serif
-  (`251-luxury-focus`).
-- **Other pairings.** A display serif over a grotesk: Prata with Hanken
-  Grotesk (`ms-space-planet`) and Fraunces with Plus Jakarta Sans
-  (`sup-cream-and-sky-playful-saas-pricing`). Also one variable sans at
-  exact fractional weights (Figtree in `ms-quantum-lucid`), a monospace
-  for everything (JetBrains Mono in `113-cyberpunk-reveal`), a rounded face
-  for a playful system (Nunito in `133-duolingo-styleguide`), and
-  extra-bold Poppins
-  (`sup-modal-design-success-celebration-pastel-legibility-fixed`).
-- **Setting.** Headlines are large, light to medium in weight, tightly
-  tracked, with leading near 1; labels are small, uppercase, and widely
-  tracked (`179-future-state`; `ms-quantum-lucid`; `ms-palomar-labs`).
-- **Bans on defaults.** `ms-quantum-lucid` forbids Inter or the system font
-  as the primary face, and `ms-palomar-labs` wants a light Helvetica, "not
-  heavy Inter/SF".
+- **The house pairing.** A grotesk sans for body and interface text, with Instrument Serif, usually italic, for headlines or for one or two words in them: Inter with Instrument Serif (`ms-agent-wave`, where the serif words are also a muted gray), Barlow with Instrument Serif (`237-liquid-glass-agency`), and Manrope with Instrument Serif (`251-luxury-focus`).
+- **Other pairings.** A display serif over a grotesk: Prata with Hanken Grotesk (`ms-space-planet`) and Fraunces with Plus Jakarta Sans (`sup-cream-and-sky-playful-saas-pricing`). Also one variable sans at exact fractional weights (Figtree in `ms-quantum-lucid`), a monospace for everything (JetBrains Mono in `113-cyberpunk-reveal`), a rounded face for a playful system (Nunito in `133-duolingo-styleguide`), and extra-bold Poppins (`sup-modal-design-success-celebration-pastel-legibility-fixed`).
+- **Setting.** Headlines are large, light to medium in weight, tightly tracked, with leading near 1; labels are small, uppercase, and widely tracked (`179-future-state`; `ms-quantum-lucid`; `ms-palomar-labs`).
+- **Bans on defaults.** `ms-quantum-lucid` forbids Inter or the system font as the primary face, and `ms-palomar-labs` wants a light Helvetica, "not heavy Inter/SF".
 
 ### Backgrounds, video, and glass
 
-- **Dark first.** Most motionsites.ai pages are dark, and near-blacks such
-  as `#0a0a0a` and `#050505` are more common than any color (see
-  [Page backgrounds and hex colors](#page-backgrounds-and-hex-colors)).
-- **Video.** 70.6% of motionsites.ai prompts name a video file or element,
-  and 282 point at one CloudFront host, whose files are named by date
-  (appendix; `ms-palomar-labs`). The loop is muted and inline, with no
-  overlay at all (`ms-palomar-labs`; `050-aurora-onboard`), a fade to the
-  page color at the bottom (`237-liquid-glass-agency`), or a light black
-  scrim for contrast (`179-future-state`).
-- **Scroll-scrubbed video.** A tall page whose scroll position drives the
-  video's time, with smoothing (`179-future-state`; `251-luxury-focus`).
-- **Liquid glass.** An almost clear white fill, a backdrop blur, an inset
-  highlight, and a gradient hairline border cut with `mask-composite`: the
-  same recipe in `237-liquid-glass-agency`,
-  `456-wellness-companion`, and a MotionSites lesson ([ms-lesson-ms]).
-- **Light pages.** Warm cream fields with pastel blobs or a dotted grain
-  (`sup-cream-and-sky-playful-saas-pricing`; `ms-palomar-labs`), or a
-  saturated orange gradient for a children's brand (`ms-fun-404-page`).
+- **Dark first.** Most motionsites.ai pages are dark, and near-blacks such as `#0a0a0a` and `#050505` are more common than any color (see [Page backgrounds and hex colors](#page-backgrounds-and-hex-colors)).
+- **Video.** 70.6% of motionsites.ai prompts name a video file or element, and 282 point at one CloudFront host, whose files are named by date (appendix; `ms-palomar-labs`). The loop is muted and inline, with no overlay at all (`ms-palomar-labs`; `050-aurora-onboard`), a fade to the page color at the bottom (`237-liquid-glass-agency`), or a light black scrim for contrast (`179-future-state`).
+- **Scroll-scrubbed video.** A tall page whose scroll position drives the video's time, with smoothing (`179-future-state`; `251-luxury-focus`).
+- **Liquid glass.** An almost clear white fill, a backdrop blur, an inset highlight, and a gradient hairline border cut with `mask-composite`: the same recipe in `237-liquid-glass-agency`, `456-wellness-companion`, and a MotionSites lesson ([ms-lesson-ms]).
+- **Light pages.** Warm cream fields with pastel blobs or a dotted grain (`sup-cream-and-sky-playful-saas-pricing`; `ms-palomar-labs`), or a saturated orange gradient for a children's brand (`ms-fun-404-page`).
 
 ### Text opacity, buttons, and copy
 
-- **Opacity for hierarchy.** Secondary text is white at 50% to 90% rather
-  than a gray, with `text-white/70` and `/80` most common (see
-  [Design language in numbers](#design-language-in-numbers)), as in
-  `267-mood-tracker` and `179-future-state`.
-- **Pills.** The usual pair is a solid white pill with dark text as the
-  primary action and a glass or outlined pill as the secondary
-  (`179-future-state`; `237-liquid-glass-agency`). Some go square on
-  purpose: `ms-agent-wave`'s metallic nav buttons have a 7px radius, and
-  `sup-account-setup-flow-goals-interests-card-based` asks for a 12px
-  radius, not a pill, on its main button.
-- **Press and hover.** Buttons shrink a little on press, to 0.95 or 0.98,
-  and grow a little on hover (`468-zenith-footer`; `113-cyberpunk-reveal`),
-  and a light sheen crosses some on hover (`ms-agent-wave`;
-  `113-cyberpunk-reveal`). A game-like variant has a solid bottom shadow
-  that disappears as the button moves down on press
-  (`133-duolingo-styleguide`).
-- **Copy.** Every string is specified and nothing may be added
-  (`ms-palomar-labs`; `ms-quantum-lucid`). Headlines are short, broken
-  across lines on purpose, often with one italic word; a small badge or
-  eyebrow sits above; body copy is one or two sentences in muted white or
-  gray (`ms-agent-wave`; `ms-space-planet`).
+- **Opacity for hierarchy.** Secondary text is white at 50% to 90% rather than a gray, with `text-white/70` and `/80` most common (see [Design language in numbers](#design-language-in-numbers)), as in `267-mood-tracker` and `179-future-state`.
+- **Pills.** The usual pair is a solid white pill with dark text as the primary action and a glass or outlined pill as the secondary (`179-future-state`; `237-liquid-glass-agency`). Some go square on purpose: `ms-agent-wave`'s metallic nav buttons have a 7px radius, and `sup-account-setup-flow-goals-interests-card-based` asks for a 12px radius, not a pill, on its main button.
+- **Press and hover.** Buttons shrink a little on press, to 0.95 or 0.98, and grow a little on hover (`468-zenith-footer`; `113-cyberpunk-reveal`), and a light sheen crosses some on hover (`ms-agent-wave`; `113-cyberpunk-reveal`). A game-like variant has a solid bottom shadow that disappears as the button moves down on press (`133-duolingo-styleguide`).
+- **Copy.** Every string is specified and nothing may be added (`ms-palomar-labs`; `ms-quantum-lucid`). Headlines are short, broken across lines on purpose, often with one italic word; a small badge or eyebrow sits above; body copy is one or two sentences in muted white or gray (`ms-agent-wave`; `ms-space-planet`).
 
 ### Motion and reduced motion
 
-- **Entrances.** On load, elements fade in and rise 8 to 26 pixels,
-  staggered by roughly 50 to 150 milliseconds, on an ease-out curve such as
-  `cubic-bezier(0.16, 1, 0.3, 1)` over half a second to a second
-  (`267-mood-tracker`; `ms-palomar-labs`; `ms-agent-wave`).
-- **Headline reveals.** Lines rise out of a clipped mask (`ms-space-planet`;
-  `ms-agent-wave`), a clip-path wipes down (`ms-quantum-lucid`), words
-  sharpen from a blur one by one (`237-liquid-glass-agency`), or text types
-  in character by character (`ms-church-community`).
-- **Named vocabularies.** `ms-space-planet` names five motion verbs, draw,
-  reveal, rise, settle, and fade, each with its curve, and `ms-agent-wave`
-  names seven entrance variants in a table of delays.
-- **Success moments.** A badge pops with overshoot, a check draws itself,
-  two rings pulse outward, and confetti falls
-  (`sup-modal-design-success-celebration-pastel-legibility-fixed`); dots
-  pop with overshoot along a stats arc (`113-cyberpunk-reveal`).
-- **Springs.** Spring physics with stiffness, damping, and mass drive a
-  magnetic button (`006-3d-animation-hero`), and an overshooting curve
-  makes a toggle feel springy (`sup-cream-and-sky-playful-saas-pricing`).
-- **Reduced motion.** The newest prompts switch animation off under
-  `prefers-reduced-motion` and make the final state the resting state, so
-  nothing stays hidden if an animation never runs (`ms-agent-wave`;
-  `ms-space-planet`; `ms-quantum-lucid`; `113-cyberpunk-reveal`); 31% of
-  July and August prompts handle reduced motion, against 1% in March and
-  April (appendix).
+- **Entrances.** On load, elements fade in and rise 8 to 26 pixels, staggered by roughly 50 to 150 milliseconds, on an ease-out curve such as `cubic-bezier(0.16, 1, 0.3, 1)` over half a second to a second (`267-mood-tracker`; `ms-palomar-labs`; `ms-agent-wave`).
+- **Headline reveals.** Lines rise out of a clipped mask (`ms-space-planet`; `ms-agent-wave`), a clip-path wipes down (`ms-quantum-lucid`), words sharpen from a blur one by one (`237-liquid-glass-agency`), or text types in character by character (`ms-church-community`).
+- **Named vocabularies.** `ms-space-planet` names five motion verbs, draw, reveal, rise, settle, and fade, each with its curve, and `ms-agent-wave` names seven entrance variants in a table of delays.
+- **Success moments.** A badge pops with overshoot, a check draws itself, two rings pulse outward, and confetti falls (`sup-modal-design-success-celebration-pastel-legibility-fixed`); dots pop with overshoot along a stats arc (`113-cyberpunk-reveal`).
+- **Springs.** Spring physics with stiffness, damping, and mass drive a magnetic button (`006-3d-animation-hero`), and an overshooting curve makes a toggle feel springy (`sup-cream-and-sky-playful-saas-pricing`).
+- **Reduced motion.** The newest prompts switch animation off under `prefers-reduced-motion` and make the final state the resting state, so nothing stays hidden if an animation never runs (`ms-agent-wave`; `ms-space-planet`; `ms-quantum-lucid`; `113-cyberpunk-reveal`); 31% of July and August prompts handle reduced motion, against 1% in March and April (appendix).
 
 ## What transfers to a native iPhone game
 
-Every bullet here is judgment. Guessling is one screen with a question
-field and a character whose four poses are "animated with Reanimated", with
-a fade under Reduce Motion ([trd-reactions]), and its text keeps "a
-contrast of at least 4.5 to 1" in light and dark themes ([trd-a11y]). Expo
-SDK 55 and later "run entirely on the New Architecture" ([expo-new-arch]).
+Every bullet here is judgment. Guessling is one screen with a question field and a character whose four poses are "animated with Reanimated", with a fade under Reduce Motion ([trd-reactions]), and its text keeps "a contrast of at least 4.5 to 1" in light and dark themes ([trd-a11y]). Expo SDK 55 and later "run entirely on the New Architecture" ([expo-new-arch]).
 
 [expo-new-arch]: https://docs.expo.dev/guides/new-architecture/
 
 ### Web-only patterns
 
-- **hls.js.** Synthesis: The library exists for browsers that can't play
-  HLS, and iOS can: expo-video's docs cover HLS sources, telling apps to
-  "make sure that the uri contains .m3u8 extension" ([expo-video]). So
-  hls.js is web-only, but HLS isn't. What doesn't fit is the background
-  loop itself: behind a puzzle it competes with the character, costs data,
-  and says nothing about Guessling.
-- **CSS backdrop-filter.** Synthesis: React Native 0.86 has no backdrop
-  filter, and on iOS its `filter` style offers brightness and opacity only:
-  "these are the only two filter functions available on iOS" ([rn-style]).
-  expo-blur's BlurView, "A React component that blurs everything underneath
-  the view", names "navigation bars, tab bars, and modals" as its common
-  use ([expo-blur]); that's the native glass, best kept to one sheet or
-  bar.
-- **mask-composite borders and gradient text.** Synthesis: React Native has
-  no CSS masks. A gradient hairline becomes a gradient view behind an inset
-  view, from expo-linear-gradient, which "transitions between multiple
-  colors in a linear direction" ([expo-linear-gradient]), and gradient text
-  needs a masked view, "A library that provides a masked view."
-  ([expo-masked-view]) The built-in gradient style in 0.86,
-  `experimental_backgroundImage`, carries "Don't use them in production."
-  ([rn-style])
-- **Scroll-driven pages.** Synthesis: ScrollTrigger, reveals on
-  IntersectionObserver, and scroll-scrubbed video assume a long page; a
-  round is one screen, so there's nothing to scrub.
-- **Cursors and hover.** Synthesis: Custom cursors, cursor spotlights,
-  magnetic buttons, and hover sheens need a pointer; on an iPhone, press
-  states replace them.
-- **Blur-in text.** Synthesis: With no blur filter on iOS in React Native,
-  the words-sharpening reveal becomes a fade or a rise.
-- **Fonts by URL.** Synthesis: The app bundles its fonts, so Google Fonts
-  links and font mirrors don't apply, and commercial families don't
-  transfer without a license.
-- **Phone frames.** Synthesis: The HTML iPhone frames with a drawn Dynamic
-  Island in the July and August app prompts exist to show an app on a web
-  page (`267-mood-tracker`; `456-wellness-companion`); the app runs on the
-  real one.
+- **hls.js.** Synthesis: The library exists for browsers that can't play HLS, and iOS can: expo-video's docs cover HLS sources, telling apps to "make sure that the uri contains .m3u8 extension" ([expo-video]). So hls.js is web-only, but HLS isn't. What doesn't fit is the background loop itself: behind a puzzle it competes with the character, costs data, and says nothing about Guessling.
+- **CSS backdrop-filter.** Synthesis: React Native 0.86 has no backdrop filter, and on iOS its `filter` style offers brightness and opacity only: "these are the only two filter functions available on iOS" ([rn-style]). expo-blur's BlurView, "A React component that blurs everything underneath the view", names "navigation bars, tab bars, and modals" as its common use ([expo-blur]); that's the native glass, best kept to one sheet or bar.
+- **mask-composite borders and gradient text.** Synthesis: React Native has no CSS masks. A gradient hairline becomes a gradient view behind an inset view, from expo-linear-gradient, which "transitions between multiple colors in a linear direction" ([expo-linear-gradient]), and gradient text needs a masked view, "A library that provides a masked view." ([expo-masked-view]) The built-in gradient style in 0.86, `experimental_backgroundImage`, carries "Don't use them in production." ([rn-style])
+- **Scroll-driven pages.** Synthesis: ScrollTrigger, reveals on IntersectionObserver, and scroll-scrubbed video assume a long page; a round is one screen, so there's nothing to scrub.
+- **Cursors and hover.** Synthesis: Custom cursors, cursor spotlights, magnetic buttons, and hover sheens need a pointer; on an iPhone, press states replace them.
+- **Blur-in text.** Synthesis: With no blur filter on iOS in React Native, the words-sharpening reveal becomes a fade or a rise.
+- **Fonts by URL.** Synthesis: The app bundles its fonts, so Google Fonts links and font mirrors don't apply, and commercial families don't transfer without a license.
+- **Phone frames.** Synthesis: The HTML iPhone frames with a drawn Dynamic Island in the July and August app prompts exist to show an app on a web page (`267-mood-tracker`; `456-wellness-companion`); the app runs on the real one.
 
 [expo-blur]: https://docs.expo.dev/versions/v57.0.0/sdk/blur-view/
 [expo-linear-gradient]: https://docs.expo.dev/versions/v57.0.0/sdk/linear-gradient/
@@ -831,44 +442,15 @@ SDK 55 and later "run entirely on the New Architecture" ([expo-new-arch]).
 
 ### Patterns that carry over
 
-- **A spec shaped like the newest prompts.** Synthesis: Tokens with exact
-  values, exact copy, a list of what not to add, and acceptance checks
-  translate directly into `docs/DESIGN.md` (`ms-quantum-lucid`;
-  `ms-space-planet`).
-- **A named motion vocabulary.** Synthesis: A handful of verbs, each with
-  one curve and a duration range, maps onto Reanimated: "withSpring lets
-  you create spring-based animations", configured by `stiffness`,
-  `damping`, and `mass`, and its `reduceMotion` option defaults to
-  `ReduceMotion.System` ([rea-spring]).
-- **Reduced motion as a rule.** Synthesis: The resting state is the final
-  state, as in the newest prompts; "useReducedMotion lets you query the
-  reduced motion system setting" ([rea-reduced]), which fits the TRD's
-  fade between poses ([trd-reactions]).
-- **Press feedback.** Synthesis: A slight shrink on press, and the
-  game-style button whose bottom shadow disappears as it moves down
-  (`133-duolingo-styleguide`), suit the Guess button.
-- **Hierarchy by opacity, with a floor.** Synthesis: White at 50% or more
-  on near-black clears 4.5 to 1 (see
-  [Design language in numbers](#design-language-in-numbers)); the light
-  theme needs its own floor, tested the same way.
-- **Split colors.** Synthesis: Decorative pastels for fills and confetti,
-  and darker text tokens that clear 4.5 to 1, as in
-  `sup-modal-design-success-celebration-pastel-legibility-fixed`, fit the
-  TRD's contrast rule ([trd-a11y]).
-- **One accent and no default purple.** Synthesis: One signature accent per
-  design, and the bans on the violet "AI" palette, are cheap ways to look
-  deliberate (`251-luxury-focus`;
-  `sup-acid-yellow-neo-brutalist-mega-footer`).
-- **Drawn marks.** Synthesis: A check that draws itself, pulsing rings, and
-  faces made of a few paths
-  (`sup-modal-design-success-celebration-pastel-legibility-fixed`;
-  `267-mood-tracker`) suit react-native-svg, "A library that allows using
-  SVGs in your app." ([expo-svg])
-- **Blend modes, if needed.** Synthesis: `mixBlendMode` "is only available
-  on the New Architecture and Android 10+" ([rn-style]), which Expo SDK 57
-  runs, so a trick such as darkening a white-backed character video onto a
-  color field (`ms-fun-404-page`) could work natively, though drawn poses
-  don't need it.
+- **A spec shaped like the newest prompts.** Synthesis: Tokens with exact values, exact copy, a list of what not to add, and acceptance checks translate directly into `docs/DESIGN.md` (`ms-quantum-lucid`; `ms-space-planet`).
+- **A named motion vocabulary.** Synthesis: A handful of verbs, each with one curve and a duration range, maps onto Reanimated: "withSpring lets you create spring-based animations", configured by `stiffness`, `damping`, and `mass`, and its `reduceMotion` option defaults to `ReduceMotion.System` ([rea-spring]).
+- **Reduced motion as a rule.** Synthesis: The resting state is the final state, as in the newest prompts; "useReducedMotion lets you query the reduced motion system setting" ([rea-reduced]), which fits the TRD's fade between poses ([trd-reactions]).
+- **Press feedback.** Synthesis: A slight shrink on press, and the game-style button whose bottom shadow disappears as it moves down (`133-duolingo-styleguide`), suit the Guess button.
+- **Hierarchy by opacity, with a floor.** Synthesis: White at 50% or more on near-black clears 4.5 to 1 (see [Design language in numbers](#design-language-in-numbers)); the light theme needs its own floor, tested the same way.
+- **Split colors.** Synthesis: Decorative pastels for fills and confetti, and darker text tokens that clear 4.5 to 1, as in `sup-modal-design-success-celebration-pastel-legibility-fixed`, fit the TRD's contrast rule ([trd-a11y]).
+- **One accent and no default purple.** Synthesis: One signature accent per design, and the bans on the violet "AI" palette, are cheap ways to look deliberate (`251-luxury-focus`; `sup-acid-yellow-neo-brutalist-mega-footer`).
+- **Drawn marks.** Synthesis: A check that draws itself, pulsing rings, and faces made of a few paths (`sup-modal-design-success-celebration-pastel-legibility-fixed`; `267-mood-tracker`) suit react-native-svg, "A library that allows using SVGs in your app." ([expo-svg])
+- **Blend modes, if needed.** Synthesis: `mixBlendMode` "is only available on the New Architecture and Android 10+" ([rn-style]), which Expo SDK 57 runs, so a trick such as darkening a white-backed character video onto a color field (`ms-fun-404-page`) could work natively, though drawn poses don't need it.
 
 [rea-spring]: https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring/
 [rea-reduced]: https://docs.swmansion.com/react-native-reanimated/docs/device/useReducedMotion/
@@ -876,160 +458,59 @@ SDK 55 and later "run entirely on the New Architecture" ([expo-new-arch]).
 
 ### Where each pattern fits in Guessling
 
-- **Nod (Yes).** Synthesis: A quick vertical spring with a little
-  overshoot, and the word "Yes" rising out of a mask below the character,
-  with the TRD's light haptic ([trd-reactions]).
-- **Head shake (No).** Synthesis: A horizontal spring with low damping, so
-  it swings two or three times and settles; no red flash, since the
-  character "never mocks a wrong guess" ([product-character]).
-- **Shrug ("Ask another way").** Synthesis: A slower lift and drop on a
-  plain ease-out, without overshoot, so it reads as neither yes nor no.
-- **Celebration.** Synthesis: The success recipe, once: a pop with
-  overshoot, a drawn sparkle or check, a ring pulse, and a short burst of
-  confetti, then settle; under Reduce Motion, the TRD's fade.
-- **End-of-round reveal.** Synthesis: The one place for the display face:
-  the answer rises out of a mask or wipes in, a hairline draws under it,
-  and the stats and the Share button rise in a stagger (`ms-space-planet`;
-  `ms-quantum-lucid`).
-- **Paywall.** Synthesis: It's RevenueCat's native paywall
-  ([rc-paywalls]), so only choices carry over: the app's type and accent, a
-  highlighted package with a badge, a reassurance line under the prices
-  (`sup-cream-and-sky-playful-saas-pricing`), and legible contrast; not
-  video or glass.
-- **App Store screenshots.** Synthesis: One reaction per screenshot on the
-  app's own field, a short two-line caption with one italic word, and
-  phones side by side as in the three-screen app prompts
-  (`267-mood-tracker`; `ms-church-community`).
-- **Demo video.** Synthesis: The category asks for "real gameplay on the
-  device the game was built for" ([shipaton-cats]), so the video is a
-  screen recording, which is also how MotionSites tells builders to show
-  work: "Record a screen capture of your live site" with a short caption
-  ([ms-lesson-3d]). Its title cards can reuse the type pairing and the
-  entrance choreography.
-- **The three web pages.** Synthesis: CSS works on /privacy, /terms, and
-  /support, so the web patterns apply literally but lightly: the app's
-  pairing and accent, light and dark themes, no video, and at most a short
-  fade that honors `prefers-reduced-motion` ([cf-pages]).
+- **Nod (Yes).** Synthesis: A quick vertical spring with a little overshoot, and the word "Yes" rising out of a mask below the character, with the TRD's light haptic ([trd-reactions]).
+- **Head shake (No).** Synthesis: A horizontal spring with low damping, so it swings two or three times and settles; no red flash, since the character "never mocks a wrong guess" ([product-character]).
+- **Shrug ("Ask another way").** Synthesis: A slower lift and drop on a plain ease-out, without overshoot, so it reads as neither yes nor no.
+- **Celebration.** Synthesis: The success recipe, once: a pop with overshoot, a drawn sparkle or check, a ring pulse, and a short burst of confetti, then settle; under Reduce Motion, the TRD's fade.
+- **End-of-round reveal.** Synthesis: The one place for the display face: the answer rises out of a mask or wipes in, a hairline draws under it, and the stats and the Share button rise in a stagger (`ms-space-planet`; `ms-quantum-lucid`).
+- **Paywall.** Synthesis: It's RevenueCat's native paywall ([rc-paywalls]), so only choices carry over: the app's type and accent, a highlighted package with a badge, a reassurance line under the prices (`sup-cream-and-sky-playful-saas-pricing`), and legible contrast; not video or glass.
+- **App Store screenshots.** Synthesis: One reaction per screenshot on the app's own field, a short two-line caption with one italic word, and phones side by side as in the three-screen app prompts (`267-mood-tracker`; `ms-church-community`).
+- **Demo video.** Synthesis: The category asks for "real gameplay on the device the game was built for" ([shipaton-cats]), so the video is a screen recording, which is also how MotionSites tells builders to show work: "Record a screen capture of your live site" with a short caption ([ms-lesson-3d]). Its title cards can reuse the type pairing and the entrance choreography.
+- **The three web pages.** Synthesis: CSS works on /privacy, /terms, and /support, so the web patterns apply literally but lightly: the app's pairing and accent, light and dark themes, no video, and at most a short fade that honors `prefers-reduced-motion` ([cf-pages]).
 
 ## Findings for DESIGN.md
 
-- **Take patterns, not prompts.** The site grants only "For personal &
-  client work" and reserves all rights; 282 motionsites.ai prompts point at
-  one CloudFront host for media and 65 load fonts from a mirror. Synthesis:
-  DESIGN.md
-  should cite these notes, not prompt text, and the app should ship no
-  media or mirrored font a prompt points to. See
-  [License and terms](#license-and-terms).
-- **Write it like the newest prompts.** The August prompts are the longest
-  (a median of 9,402 characters) and add exact tokens, "do not" lists,
-  reduced motion, accessibility, and acceptance checks, while MotionSites'
-  own DESIGN.md files were still "Coming soon" ([ms-design-md]).
-  Synthesis: give DESIGN.md the same parts. See
-  [Dates and the newest prompts](#dates-and-the-newest-prompts).
-- **One sans and one expressive face.** Inter (94 prompts declare it, 314
-  name it) with Instrument Serif (52 and 76) is the house pairing, and two
-  August prompts rule out Inter as the main face. Synthesis: pick a pairing
-  with a reason, keep
-  the display face for the few words that matter, and test both at the
-  largest Dynamic Type sizes. See [Type pairings](#type-pairings).
-- **Dark is a habit, not a rule.** 52.0% of motionsites.ai prompts are dark
-  and 18.0% light, and the playful ones use warm light fields. Synthesis:
-  Guessling needs both themes anyway ([trd-a11y]), so define both fields
-  and let the character carry the mood. See
-  [Page backgrounds and hex colors](#page-backgrounds-and-hex-colors).
-- **Hierarchy by opacity, with a floor.** White at 70% and 80% is the usual
-  secondary text, and 50% is the lowest that clears 4.5 to 1 on near-black.
-  Synthesis: define three or four text levels per theme and test each. See
-  [Design language in numbers](#design-language-in-numbers).
-- **One accent with one job.** Prompts pick one signature accent and ban
-  the violet default. Synthesis: one accent for the answer and the primary
-  action, with its decorative and text versions split for contrast. See
-  [Patterns that carry over](#patterns-that-carry-over).
-- **Name the motion.** The newest prompts name their moves and give each a
-  curve. Synthesis: name Guessling's moves after its reactions, give each a
-  Reanimated spring or curve and a duration, and reuse them everywhere. See
-  [Motion and reduced motion](#motion-and-reduced-motion).
-- **Celebrate with a recipe.** A pop, a drawn check, a pulsing ring, and
-  confetti make up the corpus's success moment. Synthesis: play it once on
-  the solve, and keep the other three reactions smaller. See
-  [Where each pattern fits in Guessling](#where-each-pattern-fits-in-guessling).
-- **Rest in the final state.** 31% of July and August prompts handle
-  reduced motion, against 1% in March and April. Synthesis: every animation
-  in DESIGN.md gets a reduced-motion version, as the TRD's fade does
-  ([trd-reactions]).
-- **Leave the web signatures on the web.** Background video, glass on every
-  card, scroll scrubbing, cursors, and blur-in text are web habits or don't
-  fit one puzzle screen. Synthesis: use BlurView for one sheet at most,
-  expo-linear-gradient for gradients, and no `experimental_backgroundImage`
-  in production. See [Web-only patterns](#web-only-patterns).
+- **Take patterns, not prompts.** The site grants only "For personal & client work" and reserves all rights; 282 motionsites.ai prompts point at one CloudFront host for media and 65 load fonts from a mirror. Synthesis: DESIGN.md should cite these notes, not prompt text, and the app should ship no media or mirrored font a prompt points to. See [License and terms](#license-and-terms).
+- **Write it like the newest prompts.** The August prompts are the longest (a median of 9,402 characters) and add exact tokens, "do not" lists, reduced motion, accessibility, and acceptance checks, while MotionSites' own DESIGN.md files were still "Coming soon" ([ms-design-md]). Synthesis: give DESIGN.md the same parts. See [Dates and the newest prompts](#dates-and-the-newest-prompts).
+- **One sans and one expressive face.** Inter (94 prompts declare it, 314 name it) with Instrument Serif (52 and 76) is the house pairing, and two August prompts rule out Inter as the main face. Synthesis: pick a pairing with a reason, keep the display face for the few words that matter, and test both at the largest Dynamic Type sizes. See [Type pairings](#type-pairings).
+- **Dark is a habit, not a rule.** 52.0% of motionsites.ai prompts are dark and 18.0% light, and the playful ones use warm light fields. Synthesis: Guessling needs both themes anyway ([trd-a11y]), so define both fields and let the character carry the mood. See [Page backgrounds and hex colors](#page-backgrounds-and-hex-colors).
+- **Hierarchy by opacity, with a floor.** White at 70% and 80% is the usual secondary text, and 50% is the lowest that clears 4.5 to 1 on near-black. Synthesis: define three or four text levels per theme and test each. See [Design language in numbers](#design-language-in-numbers).
+- **One accent with one job.** Prompts pick one signature accent and ban the violet default. Synthesis: one accent for the answer and the primary action, with its decorative and text versions split for contrast. See [Patterns that carry over](#patterns-that-carry-over).
+- **Name the motion.** The newest prompts name their moves and give each a curve. Synthesis: name Guessling's moves after its reactions, give each a Reanimated spring or curve and a duration, and reuse them everywhere. See [Motion and reduced motion](#motion-and-reduced-motion).
+- **Celebrate with a recipe.** A pop, a drawn check, a pulsing ring, and confetti make up the corpus's success moment. Synthesis: play it once on the solve, and keep the other three reactions smaller. See [Where each pattern fits in Guessling](#where-each-pattern-fits-in-guessling).
+- **Rest in the final state.** 31% of July and August prompts handle reduced motion, against 1% in March and April. Synthesis: every animation in DESIGN.md gets a reduced-motion version, as the TRD's fade does ([trd-reactions]).
+- **Leave the web signatures on the web.** Background video, glass on every card, scroll scrubbing, cursors, and blur-in text are web habits or don't fit one puzzle screen. Synthesis: use BlurView for one sheet at most, expo-linear-gradient for gradients, and no `experimental_backgroundImage` in production. See [Web-only patterns](#web-only-patterns).
 
 ## Conflicts between sources
 
-- **Free flags.** 810 of 813 corpus records say `is_free: true`, but the
-  site marks 239 of the 385 matched folders paid (appendix).
-- **Dates and categories.** The corpus dates all 431 numbered records to
-  one second of July 17, 2026 and files them under "Premium"; the live
-  listing dates the same prompts from March to August 2026 and files them
-  under categories such as "Landing Page", "Hero", and "SaaS" (appendix).
-- **A monthly plan.** The purchase confirmation says "Your Go Unlimited
-  monthly plan is active", but the pricing page sells three-month, yearly,
-  and lifetime access only ([ms-payment]; [ms-unlimited]).
-- **Template count.** The plans list "40+ Lovable Templates", and the
-  prompt dialog's upsell "30+ AI Ready Templates" ([ms-unlimited];
-  [ms-dialog-js]).
-- **Recovered but reconstructed.** Two folders marked `recovered: true`
-  hold texts that call themselves reconstructions (`389-slam-dunk-hero`;
-  `459-wisa-space-hero`).
-- **Two versions of one prompt.** In 9 numbered folders, prompt.md and the
-  export's `prompt_text` are different prompts under one title
-  (`336-portal`).
-- **Builder lists.** Each page names a different set of builders, from
-  three on the MCP page to six in the pricing FAQ ([ms-mcp];
-  [ms-unlimited]).
-- **HLS as web-only.** The brief for these notes counts HLS video
-  backgrounds as web-only, but expo-video plays HLS sources on iOS
-  ([expo-video]); only the hls.js library is web-only.
+- **Free flags.** 810 of 813 corpus records say `is_free: true`, but the site marks 239 of the 385 matched folders paid (appendix).
+- **Dates and categories.** The corpus dates all 431 numbered records to one second of July 17, 2026 and files them under "Premium"; the live listing dates the same prompts from March to August 2026 and files them under categories such as "Landing Page", "Hero", and "SaaS" (appendix).
+- **A monthly plan.** The purchase confirmation says "Your Go Unlimited monthly plan is active", but the pricing page sells three-month, yearly, and lifetime access only ([ms-payment]; [ms-unlimited]).
+- **Template count.** The plans list "40+ Lovable Templates", and the prompt dialog's upsell "30+ AI Ready Templates" ([ms-unlimited]; [ms-dialog-js]).
+- **Recovered but reconstructed.** Two folders marked `recovered: true` hold texts that call themselves reconstructions (`389-slam-dunk-hero`; `459-wisa-space-hero`).
+- **Two versions of one prompt.** In 9 numbered folders, prompt.md and the export's `prompt_text` are different prompts under one title (`336-portal`).
+- **Builder lists.** Each page names a different set of builders, from three on the MCP page to six in the pricing FAQ ([ms-mcp]; [ms-unlimited]).
+- **HLS as web-only.** The brief for these notes counts HLS video backgrounds as web-only, but expo-video plays HLS sources on iOS ([expo-video]); only the hls.js library is web-only.
 
 [ms-payment]: https://motionsites.ai/payment-success
 
 ## Gaps
 
-What the sources don't say that DESIGN.md or the team needs, as of
-September 22, 2026:
+What the sources don't say that DESIGN.md or the team needs, as of September 22, 2026:
 
-- **Terms.** No license, terms, privacy, or refund text was found, so what
-  a buyer may do with prompt text, code built from a prompt, or the media a
-  prompt points to is undocumented; the checkout, which the page code opens
-  at an address from the site's backend, wasn't visited.
-- **Search.** No search results for the domain were read (see
-  [Sources and method](#sources-and-method)), so off-site terms, reviews,
-  and earlier versions of the pages went unchecked.
-- **Visitor limits.** The number of free copies before "You've reached your
-  free copy limit." isn't stated anywhere ([ms-dialog-js]).
-- **Marketing counts.** "50,000 Total websites built" and "100,000 Users"
-  have no source ([ms-motionsite]).
-- **Corpus origin.** The corpus has no README or scripts. The archive
-  behind the premium texts, what `recovered` means, and how the
-  Superdesign, HorizonX, and 21st.dev folders were gathered aren't
-  recorded, and those three libraries' own sites weren't visited.
-- **September.** The 49 prompts added from September 1 to 21, 2026 aren't
-  in the corpus, so what's newest rests on their metadata alone.
-- **Paywall editor.** Whether RevenueCat's paywall editor can show a badge
-  on a package, a custom font, or a gradient wasn't checked here (see
-  [RevenueCat paywalls in React Native][rc-paywalls]).
-- **Previews.** The preview videos weren't watched; every design judgment
-  here comes from prompt text.
-- **Background classifier.** 30.0% of motionsites.ai prompts stay
-  undetermined, and the text-color step agrees with stronger signals in 67
-  of 75 prompts, not all (appendix).
+- **Terms.** No license, terms, privacy, or refund text was found, so what a buyer may do with prompt text, code built from a prompt, or the media a prompt points to is undocumented; the checkout, which the page code opens at an address from the site's backend, wasn't visited.
+- **Search.** No search results for the domain were read (see [Sources and method](#sources-and-method)), so off-site terms, reviews, and earlier versions of the pages went unchecked.
+- **Visitor limits.** The number of free copies before "You've reached your free copy limit." isn't stated anywhere ([ms-dialog-js]).
+- **Marketing counts.** "50,000 Total websites built" and "100,000 Users" have no source ([ms-motionsite]).
+- **Corpus origin.** The corpus has no README or scripts. The archive behind the premium texts, what `recovered` means, and how the Superdesign, HorizonX, and 21st.dev folders were gathered aren't recorded, and those three libraries' own sites weren't visited.
+- **September.** The 49 prompts added from September 1 to 21, 2026 aren't in the corpus, so what's newest rests on their metadata alone.
+- **Paywall editor.** Whether RevenueCat's paywall editor can show a badge on a package, a custom font, or a gradient wasn't checked here (see [RevenueCat paywalls in React Native][rc-paywalls]).
+- **Previews.** The preview videos weren't watched; every design judgment here comes from prompt text.
+- **Background classifier.** 30.0% of motionsites.ai prompts stay undetermined, and the text-color step agrees with stronger signals in 67 of 75 prompts, not all (appendix).
 
 ## Appendix: analysis script
 
-Python 3 with the standard library only. Run it as
-`python3 analyze.py <prompts folder> [<live listing>.json]`; without the
-JSON, it skips the sections that need live dates. The JSON is the list of
-rows the home page reads (see [Sources and method](#sources-and-method)).
-The run behind these notes printed every count quoted above.
+Python 3 with the standard library only. Run it as `python3 analyze.py <prompts folder> [<live listing>.json]`; without the JSON, it skips the sections that need live dates. The JSON is the list of rows the home page reads (see [Sources and method](#sources-and-method)). The run behind these notes printed every count quoted above.
 
 ```python
 #!/usr/bin/env python3
@@ -1532,17 +1013,11 @@ if LIVE:
 
 ## See also
 
-- [The Guessling character][product-character] and
-  [Reactions, sound, and haptics][trd-reactions], which set the four
-  reactions this design must carry.
-- [RevenueCat paywalls in React Native][rc-paywalls], for what the native
-  paywall allows.
-- [RevenueCat core category requirements][shipaton-cats], for the Best Game
-  brief and its demo video.
-- [Store listing and discoverability][bp-store] and
-  [Demo video and write-up][bp-video], for the screenshots and the video.
-- [Hosting the privacy policy and terms][cf-pages], for the three web
-  pages.
+- [The Guessling character][product-character] and [Reactions, sound, and haptics][trd-reactions], which set the four reactions this design must carry.
+- [RevenueCat paywalls in React Native][rc-paywalls], for what the native paywall allows.
+- [RevenueCat core category requirements][shipaton-cats], for the Best Game brief and its demo video.
+- [Store listing and discoverability][bp-store] and [Demo video and write-up][bp-video], for the screenshots and the video.
+- [Hosting the privacy policy and terms][cf-pages], for the three web pages.
 
 [ms-home]: https://motionsites.ai/
 [ms-unlimited]: https://motionsites.ai/unlimited
