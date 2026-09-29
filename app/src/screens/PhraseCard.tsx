@@ -21,6 +21,13 @@ import TurnText from './TurnText'
 
 const fixedSymbols = { yes: 'checkmark', no: 'xmark', 'not-sure': 'questionmark.circle' } as const
 
+// The speaking symbol's size, and its chip, 5 points around it and 6 in from the corner.
+const markSize = (fontScale: number) => Math.round(18 * Math.min(fontScale, 2))
+
+/** The room a card's words always leave at their end for the speaking symbol's chip, past the card's own padding, so
+ * the chip never covers a word and the words never reflow when speaking starts or stops. */
+export const speakingRoom = (fontScale: number, short: boolean) => markSize(fontScale) + 16 - (short ? 10 : 16)
+
 type Props = {
   id: string
   text: string
@@ -80,7 +87,7 @@ export default function PhraseCard({
   const edge = tokens ? colors[tokens.edge] : palette.edge
   const scale = Math.min(fontScale, 2)
   const disc = Math.round(40 * scale)
-  const mark = Math.round(18 * scale)
+  const mark = markSize(fontScale)
 
   return (
     <Pressable
@@ -143,7 +150,12 @@ export default function PhraseCard({
           pressStyle
         ]}
       />
-      <Animated.View style={[{ flexDirection: 'row', alignItems: 'center', gap: 12 }, wordsStyle]}>
+      <Animated.View
+        style={[
+          { flexDirection: 'row', alignItems: 'center', gap: 12, paddingRight: speakingRoom(fontScale, short) },
+          wordsStyle
+        ]}
+      >
         {fixed && (
           <View
             style={{
@@ -175,7 +187,7 @@ export default function PhraseCard({
         </TurnText>
       </Animated.View>
       {speaking && (
-        // Pinned to the corner on a chip of the card's fill, so the words never reflow around it.
+        // Pinned to the corner on a chip of the card's fill, in the room the words leave for it.
         <View
           pointerEvents="none"
           style={{

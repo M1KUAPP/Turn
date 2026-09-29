@@ -14,7 +14,7 @@ import { categoryColors, colors, typography } from '../constants/theme'
 import { categoryPalette, categorySymbol } from './category-palette'
 import { bigRing, bigSheen, useDepth } from './home-depth'
 import { slotTextKind, type homeLayout } from './home-layout'
-import PhraseCard from './PhraseCard'
+import PhraseCard, { speakingRoom } from './PhraseCard'
 import StarterReviewCard from './StarterReviewCard'
 import TurnText from './TurnText'
 
@@ -144,7 +144,12 @@ function ReplySlot({
           text={current.text}
           palette={paletteFor(current, categories)}
           speaking={activePhraseId === current.id}
-          kind={slotTextKind(current.text.length, width - (short ? 23 : 35), fontScale, short)}
+          kind={slotTextKind(
+            current.text.length,
+            width - (short ? 23 : 35) - speakingRoom(fontScale, short),
+            fontScale,
+            short
+          )}
           short={short}
           boldText={boldText}
           fontScale={fontScale}
@@ -202,6 +207,7 @@ function BigReply({
   const pressStyle = useAnimatedStyle(() => ({ opacity: pressed.value }))
   const category = categories.find((candidate) => candidate.id === reply.categoryId)
   const scale = Math.min(fontScale, 2)
+  const mark = Math.round(26 * scale)
 
   return (
     <View style={{ flex: 1, borderRadius: 28, boxShadow: depth.big }}>
@@ -270,7 +276,8 @@ function BigReply({
             </TurnText>
           </View>
         )}
-        <View style={{ flex: 1, justifyContent: 'center', paddingBottom: category ? 30 : 0 }}>
+        {/* The words stay above the speaker mark, which sits 24 points in from the corner, and balance the tag. */}
+        <View style={{ flex: 1, justifyContent: 'center', paddingBottom: Math.max(category ? 30 : 0, mark + 12) }}>
           <TurnText
             kind="phrase-big"
             boldText={boldText}
@@ -285,7 +292,7 @@ function BigReply({
         </View>
         <SymbolView
           name={speaking ? 'waveform' : 'speaker.wave.2.fill'}
-          size={Math.round(26 * scale)}
+          size={mark}
           weight="semibold"
           tintColor={colors['on-accent']}
           accessible={false}
