@@ -1,10 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { SymbolView } from 'expo-symbols'
-import { AccessibilityInfo, Pressable, StyleSheet, View, type ColorValue } from 'react-native'
+import { Pressable, StyleSheet, View, type ColorValue } from 'react-native'
 import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { colors } from '../constants/theme'
-import { useDepth, useSystemSetting } from './home-depth'
+import { useDepth } from './home-depth'
 import { toolbarLayout, type ToolbarItem } from './home-layout'
 import TurnText from './TurnText'
 
@@ -13,6 +13,7 @@ type Props = {
   fontScale: number
   boldText: boolean
   reduceMotion: boolean
+  reduceTransparency: boolean
   speaking: boolean
   canRepeat: boolean
   canPageUp: boolean
@@ -80,6 +81,7 @@ export default function Toolbar({
   fontScale,
   boldText,
   reduceMotion,
+  reduceTransparency,
   speaking,
   canRepeat,
   canPageUp,
@@ -91,10 +93,6 @@ export default function Toolbar({
   onPageDown
 }: Props) {
   const depth = useDepth()
-  const reduceTransparency = useSystemSetting(
-    AccessibilityInfo.isReduceTransparencyEnabled,
-    'reduceTransparencyChanged'
-  )
   const [measured, setMeasured] = useState<Partial<Record<ToolbarItem, { width: number; height: number }>>>({})
   const scale = Math.min(fontScale, 2.6)
   const symbol = Math.round(20 * scale)
@@ -118,7 +116,7 @@ export default function Toolbar({
       ? speaking
         ? 1
         : 0
-      : withTiming(speaking ? 1 : 0, { duration: 150, reduceMotion: ReduceMotion.System })
+      : withTiming(speaking ? 1 : 0, { duration: 150, reduceMotion: ReduceMotion.Never })
   }, [speaking, reduceMotion, stop])
   const stopStyle = useAnimatedStyle(() => ({ opacity: stop.value }))
 

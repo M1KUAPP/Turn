@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { AccessibilityInfo, Pressable, useColorScheme, View } from 'react-native'
+import { Pressable, useColorScheme, View } from 'react-native'
 import Animated, {
   interpolateColor,
   ReduceMotion,
@@ -13,7 +13,7 @@ import Animated, {
 import { colorValues, colors } from '../constants/theme'
 import { listenStrings } from '../listen/strings'
 import { freshStart, wordSegments, type CaptionView, type WordSegment } from './caption-view'
-import { listeningGlow, useDepth, useSystemSetting } from './home-depth'
+import { listeningGlow, useDepth } from './home-depth'
 import { modelProgressWords } from './home-layout'
 import { useListenLight } from './listen-light'
 import TurnText from './TurnText'
@@ -27,6 +27,7 @@ type Props = {
   fontScale: number
   boldText: boolean
   reduceMotion: boolean
+  increaseContrast: boolean
   // The partner's loudness, 0 to 1, which the meter follows.
   level: number
   model: { progress: number; secondsLeft: number | null } | null
@@ -38,9 +39,8 @@ type Props = {
 type Inks = { ink: string; soft: string }
 
 // The ink and the arrival highlight as plain colors in this appearance, since a fade needs values it can mix.
-function useInks(): Inks {
+function useInks(increaseContrast: boolean): Inks {
   const dark = useColorScheme() === 'dark'
-  const increaseContrast = useSystemSetting(AccessibilityInfo.isDarkerSystemColorsEnabled, 'darkerSystemColorsChanged')
   const mode = dark ? (increaseContrast ? 'dark-hc' : 'dark') : increaseContrast ? 'light-hc' : 'light'
   return { ink: colorValues.ink[mode], soft: colorValues['listen-soft'][mode] }
 }
@@ -55,8 +55,8 @@ function ArrivingWords({ segment, inks, reduceMotion }: { segment: WordSegment; 
   const lit = useSharedValue(segment.highlight ? 1 : 0)
   useEffect(() => {
     if (reduceMotion) return
-    if (segment.fade) shown.value = withTiming(1, { duration: 120, reduceMotion: ReduceMotion.System })
-    if (segment.highlight) lit.value = withTiming(0, { duration: 600, reduceMotion: ReduceMotion.System })
+    if (segment.fade) shown.value = withTiming(1, { duration: 120, reduceMotion: ReduceMotion.Never })
+    if (segment.highlight) lit.value = withTiming(0, { duration: 600, reduceMotion: ReduceMotion.Never })
   }, [segment.fade, segment.highlight, reduceMotion, shown, lit])
   const inkClear = clear(inks.ink)
   const softClear = clear(inks.soft)
@@ -82,17 +82,19 @@ function CaptionWords({
   lines,
   hearing,
   reduceMotion,
+  increaseContrast,
   boldText
 }: {
   text: string
   lines: number
   hearing: boolean
   reduceMotion: boolean
+  increaseContrast: boolean
   boldText: boolean
 }) {
   const [tail, setTail] = useState<{ text: string; lines: number; shown: string[] } | null>(null)
   const visibleTail = tail?.text === text && tail.lines === lines ? tail.shown : null
-  const inks = useInks()
+  const inks = useInks(increaseContrast)
   const fresh = useFreshStart(text)
   const arriving = (line: string, lineStart: number) =>
     hearing
@@ -172,7 +174,7 @@ const FLAT = 3
 const METER_HEIGHT = 18
 // Each bar's share of the meter's height at its loudest, so the five never rise as one.
 const peaks = [0.5, 0.8, 1, 0.65, 0.85]
-const spring = { damping: 18, stiffness: 220, reduceMotion: ReduceMotion.System }
+const spring = { damping: 18, stiffness: 220, reduceMotion: ReduceMotion.Never }
 
 function Bar({ level }: { level: SharedValue<number> }) {
   const style = useAnimatedStyle(() => ({ height: level.value }))
@@ -213,6 +215,7 @@ export default function Caption({
   fontScale,
   boldText,
   reduceMotion,
+  increaseContrast,
   level,
   model,
   onType,
@@ -235,7 +238,7 @@ export default function Caption({
       ? lamp
         ? 1
         : 0
-      : withTiming(lamp ? 1 : 0, { duration: 400, reduceMotion: ReduceMotion.System })
+      : withTiming(lamp ? 1 : 0, { duration: 400, reduceMotion: ReduceMotion.Never })
   }, [lamp, reduceMotion, lampValue])
   const lampStyle = useAnimatedStyle(() => ({ opacity: lampValue.value }))
   const scale = Math.min(fontScale, 2)
@@ -371,6 +374,7 @@ export default function Caption({
           lines={view.note && !grows ? 1 : 2}
           hearing={view.lineOpen}
           reduceMotion={reduceMotion}
+          increaseContrast={increaseContrast}
           boldText={boldText}
         />
       </View>
