@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { Pressable, Text, View } from 'react-native'
-import Animated from 'react-native-reanimated'
-import { colors } from '../constants/theme'
+import { AccessibilityInfo, Pressable, useColorScheme, View } from 'react-native'
+import Animated, {
+  interpolateColor,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+  type SharedValue
+} from 'react-native-reanimated'
+import { colorValues, colors } from '../constants/theme'
 import { listenStrings } from '../listen/strings'
-import type { CaptionView } from './caption-view'
-import { listeningGlow, useDepth } from './home-depth'
+import { freshStart, wordSegments, type CaptionView, type WordSegment } from './caption-view'
+import { listeningGlow, useDepth, useSystemSetting } from './home-depth'
 import { modelProgressWords } from './home-layout'
 import { useListenLight } from './listen-light'
 import TurnText from './TurnText'
@@ -19,54 +27,83 @@ type Props = {
   fontScale: number
   boldText: boolean
   reduceMotion: boolean
+  // The partner's voice is on, which the meter follows.
+  voice: boolean
   model: { progress: number; secondsLeft: number | null } | null
   onType: (() => void) | null
   onDone: () => void
   onClear: () => void
 }
 
-// The newest word sits on `listen-soft` for 600 ms (DESIGN, motion), or, under Reduce Motion, until the line ends.
-function useNewestWord(text: string, hearing: boolean, reduceMotion: boolean) {
-  const [lit, setLit] = useState(false)
-  useEffect(() => {
-    if (!hearing || !text) {
-      setLit(false)
-      return
-    }
-    setLit(true)
-    if (reduceMotion) return
-    const timer = setTimeout(() => setLit(false), 600)
-    return () => clearTimeout(timer)
-  }, [text, hearing, reduceMotion])
-  return lit
+type Inks = { ink: string; soft: string }
+
+// The ink and the arrival highlight as plain colors in this appearance, since a fade needs values it can mix.
+function useInks(): Inks {
+  const dark = useColorScheme() === 'dark'
+  const increaseContrast = useSystemSetting(AccessibilityInfo.isDarkerSystemColorsEnabled, 'darkerSystemColorsChanged')
+  const mode = dark ? (increaseContrast ? 'dark-hc' : 'dark') : increaseContrast ? 'light-hc' : 'light'
+  return { ink: colorValues.ink[mode], soft: colorValues['listen-soft'][mode] }
 }
 
-function WithNewestWord({ line, lit }: { line: string; lit: boolean }) {
-  const match = /\S+\s*$/.exec(line)
-  if (!match) return line
-  return (
-    <>
-      {line.slice(0, match.index)}
-      <Text style={{ backgroundColor: lit ? colors['listen-soft'] : undefined }}>{match[0]}</Text>
-    </>
-  )
+const clear = (hex: string) =>
+  `rgba(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)}, 0)`
+
+// Words arriving (plan 0044's motion): new words fade in over 120 ms, and the newest sits on `listen-soft`, which
+// fades over 600 ms. Reduce Motion shows them at once and keeps the highlight on the newest word until the line ends.
+function ArrivingWords({ segment, inks, reduceMotion }: { segment: WordSegment; inks: Inks; reduceMotion: boolean }) {
+  const shown = useSharedValue(segment.fade && !reduceMotion ? 0 : 1)
+  const lit = useSharedValue(segment.highlight ? 1 : 0)
+  useEffect(() => {
+    if (reduceMotion) return
+    if (segment.fade) shown.value = withTiming(1, { duration: 120, reduceMotion: ReduceMotion.System })
+    if (segment.highlight) lit.value = withTiming(0, { duration: 600, reduceMotion: ReduceMotion.System })
+  }, [segment.fade, segment.highlight, reduceMotion, shown, lit])
+  const inkClear = clear(inks.ink)
+  const softClear = clear(inks.soft)
+  const style = useAnimatedStyle(() => ({
+    color: interpolateColor(shown.value, [0, 1], [inkClear, inks.ink]),
+    backgroundColor: interpolateColor(lit.value, [0, 1], [softClear, inks.soft])
+  }))
+  return <Animated.Text style={style}>{segment.text}</Animated.Text>
+}
+
+// The words that came with this text, remembered from the text before it.
+function useFreshStart(text: string) {
+  const last = useRef({ text: '', start: 0 })
+  if (last.current.text !== text) last.current = { text, start: freshStart(text, last.current.text) }
+  return last.current.start
 }
 
 /** The partner's words in up to `lines` lines: a longer line shows its last lines, cut at the start with an ellipsis,
- * since the newest words matter most; the caption's label gives VoiceOver the whole line (DESIGN, the caption). */
+ * since the newest words matter most; the caption's label gives VoiceOver the whole line (DESIGN, the caption). While
+ * the partner speaks, the words that arrive animate inside those lines, which keep their text and so their cut. */
 function CaptionWords({
   text,
   lines,
-  lit,
+  hearing,
+  reduceMotion,
   boldText
 }: {
   text: string
   lines: number
-  lit: boolean
+  hearing: boolean
+  reduceMotion: boolean
   boldText: boolean
 }) {
   const [tail, setTail] = useState<{ text: string; lines: number; shown: string[] } | null>(null)
   const visibleTail = tail?.text === text && tail.lines === lines ? tail.shown : null
+  const inks = useInks()
+  const fresh = useFreshStart(text)
+  const arriving = (line: string, lineStart: number) =>
+    hearing
+      ? wordSegments(text, fresh, lineStart).map((segment, index) =>
+          segment.fade || segment.highlight ? (
+            <ArrivingWords key={`${text}-${index}`} segment={segment} inks={inks} reduceMotion={reduceMotion} />
+          ) : (
+            segment.text
+          )
+        )
+      : line
 
   return (
     <View>
@@ -81,12 +118,12 @@ function CaptionWords({
             style={{ color: colors.ink }}
           >
             {index === 0 ? '…' : ''}
-            {index === visibleTail.length - 1 ? <WithNewestWord line={line} lit={lit} /> : line}
+            {index === visibleTail.length - 1 ? arriving(line, text.trimEnd().length - line.length) : line}
           </TurnText>
         ))
       ) : (
         <TurnText kind="partner-line" boldText={boldText} numberOfLines={lines} style={{ color: colors.ink }}>
-          <WithNewestWord line={text} lit={lit} />
+          {arriving(text, 0)}
         </TurnText>
       )}
       <View
@@ -131,12 +168,52 @@ function Light({ ringStyle }: { ringStyle: ReturnType<typeof useListenLight> }) 
   )
 }
 
-// The session reports whether the partner's voice is on, not a level, so the five bars stand still (plan 0044's meter).
-function Meter() {
+const FLAT = 3
+const METER_HEIGHT = 18
+// Each bar's share of the meter's height at its loudest, so the five never rise as one.
+const peaks = [0.5, 0.8, 1, 0.65, 0.85]
+const spring = { damping: 18, stiffness: 220, reduceMotion: ReduceMotion.System }
+
+function Bar({ level }: { level: SharedValue<number> }) {
+  const style = useAnimatedStyle(() => ({ height: level.value }))
+  return <Animated.View style={[{ width: 3, borderRadius: 1.5, backgroundColor: colors.listen }, style]} />
+}
+
+// The meter (plan 0044's motion): the session reports whether the partner's voice is on, not its level, so while it's
+// on the five bars spring toward varied heights 15 times a second, and they settle flat when it stops. The heights
+// live in shared values, so the meter never re-renders React.
+function Meter({ voice }: { voice: boolean }) {
+  const bars = [
+    useSharedValue(FLAT),
+    useSharedValue(FLAT),
+    useSharedValue(FLAT),
+    useSharedValue(FLAT),
+    useSharedValue(FLAT)
+  ]
+  useEffect(() => {
+    if (!voice) {
+      bars.forEach((bar) => {
+        bar.value = withSpring(FLAT, spring)
+      })
+      return
+    }
+    let tick = 0
+    const step = () => {
+      bars.forEach((bar, index) => {
+        const swing = (Math.sin(tick * 1.3 + index * 2.1) + 1) / 2
+        bar.value = withSpring(FLAT + (METER_HEIGHT - FLAT) * peaks[index] * (0.35 + 0.65 * swing), spring)
+      })
+      tick += 1
+    }
+    step()
+    const timer = setInterval(step, 1000 / 15)
+    return () => clearInterval(timer)
+    // The five shared values are stable for the meter's life.
+  }, [voice])
   return (
-    <View accessible={false} style={{ flexDirection: 'row', alignItems: 'center', gap: 2.5, height: 18 }}>
-      {[7, 13, 18, 11, 15].map((height, index) => (
-        <View key={index} style={{ width: 3, height, borderRadius: 1.5, backgroundColor: colors.listen }} />
+    <View accessible={false} style={{ flexDirection: 'row', alignItems: 'center', gap: 2.5, height: METER_HEIGHT }}>
+      {bars.map((bar, index) => (
+        <Bar key={index} level={bar} />
       ))}
     </View>
   )
@@ -150,6 +227,7 @@ export default function Caption({
   fontScale,
   boldText,
   reduceMotion,
+  voice,
   model,
   onType,
   onDone,
@@ -157,13 +235,23 @@ export default function Caption({
 }: Props) {
   const depth = useDepth()
   const ringStyle = useListenLight(view.lineOpen, reduceMotion)
-  const lit = useNewestWord(view.kind === 'words' ? view.words : '', view.lineOpen, reduceMotion)
   const [labelRow, setLabelRow] = useState({ y: 0, height: 20 })
   const [pill, setPill] = useState({ width: 0, height: 32 })
   // The lamp: an orange edge and glow while the session opens and while the partner speaks (frames 03, 04); once
   // they've said their line, the panel rests on its usual edge while the capsule stays lit.
   const lamp = view.micOn && (view.kind === 'opening' || view.lineOpen)
-  const edgeWidth = lamp ? 2.5 : 1.5
+  const edgeWidth = 1.5
+  const lampValue = useSharedValue(lamp ? 1 : 0)
+  // Listening starts (plan 0044's motion): the orange edge and its glow fade in over 400 ms, and out as the line
+  // ends, or switch at once under Reduce Motion. They sit over the panel's own edge, so the words never move.
+  useEffect(() => {
+    lampValue.value = reduceMotion
+      ? lamp
+        ? 1
+        : 0
+      : withTiming(lamp ? 1 : 0, { duration: 400, reduceMotion: ReduceMotion.System })
+  }, [lamp, reduceMotion, lampValue])
+  const lampStyle = useAnimatedStyle(() => ({ opacity: lampValue.value }))
   const scale = Math.min(fontScale, 2)
   // Done or Clear keeps the top-right corner: beside the label below AX1, and above the content once the caption grows,
   // where the pill is too wide to share a line.
@@ -289,10 +377,16 @@ export default function Caption({
             {view.label}
           </TurnText>
         )}
-        {view.lineOpen && !reduceMotion && <Meter />}
+        {view.lineOpen && !reduceMotion && <Meter voice={voice} />}
       </View>
       <View style={{ marginTop: 4 }}>
-        <CaptionWords text={view.words} lines={view.note && !grows ? 1 : 2} lit={lit} boldText={boldText} />
+        <CaptionWords
+          text={view.words}
+          lines={view.note && !grows ? 1 : 2}
+          hearing={view.lineOpen}
+          reduceMotion={reduceMotion}
+          boldText={boldText}
+        />
       </View>
       {view.note && (
         <View
@@ -336,9 +430,9 @@ export default function Caption({
         marginHorizontal: 16,
         borderRadius: oneLine ? 20 : 24,
         borderWidth: edgeWidth,
-        borderColor: lamp ? colors.listen : colors.edge,
+        borderColor: colors.edge,
         backgroundColor: colors.surface,
-        boxShadow: lamp ? listeningGlow : depth.card
+        boxShadow: depth.card
       }}
     >
       <Pressable
@@ -359,6 +453,23 @@ export default function Caption({
       >
         {content}
       </Pressable>
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            position: 'absolute',
+            top: -edgeWidth,
+            right: -edgeWidth,
+            bottom: -edgeWidth,
+            left: -edgeWidth,
+            borderRadius: oneLine ? 20 : 24,
+            borderWidth: 2.5,
+            borderColor: colors.listen,
+            boxShadow: listeningGlow
+          },
+          lampStyle
+        ]}
+      />
       {view.button && (
         <Pressable
           accessibilityRole="button"

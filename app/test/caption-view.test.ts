@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { consentWords } from '../src/consent/strings'
 import { listenStrings } from '../src/listen/strings'
 import { purchaseNotes } from '../src/purchases/store'
-import { captionView, type CaptionInput } from '../src/screens/caption-view'
+import { captionView, freshStart, wordSegments, type CaptionInput } from '../src/screens/caption-view'
 
 const off: CaptionInput = {
   active: false,
@@ -99,5 +99,41 @@ describe('the caption', () => {
     const view = captionView({ ...listening, under18: true })
     expect(view).toMatchObject({ kind: 'mic-off', label: consentWords.under18Note, discSymbol: 'ear', micOn: false })
     expect(view.accessibilityLabel).toBe(`${consentWords.under18Note}, ${consentWords.typedLinePrompt}`)
+  })
+})
+
+describe('words arriving', () => {
+  test('fades the words a partial adds and highlights the newest word', () => {
+    const text = 'How was physio today'
+    const fresh = freshStart(text, 'How was physio')
+    expect(fresh).toBe(14)
+    expect(wordSegments(text, fresh)).toEqual([
+      { text: 'How was physio', fade: false, highlight: false },
+      { text: ' ', fade: true, highlight: false },
+      { text: 'today', fade: true, highlight: true }
+    ])
+  })
+
+  test('highlights a newest word as it grows, fading only its new letters', () => {
+    const text = 'How was physio'
+    expect(wordSegments(text, freshStart(text, 'How was phys'))).toEqual([
+      { text: 'How was ', fade: false, highlight: false },
+      { text: 'phys', fade: false, highlight: true },
+      { text: 'io', fade: true, highlight: true }
+    ])
+  })
+
+  test('treats a rewritten line as new from its last word', () => {
+    const text = 'How was physio'
+    expect(freshStart(text, 'Who was')).toBe(8)
+    expect(wordSegments(text, 8)[0]).toEqual({ text: 'How was ', fade: false, highlight: false })
+  })
+
+  test("keeps only the last shown line's part of a long caption", () => {
+    const text = 'I went to the clinic and the physio was hard today'
+    expect(wordSegments(text, text.length - 5, 29)).toEqual([
+      { text: 'physio was hard ', fade: false, highlight: false },
+      { text: 'today', fade: true, highlight: true }
+    ])
   })
 })

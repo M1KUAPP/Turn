@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { Pressable, View, type ColorValue } from 'react-native'
+import { Pressable, StyleSheet, View, type ColorValue } from 'react-native'
+import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { colors } from '../constants/theme'
 import { listeningGlow } from './home-depth'
 import type { ListenControl } from './listen-control'
@@ -12,6 +13,7 @@ type Props = {
   disabled: boolean
   boldText: boolean
   fontScale: number
+  reduceMotion: boolean
   // From AX3 the controls fill their row.
   fill: boolean
   height: number
@@ -19,9 +21,8 @@ type Props = {
   onEnd: () => void
 }
 
-function looks(control: ListenControl, micOn: boolean, disabled: boolean) {
+function looks(control: ListenControl, disabled: boolean) {
   const ink = disabled ? colors['ink-secondary'] : colors.ink
-  if (micOn) return { fill: colors.listen, edge: colors.listen, ink: colors['on-listen'] }
   if (control.action === 'unlock') return { fill: colors['accent-soft'], edge: colors.accent, ink }
   if (control.action === 'resume') return { fill: colors['listen-soft'], edge: colors.listen, ink }
   if (control.action === null)
@@ -34,14 +35,12 @@ function Capsule({
   fill,
   edge,
   height,
-  glow,
   children
 }: {
   pressed: boolean
   fill: ColorValue
   edge: ColorValue
   height: number
-  glow: boolean
   children: ReactNode
 }) {
   const edgeWidth = pressed ? 2.5 : 1.5
@@ -59,9 +58,8 @@ function Capsule({
         paddingVertical: 4,
         borderRadius: 999,
         borderWidth: edgeWidth,
-        borderColor: glow && pressed ? colors.ink : edge,
-        backgroundColor: pressed && !glow ? colors['surface-pressed'] : fill,
-        boxShadow: glow ? listeningGlow : undefined
+        borderColor: edge,
+        backgroundColor: pressed ? colors['surface-pressed'] : fill
       }}
     >
       {children}
@@ -77,14 +75,69 @@ export default function ListenButton({
   disabled,
   boldText,
   fontScale,
+  reduceMotion,
   fill,
   height,
   onPress,
   onEnd
 }: Props) {
-  const look = looks(control, micOn, disabled)
+  const look = looks(control, disabled)
   const scale = Math.min(fontScale, 2.6)
   const locked = control.action === 'unlock'
+  const lit = useSharedValue(micOn ? 1 : 0)
+
+  // Listening starts (plan 0044's motion): the orange capsule fades in over its unlit face in 400 ms, or at once under
+  // Reduce Motion; it goes out at once.
+  useEffect(() => {
+    lit.value =
+      micOn && !reduceMotion ? withTiming(1, { duration: 400, reduceMotion: ReduceMotion.System }) : micOn ? 1 : 0
+  }, [micOn, reduceMotion, lit])
+  const litStyle = useAnimatedStyle(() => ({ opacity: lit.value }))
+
+  const face = (ink: ColorValue) => (
+    <>
+      {control.symbol ? (
+        <SymbolView
+          name={control.symbol}
+          size={Math.round(18 * scale)}
+          weight="semibold"
+          tintColor={ink}
+          accessible={false}
+        />
+      ) : (
+        // The light: while the microphone is on, the capsule carries a lamp in place of a symbol (CONSENT-5).
+        <View
+          style={{
+            width: Math.round(16 * scale),
+            height: Math.round(16 * scale),
+            borderRadius: 999,
+            backgroundColor: ink
+          }}
+        />
+      )}
+      <TurnText kind="button" boldText={boldText} style={{ color: ink, flexShrink: 1 }}>
+        {control.word}
+      </TurnText>
+      {control.detail && (
+        <View
+          style={{
+            paddingHorizontal: 8,
+            paddingVertical: 2,
+            borderRadius: 999,
+            backgroundColor: locked ? colors.accent : colors['listen-soft']
+          }}
+        >
+          <TurnText
+            kind="caption"
+            boldText={boldText}
+            style={{ color: locked ? colors['on-accent'] : colors.listen, fontVariant: ['tabular-nums'] }}
+          >
+            {control.detail}
+          </TurnText>
+        </View>
+      )}
+    </>
+  )
 
   return (
     <View
@@ -106,48 +159,34 @@ export default function ListenButton({
         style={{ flexGrow: fill ? 1 : 0 }}
       >
         {({ pressed }) => (
-          <Capsule pressed={pressed && !disabled} fill={look.fill} edge={look.edge} height={height} glow={micOn}>
-            {control.symbol ? (
-              <SymbolView
-                name={control.symbol}
-                size={Math.round(18 * scale)}
-                weight="semibold"
-                tintColor={look.ink}
-                accessible={false}
-              />
-            ) : (
-              // The light: while the microphone is on, the capsule carries a lamp in place of a symbol (CONSENT-5).
-              <View
-                style={{
-                  width: Math.round(16 * scale),
-                  height: Math.round(16 * scale),
-                  borderRadius: 999,
-                  backgroundColor: colors['on-listen']
-                }}
-              />
-            )}
-            <TurnText kind="button" boldText={boldText} style={{ color: look.ink, flexShrink: 1 }}>
-              {control.word}
-            </TurnText>
-            {control.detail && (
-              <View
-                style={{
-                  paddingHorizontal: 8,
-                  paddingVertical: 2,
-                  borderRadius: 999,
-                  backgroundColor: locked ? colors.accent : colors['listen-soft']
-                }}
+          <View>
+            <Capsule pressed={pressed && !disabled} fill={look.fill} edge={look.edge} height={height}>
+              {face(look.ink)}
+            </Capsule>
+            {micOn && (
+              <Animated.View
+                pointerEvents="none"
+                style={[
+                  StyleSheet.absoluteFill,
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 6,
+                    paddingHorizontal: pressed ? 11 : 13.5,
+                    borderRadius: 999,
+                    borderWidth: pressed ? 2.5 : 0,
+                    borderColor: colors.ink,
+                    backgroundColor: colors.listen,
+                    boxShadow: listeningGlow
+                  },
+                  litStyle
+                ]}
               >
-                <TurnText
-                  kind="caption"
-                  boldText={boldText}
-                  style={{ color: locked ? colors['on-accent'] : colors.listen, fontVariant: ['tabular-nums'] }}
-                >
-                  {control.detail}
-                </TurnText>
-              </View>
+                {face(colors['on-listen'])}
+              </Animated.View>
             )}
-          </Capsule>
+          </View>
         )}
       </Pressable>
       {control.showsEnd && (
@@ -159,7 +198,7 @@ export default function ListenButton({
           style={{ flexGrow: fill ? 1 : 0 }}
         >
           {({ pressed }) => (
-            <Capsule pressed={pressed} fill={colors.surface} edge={colors.edge} height={height} glow={false}>
+            <Capsule pressed={pressed} fill={colors.surface} edge={colors.edge} height={height}>
               <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
                 End
               </TurnText>
