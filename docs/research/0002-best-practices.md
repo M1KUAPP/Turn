@@ -274,8 +274,7 @@ Medians from [sosa-2026], as of September 21, 2026:
 | Year-1 retention, monthly plans        | "Monthly: 8% (freemium) vs. 9% (hard paywall)"           |
 
 - The report's summary: "Apps that ask for money upfront convert 5x better than freemium (10.7% vs. 2.1%). But the advantage disappears over the long run: after one year, retention for both models is nearly identical." ([sosa-2026])
-- New-app outcomes: "If you're at ~$72/mo, you're at the overall median 1
-  year post-launch." "All Categories median: 58 days to $1K, 109 days to $10K." "All Categories: 17.3% hit $1K, 4.6% hit $10K." ([sosa-2026])
+- New-app outcomes: "If you're at ~$72/mo, you're at the overall median 1 year post-launch." "All Categories median: 58 days to $1K, 109 days to $10K." "All Categories: 17.3% hit $1K, 4.6% hit $10K." ([sosa-2026])
 
 ### Trial length and purchase timing
 
@@ -290,14 +289,11 @@ Medians from [sosa-2026], as of September 21, 2026:
 
 - Price points year over year ([sosa-2026]):
   - Weekly: "Most common at $5, median $5–$5.90, top percentile at $10 (unchanged YoY)."
-  - Monthly: "Most common at $10, median risen from $7 to $8, top performers
-    went up from $20 to $22.70."
-  - Yearly: "Most common at $30, median up from $31.60 to $34.80, the top
-    dropped from $92 to $90."
+  - Monthly: "Most common at $10, median risen from $7 to $8, top performers went up from $20 to $22.70."
+  - Yearly: "Most common at $30, median up from $31.60 to $34.80, the top dropped from $92 to $90."
 - "Across geographies, the dominant architecture remains $4.99–$6.99 weekly, $7.99–$9.99 monthly, and $29.99–$39.99 yearly." ([sosa-2026])
 - Plan mix: "overall market: 42% monthly, 34% yearly", and "North America balances monthly/yearly at 36%/40%." A contributor notes annual plans fell from "41.4% of all subscription durations" last year to "only 33.6%" ([sosa-2026]).
-- RPI by an app's most-sold plan: "Yearly-dominant apps: D14: $0.36, D60:
-  $0.46." "Monthly-dominant apps: D14: $0.18, D60: $0.29." "Weekly-dominant apps: D14: $0.19, D60: $0.32." ([sosa-2026])
+- RPI by an app's most-sold plan: "Yearly-dominant apps: D14: $0.36, D60: $0.46." "Monthly-dominant apps: D14: $0.18, D60: $0.29." "Weekly-dominant apps: D14: $0.19, D60: $0.32." ([sosa-2026])
 
 ### Paywall design and offers in the report
 
@@ -511,8 +507,7 @@ Apple's product page advice ([apple-product-page]):
 - **SOSA 2026, day-0 purchases.** "1/3 of all conversions happen on day zero for both methods" versus "Day 0 conversion: 50.6% overall" and a contributor's "Around 50% of paid conversions happen on Day 0." ([sosa-2026])
 - **SOSA 2026, plan mix by category.** "Productivity favors yearly (77%)" and "Health & Fitness is monthly-heavy (68%)" versus "Health & Fitness leads annual adoption at 68%" and "Productivity is the monthly outlier at 77%". Overall: "Weekly, monthly, and annual each capture roughly a third overall" versus "overall market: 42% monthly, 34% yearly" ([sosa-2026]).
 - **SOSA 2026, median prices.** Monthly "median risen from $7 to $8" versus "Weekly and monthly medians are flat ($5.99 and $10)", while weekly is also "median $5–$5.90" ([sosa-2026]).
-- **SOSA 2026, RPI by plan.** "Weekly-dominant apps: D14: $0.19" versus a
-  contributor's "D14 median RPI: $0.36 vs. $0.18 vs. $0.07" for annual, monthly, and weekly plans ([sosa-2026]).
+- **SOSA 2026, RPI by plan.** "Weekly-dominant apps: D14: $0.19" versus a contributor's "D14 median RPI: $0.36 vs. $0.18 vs. $0.07" for annual, monthly, and weekly plans ([sosa-2026]).
 - **SOSA 2026, North America.** "North America median: 2.8%" versus "D35 download-to-paid median is 2.56% in North America vs. 1.37% in IN/SEA", while IN/SEA is elsewhere "median: 0.7%" ([sosa-2026]).
 - **SOSA summary versus report.** The summary calls 10.7% versus 2.1% a "median Day-35 trial-to-paid conversion rate", says AI apps "churn 36% faster", and says "55% of all trial cancellations happen on Day 0" ([sosa-blog]). The report defines the metric as download-to-paid, says AI apps "churn 30% faster", and limits the 55% to "3-day trial cancellations" ([sosa-2026]).
 - **Apple, in-app purchase text limits.** "In-app purchase names are limited to 35 characters and descriptions are limited to 55 characters" ([apple-product-page]) versus "no more than 30 characters" and "no more than 45 characters" ([asc-iap-info]).

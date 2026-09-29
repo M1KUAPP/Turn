@@ -421,8 +421,7 @@ export default requireNativeModule<MyModule>('MyModule')
 
 - **The simple way.** "To set permission messages, use the `ios.infoPlist` key", and "Changes to the **Info.plist** cannot be updated over-the-air" ([permissions][permissions]). `ios.infoPlist` is "Applied prior to all other Expo-specific configuration. No other validation is performed" ([app config][app-config]).
 - **A plugin, if needed.** A config plugin can set keys with `withInfoPlist` from `expo/config-plugins` ([plugins][config-plugins]).
-- **The fallback's plugin.** `expo-speech-recognition`'s plugin always writes `NSSpeechRecognitionUsageDescription` and `NSMicrophoneUsageDescription`, taking the plugin's props first, then an existing `ios.infoPlist` value, then "Allow $(PRODUCT_NAME) to use speech recognition." or "Allow
-  $(PRODUCT_NAME) to use the microphone." ([plugin][esr-plugin])
+- **The fallback's plugin.** `expo-speech-recognition`'s plugin always writes `NSSpeechRecognitionUsageDescription` and `NSMicrophoneUsageDescription`, taking the plugin's props first, then an existing `ios.infoPlist` value, then "Allow $(PRODUCT_NAME) to use speech recognition." or "Allow $(PRODUCT_NAME) to use the microphone." ([plugin][esr-plugin])
 - Synthesis: put both usage strings in `ios.infoPlist`, worded for Turn's partner and user; no plugin of Turn's own is needed.
 
 [permissions]: https://docs.expo.dev/guides/permissions/

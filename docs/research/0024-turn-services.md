@@ -193,13 +193,7 @@ The documented statuses (401, 422, 429, and 529) and the live API's 403 for a mi
 - **Input tokens only.** "Charged per input token. Output tokens are free." ([ts-models]) `usage.input_tokens` is the "Number of billable input tokens used to evaluate the request." ([ts-openapi])
 - **The state counts once.** "Adding questions barely changes the response time and costs only the tokens for the extra questions, which are cheap." ([ts-primitives]) "The document dominates every request. N single-question calls pay for it N times, in N round trips; the batched call pays once." ([cb-parallel])
 - **Published usage.** One short Noul about a one-sentence state used 296 input tokens ([ts-api]), the quickstart's three questions used 392 ([ts-quickstart]), and the Noul page's three candidate records used 535 ([ts-noul]).
-- Synthesis: in the parallel-questions cookbook's run on `jev-1.12`, the batched call of 13 questions cost $0.000497, about 11,833 tokens at $0.042 per million, against $0.006090 for 13 single calls, about 11,154 tokens
-  each ([cb-parallel]), so each extra question cost about 57 tokens. The
-  296-token example puts a request's fixed overhead near 280 tokens. A Turn
-  request with 40 phrases of about 14 characters then comes to roughly 1,700
-  to 1,900 input tokens, depending on the layout: about $0.00007 to $0.00008
-  a line, or $5.20 to $5.80 a year at 200 lines a day, against the
-  "about 1,500" tokens and $4.60 the idea first estimated ([idea-money]). TypeSafe's tokenizer isn't published, so the relay should log `usage.input_tokens` from its first real call.
+- Synthesis: in the parallel-questions cookbook's run on `jev-1.12`, the batched call of 13 questions cost $0.000497, about 11,833 tokens at $0.042 per million, against $0.006090 for 13 single calls, about 11,154 tokens each ([cb-parallel]), so each extra question cost about 57 tokens. The 296-token example puts a request's fixed overhead near 280 tokens. A Turn request with 40 phrases of about 14 characters then comes to roughly 1,700 to 1,900 input tokens, depending on the layout: about $0.00007 to $0.00008 a line, or $5.20 to $5.80 a year at 200 lines a day, against the "about 1,500" tokens and $4.60 the idea first estimated ([idea-money]). TypeSafe's tokenizer isn't published, so the relay should log `usage.input_tokens` from its first real call.
 
 ## The relay on Cloudflare Workers
 
@@ -520,8 +514,7 @@ The relay counts free lines per device and checks `listen` per RevenueCat custom
 
 - **Cloudflare's free options.** The Free plan gets one WAF rate limiting rule, counting by IP over 10 seconds, and such rules "are not designed to allow a precise number of requests to reach your origin server" ([cf-waf-rl]). "For native mobile applications, Turnstile does not run natively. Instead, you use a WebView" ([cf-turnstile-mobile]). API Shield is an "Enterprise-only paid add-on" ([cf-api-shield]), and Bot Fight Mode "may challenge API or mobile app traffic" ([cf-bfm]).
 - **RevenueCat's rule.** "App User IDs should not be guessable" ([rc-identify]).
-- Synthesis: any client can mint new IDs, since the relay's code and URL are public, and a Test Store purchase costs nothing, so neither the free-line count nor `listen` guards Jev's credits. The backstops are the per-device count, the burst limit, and a global daily Jev budget checked before every call. Kept in one object, that budget is the global counter Cloudflare's [rules page][cf-do-rules] warns about, which is harmless at judging's volume. At about $0.00008 a line, 20 free lines cost about
-  $0.0016 per minted ID.
+- Synthesis: any client can mint new IDs, since the relay's code and URL are public, and a Test Store purchase costs nothing, so neither the free-line count nor `listen` guards Jev's credits. The backstops are the per-device count, the burst limit, and a global daily Jev budget checked before every call. Kept in one object, that budget is the global counter Cloudflare's [rules page][cf-do-rules] warns about, which is harmless at judging's volume. At about $0.00008 a line, 20 free lines cost about $0.0016 per minted ID.
 
 [cf-waf-rl]: https://developers.cloudflare.com/waf/rate-limiting-rules/
 [cf-turnstile-mobile]: https://developers.cloudflare.com/turnstile/get-started/mobile-implementation/

@@ -23,8 +23,7 @@ Contents:
 - **The challenge:** ship a brand-new app to the App Store, Google Play Store, or, new this year, the Samsung Galaxy Store, first released between August 1 and September 30, 2026. The RevenueCat SDK must power at least one in-app or web purchase, or serve ads through RevenueCat Ads.
 - **Platforms:** iOS, iPadOS, macOS, or Android. Web apps are not eligible.
 - **Deadline:** Wednesday, September 30, 2026 at 11:45 PM Pacific Time.
-- **Prizes:** over $700,000 in cash across 21 categories (the Shipaton site
-  says "$740k+"), led by a $100,000 Grand Prize. Most first places also get a Times Square billboard, a Shippy trophy, and travel to, or an invitation to, App Growth Annual in New York City.
+- **Prizes:** over $700,000 in cash across 21 categories (the Shipaton site says "$740k+"), led by a $100,000 Grand Prize. Most first places also get a Times Square billboard, a Shippy trophy, and travel to, or an invitation to, App Growth Annual in New York City.
 - **Winners:** announced October 22, 2026.
 - **Contact:** `shipaton@revenuecat.com`, or the official Shipaton Discord.
 
@@ -192,8 +191,7 @@ What this means for an entry:
 
 ## Resources and perks
 
-- **Ship Kit:** 28 sponsor perks, most of which unlock at five milestones: registration complete, RevenueCat project created, first test purchase, first store API call, and first real purchase. RevenueCat tracks progress and emails each perk. Allow 3 to 5 business days after registering; after 7 days, write to `shipkit@revenuecat.com` or ask in `#shipkit-support` on Discord. Examples: no Paddle fees on your first $100k in transaction volume,
-  500 Codemagic build minutes per month, $250 in Stripe credits, and $100 in Sentry credits.
+- **Ship Kit:** 28 sponsor perks, most of which unlock at five milestones: registration complete, RevenueCat project created, first test purchase, first store API call, and first real purchase. RevenueCat tracks progress and emails each perk. Allow 3 to 5 business days after registering; after 7 days, write to `shipkit@revenuecat.com` or ask in `#shipkit-support` on Discord. Examples: no Paddle fees on your first $100k in transaction volume, 500 Codemagic build minutes per month, $250 in Stripe credits, and $100 in Sentry credits.
 - **Builder resources:** the [Zero to Ship quest](https://revenuecat.github.io/start/), the RevenueCat SDK quickstart and codelabs, docs for Android, iOS, React Native with Expo, Kotlin Multiplatform, and Flutter, and the [AI Toolkits for RevenueCat SDK](https://github.com/RevenueCat/ai-toolkit), which help coding assistants integrate RevenueCat correctly.
 - **#ShipatonSale:** a directory of 42 community deals on tools and services, each with its own dates. Examples for the final stretch: AcceptMyApp review prep at 30% off with `SHIP30`, Marquee App Store screenshots at 100% off with `SHIPATON26` (500 redemptions), and Lingue's Starter plan free through September 30. You can also list a sale on your own app with the #ShipatonSale hashtag to reach other participants.
 - **Livestreams:** twice a week, with expert guests and live Q&A, on the [livestream calendar](https://luma.com/shipaton-live). The last three are "ASO in the age of AI agents" (Tuesday, September 22), a "Final AMA" (Friday, September 25), and a wrap-up celebration (Tuesday, September 29), all at 9AM PT.
@@ -264,8 +262,7 @@ The captured sources leave these points open or disagree on them. Confirm them i
 - **Official rules.** They are not captured, so the minimum age outside Next Gen, the full country list, IP ownership, taxes, disqualification terms, and the "full judging criteria" are not covered here. Shipyard's rules covered IP and disqualification, but that was a different hackathon.
 - **Multiple prizes.** You can enter several categories, but no 2026 source says whether one app can win more than one prize. Enter the categories that fit, and don't count on more than one prize.
 - **Purchase or transaction.** Devpost asks the SDK to "power at least one in-app purchase", while the vibe code page says "Get one sale, even from a friend or family member, or run a single ad." The safe default is at least one real purchase or ad.
-- **First-place cash.** The Devpost summary gives "$20,000" to the first place
-  of every other category, but its prize list pays $15,000 in five sponsor categories and no cash for Best App for Galaxy. This brief follows the prize list.
+- **First-place cash.** The Devpost summary gives "$20,000" to the first place of every other category, but its prize list pays $15,000 in five sponsor categories and no cash for Best App for Galaxy. This brief follows the prize list.
 - **Best App for Galaxy places.** Devpost lists a single winner, but the category page also lists a 2nd and 3rd place, each with a blog feature. Follow Devpost and plan for a single winner.
 - **Required items.** Devpost lists six; the submission guide lists nine, adding the tagline, the RevenueCat project ID, and category-specific details, and intake also checks the bundle ID or package name. Provide all of them.
 - **Funnel Vision.** Its "measurement period" for web payment volume is not defined. The category page says no extra fields were announced, but the submission guide asks for the funnel URL and the Stripe Project ID; include both.

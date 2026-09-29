@@ -155,8 +155,7 @@ https://apps.apple.com/app/id<APP_ID>
 
 ### The paywall and purchases
 
-- **PAY-1, Must.** One RevenueCat Paywall, configured remotely, offers Guessling+ yearly at $19.99 with a 3-day free trial, preselected, and
-  monthly at $2.99. Check: the sandbox paywall shows both, yearly selected.
+- **PAY-1, Must.** One RevenueCat Paywall, configured remotely, offers Guessling+ yearly at $19.99 with a 3-day free trial, preselected, and monthly at $2.99. Check: the sandbox paywall shows both, yearly selected.
 - **PAY-2, Must.** The paywall says what Guessling+ holds today, such as the number of archive puzzles, as guideline 3.1.2(c) asks; makes the billed amount its most prominent price; and shows the trial's length, the renewal price and period, and how to cancel, as the context's [paywall rules][ctx-money] say. Check: each listed item shows on the sandbox paywall.
 - **PAY-3, Must.** The paywall has visible Close, Restore Purchases, Terms of Use, and Privacy Policy buttons, each added in RevenueCat's paywall editor, since current paywalls ignore the SDK's close-button flag ([RevenueCat notes][rc-buttons]). Check: all four work on a device.
 - **PAY-4, Must.** The paywall appears only from "Play yesterday's?" and a locked archive puzzle, and closing it returns to where the player was. Check: no other screen opens it.

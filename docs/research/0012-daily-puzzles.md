@@ -181,8 +181,7 @@ Contents:
 | LinkedIn games                | No charge: "you do not need any special access to play"            | [li-faq]              |
 
 - The App Store page names each in-app purchase and its price but not its billing period, and it lists ten, so the list may be partial ([nyt-games-app-store]).
-- Apple's Newsroom gave other markets on July 17, 2025: "$12.99 per month
-  in the U.S., £12.99 in the UK, $16.99 in Canada, and $19.99 in Australia" ([apple-nr-emoji]).
+- Apple's Newsroom gave other markets on July 17, 2025: "$12.99 per month in the U.S., £12.99 in the UK, $16.99 in Canada, and $19.99 in Australia" ([apple-nr-emoji]).
 - NYT sells Puzzle Packs apart from the subscription: "Puzzle Packs are not included in a New York Times Games subscription", and "Both subscribers and non-subscribers can purchase Puzzle Packs directly in the Games app" ([nyt-games-app-help]).
 - Synthesis: Guessling+ at $2.99 a month or $19.99 a year ([idea-money]) sells one game's archive for about half of NYT's $5.99 App Store price, which covers 13 games and over 10,000 past puzzles, and for under a quarter of Apple News+.
 
@@ -256,9 +255,7 @@ Contents:
 - **Share card.** Synthesis: Name and number, questions used out of 20 or `X`, one symbol per answer, and the hint; never the question text; a date line for archive play. See [NYT share formats](#nyt-share-formats).
 - **Streaks.** Synthesis: Decide whether wins or days count, when the day closes, and whether a miss is forgiven. LinkedIn's freeze, earned after 5 straight wins, held two at most, and applied automatically, is the only documented protection. See [How streaks work](#how-streaks-work).
 - **Archive.** Synthesis: Keep today free and sell the past; archive rounds count in stats but never in streaks and can't be replayed; offer the archive once today's round is over, as Wordle's archive button does. See [How archives are offered](#how-archives-are-offered).
-- **Prices.** Synthesis: On September 22, 2026, NYT Games was $5.99 or
-  $4.99 a month on the US App Store and Apple News+ $12.99 a month after a
-  free month; LinkedIn charges nothing. Guessling+'s $2.99 sits below both. See [Prices on September 22, 2026](#prices-on-september-22-2026).
+- **Prices.** Synthesis: On September 22, 2026, NYT Games was $5.99 or $4.99 a month on the US App Store and Apple News+ $12.99 a month after a free month; LinkedIn charges nothing. Guessling+'s $2.99 sits below both. See [Prices on September 22, 2026](#prices-on-september-22-2026).
 - **Finished round.** Synthesis: Show Played, Win %, Current Streak, Max Streak, and questions used, plus a countdown, because the first version has no push reminders. See [What a finished round shows](#what-a-finished-round-shows).
 - **Classic rules.** Synthesis: The hint is the classic category opener; decide whether a guess uses one of the 20 questions, as it does in the parlor game, and define each hint so the answers can't split on technicalities. See [Rules of the classic game](#rules-of-the-classic-game).
 - **Fairness.** Synthesis: Everyone gets the same puzzle and the same answers; fix a reported answer only after the last time zone's midnight; keep the answer and future puzzles off the device, unlike Wordle. See [Fairness and corrections](#fairness-and-corrections).

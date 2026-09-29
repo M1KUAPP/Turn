@@ -24,8 +24,7 @@ Contents:
 - **Measured speed.** Jev's mean round trip was "111ms" and "114ms" in the self-consistency runs of `jev-1.13.0` ([cb-consistency-noul]; [cb-consistency-choice]). Whole eval cases, some chaining several requests, took 0.18 to 1.02 s for Jev and 3.8 to 681 s for Opus 5 and Sol ([ev-security-data]; [ev-trace-data]; [ev-invoice-data]).
 - **Concurrency.** Cookbook authors keep 3 to 12 requests in flight and warn that "the public endpoint rate-limits above roughly eight" ([cb-entity]; [cb-autoresearch]; see [Concurrency in the cookbooks](#concurrency-in-the-cookbooks)). The Doom bot ran at "10 queries a second" ([ts-blog-launch]).
 - **Cardinality.** A Choice takes up to 255 options and "works reliably up to roughly 240", and a Score takes at most ten levels ([ts-choice]; [cb-classify-confidence]; [cb-autoresearch]). Bigger decisions use two stages, as Wikiracing does ([ts-blog-launch]).
-- **Evals.** Jev averages 67.8% accuracy against a consensus of GPT-6 Astra and Claude Fable 5.1, at $0.0004 and 0.4 s per case, against 74.1% for Sol at
-  $0.0836 and 23.3 s. It is near the top on customer service (76.0%) and eighth of nine on invoice processing (61.8%) ([ts-evals]).
+- **Evals.** Jev averages 67.8% accuracy against a consensus of GPT-6 Astra and Claude Fable 5.1, at $0.0004 and 0.4 s per case, against 74.1% for Sol at $0.0836 and 23.3 s. It is near the top on customer service (76.0%) and eighth of nine on invoice processing (61.8%) ([ts-evals]).
 - **Calibration evidence.** TypeSafe claims calibrated probabilities, but no page read publishes a reliability plot or calibration error. The only confidence-versus-accuracy split is 27 of 30 right at or above 0.9 against 12 of 30 below, on 60 filings with `jev-1.12` ([cb-classify-confidence]).
 - **Consistency.** Over 15 repeats the top label flipped on 2 of 8 Choice questions, with a mean per-question standard deviation near 0.01 ([cb-consistency-choice]; [cb-consistency-noul]).
 - **No demo source.** Doom, Wikiracing, and the smart home assistant have no public code; the launch post gives only a few design notes ([ts-blog-launch]; [ts-smart-home]; [gh-org]).
@@ -281,8 +280,7 @@ def suggest(request: str) -> tuple[str, ...]:
 - **Per request in a chain.** Skill suggestion's demo requests took "(0.31s)" and "(0.16s)" for the wide ranking and "(0.12s)" and "(0.09s)" for the re-check ([cb-skill-suggestion]).
 - **Question count barely matters.** Structure recovery ran "16 pair questions, one request, 0.32s" and "62 questions about 17 blocks, one request, 0.51s" ([cb-autoformat]). "An extra question adds little, since the state is most of the tokens and is sent once either way, while an extra round trip adds a full request of latency." ([cb-autoformat])
 - **Concurrency does not remove token cost.** Of 13 separate calls: "Fire them concurrently and the gap shrinks, but the 13x token cost stays." ([cb-parallel])
-- **Cost.** Re-ranking's "1200 TypeSafe calls used 1,536,002 input and 25,200 output tokens, costing $0.0645." ([cb-rerank]) The self-consistency runs cost
-  "$0.000043" and "$0.000046" per call ([cb-consistency-noul]; [cb-consistency-choice]).
+- **Cost.** Re-ranking's "1200 TypeSafe calls used 1,536,002 input and 25,200 output tokens, costing $0.0645." ([cb-rerank]) The self-consistency runs cost "$0.000043" and "$0.000046" per call ([cb-consistency-noul]; [cb-consistency-choice]).
 
 ### Concurrency in the cookbooks
 
@@ -339,8 +337,7 @@ What the launch post says ([ts-blog-launch]):
 
 - **Claim.** "Jev outputs all probabilities in parallel instead of autoregressively generating by token." ([ts-blog-launch])
 - **Nuance.** "The relatively shorter input paints our model in an advantageous light." In the recorded run, the "only disagreement with GPT-5.6 Terra is on" the churn likelihood question ([ts-blog-launch]).
-- **Homepage counters.** Jev "Cost $0.000081" and "Completed in 0.114s"; LLMs
-  "Cost $0.013880" and "Completed in 8.566s" ([ts-home]).
+- **Homepage counters.** Jev "Cost $0.000081" and "Completed in 0.114s"; LLMs "Cost $0.013880" and "Completed in 8.566s" ([ts-home]).
 
 ### Source code for the demos
 
@@ -535,8 +532,7 @@ Roles that TypeSafe's own pages give an LLM next to Jev:
 - **Choice size.** The API accepts "a maximum of 255 options per Choice", and the Choice page advises the full list ([ts-api]; [ts-choice]); the classification cookbook says "a Choice works reliably up to roughly 240 options" ([cb-classify-confidence]).
 - **Rate limits.** The models page lists 1,200 requests a minute ([ts-models]); cookbooks say "the public endpoint rate-limits above roughly eight" in flight ([cb-entity]; [cb-autoresearch]).
 - **Price status.** The models page gives $0.042 per million input tokens as current ([ts-models]); the self-consistency cookbooks label it "Historical TypeSafe rate, as of 2026-08" and their costs "not verified `jev-latest` prices" ([cb-consistency-noul]).
-- **Structure recovery cost.** The printed total is "$0.0003", while the page's
-  text says "$0.0015" ([cb-autoformat]).
+- **Structure recovery cost.** The printed total is "$0.0003", while the page's text says "$0.0015" ([cb-autoformat]).
 - **Choice confidence.** Structure recovery describes type confidence as "the probability behind the winning choice" but prints 0.43 for a 0.53 winner ([cb-autoformat]); function calling defines its own call confidence as "the least certain judgement in the call" ([cb-function-calling]).
 - **Beam requests.** The hierarchical cookbook says its "TypeSafe API calls each simultaneously evaluate `K` paths", while its code sends one single-question request per path in parallel ([cb-hierarchical]).
 - **Example thresholds.** Confidence floors differ across pages for similar decisions: 0.6 ([ts-confidence-routing]), 0.5 ([ts-confidence]; [ts-intent]), 0.75 and 0.8 ([ts-build]).
