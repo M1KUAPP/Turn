@@ -420,7 +420,8 @@ Each ratio is WCAG 2.2's, truncated to one decimal so none is rounded up to pass
 | `ink`           | `unsure-fill`     | Not sure                                               | 13.9:1 | 13.3:1 | 14.8:1               | 16.5:1              | 7:1      |
 | `on-accent`     | `accent`          | The big reply, Type, Speak, and primary buttons        | 8.4:1  | 7.6:1  | 10.8:1               | 12.1:1              | 7:1      |
 | `on-accent`     | `accent-pressed`  | The same, pressed                                      | 10.8:1 | 9.5:1  | 13.4:1               | 15.1:1              | 7:1      |
-| `surface`       | `ink`             | The selected tab, and Stop                             | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `surface`       | `ink`             | The selected tab, Stop, and Send                       | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `surface`       | `ink-secondary`   | The same, pressed                                      | 7.3:1  | 7.6:1  | 11.7:1               | 12.0:1              | 7:1      |
 | `on-listen`     | `listen`          | "Listening" and its symbol                             | 5.4:1  | 9.0:1  | 7.4:1                | 12.0:1              | 4.5:1    |
 | `listen`        | `surface`         | The caption's label while hearing                      | 5.3:1  | 7.8:1  | 7.4:1                | 10.0:1              | 4.5:1    |
 | `listen`        | `listen-soft`     | The free lines' pill                                   | 4.5:1  | 7.2:1  | 5.5:1                | 9.8:1               | 4.5:1    |
@@ -625,7 +626,7 @@ spacing:
   target: 44px
   strip-cell: 48px
   slot: 78px
-  caption: 86px
+  caption: 114px
   button: 56px
   list-row: 56px
   bar: 52px
@@ -661,7 +662,7 @@ bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
 | Band        | Height at the default text size | What sets it                                                         |
 | ----------- | ------------------------------- | -------------------------------------------------------------------- |
 | Top bar     | 52 points                       | `bar`                                                                |
-| The caption | 86 points                       | A label and two lines of `partner-line`, with one button beside them |
+| The caption | 114 points                      | A label and two lines of `partner-line`, with one button beside them |
 | The strip   | About 120 points                | Two rows of cells whose phrases wrap to two lines on a phone         |
 | The row     | 258 points                      | Three rows of 78-point slots and two 12-point gaps                   |
 | Tabs        | 44 points                       | `target`                                                             |
@@ -713,12 +714,12 @@ Turn lays out by the width it's given, not by the device, since an app built wit
 - **The lamp's glow is behind everything.** While listening, a radial gradient in `listen-glow` at 30%, 560 by 420 points, centered near the Listen control, washes the top of the board, through `experimental_backgroundImage` or an exported ellipse.
 - **Every glass setting leaves the words readable.** Reduce Transparency and the Liquid Glass slider, from clear to tinted, change only the toolbar and the system's chrome; Increase Contrast also moves Turn's own colors to their `-hc` values ([Turn's iOS design notes][ios-glass-settings]).
 
-| Shadow                         | Light                                                          | Dark                                                    |
-| ------------------------------ | -------------------------------------------------------------- | ------------------------------------------------------- |
-| A card                         | `0 1px 2px rgba(30,26,21,.06), 0 6px 16px rgba(30,26,21,.07)`  | `0 1px 2px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.35)` |
-| Raised: the toolbar and sheets | `0 2px 4px rgba(30,26,21,.08), 0 14px 32px rgba(30,26,21,.12)` | `0 2px 4px rgba(0,0,0,.5), 0 14px 32px rgba(0,0,0,.45)` |
-| The listening light's glow     | `0 0 18px 2px rgba(255,138,61,.55)`                            | The same                                                |
-| The big reply                  | `0 10px 28px rgba(36,56,201,.35)`                              | None                                                    |
+| Shadow                                          | Light                                                          | Dark                                                    |
+| ----------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------- |
+| A card                                          | `0 1px 2px rgba(30,26,21,.06), 0 6px 16px rgba(30,26,21,.07)`  | `0 1px 2px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.35)` |
+| Raised: the toolbar, the place menu, and sheets | `0 2px 4px rgba(30,26,21,.08), 0 14px 32px rgba(30,26,21,.12)` | `0 2px 4px rgba(0,0,0,.5), 0 14px 32px rgba(0,0,0,.45)` |
+| The listening light's glow                      | `0 0 18px 2px rgba(255,138,61,.55)`                            | The same                                                |
+| The big reply                                   | `0 10px 28px rgba(36,56,201,.35)`                              | None                                                    |
 
 [ios-key]: /docs/research/0029-turn-ios-design.md#the-compatibility-key-under-xcode-27
 [ios-chrome]: /docs/research/0029-turn-ios-design.md#turns-chrome-that-turns-to-glass
@@ -1241,7 +1242,7 @@ components:
 
 - **Look.** A `surface` card with a 1.5-point edge in its category's color, `card` corners, 12-point padding, and the phrase in `phrase`, `ink`, left-aligned and wrapped; at least 78 points tall and as wide as its column. The whole card is the target.
 - **Four states.** Plain is a `surface` card on the category's edge; Tinted, the state a reply to the current line takes, fills with the category's fill; Pressed is `surface-pressed` with a 2.5-point edge, on touch-down, speaking on touch-up; Speaking is `accent-soft` with a 2.5-point `accent` edge.
-- **Press.** The fill turns `surface-pressed` at once and back on release, with no change of size; the phrase speaks on release, and sliding off cancels ([motionsites notes][ms-app]).
+- **Press.** The fill turns `surface-pressed` at once and fades back over 120 ms on release, with no change of size; the phrase speaks on release, and sliding off cancels ([motionsites notes][ms-app]).
 - **Speaking.** While its phrase speaks, the card shows `waveform` pinned to its bottom trailing corner, so the text never reflows, in its text's color: `ink` on cards and tints, and `on-accent` on the big reply.
 - **Accessibility.** Its label is its text and its trait is button, and Edit and Move are named actions, never long presses (A11Y-2, A11Y-8) ([TRD][trd-a11y]).
 
@@ -1272,7 +1273,7 @@ The row's height and its six slots are fixed for the text size and the screen (R
 
 The caption shows the partner's words in Listen mode; outside it, it says so: "Listen mode is off."
 
-- **Look.** A `caption` panel across the screen, 86 points tall at the default size: a speaker label in `label`, then up to two lines of the partner's words in `partner-line`, `ink`, with one capsule button at its trailing edge. While hearing, the panel is `caption-hearing`: a 2.5-point `listen` edge, the lamp's glow, a 10-point light, and a five-bar meter, with "They're saying" in `listen`.
+- **Look.** A `caption` panel across the screen, 114 points tall at the default size: a speaker label in `label`, then up to two lines of the partner's words in `partner-line`, `ink`, with one capsule button at its trailing edge. While hearing, the panel is `caption-hearing`: a 2.5-point `listen` edge, the lamp's glow, a 10-point light, and a five-bar meter, with "They're saying" in `listen`.
 - **Words.** A long partner line shows its last two lines, cut at the start with an ellipsis, since the newest words matter most, and VoiceOver reads the whole line. The words, and the partner's words that "Still answering" and "Replying to" quote, live only in memory and clear as LISTEN-8 says.
 - **The button.** Done while a partner line is open (LISTEN-2), and Clear when the row holds replies (ROW-10) as a 32-tall pill with a 44-point hit area; it never moves, so a hand learns it.
 - **Notes.** A `note` pill replaces the speaker label's right half, with its symbol, on `surface-sunken`: the phone ranked the replies (STATE-1), Listen mode is degraded (STATE-2, STATE-3), Listen mode is off for this partner (CONSENT-6), live transcription isn't available (LISTEN-9), or the speech model is downloading, with a progress bar under the words (LISTEN-1).
@@ -1298,7 +1299,7 @@ The top bar's trailing control, in `button`, with its symbol before its word:
 
 ### The place picker
 
-A chip in the top bar with the place's symbol, its name, and `chevron.down`. A tap opens iOS's own menu of the user's places, and one tap on a place chooses it (PLACE-1).
+A chip in the top bar with the place's symbol, its name, and `chevron.down`. A tap opens a raised `surface` menu under the chip, with `panel` corners and the raised shadow: each of the user's places with its symbol, the current one on `accent-soft` with a check, then Edit places under a hairline. One tap on a place chooses it (PLACE-1). A tap anywhere outside closes the menu; the board behind it stays as it is, with no scrim.
 
 ### The tabs
 
@@ -1316,14 +1317,14 @@ A chip in the top bar with the place's symbol, its name, and `chevron.down`. A t
 A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point area, with four items 84 by 52, each a symbol above its label in `caption` on a solid pill: `toolbar-item`, a `surface` pill with a 1.5-point `edge`, since a button's edge reaches 3 to 1 (rule 2), unless a bullet below names another:
 
 - **Type** (`keyboard`) opens the composer (SPEAK-1, SPEAK-3), on an `accent` pill.
-- **Repeat** (`arrow.counterclockwise`) says the last spoken text again (SPEAK-6), and becomes **Stop** (`stop.fill`) on an `ink` pill while Turn speaks (SPEAK-2), in the same place.
+- **Repeat** (`arrow.counterclockwise`) says the last spoken text again (SPEAK-6), and becomes **Stop** (`stop.fill`) on an `ink` pill while Turn speaks (SPEAK-2), in the same place; pressed, Stop's pill turns `ink-secondary`.
 - **Up** and **Down** (`chevron.up` and `chevron.down`) scroll the grid by a screen, or the whole column on short screens and from AX1.
 - **At large sizes** the four take two rows, so no label is cut.
 
 ### The composer
 
 - **Your words.** Docked above the keyboard: a field in `body` that grows to four lines and then scrolls, "Replying to" and the partner's line above it in `partner-line-small`, and Speak as `button-primary` (SPEAK-3). While Turn speaks, Speak becomes Stop. Within 50 characters of the 500-character limit, a count in `label` says how many are left.
-- **Their words.** The same composer, labeled "What did they say?" (LISTEN-4), with Send as `button-secondary`, never marker blue, so a partner's words can't be mistaken for the user's.
+- **Their words.** The same composer, labeled "What did they say?" (LISTEN-4), with Send on `ink`, its word and `arrow.uturn.backward` in `surface`, never marker blue, so a partner's words can't be mistaken for the user's.
 
 ### Buttons and lists
 
@@ -1337,19 +1338,19 @@ A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point
 
 ## Motion
 
-Motion is feedback, never decoration. The format has no motion tokens, and its maintainer points motion to prose, so this table is the whole inventory ([trends notes][ft-proposals]). Every animation uses Reanimated with `ReduceMotion.System`, and every row says what Reduce Motion shows instead.
+Motion is feedback, never decoration. The format has no motion tokens, and its maintainer points motion to prose, so this table is the whole inventory ([trends notes][ft-proposals]). Every animation uses Reanimated with `ReduceMotion.Never`, so the accessibility store's Reduce Motion flag alone decides, as "One flag" below says, and every row says what Reduce Motion shows instead.
 
-| Moment            | What moves                                                                                        | Timing                                                                             | Reduce Motion                                                     |
-| ----------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| A press           | Fill to `surface-pressed` or `accent-pressed`, edge to 2.5; nothing translates or scales          | Instant on touch-down; back in 120 ms                                              | The same                                                          |
-| Replies arrive    | In each changed slot, the old words fade out, the new fade in rising 4 points, and the tint fills | Out 90 ms, in 180 ms ease-out, fill 240 ms; slots staggered 40 ms in reading order | Instant swap                                                      |
-| The big reply     | The six slots cross-fade into the one card, in the same frame                                     | 200 ms ease-out                                                                    | Instant                                                           |
-| Listening starts  | The board glow fades in, the capsule turns orange, and the caption's edge turns orange            | 400 ms                                                                             | Instant, glow static                                              |
-| The light         | A ring grows from the light and fades                                                             | 1.6 s loop, scale 1 to 1.8, opacity 0.6 to 0                                       | Static light, no ring                                             |
-| The meter         | Five bars follow the input level                                                                  | 15 Hz, spring (damping 18, stiffness 220)                                          | Bars hidden; "They're saying" stays                               |
-| Words arrive      | Each new word fades in, and the newest sits on a `listen-soft` highlight that fades               | 120 ms a word; highlight 600 ms                                                    | No fade; the highlight stays on the last word until the line ends |
-| Speaking          | The slot's waveform symbol animates, and Repeat cross-fades to Stop                               | SF Symbol `variableColor.iterative`; 150 ms                                        | Static symbol                                                     |
-| Sheets and alerts | System                                                                                            | System                                                                             | System                                                            |
+| Moment            | What moves                                                                                                            | Timing                                                                             | Reduce Motion                                                     |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| A press           | Fill to `surface-pressed` or `accent-pressed`, or `ink` to `ink-secondary`, edge to 2.5; nothing translates or scales | Instant on touch-down; back in 120 ms                                              | The same                                                          |
+| Replies arrive    | In each changed slot, the old words fade out, the new fade in rising 4 points, and the tint fills                     | Out 90 ms, in 180 ms ease-out, fill 240 ms; slots staggered 40 ms in reading order | Instant swap                                                      |
+| The big reply     | The six slots cross-fade into the one card, in the same frame                                                         | 200 ms ease-out                                                                    | Instant                                                           |
+| Listening starts  | The board glow fades in, the capsule turns orange, and the caption's edge turns orange                                | 400 ms                                                                             | Instant, glow static                                              |
+| The light         | A ring grows from the light and fades                                                                                 | 1.6 s loop, scale 1 to 1.8, opacity 0.6 to 0                                       | Static light, no ring                                             |
+| The meter         | Five bars follow the input level, and lie flat where the engine measures none                                         | The recognizer's level, up to 10 Hz; spring (damping 18, stiffness 220)            | Bars hidden; "They're saying" stays                               |
+| Words arrive      | Each new word fades in, and the newest sits on a `listen-soft` highlight that fades                                   | 120 ms a word; highlight 600 ms                                                    | No fade; the highlight stays on the last word until the line ends |
+| Speaking          | The slot's waveform symbol animates, and Repeat cross-fades to Stop                                                   | SF Symbol `variableColor.iterative`; 150 ms                                        | Static symbol                                                     |
+| Sheets and alerts | System                                                                                                                | System                                                                             | System                                                            |
 
 - **Nothing else moves.** No entrances, springs, parallax, shimmer, skeletons, or loops beyond the light's ring; the grid never animates; and a press changes the fill, never the size, so the target stays where the finger is ([motionsites notes][ms-app]).
 - **Fades, not slides.** A new phrase appears in its slot's frame, which never moves or scales; only its words rise 4 points as they fade in, so the target stays where a finger, a pointer, or a gaze left it ([Turn's iOS design notes][ios-put]).
