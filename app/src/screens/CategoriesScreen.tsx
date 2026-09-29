@@ -20,6 +20,7 @@ import {
   useListMetrics
 } from './ListGroup'
 import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 type Editor = { id: string | null; name: string }
@@ -205,32 +206,36 @@ export default function CategoriesScreen() {
             accessibilityValue={{ text: 'Phrases always visible above the grid' }}
             accessibilityHint="Opens its phrases."
             onPress={() => router.push('/bank/strip')}
-            style={({ pressed }) => ({
+            style={{
               minHeight: 62,
               flexDirection: 'row',
               alignItems: 'center',
               gap: 12,
               paddingHorizontal: 16,
-              paddingVertical: 10,
-              backgroundColor: pressed ? colors['surface-pressed'] : undefined
-            })}
+              paddingVertical: 10
+            }}
           >
-            <SymbolTile symbol={categorySymbol('strip')} tone={tileTones.neutral} />
-            <View style={{ flex: 1, gap: 2 }}>
-              <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                Conversation strip
-              </TurnText>
-              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                Phrases always visible above the grid
-              </TurnText>
-            </View>
-            <SymbolView
-              name="chevron.right"
-              size={mark}
-              weight="semibold"
-              tintColor={colors['ink-secondary']}
-              accessible={false}
-            />
+            {({ pressed }) => (
+              <>
+                <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                <SymbolTile symbol={categorySymbol('strip')} tone={tileTones.neutral} />
+                <View style={{ flex: 1, gap: 2 }}>
+                  <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                    Conversation strip
+                  </TurnText>
+                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                    Phrases always visible above the grid
+                  </TurnText>
+                </View>
+                <SymbolView
+                  name="chevron.right"
+                  size={mark}
+                  weight="semibold"
+                  tintColor={colors['ink-secondary']}
+                  accessible={false}
+                />
+              </>
+            )}
           </Pressable>
         </View>
 
@@ -275,30 +280,34 @@ export default function CategoriesScreen() {
                       if (event.nativeEvent.actionName === 'delete') void confirmDelete(category)
                     }}
                     onPress={() => router.push(`/bank/${category.id}`)}
-                    style={({ pressed }) => ({
+                    style={{
                       minHeight: 56,
                       flexDirection: 'row',
                       alignItems: 'center',
                       gap: 12,
                       paddingHorizontal: 16,
-                      paddingVertical: 10,
-                      backgroundColor: pressed ? colors['surface-pressed'] : undefined
-                    })}
+                      paddingVertical: 10
+                    }}
                   >
-                    <SymbolTile symbol={categorySymbol(category.id)} tone={{ fill: hue.fill, ink: hue.edge }} />
-                    <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
-                      {category.name}
-                    </TurnText>
-                    <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                      {count}
-                    </TurnText>
-                    <SymbolView
-                      name="chevron.right"
-                      size={mark}
-                      weight="semibold"
-                      tintColor={colors['ink-secondary']}
-                      accessible={false}
-                    />
+                    {({ pressed }) => (
+                      <>
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                        <SymbolTile symbol={categorySymbol(category.id)} tone={{ fill: hue.fill, ink: hue.edge }} />
+                        <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
+                          {category.name}
+                        </TurnText>
+                        <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          {count}
+                        </TurnText>
+                        <SymbolView
+                          name="chevron.right"
+                          size={mark}
+                          weight="semibold"
+                          tintColor={colors['ink-secondary']}
+                          accessible={false}
+                        />
+                      </>
+                    )}
                   </Pressable>
 
                   {/* Edit mode's buttons sit under the name, one tap each, never a drag (A11Y-5, A11Y-8). */}

@@ -18,6 +18,7 @@ import {
 } from './ListGroup'
 import SegmentedControl from './SegmentedControl'
 import SheetHeader, { SheetActions } from './SheetHeader'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 const previewText = 'Hello. This is how I sound.'
@@ -99,16 +100,20 @@ export default function VoiceScreen() {
                       setNote(null)
                       void ready.speech.preview(previewText, voice.identifier).catch((cause) => setNote(String(cause)))
                     }}
-                    style={({ pressed }) => ({
+                    style={{
                       width: Math.max(44, tile),
                       height: Math.max(44, tile),
                       alignItems: 'center',
                       justifyContent: 'center',
-                      borderRadius: 14,
-                      backgroundColor: pressed ? colors['surface-pressed'] : undefined
-                    })}
+                      borderRadius: 14
+                    }}
                   >
-                    <SymbolTile symbol="speaker.wave.2.fill" tone={tileTones.accent} />
+                    {({ pressed }) => (
+                      <>
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} radius={14} />
+                        <SymbolTile symbol="speaker.wave.2.fill" tone={tileTones.accent} />
+                      </>
+                    )}
                   </Pressable>
                   <Pressable
                     accessibilityRole="button"
@@ -118,7 +123,7 @@ export default function VoiceScreen() {
                       setNote(null)
                       void voiceSettings.chooseVoice(voice.identifier).catch((cause) => setNote(String(cause)))
                     }}
-                    style={({ pressed }) => ({
+                    style={{
                       flex: 1,
                       minHeight: 56,
                       flexDirection: 'row',
@@ -126,21 +131,25 @@ export default function VoiceScreen() {
                       gap: 12,
                       paddingLeft: 6,
                       paddingRight: 16,
-                      paddingVertical: 10,
-                      backgroundColor: pressed ? colors['surface-pressed'] : undefined
-                    })}
+                      paddingVertical: 10
+                    }}
                   >
-                    <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
-                      {voice.name}
-                    </TurnText>
-                    {on && (
-                      <SymbolView
-                        name="checkmark"
-                        size={mark + 3}
-                        weight="semibold"
-                        tintColor={colors.accent}
-                        accessible={false}
-                      />
+                    {({ pressed }) => (
+                      <>
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                        <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
+                          {voice.name}
+                        </TurnText>
+                        {on && (
+                          <SymbolView
+                            name="checkmark"
+                            size={mark + 3}
+                            weight="semibold"
+                            tintColor={colors.accent}
+                            accessible={false}
+                          />
+                        )}
+                      </>
                     )}
                   </Pressable>
                 </View>

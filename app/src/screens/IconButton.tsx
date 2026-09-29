@@ -2,6 +2,7 @@ import { SymbolView } from 'expo-symbols'
 import { Pressable, useWindowDimensions, type ColorValue } from 'react-native'
 import { colors } from '../constants/theme'
 import type { SymbolName } from './category-style'
+import PressFill from './PressFill'
 
 // A 44-point round symbol button, named for VoiceOver and Voice Control (DESIGN, symbol buttons).
 export default function IconButton({
@@ -26,22 +27,27 @@ export default function IconButton({
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => ({
+      style={{
         width: size,
         height: size,
         borderRadius: size / 2,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: pressed ? colors['surface-pressed'] : colors['surface-sunken']
-      })}
+        backgroundColor: colors['surface-sunken']
+      }}
     >
-      <SymbolView
-        name={symbol}
-        size={Math.round(size * 0.42)}
-        weight="semibold"
-        tintColor={disabled ? colors['ink-secondary'] : tint}
-        accessible={false}
-      />
+      {({ pressed }) => (
+        <>
+          <PressFill pressed={pressed} color={colors['surface-pressed']} radius={size / 2} />
+          <SymbolView
+            name={symbol}
+            size={Math.round(size * 0.42)}
+            weight="semibold"
+            tintColor={disabled ? colors['ink-secondary'] : tint}
+            accessible={false}
+          />
+        </>
+      )}
     </Pressable>
   )
 }
