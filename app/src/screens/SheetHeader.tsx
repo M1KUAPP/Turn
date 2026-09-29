@@ -3,6 +3,8 @@ import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Dimensions, Keyboard, Pressable, useWindowDimensions, View, type KeyboardEvent } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors } from '../constants/theme'
+import PressFill from './PressFill'
+import { keyboardInset } from './sheet-layout'
 import TurnText from './TurnText'
 
 type Props = {
@@ -30,23 +32,28 @@ export default function SheetHeader({ title, boldText, onClose, closeLabel = 'Ca
           accessibilityRole="button"
           accessibilityLabel={closeLabel}
           onPress={onClose}
-          style={({ pressed }) => ({
+          style={{
             width: 44,
             height: 44,
             borderRadius: 22,
             alignItems: 'center',
             justifyContent: 'center',
             alignSelf: 'flex-start',
-            backgroundColor: pressed ? colors['surface-pressed'] : colors['surface-sunken']
-          })}
+            backgroundColor: colors['surface-sunken']
+          }}
         >
-          <SymbolView
-            name="xmark"
-            size={Math.round(16 * Math.min(fontScale, 1.4))}
-            weight="semibold"
-            tintColor={colors.ink}
-            accessible={false}
-          />
+          {({ pressed }) => (
+            <>
+              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={22} />
+              <SymbolView
+                name="xmark"
+                size={Math.round(16 * Math.min(fontScale, 1.4))}
+                weight="semibold"
+                tintColor={colors.ink}
+                accessible={false}
+              />
+            </>
+          )}
         </Pressable>
       </View>
     </View>
@@ -87,10 +94,11 @@ export function SheetBody({ children }: { children: ReactNode }) {
   useEffect(() => {
     const fit = (event: KeyboardEvent) => {
       root.current?.measureInWindow((_rootX, _rootY, _rootWidth, rootHeight) => {
-        body.current?.measureInWindow((_x, y, _width, height) => {
-          const sheetTop = Dimensions.get('window').height - rootHeight
-          setInset(Math.max(0, Math.round(sheetTop + y + height - event.endCoordinates.screenY)))
-        })
+        body.current?.measureInWindow((_x, y, _width, height) =>
+          setInset(
+            keyboardInset(Dimensions.get('window').height, rootHeight, { y, height }, event.endCoordinates.screenY)
+          )
+        )
       })
     }
     const subscriptions = [
