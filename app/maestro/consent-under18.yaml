@@ -28,11 +28,13 @@ name: Under-18 partner
     visible: Can my phone listen while we talk\?
     timeout: 10000
 # From AX1 the card's text scrolls above the pinned answers, and Maestro counts the switch as on screen while it's
-# under They agreed, so it only matches once it's above them; otherwise the tap agrees for the partner.
+# under They agreed, so it only matches once it's above them; otherwise the tap agrees for the partner. At AX5 the
+# facts run several screens, so the scroll gets a minute.
 - scrollUntilVisible:
     element:
       text: '.*My partner is under 18.*'
       above: They agreed
+    timeout: 60000
 - tapOn:
     text: '.*My partner is under 18.*'
     checked: false
