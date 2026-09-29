@@ -2,9 +2,8 @@ import { SymbolView } from 'expo-symbols'
 import { Pressable, useWindowDimensions, View } from 'react-native'
 import { colors } from '../constants/theme'
 import { useDepth } from './home-depth'
+import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
-
-const edgeWidth = (primary: boolean, pressed: boolean) => (primary ? 0 : pressed ? 2.5 : 1.5)
 
 function CardButton({
   label,
@@ -19,30 +18,37 @@ function CardButton({
   boldText: boolean
   onPress: () => void
 }) {
+  const press = usePress()
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
       onPress={onPress}
-      style={({ pressed }) => ({
+      style={{
         flex: stacked ? undefined : 1,
         minHeight: 52,
         justifyContent: 'center',
-        // The edge thickens on press inside the same outline, so the label stays put.
-        paddingHorizontal: 17.5 - edgeWidth(primary, pressed),
-        paddingVertical: 9.5 - edgeWidth(primary, pressed),
-        borderRadius: 999,
-        borderWidth: edgeWidth(primary, pressed),
-        borderColor: colors.edge,
-        backgroundColor: primary
-          ? pressed
-            ? colors['accent-pressed']
-            : colors.accent
-          : pressed
-            ? colors['surface-pressed']
-            : colors.surface
-      })}
+        paddingHorizontal: 17.5,
+        paddingVertical: 9.5,
+        borderRadius: 999
+      }}
     >
+      {/* The edge thickens on press under the label, so the label stays put. */}
+      <Layer
+        fill={primary ? colors.accent : colors.surface}
+        edge={primary ? undefined : colors.edge}
+        edgeWidth={1.5}
+        radius={999}
+      />
+      <Layer
+        fill={primary ? colors['accent-pressed'] : colors['surface-pressed']}
+        edge={primary ? undefined : colors.edge}
+        edgeWidth={2.5}
+        radius={999}
+        style={press.style}
+      />
       <TurnText
         kind="button"
         boldText={boldText}

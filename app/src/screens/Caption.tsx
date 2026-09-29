@@ -15,6 +15,7 @@ import { listenStrings } from '../listen/strings'
 import { freshStart, wordSegments, type CaptionView, type WordSegment } from './caption-view'
 import { listeningGlow, useDepth } from './home-depth'
 import { modelProgressWords } from './home-layout'
+import { Layer, usePress } from './home-press'
 import { useListenLight } from './listen-light'
 import TurnText from './TurnText'
 
@@ -223,6 +224,7 @@ export default function Caption({
   onClear
 }: Props) {
   const depth = useDepth()
+  const press = usePress()
   const ringStyle = useListenLight(view.lineOpen, reduceMotion)
   const [labelRow, setLabelRow] = useState({ y: 0, height: 20 })
   const [pill, setPill] = useState({ width: 0, height: 32 })
@@ -469,8 +471,10 @@ export default function Caption({
           onLayout={({ nativeEvent }) =>
             setPill({ width: nativeEvent.layout.width, height: nativeEvent.layout.height })
           }
+          onPressIn={press.onPressIn}
+          onPressOut={press.onPressOut}
           onPress={view.button === 'done' ? onDone : onClear}
-          style={({ pressed }) => ({
+          style={{
             position: 'absolute',
             right: 16 - edgeWidth,
             top: oneLine
@@ -484,10 +488,11 @@ export default function Caption({
             alignItems: 'center',
             gap: 6,
             paddingHorizontal: 12,
-            borderRadius: 999,
-            backgroundColor: pressed ? colors['surface-pressed'] : colors['surface-sunken']
-          })}
+            borderRadius: 999
+          }}
         >
+          <Layer fill={colors['surface-sunken']} radius={999} />
+          <Layer fill={colors['surface-pressed']} radius={999} style={press.style} />
           {view.button === 'clear' && (
             <SymbolView
               name="xmark"

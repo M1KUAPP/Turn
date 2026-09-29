@@ -1,5 +1,6 @@
 import { Pressable, ScrollView, View, type ColorValue } from 'react-native'
 import { colors } from '../constants/theme'
+import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
 
 type Props = {
@@ -33,50 +34,57 @@ function Tab({
   boldText: boolean
   onPress: () => void
 }) {
+  const press = usePress()
+  // The tab ROW-9 marks keeps its dot and takes a 2.5 edge in its category's color, a shape as well as a hue.
+  const edge = suggested && dot ? dot : colors.edge
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ selected }}
       accessibilityValue={suggested ? { text: 'suggested' } : undefined}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
       onPress={onPress}
-    >
-      {({ pressed }) => {
-        // The tab ROW-9 marks keeps its dot and takes a 2.5 edge in its category's color, a shape as well as a hue.
-        const edgeWidth = suggested || pressed ? 2.5 : selected ? 0 : 1.5
-        return (
-          <View
-            style={{
-              minHeight: height,
-              minWidth: 44,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-              paddingHorizontal: 16 - edgeWidth,
-              borderRadius: 999,
-              borderWidth: edgeWidth,
-              borderColor: suggested && dot ? dot : colors.edge,
-              backgroundColor: selected ? colors.ink : pressed ? colors['surface-pressed'] : colors.surface
-            }}
-          >
-            {dot && (
-              <View
-                style={{
-                  width: dotSize,
-                  height: dotSize,
-                  borderRadius: dotSize / 2,
-                  backgroundColor: dot,
-                  borderWidth: selected ? 1.5 : 0,
-                  borderColor: colors.surface
-                }}
-              />
-            )}
-            <TurnText kind="label" boldText={boldText} style={{ color: selected ? colors.surface : colors.ink }}>
-              {name}
-            </TurnText>
-          </View>
-        )
+      style={{
+        minHeight: height,
+        minWidth: 44,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        paddingHorizontal: 16,
+        borderRadius: 999
       }}
+    >
+      <Layer
+        fill={selected ? colors.ink : colors.surface}
+        edge={edge}
+        edgeWidth={suggested ? 2.5 : selected ? 0 : 1.5}
+        radius={999}
+      />
+      {/* Pressed, the selected tab's `ink` turns `ink-secondary`, as Stop's does; the others take `surface-pressed`. */}
+      <Layer
+        fill={selected ? colors['ink-secondary'] : colors['surface-pressed']}
+        edge={edge}
+        edgeWidth={selected && !suggested ? 0 : 2.5}
+        radius={999}
+        style={press.style}
+      />
+      {dot && (
+        <View
+          style={{
+            width: dotSize,
+            height: dotSize,
+            borderRadius: dotSize / 2,
+            backgroundColor: dot,
+            borderWidth: selected ? 1.5 : 0,
+            borderColor: colors.surface
+          }}
+        />
+      )}
+      <TurnText kind="label" boldText={boldText} style={{ color: selected ? colors.surface : colors.ink }}>
+        {name}
+      </TurnText>
     </Pressable>
   )
 }

@@ -30,6 +30,7 @@ import CategoryTabs from './CategoryTabs'
 import { useDepth } from './home-depth'
 import { homeLayout, modelSecondsLeft, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
 import { homePreview } from './home-preview'
+import { Layer, usePress } from './home-press'
 import { listenControl } from './listen-control'
 import ListenButton from './ListenButton'
 import PartnerLineComposer from './PartnerLineComposer'
@@ -82,6 +83,55 @@ function BoardGlow({ on, width, reduceMotion }: { on: boolean; width: number; re
   )
 }
 
+/** A strip phrase (DESIGN, the strip): a `surface` chip on an `edge`, or `no-fill` on `no-edge` when urgent, pressed on
+ * `surface-pressed` with a 2.5 edge that fades back over 120 ms. */
+function StripChip({
+  phrase,
+  width,
+  boldText,
+  onEdit,
+  onSpeak
+}: {
+  phrase: Phrase
+  width: number
+  boldText: boolean
+  onEdit: () => void
+  onSpeak: () => void
+}) {
+  const depth = useDepth()
+  const press = usePress()
+  const urgent = phrase.id === 'somethings-wrong'
+  const edge = urgent ? colors['no-edge'] : colors.edge
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={phrase.text}
+      accessibilityActions={[{ name: 'edit', label: 'Edit' }]}
+      onAccessibilityAction={(event) => {
+        if (event.nativeEvent.actionName === 'edit') onEdit()
+      }}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
+      onPress={onSpeak}
+      style={{
+        width,
+        minHeight: 48,
+        justifyContent: 'center',
+        paddingHorizontal: 12.5,
+        paddingVertical: 7.5,
+        borderRadius: 14,
+        boxShadow: depth.card
+      }}
+    >
+      <Layer fill={urgent ? colors['no-fill'] : colors.surface} edge={edge} edgeWidth={1.5} radius={14} />
+      <Layer fill={colors['surface-pressed']} edge={edge} edgeWidth={2.5} radius={14} style={press.style} />
+      <TurnText kind="phrase-strip" boldText={boldText} style={{ color: colors.ink, width: width - 25 }}>
+        {phrase.text}
+      </TurnText>
+    </Pressable>
+  )
+}
+
 export default function HomeScreen({
   bank,
   speech,
@@ -92,7 +142,8 @@ export default function HomeScreen({
   reduceTransparency
 }: Props) {
   const router = useRouter()
-  const depth = useDepth()
+  const settingsPress = usePress()
+  const placePress = usePress()
   const { consent, state: consentState } = useConsent()
   const { purchases, state: purchasesLive } = usePurchases()
   const { ready } = useTurn()
@@ -397,54 +448,20 @@ export default function HomeScreen({
     </View>
   )
 
-  const renderStripPhrase = (phrase: Phrase, cardWidth: number) => {
-    const urgent = phrase.id === 'somethings-wrong'
-    return (
-      <Pressable
-        key={phrase.id}
-        accessibilityRole="button"
-        accessibilityLabel={phrase.text}
-        accessibilityActions={[{ name: 'edit', label: 'Edit' }]}
-        onAccessibilityAction={(event) => {
-          if (event.nativeEvent.actionName === 'edit') {
-            router.push({
-              pathname: '/bank/[category]',
-              params: { category: phrase.category_id, editPhraseId: phrase.id }
-            })
-          }
-        }}
-        onPress={() => {
-          void speech.speak(phrase.text, phrase.id)
-        }}
-        style={{ width: cardWidth }}
-      >
-        {({ pressed }) => {
-          const edgeWidth = pressed ? 2.5 : 1.5
-          return (
-            <View
-              style={{
-                flexGrow: 1,
-                minHeight: 48,
-                justifyContent: 'center',
-                // The edge thickens on press inside the same outline, so the words stay put.
-                paddingHorizontal: 12.5 - edgeWidth,
-                paddingVertical: 7.5 - edgeWidth,
-                borderRadius: 14,
-                borderWidth: edgeWidth,
-                borderColor: urgent ? colors['no-edge'] : colors.edge,
-                backgroundColor: pressed ? colors['surface-pressed'] : urgent ? colors['no-fill'] : colors.surface,
-                boxShadow: depth.card
-              }}
-            >
-              <TurnText kind="phrase-strip" boldText={boldText} style={{ color: colors.ink, width: cardWidth - 25 }}>
-                {phrase.text}
-              </TurnText>
-            </View>
-          )
-        }}
-      </Pressable>
-    )
-  }
+  const renderStripPhrase = (phrase: Phrase, cardWidth: number) => (
+    <StripChip
+      key={phrase.id}
+      phrase={phrase}
+      width={cardWidth}
+      boldText={boldText}
+      onEdit={() =>
+        router.push({ pathname: '/bank/[category]', params: { category: phrase.category_id, editPhraseId: phrase.id } })
+      }
+      onSpeak={() => {
+        void speech.speak(phrase.text, phrase.id)
+      }}
+    />
+  )
 
   const stripContent =
     layout.stripColumns === 1 ? (
@@ -562,75 +579,81 @@ export default function HomeScreen({
         borderBottomColor: colors.hairline
       }}
     >
-      <Pressable accessibilityRole="button" accessibilityLabel="Settings" onPress={() => router.push('/settings')}>
-        {({ pressed }) => (
-          <View
-            style={{
-              width: 44,
-              height: oneControlColumn ? controlHeight : 44,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 22,
-              borderWidth: pressed ? 2.5 : 1.5,
-              borderColor: colors.edge,
-              backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-            }}
-          >
-            <SymbolView
-              name="gearshape.fill"
-              size={Math.round(20 * Math.min(fontScale, 1.6))}
-              weight="semibold"
-              tintColor={colors.ink}
-              accessible={false}
-            />
-          </View>
-        )}
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Settings"
+        onPressIn={settingsPress.onPressIn}
+        onPressOut={settingsPress.onPressOut}
+        onPress={() => router.push('/settings')}
+        style={{
+          width: 44,
+          height: oneControlColumn ? controlHeight : 44,
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 22
+        }}
+      >
+        <Layer fill={colors.surface} edge={colors.edge} edgeWidth={1.5} radius={22} />
+        <Layer
+          fill={colors['surface-pressed']}
+          edge={colors.edge}
+          edgeWidth={2.5}
+          radius={22}
+          style={settingsPress.style}
+        />
+        <SymbolView
+          name="gearshape.fill"
+          size={Math.round(20 * Math.min(fontScale, 1.6))}
+          weight="semibold"
+          tintColor={colors.ink}
+          accessible={false}
+        />
       </Pressable>
       <Pressable
         ref={placeChip}
         accessibilityRole="button"
         accessibilityLabel={selectedPlace?.name ?? 'Place'}
+        onPressIn={placePress.onPressIn}
+        onPressOut={placePress.onPressOut}
         onPress={choosePlace}
-        style={{ flexShrink: 1, width: oneControlColumn ? width - 84 : undefined }}
-      >
-        {({ pressed }) => {
-          const edgeWidth = pressed ? 2.5 : 1.5
-          return (
-            <View
-              style={{
-                minHeight: oneControlColumn ? controlHeight : 44,
-                minWidth: 44,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 6,
-                paddingHorizontal: 13.5 - edgeWidth,
-                borderRadius: 999,
-                borderWidth: edgeWidth,
-                borderColor: colors.edge,
-                backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-              }}
-            >
-              <SymbolView
-                name={placeSymbol(selectedPlace?.id ?? '')}
-                size={symbolSize(18)}
-                weight="semibold"
-                tintColor={colors.ink}
-                accessible={false}
-              />
-              <TurnText kind="button" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
-                {selectedPlace?.name ?? 'Place'}
-              </TurnText>
-              <SymbolView
-                name="chevron.down"
-                size={symbolSize(12)}
-                weight="semibold"
-                tintColor={colors.ink}
-                accessible={false}
-              />
-            </View>
-          )
+        style={{
+          flexShrink: 1,
+          width: oneControlColumn ? width - 84 : undefined,
+          minHeight: oneControlColumn ? controlHeight : 44,
+          minWidth: 44,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 6,
+          paddingHorizontal: 13.5,
+          borderRadius: 999
         }}
+      >
+        <Layer fill={colors.surface} edge={colors.edge} edgeWidth={1.5} radius={999} />
+        <Layer
+          fill={colors['surface-pressed']}
+          edge={colors.edge}
+          edgeWidth={2.5}
+          radius={999}
+          style={placePress.style}
+        />
+        <SymbolView
+          name={placeSymbol(selectedPlace?.id ?? '')}
+          size={symbolSize(18)}
+          weight="semibold"
+          tintColor={colors.ink}
+          accessible={false}
+        />
+        <TurnText kind="button" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
+          {selectedPlace?.name ?? 'Place'}
+        </TurnText>
+        <SymbolView
+          name="chevron.down"
+          size={symbolSize(12)}
+          weight="semibold"
+          tintColor={colors.ink}
+          accessible={false}
+        />
       </Pressable>
       {!oneControlColumn && <View style={{ flex: 1 }} />}
       {/* From AX3 the controls fill their row and share it only when both words fit, so neither label is cut. */}

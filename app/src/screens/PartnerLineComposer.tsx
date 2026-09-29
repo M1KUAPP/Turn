@@ -1,6 +1,7 @@
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
+import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
 
 type Props = {
@@ -20,6 +21,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
   const maxInputHeight = lineHeight * 4 + 30
   const disabled = !text.trim()
   const symbol = Math.round(17 * Math.min(fontScale, 2.6))
+  const press = usePress()
 
   return (
     <View
@@ -94,21 +96,28 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           accessibilityLabel="Send"
           accessibilityState={{ disabled }}
           disabled={disabled}
+          onPressIn={press.onPressIn}
+          onPressOut={press.onPressOut}
           onPress={onSend}
-          style={({ pressed }) => ({
+          style={{
             minWidth: 96,
             minHeight: 56,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             gap: 6,
-            paddingHorizontal: disabled ? 14.5 : 16,
-            borderRadius: 999,
-            borderWidth: disabled || pressed ? 1.5 : 0,
-            borderColor: colors.edge,
-            backgroundColor: disabled ? colors.surface : colors.ink
-          })}
+            paddingHorizontal: 16,
+            borderRadius: 999
+          }}
         >
+          <Layer
+            fill={disabled ? colors.surface : colors.ink}
+            edge={disabled ? colors.edge : undefined}
+            edgeWidth={1.5}
+            radius={999}
+          />
+          {/* Pressed, Send's `ink` turns `ink-secondary`, as Stop's does. */}
+          {!disabled && <Layer fill={colors['ink-secondary']} radius={999} style={press.style} />}
           <SymbolView
             name="arrow.uturn.backward"
             size={symbol}
