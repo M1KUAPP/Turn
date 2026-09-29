@@ -200,6 +200,24 @@ fi
 
 printf 'Using iOS %s runtime.\n' "$runtime_version"
 
+# busy-relay.yaml is scenario 7, with the relay's address blocked (STATE-2). The Simulator resolves names through the
+# Mac, so an /etc/hosts entry for the relay in app/app.config.ts blocks it for that flow alone.
+relay_host=turn-relay.m1ku-turn.workers.dev
+flush_dns() {
+  sudo dscacheutil -flushcache
+  sudo killall -HUP mDNSResponder
+}
+block_relay() {
+  printf '127.0.0.1 %s\n::1 %s\n' "$relay_host" "$relay_host" | sudo tee -a /etc/hosts >/dev/null
+  trap unblock_relay EXIT
+  flush_dns
+}
+unblock_relay() {
+  sudo sed -i '' "/ ${relay_host//./\\.}\$/d" /etc/hosts
+  trap - EXIT
+  flush_dns
+}
+
 run_combination() {
   local device_id=$1
   local device_name=$2
@@ -247,6 +265,9 @@ run_combination() {
     xcrun simctl spawn "$device_id" log stream --style compact --level info \
       --predicate 'process == "Turn"' >"$artifacts_dir/device.log" 2>&1 &
     log_pid=$!
+    if [[ $flow_name == busy-relay ]]; then
+      block_relay
+    fi
 
     # Maestro's driver can time out starting on a cold runner, before any step runs; only that gets one retry.
     for attempt in 1 2; do
@@ -262,6 +283,9 @@ run_combination() {
       grep -q IOSDriverTimeoutException "$artifacts_dir/maestro-$attempt.log" || break
     done
     kill "$log_pid" 2>/dev/null || true
+    if [[ $flow_name == busy-relay ]]; then
+      unblock_relay
+    fi
     if [[ $flow_result == FAIL ]]; then
       failures=$((failures + 1))
     fi
