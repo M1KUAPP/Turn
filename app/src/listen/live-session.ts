@@ -32,6 +32,8 @@ export type LiveListenSnapshot = TypedListenState & {
   phase: EngineState
   assetProgress: number | null
   rankedOnce: boolean
+  /** True while the engine hears the partner's voice above the silence level, which the caption's meter follows. */
+  voiceActive: boolean
 }
 
 export function createLiveListenSession(options: {
@@ -109,7 +111,7 @@ export function createLiveListenSession(options: {
 
   const publish = () => {
     if (disposed) return
-    snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce }
+    snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce, voiceActive }
     for (const listener of listeners) listener()
   }
 
@@ -360,7 +362,9 @@ export function createLiveListenSession(options: {
     },
     onVoice(active) {
       if (disposed || !typedState.active || !engineCapturing) return
+      const changed = voiceActive !== active
       voiceActive = active
+      if (changed) publish()
       if (active) {
         if (!lineOpen) {
           lineConsumed = false
@@ -384,7 +388,7 @@ export function createLiveListenSession(options: {
     publish()
   })
 
-  snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce }
+  snapshot = { ...typedState, caption: caption(), phase, assetProgress, rankedOnce, voiceActive }
 
   return {
     ready: typed.ready,
