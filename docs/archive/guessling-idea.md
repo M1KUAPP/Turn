@@ -81,8 +81,7 @@ How it's wired:
 - **The SDK in a Worker:** the SDK declares Node 20 or newer, so the first day tests it in a Worker, with direct calls to the HTTP API as the fallback. SDK error text never reaches the app, since an open issue reports the key echoed into connection errors.
 - **The pinned version:** no source says how long it stays available, so a move to `jev-latest` means running the consistency test again.
 - **Busy or down:** the SDK retries busy responses (429 and 529) with backoff, the app shows a busy state, and the Worker still answers, in code, any wording that exactly matches a bank question.
-- **Cost:** at $0.042 per million input tokens, a call the size of
-  TypeSafe's quickstart costs about $0.000016 ([prices][jev-prices]). Even a Choice over a full bank, many times that size, costs a fraction of a cent, so cost is unlikely to limit the game. Early access and a limit of 1,200 requests per minute, which "can change without notice", matter more, so the key is the first thing to request.
+- **Cost:** at $0.042 per million input tokens, a call the size of TypeSafe's quickstart costs about $0.000016 ([prices][jev-prices]). Even a Choice over a full bank, many times that size, costs a fraction of a cent, so cost is unlikely to limit the game. Early access and a limit of 1,200 requests per minute, which "can change without notice", matter more, so the key is the first thing to request.
 
 Data, consent, and terms:
 
@@ -103,8 +102,7 @@ The context has the [benchmarks and paywall rules][ctx-money]; this is how Guess
 
 - **Free:** today's puzzle, every day. A daily game that locks its daily puzzle fights its genre.
 - **Guessling+:** one entitlement that opens the archive of every past puzzle: ten at launch, and one more each day. Puzzle subscriptions already sell archives, as Apple News+ does with its "daily and archived" puzzles, and nothing Guessling+ promises is missing on launch day.
-- **Plans:** yearly at $19.99 with a 3-day free trial, as the default, and
-  monthly at $2.99. That's below NYT Games' $4.99 to $5.99 a month for a bundle, and above a single 20-questions rival's $0.99 a month. Both prices sit below the context's common ranges, which span every category; a single daily game prices like its genre instead.
+- **Plans:** yearly at $19.99 with a 3-day free trial, as the default, and monthly at $2.99. That's below NYT Games' $4.99 to $5.99 a month for a bundle, and above a single 20-questions rival's $0.99 a month. Both prices sit below the context's common ranges, which span every category; a single daily game prices like its genre instead.
 - **Paywall:** one RevenueCat Paywall, configured remotely and dismissible, shown after today's result as "Play yesterday's?" and on any locked archive puzzle.
 - **Trial length:** a trial started before 11:45 PM PT on September 27 converts before the Submission Period closes on September 30, while revenue still counts toward the Grand Prize shortlist. The cost: a median 25.5% of trials of 4 days or less become paid, against 37.4% at 5–9 days.
 - **Judges:** an Apple offer code for a free month of Guessling+, created once the app is live: a custom code with a small redemption limit, since one-time-use codes come in batches of at least 500 (PAY-7 in the [PRD][prd-pay]). A code redeemed on October 1 lasts past the end of judging on October 13, and the daily puzzle needs no code.

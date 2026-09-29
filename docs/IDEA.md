@@ -36,8 +36,7 @@ Contents:
 - **Who:** adults who can't rely on speech, after ALS, a stroke, or other causes, and the people they talk with. ASHA cites an estimate that "approximately 5 million Americans and 97 million people in the world may benefit from AAC". CDC projects 34,720 US adults with ALS in 2026, and a 2011 review says: "At some point, 80 to 95% of people with ALS are unable to meet their daily communication needs using natural speech."
 - **The gap:** aided communication runs at "8–10 wpm without acceleration methods", against "speaking rates of between 125 and 185 words per minute", and a 1988 study found that "Augmented communicators were frequently unsuccessful in their attempts to secure speaking turns". By the time a reply is typed, the conversation has moved on.
 - **Why it matters:** in a Quebec review of 2,355 hospital charts, patients with preventable adverse events were more likely to have a communication problem, with an odds ratio of 3.00. The study covers communication problems in general, not AAC.
-- **What already exists:** the incumbents sell symbol grids or typing with saved phrases, such as Proloquo2Go at $249.99 and Proloquo4Text at
-  $119.99, and Apple's Live Speech speaks typed text and saved phrases for free. Three newer apps listen to the partner. The closest, Rejoin Voice, released July 12, 2026, offers three generated replies, with speech free and listening at $12.99 a month.
+- **What already exists:** the incumbents sell symbol grids or typing with saved phrases, such as Proloquo2Go at $249.99 and Proloquo4Text at $119.99, and Apple's Live Speech speaks typed text and saved phrases for free. Three newer apps listen to the partner. The closest, Rejoin Voice, released July 12, 2026, offers three generated replies, with speech free and listening at $12.99 a month.
 - **Turn's difference:** every reply is one of the user's own saved phrases, never generated words. AAC users testing AI suggestions "had concerns about the system suggesting the wrong thing and making the participants look bad", though the same study found that even a pre-stored phrase "made others believe the system did all the work for them".
 - **The field:** on September 22, the 2026 gallery had no AAC entry and no entry naming Jev. Among the entries tied to Next Gen, study help is the crowded theme.
 
@@ -106,9 +105,7 @@ Why Jev decides this way:
 - **Not the on-device model.** Apple's Foundation Models can be made to pick from a list, but it returns no probabilities and "may take a few seconds", on iPhone 15 Pro and later only ([simpler methods][ev-simpler]).
 - **Not only embeddings.** General-purpose embeddings, like Apple's and Workers AI's, measure how alike two strings are, not whether one answers the other, though embeddings trained on reply pairs do better ([Turn without Jev][ev-without]). The evaluation tests this. If Jev trails embeddings, it re-ranks an embedding shortlist instead, built on the phone with Apple's sentence embeddings, the order TypeSafe's RAG cookbook uses ([simpler methods][ev-simpler]).
 - **Fast enough for a conversation.** TypeSafe says "Most queries complete in about 100 ms", and its cookbooks measured mean round trips of 111 and 114 ms. The phone's trip to the relay, and the relay's to TypeSafe on the US West Coast, come on top ([limits][jev-limits]).
-- **Cheap enough to run on every line.** At $0.042 per million input
-  tokens, a request of about 1,700 to 1,900 tokens costs up to about
-  $0.00008 ([billing][svc-billing]).
+- **Cheap enough to run on every line.** At $0.042 per million input tokens, a request of about 1,700 to 1,900 tokens costs up to about $0.00008 ([billing][svc-billing]).
 
 How it's wired:
 
@@ -148,11 +145,8 @@ Data, consent, and terms:
 The context has the [paywall rules][ctx-money], and round 8 of the log has the [reasoning][r8]; this is how Turn applies them.
 
 - **Speech is never sold.** The grid, saved phrases, typing, and Personal Voice stay free. One AAC app's reviewer calls "paying an ongoing subscription fee in order to access basic communication" repugnant, and Rejoin Voice promises "Everything you need to speak is free, forever".
-- **Listen mode is what's sold.** It is the part that costs the team money on every partner line, and the part rivals charge for: Rejoin+ costs $12.99
-  a month or $99.99.
-- **One price, paid once.** Turn Listen is a one-time purchase of $24.99 that
-  grants the entitlement `listen`. The established text AAC apps also sell
-  once, from $24.99 to $159.99, and a one-time price answers the fear of losing one's voice when a payment lapses.
+- **Listen mode is what's sold.** It is the part that costs the team money on every partner line, and the part rivals charge for: Rejoin+ costs $12.99 a month or $99.99.
+- **One price, paid once.** Turn Listen is a one-time purchase of $24.99 that grants the entitlement `listen`. The established text AAC apps also sell once, from $24.99 to $159.99, and a one-time price answers the fear of losing one's voice when a payment lapses.
 - **What a user costs.** At 200 partner lines a day for a year, Jev costs about $5.20 to $5.80, so one payment covers over four years of Jev at that pace, with the relay's hosting on top ([billing][svc-billing]).
 - **Trying first.** Listen mode is free for the first 20 partner lines, counted by the relay, so the user sees it work before the paywall.
 - **The paywall.** A RevenueCat Paywall, configured remotely, opens when the free lines run out, or when the user turns Listen mode on after that. It shows the one-time price, says speaking stays free, and closes with one tap. Settings holds Restore Purchases, and a caregiver can buy from there.

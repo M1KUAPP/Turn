@@ -50,8 +50,7 @@ Synthesis: each bullet condenses the section it links to, where the sources are.
 
 - **Three new prompts.** The listing grew from 526 to 529 rows, all three created on September 22: "Space Voyage" (Creative, free), "Avelon Drive" (Cars), and "Golden Identity" (Agency), all heroes. September counts 52 prompts, and 180 of 529 are free (appendix).
 - **An archive prompt went live.** `397-space-voyage`, from the July 17 export, matches the new "Space Voyage" row, so the newest matched folder is dated September 22, not August 30 as in [How the corpus matches the live catalog][ms-note-match].
-- **Prices and plans.** Unchanged from the [price table][ms-note-prices]: $129 for three months, $279 a year, and $399 for life beside a struck-out
-  $759 ([ms-unlimited]), from the same script files the earlier note cited ([ms-unlimited-js]; [ms-dialog-js]).
+- **Prices and plans.** Unchanged from the [price table][ms-note-prices]: $129 for three months, $279 a year, and $399 for life beside a struck-out $759 ([ms-unlimited]), from the same script files the earlier note cited ([ms-unlimited-js]; [ms-dialog-js]).
 - **Terms.** Unchanged: `/terms`, `/privacy`, `/license`, `/refund`, and seven more policy paths, `/accessibility` among them, return HTTP 404; the footer still reads "All rights reserved" ([ms-home]); and the DESIGN.md page still shows four "Coming soon" cards ([ms-design-md]).
 
 [ms-note-match]: /docs/research/0013-motionsites.md#how-the-corpus-matches-the-live-catalog
