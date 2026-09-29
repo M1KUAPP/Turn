@@ -225,6 +225,7 @@ export default function Caption({
 }: Props) {
   const depth = useDepth()
   const press = usePress()
+  const panelPress = usePress()
   const ringStyle = useListenLight(view.lineOpen, reduceMotion)
   const [labelRow, setLabelRow] = useState({ y: 0, height: 20 })
   const [pill, setPill] = useState({ width: 0, height: 32 })
@@ -427,11 +428,31 @@ export default function Caption({
         boxShadow: depth.card
       }}
     >
+      {/* In Listen mode the panel is a button: pressed, it turns `surface-pressed` with a 2.5 edge over its own. */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            position: 'absolute',
+            top: -edgeWidth,
+            right: -edgeWidth,
+            bottom: -edgeWidth,
+            left: -edgeWidth,
+            borderRadius: oneLine ? 20 : 24,
+            borderWidth: 2.5,
+            borderColor: colors.edge,
+            backgroundColor: colors['surface-pressed']
+          },
+          panelPress.style
+        ]}
+      />
       <Pressable
         accessibilityRole={onType ? 'button' : undefined}
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={onType ? 'Type the partner line.' : undefined}
         disabled={!onType}
+        onPressIn={panelPress.onPressIn}
+        onPressOut={panelPress.onPressOut}
         onPress={onType ?? undefined}
         style={{
           flexGrow: 1,
