@@ -788,6 +788,11 @@ and the default category is silenced by the Silent switch
   unmutes.
 - **Leaving the foreground (LISTEN-7).** The module stops the engine and
   reports `paused`; the app shows the light off until the user taps it.
+- **Pausing.** The analyzer finalizes only once audio passes the point it's
+  asked to finalize through, and on the phone only once another buffer
+  follows, while a stopped engine sends none. So the module gives it silence,
+  a quarter second at a time and 3 seconds at most, until it has finalized,
+  and only then reports `paused` (CONSENT-5, LISTEN-10).
 - **Interruptions (LISTEN-10).** A call or Siri pauses Listen mode, which
   stays paused. The module observes both iOS 26's interruption notification
   and iOS 27's replacements, `AVAudioSessionDidBecomeInactiveNotification`
