@@ -85,6 +85,15 @@ describe('bank store', () => {
     expect((await store.phrases('quick'))[0].text).toBe('Absolutely')
   })
 
+  test("lists every category's phrases in All, in the tabs' order, with the strip excluded", async () => {
+    const store = createBankStore(database(), starterBank)
+    await store.initialize()
+    const categories = await store.categories()
+    const all = await store.phrases('all')
+    expect([...new Set(all.map((phrase) => phrase.category_id))]).toEqual(categories.map((category) => category.id))
+    expect(all).toEqual((await Promise.all(categories.map((category) => store.phrases(category.id)))).flat())
+  })
+
   test('records each spoken tap in a local day and prunes rows outside 30 days', async () => {
     const db = database()
     const date = new Date(2026, 8, 23, 22, 30)

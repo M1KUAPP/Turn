@@ -24,7 +24,7 @@ import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
 import { purchaseNotes } from '../purchases/store'
 import { useConsent, usePurchases, useTurn } from '../turn-context'
-import { homeLayout, pageOffset, replyStat, starterCardShown } from './home-layout'
+import { homeLayout, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
 import { listenControl } from './listen-control'
 import { useListenLight } from './listen-light'
 import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
@@ -228,7 +228,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
       ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace, nextReview]) => {
         if (!alive) return
         setCategories(nextCategories)
-        if (!nextCategories.some((category) => category.id === categoryId)) setCategoryId('quick')
+        setCategoryId(selectedTab(categoryId, nextCategories))
         setPhrases(nextPhrases)
         setStrip(nextStrip)
         setPlaces(nextPlaces)
