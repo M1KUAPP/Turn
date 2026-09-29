@@ -126,9 +126,9 @@ judge's, which uses the Simulator build.
     Listen through Test Store, and the next partner line reaches Jev.
 9.  **Restoring.** After buying, the user taps Restore Purchases in
     Settings; Turn refreshes the purchase and says Listen mode is unlocked.
-10. **A judge.** A judge installs the Simulator build from the README, types
-    "How was physio?" as the partner's line, sees "It was hard" in the row,
-    and hears it in a system voice.
+10. **A judge.** A judge installs the Simulator build from the README,
+    chooses Clinic as the place, types "How was physio?" as the partner's
+    line, sees "It was hard" in the row, and hears it in a system voice.
 11. **A new phrase.** The user types "The new nurse is kind" and speaks it.
     It joins the bank, and the next time a partner asks about the nurse, it
     can appear in the row.
