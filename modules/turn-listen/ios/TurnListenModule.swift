@@ -5,6 +5,7 @@ import NaturalLanguage
 public class TurnListenModule: Module {
   private let gazetteerLock = NSLock()
   private var gazetteer: NLGazetteer?
+  private var nameModelReady = false
 
   @MainActor
   private lazy var listenEngine = ListenEngine(
@@ -89,7 +90,8 @@ public class TurnListenModule: Module {
       try await engine.muteForSpeech(muted)
     }
 
-    AsyncFunction("findNames") { (texts: [String]) -> [[[String: Any]]] in
+    AsyncFunction("findNames") { (texts: [String]) async throws -> [[[String: Any]]] in
+      try await self.requireNameModel()
       let tagger = NLTagger(tagSchemes: [.nameType])
 
       self.gazetteerLock.lock()
@@ -104,6 +106,8 @@ public class TurnListenModule: Module {
 
       return texts.map { text in
         tagger.string = text
+        // Turn listens in English; guessing the language of a line as short as "Cupertino" can pick another one.
+        tagger.setLanguage(.english, range: text.startIndex..<text.endIndex)
         var spans: [[String: Any]] = []
         tagger.enumerateTags(
           in: text.startIndex..<text.endIndex,
@@ -143,4 +147,21 @@ public class TurnListenModule: Module {
       self.gazetteerLock.unlock()
     }
   }
+
+  /// Without Apple's English name model the tagger finds no names, and the phone may not have it yet, so the first
+  /// tagging asks for it, and no line goes to the relay until it's there (#147).
+  private func requireNameModel() async throws {
+    gazetteerLock.lock()
+    let ready = nameModelReady
+    gazetteerLock.unlock()
+    if ready { return }
+    guard try await NLTagger.requestAssets(for: .english, tagScheme: .nameType) == .available else {
+      throw NameModelUnavailable()
+    }
+    gazetteerLock.lock()
+    nameModelReady = true
+    gazetteerLock.unlock()
+  }
 }
+
+private struct NameModelUnavailable: Error {}
