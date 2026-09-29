@@ -8,7 +8,13 @@
 
 **Tech stack:** Expo SDK 57, React Native, SQLite, Vitest, iOS Simulator.
 
-**Spec:** [Issue #33](https://github.com/RevenueCat-M1KU/RevenueCat/issues/33), [DESIGN.md](../DESIGN.md#the-home-screen).
+**Spec:** [Issue #33](https://github.com/RevenueCat-M1KU/RevenueCat/issues/33), [DESIGN.md](/docs/DESIGN.md#the-home-screen).
+
+Contents:
+
+1.  [Task 1: Persist the chosen place and read the strip](#task-1-persist-the-chosen-place-and-read-the-strip)
+1.  [Task 2: Lay out the home bands](#task-2-lay-out-the-home-bands)
+1.  [Task 3: Verify and hand off](#task-3-verify-and-hand-off)
 
 ## Task 1: Persist the chosen place and read the strip
 

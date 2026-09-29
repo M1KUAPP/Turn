@@ -10,6 +10,15 @@
 
 **Spec:** [Issue #34](https://github.com/RevenueCat-M1KU/RevenueCat/issues/34), [names as tags](/docs/TRD.md#names-as-tags), [the turn-listen module](/docs/TRD.md#the-turn-listen-module), [the repository layout](/docs/TRD.md#repository-layout), [iPhone notes on NLTagger](/docs/research/0023-turn-ios.md#swapping-names-for-tags-with-nltagger), [iPhone notes on local modules](/docs/research/0023-turn-ios.md#two-local-swift-modules-in-expo).
 
+Contents:
+
+1.  [Rules](#rules)
+1.  [Task 1: Spare phrases from the shortlist](#task-1-spare-phrases-from-the-shortlist)
+1.  [Task 2: Tagging and cutting](#task-2-tagging-and-cutting)
+1.  [Task 3: The turn-listen module's name finder](#task-3-the-turn-listen-modules-name-finder)
+1.  [Task 4: The device self-check](#task-4-the-device-self-check)
+1.  [Task 5: Handoff](#task-5-handoff)
+
 ## Rules
 
 - **Spans.** The finder returns, per text, `{ kind, start, end }` with `kind` one of `person`, `place`, and `org`, and offsets in UTF-16 code units, end exclusive, which JavaScript strings index directly.

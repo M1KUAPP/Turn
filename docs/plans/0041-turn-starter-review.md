@@ -10,6 +10,21 @@
 
 **Spec:** Issue #47; [The phrase bank](/docs/PRD.md#the-phrase-bank) BANK-10; the TRD data model and its `reviewed` column and Undo rule; [The first launch](/docs/DESIGN.md#the-first-launch), [The row](/docs/DESIGN.md#the-row), [The phrase bank editor](/docs/DESIGN.md#the-phrase-bank-editor), [Buttons and lists](/docs/DESIGN.md#buttons-and-lists) and its equal-pairs rule, and [Strings the PRD leaves open](/docs/DESIGN.md#strings-the-prd-leaves-open).
 
+Contents:
+
+1.  [Existing behavior and decisions](#existing-behavior-and-decisions)
+    1.  [1. Which phrases carry the mark, and what the walk covers](#1-which-phrases-carry-the-mark-and-what-the-walk-covers)
+    1.  [2. What reviewing a category is](#2-what-reviewing-a-category-is)
+    1.  [3. The store](#3-the-store)
+    1.  [4. The row](#4-the-row)
+    1.  [5. Review's walk](#5-reviews-walk)
+    1.  [6. The editor's mark](#6-the-editors-mark)
+    1.  [7. Tests](#7-tests)
+    1.  [8. Maestro](#8-maestro)
+    1.  [9. Tasks](#9-tasks)
+    1.  [10. Decisions](#10-decisions)
+1.  [Checks](#checks)
+
 ## Existing behavior and decisions
 
 - **The seed already marks everything.** `app/src/bank/store.ts:97-105` inserts a literal `0` into `phrase.reviewed` for every phrase in every category in `app/src/content/starter-bank.json`, `strip` included. Nothing needs seeding differently, and the `reviewed INTEGER NOT NULL DEFAULT 1` default (`store.ts:41`) already covers `addPhrase` (`store.ts:452`), `saveTypedPhrase` (`store.ts:711`) and `seedDebugPhrases` (`store.ts:801`).

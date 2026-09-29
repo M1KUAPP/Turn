@@ -13,8 +13,23 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Review round 1](#review-round-1)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research notes](#task-1-research-notes)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: The test helpers](#task-3-the-test-helpers)
+    1.  [Task 4: Counting free lines](#task-4-counting-free-lines)
+    1.  [Task 5: Checking the entitlement](#task-5-checking-the-entitlement)
+    1.  [Task 6: The Simulator switch](#task-6-the-simulator-switch)
+    1.  [Task 7: The log's new outcomes](#task-7-the-logs-new-outcomes)
+    1.  [Task 8: The log summary](#task-8-the-log-summary)
+    1.  [Task 9: The credit alert](#task-9-the-credit-alert)
+    1.  [Task 10: The TRD](#task-10-the-trd)
+    1.  [Task 11: Graph, pull request, review, deploy, and merge](#task-11-graph-pull-request-review-deploy-and-merge)
 
 [count-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/30
 [script-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/31

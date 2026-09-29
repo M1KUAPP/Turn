@@ -10,6 +10,13 @@
 
 **Spec:** Issue #58; [Listening](/docs/PRD.md#listening) LISTEN-3, [Voices](/docs/PRD.md#voices) VOICE-4; the [turn-listen module](/docs/TRD.md#the-turn-listen-module) and [the audio session](/docs/TRD.md#the-audio-session).
 
+Contents:
+
+1.  [Existing behavior and decisions](#existing-behavior-and-decisions)
+1.  [Task 1: The session gates speech, in TypeScript](#task-1-the-session-gates-speech-in-typescript)
+1.  [Task 2: The Swift audio session](#task-2-the-swift-audio-session)
+1.  [Checks](#checks)
+
 ## Existing behavior and decisions
 
 - **Launch already has `.playback`.** `app/src/turn-context.tsx` calls `expo-audio`'s `setAudioModeAsync({ playsInSilentMode: true, allowsRecording: false })`, so speech plays with the Silent switch on. That call stays: `expo-audio` has no players or recorders in Turn, and re-applies its mode only after a media services reset, which is rare and ends Listen mode anyway.

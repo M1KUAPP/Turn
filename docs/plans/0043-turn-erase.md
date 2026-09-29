@@ -10,6 +10,14 @@
 
 **Spec:** Issue #60; [Settings](/docs/PRD.md#settings) SET-3; the TRD's [Flows on the phone](/docs/TRD.md#flows-on-the-phone); DESIGN's [Settings](/docs/DESIGN.md#settings) and "Erase all data" in its strings.
 
+Contents:
+
+1.  [Decisions](#decisions)
+1.  [Changes](#changes)
+1.  [Tests](#tests)
+1.  [Maestro](#maestro)
+1.  [Checks](#checks)
+
 ## Decisions
 
 - **Rows, not the file.** The TRD said the app deletes the SQLite file. The open connection holds that file, so `eraseAll()` deletes every row instead, with the same result, and the TRD now says so.

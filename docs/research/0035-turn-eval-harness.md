@@ -10,6 +10,10 @@ Contents:
 1.  [Timing JavaScript](#timing-javascript)
 1.  [Chance rates](#chance-rates)
 1.  [Agreement between two labelers](#agreement-between-two-labelers)
+    1.  [Cohen's kappa and specific agreement](#cohens-kappa-and-specific-agreement)
+    1.  [Krippendorff's alpha for two coders](#krippendorffs-alpha-for-two-coders)
+    1.  [MASI and NLTK](#masi-and-nltk)
+    1.  [A test oracle for agreement](#a-test-oracle-for-agreement)
 1.  [Gaps](#gaps)
 1.  [See also](#see-also)
 

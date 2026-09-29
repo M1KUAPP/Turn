@@ -10,6 +10,15 @@
 
 **Spec:** [Issue #46](https://github.com/RevenueCat-M1KU/RevenueCat/issues/46), [Permission and consent](/docs/PRD.md#permission-and-consent), [Relay API](/docs/TRD.md#relay-api), [Networking](/docs/TRD.md#networking), [the permission step](/docs/DESIGN.md#the-permission-step), [the consent card](/docs/DESIGN.md#the-consent-card).
 
+Contents:
+
+1.  [Rules](#rules)
+1.  [Task 1: The relay's ID, headers, and cached configuration](#task-1-the-relays-id-headers-and-cached-configuration)
+1.  [Task 2: The two texts, both versions](#task-2-the-two-texts-both-versions)
+1.  [Task 3: The consent controller](#task-3-the-consent-controller)
+1.  [Task 4: The screens](#task-4-the-screens)
+1.  [Task 5: Handoff](#task-5-handoff)
+
 ## Rules
 
 - **The ID and the headers (CONSENT-1, PRIV-3).** One random version 4 UUID in the Keychain, created once and reused, and every request carries it, the app's version, and the build kind, exactly as `worker/src/request.ts:17-19` reads them: `X-Turn-User`, `X-Turn-Version`, `X-Turn-Build`, whose value is `device` or `simulator` from `app/app.config.ts:36`. `Content-Type` is `application/json` on POSTs only (`worker/src/request.ts:83`).

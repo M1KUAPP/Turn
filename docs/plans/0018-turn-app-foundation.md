@@ -8,6 +8,15 @@
 
 **Spec:** [Issue #22](https://github.com/RevenueCat-M1KU/RevenueCat/issues/22), the [TRD](/docs/TRD.md#build-configuration), and the [design](/docs/DESIGN.md#colors).
 
+Contents:
+
+1.  [Global constraints](#global-constraints)
+1.  [Tasks](#tasks)
+    1.  [Task 1: Expo package and configuration](#task-1-expo-package-and-configuration)
+    1.  [Task 2: Theme](#task-2-theme)
+    1.  [Task 3: Accessibility preferences](#task-3-accessibility-preferences)
+    1.  [Task 4: Native check and handoff](#task-4-native-check-and-handoff)
+
 ## Global constraints
 
 - Keep the app portrait and iPhone only, with iOS 26 as its deployment target.
