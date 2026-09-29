@@ -10,13 +10,13 @@ fixes below, with the same features, before the Devpost entry (#69, due Wed
 Sep 30, 11:45 PM PT). The team lead judged v1 "too plain"; v2 gives Turn a
 warm, premium identity without breaking any accessibility rule.
 
-**Figma:** [Turn v2 — iPhone redesign][v2-file], pages 📱 Screens (62
-frames, v1's numbering), 🧩 Components, 🎨 Foundations, 🧭 Directions &
-research, and 📝 Handoff for kymil4. It's the source. The [team's
-file][v1-file] keeps v1 on its "v1 prototype (old)" page and holds a copy of
-v2's screens and components on its "v2 · Screens" and "v2 · System" pages,
-for anyone without access to the v2 file; the copied screens' instances and
-variables still point at the v2 file.
+**Figma:** Build from the locked design: [v2 · Screens][locked-screens]
+(62 frames) and [v2 · System][locked-system] (the component library), both
+view-only to anyone with the link. The [v2 source file][v2-file] holds
+🎨 Foundations, 📝 Handoff, and the tokens in four modes. One amendment since
+the lock: the toolbar, every item on its own solid pill, and the grid ending 8
+points above it ([Size, shape, and depth](#size-shape-and-depth)). The
+🧪 Companion page is an experiment outside the build order.
 
 **Tech stack:** Expo SDK 57, React Native 0.86, react-native-reanimated 4.5,
 expo-symbols, react-native-purchases-ui. Two optional native additions:
@@ -27,7 +27,8 @@ replaces its colors, type, shapes, depth, and motion);
 [research note](/docs/research/0051-turn-redesign.md) for the sources.
 
 [v2-file]: https://www.figma.com/design/VNzApYUFQ7VZxSZ0Lnz5dv
-[v1-file]: https://www.figma.com/design/9KvXsgbqCOro2VHGpfk9mR
+[locked-screens]: https://www.figma.com/design/9KvXsgbqCOro2VHGpfk9mR?node-id=27-4
+[locked-system]: https://www.figma.com/design/9KvXsgbqCOro2VHGpfk9mR?node-id=27-5
 
 Contents:
 
@@ -400,10 +401,9 @@ Each step is shippable on its own, so stop wherever the clock runs out.
 
 ## Open questions
 
-1.  **Sharing the v2 file.** The team file's copy covers the screens and
-    components; the Foundations and Handoff pages, and inspecting the tokens
-    in all four modes, need view access to the v2 file, which its owner
-    shares.
+1.  **Sharing the v2 file.** The team file is view-only to anyone with the
+    link. Only 🎨 Foundations, 📝 Handoff, and inspecting the tokens in all
+    four modes need view access to the v2 file, which its owner shares.
 1.  **The app icon.** v2 concepts are on the 🧭 page; #56's icon stays until
     the team picks one.
 1.  **Word highlight while speaking** depends on range callbacks from the
