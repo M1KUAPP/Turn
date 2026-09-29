@@ -2,6 +2,7 @@ import { SymbolView } from 'expo-symbols'
 import { Pressable, useWindowDimensions, type ColorValue, type StyleProp, type ViewStyle } from 'react-native'
 import { colors } from '../constants/theme'
 import type { SymbolName } from './category-style'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'listen' | 'plain'
@@ -51,6 +52,7 @@ export default function Button({
   const { fontScale } = useWindowDimensions()
   const look = looks[variant]
   const ink = disabled ? colors['ink-secondary'] : look.ink
+  const edgeWidth = (pressed: boolean) => (disabled ? 0 : pressed ? (look.pressedEdge ? 2.5 : 0) : look.edge ? 1.5 : 0)
 
   return (
     <Pressable
@@ -71,25 +73,30 @@ export default function Button({
           paddingVertical: 12,
           borderRadius: 28,
           borderCurve: 'continuous',
-          backgroundColor: disabled ? colors['surface-sunken'] : pressed ? look.pressedFill : look.fill,
-          borderWidth: disabled ? 0 : pressed ? (look.pressedEdge ? 2.5 : 0) : look.edge ? 1.5 : 0,
+          backgroundColor: disabled ? colors['surface-sunken'] : look.fill,
+          borderWidth: edgeWidth(pressed),
           borderColor: pressed ? look.pressedEdge : look.edge
         },
         style
       ]}
     >
-      {symbol && (
-        <SymbolView
-          name={symbol}
-          size={Math.round(18 * Math.min(fontScale, 2.6))}
-          weight="semibold"
-          tintColor={ink}
-          accessible={false}
-        />
+      {({ pressed }) => (
+        <>
+          {!disabled && <PressFill pressed={pressed} color={look.pressedFill} radius={28 - edgeWidth(pressed)} />}
+          {symbol && (
+            <SymbolView
+              name={symbol}
+              size={Math.round(18 * Math.min(fontScale, 2.6))}
+              weight="semibold"
+              tintColor={ink}
+              accessible={false}
+            />
+          )}
+          <TurnText kind="button" boldText={boldText} style={{ color: ink, textAlign: 'center', flexShrink: 1 }}>
+            {label}
+          </TurnText>
+        </>
       )}
-      <TurnText kind="button" boldText={boldText} style={{ color: ink, textAlign: 'center', flexShrink: 1 }}>
-        {label}
-      </TurnText>
     </Pressable>
   )
 }

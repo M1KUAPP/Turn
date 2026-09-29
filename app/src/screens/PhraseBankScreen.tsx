@@ -12,6 +12,7 @@ import { useShadow } from './depth'
 import IconButton from './IconButton'
 import { GroupNote, ListGroup, ListRow, ScreenTitle } from './ListGroup'
 import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 type Editor = {
@@ -322,72 +323,76 @@ export default function PhraseBankScreen() {
                     if (event.nativeEvent.actionName === 'delete') deletePhrase(phrase.id)
                   }}
                   onPress={() => void openEdit(phrase)}
-                  style={({ pressed }) => ({
+                  style={{
                     minHeight: 61,
                     flexDirection: 'row',
                     alignItems: 'center',
                     gap: 12,
                     paddingLeft: 16,
                     paddingRight: editMode ? 16 : 8,
-                    paddingVertical: 9.5,
-                    backgroundColor: pressed ? colors['surface-pressed'] : undefined
-                  })}
+                    paddingVertical: 9.5
+                  }}
                 >
-                  <View style={{ flex: 1, gap: 2 }}>
-                    <TurnText kind="phrase" boldText={boldText} style={{ color: colors.ink }}>
-                      {phrase.text}
-                    </TurnText>
-                    {(phrase.reviewed === 0 || !!placesText) && (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          flexWrap: 'wrap',
-                          alignItems: 'center',
-                          columnGap: 10,
-                          rowGap: 2
-                        }}
-                      >
-                        {phrase.reviewed === 0 && (
-                          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                            <SymbolView
-                              name="text.book.closed"
-                              size={Math.round(12 * Math.min(fontScale, 2.6))}
-                              weight="semibold"
-                              tintColor={colors['ink-secondary']}
-                              accessible={false}
-                            />
-                            <TurnText kind="caption" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                              Starter
-                            </TurnText>
+                  {({ pressed }) => (
+                    <>
+                      <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                      <View style={{ flex: 1, gap: 2 }}>
+                        <TurnText kind="phrase" boldText={boldText} style={{ color: colors.ink }}>
+                          {phrase.text}
+                        </TurnText>
+                        {(phrase.reviewed === 0 || !!placesText) && (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              flexWrap: 'wrap',
+                              alignItems: 'center',
+                              columnGap: 10,
+                              rowGap: 2
+                            }}
+                          >
+                            {phrase.reviewed === 0 && (
+                              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                <SymbolView
+                                  name="text.book.closed"
+                                  size={Math.round(12 * Math.min(fontScale, 2.6))}
+                                  weight="semibold"
+                                  tintColor={colors['ink-secondary']}
+                                  accessible={false}
+                                />
+                                <TurnText kind="caption" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                                  Starter
+                                </TurnText>
+                              </View>
+                            )}
+                            {placesText ? (
+                              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                                {placesText}
+                              </TurnText>
+                            ) : null}
                           </View>
                         )}
-                        {placesText ? (
-                          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                            {placesText}
-                          </TurnText>
-                        ) : null}
                       </View>
-                    )}
-                  </View>
-                  {!editMode && (
-                    <View
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 22,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: colors['surface-sunken']
-                      }}
-                    >
-                      <SymbolView
-                        name="pencil"
-                        size={glyph}
-                        weight="semibold"
-                        tintColor={colors.ink}
-                        accessible={false}
-                      />
-                    </View>
+                      {!editMode && (
+                        <View
+                          style={{
+                            width: 44,
+                            height: 44,
+                            borderRadius: 22,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: colors['surface-sunken']
+                          }}
+                        >
+                          <SymbolView
+                            name="pencil"
+                            size={glyph}
+                            weight="semibold"
+                            tintColor={colors.ink}
+                            accessible={false}
+                          />
+                        </View>
+                      )}
+                    </>
                   )}
                 </Pressable>
 
@@ -468,26 +473,31 @@ export default function PhraseBankScreen() {
             onPress={() => {
               void bank.undoDelete().catch((cause) => setError(String(cause)))
             }}
-            style={({ pressed }) => ({
+            style={{
               minHeight: 44,
               flexDirection: 'row',
               alignItems: 'center',
               gap: 6,
               paddingHorizontal: 16,
               borderRadius: 22,
-              backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-            })}
+              backgroundColor: colors.surface
+            }}
           >
-            <SymbolView
-              name="arrow.uturn.backward"
-              size={glyph}
-              weight="semibold"
-              tintColor={colors.ink}
-              accessible={false}
-            />
-            <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
-              Undo
-            </TurnText>
+            {({ pressed }) => (
+              <>
+                <PressFill pressed={pressed} color={colors['surface-pressed']} radius={22} />
+                <SymbolView
+                  name="arrow.uturn.backward"
+                  size={glyph}
+                  weight="semibold"
+                  tintColor={colors.ink}
+                  accessible={false}
+                />
+                <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
+                  Undo
+                </TurnText>
+              </>
+            )}
           </Pressable>
         </View>
       )}

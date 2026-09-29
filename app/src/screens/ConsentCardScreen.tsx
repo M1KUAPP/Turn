@@ -6,6 +6,7 @@ import { useConsent, useTurn } from '../turn-context'
 import Button from './Button'
 import type { SymbolName } from './category-style'
 import { useShadow } from './depth'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 // CONSENT-4's facts in order: text on this phone, where the words go, no audio, pause any time.
@@ -99,7 +100,7 @@ export default function ConsentCardScreen() {
                   accessibilityState={{ disabled }}
                   disabled={disabled}
                   onPress={() => void consent?.readAloud()}
-                  style={({ pressed }) => ({
+                  style={{
                     minHeight: 44,
                     flexShrink: 1,
                     flexDirection: 'row',
@@ -108,19 +109,24 @@ export default function ConsentCardScreen() {
                     paddingHorizontal: 12,
                     paddingVertical: 8,
                     borderRadius: 22,
-                    backgroundColor: pressed ? colors['surface-pressed'] : colors['surface-sunken']
-                  })}
+                    backgroundColor: colors['surface-sunken']
+                  }}
                 >
-                  <SymbolView
-                    name="speaker.wave.2.fill"
-                    size={Math.round(18 * Math.min(fontScale, 2.6))}
-                    weight="semibold"
-                    tintColor={colors.ink}
-                    accessible={false}
-                  />
-                  <TurnText kind="label" boldText={boldText} style={{ flexShrink: 1, color: colors.ink }}>
-                    {card.readAloud}
-                  </TurnText>
+                  {({ pressed }) => (
+                    <>
+                      <PressFill pressed={pressed} color={colors['surface-pressed']} radius={22} />
+                      <SymbolView
+                        name="speaker.wave.2.fill"
+                        size={Math.round(18 * Math.min(fontScale, 2.6))}
+                        weight="semibold"
+                        tintColor={colors.ink}
+                        accessible={false}
+                      />
+                      <TurnText kind="label" boldText={boldText} style={{ flexShrink: 1, color: colors.ink }}>
+                        {card.readAloud}
+                      </TurnText>
+                    </>
+                  )}
                 </Pressable>
               </View>
               <TurnText
