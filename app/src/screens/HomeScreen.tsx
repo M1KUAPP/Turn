@@ -126,8 +126,10 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
   const wasSpeaking = useRef(false)
   const speakingLive = useSyncExternalStore(speech.subscribe, speech.getSnapshot)
   const listeningLive = useSyncExternalStore(listen.subscribe, listen.getSnapshot)
-  // __DEV__ bundles show the design's states on request (home-preview.ts); release builds never do.
-  const preview = __DEV__ ? homePreview(params.preview, listeningLive) : null
+  // Dev bundles, and bundles built with EXPO_PUBLIC_HOME_PREVIEW=1 for design checks, show the design's states on
+  // request (home-preview.ts); release builds never do.
+  const preview =
+    __DEV__ || process.env.EXPO_PUBLIC_HOME_PREVIEW === '1' ? homePreview(params.preview, listeningLive) : null
   const listening = preview?.listening ?? listeningLive
   const purchasesState = preview?.purchases ? { ...purchasesLive, ...preview.purchases } : purchasesLive
   const under18 = preview?.under18 ?? consentState.under18

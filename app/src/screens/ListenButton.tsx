@@ -56,9 +56,9 @@ function Capsule({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 8,
+        gap: 6,
         // The edge thickens on press inside the same outline, so nothing under the finger moves.
-        paddingHorizontal: 15.5 - edgeWidth,
+        paddingHorizontal: 13.5 - edgeWidth,
         paddingVertical: 4,
         borderRadius: 999,
         borderWidth: edgeWidth,

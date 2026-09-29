@@ -130,18 +130,20 @@ function ReplySlot({
     tint.value = tinted ? 1 : 0
   }, [tinted, tint])
 
+  // The same words take the reply's latest details, such as its category once the bank's are read.
+  const current = shown && reply && shown.id === reply.id && shown.text === reply.text ? reply : shown
   const cardStyle = useAnimatedStyle(() => ({ opacity: card.value }))
   const wordsStyle = useAnimatedStyle(() => ({ opacity: words.value, transform: [{ translateY: rise.value }] }))
 
   return (
     <Animated.View style={[{ width, height }, cardStyle]}>
-      {shown && (
+      {current && (
         <PhraseCard
-          id={shown.id}
-          text={shown.text}
-          palette={paletteFor(shown, categories)}
-          speaking={activePhraseId === shown.id}
-          kind={slotTextKind(shown.text.length, width - (short ? 23 : 35), fontScale, short)}
+          id={current.id}
+          text={current.text}
+          palette={paletteFor(current, categories)}
+          speaking={activePhraseId === current.id}
+          kind={slotTextKind(current.text.length, width - (short ? 23 : 35), fontScale, short)}
           short={short}
           boldText={boldText}
           fontScale={fontScale}
@@ -164,7 +166,7 @@ function ReplySlot({
             setPressed(false)
             onInteractionChange?.(false)
           }}
-          onPress={() => onSpeak(shown)}
+          onPress={() => onSpeak(current)}
         />
       )}
     </Animated.View>

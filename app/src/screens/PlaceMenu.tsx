@@ -86,7 +86,6 @@ export default function PlaceMenu({
       />
       {anchor && (
         <View
-          accessibilityViewIsModal
           onAccessibilityEscape={onClose}
           style={{
             position: 'absolute',
