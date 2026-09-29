@@ -199,6 +199,39 @@ describe('live partner session', () => {
     await live.dispose()
   })
 
+  test('never sends or counts a line with no letters or digits, spoken or typed', async () => {
+    const fake = fakeEngine()
+    const { live, typed } = await session({ engine: fake.engine })
+    const send = vi.spyOn(typed, 'send')
+    await live.start()
+
+    fake.partial('.')
+    fake.line({ text: '.', endedAt: 1000, silenceWindowMs: 500 })
+    await live.send(' ?! ')
+    expect(send).not.toHaveBeenCalled()
+    expect(live.getSnapshot().caption.label).toBe('Listening')
+
+    fake.partial('Are you tired?')
+    fake.line({ text: 'Are you tired?', endedAt: 1001, silenceWindowMs: 500 })
+    await vi.waitFor(() => expect(send).toHaveBeenCalledOnce())
+    expect(send).toHaveBeenCalledWith('Are you tired?', '')
+    await live.dispose()
+  })
+
+  test('punctuation alone opens no line and starts no silence timer', async () => {
+    vi.useFakeTimers()
+    const fake = fakeEngine()
+    const { live } = await session({ engine: fake.engine })
+    await live.start()
+
+    fake.partial('.')
+    fake.voice(true)
+    fake.voice(false)
+    await vi.advanceTimersByTimeAsync(600)
+    expect(fake.engine.endLine).not.toHaveBeenCalled()
+    await live.dispose()
+  })
+
   test('Done ends and ranks an open line once using the engine stamp and ranking time', async () => {
     const log = vi.fn()
     const now = vi.fn(() => 4012)
