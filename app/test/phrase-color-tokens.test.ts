@@ -1,10 +1,9 @@
 import { expect, test, vi } from 'vitest'
 
 vi.mock('react-native', () => ({ DynamicColorIOS: ({ light }: { light: string }) => light }))
-vi.mock('expo-symbols', () => ({ SymbolView: () => null }))
 
 test('maps fixed reply ids to their shared fill and edge tokens', async () => {
-  const row = await import('../src/screens/ReplyRow')
+  const row = await import('../src/screens/category-palette')
 
   expect(row.phraseColorTokensForId).toBeTypeOf('function')
   expect(row.phraseColorTokensForId('yes')).toEqual({ fill: 'yes-fill', edge: 'yes-edge' })
