@@ -49,7 +49,7 @@ Contents:
 - **Animation and tools.** Valve's publications, GDC Vault session pages, WWDC transcripts, and the owners' docs for Rive, Lottie, LottieFiles, Reanimated 4.5.1 (docs and package source), react-native-svg, Expo SDK 57, and Material Design 3.
 - **Accessibility.** W3C's WCAG 2.2, its Understanding documents, and WCAG2ICT, captured with headless Chrome because w3.org challenged `curl`; Okabe and Ito's Color Universal Design page; and Paul Tol's notes at their current address.
 - **Measurements.** Emoji colors come from Apple Color Emoji drawn in headless Chrome on macOS 27.0 and checked against the glyph images in the font file. Colors in owners' images are box means read with ffmpeg from sRGB-tagged files, and icon colors are the `fill` values in owners' SVG files. Contrast ratios use WCAG 2.2's formula. Color-blind views use the full-severity matrices of Machado, Oliveira, and Fernandes (2009) in linear RGB, compared by CIEDE2000 (ΔE00). Timings in promo videos and GIFs were read frame by frame; they come from marketing edits, not specs.
-- **Rules.** The official rules on Devpost, headed "Updated August 31, 2026" and read directly ([dp-rules]); Shipaton's pages as captured in `docs/sources/`; Apple's App Review Guidelines; and the US Copyright Office.
+- **Rules.** The official rules on Devpost, headed "Updated August 31, 2026" and read directly ([dp-rules]); Shipaton's pages reviewed in September 2026, now linked to their original URLs; Apple's App Review Guidelines; and the US Copyright Office.
 - **Search.** Web search was unavailable for most of the work, so sources were found through sitemaps, feeds, `llms.txt` files, GitHub, npm, and GDC Vault's browse pages. No third-party article is cited as evidence.
 
 [li-robots]: https://www.linkedin.com/robots.txt
@@ -415,8 +415,8 @@ The emoji were drawn with Apple Color Emoji 22.0d3e2 on macOS 27.0 and read at t
 - **Precedent.** Shipaton 2025's Grand Prize winner wrote that "The entire app — design, code, and assets — was produced through AI-assisted development" ([brief-lessons]).
 - Synthesis: AI can explore the look; a person should then draw the final character as vector parts, set its key poses, and time its motion, which both the rules' "original work product" and the Copyright Office's "sufficient expressive elements" favor. Credit the tools in the write-up, as the [product][product-character] says.
 
-[sh-vibe]: /docs/sources/www.shipathon.com/[]-vibe-code.md
-[sh-submit]: /docs/sources/www.shipathon.com/[]-blog-how-to-submit-your-app-for-shipaton.md
+[sh-vibe]: https://www.shipaton.com/vibe-code
+[sh-submit]: https://www.shipaton.com/blog/how-to-submit-your-app-for-shipaton
 [apple-ai]: /docs/research/0011-apple-requirements.md#rules-about-ai-since-2025
 [apple-guidelines]: https://developer.apple.com/app-store/review/guidelines/
 [usco-ai]: https://www.copyright.gov/newsnet/2025/1060.html
@@ -503,7 +503,7 @@ What the sources don't say that DESIGN.md needs, as of September 22, 2026:
 [nyt-open-dark-2025]: https://open.nytimes.com/the-new-york-times-games-path-to-dark-mode-345dfe464e1a
 [li-queens]: https://www.linkedin.com/help/linkedin/answer/a6269510
 [ug-sudoku]: https://support.apple.com/guide/iphone/iph9b53d2906/ios
-[sh-best-game]: /docs/sources/www.shipathon.com/[]-categories-best-game-award.md
+[sh-best-game]: https://www.shipaton.com/categories/best-game-award
 [duo-guidelines]: https://web.archive.org/web/20260823211810/https://design.duolingo.com/main.97ab633ac458b0ea94d6.js
 [rive-lily]: https://rive.app/blog/duolingo-s-ai-powered-video-call-brings-lily-to-life
 [duo-shape-language]: https://blog.duolingo.com/shape-language-duolingos-art-style/
