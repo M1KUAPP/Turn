@@ -27,11 +27,6 @@ name: Phrase bank protected items
     below: Body and pain
     above: Food and drink
 - takeScreenshot: bank-5-fixed-protected-category
-# Edit mode makes the list longer: back to the top first, so Quick isn't left under the bar, which would take the tap.
-- scrollUntilVisible:
-    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
-    direction: UP
-    timeout: 60000
 - scrollUntilVisible:
     element: Quick
     direction: UP
