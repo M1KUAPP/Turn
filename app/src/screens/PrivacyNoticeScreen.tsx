@@ -30,7 +30,7 @@ export default function PrivacyNoticeScreen() {
             <TurnText kind="title" boldText={boldText} accessibilityRole="header" style={{ color: colors.ink }}>
               {section.title}
             </TurnText>
-            <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+            <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
               {section.body}
             </TurnText>
             {url && (

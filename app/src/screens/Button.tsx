@@ -1,35 +1,21 @@
 import { SymbolView } from 'expo-symbols'
-import { Pressable, useWindowDimensions, type ColorValue, type StyleProp, type ViewStyle } from 'react-native'
+import { Pressable, useWindowDimensions, View, type ColorValue, type StyleProp, type ViewStyle } from 'react-native'
 import { colors } from '../constants/theme'
 import type { SymbolName } from './category-style'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'listen' | 'plain'
+export type ButtonVariant = 'primary' | 'secondary'
 
-type Look = { fill: ColorValue; pressedFill: ColorValue; ink: ColorValue; edge?: ColorValue; pressedEdge?: ColorValue }
+type Look = { fill: ColorValue; pressedFill: ColorValue; ink: ColorValue; edge?: ColorValue }
 
-// Plan 0044's Button: 56-point capsules. A press changes the fill and thickens the edge, never the size.
 const looks: Record<ButtonVariant, Look> = {
   primary: { fill: colors.accent, pressedFill: colors['accent-pressed'], ink: colors['on-accent'] },
-  secondary: {
-    fill: colors.surface,
-    pressedFill: colors['surface-pressed'],
-    ink: colors.ink,
-    edge: colors.edge,
-    pressedEdge: colors.edge
-  },
-  destructive: {
-    fill: colors.surface,
-    pressedFill: colors['surface-pressed'],
-    ink: colors['no-edge'],
-    edge: colors['no-edge'],
-    pressedEdge: colors['no-edge']
-  },
-  listen: { fill: colors.listen, pressedFill: colors.listen, ink: colors['on-listen'], pressedEdge: colors.ink },
-  plain: { fill: 'transparent', pressedFill: colors['surface-pressed'], ink: colors.accent }
+  secondary: { fill: colors.surface, pressedFill: colors['surface-pressed'], ink: colors.ink, edge: colors.edge }
 }
 
+// Plan 0044's Button: 56-point capsules. A press changes the fill and draws the 2.5 edge over the laid-out 1.5, so
+// the capsule and its words never move or grow under a finger.
 export default function Button({
   label,
   boldText,
@@ -52,7 +38,7 @@ export default function Button({
   const { fontScale } = useWindowDimensions()
   const look = looks[variant]
   const ink = disabled ? colors['ink-secondary'] : look.ink
-  const edgeWidth = (pressed: boolean) => (disabled ? 0 : pressed ? (look.pressedEdge ? 2.5 : 0) : look.edge ? 1.5 : 0)
+  const edgeWidth = look.edge ? 1.5 : 0
 
   return (
     <Pressable
@@ -62,7 +48,7 @@ export default function Button({
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => [
+      style={[
         {
           minHeight: 56,
           flexDirection: 'row',
@@ -74,15 +60,31 @@ export default function Button({
           borderRadius: 28,
           borderCurve: 'continuous',
           backgroundColor: disabled ? colors['surface-sunken'] : look.fill,
-          borderWidth: edgeWidth(pressed),
-          borderColor: pressed ? look.pressedEdge : look.edge
+          borderWidth: edgeWidth,
+          borderColor: look.edge
         },
         style
       ]}
     >
       {({ pressed }) => (
         <>
-          {!disabled && <PressFill pressed={pressed} color={look.pressedFill} radius={28 - edgeWidth(pressed)} />}
+          {!disabled && <PressFill pressed={pressed} color={look.pressedFill} radius={28 - edgeWidth} />}
+          {pressed && !disabled && look.edge && (
+            <View
+              pointerEvents="none"
+              style={{
+                position: 'absolute',
+                top: -edgeWidth,
+                right: -edgeWidth,
+                bottom: -edgeWidth,
+                left: -edgeWidth,
+                borderRadius: 28,
+                borderCurve: 'continuous',
+                borderWidth: 2.5,
+                borderColor: look.edge
+              }}
+            />
+          )}
           {symbol && (
             <SymbolView
               name={symbol}

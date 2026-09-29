@@ -58,7 +58,6 @@ export default function ListenModeScreen() {
 
       {allowed ? (
         <Button
-          variant="destructive"
           label={consentWords.withdraw}
           boldText={boldText}
           disabled={!consent}
@@ -88,6 +87,7 @@ export default function ListenModeScreen() {
           boldText={boldText}
           symbol="person.crop.circle.badge.xmark"
           tone={tileTones.listen}
+          subtitle="Asked on the consent card each time"
           toggle={{
             value: state.under18,
             onValueChange: (value) => void consent?.setUnder18(value),

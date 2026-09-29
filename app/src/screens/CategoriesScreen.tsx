@@ -344,12 +344,7 @@ export default function CategoriesScreen() {
                         }}
                       />
                       {canDelete && (
-                        <IconButton
-                          symbol="trash"
-                          label="Delete"
-                          tint={colors['no-edge']}
-                          onPress={() => void confirmDelete(category)}
-                        />
+                        <IconButton symbol="trash" label="Delete" onPress={() => void confirmDelete(category)} />
                       )}
                     </View>
                   )}
@@ -467,7 +462,6 @@ export default function CategoriesScreen() {
           <SheetActions>
             <Button label="Cancel" boldText={boldText} onPress={() => setDeleting(null)} />
             <Button
-              variant="destructive"
               label="Delete"
               boldText={boldText}
               disabled={!destination}
