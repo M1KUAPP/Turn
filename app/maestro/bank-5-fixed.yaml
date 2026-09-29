@@ -36,6 +36,11 @@ name: Phrase bank protected items
     element: Quick
     direction: UP
     speed: 10
+# Quick can come into view under the header, where a tap lands on the header, so the list goes back to its top.
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+    speed: 10
 - tapOn: Quick
 - waitForAnimationToEnd
 - extendedWaitUntil:
