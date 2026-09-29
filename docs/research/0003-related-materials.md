@@ -535,8 +535,7 @@ Key facts:
 - "Noise is a creator-economy platform connecting brands with content creators for UGC (user-generated content) campaigns." ([noise-llms])
 - Sign-up: the "Get started free" link redirects from `getnoise.com/auth/sign-up` to `platform.getnoise.com`. Setup takes four steps: billing, a playbook, campaign images, and the first campaign. ([noise-signup]; [noise-start])
 - "The minimum daily budget is $50." Charges come only from views: "Nothing is charged until your campaign is live and creators are earning views." ([noise-campaigns]; [noise-start])
-- Plans: Standard, "Start with $0", with "No monthly platform fee"; Unlimited,
-  "$99/ month", "Instantly credited towards your campaign spend." ([noise-pricing])
+- Plans: Standard, "Start with $0", with "No monthly platform fee"; Unlimited, "$99/ month", "Instantly credited towards your campaign spend." ([noise-pricing])
 - To show paid features, give creators a public TestFlight link or a shared test login; the TestFlight route needs external-testing review. ([noise-premium])
 - The submission needs "the email address associated with the Entrant's Noise account". ([rules], section 4)
 - Noise can read installs through a read-only App Store Connect key with the "Sales and Reports" role, or a Google Play service account. ([noise-store-int])

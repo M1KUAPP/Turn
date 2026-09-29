@@ -352,12 +352,9 @@ The team must report paywall views, trial starts, and conversions without an ana
 
 ### RevenueCat plans and pricing
 
-- **Pro plan.** "Pay nothing for up to $2,500 in monthly tracked revenue.
-  Then pay 1% of what you track once you hit $2,500 in MTR." The only other plan is Enterprise, at "Custom Pricing & Usage" ([rc-pricing]).
+- **Pro plan.** "Pay nothing for up to $2,500 in monthly tracked revenue. Then pay 1% of what you track once you hit $2,500 in MTR." The only other plan is Enterprise, at "Custom Pricing & Usage" ([rc-pricing]).
 - **MTR.** "MTR stands for monthly tracked revenue. It's the amount of revenue tracked by RevenueCat (in USD, before the platform cut) during a one-month billing period." ([rc-pricing])
-- **Above the line.** "Once you reach $2.5K MTR, you'll be charged 1%. For
-  $2.5K, we'll charge you $25. No charges apply on months when you don't hit
-  the $2.5K threshold." ([rc-pricing])
+- **Above the line.** "Once you reach $2.5K MTR, you'll be charged 1%. For $2.5K, we'll charge you $25. No charges apply on months when you don't hit the $2.5K threshold." ([rc-pricing])
 - **Card on file.** A card is optional at sign-up, "However, if you don't provide credit card details and you reach $2.5k in MTR (congratulations!), parts of the product will become unavailable until you do." ([rc-pricing])
 - **Legacy plans.** "For customers on Basic or Starter, you'll be prompted to move to the new Pro plan" ([rc-pricing]); webhooks "are available on our Pro plan" ([rc-webhooks]).
 - Synthesis: there is no separate free plan any more; a new project is on Pro and pays nothing at Guessling's scale, with webhooks, Customer Center, and the paywall charts included.

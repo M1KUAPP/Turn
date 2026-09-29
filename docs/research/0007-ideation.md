@@ -124,8 +124,7 @@ Merged duplicates, each kept under the lower number:
 Patterns across the thirty:
 
 - Every idea keeps Jev choosing among things people wrote: replies, sessions, scenario lines, guides, or verdicts. No idea shows users generated text.
-- The most common price was $7.99 a month, in 15 of the 30 ideas; yearly
-  plans ran from $19.99 to $39.99, and 20 ideas offered a 3-day trial. Every idea gives judges offer codes.
+- The most common price was $7.99 a month, in 15 of the 30 ideas; yearly plans ran from $19.99 to $39.99, and 20 ideas offered a 3-day trial. Every idea gives judges offer codes.
 - The risks cluster in authored content (scenarios, sessions, guides, fact cards) and in review: consent under 5.1.2(i), microphone and speech-recognition prompts, and health data.
 
 **Decision:** the 26 distinct ideas go to Round 3.
@@ -326,18 +325,14 @@ Borrowed from the runners-up:
 
 - **What stays free:** today's puzzle, every day, with its twenty questions and share card. A daily game that locks its daily puzzle fights the genre.
 - **What's paid:** Guessling+, one entitlement, unlocks the archive of every past puzzle: ten at launch, and one more each day as today's puzzle retires. Puzzle subscriptions already sell archives, as Apple News+ does with its "daily and archived" puzzles, and this one promises nothing that won't exist on launch day.
-- **Packages:** two plans, the most common paywall layout. Yearly at $19.99
-  with a 3-day free trial is the default; monthly is $2.99. That sits below NYT Games at $4.99 to $5.99 a month for a bundle, and above the $0.99 a
-  month of a single 20-questions rival. Both prices sit below the context's
-  common ranges, $7.99 to $9.99 a month and $29.99 to $39.99 a year, which span every category; a single daily game prices like its genre instead.
+- **Packages:** two plans, the most common paywall layout. Yearly at $19.99 with a 3-day free trial is the default; monthly is $2.99. That sits below NYT Games at $4.99 to $5.99 a month for a bundle, and above the $0.99 a month of a single 20-questions rival. Both prices sit below the context's common ranges, $7.99 to $9.99 a month and $29.99 to $39.99 a year, which span every category; a single daily game prices like its genre instead.
 - **Trial:** 3 days, because nearly all trials start on day 0 and a 7-day trial started after September 23 ends after the deadline. A trial started before 11:45 PM PT on September 27 converts before the Submission Period closes on September 30, and the Grand Prize shortlist counts revenue "during the Submission Period, as reported in RevenueCat". The cost: a median 25.5% of trials of 4 days or less become paid, against 37.4% at 5–9 days.
 - **Paywall moments:** right after today's result, as "Play yesterday's?", and on tapping any locked archive puzzle. Both are placements of one RevenueCat Paywall, configured remotely, so the offer can change without an app update. The paywall can be dismissed, because the daily game stays free.
 - **Paywall content:** the yearly price in full as the most prominent price, the trial length, the renewal price, how to cancel, Restore Purchases, and links to the Terms of Use and the privacy policy.
 - **Judges:** one-time-use Apple offer codes for a free month of Guessling+, created once the app is live, since a never-released app's purchases fail even with a code. A code redeemed on October 1 lasts past the end of judging on October 13, and the free daily puzzle needs no code at all.
 - **What to measure for HAMM:** paywall views, trial starts, and conversions from RevenueCat's charts, which count production purchases only. No A/B tests: Experiments needs a paid plan, and launch week brings too little traffic.
 
-**Decision:** free daily puzzle; Guessling+ archive at $19.99 a year with a
-3-day trial or $2.99 a month; paywall after today's result; one-month offer codes that cover judging to October 13.
+**Decision:** free daily puzzle; Guessling+ archive at $19.99 a year with a 3-day trial or $2.99 a month; paywall after today's result; one-month offer codes that cover judging to October 13.
 
 [ctx-money-r8]: /docs/CONTEXT.md#monetization-and-paywalls
 [ev-hunch]: 0008-idea-evidence.md#hunch-a-daily-20-questions-game

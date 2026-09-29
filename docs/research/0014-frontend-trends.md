@@ -199,8 +199,7 @@ Prices are as each pricing page showed them on September 22, 2026, to a reader w
 - **Design systems.** Design Systems 2.0 "lets you teach v0 your design system once, so chats can build with your real components, tokens, and conventions"; "A design system is saved as a skill", built from GitHub repositories, Figma frames, links, or attachments ([v0-ds]). The older route is a shadcn registry, "a distribution specification designed to pass context from your design system to AI Models" ([v0-ds-legacy]). v0's docs don't mention DESIGN.md.
 - **Export.** GitHub sync, ZIP download, deploys to Vercel, a Platform API, and an MCP server: "The v0 MCP server lets another agent use v0." ([v0-github]; [v0-mcp])
 - **Native mobile.** "v0 has a dedicated iOS app that lets you prompt, generate, and iterate on projects directly from your iOS device" ([v0-faq]); that app is for using v0, and v0 generates no React Native or SwiftUI.
-- **Price.** Free at "$0/month" with "$5 of included monthly credits" and a "7 message/day limit"; Plus at "$30" "/user/month", shown against a
-  struck-through "$90"; Business at "$100/user/month"; Enterprise custom ([v0-pricing]).
+- **Price.** Free at "$0/month" with "$5 of included monthly credits" and a "7 message/day limit"; Plus at "$30" "/user/month", shown against a struck-through "$90"; Business at "$100/user/month"; Enterprise custom ([v0-pricing]).
 
 [v0-faq]: https://v0.app/docs/faqs
 [v0-ds]: https://v0.app/docs/design-systems-2
@@ -246,8 +245,7 @@ Prices are as each pricing page showed them on September 22, 2026, to a reader w
 - **Design systems.** Make kits bring "npm packages for code context", "Variables and styles from published Figma Design libraries", and "Guidelines to help Figma Make understand how to use your system's assets" ([figma-make-kits]). "When you create something with Make, an empty Guidelines.md file is also added", with the tip "More context isn't always better. It can confuse the LLM." ([figma-make-guidelines])
 - **Export.** Publishing "as a website with a dedicated URL", pasting a preview into Figma Design as layers ([figma-make-help]), downloading code as a zip ([figma-make-code]), and "a one-way push from Figma Make → GitHub" ([figma-make-github]).
 - **Native mobile.** None found; Make builds "functional prototypes, web apps, and interactive UI" ([figma-make-faq]).
-- **Price.** Starter is free with "150 AI credits/day, up to 500 AI credits/mo"; a Professional Full seat is "$16/mo" with "3,000 AI credits/mo" on annual
-  billing; Organization and Enterprise Full seats are "$55/mo" and "$90/mo", billed annually ([figma-pricing]).
+- **Price.** Starter is free with "150 AI credits/day, up to 500 AI credits/mo"; a Professional Full seat is "$16/mo" with "3,000 AI credits/mo" on annual billing; Organization and Enterprise Full seats are "$55/mo" and "$90/mo", billed annually ([figma-pricing]).
 
 [figma-make-launch]: https://www.figma.com/blog/introducing-figma-make/
 [figma-make-help]: https://help.figma.com/hc/en-us/articles/31304412302231
@@ -264,8 +262,7 @@ Prices are as each pricing page showed them on September 22, 2026, to a reader w
 - **Design systems.** "The agent takes care of colors, fonts, component styles, motion and effects across your site." ([framer-agents-home])
 - **Export.** Sites are hosted by Framer; no export of a site's code was found in the docs read.
 - **Native mobile.** None; Framer makes websites.
-- **Price.** Free at "$0" with "500 AI credits to try"; Basic at "$10, per month"; Pro at "$30, per month"; Enterprise custom; "Additional editors are
-  $20 / month" ([framer-pricing]). Its `llms.txt` gives the same plans "as of 30 Aug 2026 (monthly; yearly billing available)" ([framer-llms]).
+- **Price.** Free at "$0" with "500 AI credits to try"; Basic at "$10, per month"; Pro at "$30, per month"; Enterprise custom; "Additional editors are $20 / month" ([framer-pricing]). Its `llms.txt` gives the same plans "as of 30 Aug 2026 (monthly; yearly billing available)" ([framer-llms]).
 
 [framer-llms]: https://www.framer.com/llms.txt
 [framer-ai]: https://www.framer.com/ai/
@@ -293,8 +290,7 @@ Prices are as each pricing page showed them on September 22, 2026, to a reader w
 - **Design systems.** "Our Design Systems feature is what makes Magic Patterns fundamentally different from other AI tools": components, type, icons, colors "with dark mode and token references", and rules, imported from GitHub, npm, Figma, a local folder, or a website ([mp-ds]). No DESIGN.md support was found.
 - **Export.** An MCP server, a prompt to copy, an integration skill, a zip, "Two-way sync with a GitHub repository", and a Figma plugin ([mp-export]).
 - **Native mobile.** None found.
-- **Price.** With "Annual (15% off)" selected: Free at "$0"; Starter at "$17" a seat a month, "$20" billed monthly, with "1,000 monthly credits"; Business at
-  "$85", "$100" monthly; Enterprise custom; "Each additional credit costs $0.02" ([mp-pricing]).
+- **Price.** With "Annual (15% off)" selected: Free at "$0"; Starter at "$17" a seat a month, "$20" billed monthly, with "1,000 monthly credits"; Business at "$85", "$100" monthly; Enterprise custom; "Each additional credit costs $0.02" ([mp-pricing]).
 
 [mp-llms]: https://www.magicpatterns.com/docs/llms.txt
 [mp-faq]: https://www.magicpatterns.com/docs/documentation/get-started/faq
@@ -323,9 +319,7 @@ Prices are as each pricing page showed them on September 22, 2026, to a reader w
 - **Design systems.** A style guide of "Colours, typography and spacing tokens" ([relume-pricing]); no DESIGN.md support was found.
 - **Export.** Figma, Webflow, and React, but "Exporting of the Relume Style Guide or Relume Designs is not supported with React export. You will only be exporting unstyled wireframes (layouts)" ([relume-react]). A library MCP server drops components into a project "as editable React" ([relume-mcp]).
 - **Native mobile.** None; Relume makes websites.
-- **Price.** The Site Builder's export plans run from Free to Starter "From $18
-  / mo", Pro "From $40 / mo", and Team "From $36 / mo (min 3 users)"; publishing
-  is Free or Pro "from $14 / month" ([relume-pricing]).
+- **Price.** The Site Builder's export plans run from Free to Starter "From $18 / mo", Pro "From $40 / mo", and Team "From $36 / mo (min 3 users)"; publishing is Free or Pro "from $14 / month" ([relume-pricing]).
 
 [relume-llms]: https://www.relume.ai/llms.txt
 [relume-react]: https://react-docs.relume.io/
@@ -387,8 +381,7 @@ Versions are npm's `latest` tags on September 22, 2026. For the app, what matter
 
 ### Animation formats with native players
 
-- **Rive.** "Build interactive UI, motion, and game experiences in the Editor ... What you build runs natively on mobile, desktop, web" ([rive]). "Our official runtimes are all open-source and licensed under the MIT License" ([rive-runtimes]). The editor's yearly prices: Free at $0, Cadet at $9 a seat a month (the first plan with "Export .riv files"), Voyager at $32, and
-  Enterprise at $120 ([rive-pricing]).
+- **Rive.** "Build interactive UI, motion, and game experiences in the Editor ... What you build runs natively on mobile, desktop, web" ([rive]). "Our official runtimes are all open-source and licensed under the MIT License" ([rive-runtimes]). The editor's yearly prices: Free at $0, Cadet at $9 a seat a month (the first plan with "Export .riv files"), Voyager at $32, and Enterprise at $120 ([rive-pricing]).
 - **Rive in React Native.** The new runtime, version 0.4.20 of `@rive-app/react-native` (August 19, 2026), is built on Nitro Modules and needs "React Native : 0.78 or later", "Expo SDK : 53 or later", and "iOS : 15.1 or later" ([rive-rn]). The older `rive-react-native` is at 9.8.5, from July 17, 2026. "Because this package contains custom native code, it’s not compatible with Expo Go. Instead, you’ll need to use a development build" ([rive-expo]). Neither package is in Expo SDK 57's pinned list ([expo-bundled]).
 - **Lottie.** "Lottie is an open format for animated vector graphics", now run by the Lottie Animation Community, "a non-profit open source project hosted by The Linux Foundation" ([lottie-lac]). Its specification reached version 1.0 on September 17, 2024, and 1.0.1 on April 15, 2025 ([lottie-news]). `lottie-react-native` 7.5.0 (August 22, 2026, Apache-2.0) "Requires React Native 0.84 or newer and the New Architecture"; Expo SDK 57 pins ~7.3.8 ([lottie-rn]; [expo-bundled]). Expo Go dropped Lottie on June 20, 2025: "Remove Lottie. Latest version is a nitro module" ([expo-go-lottie]).
 - **dotLottie.** "an open-source file format designed to package one or more Lottie animations along with their associated resources, such as images, themes, state machines, into a single, compressed file" ([dotlottie]). `@lottiefiles/dotlottie-react-native` is at 0.12.1 (July 30, 2026, MIT), and "Expo Go does not bundle the DotLottie native module." ([dotlottie-rn])

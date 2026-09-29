@@ -552,8 +552,7 @@ The pitch reports players, puzzles solved, and questions asked ([idea-launch]); 
 
 - **Writing.** `env.EVENTS.writeDataPoint({ blobs, doubles, indexes })`; "You do not need to await `writeDataPoint()`", datasets are created on the first write, and "you currently must only provide a single index" ([cf-ae-get-started]).
 - **Limits.** "up to twenty blobs, twenty doubles, and one index per call"; blobs up to 16 KB in total per data point; an index of at most 96 bytes; "a maximum of 250 data points per Worker invocation"; and "Data written to Workers Analytics Engine is stored for three months." ([cf-ae-limits])
-- **Prices.** Paid includes 10 million data points a month, then $0.25 per
-  million, and 1 million read queries, then $1.00 per million; Free includes 100,000 data points and 10,000 read queries a day. "Currently, you will not be billed for your use of Workers Analytics Engine." ([cf-ae-pricing])
+- **Prices.** Paid includes 10 million data points a month, then $0.25 per million, and 1 million read queries, then $1.00 per million; Free includes 100,000 data points and 10,000 read queries a day. "Currently, you will not be billed for your use of Workers Analytics Engine." ([cf-ae-pricing])
 - **Reading.** The SQL API is at `/client/v4/accounts/<account_id>/analytics_engine/sql` on `api.cloudflare.com`, with a token granted "Account | Account Analytics | Read" ([cf-ae-sql]).
 - **Sampling.** At high volume the data is sampled, so counts use `SUM(_sample_interval)` rather than `COUNT()` ([cf-ae-sql]). `count(DISTINCT column_name)` is supported ([cf-ae-agg]).
 

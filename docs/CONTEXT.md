@@ -84,8 +84,7 @@ The counts are tallies from the past winners notes, and the lessons drawn from t
 As of September 21, 2026:
 
 - 28 of the 30 2025 winners are on at least one store, but only five have more than 100 US App Store ratings: Payout (11,329), PitchLab (2,064), Shutter Declutter (355), Hearing Buddy (131), and Kigaru Talks (128).
-- Payout is the outlier. Its builder's site says it "hit $100K MRR in 5
-  months" and "has now generated over $1M in revenue", and its Google Play listing shows "100K+" downloads.
+- Payout is the outlier. Its builder's site says it "hit $100K MRR in 5 months" and "has now generated over $1M in revenue", and its Google Play listing shows "100K+" downloads.
 - All nine 2024 winners are still listed. Of the seven Shipyard winners, only Remy Reminders was found published by the creator whose brief it answered.
 - Synthesis: placing didn't guarantee traction; most winners were still small a year on.
 
