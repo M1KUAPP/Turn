@@ -74,6 +74,11 @@ name: Phrase bank reorder controls
     element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
     speed: 10
+# The strip leads the list, so at large sizes Quick sits further down from the top.
+- scrollUntilVisible:
+    element: Quick
+    direction: DOWN
+    speed: 10
 - tapOn: Quick
 - waitForAnimationToEnd
 - extendedWaitUntil:
