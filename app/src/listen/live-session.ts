@@ -7,6 +7,9 @@ import type { StatsStore } from '../stats/store'
 export const SILENCE_WINDOW_MS = 500
 const CAPTION_EXPIRY_MS = 120_000
 
+/** Whether a line holds a letter or a digit: the transcriber can hear a lone "." in a silence, which is no line. */
+const hasWords = (text: string) => /[\p{L}\p{N}]/u.test(text)
+
 type TypedSession = ReturnType<typeof createTypedListenSession>
 
 export type ListenLogEntry = {
@@ -215,7 +218,7 @@ export function createLiveListenSession(options: {
   const rankLine = (line: ListenLine) => {
     if (disposed || !typedState.active) return
     const text = line.text.trim()
-    if (!text) {
+    if (!hasWords(text)) {
       cancelCaptionTimer()
       lineOpen = false
       openLineWords = ''
@@ -270,7 +273,7 @@ export function createLiveListenSession(options: {
       return
     }
     // A line of noise alone makes no line for the engine to send, so there's nothing to ignore.
-    if (ignoreFinal && openLineWords.trim()) {
+    if (ignoreFinal && hasWords(openLineWords)) {
       ignoreNextEngineLine = true
       lineConsumed = true
     }
@@ -302,13 +305,13 @@ export function createLiveListenSession(options: {
       }
       lineOpen = true
       openLineWords = text
-      captionLabel = text.trim() ? listenStrings.saying : listenStrings.listening
+      captionLabel = hasWords(text) ? listenStrings.saying : listenStrings.listening
       captionWords = text
       captionNote = assetProgress === null ? null : listenStrings.gettingModel
       captionPrompt = engine ? null : listenStrings.typedLinePrompt
       rankedOnce = false
       cancelSilenceTimer()
-      if (text.trim() && !voiceActive && phase !== 'paused' && phase !== 'unavailable') {
+      if (hasWords(text) && !voiceActive && phase !== 'paused' && phase !== 'unavailable') {
         silenceTimer = setTimeout(() => {
           silenceTimer = null
           void endOpenLine().catch(() => setUnavailable())
@@ -365,7 +368,7 @@ export function createLiveListenSession(options: {
         }
         lineOpen = true
         cancelSilenceTimer()
-      } else if (lineOpen && openLineWords.trim()) {
+      } else if (lineOpen && hasWords(openLineWords)) {
         cancelSilenceTimer()
         silenceTimer = setTimeout(() => {
           silenceTimer = null
@@ -518,7 +521,7 @@ export function createLiveListenSession(options: {
     },
     async send(line: string, linePlace?: string): Promise<void> {
       const text = line.trim()
-      if (!typedState.active || !text || disposed) return
+      if (!typedState.active || !hasWords(text) || disposed) return
       if (lineOpen || lineEnding) await endOpenLine(true).catch(() => undefined)
       cancelSilenceTimer()
 
