@@ -282,11 +282,12 @@ export default function Caption({
       </TurnText>
     </View>
   ) : view.kind === 'off' || view.kind === 'mic-off' || view.kind === 'paused' ? (
+    // From AX1 the disc sits above the message, so a long word keeps the panel's width.
     <View
       style={{
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: grows ? 'column' : 'row',
+        alignItems: grows ? 'flex-start' : 'center',
         gap: 14,
         paddingRight: besidePill
       }}

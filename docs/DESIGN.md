@@ -1283,6 +1283,7 @@ The caption shows the partner's words in Listen mode; outside it, it says so: "L
 - **The button.** Done while a partner line is open (LISTEN-2), and Clear when the row holds replies (ROW-10) as a 32-tall pill with a 44-point hit area; it never moves, so a hand learns it.
 - **Notes.** A `note` pill replaces the speaker label's right half, with its symbol, on `surface-sunken`: the phone ranked the replies (STATE-1), Listen mode is degraded (STATE-2, STATE-3), Listen mode is off for this partner (CONSENT-6), live transcription isn't available (LISTEN-9), or the speech model is downloading, with a progress bar under the words (LISTEN-1).
 - **Tap.** In Listen mode, a tap on the words opens the composer for the partner's words (LISTEN-4).
+- **From AX1.** The caption grows to fit its label, note, and message, and the disc that heads "Listen mode is off.", Mic off's message, and Paused sits above the words, so a long word keeps the panel's width.
 
 ### The Listen control
 
@@ -1296,6 +1297,7 @@ The top bar's trailing control, in `button`, with its symbol before its word:
 | Paused    | A capsule: `pause.fill`, "Paused", with End beside it in its own capsule                            | Resumes without the card; End stops Listen mode and clears the row    |
 | Mic off   | A capsule: `mic.slash.fill`, "Mic off", with End beside it                                          | Nothing: the caption says why (CONSENT-6, LISTEN-9); End stops it     |
 
+- **The pill.** The free lines' pill wraps under the word when the two don't fit on one line, so the word never breaks.
 - **The light.** While the partner's words arrive, the light's symbol and the five-bar meter follow the input level, a ring grows from the light and fades, and a warm radial glow washes the top of the board, in `listen` and `listen-glow`; a word and a symbol carry its meaning, and the color is a third cue ([AAC design notes][aac-light]). Paused and off states drop the glow.
 - **Large at first.** When a session starts, the caption says "Listening" in `partner-line` until the first words arrive, since small lights go unnoticed ([AAC design notes][aac-light]).
 - **Free lines.** The count, "20 free", sits under "Listen" in `caption`, in tabular figures, until Turn Listen is bought (PAY-1).
