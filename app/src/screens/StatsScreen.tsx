@@ -81,14 +81,14 @@ function StatsContent({
                 <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, flex: stacked ? undefined : 1 }}>
                   {label}
                 </TurnText>
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {value}
                 </TurnText>
               </View>
             </Pressable>
           ))}
         </View>
-        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 16 }}>
+        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 16 }}>
           These counts stay on this phone.
         </TurnText>
       </View>
