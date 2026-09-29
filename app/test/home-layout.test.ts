@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { homeLayout, pageOffset, replyStat, starterCardShown } from '../src/screens/home-layout'
+import { homeLayout, pageOffset, replyStat, selectedTab, starterCardShown } from '../src/screens/home-layout'
 
 describe('home layout', () => {
   test('keeps the row at 258 points with two columns on ordinary phones', () => {
@@ -60,6 +60,22 @@ describe('home layout', () => {
     expect(pageOffset(0, 200, 650, 1)).toBe(200)
     expect(pageOffset(400, 200, 650, 1)).toBe(450)
     expect(pageOffset(100, 200, 650, -1)).toBe(0)
+  })
+})
+
+describe('selected tab', () => {
+  const categories = [{ id: 'quick' }, { id: 'chat' }, { id: 'care' }]
+
+  test('keeps All selected when tapped', () => {
+    expect(selectedTab('all', categories)).toBe('all')
+  })
+
+  test('keeps a category the bank still has', () => {
+    expect(selectedTab('care', categories)).toBe('care')
+  })
+
+  test('falls back to Quick once the selected category is deleted', () => {
+    expect(selectedTab('food', categories)).toBe('quick')
   })
 })
 
