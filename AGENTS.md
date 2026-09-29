@@ -5,4 +5,4 @@
 @docs/agents/rtk.md
 @docs/agents/skills.md
 @docs/agents/triage-labels.md
-@docs/references/markdown-style.md
+@docs/references/project-conventions.md
