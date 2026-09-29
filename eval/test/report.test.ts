@@ -1,7 +1,8 @@
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { format, resolveConfig } from 'prettier'
 import { beforeAll, expect, test, vi } from 'vitest'
 import { sentenceEmbedding } from '../src/apple'
 import { brier } from '../src/calibration'
@@ -42,7 +43,7 @@ const section = (heading: string, text = report) => {
   const end = rest.search(new RegExp(`^#{1,${level}} `, 'm'))
   return end < 0 ? rest : rest.slice(0, end)
 }
-/** Words as the report wraps them, a line break wherever a space may be. */
+/** Words in order, with any run of whitespace between them. */
 const prose = (text: string) =>
   new RegExp(
     text
@@ -167,19 +168,18 @@ test('gives the latency of the shortlist and each ranker at the median, the 95th
   }
 })
 
-test("pads every table as Prettier does, so the report passes the repo's lint", () => {
-  const tables = report.split('\n\n').filter((block) => block.startsWith('|'))
-  expect(tables.length).toBeGreaterThan(0)
-  for (const table of tables) {
-    const rows = table.trimEnd().split('\n')
-    expect(new Set(rows.map((row) => row.length)).size, rows[0]).toBe(1)
-    expect(rows[1], rows[0]).toMatch(/^\|( -{3,} \|)+$/)
-  }
+test("comes out as Prettier formats it, so the report passes the repo's lint", async () => {
+  const filepath = fileURLToPath(new URL('../results.md', import.meta.url))
+  expect(await format(report, { ...(await resolveConfig(filepath)), filepath })).toBe(report)
 })
 
-test("wraps its prose at 80 columns, as the repo's Markdown style asks", () => {
-  const lines = report.split('\n').filter((line) => !line.startsWith('|') && !line.includes('](#'))
-  for (const line of lines) expect(line.length, line).toBeLessThanOrEqual(80)
+test("writes each paragraph and list item on one line, as the repo's Markdown style asks", () => {
+  for (const block of report.trimEnd().split('\n\n')) {
+    const lines = block.split('\n')
+    if (lines[0].startsWith('|')) continue
+    if (/^ *(- |1\. {2})/.test(lines[0])) for (const line of lines) expect(line, block).toMatch(/^ *(- |1\. {2})/)
+    else expect(lines, block).toHaveLength(1)
+  }
 })
 
 test('stops before scoring a line whose labels name a phrase the bank lacks', async () => {
@@ -211,10 +211,8 @@ test('says so in a whole sentence when a group has no lines', async () => {
   expect(one).toMatch(prose('which leaves no skill score, since every line is right or none is.'))
   // One line fills one fold, so four have no lines, and the report says so rather than give their cut-offs.
   expect(one.match(/\| no lines(?= +\|)/g)).toHaveLength(16)
-  const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency'))
-  for (const line of empty.split('\n').filter((line) => !line.startsWith('|'))) {
-    expect(line.length, line).toBeLessThanOrEqual(80)
-  }
+  const empty = one.slice(one.indexOf('## Pain and consent lines'), one.indexOf('## Latency')).trimEnd().split('\n\n')
+  for (const block of empty.filter((block) => !block.startsWith('|'))) expect(block.split('\n'), block).toHaveLength(1)
 })
 
 test("says how the app picks each shortlist, and what that leaves of the line in the place ranker's order", () => {
@@ -378,25 +376,14 @@ test('names no model even when Jev reports one in other words, and counts a sing
   expect(unnamed).toMatch(prose('which answered as version 1.14.0 on 1 call and version 1.13.0 on 31 calls'))
 })
 
-test('wraps the Lines line, so only a path too long for any line runs past 80 columns', async () => {
-  const dir = join(
-    mkdtempSync(join(tmpdir(), 'turn-eval-')),
-    'a-folder-whose-name-is-long-enough-to-push-the-path-past-80'
+test('lists every section and subsection in its contents, in order, and nothing else', () => {
+  const contents = [...report.matchAll(/^( *)1\. {2}\[(.+)\]\(#.+\)$/gm)].map(([, indent, heading]) => indent + heading)
+  const headings = [...report.matchAll(/^(#{2,3}) (.+)$/gm)].map(
+    ([, hashes, heading]) => ' '.repeat(4 * (hashes.length - 2)) + heading
   )
-  mkdirSync(dir)
-  writeFileSync(join(dir, 'lines.jsonl'), readFileSync(fixture, 'utf8'))
-  fakeServices()
-  await main(['--lines', join(dir, 'lines.jsonl'), '--out', join(dir, 'results.md')])
-  const long = readFileSync(join(dir, 'results.md'), 'utf8')
-    .split('\n')
-    .filter((line) => line.length > 80 && !line.startsWith('|') && !line.includes('](#'))
-  expect(long).toEqual([`  \`${join(dir, 'lines.jsonl')}\`.`])
-})
-
-test('lists every section in its contents, in order, and nothing else', () => {
-  const contents = [...report.matchAll(/^1\.  \[(.+)\]\(#.+\)$/gm)].map(([, heading]) => heading)
-  expect(contents).toEqual([...report.matchAll(/^## (.+)$/gm)].map(([, heading]) => heading))
-  expect(contents).toHaveLength(11)
+  expect(contents).toEqual(headings)
+  expect(contents.filter((heading) => !heading.startsWith(' '))).toHaveLength(11)
+  expect(contents.length).toBeGreaterThan(11)
 })
 
 test("draws Jev's reliability diagram beside the report, its blocks as its text, and the Brier score (EVAL-8)", () => {
