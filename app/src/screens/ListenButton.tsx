@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, View, type ColorValue } from 'react-native'
 import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { colors } from '../constants/theme'
 import { listeningGlow } from './home-depth'
+import { Layer, usePress } from './home-press'
 import type { ListenControl } from './listen-control'
 import TurnText from './TurnText'
 
@@ -31,19 +32,19 @@ function looks(control: ListenControl, disabled: boolean) {
 }
 
 function Capsule({
-  pressed,
+  pressStyle,
   fill,
   edge,
   height,
   children
 }: {
-  pressed: boolean
+  // Null for a control that can't be pressed.
+  pressStyle: ReturnType<typeof usePress>['style'] | null
   fill: ColorValue
   edge: ColorValue
   height: number
   children: ReactNode
 }) {
-  const edgeWidth = pressed ? 2.5 : 1.5
   return (
     <View
       style={{
@@ -53,15 +54,16 @@ function Capsule({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 6,
-        // The edge thickens on press inside the same outline, so nothing under the finger moves.
-        paddingHorizontal: 13.5 - edgeWidth,
+        paddingHorizontal: 13.5,
         paddingVertical: 4,
-        borderRadius: 999,
-        borderWidth: edgeWidth,
-        borderColor: edge,
-        backgroundColor: pressed ? colors['surface-pressed'] : fill
+        borderRadius: 999
       }}
     >
+      <Layer fill={fill} edge={edge} edgeWidth={1.5} radius={999} />
+      {pressStyle && (
+        // The edge thickens on press under the words, so nothing under the finger moves.
+        <Layer fill={colors['surface-pressed']} edge={edge} edgeWidth={2.5} radius={999} style={pressStyle} />
+      )}
       {children}
     </View>
   )
@@ -85,6 +87,8 @@ export default function ListenButton({
   const scale = Math.min(fontScale, 2.6)
   const locked = control.action === 'unlock'
   const lit = useSharedValue(micOn ? 1 : 0)
+  const press = usePress()
+  const endPress = usePress()
 
   // Listening starts (plan 0044's motion): the orange capsule fades in over its unlit face in 400 ms, or at once under
   // Reduce Motion; it goes out at once.
@@ -155,55 +159,55 @@ export default function ListenButton({
         accessibilityHint={control.hint}
         accessibilityState={{ disabled }}
         disabled={disabled}
+        onPressIn={press.onPressIn}
+        onPressOut={press.onPressOut}
         onPress={onPress}
         style={{ flexGrow: fill ? 1 : 0 }}
       >
-        {({ pressed }) => (
-          <View>
-            <Capsule pressed={pressed && !disabled} fill={look.fill} edge={look.edge} height={height}>
-              {face(look.ink)}
-            </Capsule>
-            {micOn && (
-              <Animated.View
-                pointerEvents="none"
-                style={[
-                  StyleSheet.absoluteFill,
-                  {
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 6,
-                    paddingHorizontal: pressed ? 11 : 13.5,
-                    borderRadius: 999,
-                    borderWidth: pressed ? 2.5 : 0,
-                    borderColor: colors.ink,
-                    backgroundColor: colors.listen,
-                    boxShadow: listeningGlow
-                  },
-                  litStyle
-                ]}
-              >
-                {face(colors['on-listen'])}
-              </Animated.View>
-            )}
-          </View>
-        )}
+        <View>
+          <Capsule pressStyle={disabled ? null : press.style} fill={look.fill} edge={look.edge} height={height}>
+            {face(look.ink)}
+          </Capsule>
+          {micOn && (
+            <Animated.View
+              pointerEvents="none"
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 6,
+                  paddingHorizontal: 13.5,
+                  borderRadius: 999,
+                  backgroundColor: colors.listen,
+                  boxShadow: listeningGlow
+                },
+                litStyle
+              ]}
+            >
+              {/* Pressed, the orange capsule takes a 2.5 `ink` edge, as it has no darker orange. */}
+              <Layer edge={colors.ink} edgeWidth={2.5} radius={999} style={press.style} />
+              {face(colors['on-listen'])}
+            </Animated.View>
+          )}
+        </View>
       </Pressable>
       {control.showsEnd && (
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="End"
           accessibilityHint="Ends Listen mode."
+          onPressIn={endPress.onPressIn}
+          onPressOut={endPress.onPressOut}
           onPress={onEnd}
           style={{ flexGrow: fill ? 1 : 0 }}
         >
-          {({ pressed }) => (
-            <Capsule pressed={pressed} fill={colors.surface} edge={colors.edge} height={height}>
-              <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
-                End
-              </TurnText>
-            </Capsule>
-          )}
+          <Capsule pressStyle={endPress.style} fill={colors.surface} edge={colors.edge} height={height}>
+            <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
+              End
+            </TurnText>
+          </Capsule>
         </Pressable>
       )}
     </View>
