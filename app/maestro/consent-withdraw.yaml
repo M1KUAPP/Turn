@@ -48,6 +48,8 @@ name: Consent withdrawal during Listen
 - scrollUntilVisible:
     element: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
 - assertVisible: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
+- tapOn: '.*Allowed on, [0-9]{1,2}/[0-9]{1,2}/[0-9]{4}.*'
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Withdraw
 - assertVisible: Withdraw
@@ -66,6 +68,11 @@ name: Consent withdrawal during Listen
     element: '.*Listen mode is off, and nothing more leaves this phone until you allow it again\..*'
 - assertVisible: '.*Listen mode is off, and nothing more leaves this phone until you allow it again\..*'
 - takeScreenshot: consent-withdraw-settings-note
+# Back to Settings, then back to Home.
+- swipe:
+    start: '1%, 50%'
+    end: '80%, 50%'
+- waitForAnimationToEnd
 - swipe:
     start: '1%, 50%'
     end: '80%, 50%'
