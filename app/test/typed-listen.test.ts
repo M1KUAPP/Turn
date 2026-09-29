@@ -1,5 +1,6 @@
 import { DatabaseSync } from 'node:sqlite'
 import { afterEach, describe, expect, test } from 'vitest'
+import { PhraseIndex, pickShortlist } from '@turn/shared/shortlist'
 import { createBankStore, type BankDatabase } from '../src/bank/store'
 import starterBank from '../src/content/starter-bank.json'
 import { createTypedListenSession } from '../src/listen/typed-session'
@@ -132,5 +133,17 @@ describe('typed partner lines ranked on the phone', () => {
     expect(listen.getSnapshot().row.slots.every((slot) => slot === null)).toBe(true)
     expect(listen.getSnapshot().line).toBeNull()
     listen.dispose()
+  })
+})
+
+describe("a fresh bank's shortlist", () => {
+  test('holds "It was hard" for "How was physio?" at Clinic', async () => {
+    const bank = createBankStore(database(), starterBank, () => new Date(2026, 8, 23))
+    await bank.initialize()
+    // As the session picks it for a line: the bank and its taps, which a fresh bank lacks, and an empty row.
+    const { bank: phrases, taps } = await bank.rankingData()
+    const context = { bank: phrases, row: [], place: 'clinic', taps }
+    const shortlist = pickShortlist('How was physio?', new PhraseIndex(), context).map(({ id }) => id)
+    expect(shortlist).toEqual(expect.arrayContaining(['it-was-hard', 'it-went-well']))
   })
 })
