@@ -1,27 +1,36 @@
 import { useEffect, useRef, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { AccessibilityInfo, Animated, Pressable, View } from 'react-native'
-import { colors, typography } from '../constants/theme'
-import type { homeLayout } from './home-layout'
+import { Pressable, StyleSheet, View } from 'react-native'
+import Animated, {
+  cancelAnimation,
+  Easing,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming
+} from 'react-native-reanimated'
+import { categoryColors, colors, typography } from '../constants/theme'
+import { categoryPalette, categorySymbol } from './category-palette'
+import { bigRing, bigSheen, useDepth } from './home-depth'
+import { slotTextKind, type homeLayout } from './home-layout'
+import PhraseCard, { speakingRoom } from './PhraseCard'
 import StarterReviewCard from './StarterReviewCard'
 import TurnText from './TurnText'
 
-type Reply = { id: string; text: string }
-
-const phraseColorTokens = {
-  yes: { fill: 'yes-fill', edge: 'yes-edge' },
-  no: { fill: 'no-fill', edge: 'no-edge' },
-  'not-sure': { fill: 'unsure-fill', edge: 'unsure-edge' }
-} as const
-
-export function phraseColorTokensForId(id: string) {
-  return phraseColorTokens[id as keyof typeof phraseColorTokens] ?? null
-}
+export type Reply = { id: string; text: string; categoryId?: string }
+type Category = { id: string; name: string }
 
 type Props = {
   layout: ReturnType<typeof homeLayout>
   width: number
+  fontScale: number
   boldText: boolean
+  reduceMotion: boolean
+  increaseContrast: boolean
+  categories: readonly Category[]
+  // Replies to the partner's lines are Tinted; typing's matches stay Plain (DESIGN, the phrase button).
+  tinted: boolean
   slots?: readonly (Reply | null)[]
   bigButton?: Reply | null
   starterCard?: { onReview: () => void; onDismiss: () => void } | null
@@ -31,63 +40,130 @@ type Props = {
   onSpeak: (reply: Reply) => void
 }
 
+const easeOut = (duration: number) => ({
+  duration,
+  easing: Easing.out(Easing.cubic),
+  reduceMotion: ReduceMotion.Never
+})
+
+const paletteFor = (reply: Reply, categories: readonly Category[]) =>
+  reply.categoryId ? categoryPalette(reply.categoryId, categories) : categoryColors.quick
+
 function ReplySlot({
   reply,
+  index,
   width,
   height,
   short,
+  tinted,
+  categories,
+  fontScale,
   boldText,
-  activePhraseId,
   reduceMotion,
+  activePhraseId,
   onInteractionChange,
   onSpeak
 }: {
   reply: Reply | null | undefined
+  index: number
   width: number
   height: number
   short: boolean
+  tinted: boolean
+  categories: readonly Category[]
+  fontScale: number
   boldText: boolean
-  activePhraseId?: string | null
   reduceMotion: boolean
+  activePhraseId?: string | null
   onInteractionChange?: (pressed: boolean) => void
   onSpeak: (reply: Reply) => void
 }) {
   const [shown, setShown] = useState(reply)
   const [pressed, setPressed] = useState(false)
   const pressing = useRef(false)
-  const opacity = useRef(new Animated.Value(1)).current
+  const card = useSharedValue(reply ? 1 : 0)
+  const words = useSharedValue(1)
+  const rise = useSharedValue(0)
+  const tint = useSharedValue(tinted ? 1 : 0)
 
+  // Replies arriving (plan 0044's motion): in a changed slot the old words fade out in 90 ms, the new fade in over
+  // 180 ms rising 4 points, and the tint fills over 240 ms, slots 40 ms apart in reading order. The slot's frame never
+  // moves, nothing changes under a finger, and Reduce Motion swaps at once.
   useEffect(() => {
     if (pressed) return
     if (shown?.id === reply?.id && shown?.text === reply?.text) return
-    opacity.stopAnimation()
+    const fill = tinted ? 1 : 0
+    const delay = 40 * index
     if (reduceMotion || !reply) {
       setShown(reply)
-      opacity.setValue(1)
+      card.value = reply ? 1 : 0
+      words.value = 1
+      rise.value = 0
+      tint.value = fill
       return
     }
-    Animated.timing(opacity, { toValue: 0, duration: 75, useNativeDriver: true }).start(({ finished }) => {
-      if (!finished || pressing.current) return
+    if (!shown) {
       setShown(reply)
-      Animated.timing(opacity, { toValue: 1, duration: 75, useNativeDriver: true }).start()
-    })
-    return () => opacity.stopAnimation()
-  }, [reply?.id, reply?.text, reduceMotion, opacity, pressed])
+      words.value = 1
+      card.value = 0
+      rise.value = 4
+      tint.value = 0
+      card.value = withDelay(delay, withTiming(1, easeOut(180)))
+      rise.value = withDelay(delay, withTiming(0, easeOut(180)))
+      tint.value = withDelay(delay, withTiming(fill, easeOut(240)))
+      return
+    }
+    words.value = withDelay(delay, withTiming(0, { duration: 90, reduceMotion: ReduceMotion.Never }))
+    const timer = setTimeout(() => {
+      if (pressing.current) return
+      setShown(reply)
+      rise.value = 4
+      tint.value = 0
+      words.value = withTiming(1, easeOut(180))
+      rise.value = withTiming(0, easeOut(180))
+      tint.value = withTiming(fill, easeOut(240))
+    }, delay + 90)
+    return () => clearTimeout(timer)
+    // Keyed on the words, not the objects, which the session rebuilds as captions arrive.
+  }, [reply?.id, reply?.text, shown?.id, shown?.text, pressed, reduceMotion])
 
-  const tokens = shown ? phraseColorTokensForId(shown.id) : null
-  const length = shown?.text.length ?? 0
-  const textKind =
-    length > Math.floor(width / 3) ? 'phrase-strip' : short || length > Math.floor(width / 5) ? 'button' : 'phrase'
+  useEffect(() => {
+    tint.value = tinted ? 1 : 0
+  }, [tinted, tint])
+
+  // The same words take the reply's latest details, such as its category once the bank's are read.
+  const current = shown && reply && shown.id === reply.id && shown.text === reply.text ? reply : shown
+  const cardStyle = useAnimatedStyle(() => ({ opacity: card.value }))
+  const wordsStyle = useAnimatedStyle(() => ({ opacity: words.value, transform: [{ translateY: rise.value }] }))
+
   return (
-    <Animated.View style={{ width, height, opacity }}>
-      {shown && (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={shown.text}
+    <Animated.View style={[{ width, height }, cardStyle]}>
+      {current && (
+        <PhraseCard
+          id={current.id}
+          text={current.text}
+          palette={paletteFor(current, categories)}
+          speaking={activePhraseId === current.id}
+          kind={slotTextKind(
+            current.text.length,
+            width - (short ? 23 : 35) - speakingRoom(fontScale, short),
+            fontScale,
+            short
+          )}
+          short={short}
+          boldText={boldText}
+          fontScale={fontScale}
+          reduceMotion={reduceMotion}
+          numberOfLines={2}
+          height={height}
+          tint={tint}
+          wordsStyle={wordsStyle}
           onPressIn={() => {
             pressing.current = true
-            opacity.stopAnimation()
-            opacity.setValue(1)
+            for (const value of [card, words, rise]) cancelAnimation(value)
+            card.value = 1
+            words.value = 1
+            rise.value = 0
             setPressed(true)
             onInteractionChange?.(true)
           }}
@@ -96,46 +172,149 @@ function ReplySlot({
             setPressed(false)
             onInteractionChange?.(false)
           }}
-          onPress={() => onSpeak(shown)}
-          style={({ pressed }) => ({
-            width,
-            height,
-            justifyContent: 'center',
-            borderWidth: 2,
-            borderColor: tokens ? colors[tokens.edge] : colors.edge,
-            borderRadius: 12,
-            padding: short ? 10 : 12,
-            backgroundColor: pressed ? colors['surface-pressed'] : tokens ? colors[tokens.fill] : colors.surface
-          })}
-        >
-          <TurnText
-            kind={textKind}
-            boldText={boldText}
-            numberOfLines={2}
-            ellipsizeMode="tail"
-            style={{ color: colors.ink }}
-          >
-            {shown.text}
-          </TurnText>
-          {activePhraseId === shown.id && (
-            <SymbolView
-              name="speaker.wave.2"
-              size={16}
-              tintColor={colors.ink}
-              accessible={false}
-              style={{ position: 'absolute', top: 8, right: 8 }}
-            />
-          )}
-        </Pressable>
+          onPress={() => onSpeak(current)}
+        />
       )}
     </Animated.View>
+  )
+}
+
+/** The one confident reply, filling the row's frame (DESIGN, the row): marker blue, its category as a tag, the speaker
+ * mark, and a sheen and ring that Increase Contrast hides. */
+function BigReply({
+  reply,
+  categories,
+  fontScale,
+  boldText,
+  reduceMotion,
+  increaseContrast,
+  speaking,
+  onInteractionChange,
+  onSpeak
+}: {
+  reply: Reply
+  categories: readonly Category[]
+  fontScale: number
+  boldText: boolean
+  reduceMotion: boolean
+  increaseContrast: boolean
+  speaking: boolean
+  onInteractionChange?: (pressed: boolean) => void
+  onSpeak: (reply: Reply) => void
+}) {
+  const depth = useDepth()
+  const pressed = useSharedValue(0)
+  const pressStyle = useAnimatedStyle(() => ({ opacity: pressed.value }))
+  const category = categories.find((candidate) => candidate.id === reply.categoryId)
+  const scale = Math.min(fontScale, 2)
+  const mark = Math.round(26 * scale)
+
+  return (
+    <View style={{ flex: 1, borderRadius: 28, boxShadow: depth.big }}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={reply.text}
+        onPressIn={() => {
+          pressed.value = 1
+          onInteractionChange?.(true)
+        }}
+        onPressOut={() => {
+          pressed.value = withTiming(0, { duration: 120, reduceMotion: ReduceMotion.Never })
+          onInteractionChange?.(false)
+        }}
+        onPress={() => onSpeak(reply)}
+        style={{
+          flex: 1,
+          borderRadius: 28,
+          overflow: 'hidden',
+          backgroundColor: colors.accent,
+          paddingHorizontal: 22,
+          paddingVertical: 16
+        }}
+      >
+        <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: colors['accent-pressed'] }, pressStyle]} />
+        {!increaseContrast && (
+          <>
+            <View pointerEvents="none" style={[StyleSheet.absoluteFill, { experimental_backgroundImage: bigSheen }]} />
+            <View
+              pointerEvents="none"
+              style={{
+                position: 'absolute',
+                right: -149,
+                bottom: -131,
+                width: 290,
+                height: 290,
+                borderRadius: 145,
+                borderWidth: 27,
+                borderColor: bigRing
+              }}
+            />
+          </>
+        )}
+        {category && (
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 6,
+              paddingHorizontal: 10,
+              paddingVertical: 7,
+              borderRadius: 999,
+              backgroundColor: colors['accent-tag']
+            }}
+          >
+            <SymbolView
+              name={categorySymbol(category.id)}
+              size={Math.round(14 * scale)}
+              weight="semibold"
+              tintColor={colors['on-accent']}
+              accessible={false}
+            />
+            <TurnText kind="caption" boldText={boldText} style={{ color: colors['on-accent'] }}>
+              {category.name}
+            </TurnText>
+          </View>
+        )}
+        {/* The words stay above the speaker mark, which sits 24 points in from the corner, and balance the tag. */}
+        <View style={{ flex: 1, justifyContent: 'center', paddingBottom: Math.max(category ? 30 : 0, mark + 12) }}>
+          <TurnText
+            kind="phrase-big"
+            boldText={boldText}
+            numberOfLines={4}
+            ellipsizeMode="tail"
+            adjustsFontSizeToFit
+            minimumFontScale={typography.phrase.fontSize / typography['phrase-big'].fontSize}
+            style={{ color: colors['on-accent'] }}
+          >
+            {reply.text}
+          </TurnText>
+        </View>
+        <SymbolView
+          name={speaking ? 'waveform' : 'speaker.wave.2.fill'}
+          size={mark}
+          weight="semibold"
+          tintColor={colors['on-accent']}
+          accessible={false}
+          animationSpec={
+            speaking && !reduceMotion ? { repeating: true, variableAnimationSpec: { iterative: true } } : undefined
+          }
+          style={{ position: 'absolute', right: 24, bottom: 24, opacity: speaking ? 1 : 0.75 }}
+        />
+      </Pressable>
+    </View>
   )
 }
 
 export default function ReplyRow({
   layout,
   width,
+  fontScale,
   boldText,
+  reduceMotion,
+  increaseContrast,
+  categories,
+  tinted,
   slots = [],
   bigButton,
   starterCard,
@@ -146,70 +325,83 @@ export default function ReplyRow({
 }: Props) {
   const slotWidth = layout.rowColumns === 2 ? (width - 32 - layout.rowGap) / 2 : width - 32
   const empty = !bigButton && slots.every((reply) => !reply)
-  const [reduceMotion, setReduceMotion] = useState(true)
+  // The big reply keeps its words while it fades out.
+  const [lastBig, setLastBig] = useState(bigButton ?? null)
+  const big = useSharedValue(bigButton ? 1 : 0)
+  const shownBig = bigButton ?? lastBig
 
+  // The big reply: the six slots cross-fade into the one card in the same frame, over 200 ms, or at once under Reduce
+  // Motion.
   useEffect(() => {
-    let active = true
-    void AccessibilityInfo.isReduceMotionEnabled().then((value) => {
-      if (active) setReduceMotion(value)
-    })
-    const listener = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion)
-    return () => {
-      active = false
-      listener.remove()
-    }
-  }, [])
+    if (bigButton) setLastBig(bigButton)
+    const target = bigButton ? 1 : 0
+    big.value = reduceMotion ? target : withTiming(target, easeOut(200))
+  }, [bigButton, reduceMotion, big])
+
+  const slotsStyle = useAnimatedStyle(() => ({ opacity: 1 - big.value }))
+  const bigStyle = useAnimatedStyle(() => ({ opacity: big.value }))
 
   return (
     <View style={{ height: layout.rowHeight, marginHorizontal: 16 }}>
-      {bigButton ? (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={bigButton.text}
-          onPressIn={() => onInteractionChange?.(true)}
-          onPressOut={() => onInteractionChange?.(false)}
-          onPress={() => onSpeak(bigButton)}
-          style={({ pressed }) => ({
-            height: layout.rowHeight,
-            borderRadius: 16,
-            backgroundColor: pressed ? colors['accent-pressed'] : colors.accent,
-            padding: 16
-          })}
-        >
-          <TurnText
-            kind="phrase-big"
-            boldText={boldText}
-            numberOfLines={4}
-            ellipsizeMode="tail"
-            adjustsFontSizeToFit
-            minimumFontScale={typography.phrase.fontSize / typography['phrase-big'].fontSize}
-            style={{ color: colors['on-accent'] }}
-          >
-            {bigButton.text}
-          </TurnText>
-          {activePhraseId === bigButton.id && (
-            <SymbolView name="speaker.wave.2" size={18} tintColor={colors['on-accent']} accessible={false} />
-          )}
-        </Pressable>
-      ) : empty && starterCard ? (
-        <StarterReviewCard boldText={boldText} onReview={starterCard.onReview} onDismiss={starterCard.onDismiss} />
+      {empty && starterCard ? (
+        <StarterReviewCard
+          boldText={boldText}
+          short={layout.short}
+          onReview={starterCard.onReview}
+          onDismiss={starterCard.onDismiss}
+        />
       ) : (
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: layout.rowGap }}>
-          {Array.from({ length: 6 }, (_, index) => (
-            <ReplySlot
-              key={index}
-              reply={slots[index]}
-              width={slotWidth}
-              height={layout.slotHeight}
-              short={layout.short}
-              boldText={boldText}
-              activePhraseId={activePhraseId}
-              reduceMotion={reduceMotion}
-              onInteractionChange={onInteractionChange}
-              onSpeak={onSpeak}
-            />
-          ))}
-        </View>
+        <>
+          <Animated.View
+            pointerEvents={bigButton ? 'none' : 'auto'}
+            accessibilityElementsHidden={Boolean(bigButton)}
+            importantForAccessibility={bigButton ? 'no-hide-descendants' : 'auto'}
+            style={[
+              StyleSheet.absoluteFill,
+              { flexDirection: 'row', flexWrap: 'wrap', alignContent: 'flex-start', gap: layout.rowGap },
+              slotsStyle
+            ]}
+          >
+            {Array.from({ length: 6 }, (_, index) => (
+              <ReplySlot
+                key={index}
+                reply={slots[index]}
+                index={index}
+                width={slotWidth}
+                height={layout.slotHeight}
+                short={layout.short}
+                tinted={tinted}
+                categories={categories}
+                fontScale={fontScale}
+                boldText={boldText}
+                reduceMotion={reduceMotion}
+                activePhraseId={activePhraseId}
+                onInteractionChange={onInteractionChange}
+                onSpeak={onSpeak}
+              />
+            ))}
+          </Animated.View>
+          {shownBig && (
+            <Animated.View
+              pointerEvents={bigButton ? 'auto' : 'none'}
+              accessibilityElementsHidden={!bigButton}
+              importantForAccessibility={bigButton ? 'auto' : 'no-hide-descendants'}
+              style={[StyleSheet.absoluteFill, bigStyle]}
+            >
+              <BigReply
+                reply={shownBig}
+                categories={categories}
+                fontScale={fontScale}
+                boldText={boldText}
+                reduceMotion={reduceMotion}
+                increaseContrast={increaseContrast}
+                speaking={activePhraseId === shownBig.id}
+                onInteractionChange={onInteractionChange}
+                onSpeak={onSpeak}
+              />
+            </Animated.View>
+          )}
+        </>
       )}
       {empty && !starterCard && (
         <View
@@ -226,7 +418,7 @@ export default function ReplyRow({
             paddingHorizontal: 12
           }}
         >
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], textAlign: 'center' }}>
+          <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'], textAlign: 'center' }}>
             {emptyNote ?? 'Replies to your partner appear here.'}
           </TurnText>
         </View>
