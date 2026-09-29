@@ -1,6 +1,6 @@
 # RevenueCat Shipaton 2026 brief
 
-What a team needs to know to enter RevenueCat Shipaton 2026. Every fact here is condensed from the captures in `docs/sources/`, and the [research notes](/docs/research/0001-shipaton-2026.md) cite the source of each one.
+What a team needs to know to enter RevenueCat Shipaton 2026. The [research notes](/docs/research/0001-shipaton-2026.md) cite the original organizer pages for each fact. Those pages can change; check the [official rules][rules] before submitting.
 
 Contents:
 
@@ -162,27 +162,27 @@ What this means for an entry:
 - The five Influencer Awards are fixed product briefs for each creator's audience. Building for that audience doesn't allow you to use the creator's name, image, voice, logo, or likeness.
 - Every category page says: "Check DevPost for official, up-to-date prizes."
 
-[cat-grand]: /docs/sources/www.shipathon.com/[]-categories-grand-prize.md
-[cat-bip]: /docs/sources/www.shipathon.com/[]-categories-build-in-public-award.md
-[cat-hamm]: /docs/sources/www.shipathon.com/[]-categories-hamm-award.md
-[cat-cat]: /docs/sources/www.shipathon.com/[]-categories-catvertising-award.md
-[cat-design]: /docs/sources/www.shipathon.com/[]-categories-revenuecat-design-award.md
-[cat-peace]: /docs/sources/www.shipathon.com/[]-categories-revenuecat-peace-prize.md
-[cat-game]: /docs/sources/www.shipathon.com/[]-categories-best-game-award.md
-[cat-next-gen]: /docs/sources/www.shipathon.com/[]-categories-next-gen-award.md
-[cat-lawley]: /docs/sources/www.shipathon.com/[]-categories-christopher-lawley.md
-[cat-abbey]: /docs/sources/www.shipathon.com/[]-categories-abbey-sharp.md
-[cat-simone]: /docs/sources/www.shipathon.com/[]-categories-simone-sharice.md
-[cat-heather]: /docs/sources/www.shipathon.com/[]-categories-leadership-heather.md
-[cat-lewis]: /docs/sources/www.shipathon.com/[]-categories-lewis-blogs.md
-[cat-kotlin]: /docs/sources/www.shipathon.com/[]-categories-ship-kotlin-everywhere.md
-[cat-noise]: /docs/sources/www.shipathon.com/[]-categories-most-viral-app.md
-[cat-galaxy]: /docs/sources/www.shipathon.com/[]-categories-best-app-for-galaxy.md
-[cat-replit]: /docs/sources/www.shipathon.com/[]-categories-replits-idea-to-income.md
-[cat-onesignal]: /docs/sources/www.shipathon.com/[]-categories-keep-them-coming-back-award.md
-[cat-layers]: /docs/sources/www.shipathon.com/[]-categories-growth-loop-award.md
-[cat-stripe]: /docs/sources/www.shipathon.com/[]-categories-funnel-vision-award.md
-[cat-coi]: /docs/sources/www.shipathon.com/[]-categories-conflict-of-interest-award.md
+[cat-grand]: https://www.shipaton.com/categories/grand-prize
+[cat-bip]: https://www.shipaton.com/categories/build-in-public-award
+[cat-hamm]: https://www.shipaton.com/categories/hamm-award
+[cat-cat]: https://www.shipaton.com/categories/catvertising-award
+[cat-design]: https://www.shipaton.com/categories/revenuecat-design-award
+[cat-peace]: https://www.shipaton.com/categories/revenuecat-peace-prize
+[cat-game]: https://www.shipaton.com/categories/best-game-award
+[cat-next-gen]: https://www.shipaton.com/categories/next-gen-award
+[cat-lawley]: https://www.shipaton.com/categories/christopher-lawley
+[cat-abbey]: https://www.shipaton.com/categories/abbey-sharp
+[cat-simone]: https://www.shipaton.com/categories/simone-sharice
+[cat-heather]: https://www.shipaton.com/categories/leadership-heather
+[cat-lewis]: https://www.shipaton.com/categories/lewis-blogs
+[cat-kotlin]: https://www.shipaton.com/categories/ship-kotlin-everywhere
+[cat-noise]: https://www.shipaton.com/categories/most-viral-app
+[cat-galaxy]: https://www.shipaton.com/categories/best-app-for-galaxy
+[cat-replit]: https://www.shipaton.com/categories/replits-idea-to-income
+[cat-onesignal]: https://www.shipaton.com/categories/keep-them-coming-back-award
+[cat-layers]: https://www.shipaton.com/categories/growth-loop-award
+[cat-stripe]: https://www.shipaton.com/categories/funnel-vision-award
+[cat-coi]: https://www.shipaton.com/categories/conflict-of-interest-award
 
 ## Rules to watch
 
@@ -283,14 +283,14 @@ The captured sources leave these points open or disagree on them. Confirm them i
 
 - [Research notes](/docs/research/0001-shipaton-2026.md): per-claim citations and the full perk, event, and livestream tables.
 - [Context](/docs/CONTEXT.md): what the official rules settle or change, what past winners did, best practices from primary sources, and related materials.
-- [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten rounds of ideation, with Jev built in.
+- [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten rounds of ideation, with a hosted decision model built in.
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why, with its principles, metrics, and roadmap.
 - [Product requirements](/docs/PRD.md): what the first version must do, as numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how the first version is built, traced to the product requirements.
 - [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and rules a coding agent can follow.
 - [Guessling idea](/docs/archive/guessling-idea.md): the first idea, which Turn superseded. The [product](/docs/archive/guessling-product.md), [product requirements](/docs/archive/guessling-prd.md), [technical requirements](/docs/archive/guessling-trd.md), and [design](/docs/archive/guessling-design.md) built on it are archived with it.
-- [Devpost page capture][devpost]: the authoritative 2026 overview, requirements, prizes, and judges.
-- [Official rules][rules]: the source of truth for eligibility, deadlines, and legal terms; not captured in `docs/sources/`.
+- [Devpost entry page][devpost]: the 2026 overview, requirements, prizes, and judges.
+- [Official rules][rules]: the source of truth for eligibility, deadlines, and legal terms.
 
-[devpost]: /docs/sources/devpost.com/revenuecat-shipaton-2026.[].md
+[devpost]: https://revenuecat-shipaton-2026.devpost.com/
 [rules]: https://revenuecat-shipaton-2026.devpost.com/rules
