@@ -13,8 +13,19 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research note](#task-1-research-note)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: Prettier and the source captures](#task-3-prettier-and-the-source-captures)
+    1.  [Task 4: The workspace and the shared package](#task-4-the-workspace-and-the-shared-package)
+    1.  [Task 5: The evaluation's package](#task-5-the-evaluations-package)
+    1.  [Task 6: The relay's package](#task-6-the-relays-package)
+    1.  [Task 7: Local secrets](#task-7-local-secrets)
+    1.  [Task 8: Graph, pull request, review, and merge](#task-8-graph-pull-request-review-and-merge)
 
 [issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/17
 [spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13

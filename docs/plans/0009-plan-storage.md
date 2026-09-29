@@ -13,8 +13,17 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research note](#task-1-research-note)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: Move the plans](#task-3-move-the-plans)
+    1.  [Task 4: The superpowers notes](#task-4-the-superpowers-notes)
+    1.  [Task 5: Where plans live](#task-5-where-plans-live)
+    1.  [Task 6: Graph, pull request, review, and merge](#task-6-graph-pull-request-review-and-merge)
 
 ## Global constraints
 

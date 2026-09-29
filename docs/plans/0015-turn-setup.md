@@ -13,9 +13,22 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research note](#task-1-research-note)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: The relay's secret](#task-3-the-relays-secret)
+    1.  [Task 4: The Git check](#task-4-the-git-check)
+    1.  [Task 5: The bundle ID in the TRD](#task-5-the-bundle-id-in-the-trd)
+    1.  [Task 6: The follow-up tickets](#task-6-the-follow-up-tickets)
+    1.  [Task 7: The tickets' boxes and comments](#task-7-the-tickets-boxes-and-comments)
+    1.  [Task 8: Graph, pull request, review, and merge](#task-8-graph-pull-request-review-and-merge)
 1.  [Appendix: the two messages](#appendix-the-two-messages)
+    1.  [The naming request](#the-naming-request)
+    1.  [The organizers' question](#the-organizers-question)
 
 [key-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/14
 [setup-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/16

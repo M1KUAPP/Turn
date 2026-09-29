@@ -10,6 +10,7 @@ Contents:
 1.  [Findings for the plan](#findings-for-the-plan)
 1.  [Cross-validating the hold cut-off](#cross-validating-the-hold-cut-off)
 1.  [The paired bootstrap for the gap](#the-paired-bootstrap-for-the-gap)
+    1.  [Seeded random numbers in JavaScript](#seeded-random-numbers-in-javascript)
 1.  [Risk-coverage curves and their area](#risk-coverage-curves-and-their-area)
 1.  [Plots in a Markdown report on GitHub](#plots-in-a-markdown-report-on-github)
 1.  [The confusion matrix's orientation](#the-confusion-matrixs-orientation)
