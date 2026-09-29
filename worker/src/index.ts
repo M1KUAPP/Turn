@@ -144,7 +144,10 @@ async function route(request: Request, env: Env, log: LogFacts): Promise<Respons
 }
 
 export default {
-  /** Answers a request, then writes its one log line as an object, whose keys Workers Logs indexes (METRIC-1). */
+  /**
+   * Answers a request with `Cache-Control: no-store`, so iOS's URL cache keeps neither the request nor the answer on
+   * the phone (PRIV-1), then writes its one log line as an object, whose keys Workers Logs indexes (METRIC-1).
+   */
   async fetch(request: Request, env: Env) {
     const log: LogFacts = { started: Date.now() }
     let response: Response
@@ -153,6 +156,7 @@ export default {
     } catch {
       response = refuse(log, 'internal')
     }
+    response.headers.set('Cache-Control', 'no-store')
     const { started, jevMs, ...facts } = log
     const total = Date.now() - started
     console.log({
