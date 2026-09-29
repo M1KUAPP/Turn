@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, StyleSheet, View, type ColorValue } from 'react-native'
@@ -6,6 +6,7 @@ import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } 
 import { colors } from '../constants/theme'
 import { useDepth } from './home-depth'
 import { toolbarLayout, type ToolbarItem } from './home-layout'
+import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
 
 type Props = {
@@ -28,25 +29,20 @@ type Props = {
 const labels: Record<ToolbarItem, string> = { type: 'Type', repeat: 'Repeat', up: 'Up', down: 'Down' }
 const icons = { type: 'keyboard', repeat: 'arrow.counterclockwise', up: 'chevron.up', down: 'chevron.down' } as const
 
+// A pill's symbol above or beside its label.
 function PillFace({
   icon,
   label,
   stacked,
   symbol,
-  fill,
   ink,
-  edge,
-  pressed,
   boldText
 }: {
   icon: (typeof icons)[ToolbarItem] | 'stop.fill'
   label: string
   stacked: boolean
   symbol: number
-  fill: ColorValue
   ink: ColorValue
-  edge: ColorValue | null
-  pressed: boolean
   boldText: boolean
 }) {
   return (
@@ -57,11 +53,7 @@ function PillFace({
           flexDirection: stacked ? 'column' : 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: stacked ? 3 : 6,
-          borderRadius: 999,
-          borderWidth: edge ? (pressed ? 2.5 : 1.5) : 0,
-          borderColor: edge ?? undefined,
-          backgroundColor: fill
+          gap: stacked ? 3 : 6
         }
       ]}
     >
@@ -70,6 +62,83 @@ function PillFace({
         {label}
       </TurnText>
     </View>
+  )
+}
+
+// One toolbar item on its pill. Pressed, Type's `accent` turns `accent-pressed`, Stop's `ink` turns `ink-secondary`,
+// and the others turn `surface-pressed` with a 2.5 edge; each fades back over 120 ms.
+function Pill({
+  item,
+  speaking,
+  disabled,
+  stacked,
+  width,
+  height,
+  symbol,
+  boldText,
+  stopStyle,
+  onPress
+}: {
+  item: ToolbarItem
+  speaking: boolean
+  disabled: boolean
+  stacked: boolean
+  width: number | undefined
+  height: number
+  symbol: number
+  boldText: boolean
+  stopStyle: ReturnType<typeof useAnimatedStyle>
+  onPress: () => void
+}) {
+  const press = usePress()
+  const type = item === 'type'
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={item === 'repeat' && speaking ? 'Stop' : labels[item]}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
+      onPress={onPress}
+      style={{ width, flexGrow: stacked ? 0 : 1, minWidth: 44, height }}
+    >
+      <Layer
+        fill={type ? colors.accent : colors.surface}
+        edge={type ? undefined : colors.edge}
+        edgeWidth={1.5}
+        radius={999}
+      />
+      <Layer
+        fill={type ? colors['accent-pressed'] : colors['surface-pressed']}
+        edge={type ? undefined : colors.edge}
+        edgeWidth={2.5}
+        radius={999}
+        style={press.style}
+      />
+      <PillFace
+        icon={icons[item]}
+        label={labels[item]}
+        stacked={stacked}
+        symbol={symbol}
+        ink={type ? colors['on-accent'] : disabled ? colors['ink-secondary'] : colors.ink}
+        boldText={boldText}
+      />
+      {item === 'repeat' && (
+        <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, stopStyle]}>
+          <Layer fill={colors.ink} radius={999} />
+          <Layer fill={colors['ink-secondary']} radius={999} style={press.style} />
+          <PillFace
+            icon="stop.fill"
+            label="Stop"
+            stacked={stacked}
+            symbol={symbol}
+            ink={colors.surface}
+            boldText={boldText}
+          />
+        </Animated.View>
+      )}
+    </Pressable>
   )
 }
 
@@ -120,77 +189,39 @@ export default function Toolbar({
   }, [speaking, reduceMotion, stop])
   const stopStyle = useAnimatedStyle(() => ({ opacity: stop.value }))
 
-  const pill = (item: ToolbarItem): ReactNode => {
-    const repeat = item === 'repeat'
-    const disabled =
-      item === 'repeat' ? !speaking && !canRepeat : item === 'up' ? !canPageUp : item === 'down' ? !canPageDown : false
-    const label = repeat && speaking ? 'Stop' : labels[item]
-    const action =
-      item === 'type'
-        ? onType
-        : item === 'repeat'
-          ? speaking
-            ? onStop
-            : onRepeat
+  const pill = (item: ToolbarItem) => (
+    <Pill
+      key={item}
+      item={item}
+      speaking={speaking}
+      disabled={
+        item === 'repeat'
+          ? !speaking && !canRepeat
           : item === 'up'
-            ? onPageUp
-            : onPageDown
-    return (
-      <Pressable
-        key={item}
-        accessibilityRole="button"
-        accessibilityLabel={label}
-        accessibilityState={{ disabled }}
-        disabled={disabled}
-        onPress={action}
-        style={{
-          width: layout.stacked ? layout.pillWidth : undefined,
-          flexGrow: layout.stacked ? 0 : 1,
-          minWidth: 44,
-          height: pillHeight
-        }}
-      >
-        {({ pressed }) => (
-          <>
-            <PillFace
-              icon={icons[item]}
-              label={labels[item]}
-              stacked={layout.stacked}
-              symbol={symbol}
-              fill={
-                item === 'type'
-                  ? pressed
-                    ? colors['accent-pressed']
-                    : colors.accent
-                  : pressed
-                    ? colors['surface-pressed']
-                    : colors.surface
-              }
-              ink={item === 'type' ? colors['on-accent'] : disabled ? colors['ink-secondary'] : colors.ink}
-              edge={item === 'type' ? null : colors.edge}
-              pressed={pressed}
-              boldText={boldText}
-            />
-            {repeat && (
-              <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, stopStyle]}>
-                <PillFace
-                  icon="stop.fill"
-                  label="Stop"
-                  stacked={layout.stacked}
-                  symbol={symbol}
-                  fill={colors.ink}
-                  ink={colors.surface}
-                  edge={null}
-                  pressed={false}
-                  boldText={boldText}
-                />
-              </Animated.View>
-            )}
-          </>
-        )}
-      </Pressable>
-    )
-  }
+            ? !canPageUp
+            : item === 'down'
+              ? !canPageDown
+              : false
+      }
+      stacked={layout.stacked}
+      width={layout.stacked ? layout.pillWidth : undefined}
+      height={pillHeight}
+      symbol={symbol}
+      boldText={boldText}
+      stopStyle={stopStyle}
+      onPress={
+        item === 'type'
+          ? onType
+          : item === 'repeat'
+            ? speaking
+              ? onStop
+              : onRepeat
+            : item === 'up'
+              ? onPageUp
+              : onPageDown
+      }
+    />
+  )
 
   const rows = layout.rows.map((row) => (
     <View
