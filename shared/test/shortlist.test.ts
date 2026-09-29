@@ -93,16 +93,21 @@ describe('pickShortlist', () => {
     ])
   })
 
-  test("fills up to 40 with the rest by taps, then the grid's order", () => {
+  test("fills up to 40 with the rest by taps, then the place's phrases, then the grid's order", () => {
     const p = numbered('p')
-    const taps = new Map([
-      [p(30), 2],
-      [p(10), 5],
-      [p(44), 1]
+    const h = numbered('h')
+    // Ten phrases with taps and ten of home's, so the most-tapped and the place's steps each leave two to the fill.
+    const bank = [...plain(...range(0, 34).map(p)), ...range(0, 9).map((i) => phrase(h(i), `Plain ${h(i)}`, ['home']))]
+    const taps = new Map<string, number>([...range(20, 28).map((i): [string, number] => [p(i), 2]), [p(10), 1]])
+    expect(pick('Hello there', { bank, taps })).toEqual([
+      ...range(20, 27).map(p),
+      ...range(0, 7).map(h),
+      p(28),
+      p(10),
+      h(8),
+      h(9),
+      ...[...range(0, 9), ...range(11, 19), 29].map(p)
     ])
-    expect(pick('Hello there', { bank: plain(...range(0, 44).map(p)), taps })).toEqual(
-      [10, 30, 44, ...range(0, 9), ...range(11, 29), ...range(31, 38)].map(p)
-    )
   })
 
   test('takes spare phrases beyond the default 40 in the same order', () => {
@@ -116,9 +121,17 @@ describe('pickShortlist', () => {
   })
 
   test("takes up to 8 of the place's phrases after the keyword matches", () => {
+    const o = numbered('o')
     const home = ['h00', 'h01', 'h02', 'h03', 'h04', 'h05', 'h06', 'h07', 'h08', 'h09', 'h10', 'h11']
-    const bank = [...plain('o00', 'o01', 'o02'), ...home.map((id) => phrase(id, `Plain ${id}`, ['home']))]
-    expect(pick('Hello there', { bank })).toEqual([...home.slice(0, 8), 'o00', 'o01', 'o02', ...home.slice(8)])
+    const bank = [...plain(...range(0, 8).map(o)), ...home.map((id) => phrase(id, `Plain ${id}`, ['home']))]
+    // One tapped phrase more than the most-tapped step takes, which the fill takes before the place's ninth.
+    const taps = new Map(range(0, 8).map((i): [string, number] => [o(i), 1]))
+    expect(pick('Hello there', { bank, taps })).toEqual([
+      ...range(0, 7).map(o),
+      ...home.slice(0, 8),
+      o(8),
+      ...home.slice(8)
+    ])
   })
 
   test("takes up to 8 of the most-tapped before the place's, which come most-tapped first", () => {
