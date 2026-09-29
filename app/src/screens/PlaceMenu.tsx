@@ -76,7 +76,8 @@ function MenuRow({
 }
 
 /** The place picker's menu (plan 0044, frame 24): a raised `surface` menu under the chip, the current place on
- * `accent-soft` with a check, and one tap on a place chooses it (PLACE-1). A tap outside closes it. */
+ * `accent-soft` with a check, and one tap on a place chooses it (PLACE-1). A tap anywhere outside it closes it; the
+ * board behind stays as it is. */
 export default function PlaceMenu({
   anchor,
   places,
@@ -100,7 +101,7 @@ export default function PlaceMenu({
         accessibilityRole="button"
         accessibilityLabel="Close menu"
         onPress={onClose}
-        style={[StyleSheet.absoluteFill, { backgroundColor: depth.scrim }]}
+        style={StyleSheet.absoluteFill}
       />
       {anchor && (
         <View
