@@ -174,7 +174,7 @@ export default function PlacesScreen() {
                       {place.name}
                     </TurnText>
                     {current && (
-                      <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                         Current place
                       </TurnText>
                     )}
@@ -190,15 +190,11 @@ export default function PlacesScreen() {
             })}
           </View>
         )}
-        <TurnText
-          kind="subheadline"
-          boldText={boldText}
-          style={{ color: colors['ink-secondary'], marginHorizontal: 16 }}
-        >
+        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], marginHorizontal: 16 }}>
           Choose a place from the Home screen. Move places here to change the picker order.
         </TurnText>
         {error && !editor && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
           </TurnText>
         )}
@@ -228,7 +224,7 @@ export default function PlacesScreen() {
           </TurnText>
         </Pressable>
         {places.length >= 12 && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             You can have up to 12 places.
           </TurnText>
         )}
@@ -279,12 +275,12 @@ export default function PlacesScreen() {
                 }}
               />
               {!!editor && editor.name.length >= 35 && (
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {40 - editor.name.length} characters left
                 </TurnText>
               )}
               {error && (
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {error}
                 </TurnText>
               )}
