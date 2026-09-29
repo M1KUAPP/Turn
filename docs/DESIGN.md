@@ -480,36 +480,36 @@ small text" ([AAC design notes][aac-polarity]); labels and notes need 4.5 to
 1; and edges and fills that mark a control need 3 to 1 against what's next to
 them (A11Y-7).
 
-| Text or mark    | On                | Used for                                        | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
-| --------------- | ----------------- | ----------------------------------------------- | ------ | ------ | -------------------- | ------------------- | -------- |
-| `ink`           | `surface`         | Phrases, the caption, and text on cards         | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
-| `ink`           | `surface-pressed` | A card under a finger                           | 12.8:1 | 12.2:1 | 14.0:1               | 12.4:1              | 7:1      |
-| `ink`           | `board`           | Titles and text on the board                    | 15.1:1 | 16.5:1 | 18.3:1               | 19.5:1              | 7:1      |
-| `ink`           | `accent-soft`     | The speaking card and the starter card          | 14.2:1 | 13.6:1 | 15.4:1               | 17.3:1              | 7:1      |
-| `ink`           | `listen-soft`     | A caption word as it arrives                    | 14.3:1 | 13.5:1 | 15.6:1               | 17.1:1              | 7:1      |
-| `ink`           | `yes-fill`        | Yes                                             | 14.5:1 | 13.7:1 | 16.4:1               | 17.0:1              | 7:1      |
-| `ink`           | `no-fill`         | No, and "Something's wrong"                     | 13.8:1 | 14.6:1 | 14.9:1               | 18.0:1              | 7:1      |
-| `ink`           | `unsure-fill`     | Not sure                                        | 13.9:1 | 13.3:1 | 14.8:1               | 16.5:1              | 7:1      |
-| `on-accent`     | `accent`          | The big reply, Type, Speak, and primary buttons | 8.4:1  | 7.6:1  | 10.8:1               | 12.1:1              | 7:1      |
-| `on-accent`     | `accent-pressed`  | The same, pressed                               | 10.8:1 | 9.5:1  | 13.4:1               | 15.1:1              | 7:1      |
-| `surface`       | `ink`             | The selected tab, and Stop                      | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
-| `on-listen`     | `listen`          | "Listening" and its symbol                      | 5.4:1  | 9.0:1  | 7.4:1                | 12.0:1              | 4.5:1    |
-| `listen`        | `surface`         | The caption's label while hearing               | 5.3:1  | 7.8:1  | 7.4:1                | 10.0:1              | 4.5:1    |
-| `listen`        | `listen-soft`     | The free lines' pill                            | 4.5:1  | 7.2:1  | 5.5:1                | 9.8:1               | 4.5:1    |
-| `ink-secondary` | `surface`         | Labels, counts, and placeholders on cards       | 7.3:1  | 7.6:1  | 11.7:1               | 12.0:1              | 4.5:1    |
-| `ink-secondary` | `board`           | Notes and group headers on the board            | 6.6:1  | 8.6:1  | 10.2:1               | 13.4:1              | 4.5:1    |
-| `ink-secondary` | `surface-sunken`  | Notes in pills                                  | 5.9:1  | 8.9:1  | 8.6:1                | 13.9:1              | 4.5:1    |
-| `accent`        | `surface`         | Links                                           | 8.2:1  | 6.8:1  | 10.8:1               | 10.1:1              | 4.5:1    |
-| `accent`        | `board`           | The big reply's fill against the board          | 7.3:1  | 7.6:1  | 9.4:1                | 11.3:1              | 3:1      |
-| `edge`          | `board`           | Card edges against the board                    | 3.3:1  | 4.9:1  | 8.5:1                | 11.5:1              | 3:1      |
-| `edge`          | `surface`         | Card edges against the card                     | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
-| `yes-edge`      | `board`           | Yes's edge against the board                    | 4.7:1  | 8.7:1  | 7.2:1                | 12.3:1              | 3:1      |
-| `yes-edge`      | `yes-fill`        | Yes's edge against its fill                     | 4.5:1  | 7.2:1  | 6.5:1                | 10.8:1              | 3:1      |
-| `no-edge`       | `board`           | No's edge against the board                     | 5.7:1  | 7.3:1  | 7.9:1                | 10.3:1              | 3:1      |
-| `no-edge`       | `no-fill`         | No's edge against its fill                      | 5.2:1  | 6.5:1  | 6.4:1                | 9.5:1               | 3:1      |
-| `unsure-edge`   | `board`           | Not sure's edge against the board               | 5.1:1  | 6.7:1  | 8.5:1                | 11.7:1              | 3:1      |
-| `unsure-edge`   | `unsure-fill`     | Not sure's edge against its fill                | 4.7:1  | 5.4:1  | 6.8:1                | 9.9:1               | 3:1      |
-| `listen`        | `board`           | The light against the board                     | 4.7:1  | 8.8:1  | 6.4:1                | 11.2:1              | 3:1      |
+| Text or mark    | On                | Used for                                               | Light  | Dark   | Light, more contrast | Dark, more contrast | At least |
+| --------------- | ----------------- | ------------------------------------------------------ | ------ | ------ | -------------------- | ------------------- | -------- |
+| `ink`           | `surface`         | Phrases, the caption, toolbar items, and text on cards | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `ink`           | `surface-pressed` | A card under a finger                                  | 12.8:1 | 12.2:1 | 14.0:1               | 12.4:1              | 7:1      |
+| `ink`           | `board`           | Titles and text on the board                           | 15.1:1 | 16.5:1 | 18.3:1               | 19.5:1              | 7:1      |
+| `ink`           | `accent-soft`     | The speaking card and the starter card                 | 14.2:1 | 13.6:1 | 15.4:1               | 17.3:1              | 7:1      |
+| `ink`           | `listen-soft`     | A caption word as it arrives                           | 14.3:1 | 13.5:1 | 15.6:1               | 17.1:1              | 7:1      |
+| `ink`           | `yes-fill`        | Yes                                                    | 14.5:1 | 13.7:1 | 16.4:1               | 17.0:1              | 7:1      |
+| `ink`           | `no-fill`         | No, and "Something's wrong"                            | 13.8:1 | 14.6:1 | 14.9:1               | 18.0:1              | 7:1      |
+| `ink`           | `unsure-fill`     | Not sure                                               | 13.9:1 | 13.3:1 | 14.8:1               | 16.5:1              | 7:1      |
+| `on-accent`     | `accent`          | The big reply, Type, Speak, and primary buttons        | 8.4:1  | 7.6:1  | 10.8:1               | 12.1:1              | 7:1      |
+| `on-accent`     | `accent-pressed`  | The same, pressed                                      | 10.8:1 | 9.5:1  | 13.4:1               | 15.1:1              | 7:1      |
+| `surface`       | `ink`             | The selected tab, and Stop                             | 16.9:1 | 14.7:1 | 21.0:1               | 17.5:1              | 7:1      |
+| `on-listen`     | `listen`          | "Listening" and its symbol                             | 5.4:1  | 9.0:1  | 7.4:1                | 12.0:1              | 4.5:1    |
+| `listen`        | `surface`         | The caption's label while hearing                      | 5.3:1  | 7.8:1  | 7.4:1                | 10.0:1              | 4.5:1    |
+| `listen`        | `listen-soft`     | The free lines' pill                                   | 4.5:1  | 7.2:1  | 5.5:1                | 9.8:1               | 4.5:1    |
+| `ink-secondary` | `surface`         | Labels, counts, and placeholders on cards              | 7.3:1  | 7.6:1  | 11.7:1               | 12.0:1              | 4.5:1    |
+| `ink-secondary` | `board`           | Notes and group headers on the board                   | 6.6:1  | 8.6:1  | 10.2:1               | 13.4:1              | 4.5:1    |
+| `ink-secondary` | `surface-sunken`  | Notes in pills                                         | 5.9:1  | 8.9:1  | 8.6:1                | 13.9:1              | 4.5:1    |
+| `accent`        | `surface`         | Links                                                  | 8.2:1  | 6.8:1  | 10.8:1               | 10.1:1              | 4.5:1    |
+| `accent`        | `board`           | The big reply's fill against the board                 | 7.3:1  | 7.6:1  | 9.4:1                | 11.3:1              | 3:1      |
+| `edge`          | `board`           | Card edges against the board                           | 3.3:1  | 4.9:1  | 8.5:1                | 11.5:1              | 3:1      |
+| `edge`          | `surface`         | Card edges against the card                            | 3.7:1  | 4.3:1  | 9.7:1                | 10.3:1              | 3:1      |
+| `yes-edge`      | `board`           | Yes's edge against the board                           | 4.7:1  | 8.7:1  | 7.2:1                | 12.3:1              | 3:1      |
+| `yes-edge`      | `yes-fill`        | Yes's edge against its fill                            | 4.5:1  | 7.2:1  | 6.5:1                | 10.8:1              | 3:1      |
+| `no-edge`       | `board`           | No's edge against the board                            | 5.7:1  | 7.3:1  | 7.9:1                | 10.3:1              | 3:1      |
+| `no-edge`       | `no-fill`         | No's edge against its fill                             | 5.2:1  | 6.5:1  | 6.4:1                | 9.5:1               | 3:1      |
+| `unsure-edge`   | `board`           | Not sure's edge against the board                      | 5.1:1  | 6.7:1  | 8.5:1                | 11.7:1              | 3:1      |
+| `unsure-edge`   | `unsure-fill`     | Not sure's edge against its fill                       | 4.7:1  | 5.4:1  | 6.8:1                | 9.9:1               | 3:1      |
+| `listen`        | `board`           | The light against the board                            | 4.7:1  | 8.8:1  | 6.4:1                | 11.2:1              | 3:1      |
 
 Each category's fill and edge, checked the same way:
 
@@ -773,7 +773,8 @@ height, `button` a capsule button's height, `list-row` a list group's row,
   hands, and zero spacing was least accurate, so phrase buttons are wider than
   tall, with 12 points between them ([AAC design notes][aac-targets]).
 - **The toolbar floats.** The bottom toolbar sits 2 points above the home
-  indicator's 34-point area, and the grid scrolls under it.
+  indicator's 34-point area, and the grid ends 8 points above the toolbar, so
+  no phrase ever sits under its glass.
 
 ### The home screen
 
@@ -879,11 +880,14 @@ points, about 13 characters of `phrase` inside 12-point padding.
   React Native 0.86's `boxShadow` strings, in the table below. No view uses
   the `filter` prop's drop shadow, since it clips children.
 - **Glass on the floating toolbar only.** Turn's one `GlassView` is the bottom
-  toolbar, with `GlassView` from expo-glass-effect where
+  toolbar's capsule, with `GlassView` from expo-glass-effect where
   `isLiquidGlassAvailable()`, `surface` at 82% over a `BlurView` otherwise, and
   opaque `surface` when
   `AccessibilityInfo.isReduceTransparencyEnabled()`. No `GlassView` is ever
   faded with `opacity`.
+- **No word on glass.** Each toolbar item sits on its own solid pill, so its
+  label keeps its contrast at every point of the Liquid Glass slider, which
+  Turn can't read; and nothing scrolls under the capsule.
 - **The system's glass elsewhere.** Bars, sheets, alerts, and switches turn to
   glass by themselves, and Xcode 27 ignores `UIDesignRequiresCompatibility`, so
   an app can no longer opt out ([Turn's iOS design notes][ios-key]). Settings'
@@ -1111,6 +1115,11 @@ components:
     typography: '{typography.caption}'
     rounded: '{rounded.full}'
     height: '{spacing.toolbar}'
+  toolbar-item:
+    backgroundColor: '{colors.surface.light}'
+    textColor: '{colors.ink.light}'
+    typography: '{typography.caption}'
+    rounded: '{rounded.full}'
   toolbar-type:
     backgroundColor: '{colors.accent.light}'
     textColor: '{colors.on-accent.light}'
@@ -1362,6 +1371,15 @@ components:
   toolbar-dark-hc:
     backgroundColor: '{colors.surface.dark-hc}'
     textColor: '{colors.ink.dark-hc}'
+  toolbar-item-dark:
+    backgroundColor: '{colors.surface.dark}'
+    textColor: '{colors.ink.dark}'
+  toolbar-item-light-hc:
+    backgroundColor: '{colors.surface.light-hc}'
+    textColor: '{colors.ink.light-hc}'
+  toolbar-item-dark-hc:
+    backgroundColor: '{colors.surface.dark-hc}'
+    textColor: '{colors.ink.dark-hc}'
   toolbar-type-dark:
     backgroundColor: '{colors.accent.dark}'
     textColor: '{colors.on-accent.dark}'
@@ -1603,13 +1621,15 @@ it (PLACE-1).
 - **Scrolling.** Up and down only, with the system's scroll indicator, and
   the floating toolbar's Up and Down move it a screen at a tap, so it never
   needs a swipe (A11Y-5), as the AAC notes advise
-  ([AAC design notes][aac-grid]). The grid scrolls under the toolbar.
+  ([AAC design notes][aac-grid]). The grid ends 8 points above the toolbar,
+  and nothing scrolls under it.
 
 ### The bottom bar
 
 A 370 by 64 floating glass capsule, 2 points above the home indicator's
 34-point area, with four items 84 by 52, each a symbol above its label in
-`caption`:
+`caption` on a solid pill: `toolbar-item`, a `surface` pill with a `hairline`
+edge, unless a bullet below names another:
 
 - **Type** (`keyboard`) opens the composer (SPEAK-1, SPEAK-3), on an `accent`
   pill.
