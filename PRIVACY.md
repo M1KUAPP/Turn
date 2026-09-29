@@ -2,6 +2,15 @@
 
 Turn's privacy notice is also available in the app without a network connection.
 
+Contents:
+
+1.  [What stays on this iPhone](#what-stays-on-this-iphone)
+1.  [What leaves in Listen mode](#what-leaves-in-listen-mode)
+1.  [Service records](#service-records)
+1.  [Purchases](#purchases)
+1.  [Age and people nearby](#age-and-people-nearby)
+1.  [Questions](#questions)
+
 ## What stays on this iPhone
 
 Your phrase bank, places, tap counts, and settings stay on this iPhone until you erase them. Audio is never recorded, stored, or sent. A partner’s transcript is held in memory as a caption for at most two minutes, then forgotten. Turn keeps no transcript history.

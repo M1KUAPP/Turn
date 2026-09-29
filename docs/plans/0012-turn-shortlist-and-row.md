@@ -13,8 +13,22 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research note](#task-1-research-note)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: The phrase index](#task-3-the-phrase-index)
+    1.  [Task 4: The shortlist's order](#task-4-the-shortlists-order)
+    1.  [Task 5: Yes-or-no lines](#task-5-yes-or-no-lines)
+    1.  [Task 6: A big button, a row, or no change](#task-6-a-big-button-a-row-or-no-change)
+    1.  [Task 7: The row's other rules](#task-7-the-rows-other-rules)
+    1.  [Task 8: The phone's own ranking](#task-8-the-phones-own-ranking)
+    1.  [Task 9: The speed test](#task-9-the-speed-test)
+    1.  [Task 10: The TRD](#task-10-the-trd)
+    1.  [Task 11: Graph, pull request, review, and merge](#task-11-graph-pull-request-review-and-merge)
 
 [shortlist-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/23
 [row-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/25

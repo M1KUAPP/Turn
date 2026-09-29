@@ -10,6 +10,17 @@
 
 **Spec:** Issue #54; [Settings](/docs/PRD.md#settings) SET-4, [Measurement requirements](/docs/PRD.md#measurement-requirements) METRIC-3, the north star in [Success metrics](/docs/PRODUCT.md#success-metrics), and [Stats on this phone](/docs/DESIGN.md#stats-on-this-phone) in DESIGN.
 
+Contents:
+
+1.  [Decisions](#decisions)
+1.  [The module](#the-module)
+1.  [The hooks](#the-hooks)
+1.  [The screen](#the-screen)
+1.  [Tests](#tests)
+1.  [Maestro](#maestro)
+1.  [Tasks](#tasks)
+1.  [Checks](#checks)
+
 ## Decisions
 
 - **The north star.** `PRODUCT.md:288-290`: replies from the row, out of all partner lines the user answers. The screen shows both reply counts, so the share is `fromRow / (fromRow + fromGrid)`.

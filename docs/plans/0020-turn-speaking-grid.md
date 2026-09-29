@@ -2,6 +2,11 @@
 
 Implement [issue #27](https://github.com/RevenueCat-M1KU/RevenueCat/issues/27) on `feat/27-speak-grid`. The existing starter bank is the initial data.
 
+Contents:
+
+1.  [Design](#design)
+1.  [Steps](#steps)
+
 ## Design
 
 - Open one persistent SQLite database. Create the TRD tables, seed them only when the bank has never been initialized, and prune tap rows older than 30 local days at launch. Keep category and phrase positions fixed during speech.

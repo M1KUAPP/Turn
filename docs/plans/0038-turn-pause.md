@@ -10,6 +10,14 @@
 
 **Spec:** Issue #57; [Listening](/docs/PRD.md#listening), [Permission and consent](/docs/PRD.md#permission-and-consent); [audio session](/docs/TRD.md#the-audio-session); [Listen control](/docs/DESIGN.md#the-listen-control), [caption](/docs/DESIGN.md#the-caption), and [Motion](/docs/DESIGN.md#motion).
 
+Contents:
+
+1.  [Existing behavior and decisions](#existing-behavior-and-decisions)
+1.  [Task 1: Session actions and foreground lifecycle](#task-1-session-actions-and-foreground-lifecycle)
+1.  [Task 2: Native `turn-listen` interruptions](#task-2-native-turn-listen-interruptions)
+1.  [Task 3: Listen control and light (human visual-design task)](#task-3-listen-control-and-light-human-visual-design-task)
+1.  [Task 4: CI and iPhone checks](#task-4-ci-and-iphone-checks)
+
 ## Existing behavior and decisions
 
 - #120 already has live transcription, the large initial caption, and Listening/mic.fill and Paused/mic.slash looks. `EngineState` and both engines support pause/resume, but the session exposes no actions; `HomeScreen` shows orange for active phases except paused/unavailable (including `starting`), and disables the active control; paused clears words and displays “Paused”.

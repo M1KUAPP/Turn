@@ -10,6 +10,16 @@
 
 **Spec:** [Issue #49](https://github.com/RevenueCat-M1KU/RevenueCat/issues/49), [Issue #51](https://github.com/RevenueCat-M1KU/RevenueCat/issues/51), [Listening](/docs/PRD.md#listening), [The turn-listen module](/docs/TRD.md#the-turn-listen-module), [The end of a line](/docs/TRD.md#the-end-of-a-line), [When transcription isn't available](/docs/TRD.md#when-transcription-isnt-available), [the caption](/docs/DESIGN.md#the-caption).
 
+Contents:
+
+1.  [Rules](#rules)
+1.  [The port: `app/src/listen/engine.ts`](#the-port-appsrclistenenginets)
+1.  [Task 1: The live session and the picker](#task-1-the-live-session-and-the-picker)
+1.  [Task 2: The `expo-speech-recognition` engine](#task-2-the-expo-speech-recognition-engine)
+1.  [Task 3: The `turn-listen` Swift engine](#task-3-the-turn-listen-swift-engine)
+1.  [Task 4: The screens](#task-4-the-screens)
+1.  [Task 5: Handoff](#task-5-handoff)
+
 ## Rules
 
 - **One port, one surface.** `app/src/listen/engine.ts` is the block below. It imports nothing from Expo, so every test runs on Linux. Three workers build against it: this file lands first as its own change, then Task 1 (users), Task 2 (`expo-speech-recognition`), and Task 3 (`turn-listen`) go in parallel.

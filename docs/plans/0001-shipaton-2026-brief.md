@@ -16,6 +16,14 @@ Contents:
 1.  [Design](#design)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Frame, at a glance, and key dates](#task-1-frame-at-a-glance-and-key-dates)
+    1.  [Task 2: Eligibility and submission checklist](#task-2-eligibility-and-submission-checklist)
+    1.  [Task 3: Judging process and prizes](#task-3-judging-process-and-prizes)
+    1.  [Task 4: Rules to watch, resources, and perks](#task-4-rules-to-watch-resources-and-perks)
+    1.  [Task 5: Lessons from past winners and winning playbook](#task-5-lessons-from-past-winners-and-winning-playbook)
+    1.  [Task 6: Open questions](#task-6-open-questions)
+    1.  [Task 7: Whole-document review and graph refresh](#task-7-whole-document-review-and-graph-refresh)
+    1.  [Task 8: Pull request, review, and merge](#task-8-pull-request-review-and-merge)
 1.  [Appendix: check scripts](#appendix-check-scripts)
 
 ## Global constraints

@@ -13,8 +13,18 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research note](#task-1-research-note)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: The clean checkout and CocoaPods](#task-3-the-clean-checkout-and-cocoapods)
+    1.  [Task 4: Build, install, and launch](#task-4-build-install-and-launch)
+    1.  [Task 5: Light and dark](#task-5-light-and-dark)
+    1.  [Task 6: The records](#task-6-the-records)
+    1.  [Task 7: Graph, pull request, review, and merge](#task-7-graph-pull-request-review-and-merge)
 
 [debug-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/88
 [app-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/22

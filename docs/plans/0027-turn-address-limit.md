@@ -13,8 +13,20 @@ Contents:
 1.  [Global constraints](#global-constraints)
 1.  [Skills](#skills)
 1.  [Design](#design)
+    1.  [Decisions](#decisions)
+    1.  [Review round 1](#review-round-1)
+    1.  [The live check's results](#the-live-checks-results)
+    1.  [Rejected alternatives](#rejected-alternatives)
+    1.  [Out of scope](#out-of-scope)
 1.  [Verification gate](#verification-gate)
 1.  [Tasks](#tasks)
+    1.  [Task 1: Research notes](#task-1-research-notes)
+    1.  [Task 2: This plan](#task-2-this-plan)
+    1.  [Task 3: One minute's count](#task-3-one-minutes-count)
+    1.  [Task 4: The address's object](#task-4-the-addresss-object)
+    1.  [Task 5: Mutations](#task-5-mutations)
+    1.  [Task 6: The TRD](#task-6-the-trd)
+    1.  [Task 7: Graph, pull request, review, deploy, and merge](#task-7-graph-pull-request-review-deploy-and-merge)
 
 [address-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/98
 [spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13

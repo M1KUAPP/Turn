@@ -8,7 +8,14 @@
 
 **Tech stack:** Expo SDK 57, Expo Router, React Native, SQLite, Vitest, iOS Simulator.
 
-**Spec:** [Issue #39](https://github.com/RevenueCat-M1KU/RevenueCat/issues/39), [Settings design](../DESIGN.md#settings), [Place picker design](../DESIGN.md#the-place-picker).
+**Spec:** [Issue #39](https://github.com/RevenueCat-M1KU/RevenueCat/issues/39), [Settings design](/docs/DESIGN.md#settings), [Place picker design](/docs/DESIGN.md#the-place-picker).
+
+Contents:
+
+1.  [Task 1: Place storage](#task-1-place-storage)
+1.  [Task 2: Native Settings navigation](#task-2-native-settings-navigation)
+1.  [Task 3: Places screen](#task-3-places-screen)
+1.  [Task 4: Handoff](#task-4-handoff)
 
 ## Task 1: Place storage
 
