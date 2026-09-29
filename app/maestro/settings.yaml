@@ -22,6 +22,10 @@ name: Settings
 - takeScreenshot: settings-top
 - scrollUntilVisible:
     element: Erase all data
+# The relay's status sits in Listen mode's group, near the top (frame 33).
+- scrollUntilVisible:
+    element: 'Listen service: .*'
+    direction: UP
 # The build reaches the relay: a Keychain or network failure leaves it "can't be reached".
 - extendedWaitUntil:
     visible: 'Listen service: working'
