@@ -4,7 +4,7 @@ export type Policy = {
   floor: number
   /** A top phrase above it shows as the big button. */
   bigAbove: number
-  /** How much a new phrase must beat the lowest one shown by to take its slot. */
+  /** How much a new phrase must beat the lowest one shown by to take its slot, and the big button the next phrase by. */
   margin: number
   /** Whether phrases fill slots 4 to 6 beside Yes, No, and Not sure. */
   yesNoPhrases: boolean
@@ -92,7 +92,9 @@ export function applyAnswer(row: Row, { seq, kind, topic, scores, policy, onPhon
   // Nothing reaches the floor, so the row holds, still answering its earlier line (ROW-3).
   if (!showFixed && !top) return { ...row, seq, tab }
   const bigAllowed = !showFixed && !onPhone && !topics.some((likely) => policy.noBigTopics.includes(likely))
-  if (bigAllowed && top && top[1] > policy.bigAbove) return { ...row, seq, answers: seq, big: top[0], tab }
+  // The big button hides the other replies, so it needs a clear lead over the next phrase at or above the floor.
+  const clearLead = top !== undefined && (fresh[1] === undefined || top[1] - fresh[1][1] >= policy.margin - slack)
+  if (bigAllowed && top && top[1] > policy.bigAbove && clearLead) return { ...row, seq, answers: seq, big: top[0], tab }
   const slots = row.slots.map((id) => (id !== null && fixedButtons.includes(id) ? null : id))
   if (showFixed) slots.splice(0, 3, ...fixedButtons)
   if (!phrasesAllowed) slots.fill(null, 3)
