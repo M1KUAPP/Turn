@@ -1,6 +1,6 @@
 # Turn product
 
-Turn is an augmentative and alternative communication (AAC) app for iPhone that speaks the saved phrases and typed words of adults who can't rely on speech, and in Listen mode offers replies from those phrases to what a partner says, with Jev deciding which answer. This document says who Turn is for, the principles behind its decisions, and where it goes after the first version, as of September 22, 2026. The [idea](/docs/IDEA.md) records why the team chose it for the Next Gen Award, the [product requirements](/docs/PRD.md) what the first version must do, and the [technical requirements](/docs/TRD.md) how it's built.
+Turn is an augmentative and alternative communication (AAC) app for iPhone that speaks the saved phrases and typed words of adults who can't rely on speech, and in Listen mode offers replies from those phrases to what a partner says, with a hosted decision model choosing which answer. This document says who Turn is for, the principles behind its decisions, and where it goes after the first version, as of September 22, 2026. The [idea](/docs/IDEA.md) records why the team chose it for the Next Gen Award, the [product requirements](/docs/PRD.md) what the first version must do, and the [technical requirements](/docs/TRD.md) how it's built.
 
 Contents:
 
@@ -23,7 +23,7 @@ Contents:
 - **For whom:** adults who can read and tap but can't rely on their speech, such as people living with ALS or recovering from a stroke, and the people they talk with; see [Users and partners](#users-and-partners).
 - **How it earns:** speaking is free. Turn Listen, a one-time purchase of $24.99, keeps Listen mode on after 20 free partner lines.
 - **Where:** iPhone, in US English, built with Expo. For the Next Gen entry, it runs as debug builds and a Simulator build from a public repository, with no store release, as the [Next Gen rules][ng-submit] allow.
-- **What Jev decides:** for each partner line, which of 40 of the user's phrases answer it, and whether any do. Jev never writes a word; see [how Jev fits][idea-jev].
+- **What the model decides:** for each partner line, which of 40 of the user's phrases answer it, and whether any do. The model never writes a word; see [how it fits][idea-jev].
 - **Status:** the first version is filmed on Monday, September 28, and submitted by Wednesday, September 30, 2026, on the idea's [schedule][idea-schedule].
 
 [ng-submit]: /docs/research/0019-next-gen.md#what-a-next-gen-entry-must-submit
@@ -52,7 +52,7 @@ These profiles are synthesis from the idea's [evidence on the problem and audien
 Turn isn't built, in its first version, for:
 
 - **People whose language itself is affected,** as in many kinds of aphasia, for whom rows of written phrases may not fit ([AAC notes][aac-notes]).
-- **Children.** TypeSafe says its services aren't "directed to children", so Turn is for adults, and a switch keeps a partner under 18 from reaching Jev ([ages and accounts][ng-minors]).
+- **Children.** The model provider says its services aren't "directed to children", so Turn is for adults, and a switch keeps a partner under 18 from reaching the model ([ages and accounts][ng-minors]).
 - **People who need switch or eye-gaze access beyond what iOS provides.** Turn works with iOS's own Switch Control, Voice Control, and eye and head tracking, but its first version adds none of its own.
 - **Emergencies.** Turn is not an emergency service.
 
@@ -78,10 +78,10 @@ The difference is narrow: replies from the user's own words, never generated, ch
 
 Each principle settles trade-offs, and the PRD turns its consequence into requirements.
 
-- **Only their words.** Every reply Turn offers is a phrase the user saved or typed. So Jev chooses and never writes, nothing generates a reply when none fits, the starter phrases can all be edited, and every typed reply joins the bank.
+- **Only their words.** Every reply Turn offers is a phrase the user saved or typed. The model chooses and never writes, nothing generates a reply when none fits, the starter phrases can all be edited, and every typed reply joins the bank.
 - **Nothing speaks without a tap.** A suggestion is never an action. So even the big button waits for a tap, and the grid and keyboard are always one tap away.
 - **Steady beats clever.** A button the user has learned by position shouldn't move for noise. So the grid never reorders itself and only the row adapts, a phrase keeps its slot until a new one wins by a clear margin, Yes, No, and Not sure have fixed places, and when nothing fits, the row holds: listeners rate a phrase that almost fits below a reply that comes late ([AAC notes][aac-fail]).
-- **Honest about doubt.** When no phrase clears the bar, Turn changes nothing, and when Jev is slow or down, Turn says Listen mode is degraded and ranks phrases on the phone.
+- **Honest about doubt.** When no phrase clears the bar, Turn changes nothing, and when the model service is slow or down, Turn says Listen mode is degraded and ranks phrases on the phone.
 - **Listening is visible and agreed.** The user's permission comes before any of their phrases leave the phone, the partner's consent before each listening session, a light shows while the phone listens, one tap pauses it, a partner under 18 is never heard, and no audio is kept.
 - **Speech is never sold.** The grid, typing, saved phrases, and Personal Voice are free, and the paywall never stands between the user and speech.
 - **Private by default.** No accounts, and the phrase bank stays on the phone. For each partner line, only what ranking it needs leaves it, with names swapped for tags; the PRD's [reply row][prd-row] lists it.
@@ -96,9 +96,9 @@ As the user lives it; the PRD's [functional requirements][prd-functional] set ev
 
 1.  **Set up.** The first launch opens the speaking grid with about 150 starter phrases in categories, ready to speak. The user, or whoever helps them, picks a voice, authorizes their Personal Voice if they made one in iOS, adds names and places, and edits phrases.
 1.  **Speak.** A tap on a phrase speaks it. Typed text speaks with one more tap and joins the bank.
-1.  **Listen, with consent.** The first time the user turns on Listen mode, Turn asks their permission to send their phrases and the partner's words to TypeSafe, or to "a third-party AI service in the United States" until TypeSafe agrees to be named. Each time Listen mode starts, the user shows the partner a consent card; once the partner agrees, a light shows while the phone listens.
+1.  **Listen, with consent.** The first time the user turns on Listen mode, Turn asks their permission to send their phrases and the partner's words to a third-party AI service in the United States. Each time Listen mode starts, the user shows the partner a consent card; once the partner agrees, a light shows while the phone listens.
 1.  **Answer.** When the partner finishes, the row above the grid offers the user's phrases that answer: one big button when Turn is confident, up to six otherwise, and no change when none fits. A yes-or-no question puts Yes, No, and Not sure first. The user taps, and Turn speaks.
-1.  **When it goes wrong.** A caption shows the line Turn heard, so a mishearing is plain; the strip asks the partner to say it again with one tap; the partner's line can be typed instead; and without a network, or when Jev is busy, the phone ranks phrases itself and says so.
+1.  **When it goes wrong.** A caption shows the line Turn heard, so a mishearing is plain; the strip asks the partner to say it again with one tap; the partner's line can be typed instead; and without a network, or when the model service is busy, the phone ranks phrases itself and says so.
 1.  **Keep listening.** After 20 partner lines, a paywall offers Turn Listen once; closing it leaves everything else as it was.
 
 The moments that carry the product:
@@ -150,7 +150,7 @@ The **north star** is replies from the row: partner lines the user answers by ta
 In the first version, these numbers come from the evaluation, rehearsals, and the relay's logs; Turn has no analytics SDK and sends no usage data. The targets below are decisions this document sets, except where a source is named.
 
 - **Replies from the row:** counted on the team's phones during rehearsals, and in the clinic's session if one is booked; the counts stay on the phone.
-- **Ranking quality,** from the [evaluation][prd-eval] of 80 partner lines: top-1 and top-6 accuracy for each ranker, and how often the row holds when no phrase fits, each with its interval. Eighty lines settle only large differences, so Jev earns its place when it clearly beats the other rankers on top-6 accuracy; if it still trails after re-ranking an embedding shortlist, the README says so, as the idea's [risks][idea-risks] require.
+- **Ranking quality,** from the [evaluation][prd-eval] of 80 partner lines: top-1 and top-6 accuracy for each ranker, and how often the row holds when no phrase fits, each with its interval. Eighty lines settle only large differences, so the hosted decision model earns its place when it clearly beats the other rankers on top-6 accuracy; if it still trails after re-ranking an embedding shortlist, the README says so, as the idea's [risks][idea-risks] require.
 - **Speed:** the time from the end of the partner's speech to the row, kept apart from the user's own time to choose, and from a tap to speech; the PRD's [performance requirements][prd-perf] set the targets.
 - **Guardrails:**
   - No wrong big button on a yes-or-no, pain, or consent line in the evaluation.
@@ -167,13 +167,13 @@ In the first version, these numbers come from the evaluation, rehearsals, and th
 ## Roadmap
 
 - **The first version, filmed on September 28, 2026:** the PRD's Must requirements.
-- **Through October 22:** the PRD's Should requirements, such as the replay script, the clinic's fixes, and an alert when Jev's credits run low, with the relay running for judges.
+- **Through October 22:** the PRD's Should requirements, such as the replay script, the clinic's fixes, and an alert when model credits run low, with the relay running for judges.
 - **Later, if AAC users and clinicians want it:** candidates, each with the signal that would justify it.
   - An App Store release, with a paid Apple Developer Program membership and a real one-time purchase, if clinicians or users ask to use Turn day to day.
   - The partner's own phone joining the conversation, if partners ask to type or speak into their own device.
   - Switch and eye-gaze access designed around the row, if users whose motor control changes find iOS's own access too slow.
   - An iPad layout, since many AAC users carry an iPad; the iPhone layout already runs there.
-  - Languages other than English, once Jev's accuracy outside English is known; English is "where accuracy is currently best" ([Jev notes][jev-lang]).
+  - Languages other than English, once the model's accuracy outside English is known; English is "where accuracy is currently best" ([model notes][jev-lang]).
   - Android, from the same Expo code, once live transcription and a personal voice work there.
   - A backup of the phrase bank the user controls, if users fear losing it with a phone.
 
@@ -181,7 +181,7 @@ In the first version, these numbers come from the evaluation, rehearsals, and th
 
 ## What Turn is not
 
-- **Not a writer.** Jev returns probabilities, and every reply is a phrase the user saved or typed.
+- **Not a writer.** The model returns probabilities, and every reply is a phrase the user saved or typed.
 - **Not a recorder.** No audio or transcript is kept.
 - **Not a medical device or an emergency service,** and not a substitute for an AAC assessment by a speech-language pathologist.
 - **Not for children.**
@@ -195,7 +195,7 @@ In the first version, these numbers come from the evaluation, rehearsals, and th
 - [Design](/docs/DESIGN.md): how Turn looks, reads, and moves, as tokens and rules a coding agent can follow.
 - [AAC practice notes][aac-notes]: design conventions, access, outcome measures, and ethics in AAC.
 - [Evidence notes](/docs/research/0021-next-gen-evidence.md): rivals, need, and harm behind the idea.
-- [Jev notes](/docs/research/0005-jev.md): what Jev is, its API, prices, limits, and terms.
+- [Model notes](/docs/research/0005-jev.md): the model's API, prices, limits, and terms.
 - [Guessling product](/docs/archive/guessling-product.md): the product document for the team's first idea, archived.
 
 [idea-problem]: /docs/IDEA.md#problem-and-audience
