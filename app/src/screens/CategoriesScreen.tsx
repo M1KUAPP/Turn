@@ -15,6 +15,7 @@ import {
   ListGroup,
   ListRow,
   ScreenTitle,
+  useScreenTitle,
   TileLead,
   tileTones,
   useListMetrics
@@ -36,9 +37,11 @@ export default function CategoriesScreen() {
   const [editMode, setEditMode] = useState(false)
   const [editor, setEditor] = useState<Editor | null>(null)
   const [deleting, setDeleting] = useState<Category | null>(null)
+  const [destination, setDestination] = useState<string | null>(null)
   const [focused, setFocused] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Phrase bank')
 
   useEffect(() => {
     if (!bank) return
@@ -125,6 +128,7 @@ export default function CategoriesScreen() {
           }
         ])
       } else {
+        setDestination(categories.find((c) => c.id !== category.id)?.id ?? null)
         setDeleting(category)
       }
     } catch (cause) {
@@ -132,11 +136,11 @@ export default function CategoriesScreen() {
     }
   }
 
-  const deleteInto = (destination: Category) => {
-    if (!bank || !deleting) return
+  const deleteInto = () => {
+    if (!bank || !deleting || !destination) return
     const doomed = deleting
     setDeleting(null)
-    void bank.deleteCategory(doomed.id, destination.id).catch((cause) => setError(String(cause)))
+    void bank.deleteCategory(doomed.id, destination).catch((cause) => setError(String(cause)))
   }
 
   const closeEditor = () => {
@@ -175,11 +179,12 @@ export default function CategoriesScreen() {
     <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
+        {...scrollProps}
         style={{ flex: 1, backgroundColor: colors.board }}
         contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 22 }}
       >
         <View style={{ gap: 8 }}>
-          <ScreenTitle title="Phrase bank" boldText={boldText} />
+          <ScreenTitle title="Phrase bank" boldText={boldText} onLayout={onTitleLayout} />
           <TurnText
             kind="footnote"
             boldText={boldText}
@@ -422,7 +427,8 @@ export default function CategoriesScreen() {
         </SheetBody>
       </Modal>
 
-      {/* Deleting a category that holds phrases asks where they go; choosing a category moves them and deletes. */}
+      {/* Deleting a category that holds phrases asks where they go: a tap chooses the category, and Delete moves the
+          phrases there and deletes, so one stray tap can't delete (frame 61). */}
       <Modal
         visible={!!deleting}
         animationType="slide"
@@ -451,13 +457,26 @@ export default function CategoriesScreen() {
                       boldText={boldText}
                       symbol={categorySymbol(category.id)}
                       tone={{ fill: hue.fill, ink: hue.edge }}
-                      accessibilityHint={`Moves the phrases to ${category.name} and deletes ${deleting?.name ?? ''}.`}
-                      onPress={() => deleteInto(category)}
+                      checked={destination === category.id}
+                      onPress={() => setDestination(category.id)}
                     />
                   )
                 })}
             </ListGroup>
           </ScrollView>
+          <SheetActions>
+            <Button label="Cancel" boldText={boldText} onPress={() => setDeleting(null)} />
+            <Button
+              variant="destructive"
+              label="Delete"
+              boldText={boldText}
+              disabled={!destination}
+              accessibilityHint={`Moves its phrases to ${
+                categories.find((c) => c.id === destination)?.name ?? ''
+              } and deletes ${deleting?.name ?? ''}.`}
+              onPress={deleteInto}
+            />
+          </SheetActions>
         </SafeAreaView>
       </Modal>
     </>
