@@ -55,6 +55,12 @@ export default function PhraseBankScreen() {
   const { onTitleLayout, scrollProps } = useScreenTitle(title)
 
   const handledInitialEdit = useRef(false)
+  // The phrase field takes focus when the sheet opens, not again when the form returns from a chooser, where the
+  // keyboard would cover the rows below it.
+  const fieldFocusedOnce = useRef(false)
+  useEffect(() => {
+    if (!editor) fieldFocusedOnce.current = false
+  }, [editor])
 
   // Commit staged deletions on leaving the screen
   useEffect(() => {
@@ -530,7 +536,7 @@ export default function PhraseBankScreen() {
                   Phrase
                 </TurnText>
                 <TextInput
-                  autoFocus
+                  autoFocus={!fieldFocusedOnce.current}
                   accessibilityLabel="Phrase"
                   accessibilityHint="Type the phrase you want to say, up to 200 characters."
                   maxLength={200}
@@ -540,7 +546,10 @@ export default function PhraseBankScreen() {
                   onChangeText={(text) =>
                     setEditor((current) => (current ? { ...current, text: text.slice(0, 200) } : null))
                   }
-                  onFocus={() => setFocused(true)}
+                  onFocus={() => {
+                    fieldFocusedOnce.current = true
+                    setFocused(true)
+                  }}
                   onBlur={() => setFocused(false)}
                   selectionColor={colors.accent}
                   scrollEnabled
