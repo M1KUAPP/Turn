@@ -19,9 +19,10 @@ name: Phrase bank character limit
     visible: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     timeout: 10000
 - waitForAnimationToEnd
+# The strip leads the list, so at large sizes Quick sits further down.
 - scrollUntilVisible:
     element: Quick
-    direction: UP
+    direction: DOWN
     speed: 10
 - tapOn: Quick
 - extendedWaitUntil:
