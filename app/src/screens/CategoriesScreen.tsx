@@ -121,7 +121,7 @@ export default function CategoriesScreen() {
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
       <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 16 }}>
-        <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
           Categories organize your phrases. Move categories here to change the tab order.
         </TurnText>
 
@@ -213,7 +213,7 @@ export default function CategoriesScreen() {
                         backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
                       })}
                     >
-                      <TurnText kind="subheadline-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+                      <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
                         {label}
                       </TurnText>
                     </Pressable>
@@ -225,11 +225,7 @@ export default function CategoriesScreen() {
 
         {/* The strip shows last, apart, as a row that opens its phrases */}
         <View style={{ marginTop: 8, gap: 8 }}>
-          <TurnText
-            kind="subheadline-emphasized"
-            boldText={boldText}
-            style={{ color: colors['ink-secondary'], marginLeft: 4 }}
-          >
+          <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'], marginLeft: 4 }}>
             Conversation strip
           </TurnText>
           <Pressable
@@ -254,7 +250,7 @@ export default function CategoriesScreen() {
               <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
                 Conversation strip
               </TurnText>
-              <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                 Phrases always visible above the grid
               </TurnText>
             </View>
@@ -263,7 +259,7 @@ export default function CategoriesScreen() {
         </View>
 
         {error && !editor && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             {error}
           </TurnText>
         )}
@@ -297,7 +293,7 @@ export default function CategoriesScreen() {
         </Pressable>
 
         {atCategoryLimit && (
-          <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
             You can have up to 12 categories.
           </TurnText>
         )}
@@ -352,12 +348,12 @@ export default function CategoriesScreen() {
                 }}
               />
               {!!editor && editor.name.length >= 35 && (
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {40 - editor.name.length} characters left
                 </TurnText>
               )}
               {error && (
-                <TurnText kind="subheadline" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                   {error}
                 </TurnText>
               )}

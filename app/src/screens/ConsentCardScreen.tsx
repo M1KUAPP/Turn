@@ -60,12 +60,12 @@ export default function ConsentCardScreen() {
     <SafeAreaView edges={['left', 'right', 'top', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12, gap: 16 }}>
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ gap: 20, paddingBottom: 8 }}>
-          <TurnText kind="largeTitle-emphasized" boldText={boldText} style={{ color: colors.ink }}>
+          <TurnText kind="partner-card-title" boldText={boldText} style={{ color: colors.ink }}>
             {card.lead}
           </TurnText>
           <View style={{ gap: 16 }}>
             {card.facts.map((fact, index) => (
-              <TurnText key={index} kind="title2" boldText={boldText} style={{ color: colors.ink }}>
+              <TurnText key={index} kind="partner-line-small" boldText={boldText} style={{ color: colors.ink }}>
                 {fact}
               </TurnText>
             ))}
