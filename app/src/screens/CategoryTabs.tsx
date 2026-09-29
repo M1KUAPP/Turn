@@ -1,0 +1,134 @@
+import { Pressable, ScrollView, View, type ColorValue } from 'react-native'
+import { colors } from '../constants/theme'
+import TurnText from './TurnText'
+
+type Props = {
+  categories: readonly { id: string; name: string }[]
+  selectedId: string
+  suggestedId: string | null
+  paletteFor: (categoryId: string) => { fill: ColorValue; edge: ColorValue }
+  tabHeight: number
+  tabMargin: number
+  fontScale: number
+  boldText: boolean
+  onChoose: (id: string) => void
+}
+
+function Tab({
+  name,
+  selected,
+  suggested,
+  dot,
+  height,
+  dotSize,
+  boldText,
+  onPress
+}: {
+  name: string
+  selected: boolean
+  suggested: boolean
+  dot: ColorValue | null
+  height: number
+  dotSize: number
+  boldText: boolean
+  onPress: () => void
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      accessibilityValue={suggested ? { text: 'suggested' } : undefined}
+      onPress={onPress}
+    >
+      {({ pressed }) => {
+        // The tab ROW-9 marks keeps its dot and takes a 2.5 edge in its category's color, a shape as well as a hue.
+        const edgeWidth = suggested || pressed ? 2.5 : selected ? 0 : 1.5
+        return (
+          <View
+            style={{
+              minHeight: height,
+              minWidth: 44,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              paddingHorizontal: 16 - edgeWidth,
+              borderRadius: 999,
+              borderWidth: edgeWidth,
+              borderColor: suggested && dot ? dot : colors.edge,
+              backgroundColor: selected ? colors.ink : pressed ? colors['surface-pressed'] : colors.surface
+            }}
+          >
+            {dot && (
+              <View
+                style={{
+                  width: dotSize,
+                  height: dotSize,
+                  borderRadius: dotSize / 2,
+                  backgroundColor: dot,
+                  borderWidth: selected ? 1.5 : 0,
+                  borderColor: colors.surface
+                }}
+              />
+            )}
+            <TurnText kind="label" boldText={boldText} style={{ color: selected ? colors.surface : colors.ink }}>
+              {name}
+            </TurnText>
+          </View>
+        )
+      }}
+    </Pressable>
+  )
+}
+
+/** The grid's tabs (DESIGN, the tabs): one chip per category with its 10-point dot, the selected one on `ink`, and All
+ * pinned at the trailing end outside the scroll. */
+export default function CategoryTabs({
+  categories,
+  selectedId,
+  suggestedId,
+  paletteFor,
+  tabHeight,
+  tabMargin,
+  fontScale,
+  boldText,
+  onChoose
+}: Props) {
+  const dotSize = Math.round(10 * Math.min(fontScale, 2))
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: tabHeight + 2 * tabMargin }}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator
+        style={{ flexGrow: 1, height: tabHeight + 2 * tabMargin }}
+        contentContainerStyle={{ paddingLeft: 16, paddingRight: 8, paddingVertical: tabMargin, gap: 8 }}
+      >
+        {categories.map((category) => (
+          <Tab
+            key={category.id}
+            name={category.name}
+            selected={selectedId === category.id}
+            suggested={suggestedId === category.id}
+            dot={paletteFor(category.id).edge}
+            height={tabHeight}
+            dotSize={dotSize}
+            boldText={boldText}
+            onPress={() => onChoose(category.id)}
+          />
+        ))}
+      </ScrollView>
+      <View style={{ marginLeft: 8, marginRight: 16 }}>
+        <Tab
+          name="All"
+          selected={selectedId === 'all'}
+          suggested={false}
+          dot={null}
+          height={tabHeight}
+          dotSize={dotSize}
+          boldText={boldText}
+          onPress={() => onChoose('all')}
+        />
+      </View>
+    </View>
+  )
+}
