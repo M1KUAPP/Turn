@@ -207,7 +207,13 @@ name: Phrase bank actions and category limit
       text: Phrase
       below: Phrase
 - waitForAnimationToEnd
-# The places are chosen in their own sheet, whose Done sits under its Places title.
+# The places are chosen on their own page of the sheet, whose Done sits under its Places title.
+# At AX5 the pinned Save and Delete can cover the form's last rows, which Maestro still counts as on screen, so the
+# form scrolls to its end first.
+- swipe:
+    start: '50%, 60%'
+    end: '50%, 25%'
+- waitForAnimationToEnd
 - tapOn: Places
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -360,7 +366,13 @@ name: Phrase bank actions and category limit
       text: Phrase
       below: Phrase
 - waitForAnimationToEnd
-# The category and the places are chosen in their own sheets.
+# The category and the places are chosen on their own pages of the sheet.
+# At AX5 the pinned Save and Delete can cover the form's last rows, which Maestro still counts as on screen, so the
+# form scrolls to its end first.
+- swipe:
+    start: '50%, 60%'
+    end: '50%, 25%'
+- waitForAnimationToEnd
 - tapOn: Category
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -368,6 +380,12 @@ name: Phrase bank actions and category limit
     direction: LEFT
     speed: 10
 - tapOn: Quick
+- waitForAnimationToEnd
+# At AX5 the pinned Save and Delete can cover the form's last rows, which Maestro still counts as on screen, so the
+# form scrolls to its end first.
+- swipe:
+    start: '50%, 60%'
+    end: '50%, 25%'
 - waitForAnimationToEnd
 - tapOn: Places
 - waitForAnimationToEnd
