@@ -55,6 +55,8 @@ type TurnState = {
   boldText: boolean
   fontScale: number
   reduceMotion: boolean
+  increaseContrast: boolean
+  reduceTransparency: boolean
 }
 
 const TurnContext = createContext<TurnState | null>(null)
@@ -270,7 +272,9 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         error,
         boldText: accessibility.boldText,
         fontScale: accessibility.fontScale,
-        reduceMotion: accessibility.reduceMotion
+        reduceMotion: accessibility.reduceMotion,
+        increaseContrast: accessibility.increaseContrast,
+        reduceTransparency: accessibility.reduceTransparency
       }}
     >
       {children}

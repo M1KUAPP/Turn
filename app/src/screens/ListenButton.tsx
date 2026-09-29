@@ -90,7 +90,7 @@ export default function ListenButton({
   // Reduce Motion; it goes out at once.
   useEffect(() => {
     lit.value =
-      micOn && !reduceMotion ? withTiming(1, { duration: 400, reduceMotion: ReduceMotion.System }) : micOn ? 1 : 0
+      micOn && !reduceMotion ? withTiming(1, { duration: 400, reduceMotion: ReduceMotion.Never }) : micOn ? 1 : 0
   }, [micOn, reduceMotion, lit])
   const litStyle = useAnimatedStyle(() => ({ opacity: lit.value }))
 
