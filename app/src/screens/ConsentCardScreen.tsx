@@ -28,6 +28,7 @@ export default function ConsentCardScreen() {
   const card = state.card
   const disabled = consent === null
   const disc = Math.round(40 * Math.min(fontScale, 1.5))
+  const stackedAnswers = fontScale >= 1.786
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.board }}>
@@ -109,12 +110,14 @@ export default function ConsentCardScreen() {
                     paddingHorizontal: 12,
                     paddingVertical: 8,
                     borderRadius: 22,
+                    borderWidth: 1.5,
+                    borderColor: colors.edge,
                     backgroundColor: colors['surface-sunken']
                   }}
                 >
                   {({ pressed }) => (
                     <>
-                      <PressFill pressed={pressed} color={colors['surface-pressed']} radius={22} />
+                      <PressFill pressed={pressed} color={colors['surface-pressed']} radius={20.5} />
                       <SymbolView
                         name="speaker.wave.2.fill"
                         size={Math.round(18 * Math.min(fontScale, 2.6))}
@@ -158,7 +161,7 @@ export default function ConsentCardScreen() {
                         accessible={false}
                       />
                     </View>
-                    <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
+                    <TurnText kind="partner-line-small" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
                       {fact}
                     </TurnText>
                   </View>
@@ -203,24 +206,33 @@ export default function ConsentCardScreen() {
                   disabled={disabled}
                   trackColor={{ false: colors.edge, true: colors.accent }}
                   thumbColor={colors.surface}
+                  style={{ minWidth: 64, minHeight: 44 }}
                 />
               </View>
             </ScrollView>
-            {/* The answers stay pinned within a thumb's reach; above them the card scrolls at large sizes. The mic
-                stays off for a partner under 18, so agreeing then takes Turn's own blue, not the lamp's orange. */}
-            <View style={{ paddingHorizontal: 24, paddingBottom: 22, paddingTop: 0, gap: 16 }}>
+            {/* The answers are an equal pair, one size and style side by side, stacked from AX1 (CONSENT-4, DESIGN);
+                they stay pinned within a thumb's reach, and above them the card scrolls at large sizes. */}
+            <View
+              style={{
+                flexDirection: stackedAnswers ? 'column' : 'row',
+                paddingHorizontal: 24,
+                paddingBottom: 22,
+                gap: 12
+              }}
+            >
               <Button
-                variant={state.under18 ? 'primary' : 'listen'}
                 label={card.agreed}
                 boldText={boldText}
                 disabled={disabled}
                 onPress={() => void consent?.partnerAgreed()}
+                style={stackedAnswers ? undefined : { flex: 1 }}
               />
               <Button
                 label={card.declined}
                 boldText={boldText}
                 disabled={disabled}
                 onPress={() => consent?.partnerDeclined()}
+                style={stackedAnswers ? undefined : { flex: 1 }}
               />
             </View>
           </View>

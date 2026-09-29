@@ -429,14 +429,7 @@ export default function PhraseBankScreen() {
                       onPress={() => move(phrase.id, 1)}
                     />
                     <IconButton symbol="pencil" label="Edit" onPress={() => void openEdit(phrase)} />
-                    {canDelete && (
-                      <IconButton
-                        symbol="trash"
-                        label="Delete"
-                        tint={colors['no-edge']}
-                        onPress={() => deletePhrase(phrase.id)}
-                      />
-                    )}
+                    {canDelete && <IconButton symbol="trash" label="Delete" onPress={() => deletePhrase(phrase.id)} />}
                   </View>
                 )}
               </View>
@@ -641,12 +634,7 @@ export default function PhraseBankScreen() {
             </ScrollView>
             <SheetActions>
               {editorCanDelete && editorPhrase ? (
-                <Button
-                  variant="destructive"
-                  label="Delete"
-                  boldText={boldText}
-                  onPress={() => confirmDelete(editorPhrase, closeEditor)}
-                />
+                <Button label="Delete" boldText={boldText} onPress={() => confirmDelete(editorPhrase, closeEditor)} />
               ) : null}
               <Button
                 variant="primary"
