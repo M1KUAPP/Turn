@@ -1,40 +1,39 @@
 import { useEffect } from 'react'
 import {
+  Easing,
   ReduceMotion,
   cancelAnimation,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withSequence,
   withTiming
 } from 'react-native-reanimated'
 
-const HALF_CYCLE_MS = 600
-// Four 1.2-second cycles take 4.8 seconds and end back at 100%, inside the five seconds a line.
-const CYCLES_PER_LINE = 4
+const RING_MS = 1600
+// Three 1.6-second rings take 4.8 seconds, inside the five seconds a line (DESIGN, motion).
+const RINGS_PER_LINE = 3
 
-// Reduce Motion comes from the TRD's accessibility store alone, so Reanimated must not also apply the setting it
-// read at launch, as its animations do by default.
-const fadeTo = (opacity: number) => withTiming(opacity, { duration: HALF_CYCLE_MS, reduceMotion: ReduceMotion.Never })
-
-// DESIGN's light: while the partner's words arrive, the symbol fades from 100% to 35% and back every 1.2 seconds,
-// for at most five seconds a line, and holds at 100% otherwise and under Reduce Motion.
+// DESIGN's light: while the partner's words arrive, a ring grows from the light, scale 1 to 1.8, and fades from 60% to
+// nothing, once every 1.6 seconds for at most five seconds a line. Reduce Motion, from the TRD's accessibility store,
+// shows the light alone.
 export function useListenLight(wordsArriving: boolean, reduceMotion: boolean) {
-  const opacity = useSharedValue(1)
+  const progress = useSharedValue(1)
   useEffect(() => {
-    cancelAnimation(opacity)
-    if (reduceMotion) opacity.value = 1
-    else if (wordsArriving)
-      opacity.value = withRepeat(
-        withSequence(ReduceMotion.Never, fadeTo(0.35), fadeTo(1)),
-        CYCLES_PER_LINE,
-        false,
-        undefined,
-        ReduceMotion.Never
-      )
-    // A line that ends mid-fade returns to 100% at the fade's pace instead of jumping there.
-    else opacity.value = fadeTo(1)
-  }, [wordsArriving, reduceMotion, opacity])
+    cancelAnimation(progress)
+    progress.value = 1
+    if (reduceMotion || !wordsArriving) return
+    progress.value = 0
+    progress.value = withRepeat(
+      withTiming(1, { duration: RING_MS, easing: Easing.out(Easing.quad), reduceMotion: ReduceMotion.System }),
+      RINGS_PER_LINE,
+      false,
+      undefined,
+      ReduceMotion.System
+    )
+  }, [wordsArriving, reduceMotion, progress])
 
-  return useAnimatedStyle(() => ({ opacity: opacity.value }))
+  return useAnimatedStyle(() => ({
+    opacity: 0.6 * (1 - progress.value),
+    transform: [{ scale: 1 + 0.8 * progress.value }]
+  }))
 }
