@@ -20,8 +20,8 @@ Contents:
 
 | Result          | Rows |
 | --------------- | ---- |
-| Pass            | 89   |
-| Fail            | 10   |
+| Pass            | 90   |
+| Fail            | 9    |
 | Not checked     | 3    |
 | Waiting on #<n> | 3    |
 | RELEASE-4       | 7    |
@@ -41,12 +41,6 @@ run before the Devpost deadline and through judging, outside RELEASE-1.
 - **The paywall: PAY-1, PAY-2, STATE-4, and COMPAT-2.** The relay counts the
   free lines and answers the 21st with `402`. #133's Simulator flows pass the
   purchase rows, PAY-4 to PAY-6, SET-1, and METRIC-4; these four wait on #53.
-- **The Simulator build never reaches the relay: LISTEN-4 and COMPAT-2.**
-  Unsigned, it can't use the Keychain (`-34018`), so it never has a user ID;
-  Settings says "Listen service: can't be reached", and every line is ranked
-  on the phone, so scenario 10's "It was hard" can't appear.
-  `fix/50-simulator-keychain` signs it to run locally. The device build is
-  signed and unaffected.
 - **Teammate reads that didn't happen: CONTENT-1, CONTENT-3, and
   CONTENT-4.** Their checks ask a teammate to read the starter phrases, to
   compare both versions of the consent texts with the requirements, and to
@@ -58,10 +52,6 @@ run before the Devpost deadline and through judging, outside RELEASE-1.
   for scenario 7; unit tests cover the degraded note.
 - **One slow cold launch: PERF-3 and BANK-7.** One of ten launches at 2,156
   phrases took 2.11 s, loading its JavaScript from Metro.
-- **The judge's scenario 10 at Home.** On a fresh install the selected place
-  is Home, where "It was hard" isn't among the 40 phrases Jev scores for "How
-  was physio?"; at Clinic it shows (#150). The README (#119) would have the
-  judge choose Clinic.
 - **No Personal Voice on the video iPhone: VOICE-2 and COMPAT-3.** iOS takes
   hours to make one, so only Turn's note and the system voice were seen.
 
@@ -134,7 +124,7 @@ Every section below names its requirements in the order
 | LISTEN-1 | Once the model is installed, in Airplane Mode, the caption still follows a partner's speech.                               | #128 in Airplane Mode: the caption followed, though two of three lines lost their first words (#149); the model was already installed, so its first download wasn't seen                                                                                                                                                        | Pass   | 606d822, iPhone |
 | LISTEN-2 | Say two sentences with a pause; two lines are ranked.                                                                      | `app/test/live-session.test.ts`, "ends one line after 500 ms of silence and resets the window for new words and voice"; `app/test/live-session.test.ts`, "Done ends and ranks an open line once using the engine stamp and ranking time"; #128: two sentences with a pause made two ranked lines, and Done ended a line at once | Pass   | 606d822, iPhone |
 | LISTEN-3 | Scenario 12.                                                                                                               | `app/test/listen-audio-session.test.ts`, "while capturing, beforeSpeak() calls the engine endLine() before muteForSpeech(true)", covers the gate; #136: "It was hard" tapped in Listen mode never showed in the caption                                                                                                         | Pass   | 606d822, iPhone |
-| LISTEN-4 | Scenario 10.                                                                                                               | `app/maestro/listen.yaml` sends a typed line, but the unsigned Simulator build can't use the Keychain (`-34018`), never reaches the relay, and ranks every line on the phone, so "It was hard" can't answer "How was physio?"; `fix/50-simulator-keychain` signs it                                                             | Fail   | run 36323630432 |
+| LISTEN-4 | Scenario 10.                                                                                                               | `app/maestro/judge.yaml`: at Clinic, "How was physio?" typed into the field brings "It was hard" into the row, and the flow taps it                                                                                                                                                                                             | Pass   | run 36533129569 |
 | LISTEN-5 | The line "Did Anna call?" and the phrase "Anna is my sister" reach the relay as `[PERSON 1]` in both, with "Anna" nowhere. | `app/test/tags.test.ts`, "uses the same person tag in the partner line and a candidate"; `app/test/relay-ranker.test.ts`, "tags names across fields and sends the 40 candidates in order"; #147 on the iPhone: Check name tags passes, and the request for "Did Anna call?" held "Did [PERSON 1] call?"                         | Pass   | d5386ca, iPhone |
 | LISTEN-6 | A typed line of 400 characters reaches the relay as its last 300.                                                          | `app/test/tags.test.ts`, "tags before keeping the line's last 300 code points"                                                                                                                                                                                                                                                  | Pass   | c0a1180         |
 | LISTEN-7 | Switch apps; the iOS microphone indicator goes out.                                                                        | `app/test/listen-lifecycle.test.ts`, "only background pauses; active leaves it paused and cleanup removes the listener", covers the pause; #136: switching apps put the indicator out, and Turn came back Paused                                                                                                                | Pass   | 606d822, iPhone |
@@ -258,12 +248,12 @@ Every section below names its requirements in the order
 
 ### Compatibility
 
-| ID       | Check                               | Where                                                                                                                                                         | Result      | Build           |
-| -------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | --------------- |
-| COMPAT-1 | Build and run on iOS 26 and iOS 27. | #22, "installed Apple iOS 26.0 Simulator runtime (23A343) in Xcode 27.0 … Build Succeeded"; [run 36311733499]                                                 | Pass        | run 36311733499 |
-| COMPAT-2 | Scenario 10.                        | `app/maestro/listen.yaml` covers the field and the row, but the row is ranked on the phone until `fix/50-simulator-keychain` lands, and the paywall until #53 | Fail        | run 36323630432 |
-| COMPAT-3 | VOICE-2 on both kinds.              | VOICE-2's iPhone half, in #136: the video iPhone has no Personal Voice                                                                                        | Not checked | 606d822, iPhone |
-| COMPAT-4 | The build's install date.           | installed on September 29, 2026, as #92's build of 606d822; #80's profile runs from September 23 to 30                                                        | Pass        | 606d822, iPhone |
+| ID       | Check                               | Where                                                                                                         | Result      | Build           |
+| -------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------- | --------------- |
+| COMPAT-1 | Build and run on iOS 26 and iOS 27. | #22, "installed Apple iOS 26.0 Simulator runtime (23A343) in Xcode 27.0 … Build Succeeded"; [run 36311733499] | Pass        | run 36311733499 |
+| COMPAT-2 | Scenario 10.                        | `app/maestro/judge.yaml` covers the field, the row, and speech at Clinic; the paywall waits on #53            | Fail        | run 36533129569 |
+| COMPAT-3 | VOICE-2 on both kinds.              | VOICE-2's iPhone half, in #136: the video iPhone has no Personal Voice                                        | Not checked | 606d822, iPhone |
+| COMPAT-4 | The build's install date.           | installed on September 29, 2026, as #92's build of 606d822; #80's profile runs from September 23 to 30        | Pass        | 606d822, iPhone |
 
 ### Measurement requirements
 
