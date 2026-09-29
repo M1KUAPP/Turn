@@ -50,13 +50,35 @@ name: Judge scenario
     element: '.*How was physio\?.*'
 - assertVisible: '.*How was physio\?.*'
 # The grid under the category tabs can hold "It was hard" too, so the row's
-# copy is the one above the All tab. Jev answers in well under a second, and
-# at AX5 the row starts below the screen, so scrolling is the wait.
-- scrollUntilVisible:
-    element:
-      text: It was hard
-      above: All
-    timeout: 60000
+# copy is the one above the All tab. Jev answers in well under a second, so
+# scrolling is the wait.
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: It was hard
+            above: All
+          timeout: 60000
+# At AX sizes the row starts below the screen, and a fast swipe flings it past
+# in one go, so scroll slowly and center it clear of Home's fixed bars.
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: It was hard
+            above: All
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
 - takeScreenshot: judge-row
 - tapOn:
     text: It was hard
