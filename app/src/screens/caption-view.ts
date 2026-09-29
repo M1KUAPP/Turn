@@ -95,3 +95,39 @@ export function captionView(input: CaptionInput): CaptionView {
     accessibilityLabel: [label, active ? note : null, words].filter(Boolean).join(', ')
   }
 }
+
+export type WordSegment = { text: string; fade: boolean; highlight: boolean }
+
+const lastWordStart = (text: string) => /\S+\s*$/.exec(text)?.index ?? text.length
+
+/** Where the words that came with `text` begin: after the text it extends, or else at its last word, since a recognizer
+ * can rewrite what it heard. */
+export function freshStart(text: string, before: string): number {
+  return before && text.startsWith(before) ? before.length : lastWordStart(text)
+}
+
+/** Words arriving (plan 0044's motion): one caption line's text split into the part already shown, the new words that
+ * fade in, and the newest word, which sits on the highlight. `lineStart` is where the line begins in `text`, for the
+ * last line of a long caption. */
+export function wordSegments(text: string, fresh: number, lineStart = 0): WordSegment[] {
+  const newest = lastWordStart(text)
+  const cuts =
+    fresh <= newest
+      ? [
+          { from: 0, to: fresh, fade: false, highlight: false },
+          { from: fresh, to: newest, fade: true, highlight: false },
+          { from: newest, to: text.length, fade: true, highlight: true }
+        ]
+      : [
+          { from: 0, to: newest, fade: false, highlight: false },
+          { from: newest, to: fresh, fade: false, highlight: true },
+          { from: fresh, to: text.length, fade: true, highlight: true }
+        ]
+  return cuts
+    .map(({ from, to, fade, highlight }) => ({
+      text: text.slice(Math.max(from, lineStart), Math.max(to, lineStart)),
+      fade,
+      highlight
+    }))
+    .filter((segment) => segment.text.length > 0)
+}
