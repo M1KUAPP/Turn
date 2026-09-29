@@ -51,11 +51,13 @@ name: Judge scenario
 - assertVisible: '.*How was physio\?.*'
 # Jev answers in well under a second, so scrolling is the wait. At the default
 # size the row sits just above the category tabs, and the grid under them could
-# hold "It was hard" too, so the row's copy is the one above the All tab.
+# hold "It was hard" too, so the row's copy is the one above the All tab. The
+# size gates read Up, not Repeat: the tap turns Repeat into Stop, which would
+# let the second gate pass too.
 - runFlow:
     when:
       visible:
-        text: Repeat
+        text: Up
         rightOf: Type
     commands:
       - scrollUntilVisible:
@@ -75,7 +77,7 @@ name: Judge scenario
 - runFlow:
     when:
       notVisible:
-        text: Repeat
+        text: Up
         rightOf: Type
     commands:
       - scrollUntilVisible:
