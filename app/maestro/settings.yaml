@@ -20,12 +20,15 @@ name: Settings
     timeout: 10000
 - waitForAnimationToEnd
 - takeScreenshot: settings-top
+# At AX5 Settings runs several screens long, so both scrolls get a minute.
 - scrollUntilVisible:
     element: Erase all data
+    timeout: 60000
 # The relay's status sits in Listen mode's group, near the top (frame 33).
 - scrollUntilVisible:
     element: 'Listen service: .*'
     direction: UP
+    timeout: 60000
 # The build reaches the relay: a Keychain or network failure leaves it "can't be reached".
 - extendedWaitUntil:
     visible: 'Listen service: working'
