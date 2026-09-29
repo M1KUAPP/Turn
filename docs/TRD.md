@@ -474,7 +474,12 @@ category names, and the place's name together (LISTEN-5):
 
 - **The tagger.** `NLTagger` with the `nameType` scheme and the options
   `joinNames`, `omitPunctuation`, and `omitWhitespace`, as in Apple's recipe
-  ([iPhone build notes][ios-names]).
+  ([iPhone build notes][ios-names]). Each text is tagged as English, since
+  guessing the language of a text as short as "Cupertino" can pick another
+  one. The tagger finds no names without Apple's English name model, which
+  the phone may not have yet, so the first tagging asks for it with
+  `NLTagger.requestAssets`, and until it's there no line reaches the relay:
+  the phone ranks it (#147).
 - **The gazetteer.** The tagger missed every name in lowercased text in the
   notes' test until a gazetteer listed them, and transcripts are noisier
   than typed text. So the module builds an `NLGazetteer` from the names the
