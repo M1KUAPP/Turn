@@ -15,7 +15,7 @@ import {
   ListGroup,
   ListRow,
   ScreenTitle,
-  SymbolTile,
+  TileLead,
   tileTones,
   useListMetrics
 } from './ListGroup'
@@ -29,7 +29,7 @@ export default function CategoriesScreen() {
   const router = useRouter()
   const navigation = useNavigation()
   const { ready, boldText } = useTurn()
-  const { tile, mark } = useListMetrics()
+  const { tile, mark, stacked } = useListMetrics()
   const bank = ready?.bank
   const [categories, setCategories] = useState<Category[]>([])
   const [counts, setCounts] = useState<Record<string, number>>({})
@@ -218,15 +218,16 @@ export default function CategoriesScreen() {
             {({ pressed }) => (
               <>
                 <PressFill pressed={pressed} color={colors['surface-pressed']} />
-                <SymbolTile symbol={categorySymbol('strip')} tone={tileTones.neutral} />
-                <View style={{ flex: 1, gap: 2 }}>
-                  <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                    Conversation strip
-                  </TurnText>
-                  <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                    Phrases always visible above the grid
-                  </TurnText>
-                </View>
+                <TileLead symbol={categorySymbol('strip')} tone={tileTones.neutral}>
+                  <View style={{ gap: 2 }}>
+                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                      Conversation strip
+                    </TurnText>
+                    <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                      Phrases always visible above the grid
+                    </TurnText>
+                  </View>
+                </TileLead>
                 <SymbolView
                   name="chevron.right"
                   size={mark}
@@ -292,10 +293,11 @@ export default function CategoriesScreen() {
                     {({ pressed }) => (
                       <>
                         <PressFill pressed={pressed} color={colors['surface-pressed']} />
-                        <SymbolTile symbol={categorySymbol(category.id)} tone={{ fill: hue.fill, ink: hue.edge }} />
-                        <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
-                          {category.name}
-                        </TurnText>
+                        <TileLead symbol={categorySymbol(category.id)} tone={{ fill: hue.fill, ink: hue.edge }}>
+                          <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+                            {category.name}
+                          </TurnText>
+                        </TileLead>
                         <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                           {count}
                         </TurnText>
@@ -317,7 +319,7 @@ export default function CategoriesScreen() {
                         flexDirection: 'row',
                         flexWrap: 'wrap',
                         gap: 10,
-                        paddingLeft: 16 + tile + 12,
+                        paddingLeft: stacked ? 16 : 16 + tile + 12,
                         paddingRight: 16,
                         paddingBottom: 12
                       }}
