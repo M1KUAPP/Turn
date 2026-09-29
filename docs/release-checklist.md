@@ -1,12 +1,11 @@
 # Release checklist
 
-This is RELEASE-1's checklist: one row for every Must requirement in [the product requirements](/docs/PRD.md), with the check it names, where that check runs, its result, and the build it ran on. At the team lead's direction it stands in for RELEASE-1's sign-off (#65), and every failure is listed. It covers `main` at `c0a1180`, its test suites, and the CI runs that build and drive the app in the Simulator; the video iPhone's rows ran on `606d822`'s Debug build on September 29, and those that #147 to #153 fixed on `d5386ca`'s.
+This is RELEASE-1's checklist: one row for every Must requirement in [the product requirements](/docs/PRD.md), with the check it names, where that check runs, its result, and the build it ran on. At the team lead's direction it stands in for RELEASE-1's sign-off (#65), and every failure is listed. It covers `main` at `c0a1180`, its test suites, and the CI runs that build and drive the app in the Simulator; the video iPhone's rows ran on `606d822`'s Debug build on September 29, and those that #147 to #153 fixed on `d5386ca`'s; the paywall's ran on the Simulator preview, built from `9aec571`, and the README's on `a2573b7`.
 
 Contents:
 
 1.  [Summary](#summary)
 1.  [Failures](#failures)
-1.  [Waiting](#waiting)
 1.  [Checks by area](#checks-by-area)
     1.  [The speaking grid](#the-speaking-grid)
     1.  [The phrase bank](#the-phrase-bank)
@@ -33,28 +32,22 @@ Contents:
 
 ## Summary
 
-| Result          | Rows |
-| --------------- | ---- |
-| Pass            | 90   |
-| Fail            | 9    |
-| Not checked     | 3    |
-| Waiting on #<n> | 3    |
-| RELEASE-4       | 7    |
-| RELEASE-5       | 3    |
+| Result      | Rows |
+| ----------- | ---- |
+| Pass        | 97   |
+| Fail        | 5    |
+| Not checked | 3    |
+| RELEASE-4   | 7    |
+| RELEASE-5   | 3    |
 
-The 115 rows are the PRD's 115 Musts, the five release criteria among them. The Simulator rows come from [run 36323630432], all 42 flows passing on `c0a1180`. The video iPhone's come from #92, #128, #136, #61, #62, and #55, on an iPhone 15 Pro Max with iOS 27.0, and those that #147 to #153 fixed from a Debug build of `d5386ca`; PERF-1, PERF-3, and PERF-4 ran on production JavaScript from Metro, as the TRD asks, and PERF-2 on the Debug build's. RELEASE-1 waits on #119's two rows; `RELEASE-4` and `RELEASE-5` rows run before the Devpost deadline and through judging, outside RELEASE-1.
+The 115 rows are the PRD's 115 Musts, the five release criteria among them. The Simulator rows come from [run 36323630432], all 42 flows passing on `c0a1180`. The video iPhone's come from #92, #128, #136, #61, #62, and #55, on an iPhone 15 Pro Max with iOS 27.0, and those that #147 to #153 fixed from a Debug build of `d5386ca`; PERF-1, PERF-3, and PERF-4 ran on production JavaScript from Metro, as the TRD asks, and PERF-2 on the Debug build's. The paywall's rows come from #53, on the published Simulator preview on a fresh iPhone 16 Simulator. EVAL-6 and RELEASE-2 read the README at `a2573b7`, where every test suite and typecheck also pass. `RELEASE-4` and `RELEASE-5` rows run before the Devpost deadline and through judging, outside RELEASE-1.
 
 ## Failures
 
-- **The paywall: PAY-1, PAY-2, STATE-4, and COMPAT-2.** The relay counts the free lines and answers the 21st with `402`. #133's Simulator flows pass the purchase rows, PAY-4 to PAY-6, SET-1, and METRIC-4; these four wait on #53.
 - **Teammate reads that didn't happen: CONTENT-1, CONTENT-3, and CONTENT-4.** Their checks ask a teammate to read the starter phrases, to compare both versions of the consent texts with the requirements, and to compare the privacy notice with the TRD's data inventory. #75 and #76 closed as not planned. Tests check what a script can: `eval/test/starter-bank.test.ts`, `app/test/consent-strings.test.ts`, and `app/test/privacy-notice.test.ts`.
 - **Checked nowhere: STATE-2.** No test or flow blocks the relay's address for scenario 7; unit tests cover the degraded note.
 - **One slow cold launch: PERF-3 and BANK-7.** One of ten launches at 2,156 phrases took 2.11 s, loading its JavaScript from Metro.
 - **No Personal Voice on the video iPhone: VOICE-2 and COMPAT-3.** iOS takes hours to make one, so only Turn's note and the system voice were seen.
-
-## Waiting
-
-- **#119, the README:** EVAL-6 and RELEASE-2, and so RELEASE-1.
 
 ## Checks by area
 
@@ -144,26 +137,26 @@ Every section below names its requirements in the order [the product requirement
 
 ### Offline and degraded states
 
-| ID      | Check                                         | Where                                                                                                                                                                                                                                           | Result      | Build           |
-| ------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | --------------- |
-| STATE-1 | Scenario 6.                                   | `shared/test/shortlist.test.ts`, "fills six slots, the place's phrases first, and never shows a big button (STATE-1)", covers the ranking; #149 on the iPhone in Airplane Mode: "Are you tired" offered "I'm tired" with "Ranked on this phone" | Pass        | d5386ca, iPhone |
-| STATE-2 | Scenario 7, with the relay's address blocked. | `app/test/live-session.test.ts`, "shows the degraded notice after two relay failures"; scenario 7 with the relay's address blocked is in no flow or device issue                                                                                | Not checked | —               |
-| STATE-3 | Turn Jev off in the relay and send a line.    | `worker/test/lines.test.ts`, "answers 503 jev_off, reaching neither the object nor Jev, while the switch is off (STATE-3)"; `app/test/typed-remote.test.ts`, "two failures degrade, a success clears, and Jev off degrades immediately"         | Pass        | c0a1180         |
-| STATE-4 | Scenario 8.                                   | `worker/test/count.test.ts`, "count down with each answered line, and the 21st gets 402 paywall (STATE-4)"; #53                                                                                                                                 | Fail        | —               |
+| ID      | Check                                         | Where                                                                                                                                                                                                                                            | Result      | Build              |
+| ------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ------------------ |
+| STATE-1 | Scenario 6.                                   | `shared/test/shortlist.test.ts`, "fills six slots, the place's phrases first, and never shows a big button (STATE-1)", covers the ranking; #149 on the iPhone in Airplane Mode: "Are you tired" offered "I'm tired" with "Ranked on this phone"  | Pass        | d5386ca, iPhone    |
+| STATE-2 | Scenario 7, with the relay's address blocked. | `app/test/live-session.test.ts`, "shows the degraded notice after two relay failures"; scenario 7 with the relay's address blocked is in no flow or device issue                                                                                 | Not checked | —                  |
+| STATE-3 | Turn Jev off in the relay and send a line.    | `worker/test/lines.test.ts`, "answers 503 jev_off, reaching neither the object nor Jev, while the switch is off (STATE-3)"; `app/test/typed-remote.test.ts`, "two failures degrade, a success clears, and Jev off degrades immediately"          | Pass        | c0a1180            |
+| STATE-4 | Scenario 8.                                   | `worker/test/count.test.ts`, "count down with each answered line, and the 21st gets 402 paywall (STATE-4)"; #53 on the Simulator preview: with a fresh Keychain ID at Clinic, 20 typed lines were ranked and the 21st opened the paywall instead | Pass        | 9aec571, Simulator |
 
 ### The paywall and purchases
 
-| ID    | Check                                                                            | Where                                                                                                                                     | Result    | Build   |
-| ----- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
-| PAY-1 | After 20 answered lines, the 21st opens the paywall.                             | `worker/test/count.test.ts`, "count down with each answered line, and the 21st gets 402 paywall (STATE-4)"; #53; #92                      | Fail      | —       |
-| PAY-2 | Close the paywall, then speak a phrase.                                          | #53                                                                                                                                       | Fail      | —       |
-| PAY-3 | The dashboard, and the paywall's price.                                          | #15, "rc offerings verify shows the product, USD 24.99 price, entitlement, and package linked"; #26                                       | Pass      | —       |
-| PAY-4 | Scenario 8.                                                                      | `worker/test/entitlement.test.ts`, "let a line with refresh skip a fresh no once a minute (PAY-4)"; `paywall-buy.yaml`, 36476430301       | Pass      | e2f3b8f |
-| PAY-5 | Choose each failure outcome Test Store offers.                                   | `app/maestro/paywall-failed.yaml`: Test Store's failed purchase leaves Listen mode locked, with its note, in run 36476430301              | Pass      | e2f3b8f |
-| PAY-6 | Scenario 9.                                                                      | `app/maestro/paywall-buy.yaml`: buy with Test Store, then Restore Purchases says "Listen mode is unlocked.", in run 36476430301           | Pass      | e2f3b8f |
-| PAY-7 | A request with a fresh ID's 21st line and no purchase gets the paywall response. | `worker/test/entitlement.test.ts`, "answer a fresh ID's 21st line 402, then Jev's answer for a line with refresh after a purchase"        | Pass      | c0a1180 |
-| PAY-8 | The product's type in the dashboard on September 22.                             | #15, "a headless Test Store purchase for the setup-only user turn-setup-check-20260923 granted the listen entitlement with no expiration" | Pass      | —       |
-| PAY-9 | On September 25, buy in the Simulator build, or run 25 lines in it.              | `worker/wrangler.jsonc`, `SIMULATOR_UNLIMITED` is `"false"`; #59 and #53 decide how judges get past 20 lines                              | RELEASE-5 | —       |
+| ID    | Check                                                                            | Where                                                                                                                                                                                                                                                                                                                      | Result    | Build              |
+| ----- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------ |
+| PAY-1 | After 20 answered lines, the 21st opens the paywall.                             | `worker/test/count.test.ts`, "count down with each answered line, and the 21st gets 402 paywall (STATE-4)"; #53 on the Simulator preview: 20 typed "How was physio?" lines offered "It was hard", and the 21st opened "Keep Listen mode on."                                                                               | Pass      | 9aec571, Simulator |
+| PAY-2 | Close the paywall, then speak a phrase.                                          | #53 on the Simulator preview: with the paywall closed, a strip phrase spoke, and the grid stayed usable with Listen mode locked                                                                                                                                                                                            | Pass      | 9aec571, Simulator |
+| PAY-3 | The dashboard, and the paywall's price.                                          | #15, "rc offerings verify shows the product, USD 24.99 price, entitlement, and package linked"; #26                                                                                                                                                                                                                        | Pass      | —                  |
+| PAY-4 | Scenario 8.                                                                      | `worker/test/entitlement.test.ts`, "let a line with refresh skip a fresh no once a minute (PAY-4)"; `paywall-buy.yaml`, 36476430301; #53 on the Simulator preview: after a Test Store purchase on the exhausted ID, Listen mode unlocked without a restart, and the next line offered "It was hard" instead of the paywall | Pass      | 9aec571, Simulator |
+| PAY-5 | Choose each failure outcome Test Store offers.                                   | `app/maestro/paywall-failed.yaml`: Test Store's failed purchase leaves Listen mode locked, with its note, in run 36476430301                                                                                                                                                                                               | Pass      | e2f3b8f            |
+| PAY-6 | Scenario 9.                                                                      | `app/maestro/paywall-buy.yaml`: buy with Test Store, then Restore Purchases says "Listen mode is unlocked.", in run 36476430301                                                                                                                                                                                            | Pass      | e2f3b8f            |
+| PAY-7 | A request with a fresh ID's 21st line and no purchase gets the paywall response. | `worker/test/entitlement.test.ts`, "answer a fresh ID's 21st line 402, then Jev's answer for a line with refresh after a purchase"                                                                                                                                                                                         | Pass      | c0a1180            |
+| PAY-8 | The product's type in the dashboard on September 22.                             | #15, "a headless Test Store purchase for the setup-only user turn-setup-check-20260923 granted the listen entitlement with no expiration"                                                                                                                                                                                  | Pass      | —                  |
+| PAY-9 | On September 25, buy in the Simulator build, or run 25 lines in it.              | `worker/wrangler.jsonc`, `SIMULATOR_UNLIMITED` is `"false"`; #59 and #53 decide how judges get past 20 lines                                                                                                                                                                                                               | RELEASE-5 | —                  |
 
 ### Settings
 
@@ -183,14 +176,14 @@ Every section below names its requirements in the order [the product requirement
 
 ### Evaluation requirements
 
-| ID     | Check                                                        | Where                                                                                                                                                                                                                                                                                | Result          | Build   |
-| ------ | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ------- |
-| EVAL-1 | A script counts them and prints the labelers' agreement.     | `eval/test/count.test.ts`, "prints each EVAL-1 quota with its count, and exits 1 when one falls short"; #77, "bun run eval:count now meets every EVAL-1 quota (16 with none, 37 yes-or-no, 30 on pain or health, 10 on consent, and 49 that share no word) and exits 0"              | Pass            | c0a1180 |
-| EVAL-2 | The history shows the settings committed before the results. | `eval/test/frozen.test.ts`, "refuses to score any of the 80 lines with uncommitted changes, before any ranker runs (EVAL-2)" and "keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)"; #40, where nothing of Jev's changed after the results                   | Pass            | c0a1180 |
-| EVAL-3 | Run it and read the table.                                   | `eval/test/report.test.ts`, "scores all seven rankers on the same lines, in every group and step (EVAL-3, EVAL-8)"; `eval/results.md`                                                                                                                                                | Pass            | c0a1180 |
-| EVAL-4 | The table shows the interval.                                | `eval/test/report.test.ts`, "gives Jev minus embeddings in top 6 with its paired interval, matching the table's counts (EVAL-4)"; `eval/results.md`; Jev leads, so the re-ranking step doesn't run                                                                                   | Pass            | c0a1180 |
-| EVAL-5 | The script lists every big button on those lines.            | `eval/test/report.test.ts`, "lists every big button on a yes-or-no, pain, or consent line, and whether it was right (EVAL-5)"; #40, "The report lists one: 'Yes, go ahead' on line-05 … in 1 of Jev's 4 answers, and it's acceptable. None is wrong, so the relay's POLICY stays {}" | Pass            | c0a1180 |
-| EVAL-6 | Read the README.                                             | the draft README in #119 names the date, the model pin, and the commit; it isn't merged                                                                                                                                                                                              | Waiting on #119 | —       |
+| ID     | Check                                                        | Where                                                                                                                                                                                                                                                                                | Result | Build   |
+| ------ | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | ------- |
+| EVAL-1 | A script counts them and prints the labelers' agreement.     | `eval/test/count.test.ts`, "prints each EVAL-1 quota with its count, and exits 1 when one falls short"; #77, "bun run eval:count now meets every EVAL-1 quota (16 with none, 37 yes-or-no, 30 on pain or health, 10 on consent, and 49 that share no word) and exits 0"              | Pass   | c0a1180 |
+| EVAL-2 | The history shows the settings committed before the results. | `eval/test/frozen.test.ts`, "refuses to score any of the 80 lines with uncommitted changes, before any ranker runs (EVAL-2)" and "keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)"; #40, where nothing of Jev's changed after the results                   | Pass   | c0a1180 |
+| EVAL-3 | Run it and read the table.                                   | `eval/test/report.test.ts`, "scores all seven rankers on the same lines, in every group and step (EVAL-3, EVAL-8)"; `eval/results.md`                                                                                                                                                | Pass   | c0a1180 |
+| EVAL-4 | The table shows the interval.                                | `eval/test/report.test.ts`, "gives Jev minus embeddings in top 6 with its paired interval, matching the table's counts (EVAL-4)"; `eval/results.md`; Jev leads, so the re-ranking step doesn't run                                                                                   | Pass   | c0a1180 |
+| EVAL-5 | The script lists every big button on those lines.            | `eval/test/report.test.ts`, "lists every big button on a yes-or-no, pain, or consent line, and whether it was right (EVAL-5)"; #40, "The report lists one: 'Yes, go ahead' on line-05 … in 1 of Jev's 4 answers, and it's acceptable. None is wrong, so the relay's POLICY stays {}" | Pass   | c0a1180 |
+| EVAL-6 | Read the README.                                             | `README.md`, merged in #169: September 23, 2026, the model pinned to version 1.13.0, and commit `8ea25eb`                                                                                                                                                                            | Pass   | a2573b7 |
 
 ### Performance
 
@@ -244,12 +237,12 @@ Every section below names its requirements in the order [the product requirement
 
 ### Compatibility
 
-| ID       | Check                               | Where                                                                                                         | Result      | Build           |
-| -------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------- | --------------- |
-| COMPAT-1 | Build and run on iOS 26 and iOS 27. | #22, "installed Apple iOS 26.0 Simulator runtime (23A343) in Xcode 27.0 … Build Succeeded"; [run 36311733499] | Pass        | run 36311733499 |
-| COMPAT-2 | Scenario 10.                        | `app/maestro/judge.yaml` covers the field, the row, and speech at Clinic; the paywall waits on #53            | Fail        | run 36533129569 |
-| COMPAT-3 | VOICE-2 on both kinds.              | VOICE-2's iPhone half, in #136: the video iPhone has no Personal Voice                                        | Not checked | 606d822, iPhone |
-| COMPAT-4 | The build's install date.           | installed on September 29, 2026, as #92's build of 606d822; #80's profile runs from September 23 to 30        | Pass        | 606d822, iPhone |
+| ID       | Check                               | Where                                                                                                                                                                        | Result      | Build                               |
+| -------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------- |
+| COMPAT-1 | Build and run on iOS 26 and iOS 27. | #22, "installed Apple iOS 26.0 Simulator runtime (23A343) in Xcode 27.0 … Build Succeeded"; [run 36311733499]                                                                | Pass        | run 36311733499                     |
+| COMPAT-2 | Scenario 10.                        | `app/maestro/judge.yaml` covers the field, the row, and speech at Clinic; #53 opened, closed, and bought through the paywall in the Simulator preview on an iOS 27 Simulator | Pass        | run 36533129569; 9aec571, Simulator |
+| COMPAT-3 | VOICE-2 on both kinds.              | VOICE-2's iPhone half, in #136: the video iPhone has no Personal Voice                                                                                                       | Not checked | 606d822, iPhone                     |
+| COMPAT-4 | The build's install date.           | installed on September 29, 2026, as #92's build of 606d822; #80's profile runs from September 23 to 30                                                                       | Pass        | 606d822, iPhone                     |
 
 ### Measurement requirements
 
@@ -274,13 +267,13 @@ Every section below names its requirements in the order [the product requirement
 
 These five are the release criteria themselves, and they count among the 115 Musts.
 
-| ID        | Check                                      | Where                                                                                                                                                          | Result          | Build           |
-| --------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------- |
-| RELEASE-1 | The checklist, signed off.                 | this file; #92, #128, #136, #61, #62, #55 are in; #119's two rows remain                                                                                       | Waiting on #119 | —               |
-| RELEASE-2 | The README's table and the relay's values. | the draft README in #119: its table's pin (1.13.0) and thresholds (0.6, 0.85, 0.15) match `worker/wrangler.jsonc` and both evaluation reports; it isn't merged | Waiting on #119 | —               |
-| RELEASE-3 | The saved results.                         | #62's results with #147 and #148's: PRIV-1, PRIV-2, and PRIV-3 pass                                                                                            | Pass            | d5386ca, iPhone |
-| RELEASE-4 | Devpost, logged in.                        | #66, #67, #68, #69, #119                                                                                                                                       | RELEASE-4       | —               |
-| RELEASE-5 | The daily log of checks.                   | #70                                                                                                                                                            | RELEASE-5       | —               |
+| ID        | Check                                      | Where                                                                                                                                                                                                                                                                                                                                            | Result    | Build           |
+| --------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --------------- |
+| RELEASE-1 | The checklist, signed off.                 | this file, with every row's result and each failure listed, stands in for the sign-off at the team lead's direction (#65); five rows fail and three aren't checked                                                                                                                                                                               | Pass      | —               |
+| RELEASE-2 | The README's table and the relay's values. | `README.md` gives the pin, 1.13.0, and links `eval/results.md`, which ran with the starting policy's floor of 0.6, big button above 0.85, and margin of 0.15; `worker/wrangler.jsonc` serves `jev-1.13.0` with `POLICY` `{}`, so the relay uses `startingPolicy` in `shared/src/row.ts`, the same three values; none has changed since `8ea25eb` | Pass      | a2573b7         |
+| RELEASE-3 | The saved results.                         | #62's results with #147 and #148's: PRIV-1, PRIV-2, and PRIV-3 pass                                                                                                                                                                                                                                                                              | Pass      | d5386ca, iPhone |
+| RELEASE-4 | Devpost, logged in.                        | #66, #67, #68, #69, #119                                                                                                                                                                                                                                                                                                                         | RELEASE-4 | —               |
+| RELEASE-5 | The daily log of checks.                   | #70                                                                                                                                                                                                                                                                                                                                              | RELEASE-5 | —               |
 
 ## See also
 
