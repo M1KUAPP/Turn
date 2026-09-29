@@ -33,9 +33,9 @@ describe('iOS app configuration', () => {
     expect(config.ios?.infoPlist).not.toHaveProperty('NSLocationWhenInUseUsageDescription')
     expect(config.plugins).toContainEqual([
       'expo-splash-screen',
-      { backgroundColor: '#F2F2F7', dark: { backgroundColor: '#000000' } }
+      { backgroundColor: '#F4EFE7', dark: { backgroundColor: '#15120F' } }
     ])
-    expect(config.plugins).toContainEqual(['./plugins/withBoardSplash', { backgroundColor: '#F2F2F7' }])
+    expect(config.plugins).toContainEqual(['./plugins/withBoardSplash', { backgroundColor: '#F4EFE7' }])
   })
 
   test('passes public relay and Test Store configuration to the app', () => {
