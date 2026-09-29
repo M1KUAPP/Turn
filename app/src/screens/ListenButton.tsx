@@ -50,8 +50,11 @@ function Capsule({
       style={{
         minHeight: height,
         minWidth: 44,
+        // At large sizes the free lines' pill wraps under the word rather than breaking it.
         flexDirection: 'row',
+        flexWrap: 'wrap',
         alignItems: 'center',
+        alignContent: 'center',
         justifyContent: 'center',
         gap: 6,
         paddingHorizontal: 13.5,
@@ -175,7 +178,9 @@ export default function ListenButton({
                 StyleSheet.absoluteFill,
                 {
                   flexDirection: 'row',
+                  flexWrap: 'wrap',
                   alignItems: 'center',
+                  alignContent: 'center',
                   justifyContent: 'center',
                   gap: 6,
                   paddingHorizontal: 13.5,
