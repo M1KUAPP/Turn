@@ -5,7 +5,7 @@ import { formatSeconds } from '../stats/store'
 import { useTurn } from '../turn-context'
 import Button from './Button'
 import type { SymbolName } from './category-style'
-import { ScreenTitle, SymbolTile, tileTones, type TileTone } from './ListGroup'
+import { ScreenTitle, SymbolTile, tileTones, useScreenTitle, type TileTone } from './ListGroup'
 import TurnText from './TurnText'
 
 type Card = { label: string; value: string; symbol: SymbolName; tone: TileTone }
@@ -55,6 +55,7 @@ function StatsContent({
 }) {
   const snapshot = useSyncExternalStore(stats.subscribe, stats.getSnapshot)
   const oneColumn = useWindowDimensions().fontScale >= 1.786
+  const { onTitleLayout, scrollProps } = useScreenTitle('Stats on this phone')
 
   const cards: Card[] = [
     { label: 'Partner lines', value: String(snapshot.lines), symbol: 'ear', tone: tileTones.listen },
@@ -83,11 +84,12 @@ function StatsContent({
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
       style={{ flex: 1, backgroundColor: colors.board }}
       contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 12 }}
     >
       <View style={{ marginBottom: 4 }}>
-        <ScreenTitle title="Stats on this phone" boldText={boldText} />
+        <ScreenTitle title="Stats on this phone" boldText={boldText} onLayout={onTitleLayout} />
       </View>
       {rows.map((row) => (
         <View key={row[0].label} style={{ flexDirection: 'row', gap: 12 }}>

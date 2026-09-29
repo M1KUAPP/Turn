@@ -7,7 +7,7 @@ import { categoryColors, colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
 import Button from './Button'
 import { placeSymbol } from './category-style'
-import { GroupNote, ListGroup, ListRow, ScreenTitle } from './ListGroup'
+import { GroupNote, ListGroup, ListRow, ScreenTitle, useScreenTitle } from './ListGroup'
 import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
 import TurnText from './TurnText'
 
@@ -26,6 +26,7 @@ export default function PlacesScreen() {
   const [focused, setFocused] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Places')
   const atLimit = places.length >= 12
 
   useEffect(() => {
@@ -124,11 +125,12 @@ export default function PlacesScreen() {
     <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
+        {...scrollProps}
         style={{ flex: 1, backgroundColor: colors.board }}
         contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40 }}
       >
         <View style={{ marginBottom: 16 }}>
-          <ScreenTitle title="Places" boldText={boldText} />
+          <ScreenTitle title="Places" boldText={boldText} onLayout={onTitleLayout} />
         </View>
         {places.length === 0 ? (
           <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, marginHorizontal: 16 }}>
