@@ -511,8 +511,8 @@ phrases, in this order, without duplicates (ROW-2, SPEAK-7):
     [shortlist notes][sl-words]).
 3.  Up to 8 of the user's most-tapped phrases of the last 30 days.
 4.  Up to 8 of the place's phrases, most-tapped first.
-5.  The rest by taps over the last 30 days, then by the grid's order, until
-    there are 40.
+5.  The rest by taps over the last 30 days, then the place's phrases first,
+    then by the grid's order, until there are 40.
 
 Within a step, the grid's order breaks ties.
 

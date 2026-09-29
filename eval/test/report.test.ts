@@ -95,10 +95,10 @@ test("scores the place ranker's ranking and row on all lines", () => {
   expect(cells(section('### Ranking on all lines'), 'place')).toEqual([
     '0 of 6, 0% (0% to 39%)',
     '1 of 6, 17% (3% to 56%)',
-    // (1/9 + 0 + 1/5 + 1/9 + 0 + 1/10) / 6
-    '0.09'
+    // (1/11 + 0 + 1/5 + 1/10 + 1/19 + 1/22) / 6
+    '0.08'
   ])
-  expect(section('### Ranking on all lines')).toContain("The shortlist's recall at 40: 4 of 6, 67% (30% to 90%).")
+  expect(section('### Ranking on all lines')).toContain("The shortlist's recall at 40: 5 of 6, 83% (44% to 97%).")
   expect(cells(section('### The row on all lines'), 'place')).toEqual([
     '0',
     '0',
@@ -219,7 +219,7 @@ test('says so in a whole sentence when a group has no lines', async () => {
 
 test("says how the app picks each shortlist, and what that leaves of the line in the place ranker's order", () => {
   expect(report).toMatch(prose('up to 24 phrases that share a word with the line'))
-  expect(report).toMatch(prose("the place's first eight phrases in the bank's order"))
+  expect(report).toMatch(prose("the place's phrases in the bank's order, then the rest in the bank's order"))
   expect(report).toMatch(prose("so the place ranker's top 1 and top 6 never depend on the line"))
 })
 
@@ -403,24 +403,25 @@ test("draws Jev's reliability diagram beside the report, its blocks as its text,
     "<title>Reliability of Jev's top phrase</title>"
   )
   // Every line shares a word with some phrase, which the stand-in scores 0.9, so every top score is 0.9: right on
-  // fixture-1, 3, and 6, and wrong on the other five. Eight lines drawn at 0.9 as if calibrated put the fit's 5th and
-  // 95th percentiles at 6 and 8 of 8, so 3 of 8 lies outside the band at its one score.
-  expect(cells(calibration, '0.9')).toEqual(['8', '3', '0.38', '1 of 1 score'])
-  expect(calibration).toMatch(prose('on all 8 lines: 3 of them are.'))
-  // fixture-4 and fixture-5 have no reply, and the 40 miss the replies of 2 of the 6 lines with one besides Yes, No,
-  // and Not sure, as the shortlist's recall of 4 of 6 says.
-  expect(calibration).toMatch(prose('Of the 8, 4 have no acceptable phrase among their 40, so their top phrase is'))
-  // (3 × 0.1² + 5 × 0.9²) / 8; always 3/8 scores 3/8 × 5/8, and so does the fit, which is 3/8 on every line.
-  expect(calibration).toMatch(prose('is 0.510, with a 95% bootstrap interval of'))
+  // fixture-1, 3, 6, and 7, whose "It was hard" shares "was", and wrong on the other four. Eight lines drawn at 0.9 as
+  // if calibrated put the fit's 5th and 95th percentiles at 6 and 8 of 8, so 4 of 8 lies outside the band at its one
+  // score.
+  expect(cells(calibration, '0.9')).toEqual(['8', '4', '0.50', '1 of 1 score'])
+  expect(calibration).toMatch(prose('on all 8 lines: 4 of them are.'))
+  // fixture-4 and fixture-5 have no reply, and the 40 miss the replies of 1 of the 6 lines with one besides Yes, No,
+  // and Not sure, as the shortlist's recall of 5 of 6 says.
+  expect(calibration).toMatch(prose('Of the 8, 3 have no acceptable phrase among their 40, so their top phrase is'))
+  // (4 × 0.1² + 4 × 0.9²) / 8; always 4/8 scores 4/8 × 4/8, and so does the fit, which is 4/8 on every line.
+  expect(calibration).toMatch(prose('is 0.410, with a 95% bootstrap interval of'))
   // The interval of those forecasts, in the file's order, which the resamples draw from.
   const { low, high } = brier(
-    [true, false, true, false, false, true, false, false].map((right) => ({ score: 0.9, right }))
+    [true, false, true, false, false, true, true, false].map((right) => ({ score: 0.9, right }))
   )
   expect(calibration).toMatch(prose(`interval of ${low.toFixed(3)} to ${high.toFixed(3)}; lower is better.`))
-  expect(calibration).toMatch(prose('Always forecasting the share acceptable, 3 of 8, would score 0.234, so the'))
-  // 1 − 0.510 / 0.234375.
-  expect(calibration).toMatch(prose('skill score, 1 minus the Brier score over that, is -1.176: above 0 beats'))
-  expect(calibration).toMatch(prose('a miscalibration of 0.276 and a discrimination of 0.000: before rounding,'))
+  expect(calibration).toMatch(prose('Always forecasting the share acceptable, 4 of 8, would score 0.250, so the'))
+  // 1 − 0.410 / 0.25.
+  expect(calibration).toMatch(prose('skill score, 1 minus the Brier score over that, is -0.640: above 0 beats'))
+  expect(calibration).toMatch(prose('a miscalibration of 0.160 and a discrimination of 0.000: before rounding,'))
   expect(calibration).toMatch(prose("so even a calibrated ranker's fit would lie outside it at about one score in ten"))
 })
 
