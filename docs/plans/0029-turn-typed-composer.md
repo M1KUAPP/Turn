@@ -8,7 +8,14 @@
 
 **Tech stack:** Expo SDK 57, React Native, SQLite, Vitest, iOS Simulator.
 
-**Spec:** [Issue #38](https://github.com/RevenueCat-M1KU/RevenueCat/issues/38), [DESIGN.md](../DESIGN.md#the-composer), [TRD.md](../TRD.md#flows-on-the-phone).
+**Spec:** [Issue #38](https://github.com/RevenueCat-M1KU/RevenueCat/issues/38), [DESIGN.md](/docs/DESIGN.md#the-composer), [TRD.md](/docs/TRD.md#flows-on-the-phone).
+
+Contents:
+
+1.  [Task 1: Store typed phrases and find prefix matches](#task-1-store-typed-phrases-and-find-prefix-matches)
+1.  [Task 2: Speak text that is not saved](#task-2-speak-text-that-is-not-saved)
+1.  [Task 3: Composer and row behavior](#task-3-composer-and-row-behavior)
+1.  [Task 4: Handoff](#task-4-handoff)
 
 ## Task 1: Store typed phrases and find prefix matches
 

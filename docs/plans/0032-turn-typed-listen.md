@@ -8,7 +8,14 @@
 
 **Tech stack:** Expo SDK 57, React Native, SQLite, `@turn/shared`, Vitest, Bun.
 
-**Spec:** [Issue #43](https://github.com/RevenueCat-M1KU/RevenueCat/issues/43), [PRD listening](../PRD.md#listening), [home screen states](../DESIGN.md#the-home-screen-state-by-state).
+**Spec:** [Issue #43](https://github.com/RevenueCat-M1KU/RevenueCat/issues/43), [PRD listening](/docs/PRD.md#listening), [home screen states](/docs/DESIGN.md#the-home-screen-state-by-state).
+
+Contents:
+
+1.  [Task 1: Read ranking inputs from the bank](#task-1-read-ranking-inputs-from-the-bank)
+1.  [Task 2: Apply the phone's ranking to typed lines](#task-2-apply-the-phones-ranking-to-typed-lines)
+1.  [Task 3: Connect the home screen](#task-3-connect-the-home-screen)
+1.  [Task 4: Verify and hand off](#task-4-verify-and-hand-off)
 
 ## Task 1: Read ranking inputs from the bank
 
