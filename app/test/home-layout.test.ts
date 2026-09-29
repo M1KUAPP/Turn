@@ -1,5 +1,15 @@
 import { describe, expect, test } from 'vitest'
-import { homeLayout, pageOffset, replyStat, selectedTab, starterCardShown } from '../src/screens/home-layout'
+import {
+  homeLayout,
+  modelProgressWords,
+  modelSecondsLeft,
+  pageOffset,
+  replyStat,
+  selectedTab,
+  slotTextKind,
+  starterCardShown,
+  toolbarLayout
+} from '../src/screens/home-layout'
 
 describe('home layout', () => {
   test('keeps the row at 258 points with two columns on ordinary phones', () => {
@@ -48,12 +58,12 @@ describe('home layout', () => {
     expect(homeLayout(375, 667, 1.353)).toMatchObject({ oneLineCaption: true, captionHeight: 48 })
     expect(homeLayout(393, 852, 1)).toMatchObject({
       oneLineCaption: false,
-      captionHeight: 94,
+      captionHeight: 114,
       gridGap: 12,
       tabMargin: 4
     })
-    expect(homeLayout(393, 852, 0.8)).toMatchObject({ captionHeight: 86 })
-    expect(homeLayout(375, 667, 1.786)).toMatchObject({ oneLineCaption: false, captionHeight: 24 + 70 * 1.786 })
+    expect(homeLayout(393, 852, 0.8)).toMatchObject({ captionHeight: 97 })
+    expect(homeLayout(375, 667, 1.786)).toMatchObject({ oneLineCaption: false, captionHeight: 182 })
   })
 
   test('pages one visible screen and clamps at either end', () => {
@@ -158,5 +168,69 @@ describe('starter card', () => {
     expect(replyStat('row', { ...held, composerMatching: true })).toEqual({ type: 'reply', from: 'grid', seq: 4 })
     expect(replyStat('row', { ...held, listening: false })).toBeNull()
     expect(replyStat('grid', { ...held, listening: false })).toBeNull()
+  })
+})
+
+describe('row slot text', () => {
+  test('keeps phrase size while about 22 characters fit two lines of a 402-point slot', () => {
+    expect(slotTextKind(22, 144, 1, false)).toBe('phrase')
+    expect(slotTextKind(23, 144, 1, false)).toBe('button')
+  })
+
+  test('steps down sooner as the text grows, and always on short screens', () => {
+    expect(slotTextKind(20, 335, 2.6, false)).toBe('phrase')
+    expect(slotTextKind(21, 335, 2.6, false)).toBe('button')
+    expect(slotTextKind(4, 144, 1, true)).toBe('button')
+  })
+})
+
+describe('toolbar layout', () => {
+  const defaultLabels = { type: 26, repeat: 38, up: 14, down: 31 }
+
+  test('puts the four 84-point pills in one row at the default size', () => {
+    expect(toolbarLayout(defaultLabels, 18, 356)).toEqual({
+      stacked: true,
+      pillWidth: 84,
+      rows: [['type', 'repeat', 'up', 'down']]
+    })
+  })
+
+  test('narrows the pills to share one row on a 320-point screen', () => {
+    const layout = toolbarLayout(defaultLabels, 18, 274)
+    expect(layout.stacked).toBe(true)
+    expect(layout.pillWidth).toBe(64)
+  })
+
+  test('at AX5 splits Type from Repeat, keeping Up and Down paired, so no label is cut', () => {
+    expect(toolbarLayout({ type: 100, repeat: 150, up: 65, down: 120 }, 47, 356)).toEqual({
+      stacked: false,
+      pillWidth: 173,
+      rows: [['type'], ['repeat'], ['up', 'down']]
+    })
+  })
+
+  test('keeps each pair together when both fit side by side', () => {
+    expect(toolbarLayout({ type: 50, repeat: 76, up: 28, down: 60 }, 32, 356).rows).toEqual([
+      ['type', 'repeat'],
+      ['up', 'down']
+    ])
+  })
+})
+
+describe('speech model progress', () => {
+  test('says the percentage, the time left, and that speaking works', () => {
+    expect(modelProgressWords(0.62, 60)).toBe('62%, about a minute. Speaking works now.')
+    expect(modelProgressWords(0.2, 250)).toBe('20%, about 4 minutes. Speaking works now.')
+  })
+
+  test('leaves the time out until the pace is known, and never says 100% before the end', () => {
+    expect(modelProgressWords(0.05, null)).toBe('5%. Speaking works now.')
+    expect(modelProgressWords(0.999, 1)).toBe('99%, about a minute. Speaking works now.')
+  })
+
+  test('estimates the seconds left from the pace so far', () => {
+    expect(modelSecondsLeft({ at: 0, progress: 0.1 }, { at: 10_000, progress: 0.2 })).toBeCloseTo(80)
+    expect(modelSecondsLeft({ at: 0, progress: 0.1 }, { at: 500, progress: 0.2 })).toBeNull()
+    expect(modelSecondsLeft({ at: 0, progress: 0.1 }, { at: 5_000, progress: 0.1 })).toBeNull()
   })
 })

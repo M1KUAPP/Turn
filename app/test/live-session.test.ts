@@ -73,6 +73,9 @@ function fakeEngine(status: AssetStatus = 'installed') {
     voice(active: boolean) {
       events?.onVoice(active)
     },
+    level(value: number) {
+      events?.onLevel(value)
+    },
     line(line: ListenLine) {
       events?.onLine(line)
     },
@@ -196,6 +199,54 @@ describe('live partner session', () => {
       words: 'How was physio today?'
     })
     expect(live.getSnapshot().rankedOnce).toBe(true)
+    await live.dispose()
+  })
+
+  test("publishes the partner's level for the meter at most every 100 ms while the engine listens", async () => {
+    let time = 2000
+    const fake = fakeEngine()
+    const { live } = await session({ engine: fake.engine, now: () => time })
+    const listener = vi.fn()
+    live.subscribe(listener)
+    fake.level(0.4)
+    expect(live.getSnapshot().inputLevel).toBe(0)
+    await live.start()
+    expect(live.getSnapshot().inputLevel).toBe(0)
+
+    fake.level(0.4)
+    expect(live.getSnapshot().inputLevel).toBe(0.4)
+    const published = listener.mock.calls.length
+    time += 60
+    fake.level(0.7)
+    expect(live.getSnapshot().inputLevel).toBe(0.4)
+    expect(listener).toHaveBeenCalledTimes(published)
+    time += 40
+    fake.level(0.7)
+    expect(live.getSnapshot().inputLevel).toBe(0.7)
+    expect(listener).toHaveBeenCalledTimes(published + 1)
+    time += 100
+    fake.level(0.7)
+    expect(listener).toHaveBeenCalledTimes(published + 1)
+
+    await live.pause()
+    expect(live.getSnapshot().inputLevel).toBe(0)
+    time += 100
+    fake.level(0.5)
+    expect(live.getSnapshot().inputLevel).toBe(0)
+    await live.resume()
+    expect(live.getSnapshot().inputLevel).toBe(0)
+    fake.level(0.5)
+    expect(live.getSnapshot().inputLevel).toBe(0.5)
+    await live.end()
+    expect(live.getSnapshot().inputLevel).toBe(0)
+    await live.dispose()
+  })
+
+  test('typed Listen mode has no level, so the meter stays flat', async () => {
+    const { live } = await session({ engine: null })
+    await live.start()
+    await live.send('How was physio?')
+    expect(live.getSnapshot().inputLevel).toBe(0)
     await live.dispose()
   })
 

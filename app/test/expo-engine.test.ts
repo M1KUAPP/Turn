@@ -144,12 +144,14 @@ function fixture(now = 1_000_000) {
     states: Array<{ state: string; reason?: string }>
     assetProgress: Array<number | null>
     voices: boolean[]
+    levels: number[]
   } = {
     partials: [],
     lines: [],
     states: [],
     assetProgress: [],
-    voices: []
+    voices: [],
+    levels: []
   }
 
   const listener: ListenEngineEvents = {
@@ -157,7 +159,8 @@ function fixture(now = 1_000_000) {
     onLine: (line) => events.lines.push(line),
     onState: (state, reason) => events.states.push({ state, reason }),
     onAssetProgress: (fraction) => events.assetProgress.push(fraction),
-    onVoice: (active) => events.voices.push(active)
+    onVoice: (active) => events.voices.push(active),
+    onLevel: (level) => events.levels.push(level)
   }
 
   const unsubscribe = engine.listen(listener)
@@ -518,6 +521,15 @@ describe('expo-speech-recognition engine', () => {
 
     fake.emit('volumechange', { value: 0.0 })
     expect(events.voices).toEqual([true, false, true])
+  })
+
+  test('maps volumechange into a 0 to 1 level: below 0 is silence and 10 is full', async () => {
+    const { fake, engine, events } = fixture()
+
+    await engine.start({ lang: 'en-US' })
+
+    for (const value of [-2, -1, 0, 2.5, 5, 10]) fake.emit('volumechange', { value })
+    expect(events.levels).toEqual([0, 0, 0, 0.25, 0.5, 1])
   })
 
   test('stop() aborts the session and does not restart on end event', async () => {
