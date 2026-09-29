@@ -1,0 +1,97 @@
+appId: com.m1ku.turn
+name: Judge scenario
+# PRD scenario 10, COMPAT-2: at the clinic, type the partner's line and hear
+# the ranked reply.
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# The scenario happens at the clinic, whose phrases all reach Jev. The place
+# button opens an action sheet of the places.
+- tapOn: Home
+- tapOn: Clinic
+- waitForAnimationToEnd
+- assertVisible: Clinic
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+- scrollUntilVisible:
+    element: '.*Tap here to type what they say\..*'
+- tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'How was physio?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+- scrollUntilVisible:
+    element: '.*How was physio\?.*'
+- assertVisible: '.*How was physio\?.*'
+# Jev answers in well under a second, so scrolling is the wait. At the default
+# size the row sits just above the category tabs, and the grid under them could
+# hold "It was hard" too, so the row's copy is the one above the All tab. The
+# size gates read Up, not Repeat: the tap turns Repeat into Stop, which would
+# let the second gate pass too.
+- runFlow:
+    when:
+      visible:
+        text: Up
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: It was hard
+            above: All
+          timeout: 60000
+      - takeScreenshot: judge-row
+      - tapOn:
+          text: It was hard
+          above: All
+# At AX sizes the row is taller than the screen, so the All tab is off it while
+# the reply is on it, and Maestro sees only what's on screen. At Clinic the grid
+# shows Quick, which doesn't hold "It was hard", so the text alone finds the
+# row's. A fast swipe flings the row past in one go, so scroll slowly and center
+# the reply clear of Home's fixed bars before tapping it.
+- runFlow:
+    when:
+      notVisible:
+        text: Up
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: It was hard
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - takeScreenshot: judge-row
+      - tapOn: It was hard
+- takeScreenshot: judge-spoken
+- scrollUntilVisible:
+    element: End
+- tapOn: End
+- scrollUntilVisible:
+    element: '^Listen$'
+- assertVisible: '^Listen$'
