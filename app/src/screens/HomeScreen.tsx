@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { useRouter } from 'expo-router'
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useLocalSearchParams, useRouter } from 'expo-router'
+import * as Haptics from 'expo-haptics'
 import { SymbolView } from 'expo-symbols'
 import {
-  ActionSheetIOS,
   AccessibilityInfo,
   FlatList,
   Keyboard,
@@ -10,25 +10,34 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  useColorScheme,
   useWindowDimensions,
   View
 } from 'react-native'
-import Animated from 'react-native-reanimated'
+import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
-import { colors } from '../constants/theme'
+import { colorValues, colors } from '../constants/theme'
 import { consentWords } from '../consent/strings'
 import type { createLiveListenSession } from '../listen/live-session'
-import { listenStrings } from '../listen/strings'
 import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
-import { purchaseNotes } from '../purchases/store'
 import { useConsent, usePurchases, useTurn } from '../turn-context'
-import { homeLayout, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
+import Caption from './Caption'
+import { captionView } from './caption-view'
+import { categoryPalette, placeSymbol } from './category-palette'
+import CategoryTabs from './CategoryTabs'
+import { useDepth } from './home-depth'
+import { homeLayout, modelSecondsLeft, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
+import { homePreview } from './home-preview'
+import { Layer, usePress } from './home-press'
 import { listenControl } from './listen-control'
-import { useListenLight } from './listen-light'
-import ReplyRow, { phraseColorTokensForId } from './ReplyRow'
+import ListenButton from './ListenButton'
 import PartnerLineComposer from './PartnerLineComposer'
+import PhraseCard from './PhraseCard'
+import PlaceMenu from './PlaceMenu'
+import ReplyRow, { type Reply } from './ReplyRow'
+import Toolbar from './Toolbar'
 import TurnText from './TurnText'
 import TypedComposer from './TypedComposer'
 
@@ -38,76 +47,114 @@ type Props = {
   listen: ReturnType<typeof createLiveListenSession>
   boldText: boolean
   reduceMotion: boolean
+  increaseContrast: boolean
+  reduceTransparency: boolean
 }
 
-function CaptionWords({ text, boldText, measure }: { text: string; boldText: boolean; measure: boolean }) {
-  const [tail, setTail] = useState<{ text: string; first: string; second: string } | null>(null)
-  const visibleTail = tail?.text === text ? tail : null
-
+/** The lamp's glow (DESIGN, elevation): while the microphone is on, a radial `listen-glow` at 30%, 560 by 420 points
+ * near the Listen control, washes the top of the board behind everything, fading in over 400 ms, or at once under
+ * Reduce Motion. */
+function BoardGlow({ on, width, reduceMotion }: { on: boolean; width: number; reduceMotion: boolean }) {
+  const glow = colorValues['listen-glow'][useColorScheme() === 'dark' ? 'dark' : 'light']
+  const opacity = useSharedValue(on ? 1 : 0)
+  useEffect(() => {
+    opacity.value = reduceMotion
+      ? on
+        ? 1
+        : 0
+      : withTiming(on ? 1 : 0, { duration: 400, reduceMotion: ReduceMotion.Never })
+  }, [on, reduceMotion, opacity])
+  const style = useAnimatedStyle(() => ({ opacity: opacity.value }))
   return (
-    <View>
-      {visibleTail ? (
-        <>
-          <TurnText
-            kind="partner-line-small"
-            boldText={boldText}
-            numberOfLines={1}
-            ellipsizeMode="head"
-            style={{ color: colors.ink }}
-          >
-            …{visibleTail.first}
-          </TurnText>
-          <TurnText kind="partner-line-small" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
-            {visibleTail.second}
-          </TurnText>
-        </>
-      ) : (
-        <TurnText kind="partner-line-small" boldText={boldText} numberOfLines={2} style={{ color: colors.ink }}>
-          {text}
-        </TurnText>
-      )}
-      {measure && (
-        <View
-          pointerEvents="none"
-          importantForAccessibility="no-hide-descendants"
-          style={{ position: 'absolute', left: 0, right: 0, top: 0, opacity: 0 }}
-        >
-          <TurnText
-            kind="partner-line-small"
-            boldText={boldText}
-            onTextLayout={({ nativeEvent }) => {
-              const lines = nativeEvent.lines
-              if (lines.length <= 2) {
-                setTail(null)
-                return
-              }
-              const first = lines[lines.length - 2].text.trim()
-              const second = lines[lines.length - 1].text.trim()
-              setTail((previous) =>
-                previous?.text === text && previous.first === first && previous.second === second
-                  ? previous
-                  : { text, first, second }
-              )
-            }}
-          >
-            {text}
-          </TurnText>
-        </View>
-      )}
-    </View>
+    <Animated.View
+      pointerEvents="none"
+      style={[
+        {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 260,
+          experimental_backgroundImage: `radial-gradient(280px 210px at ${width - 102}px 40px, ${glow}4D 0%, ${glow}00 100%)`
+        },
+        style
+      ]}
+    />
   )
 }
 
-export default function HomeScreen({ bank, speech, listen, boldText, reduceMotion }: Props) {
+/** A strip phrase (DESIGN, the strip): a `surface` chip on an `edge`, or `no-fill` on `no-edge` when urgent, pressed on
+ * `surface-pressed` with a 2.5 edge that fades back over 120 ms. */
+function StripChip({
+  phrase,
+  width,
+  boldText,
+  onEdit,
+  onSpeak
+}: {
+  phrase: Phrase
+  width: number
+  boldText: boolean
+  onEdit: () => void
+  onSpeak: () => void
+}) {
+  const depth = useDepth()
+  const press = usePress()
+  const urgent = phrase.id === 'somethings-wrong'
+  const edge = urgent ? colors['no-edge'] : colors.edge
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={phrase.text}
+      accessibilityActions={[{ name: 'edit', label: 'Edit' }]}
+      onAccessibilityAction={(event) => {
+        if (event.nativeEvent.actionName === 'edit') onEdit()
+      }}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
+      onPress={onSpeak}
+      style={{
+        width,
+        minHeight: 48,
+        justifyContent: 'center',
+        paddingHorizontal: 12.5,
+        paddingVertical: 7.5,
+        borderRadius: 14,
+        boxShadow: depth.card
+      }}
+    >
+      <Layer fill={urgent ? colors['no-fill'] : colors.surface} edge={edge} edgeWidth={1.5} radius={14} />
+      <Layer fill={colors['surface-pressed']} edge={edge} edgeWidth={2.5} radius={14} style={press.style} />
+      <TurnText kind="phrase-strip" boldText={boldText} style={{ color: colors.ink, width: width - 25 }}>
+        {phrase.text}
+      </TurnText>
+    </Pressable>
+  )
+}
+
+export default function HomeScreen({
+  bank,
+  speech,
+  listen,
+  boldText,
+  reduceMotion,
+  increaseContrast,
+  reduceTransparency
+}: Props) {
   const router = useRouter()
+  const settingsPress = usePress()
+  const placePress = usePress()
   const { consent, state: consentState } = useConsent()
-  const { purchases, state: purchasesState } = usePurchases()
+  const { purchases, state: purchasesLive } = usePurchases()
   const { ready } = useTurn()
+  const params = useLocalSearchParams<{ preview?: string }>()
   const [categories, setCategories] = useState<Category[]>([])
   const [phrases, setPhrases] = useState<Phrase[]>([])
+  const [phraseCategories, setPhraseCategories] = useState<Map<string, string>>(new Map())
   const [strip, setStrip] = useState<Phrase[]>([])
   const [places, setPlaces] = useState<Place[]>([])
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
+  const [placeMenu, setPlaceMenu] = useState<{ x: number; y: number; height: number } | null>(null)
   const [categoryId, setCategoryId] = useState('quick')
   const [offset, setOffset] = useState(0)
   const [viewportHeight, setViewportHeight] = useState(1)
@@ -122,64 +169,50 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
   const [review, setReview] = useState({ pending: false, dismissed: false })
   const list = useRef<FlatList<Phrase>>(null)
   const composerContent = useRef<ScrollView>(null)
+  const placeChip = useRef<View>(null)
   const { width, height, fontScale } = useWindowDimensions()
   const layout = homeLayout(width, height, fontScale)
   const minPhraseHeight = layout.short ? 64 : 78
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
   const controlHeight = Math.max(44, 22 * Math.min(fontScale, 2.82) + 16)
-  const captionHeight = layout.captionHeight
   // From AX1 the column scrolls, so the caption grows to fit its label, note, and prompt rather than cutting them;
-  // only the partner's words keep their two lines (DESIGN, A11Y-4).
+  // only the partner's words keep their lines (DESIGN, A11Y-4).
   const captionGrows = fontScale >= 1.786
-  const twoControlRows = width < 352 || fontScale >= 1.786
   const oneControlColumn = fontScale >= 2.5
   // SF Symbols grow with the words beside them, as they do in iOS's own labels.
   const symbolSize = (base: number) => Math.round(base * Math.min(fontScale, 2.6))
-  const [barWidths, setBarWidths] = useState<Record<string, number>>({})
   const topBarHeight = useRef(0)
   const rowTop = useRef(0)
-  const speaking = useSyncExternalStore(speech.subscribe, speech.getSnapshot)
-  const listening = useSyncExternalStore(listen.subscribe, listen.getSnapshot)
+  const modelStart = useRef<{ at: number; progress: number } | null>(null)
+  const wasSpeaking = useRef(false)
+  const speakingLive = useSyncExternalStore(speech.subscribe, speech.getSnapshot)
+  const listeningLive = useSyncExternalStore(listen.subscribe, listen.getSnapshot)
+  // Dev bundles show the design's states on request (home-preview.ts); release builds never do.
+  const preview = __DEV__ ? homePreview(params.preview, listeningLive) : null
+  const listening = preview?.listening ?? listeningLive
+  const purchasesState = preview?.purchases ? { ...purchasesLive, ...preview.purchases } : purchasesLive
+  const under18 = preview?.under18 ?? consentState.under18
+  const speaking = preview?.speakingId
+    ? { speaking: true, lastText: 'It was hard', activePhraseId: preview.speakingId }
+    : speakingLive
   const composerOpen = composerMode !== null
   const shownListening = touchedRow ?? listening
   const rowAnnouncement = useRef<{ signature: string; pending: string | null }>({ signature: '', pending: null })
-  const under18Active = listening.active && consentState.under18
-  // The design's Listen mode states: the session's caption, with the under-18 note over it.
   const caption = listening.caption
-  const micUnavailable = listening.active && (under18Active || listening.phase === 'unavailable')
-  const paused = listening.active && !micUnavailable && listening.phase === 'paused'
-  const micOn = listening.active && !micUnavailable && !paused
-  const lineOpen = micOn && caption.label === listenStrings.saying
-  const unavailableNote = !under18Active && caption.note === listenStrings.unavailable
-  const captionLabel = under18Active
-    ? consentWords.under18Note
-    : unavailableNote
-      ? listenStrings.unavailableLabel
-      : caption.label === listenStrings.saying || caption.label === listenStrings.said
-        ? caption.label
-        : null
-  // A purchase's note replaces "Listen mode is off."; during a session only the unlock shows, beside the words.
-  const sessionPurchaseNote = purchasesState.note === purchaseNotes.unlocked ? purchasesState.note : null
-  const captionNote = under18Active || unavailableNote ? null : (caption.note ?? sessionPurchaseNote)
-  const captionText = !listening.active
-    ? (purchasesState.note ?? listenStrings.off)
-    : paused
-      ? 'Paused'
-      : caption.words || (micUnavailable ? consentWords.typedLinePrompt : listenStrings.listening)
-  // "Listening" is large until the first words, since a small light goes unnoticed.
-  const captionOpening = micOn && !caption.words
-  const noteSymbol =
-    captionNote === purchaseNotes.unlocked
-      ? 'lock.open'
-      : captionNote === listenStrings.rankedOnPhone
-        ? 'iphone'
-        : captionNote === listenStrings.gettingModel
-          ? 'arrow.down.circle'
-          : 'hourglass'
+  const view = captionView({
+    active: listening.active,
+    phase: listening.phase,
+    caption,
+    assetProgress: listening.assetProgress,
+    under18,
+    purchaseNote: purchasesState.note,
+    rowAnswers: listening.row.answers
+  })
+  const micUnavailable = listening.active && (under18 || listening.phase === 'unavailable')
   const control = listenControl({
     active: listening.active,
     micUnavailable,
-    paused,
+    paused: listening.active && !micUnavailable && listening.phase === 'paused',
     locked: purchasesState.locked,
     countLabel: purchasesState.countLabel
   })
@@ -187,9 +220,28 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
     control.action === null ||
     (control.action === 'start' && (!consent || startingListen)) ||
     (control.action === 'unlock' && (!purchases || purchasesState.busy || startingListen))
-  const listenWord = control.word
-  const listenInk = micOn ? colors['on-listen'] : listenControlDisabled ? colors['ink-secondary'] : colors.ink
-  const lightStyle = useListenLight(lineOpen, reduceMotion)
+  const model =
+    listening.assetProgress === null
+      ? null
+      : {
+          progress: listening.assetProgress,
+          secondsLeft: modelStart.current
+            ? modelSecondsLeft(modelStart.current, { at: Date.now(), progress: listening.assetProgress })
+            : null
+        }
+  const paletteFor = (id: string) => categoryPalette(id, categories)
+
+  useEffect(() => {
+    if (listening.assetProgress === null) modelStart.current = null
+    else modelStart.current ??= { at: Date.now(), progress: listening.assetProgress }
+  }, [listening.assetProgress])
+
+  // One selection tap as speech starts (DESIGN, sound and haptics); iOS mutes it while the microphone records, so
+  // nothing depends on it.
+  useEffect(() => {
+    if (speaking.speaking && !wasSpeaking.current) void Haptics.selectionAsync().catch(() => {})
+    wasSpeaking.current = speaking.speaking
+  }, [speaking.speaking])
 
   useEffect(() => {
     const current = rowAnnouncement.current
@@ -224,8 +276,9 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         bank.phrases('strip'),
         bank.places(),
         bank.selectedPlace(),
-        bank.starterReviewState()
-      ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace, nextReview]) => {
+        bank.starterReviewState(),
+        bank.phrases('all')
+      ]).then(([nextCategories, nextPhrases, nextStrip, nextPlaces, nextPlace, nextReview, allPhrases]) => {
         if (!alive) return
         setCategories(nextCategories)
         setCategoryId(selectedTab(categoryId, nextCategories))
@@ -234,6 +287,8 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         setPlaces(nextPlaces)
         setSelectedPlace(nextPlace)
         setReview(nextReview)
+        // A reply's category colors its card and names the big reply's tag.
+        setPhraseCategories(new Map(allPhrases.map((phrase) => [phrase.id, phrase.category_id])))
       })
     }
     read()
@@ -312,12 +367,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
       router.push('/settings/places')
       return
     }
-    ActionSheetIOS.showActionSheetWithOptions(
-      { options: [...places.map((place) => place.name), 'Cancel'], cancelButtonIndex: places.length },
-      (index) => {
-        if (index < places.length) void bank.choosePlace(places[index].id)
-      }
-    )
+    placeChip.current?.measureInWindow((x, y, _, chipHeight) => setPlaceMenu({ x, y, height: chipHeight }))
   }
 
   const page = (direction: -1 | 1) => {
@@ -336,116 +386,79 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
     void bank.dismissStarterReview()
   }
 
-  const renderPhrase = ({ item }: { item: Phrase }) => {
-    const tokens = phraseColorTokensForId(item.id)
-    return (
-      <View style={{ flex: 1, maxWidth: layout.gridColumns === 2 ? (width - 44) / 2 : undefined }}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={item.text}
-          accessibilityActions={[
-            { name: 'edit', label: 'Edit' },
-            { name: 'move', label: 'Move' }
-          ]}
-          onAccessibilityAction={(event) => {
-            if (event.nativeEvent.actionName === 'edit' || event.nativeEvent.actionName === 'move') {
-              router.push({
-                pathname: '/bank/[category]',
-                params: { category: item.category_id, editPhraseId: item.id }
-              })
-            }
-          }}
-          onPress={() => {
-            recordReply('grid')
-            void speech.speak(item.text, item.id)
-          }}
-          style={({ pressed }) => ({
-            flex: 1,
-            minHeight: minPhraseHeight,
-            borderWidth: tokens ? 3 : 2,
-            borderColor: tokens ? colors[tokens.edge] : colors.edge,
-            borderRadius: 12,
-            padding: 12,
-            backgroundColor: pressed ? colors['surface-pressed'] : tokens ? colors[tokens.fill] : colors.surface,
-            justifyContent: 'center'
-          })}
-        >
-          <TurnText
-            kind={layout.short ? 'button' : 'phrase'}
-            boldText={boldText}
-            style={{ color: colors.ink, paddingRight: 24 }}
-          >
-            {item.text}
-          </TurnText>
-          {speaking.activePhraseId === item.id && (
-            <SymbolView
-              name="speaker.wave.2"
-              size={18}
-              tintColor={colors.ink}
-              accessible={false}
-              style={{ position: 'absolute', top: 12, right: 12 }}
-            />
-          )}
-        </Pressable>
-      </View>
-    )
-  }
+  const withCategory = (reply: { id: string; text: string } | null): Reply | null =>
+    reply ? { id: reply.id, text: reply.text, categoryId: phraseCategories.get(reply.id) } : null
+  const rowSlots = useMemo(
+    () =>
+      composerMode === 'speak'
+        ? typeMatches.map((phrase) => ({ id: phrase.id, text: phrase.text, categoryId: phrase.category_id }))
+        : listening.active
+          ? shownListening.slots.map(withCategory)
+          : __DEV__ && replyPreview === 1
+            ? ['yes', 'no', 'not-sure', 'i-dont-know', 'please-wait', 'im-thirsty'].map((id, index) =>
+                withCategory({
+                  id,
+                  text: ['Yes', 'No', 'Not sure', "I don't know", 'Please wait', "I'm thirsty"][index]
+                })
+              )
+            : undefined,
+    // withCategory reads phraseCategories, listed here.
+    [composerMode, typeMatches, listening.active, shownListening.slots, replyPreview, phraseCategories]
+  )
+  const rowBig =
+    composerMode !== 'speak' && listening.active
+      ? withCategory(shownListening.bigButton)
+      : !composerOpen && __DEV__ && replyPreview === 2
+        ? withCategory({ id: 'i-have-something-to-say', text: 'I have something to say' })
+        : null
 
-  const renderStripPhrase = (phrase: Phrase, cardWidth: number) => (
-    <View key={phrase.id} style={{ width: cardWidth }}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={phrase.text}
-        accessibilityActions={[{ name: 'edit', label: 'Edit' }]}
+  const renderPhrase = ({ item }: { item: Phrase }) => (
+    <View style={{ flex: 1, maxWidth: layout.gridColumns === 2 ? (width - 44) / 2 : undefined }}>
+      <PhraseCard
+        id={item.id}
+        text={item.text}
+        palette={paletteFor(item.category_id)}
+        speaking={speaking.activePhraseId === item.id}
+        kind={layout.short ? 'button' : 'phrase'}
+        short={layout.short}
+        boldText={boldText}
+        fontScale={fontScale}
+        reduceMotion={reduceMotion}
+        minHeight={minPhraseHeight}
+        grow
+        accessibilityActions={[
+          { name: 'edit', label: 'Edit' },
+          { name: 'move', label: 'Move' }
+        ]}
         onAccessibilityAction={(event) => {
-          if (event.nativeEvent.actionName === 'edit') {
+          if (event.nativeEvent.actionName === 'edit' || event.nativeEvent.actionName === 'move') {
             router.push({
               pathname: '/bank/[category]',
-              params: { category: phrase.category_id, editPhraseId: phrase.id }
+              params: { category: item.category_id, editPhraseId: item.id }
             })
           }
         }}
         onPress={() => {
-          void speech.speak(phrase.text, phrase.id)
+          recordReply('grid')
+          void speech.speak(item.text, item.id)
         }}
-        style={({ pressed }) => ({
-          flexGrow: 1,
-          minHeight: 48,
-          justifyContent: 'center',
-          borderWidth: 2,
-          borderColor: colors.edge,
-          borderRadius: 12,
-          padding: phrase.id === 'somethings-wrong' && layout.stripColumns === 3 ? 4 : 8,
-          backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-        })}
-      >
-        {phrase.id === 'somethings-wrong' && (
-          <SymbolView
-            name="exclamationmark.triangle"
-            size={symbolSize(16)}
-            tintColor={colors.ink}
-            accessible={false}
-            style={{
-              position: 'absolute',
-              left: layout.stripColumns === 3 ? 4 : 8,
-              top: layout.stripColumns === 3 ? 4 : 12
-            }}
-          />
-        )}
-        <TurnText
-          kind="phrase-strip"
-          boldText={boldText}
-          style={{
-            color: colors.ink,
-            width: cardWidth - (phrase.id === 'somethings-wrong' && layout.stripColumns === 3 ? 12 : 20),
-            paddingTop: phrase.id === 'somethings-wrong' && layout.stripColumns === 3 ? symbolSize(16) + 2 : 0,
-            paddingLeft: phrase.id === 'somethings-wrong' && layout.stripColumns === 1 ? symbolSize(16) + 6 : 0
-          }}
-        >
-          {phrase.text}
-        </TurnText>
-      </Pressable>
+      />
     </View>
+  )
+
+  const renderStripPhrase = (phrase: Phrase, cardWidth: number) => (
+    <StripChip
+      key={phrase.id}
+      phrase={phrase}
+      width={cardWidth}
+      boldText={boldText}
+      onEdit={() =>
+        router.push({ pathname: '/bank/[category]', params: { category: phrase.category_id, editPhraseId: phrase.id } })
+      }
+      onSpeak={() => {
+        void speech.speak(phrase.text, phrase.id)
+      }}
+    />
   )
 
   const stripContent =
@@ -469,186 +482,22 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
       style={{ marginHorizontal: !composerOpen && layout.wholeMiddleScroll ? -16 : 0 }}
     >
       {!composerOpen && (
-        <View
-          style={{
-            height: captionGrows ? undefined : captionHeight,
-            minHeight: captionHeight,
-            marginHorizontal: 16,
-            marginTop: layout.oneLineCaption ? 0 : 4,
-            marginBottom: 8,
-            paddingHorizontal: 12,
-            paddingVertical: layout.oneLineCaption ? 0 : 12,
-            borderRadius: 12,
-            borderWidth: 2,
-            borderColor: colors.edge,
-            backgroundColor: colors.surface,
-            justifyContent: 'center',
-            flexDirection: 'row',
-            alignItems: 'center'
-          }}
-        >
-          <Pressable
-            accessibilityRole={listening.active ? 'button' : undefined}
-            accessibilityLabel={[captionLabel, captionNote, captionText].filter(Boolean).join(', ')}
-            accessibilityHint={listening.active ? 'Type the partner line.' : undefined}
-            disabled={!listening.active}
-            onPress={() => setComposerMode('partner')}
-            style={{ flex: 1, minHeight: 44, justifyContent: 'center' }}
-          >
-            {layout.oneLineCaption ? (
-              // One line on short screens: the note, or else the speaker label, then the newest words.
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                {captionNote ? (
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, maxWidth: '50%' }}>
-                    <SymbolView
-                      name={noteSymbol}
-                      size={Math.round(13 * Math.min(fontScale, 2))}
-                      tintColor={colors['ink-secondary']}
-                      accessible={false}
-                    />
-                    <TurnText
-                      kind="footnote"
-                      boldText={boldText}
-                      numberOfLines={1}
-                      style={{ color: colors['ink-secondary'], flexShrink: 1 }}
-                    >
-                      {captionNote}
-                    </TurnText>
-                  </View>
-                ) : (
-                  captionLabel && (
-                    <TurnText
-                      kind="label"
-                      boldText={boldText}
-                      numberOfLines={1}
-                      style={{ color: colors['ink-secondary'], maxWidth: '50%' }}
-                    >
-                      {captionLabel}
-                    </TurnText>
-                  )
-                )}
-                <TurnText
-                  kind="partner-line-small"
-                  boldText={boldText}
-                  numberOfLines={1}
-                  ellipsizeMode="head"
-                  style={{ color: listening.active ? colors.ink : colors['ink-secondary'], flex: 1 }}
-                >
-                  {captionText}
-                </TurnText>
-              </View>
-            ) : (
-              <>
-                {(captionLabel || captionNote) && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: captionGrows ? 'wrap' : 'nowrap',
-                      alignItems: 'center',
-                      gap: 6
-                    }}
-                  >
-                    {captionLabel && (
-                      <TurnText
-                        kind="label"
-                        boldText={boldText}
-                        numberOfLines={captionGrows ? undefined : 1}
-                        style={{ color: colors['ink-secondary'], flexShrink: 1 }}
-                      >
-                        {captionLabel}
-                      </TurnText>
-                    )}
-                    {captionNote && (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          gap: 4,
-                          flexShrink: 1,
-                          marginLeft: captionGrows ? 0 : 'auto'
-                        }}
-                      >
-                        <SymbolView
-                          name={noteSymbol}
-                          size={Math.round(13 * Math.min(fontScale, 2))}
-                          tintColor={colors['ink-secondary']}
-                          accessible={false}
-                        />
-                        <TurnText
-                          kind="footnote"
-                          boldText={boldText}
-                          numberOfLines={captionGrows ? undefined : 1}
-                          style={{ color: colors['ink-secondary'], flexShrink: 1 }}
-                        >
-                          {captionNote}
-                        </TurnText>
-                      </View>
-                    )}
-                  </View>
-                )}
-                {!listening.active ? (
-                  <TurnText
-                    kind="partner-line-small"
-                    boldText={boldText}
-                    numberOfLines={2}
-                    style={{ color: colors['ink-secondary'] }}
-                  >
-                    {captionText}
-                  </TurnText>
-                ) : captionOpening ? (
-                  <TurnText kind="title" boldText={boldText} numberOfLines={1} style={{ color: colors.ink }}>
-                    {captionText}
-                  </TurnText>
-                ) : captionGrows && !caption.words ? (
-                  <TurnText kind="partner-line-small" boldText={boldText} style={{ color: colors.ink }}>
-                    {captionText}
-                  </TurnText>
-                ) : (
-                  <CaptionWords text={captionText} boldText={boldText} measure={Boolean(caption.words)} />
-                )}
-              </>
-            )}
-            {listening.assetProgress !== null && (
-              <View
-                style={{ height: 4, marginTop: 6, borderRadius: 2, overflow: 'hidden', backgroundColor: colors.edge }}
-              >
-                <View
-                  style={{
-                    width: `${Math.round(listening.assetProgress * 100)}%`,
-                    height: 4,
-                    backgroundColor: colors.accent
-                  }}
-                />
-              </View>
-            )}
-          </Pressable>
-          {lineOpen ? (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Done"
-              accessibilityHint="Ends the partner's line now."
-              onPress={() => void listen.endLine()}
-              style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
-            >
-              <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
-                Done
-              </TurnText>
-            </Pressable>
-          ) : (
-            listening.active &&
-            listening.row.answers > 0 && (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Clear"
-                onPress={() => listen.clear()}
-                style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
-              >
-                <TurnText kind="label" boldText={boldText} style={{ color: colors.ink }}>
-                  Clear
-                </TurnText>
-              </Pressable>
-            )
-          )}
+        <View style={{ marginTop: layout.oneLineCaption ? 0 : 8, marginBottom: 8 }}>
+          <Caption
+            view={view}
+            height={layout.captionHeight}
+            grows={captionGrows}
+            oneLine={layout.oneLineCaption}
+            fontScale={fontScale}
+            boldText={boldText}
+            reduceMotion={reduceMotion}
+            increaseContrast={increaseContrast}
+            level={listening.inputLevel}
+            model={model}
+            onType={listening.active ? () => setComposerMode('partner') : null}
+            onDone={() => void listen.endLine()}
+            onClear={() => listen.clear()}
+          />
         </View>
       )}
       <View style={{ marginHorizontal: 16, marginBottom: 8 }}>{stripContent}</View>
@@ -661,12 +510,17 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         <ReplyRow
           layout={layout}
           width={width}
+          fontScale={fontScale}
           boldText={boldText}
+          reduceMotion={reduceMotion}
+          increaseContrast={increaseContrast}
+          categories={categories}
+          tinted={composerMode !== 'speak'}
           starterCard={
             starterCardShown({
               listening: listening.active,
               composerOpen: composerMode === 'speak',
-              under18: consentState.under18,
+              under18,
               reviewPending: review.pending,
               reviewDismissed: review.dismissed
             })
@@ -676,33 +530,12 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
           emptyNote={
             composerMode === 'speak'
               ? 'Matching phrases appear here.'
-              : consentState.under18
+              : under18
                 ? consentWords.under18RowNote
                 : undefined
           }
-          slots={
-            composerMode === 'speak'
-              ? typeMatches
-              : listening.active
-                ? shownListening.slots
-                : __DEV__ && replyPreview === 1
-                  ? [
-                      { id: 'yes', text: 'Yes' },
-                      { id: 'no', text: 'No' },
-                      { id: 'not-sure', text: 'Not sure' },
-                      { id: 'dont-know', text: "I don't know" },
-                      { id: 'please-wait', text: 'Please wait' },
-                      { id: 'help-me', text: 'Help me' }
-                    ]
-                  : undefined
-          }
-          bigButton={
-            composerMode !== 'speak' && listening.active
-              ? shownListening.bigButton
-              : !composerOpen && __DEV__ && replyPreview === 2
-                ? { id: 'have-something-to-say', text: 'I have something to say' }
-                : null
-          }
+          slots={rowSlots}
+          bigButton={rowBig}
           activePhraseId={speaking.activePhraseId}
           onInteractionChange={(pressed) => setTouchedRow(pressed ? listening : null)}
           onSpeak={(reply) => {
@@ -712,132 +545,20 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         />
       </View>
       {!composerOpen && (
-        <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: tabHeight + 2 * layout.tabMargin }}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator
-            style={{ flexGrow: 1, height: tabHeight + 2 * layout.tabMargin }}
-            contentContainerStyle={{ paddingLeft: 16, paddingRight: 12, paddingVertical: layout.tabMargin, gap: 8 }}
-          >
-            {categories.map((category) => {
-              const selected = categoryId === category.id
-              const suggested = listening.active && listening.row.tab === category.id
-              return (
-                <Pressable
-                  key={category.id}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected }}
-                  accessibilityValue={suggested ? { text: 'suggested' } : undefined}
-                  onPress={() => chooseCategory(category.id)}
-                  style={{
-                    minHeight: tabHeight,
-                    minWidth: 44,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: 6,
-                    justifyContent: 'center',
-                    paddingHorizontal: 16,
-                    borderRadius: 22,
-                    borderWidth: selected ? 0 : 2,
-                    borderColor: colors.edge,
-                    backgroundColor: selected ? colors.ink : colors.surface
-                  }}
-                >
-                  <TurnText
-                    kind="label"
-                    boldText={boldText}
-                    style={{ color: selected ? colors.surface : colors.ink, fontWeight: suggested ? '700' : '600' }}
-                  >
-                    {category.name}
-                  </TurnText>
-                  {suggested && (
-                    <View
-                      accessible={false}
-                      style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: 3,
-                        backgroundColor: selected ? colors.surface : colors.ink
-                      }}
-                    />
-                  )}
-                </Pressable>
-              )
-            })}
-          </ScrollView>
-          <View
-            style={{
-              width: StyleSheet.hairlineWidth,
-              alignSelf: 'stretch',
-              marginVertical: 10,
-              backgroundColor: colors.edge
-            }}
-          />
-          <Pressable
-            accessibilityRole="button"
-            accessibilityState={{ selected: categoryId === 'all' }}
-            onPress={() => chooseCategory('all')}
-            style={{
-              minHeight: tabHeight,
-              minWidth: 44,
-              justifyContent: 'center',
-              paddingHorizontal: 16,
-              marginLeft: 12,
-              marginRight: 16,
-              borderRadius: 22,
-              borderWidth: categoryId === 'all' ? 0 : 2,
-              borderColor: colors.edge,
-              backgroundColor: categoryId === 'all' ? colors.ink : colors.surface
-            }}
-          >
-            <TurnText
-              kind="label"
-              boldText={boldText}
-              style={{ color: categoryId === 'all' ? colors.surface : colors.ink }}
-            >
-              All
-            </TurnText>
-          </Pressable>
-        </View>
+        <CategoryTabs
+          categories={categories}
+          selectedId={categoryId}
+          suggestedId={listening.active ? listening.row.tab : null}
+          paletteFor={paletteFor}
+          tabHeight={tabHeight}
+          tabMargin={layout.tabMargin}
+          fontScale={fontScale}
+          boldText={boldText}
+          onChoose={chooseCategory}
+        />
       )}
     </View>
   )
-
-  const bottomControls = [
-    { label: 'Type', icon: 'keyboard', action: () => setComposerMode('speak'), disabled: false },
-    {
-      label: speaking.speaking ? 'Stop' : 'Repeat',
-      icon: speaking.speaking ? 'stop.fill' : 'arrow.counterclockwise',
-      action: () => {
-        void (speaking.speaking ? speech.stop() : speech.repeat())
-      },
-      disabled: !speaking.speaking && !speaking.lastText
-    },
-    { label: 'Up', icon: 'chevron.up', action: () => page(-1), disabled: offset <= 0 },
-    { label: 'Down', icon: 'chevron.down', action: () => page(1), disabled: offset >= contentHeight - viewportHeight }
-  ] as const
-
-  // The bar's four buttons share one row when their words fit, and otherwise take two rows, Type and Repeat over Up
-  // and Down (DESIGN, the bottom bar). A pair splits only when its two words can't fit side by side, as Type and
-  // Repeat can't at AX5, so no label is cut and no row is spent on a button that fits beside its pair.
-  // Measured with 6-point sides, the four fit one row at the default size on a 6.1-inch iPhone, and a row shares
-  // what's left, so two rows never push Yes and No under the bar there.
-  const barIcon = symbolSize(18)
-  const barSpace = width - 32
-  const barMeasures = [
-    { label: 'Type', icon: 'keyboard' },
-    { label: 'Repeat', icon: 'arrow.counterclockwise' },
-    { label: 'Up', icon: 'chevron.up' },
-    { label: 'Down', icon: 'chevron.down' }
-  ] as const
-  const natural = barMeasures.map(({ label }) => barWidths[label] ?? 0)
-  const barLayout: 'row' | 'pairs' = natural.some((measured) => measured === 0)
-    ? twoControlRows
-      ? 'pairs'
-      : 'row'
-    : natural.reduce((sum, measured) => sum + measured, 0) + 8 * 3 <= barSpace
-      ? 'row'
-      : 'pairs'
 
   const topBar = (
     <View
@@ -853,68 +574,97 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         paddingHorizontal: 16,
         paddingVertical: 4,
         borderBottomWidth: layout.wholeMiddleScroll && !composerOpen ? StyleSheet.hairlineWidth : 0,
-        borderBottomColor: colors.edge
+        borderBottomColor: colors.hairline
       }}
     >
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Settings"
+        onPressIn={settingsPress.onPressIn}
+        onPressOut={settingsPress.onPressOut}
         onPress={() => router.push('/settings')}
         style={{
           width: 44,
           height: oneControlColumn ? controlHeight : 44,
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          borderRadius: 22
         }}
       >
+        <Layer fill={colors.surface} edge={colors.edge} edgeWidth={1.5} radius={22} />
+        <Layer
+          fill={colors['surface-pressed']}
+          edge={colors.edge}
+          edgeWidth={2.5}
+          radius={22}
+          style={settingsPress.style}
+        />
         <SymbolView
-          name="gearshape"
-          size={Math.round(22 * Math.min(fontScale, 1.6))}
+          name="gearshape.fill"
+          size={Math.round(20 * Math.min(fontScale, 1.6))}
+          weight="semibold"
           tintColor={colors.ink}
           accessible={false}
         />
       </Pressable>
       <Pressable
+        ref={placeChip}
         accessibilityRole="button"
         accessibilityLabel={selectedPlace?.name ?? 'Place'}
+        onPressIn={placePress.onPressIn}
+        onPressOut={placePress.onPressOut}
         onPress={choosePlace}
-        style={({ pressed }) => ({
+        style={{
+          flexShrink: 1,
+          width: oneControlColumn ? width - 84 : undefined,
           minHeight: oneControlColumn ? controlHeight : 44,
           minWidth: 44,
-          flex: oneControlColumn ? undefined : 1,
-          width: oneControlColumn ? width - 84 : undefined,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
           gap: 6,
-          borderRadius: 22,
-          borderWidth: 2,
-          borderColor: colors.edge,
-          backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-        })}
-      >
-        <SymbolView name="mappin.and.ellipse" size={symbolSize(18)} tintColor={colors.ink} accessible={false} />
-        <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
-          {selectedPlace?.name ?? 'Place'}
-        </TurnText>
-      </Pressable>
-      {/* From AX3 the controls fill their row and share it only when both words fit, so neither label is cut. */}
-      <View
-        style={{
-          flexDirection: 'row',
-          flexWrap: oneControlColumn ? 'wrap' : 'nowrap',
-          width: oneControlColumn ? width - 32 : undefined,
-          gap: oneControlColumn ? 8 : 6,
-          alignItems: oneControlColumn ? 'stretch' : 'center'
+          paddingHorizontal: 13.5,
+          borderRadius: 999
         }}
       >
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={listenWord}
-          accessibilityValue={control.detail ? { text: control.detail } : undefined}
-          accessibilityHint={control.hint}
-          accessibilityState={{ disabled: listenControlDisabled }}
+        <Layer fill={colors.surface} edge={colors.edge} edgeWidth={1.5} radius={999} />
+        <Layer
+          fill={colors['surface-pressed']}
+          edge={colors.edge}
+          edgeWidth={2.5}
+          radius={999}
+          style={placePress.style}
+        />
+        <SymbolView
+          name={placeSymbol(selectedPlace?.id ?? '')}
+          size={symbolSize(18)}
+          weight="semibold"
+          tintColor={colors.ink}
+          accessible={false}
+        />
+        <TurnText kind="button" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
+          {selectedPlace?.name ?? 'Place'}
+        </TurnText>
+        <SymbolView
+          name="chevron.down"
+          size={symbolSize(12)}
+          weight="semibold"
+          tintColor={colors.ink}
+          accessible={false}
+        />
+      </Pressable>
+      {!oneControlColumn && <View style={{ flex: 1 }} />}
+      {/* From AX3 the controls fill their row and share it only when both words fit, so neither label is cut. */}
+      <View style={{ width: oneControlColumn ? width - 32 : undefined }}>
+        <ListenButton
+          control={control}
+          micOn={view.micOn}
           disabled={listenControlDisabled}
+          boldText={boldText}
+          fontScale={fontScale}
+          reduceMotion={reduceMotion}
+          fill={oneControlColumn}
+          height={oneControlColumn ? controlHeight : 44}
           onPress={() => {
             if (control.action === 'pause') return void listen.pause()
             if (control.action === 'resume') return void listen.resume()
@@ -935,70 +685,11 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             }
             startListen()
           }}
-          style={({ pressed }) => ({
-            flexGrow: oneControlColumn ? 1 : 0,
-            minHeight: oneControlColumn ? controlHeight : 44,
-            minWidth: 44,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 6,
-            paddingHorizontal: 12,
-            borderRadius: 22,
-            borderWidth: 2,
-            borderColor: micOn ? colors.listen : colors.edge,
-            backgroundColor: micOn
-              ? colors.listen
-              : pressed && !listenControlDisabled
-                ? colors['surface-pressed']
-                : colors.surface
-          })}
-        >
-          <Animated.View style={lightStyle}>
-            <SymbolView name={control.symbol} size={symbolSize(18)} tintColor={listenInk} accessible={false} />
-          </Animated.View>
-          <View>
-            <TurnText kind="headline" boldText={boldText} style={{ color: listenInk }}>
-              {listenWord}
-            </TurnText>
-            {control.detail && (
-              <TurnText
-                kind="footnote"
-                boldText={boldText}
-                style={{ color: colors['ink-secondary'], fontVariant: ['tabular-nums'] }}
-              >
-                {control.detail}
-              </TurnText>
-            )}
-          </View>
-        </Pressable>
-        {control.showsEnd && (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="End"
-            accessibilityHint="Ends Listen mode."
-            onPress={() => {
-              closeComposer()
-              listen.end()
-            }}
-            style={({ pressed }) => ({
-              flexGrow: oneControlColumn ? 1 : 0,
-              minHeight: oneControlColumn ? controlHeight : 44,
-              minWidth: 52,
-              paddingHorizontal: 12,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 22,
-              borderWidth: 2,
-              borderColor: colors.edge,
-              backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-            })}
-          >
-            <TurnText kind="headline" boldText={boldText} style={{ color: colors.ink }}>
-              End
-            </TurnText>
-          </Pressable>
-        )}
+          onEnd={() => {
+            closeComposer()
+            listen.end()
+          }}
+        />
       </View>
     </View>
   )
@@ -1009,6 +700,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
         edges={composerOpen ? ['top', 'left', 'right'] : undefined}
         style={{ flex: 1, backgroundColor: colors.board }}
       >
+        <BoardGlow on={view.micOn} width={width} reduceMotion={reduceMotion} />
         {composerOpen ? (
           <ScrollView
             ref={composerContent}
@@ -1037,7 +729,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
               contentContainerStyle={{
                 paddingHorizontal: 16,
                 paddingTop: layout.wholeMiddleScroll ? 8 : 4,
-                paddingBottom: 16,
+                paddingBottom: 4,
                 gap: layout.gridGap
               }}
               onScroll={(event) => setOffset(event.nativeEvent.contentOffset.y)}
@@ -1072,104 +764,22 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
                 ) : null
               }
             />
-            <View
-              style={{
-                flexDirection: barLayout === 'row' ? 'row' : 'column',
-                gap: 8,
-                paddingHorizontal: 16,
-                paddingVertical: 4,
-                borderTopWidth: StyleSheet.hairlineWidth,
-                borderTopColor: colors.edge
-              }}
-            >
-              {/* Measures each button at its natural width, so the bar picks one row, two, or four without cutting a label. */}
-              <View
-                pointerEvents="none"
-                accessibilityElementsHidden
-                importantForAccessibility="no-hide-descendants"
-                style={{ position: 'absolute', top: 0, left: 0, width: 4000, flexDirection: 'row', opacity: 0 }}
-              >
-                {barMeasures.map(({ label, icon }) => (
-                  <View
-                    key={label}
-                    onLayout={(event) => {
-                      const measured = Math.ceil(event.nativeEvent.layout.width)
-                      setBarWidths((current) =>
-                        current[label] === measured ? current : { ...current, [label]: measured }
-                      )
-                    }}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 4,
-                      paddingHorizontal: 6,
-                      borderWidth: 2
-                    }}
-                  >
-                    <SymbolView name={icon} size={barIcon} tintColor={colors.ink} accessible={false} />
-                    <TurnText kind="headline" boldText={boldText}>
-                      {label}
-                    </TurnText>
-                  </View>
-                ))}
-              </View>
-              {(barLayout === 'row' ? [bottomControls] : [bottomControls.slice(0, 2), bottomControls.slice(2)]).map(
-                (group) => (
-                  <View
-                    key={group[0].label}
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: barLayout === 'row' ? 'nowrap' : 'wrap',
-                      gap: 8,
-                      flexGrow: 1
-                    }}
-                  >
-                    {group.map(({ label, icon, action, disabled }) => (
-                      <Pressable
-                        key={label}
-                        accessibilityRole="button"
-                        accessibilityLabel={label}
-                        accessibilityState={{ disabled }}
-                        disabled={disabled}
-                        onPress={action}
-                        style={({ pressed }) => ({
-                          flexGrow: 1,
-                          minHeight: controlHeight,
-                          minWidth: 44,
-                          paddingHorizontal: 6,
-                          borderRadius: 22,
-                          borderWidth: 2,
-                          borderColor: colors.edge,
-                          backgroundColor: disabled
-                            ? colors.surface
-                            : pressed
-                              ? colors['surface-pressed']
-                              : colors.surface,
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        })}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                          <SymbolView
-                            name={icon}
-                            size={barIcon}
-                            tintColor={disabled ? colors['ink-secondary'] : colors.ink}
-                            accessible={false}
-                          />
-                          <TurnText
-                            kind="headline"
-                            boldText={boldText}
-                            style={{ color: disabled ? colors['ink-secondary'] : colors.ink }}
-                          >
-                            {label}
-                          </TurnText>
-                        </View>
-                      </Pressable>
-                    ))}
-                  </View>
-                )
-              )}
-            </View>
+            <Toolbar
+              width={width}
+              fontScale={fontScale}
+              boldText={boldText}
+              reduceMotion={reduceMotion}
+              reduceTransparency={reduceTransparency}
+              speaking={speaking.speaking}
+              canRepeat={Boolean(speaking.lastText)}
+              canPageUp={offset > 0}
+              canPageDown={offset < contentHeight - viewportHeight}
+              onType={() => setComposerMode('speak')}
+              onRepeat={() => void speech.repeat()}
+              onStop={() => void speech.stop()}
+              onPageUp={() => page(-1)}
+              onPageDown={() => page(1)}
+            />
           </>
         )}
         {composerMode === 'speak' && (
@@ -1186,6 +796,7 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             speaking={speaking.speaking}
             boldText={boldText}
             fontScale={fontScale}
+            replyingTo={listening.active && caption.words ? caption.words : null}
           />
         )}
         {composerMode === 'partner' && (
@@ -1198,6 +809,22 @@ export default function HomeScreen({ bank, speech, listen, boldText, reduceMotio
             fontScale={fontScale}
           />
         )}
+        <PlaceMenu
+          anchor={placeMenu}
+          places={places}
+          selectedId={selectedPlace?.id ?? null}
+          boldText={boldText}
+          fontScale={fontScale}
+          onChoose={(id) => {
+            setPlaceMenu(null)
+            void bank.choosePlace(id)
+          }}
+          onEdit={() => {
+            setPlaceMenu(null)
+            router.push('/settings/places')
+          }}
+          onClose={() => setPlaceMenu(null)}
+        />
       </SafeAreaView>
     </KeyboardAvoidingView>
   )

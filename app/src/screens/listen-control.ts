@@ -2,7 +2,8 @@ import { consentWords } from '../consent/strings'
 
 export type ListenControl = {
   word: string
-  symbol: 'ear' | 'lock' | 'mic.fill' | 'mic.slash'
+  // Listening shows the light, the orange dot, in place of a symbol.
+  symbol: 'ear' | 'lock.fill' | 'pause.fill' | 'mic.slash.fill' | null
   action: 'start' | 'unlock' | 'pause' | 'resume' | null
   hint: string | undefined
   // Under the word while Listen mode is off: the free lines left, or "Unlock" once none are (PAY-1, PAY-2).
@@ -23,7 +24,7 @@ export function listenControl(state: {
   if (!state.active && state.locked) {
     return {
       word: 'Listen',
-      symbol: 'lock',
+      symbol: 'lock.fill',
       action: 'unlock',
       hint: 'Opens Turn Listen',
       detail: 'Unlock',
@@ -43,7 +44,7 @@ export function listenControl(state: {
   if (state.micUnavailable) {
     return {
       word: consentWords.micOff,
-      symbol: 'mic.slash',
+      symbol: 'mic.slash.fill',
       action: null,
       hint: undefined,
       detail: null,
@@ -53,7 +54,7 @@ export function listenControl(state: {
   if (state.paused) {
     return {
       word: 'Paused',
-      symbol: 'mic.slash',
+      symbol: 'pause.fill',
       action: 'resume',
       hint: 'Resumes listening',
       detail: null,
@@ -62,7 +63,7 @@ export function listenControl(state: {
   }
   return {
     word: 'Listening',
-    symbol: 'mic.fill',
+    symbol: null,
     action: 'pause',
     hint: 'Pauses listening',
     detail: null,
