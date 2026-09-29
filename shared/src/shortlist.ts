@@ -95,14 +95,15 @@ export function pickShortlist(
     }
   }
   const tapsOf = (phrase: Phrase) => taps.get(phrase.id) ?? 0
+  const atPlace = (phrase: Phrase) => (phrase.places.includes(place) ? 1 : 0)
   const idsOf = (phrases: Phrase[]) => phrases.map((phrase) => phrase.id)
-  // A stable sort, so the grid's order breaks ties.
+  // Stable sorts, so the grid's order breaks ties.
   const byTaps = [...byId.values()].sort((a, b) => tapsOf(b) - tapsOf(a))
   take(row, Infinity)
   take(index.match(line), 24)
   take(idsOf(byTaps.filter((phrase) => tapsOf(phrase) > 0)), 8)
   take(idsOf(byTaps.filter((phrase) => phrase.places.includes(place))), 8)
-  take(idsOf(byTaps), Infinity)
+  take(idsOf([...byId.values()].sort((a, b) => tapsOf(b) - tapsOf(a) || atPlace(b) - atPlace(a))), Infinity)
   return [...picked.values()]
 }
 
