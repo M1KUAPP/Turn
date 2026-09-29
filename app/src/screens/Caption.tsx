@@ -165,6 +165,10 @@ export default function Caption({
   const lamp = view.micOn && (view.kind === 'opening' || view.lineOpen)
   const edgeWidth = lamp ? 2.5 : 1.5
   const scale = Math.min(fontScale, 2)
+  // Done or Clear keeps the top-right corner: beside the label below AX1, and above the content once the caption grows,
+  // where the pill is too wide to share a line.
+  const besidePill = view.button && !grows ? pill.width + 8 : 0
+  const abovePill = view.button && grows ? pill.height + 8 : 0
   const accessibilityLabel =
     view.kind === 'model' && model
       ? `${listenStrings.gettingModel}, ${modelProgressWords(model.progress, model.secondsLeft)}`
@@ -204,7 +208,7 @@ export default function Caption({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 14,
-        paddingRight: view.button ? pill.width + 8 : 0
+        paddingRight: besidePill
       }}
     >
       <View
@@ -271,7 +275,7 @@ export default function Caption({
           flexWrap: grows ? 'wrap' : 'nowrap',
           alignItems: 'center',
           gap: 6,
-          paddingRight: view.button ? pill.width + 8 : 0
+          paddingRight: besidePill
         }}
       >
         {view.lineOpen && <Light ringStyle={ringStyle} />}
@@ -349,7 +353,7 @@ export default function Caption({
           justifyContent: 'center',
           // The edge thickens while listening inside the same outline, so the words stay put.
           paddingHorizontal: 20 - edgeWidth,
-          paddingTop: oneLine ? 0 : 12.5 - edgeWidth,
+          paddingTop: oneLine ? 0 : 12.5 - edgeWidth + abovePill,
           paddingBottom: oneLine ? 0 : 11.5 - edgeWidth
         }}
       >
@@ -368,10 +372,11 @@ export default function Caption({
           style={({ pressed }) => ({
             position: 'absolute',
             right: 16 - edgeWidth,
-            // Centered on the label's line, above the words, so it never moves a hand has learned.
             top: oneLine
               ? undefined
-              : Math.max(0, 12.5 - edgeWidth + labelRow.y + labelRow.height / 2 - pill.height / 2),
+              : grows
+                ? 12.5 - edgeWidth
+                : Math.max(0, 12.5 - edgeWidth + labelRow.y + labelRow.height / 2 - pill.height / 2),
             alignSelf: oneLine ? 'center' : undefined,
             minHeight: 32,
             flexDirection: 'row',

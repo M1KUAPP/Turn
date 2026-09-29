@@ -33,7 +33,6 @@ function Capsule({
   pressed,
   fill,
   edge,
-  grow,
   height,
   glow,
   children
@@ -41,7 +40,6 @@ function Capsule({
   pressed: boolean
   fill: ColorValue
   edge: ColorValue
-  grow: boolean
   height: number
   glow: boolean
   children: ReactNode
@@ -50,7 +48,6 @@ function Capsule({
   return (
     <View
       style={{
-        flexGrow: grow ? 1 : 0,
         minHeight: height,
         minWidth: 44,
         flexDirection: 'row',
@@ -94,7 +91,6 @@ export default function ListenButton({
       style={{
         flexDirection: 'row',
         flexWrap: fill ? 'wrap' : 'nowrap',
-        flexGrow: fill ? 1 : 0,
         gap: 8,
         alignItems: fill ? 'stretch' : 'center'
       }}
@@ -110,14 +106,7 @@ export default function ListenButton({
         style={{ flexGrow: fill ? 1 : 0 }}
       >
         {({ pressed }) => (
-          <Capsule
-            pressed={pressed && !disabled}
-            fill={look.fill}
-            edge={look.edge}
-            grow={fill}
-            height={height}
-            glow={micOn}
-          >
+          <Capsule pressed={pressed && !disabled} fill={look.fill} edge={look.edge} height={height} glow={micOn}>
             {control.symbol ? (
               <SymbolView
                 name={control.symbol}
@@ -170,14 +159,7 @@ export default function ListenButton({
           style={{ flexGrow: fill ? 1 : 0 }}
         >
           {({ pressed }) => (
-            <Capsule
-              pressed={pressed}
-              fill={colors.surface}
-              edge={colors.edge}
-              grow={fill}
-              height={height}
-              glow={false}
-            >
+            <Capsule pressed={pressed} fill={colors.surface} edge={colors.edge} height={height} glow={false}>
               <TurnText kind="button" boldText={boldText} style={{ color: colors.ink }}>
                 End
               </TurnText>
