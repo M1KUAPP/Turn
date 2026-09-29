@@ -49,9 +49,9 @@ name: Judge scenario
 - scrollUntilVisible:
     element: '.*How was physio\?.*'
 - assertVisible: '.*How was physio\?.*'
-# The grid under the category tabs can hold "It was hard" too, so the row's
-# copy is the one above the All tab. Jev answers in well under a second, so
-# scrolling is the wait.
+# Jev answers in well under a second, so scrolling is the wait. At the default
+# size the row sits just above the category tabs, and the grid under them could
+# hold "It was hard" too, so the row's copy is the one above the All tab.
 - runFlow:
     when:
       visible:
@@ -63,8 +63,15 @@ name: Judge scenario
             text: It was hard
             above: All
           timeout: 60000
-# At AX sizes the row starts below the screen, and a fast swipe flings it past
-# in one go, so scroll slowly and center it clear of Home's fixed bars.
+      - takeScreenshot: judge-row
+      - tapOn:
+          text: It was hard
+          above: All
+# At AX sizes the row is taller than the screen, so the All tab is off it while
+# the reply is on it, and Maestro sees only what's on screen. At Clinic the grid
+# shows Quick, which doesn't hold "It was hard", so the text alone finds the
+# row's. A fast swipe flings the row past in one go, so scroll slowly and center
+# the reply clear of Home's fixed bars before tapping it.
 - runFlow:
     when:
       notVisible:
@@ -72,17 +79,13 @@ name: Judge scenario
         rightOf: Type
     commands:
       - scrollUntilVisible:
-          element:
-            text: It was hard
-            above: All
+          element: It was hard
           centerElement: true
           direction: DOWN
           speed: 10
           timeout: 60000
-- takeScreenshot: judge-row
-- tapOn:
-    text: It was hard
-    above: All
+      - takeScreenshot: judge-row
+      - tapOn: It was hard
 - takeScreenshot: judge-spoken
 - scrollUntilVisible:
     element: End
