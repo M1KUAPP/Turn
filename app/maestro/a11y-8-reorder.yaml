@@ -49,6 +49,11 @@ name: Phrase bank reorder controls
     text: Move up
     below: Care and help
     above: Food and drink
+# Move up can leave the moved row above the screen, so the search starts from the list's top.
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
+    direction: UP
+    speed: 10
 - scrollUntilVisible:
     element:
       text: Care and help
@@ -60,6 +65,11 @@ name: Phrase bank reorder controls
     above: Body and pain
 - scrollUntilVisible:
     element: Quick
+    direction: UP
+    speed: 10
+# Quick can come into view under the header, where a tap lands on the header, so the list goes back to its top.
+- scrollUntilVisible:
+    element: 'Categories organize your phrases\. Move categories here to change the tab order\.'
     direction: UP
     speed: 10
 - tapOn: Quick

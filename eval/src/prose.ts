@@ -1,16 +1,3 @@
-/** Fills prose to 80 columns, as the repo's Markdown style asks, indenting the lines after the first. */
-export const wrap = (text: string, indent = ''): string => {
-  const filled: string[] = []
-  let line = ''
-  for (const word of text.split(' ')) {
-    if (line !== '' && line.length + 1 + word.length > 80) {
-      filled.push(line)
-      line = indent + word
-    } else line = line === '' ? word : `${line} ${word}`
-  }
-  return [...filled, line].join('\n')
-}
-
 /** Text with its first letter capitalized, to start a sentence. */
 export const capital = (text: string): string => text[0].toUpperCase() + text.slice(1)
 
