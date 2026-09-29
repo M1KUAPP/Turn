@@ -10,6 +10,7 @@ final class ListenEngine {
   private static let resultFinalizationTimeoutNanoseconds: UInt64 = 1_000_000_000
   private static let silenceFlushSeconds = 0.25
   private static let silenceFlushLimitSeconds = 3.0
+  private static let minimumVoiceSeconds = 0.3
   private static let voiceRmsThreshold = 0.015
 
   private struct ResultWaiter {
@@ -91,6 +92,11 @@ final class ListenEngine {
   private var tapInstalled = false
   private var capturing = false
   private var voiceActive = false
+  // How long the partner's voice has been above the speech level since the last line ended, and where in the audio it
+  // last fell.
+  private var voicedSeconds = 0.0
+  private var voiceEndedAt = CMTime.zero
+  private var silenceWindowPending = false
   private var lineFinalizing = false
   private var finalizeReturned = false
   private var finalizedText = ""
@@ -248,6 +254,7 @@ final class ListenEngine {
     removeCapture()
     silenceTask?.cancel()
     silenceTask = nil
+    silenceWindowPending = false
     // A line already finalizing waits for audio past its boundary, which no longer comes.
     var flushed = 0.0
     while lineFinalizing, flushed < Self.silenceFlushLimitSeconds {
@@ -471,6 +478,7 @@ final class ListenEngine {
           for try await result in transcriber.results {
             self?.receiveResult(
               text: String(result.text.characters),
+              range: result.range,
               finalizationTime: result.resultsFinalizationTime,
               isFinal: result.isFinal
             )
@@ -485,6 +493,7 @@ final class ListenEngine {
           for try await result in transcriber.results {
             self?.receiveResult(
               text: String(result.text.characters),
+              range: result.range,
               finalizationTime: result.resultsFinalizationTime,
               isFinal: result.isFinal
             )
@@ -539,6 +548,7 @@ final class ListenEngine {
 
     input.installTap(onBus: 0, bufferSize: 4096, format: microphoneFormat) { [weak self] buffer, _ in
       let level = Self.rmsLevel(of: buffer)
+      let seconds = Double(buffer.frameLength) / buffer.format.sampleRate
       do {
         let converted = try Self.convertBuffer(
           buffer,
@@ -551,7 +561,7 @@ final class ListenEngine {
         )
         inputBuilder.yield(AnalyzerInput(buffer: converted))
         Task { @MainActor [weak self] in
-          self?.receiveAudioLevel(level)
+          self?.receiveAudioLevel(level, seconds: seconds)
         }
       } catch {
         let reason = String(describing: error)
@@ -636,17 +646,20 @@ final class ListenEngine {
     }
   }
 
-  private func receiveAudioLevel(_ level: Double) {
+  private func receiveAudioLevel(_ level: Double, seconds: Double) {
     guard capturing else { return }
     if level >= Self.voiceRmsThreshold {
+      voicedSeconds += seconds
       if !voiceActive {
         voiceActive = true
         onVoice(true)
       }
       silenceTask?.cancel()
       silenceTask = nil
+      silenceWindowPending = false
     } else if voiceActive {
       voiceActive = false
+      voiceEndedAt = timeline.end
       onVoice(false)
       scheduleSilenceLineEnd()
     }
@@ -654,6 +667,7 @@ final class ListenEngine {
 
   private func receiveResult(
     text: String,
+    range: CMTimeRange,
     finalizationTime: CMTime,
     isFinal: Bool
   ) {
@@ -673,16 +687,22 @@ final class ListenEngine {
     guard nextText != renderedText else { return }
     renderedText = nextText
     onPartial(Self.lineText(nextText))
-    if !voiceActive, Self.hasWords(nextText) {
+    // Results trail the audio by a second or more, so words heard before the voice fell don't restart the window;
+    // only words after it, or words from a partner too quiet to pass the speech level, do.
+    if !voiceActive, Self.hasWords(nextText),
+       !silenceWindowPending || CMTimeCompare(CMTimeRangeGetEnd(range), voiceEndedAt) > 0 {
       scheduleSilenceLineEnd()
     }
   }
 
   private func scheduleSilenceLineEnd() {
-    guard !lineFinalizing, Self.hasWords(currentText()) else {
+    // The voice falling ends a line even before its words arrive, since finalizing then delivers them, unless it rose
+    // too briefly to be speech: finalizing just before a line can cost the line its first words.
+    guard !lineFinalizing, voicedSeconds >= Self.minimumVoiceSeconds || Self.hasWords(currentText()) else {
       return
     }
     silenceTask?.cancel()
+    silenceWindowPending = true
     silenceTask = Task { @MainActor [weak self] in
       do {
         try await Task.sleep(nanoseconds: Self.silenceWindowNanoseconds)
@@ -690,6 +710,7 @@ final class ListenEngine {
         return
       }
       guard let self, !self.voiceActive, !self.lineFinalizing else { return }
+      self.silenceWindowPending = false
       do {
         try await self.finishCurrentAudio(publishLine: true)
       } catch {
@@ -713,6 +734,7 @@ final class ListenEngine {
       onLine(line, endedAt, Self.silenceWindowMs)
     }
 
+    if !voiceActive { voicedSeconds = 0 }
     finalizedText = ""
     renderedText = currentText()
     if !volatileText.isEmpty {
@@ -721,7 +743,9 @@ final class ListenEngine {
   }
 
   private func waitForSettledResults(through boundary: CMTime) async {
-    guard !currentText().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+    // Finalizing delivers the settled text, whose finalization time can stay short of the boundary after a silence,
+    // so only words still volatile are waited for.
+    guard Self.hasWords(volatileText),
           CMTimeCompare(latestResultsFinalizationTime, boundary) < 0 else {
       return
     }
@@ -748,7 +772,7 @@ final class ListenEngine {
   private func resumeSettledWaiters() {
     let settled = Array(resultWaiters.keys.filter { id in
       guard let waiter = resultWaiters[id] else { return false }
-      return CMTimeCompare(latestResultsFinalizationTime, waiter.through) >= 0
+      return CMTimeCompare(latestResultsFinalizationTime, waiter.through) >= 0 || !Self.hasWords(volatileText)
     })
     for id in settled {
       resumeResultWaiter(id)
@@ -769,6 +793,8 @@ final class ListenEngine {
     finalizedText = ""
     volatileText = ""
     renderedText = ""
+    voicedSeconds = 0
+    silenceWindowPending = false
     for id in Array(resultWaiters.keys) {
       resumeResultWaiter(id)
     }
