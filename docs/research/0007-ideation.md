@@ -5,6 +5,9 @@ The ten rounds of ideation behind [the idea](/docs/archive/guessling-idea.md), r
 Contents:
 
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
+    1.  [Hard constraints](#hard-constraints)
+    1.  [Assumptions](#assumptions)
+    1.  [Rubric](#rubric)
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 1.  [Round 3: screening](#round-3-screening)
 1.  [Round 4: scoring](#round-4-scoring)
@@ -13,6 +16,10 @@ Contents:
 1.  [Round 7: the choice](#round-7-the-choice)
 1.  [Round 8: monetization](#round-8-monetization)
 1.  [Round 9: scope, stack, and schedule](#round-9-scope-stack-and-schedule)
+    1.  [Scope of the first version](#scope-of-the-first-version)
+    1.  [Stack and data flow](#stack-and-data-flow)
+    1.  [Schedule](#schedule)
+    1.  [Review-safety checklist](#review-safety-checklist)
 1.  [Round 10: pitch test](#round-10-pitch-test)
 
 ## Round 1: constraints and rubric

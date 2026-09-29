@@ -10,6 +10,14 @@
 
 **Spec:** [Issue #41](https://github.com/RevenueCat-M1KU/RevenueCat/issues/41), [the phrase bank](/docs/PRD.md#the-phrase-bank), [the phone's database](/docs/TRD.md#the-phones-database), [the phrase bank editor](/docs/DESIGN.md#the-phrase-bank-editor), [the phrase button](/docs/DESIGN.md#the-phrase-button).
 
+Contents:
+
+1.  [Rules the store enforces](#rules-the-store-enforces)
+1.  [Task 1: Category operations](#task-1-category-operations)
+1.  [Task 2: Phrase operations and Undo](#task-2-phrase-operations-and-undo)
+1.  [Task 3: Screens and entry points](#task-3-screens-and-entry-points)
+1.  [Task 4: Handoff](#task-4-handoff)
+
 ## Rules the store enforces
 
 - **Count.** At most 12 categories, counting the hidden `strip` and counting Typed even before it exists, since `saveTypedPhrase` creates it on the first typed phrase (TRD: the starter's ten categories "leave room under BANK-2's 12 for Typed and at least one more"). Names hold 1 to 40 characters, trimmed.

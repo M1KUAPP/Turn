@@ -10,6 +10,15 @@
 
 **Spec:** [Issue #42](https://github.com/RevenueCat-M1KU/RevenueCat/issues/42), [voices](/docs/PRD.md#voices), [the turn-voice module](/docs/TRD.md#the-turn-voice-module), [Settings](/docs/DESIGN.md#settings), [iPhone notes on Personal Voice](/docs/research/0023-turn-ios.md#personal-voice).
 
+Contents:
+
+1.  [Rules](#rules)
+1.  [Task 1: Voice settings](#task-1-voice-settings)
+1.  [Task 2: The turn-voice module](#task-2-the-turn-voice-module)
+1.  [Task 3: Speaking with the voice and rate](#task-3-speaking-with-the-voice-and-rate)
+1.  [Task 4: Settings](#task-4-settings)
+1.  [Task 5: Handoff](#task-5-handoff)
+
 ## Rules
 
 - **The voice list (VOICE-1).** "System default" first, then the installed English voices from `Speech.getAvailableVoicesAsync()` sorted by name, then the Personal Voice when authorized and resolved, deduplicated by identifier. Apple's novelty voices, whose identifiers start with `com.apple.speech.synthesis.voice.`, are English too and are left out.

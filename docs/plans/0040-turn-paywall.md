@@ -10,6 +10,19 @@
 
 **Spec:** #53 and #59; the PRD's [paywall and purchases](/docs/PRD.md#the-paywall-and-purchases) (PAY-1 to PAY-10), STATE-4, SPEAK-5, SET-1, PRIV-4, and METRIC-4; the TRD's [purchases and entitlements](/docs/TRD.md#purchases-and-entitlements); the design's [Listen control](/docs/DESIGN.md#the-listen-control), [Settings](/docs/DESIGN.md#settings), [the paywall](/docs/DESIGN.md#the-paywall), the home screen's states, and [the strings the PRD leaves open](/docs/DESIGN.md#strings-the-prd-leaves-open).
 
+Contents:
+
+1.  [Existing behavior and decisions](#existing-behavior-and-decisions)
+1.  [The port](#the-port)
+1.  [The store](#the-store)
+1.  [What each door does](#what-each-door-does)
+1.  [The relay path](#the-relay-path)
+1.  [The screens](#the-screens)
+1.  [Tests](#tests)
+1.  [The Simulator checks (#59)](#the-simulator-checks-59)
+1.  [METRIC-4](#metric-4)
+1.  [Tasks](#tasks)
+
 ## Existing behavior and decisions
 
 - **The paywall is published.** #26 built it in RevenueCat's editor and attached it to the offering `default`, whose one package, `$rc_lifetime`, sells the $24.99 non-consumable `turn_listen` for the entitlement `listen`. DESIGN names its words: "Keep Listen mode on", "Turn Listen is one payment. Speaking stays free.", and "Unlock Listen mode".

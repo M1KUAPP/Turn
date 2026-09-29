@@ -5,14 +5,24 @@ The ten rounds of ideation behind [the idea](/docs/IDEA.md), run on September 22
 Contents:
 
 1.  [Round 1: constraints and rubric](#round-1-constraints-and-rubric)
+    1.  [Hard constraints](#hard-constraints)
+    1.  [Assumptions](#assumptions)
+    1.  [Rubric](#rubric)
 1.  [Round 2: thirty candidates](#round-2-thirty-candidates)
 1.  [Round 3: screening](#round-3-screening)
 1.  [Round 4: scoring](#round-4-scoring)
 1.  [Round 5: evidence](#round-5-evidence)
 1.  [Round 6: red team](#round-6-red-team)
+    1.  [Failures every finalist shares](#failures-every-finalist-shares)
+    1.  [Turn under attack](#turn-under-attack)
+    1.  [Same Boat under attack](#same-boat-under-attack)
+    1.  [Scenekeeper under attack](#scenekeeper-under-attack)
 1.  [Round 7: the choice](#round-7-the-choice)
 1.  [Round 8: monetization](#round-8-monetization)
 1.  [Round 9: scope, stack, and schedule](#round-9-scope-stack-and-schedule)
+    1.  [Scope of the first version](#scope-of-the-first-version)
+    1.  [Stack and data flow](#stack-and-data-flow)
+    1.  [Schedule to September 30](#schedule-to-september-30)
 1.  [Round 10: pitch test](#round-10-pitch-test)
 
 ## Round 1: constraints and rubric
