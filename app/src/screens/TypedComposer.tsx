@@ -78,6 +78,12 @@ export default function TypedComposer({
           <SymbolView name="xmark" size={18} weight="semibold" tintColor={colors.ink} accessible={false} />
         </Pressable>
       </View>
+      {replyingTo && (
+        // The field keeps its visible name while it replies, as DESIGN's composer strings have it.
+        <TurnText kind="label" boldText={boldText} style={{ color: colors['ink-secondary'], marginTop: -4 }}>
+          Type what to say
+        </TurnText>
+      )}
       <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10, flexShrink: 1 }}>
         <TextInput
           autoFocus
