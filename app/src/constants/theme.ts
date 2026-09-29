@@ -58,7 +58,7 @@ export const colors = Object.fromEntries(
   ])
 ) as Record<ColorName, ReturnType<typeof DynamicColorIOS>>
 
-/** Each starter category's fill and inked edge, by the starter bank's category ID (DESIGN, category colors). */
+/** Each starter category's fill and inked edge, by the starter bank's category ID (DESIGN, colors). */
 export const categoryColors = {
   quick: { fill: colors['category-quick-fill'], edge: colors['category-quick-edge'] },
   chat: { fill: colors['category-chat-fill'], edge: colors['category-chat-edge'] },
