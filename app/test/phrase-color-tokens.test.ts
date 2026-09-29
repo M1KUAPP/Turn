@@ -3,7 +3,7 @@ import { expect, test, vi } from 'vitest'
 vi.mock('react-native', () => ({ DynamicColorIOS: ({ light }: { light: string }) => light }))
 
 test('maps fixed reply ids to their shared fill and edge tokens', async () => {
-  const row = await import('../src/screens/category-palette')
+  const row = await import('../src/screens/category-style')
 
   expect(row.phraseColorTokensForId).toBeTypeOf('function')
   expect(row.phraseColorTokensForId('yes')).toEqual({ fill: 'yes-fill', edge: 'yes-edge' })
