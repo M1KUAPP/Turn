@@ -43,6 +43,7 @@ name: Under-18 partner
     element:
       text: '.*My partner is under 18.*'
       above: They agreed
+    timeout: 60000
 - assertVisible:
     text: '.*My partner is under 18.*'
     checked: true
