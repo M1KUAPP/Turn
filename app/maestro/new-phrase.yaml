@@ -1,0 +1,122 @@
+appId: com.m1ku.turn
+name: A new phrase
+# PRD scenario 11: a typed sentence joins the bank, and the next partner line
+# about it brings it into the row.
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# Speak the new sentence through the composer, as in bank-2-actions.yaml.
+- scrollUntilVisible:
+    element: Type
+    direction: DOWN
+- tapOn: Type
+- extendedWaitUntil:
+    visible: Type what to say
+    timeout: 10000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Type what to say
+    direction: DOWN
+- inputText: The new nurse is kind
+- scrollUntilVisible:
+    element: Speak
+    direction: DOWN
+- tapOn: Speak
+- scrollUntilVisible:
+    element: Close composer
+    direction: UP
+- tapOn: Close composer
+- waitForAnimationToEnd
+# Then a partner asks about the nurse.
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+# From AX1 Mic off's message fills the top of the column and can end a line past the screen's edge, so most of it
+# is enough, as in listen.yaml.
+- scrollUntilVisible:
+    element: '.*Tap here to type what they say\..*'
+    visibilityPercentage: 90
+- tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'What do you think of the new nurse?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+# At the default size, run 36644149652 never saw Repeat after this tap, as if
+# the composer stayed open, so a Send still on screen gets one more. "They said"
+# labels only the caption, not the composer's field, so the wait below passes
+# once the line is sent.
+- runFlow:
+    when:
+      visible: Send
+    commands:
+      - tapOn: Send
+- extendedWaitUntil:
+    visible: '.*They said.*What do you think of the new nurse\?.*'
+    timeout: 30000
+# The bottom bar is back once the partner's composer closes, so the size checks
+# below read it, as in stats.yaml. The grid shows Quick, which doesn't hold the
+# typed sentence, but at the default size the row's copy is the one above the
+# All tab, as in judge.yaml.
+- extendedWaitUntil:
+    visible: Repeat
+    timeout: 30000
+- runFlow:
+    when:
+      notVisible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element: The new nurse is kind
+          centerElement: true
+          direction: DOWN
+          speed: 10
+          timeout: 60000
+      - takeScreenshot: new-phrase-row
+      - tapOn: The new nurse is kind
+- runFlow:
+    when:
+      visible:
+        text: Repeat
+        rightOf: Type
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: The new nurse is kind
+            above: All
+          timeout: 60000
+      - takeScreenshot: new-phrase-row
+      - tapOn:
+          text: The new nurse is kind
+          above: All
+- scrollUntilVisible:
+    element: End
+- tapOn: End
+- scrollUntilVisible:
+    element: '^Listen$'
+- assertVisible: '^Listen$'
