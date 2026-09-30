@@ -5,7 +5,7 @@ import TurnText from '../screens/TurnText'
 import { useTurn } from '../turn-context'
 
 export default function HomeRoute() {
-  const { ready, error, boldText, reduceMotion } = useTurn()
+  const { ready, error, boldText, reduceMotion, increaseContrast, reduceTransparency } = useTurn()
   if (ready)
     return (
       <HomeScreen
@@ -14,6 +14,8 @@ export default function HomeRoute() {
         listen={ready.listen}
         boldText={boldText}
         reduceMotion={reduceMotion}
+        increaseContrast={increaseContrast}
+        reduceTransparency={reduceTransparency}
       />
     )
 

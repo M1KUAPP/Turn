@@ -1,34 +1,52 @@
-import { Fragment, useEffect, useState } from 'react'
 import { SymbolView } from 'expo-symbols'
-import { Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native'
+import { useEffect, useState } from 'react'
+import { Modal, Pressable, ScrollView, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import type { VoiceOption } from '../speech/voice-settings'
+import { SPEECH_RATE_STEPS, type SpeechRateStep, type VoiceOption } from '../speech/voice-settings'
 import { colors } from '../constants/theme'
 import { useTurn } from '../turn-context'
+import Button from './Button'
+import {
+  GroupHeader,
+  GroupNote,
+  ListGroup,
+  ListRow,
+  ScreenTitle,
+  useScreenTitle,
+  SymbolTile,
+  tileTones,
+  useListMetrics
+} from './ListGroup'
+import SegmentedControl from './SegmentedControl'
+import SheetHeader, { SheetActions } from './SheetHeader'
+import PressFill from './PressFill'
 import TurnText from './TurnText'
 
 const previewText = 'Hello. This is how I sound.'
 
 export default function VoiceScreen() {
   const { ready, boldText } = useTurn()
-  // From AX1 a voice's name takes its own line, with Preview under it, so no name breaks mid-word.
-  const stacked = useWindowDimensions().fontScale >= 1.786
+  const { tile, mark } = useListMetrics()
   const voiceSettings = ready?.voiceSettings
   const [voices, setVoices] = useState<readonly VoiceOption[]>([])
-  const [selectedIdentifier, setSelectedIdentifier] = useState<string | null>(null)
+  const [selected, setSelected] = useState<VoiceOption | null>(null)
+  const [rateStep, setRateStep] = useState<SpeechRateStep | null>(null)
   const [note, setNote] = useState<string | null>(null)
+  const [personalNote, setPersonalNote] = useState<string | null>(null)
+  const { onTitleLayout, scrollProps } = useScreenTitle('Voice')
 
   useEffect(() => {
     if (!voiceSettings) return
     const read = () => {
       setVoices(voiceSettings.voices())
-      setSelectedIdentifier(voiceSettings.selected().identifier)
+      setSelected(voiceSettings.selected())
+      setRateStep(voiceSettings.rateStep())
     }
     read()
     return voiceSettings.subscribe(read)
   }, [voiceSettings])
 
-  if (!ready) {
+  if (!ready || !voiceSettings) {
     return (
       <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board, padding: 16 }}>
         <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
@@ -38,54 +56,45 @@ export default function VoiceScreen() {
     )
   }
 
+  const choosePersonalVoice = async () => {
+    setNote(null)
+    try {
+      setPersonalNote(await voiceSettings.choosePersonalVoice())
+    } catch (cause) {
+      setNote(cause instanceof Error ? cause.message : String(cause))
+    }
+  }
+
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 16 }}>
-        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-          Choose a voice or preview how it sounds.
-        </TurnText>
-        <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
-          {voices.map((voice, index) => {
-            const selected = voice.identifier === selectedIdentifier
-            return (
-              <Fragment key={voice.identifier ?? 'system-default'}>
-                {index > 0 && (
-                  <View style={{ height: StyleSheet.hairlineWidth, marginLeft: 12, backgroundColor: colors.edge }} />
-                )}
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      {...scrollProps}
+      style={{ flex: 1, backgroundColor: colors.board }}
+      contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40, gap: 22 }}
+    >
+      <ScreenTitle title="Voice" boldText={boldText} onLayout={onTitleLayout} />
+      <View>
+        <GroupHeader title="Voice" boldText={boldText} />
+        <ListGroup>
+          <ListRow
+            label="Personal Voice"
+            boldText={boldText}
+            symbol="person.wave.2.fill"
+            subtitle="Your own voice, made in iOS"
+            checked={selected?.personal === true}
+            accessibilityHint="Ask iOS to let Turn use your Personal Voice"
+            onPress={() => void choosePersonalVoice()}
+          />
+          {voices
+            .filter((voice) => !voice.personal)
+            .map((voice) => {
+              const on = selected?.personal !== true && voice.identifier === (selected?.identifier ?? null)
+              return (
                 <View
-                  style={{
-                    minHeight: 60,
-                    flexDirection: stacked ? 'column' : 'row',
-                    alignItems: stacked ? 'stretch' : 'center',
-                    gap: 8,
-                    paddingHorizontal: 12,
-                    paddingBottom: stacked ? 12 : 0
-                  }}
+                  key={voice.identifier ?? 'system-default'}
+                  style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10 }}
                 >
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel={voice.name}
-                    accessibilityState={{ selected }}
-                    onPress={() => {
-                      setNote(null)
-                      void voiceSettings?.chooseVoice(voice.identifier).catch((cause) => setNote(String(cause)))
-                    }}
-                    style={({ pressed }) => ({
-                      flex: stacked ? undefined : 1,
-                      minHeight: 52,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 8,
-                      paddingVertical: 8,
-                      paddingRight: 4,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                    })}
-                  >
-                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
-                      {voice.name}
-                    </TurnText>
-                    {selected && <SymbolView name="checkmark" size={18} tintColor={colors.accent} accessible={false} />}
-                  </Pressable>
+                  {/* The voice's tile is its Preview button, so a tap on the name only chooses it. */}
                   <Pressable
                     accessibilityRole="button"
                     accessibilityLabel="Preview"
@@ -94,34 +103,117 @@ export default function VoiceScreen() {
                       setNote(null)
                       void ready.speech.preview(previewText, voice.identifier).catch((cause) => setNote(String(cause)))
                     }}
-                    style={({ pressed }) => ({
-                      alignSelf: stacked ? 'flex-start' : undefined,
-                      minWidth: 84,
-                      minHeight: 44,
+                    style={{
+                      width: Math.max(44, tile),
+                      height: Math.max(44, tile),
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingHorizontal: 12,
-                      borderWidth: 2,
-                      borderColor: colors.edge,
-                      borderRadius: 22,
-                      backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                    })}
+                      borderRadius: 14
+                    }}
                   >
-                    <TurnText kind="label" boldText={boldText} style={{ color: colors.accent }}>
-                      Preview
-                    </TurnText>
+                    {({ pressed }) => (
+                      <>
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} radius={14} />
+                        <SymbolTile symbol="speaker.wave.2.fill" tone={tileTones.accent} />
+                      </>
+                    )}
+                  </Pressable>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={voice.name}
+                    accessibilityState={{ selected: on }}
+                    onPress={() => {
+                      setNote(null)
+                      void voiceSettings.chooseVoice(voice.identifier).catch((cause) => setNote(String(cause)))
+                    }}
+                    style={{
+                      flex: 1,
+                      minHeight: 56,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 12,
+                      paddingLeft: 6,
+                      paddingRight: 16,
+                      paddingVertical: 10
+                    }}
+                  >
+                    {({ pressed }) => (
+                      <>
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} />
+                        <TurnText kind="body" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
+                          {voice.name}
+                        </TurnText>
+                        {on && (
+                          <SymbolView
+                            name="checkmark"
+                            size={mark + 3}
+                            weight="semibold"
+                            tintColor={colors.accent}
+                            accessible={false}
+                          />
+                        )}
+                      </>
+                    )}
                   </Pressable>
                 </View>
-              </Fragment>
-            )
-          })}
-        </View>
-        {note && (
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            {note}
-          </TurnText>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+              )
+            })}
+        </ListGroup>
+        <GroupNote boldText={boldText}>Choose a voice or preview how it sounds.</GroupNote>
+        {note && <GroupNote boldText={boldText}>{note}</GroupNote>}
+      </View>
+
+      <View>
+        <GroupHeader title="Speech rate" boldText={boldText} />
+        <SegmentedControl
+          options={SPEECH_RATE_STEPS.map(({ label, step }) => ({ label, value: step }))}
+          selected={rateStep}
+          onSelect={(step) => void voiceSettings.chooseRate(step).catch((cause) => setNote(String(cause)))}
+          boldText={boldText}
+        />
+      </View>
+
+      <Modal
+        visible={personalNote !== null}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setPersonalNote(null)}
+      >
+        <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
+          <SheetHeader
+            title="Personal Voice"
+            boldText={boldText}
+            closeLabel="Close"
+            onClose={() => setPersonalNote(null)}
+          />
+          <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 16, gap: 16 }}>
+            <View
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 28,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: colors['accent-soft']
+              }}
+            >
+              <SymbolView
+                name="person.wave.2.fill"
+                size={28}
+                weight="semibold"
+                tintColor={colors.accent}
+                accessible={false}
+              />
+            </View>
+            <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+              {personalNote}
+            </TurnText>
+          </ScrollView>
+          <SheetActions>
+            <Button variant="primary" label="OK" boldText={boldText} onPress={() => setPersonalNote(null)} />
+          </SheetActions>
+        </SafeAreaView>
+      </Modal>
+    </ScrollView>
   )
 }

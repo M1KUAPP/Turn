@@ -40,8 +40,16 @@ name: Turn Listen failed purchase
 - takeScreenshot: paywall-failed-dismissed
 # The published paywall labels its close button ✕; the fallback's said Close.
 - tapOn: 'Close|✕'
+# v2's Settings sets the purchase's note under the Turn Listen group, below the fold at AX5.
+- scrollUntilVisible:
+    element: "The purchase didn't go through. Listen mode is still locked."
+    direction: DOWN
+    timeout: 30000
 - extendedWaitUntil:
     visible: "The purchase didn't go through. Listen mode is still locked."
     timeout: 30000
+- scrollUntilVisible:
+    element: Unlock Listen mode
+    direction: UP
 - assertVisible: Unlock Listen mode
 - takeScreenshot: paywall-failed-locked

@@ -25,7 +25,7 @@ describe('the Listen control', () => {
   test('locked, it shows a lock and Unlock, and opens the paywall (PAY-2)', () => {
     expect(listenControl({ ...off, locked: true, countLabel: null })).toEqual({
       word: 'Listen',
-      symbol: 'lock',
+      symbol: 'lock.fill',
       action: 'unlock',
       hint: 'Opens Turn Listen',
       detail: 'Unlock',
@@ -36,7 +36,7 @@ describe('the Listen control', () => {
   test('once Listen mode is on, neither a lock nor a count shows', () => {
     for (const state of [on, { ...on, paused: true }, { ...on, micUnavailable: true }]) {
       const control = listenControl({ ...state, locked: true, countLabel: '20 free' })
-      expect(control.symbol).not.toBe('lock')
+      expect(control.symbol).not.toBe('lock.fill')
       expect(control.action).not.toBe('unlock')
       expect(control.detail).toBeNull()
     }
@@ -45,7 +45,7 @@ describe('the Listen control', () => {
   test('listening, it pauses, says so to VoiceOver, and has no End beside it', () => {
     expect(listenControl(on)).toEqual({
       word: 'Listening',
-      symbol: 'mic.fill',
+      symbol: null,
       action: 'pause',
       hint: 'Pauses listening',
       detail: null,
@@ -56,7 +56,7 @@ describe('the Listen control', () => {
   test('paused, it resumes without the card, with End beside it', () => {
     expect(listenControl({ ...on, paused: true })).toEqual({
       word: 'Paused',
-      symbol: 'mic.slash',
+      symbol: 'pause.fill',
       action: 'resume',
       hint: 'Resumes listening',
       detail: null,
@@ -67,7 +67,7 @@ describe('the Listen control', () => {
   test('with the mic off, a tap does nothing, and End stays beside it', () => {
     expect(listenControl({ ...on, micUnavailable: true })).toEqual({
       word: consentWords.micOff,
-      symbol: 'mic.slash',
+      symbol: 'mic.slash.fill',
       action: null,
       hint: undefined,
       detail: null,
