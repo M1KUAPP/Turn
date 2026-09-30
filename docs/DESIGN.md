@@ -32,12 +32,14 @@ Contents:
     1.  [The grid](#the-grid)
     1.  [The bottom bar](#the-bottom-bar)
     1.  [The composer](#the-composer)
+    1.  [The companion](#the-companion)
     1.  [Buttons and lists](#buttons-and-lists)
 1.  [Motion](#motion)
 1.  [Sound and haptics](#sound-and-haptics)
 1.  [Screens](#screens)
     1.  [The home screen, state by state](#the-home-screen-state-by-state)
     1.  [Typing](#typing)
+    1.  [The partner view](#the-partner-view)
     1.  [The permission step](#the-permission-step)
     1.  [The consent card](#the-consent-card)
     1.  [Settings](#settings)
@@ -84,8 +86,8 @@ Every screen keeps these ten rules; each names the requirement or principle it s
 4.  **Text follows Dynamic Type.** Every text style follows one of Apple's up to AX5 and wraps; only the row may cut a phrase short, and only the caption the partner's words, and then VoiceOver gives the whole text (A11Y-4). Test: every screen at AX5.
 5.  **Targets for unsteady hands.** Phrase buttons in the row and the grid are at least 78 points tall, or 64 on short screens, the strip's at least 48, and every other control at least 44 by 44 (A11Y-1). Test: the Accessibility Inspector.
 6.  **Only a tap speaks.** Nothing speaks without a tap, nothing acts on touch-down, and nothing needs a long press, a swipe, or a drag: the grid scrolls, and page buttons do the same with a tap (ROW-6, A11Y-5, A11Y-8). Test: every scenario with single taps.
-7.  **Motion answers someone.** Only a press, replies arriving, the big reply, the listening light and its meter, the words arriving in the caption, and the speaking slot move anything, and Reduce Motion, read live, stills them all (A11Y-6). Test: turn Reduce Motion on mid-session.
-8.  **No glass behind words.** Glass appears only on the floating bottom toolbar and the system's own chrome; phrases, the caption, notes, and the consent card sit on solid fills, so their contrast holds at every glass setting (A11Y-7). Test: both ends of the Liquid Glass slider.
+7.  **Motion answers someone.** Only a press, replies arriving, the big reply, the listening light and its meter, the words arriving in the caption, the speaking slot, and the companion's face move anything, and Reduce Motion, read live, stills them all (A11Y-6). Test: turn Reduce Motion on mid-session.
+8.  **No glass behind words.** Glass appears only on the floating bottom toolbar, the companion's face beside it, and the system's own chrome; phrases, the caption, notes, and the consent card sit on solid fills, so their contrast holds at every glass setting (A11Y-7). Test: both ends of the Liquid Glass slider.
 9.  **The system decides the look.** Turn follows the iPhone's appearance, Increase Contrast, and Bold Text, and has no theme of its own, so text keeps its size and contrast in every appearance (A11Y-4, A11Y-7). Test: all four appearances, with Bold Text on and off.
 10. **Plain words, no AI badges.** No percentages, sparkles, "smart", or exclamation marks, and a reply looks like any other phrase of the user's, because it is one ([product principles][product-principles]). Test: read every string in [Words on screen](#words-on-screen).
 
@@ -1333,6 +1335,15 @@ A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point
 - **Your words.** Docked above the keyboard: a field in `body` that grows to four lines and then scrolls, "Replying to" and the partner's line above it in `partner-line-small`, and Speak as `button-primary` (SPEAK-3). While Turn speaks, Speak becomes Stop. Within 50 characters of the 500-character limit, a count in `label` says how many are left.
 - **Their words.** The same composer, labeled "What did they say?" (LISTEN-4), with Send on `ink`, its word and `arrow.uturn.backward` in `surface`, never marker blue, so a partner's words can't be mistaken for the user's.
 
+### The companion
+
+An opt-in face for the user's voice, chosen in Settings, drawn from Live2D models as still frames ([plan 0048](/docs/plans/0048-turn-companion.md)):
+
+- **Where it sits.** On Home, a 64-point glass circle left of the bottom bar, which narrows to 298 points with 70-point pills; in the composer, left of the field, below AX1. It never moves between states, so nothing shifts under a finger.
+- **Its state, first match wins.** Speaking while Turn speaks, in a 2.5 `accent` ring; Typing while the composer has focus, looking down, in the 1.5 `edge`; Listening while the partner's words arrive, looking up, in a 2.5 `listen` ring; and Rest.
+- **A tap** opens [the partner view](#the-partner-view), and VoiceOver reads it as "Turn to partner". The face never speaks on its own, and every state also shows in words: the Listen control, Stop, and the open composer.
+- **Where it stays out.** The first launch, consent, the paywall and purchases, alerts, stats, the phrase bank, and any place whose "Show the face here" is off.
+
 ### Buttons and lists
 
 - **Primary.** `button-primary`: a marker-blue capsule, 56 points tall, its word in `button`, `on-accent`; at most one to a screen.
@@ -1360,6 +1371,7 @@ Motion is feedback, never decoration. The format has no motion tokens, and its m
 | The meter         | Five bars follow the input level, and lie flat where the engine measures none                                         | The recognizer's level, up to 10 Hz; spring (damping 18, stiffness 220)            | Bars hidden; "They're saying" stays                               |
 | Words arrive      | Each new word fades in, and the newest sits on a `listen-soft` highlight that fades                                   | 120 ms a word; highlight 600 ms                                                    | No fade; the highlight stays on the last word until the line ends |
 | Speaking          | The slot's waveform symbol animates, and Repeat cross-fades to Stop                                                   | SF Symbol `variableColor.iterative`; 150 ms                                        | Static symbol                                                     |
+| The companion     | While Turn speaks, the face cycles its rest, half, and open frames; at rest it blinks                                 | About 8 frames a second; a 120 ms blink every 4 to 6 s                             | The half frame while speaking, and no blink; Let it move off too  |
 | Sheets and alerts | System                                                                                                                | System                                                                             | System                                                            |
 
 - **Nothing else moves.** No entrances, springs, parallax, shimmer, skeletons, or loops beyond the light's ring; the grid never animates; and a press changes the fill, never the size, so the target stays where the finger is ([motionsites notes][ms-app]).
@@ -1411,6 +1423,10 @@ Each screen uses the components above; the TRD's [routes](/docs/TRD.md#screens-a
 
 The composer docks above the keyboard, with "Replying to" and the partner's line above the field in Listen mode; the row shows the phrases matching the letters typed (SPEAK-4) and returns to its last answer when the keyboard closes. Speak says the text and adds it to Typed (SPEAK-3), and the caption keeps what it showed.
 
+### The partner view
+
+`/partner`, full screen, reached only by tapping the companion's face: Done and a flip that turns the screen 180° for someone across a table, the face's 370 by 440 portrait on the lamp's warm glow, mouthing what Turn says with a "Speaking" pill, the last line in `phrase-big` on a card, and Say it again as the primary button. The portrait is decoration; the line is the words.
+
 ### The permission step
 
 `/permission`, a form sheet at full height, since it's for reading, on the `board`, as every sheet is (CONSENT-1):
@@ -1441,7 +1457,7 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 `/settings`, a native stack screen with grouped lists on the board, in the order SET-1 gives:
 
-- **Voice.** The voice and the speech rate, each opening the Voice screen: Personal Voice first, with VOICE-2's explanation in a sheet when iOS says no; the voices, each tile its preview; and the speech rate as a segmented control of five steps, each chosen with one tap, since a slider needs a drag (A11Y-5).
+- **Voice.** The voice and the speech rate, each opening the Voice screen, and the companion, which opens `/settings/companion`: four faces, each previewed in the chosen voice when tapped, No companion, the voice, and Let it move. The Voice screen has Personal Voice first, with VOICE-2's explanation in a sheet when iOS says no; the voices, each tile its preview; and the speech rate as a segmented control of five steps, each chosen with one tap, since a slider needs a drag (A11Y-5).
 - **Listen mode.** Its permission and the relay's status. The permission opens the Listen mode screen, `/settings/listen`: the permission's words, Withdraw or Allow (CONSENT-3), the privacy notice, and the under-18 switch, "Asked on the consent card each time" (CONSENT-6).
 - **Your words.** Places and the phrase bank, each with its count.
 - **Turn Listen.** "Unlock Listen mode", which opens the paywall, with the free lines left under it, as "12 of 20 free lines left", or "Unlocked"; and Restore Purchases (PAY-6). A purchase or restore's note follows in a `surface-sunken` pill, and "Listen mode is unlocked." takes "Turn Listen is yours on this phone. Speaking stays free, as always." under it.
@@ -1680,7 +1696,7 @@ Apple's Accessibility Nutrition Labels make a test plan even without a store lis
 
 Each has a safe default, which this document follows until someone decides.
 
-- **A show view for the partner.** Seven of twelve rival apps can put the last phrase in large type or flip it toward the partner in a tap or two, and the PRD has no such view ([AAC design notes][aac-partner]). Safe default: none in the first version, and the PRD can add a Should.
+- **A show view for the partner.** Seven of twelve rival apps can put the last phrase in large type or flip it toward the partner in a tap or two, and the PRD has no such view ([AAC design notes][aac-partner]). Safe default: none in the first version, and the PRD can add a Should. The companion's [partner view](#the-partner-view) is one, for users who choose a face.
 - **Finishing a phrase first.** SPEAK-2 lets a stray tap cut off a phrase mid-speech, which a tremor's second tap can do, and two rivals offer a setting against it ([AAC design notes][aac-guards]). Safe default: SPEAK-2 as written.
 - **The strip's height.** Its cells are 48 points, under the row's 12 mm. Safe default: 48, revisited with the clinic's review (CONTENT-5).
 - **Saying how well Listen mode does.** In one study, a short statement of accuracy before use raised acceptance of an imperfect model ([AAC design notes][aac-confidence]). Safe default: the README carries the evaluation's table, and the app says nothing until the PRD gives it a place.

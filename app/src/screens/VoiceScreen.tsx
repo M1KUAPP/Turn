@@ -22,7 +22,7 @@ import SheetHeader, { SheetActions } from './SheetHeader'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
 
-const previewText = 'Hello. This is how I sound.'
+export const previewText = 'Hello. This is how I sound.'
 
 export default function VoiceScreen() {
   const { ready, boldText } = useTurn()

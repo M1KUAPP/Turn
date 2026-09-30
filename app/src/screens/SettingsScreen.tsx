@@ -8,8 +8,9 @@ import { consentWords } from '../consent/strings'
 import { purchaseNotes } from '../purchases/store'
 import { rebuildGazetteer } from '../listen/gazetteer'
 import { runTagChecks } from '../listen/tag-checks'
+import { companionName } from '../companion/settings'
 import { SPEECH_RATE_STEPS } from '../speech/voice-settings'
-import { useConsent, usePurchases, useTurn } from '../turn-context'
+import { useCompanion, useConsent, usePurchases, useTurn } from '../turn-context'
 import { GroupHeader, ListGroup, ListRow, ScreenTitle, tileTones, useScreenTitle } from './ListGroup'
 import TurnText from './TurnText'
 
@@ -75,6 +76,7 @@ export default function SettingsScreen() {
   const { ready, boldText, eraseAll } = useTurn()
   const { state: consentState } = useConsent()
   const { purchases, state: purchasesState } = usePurchases()
+  const { state: companionState } = useCompanion()
   const [counts, setCounts] = useState<{ phrases: number; places: number } | null>(null)
   const { onTitleLayout, scrollProps } = useScreenTitle('Settings')
   const [, setVoiceRevision] = useState(0)
@@ -188,6 +190,14 @@ export default function SettingsScreen() {
             chevron
             accessibilityHint="Open the voice list and the speech rate"
             onPress={() => router.push('/settings/voice')}
+          />
+          <ListRow
+            label="Companion"
+            boldText={boldText}
+            symbol="person.wave.2.fill"
+            value={companionName(companionState.model)}
+            chevron
+            onPress={() => router.push('/settings/companion')}
           />
         </ListGroup>
       </View>

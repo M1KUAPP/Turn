@@ -11,6 +11,7 @@ import * as SQLite from 'expo-sqlite'
 import { nativeAccessibilitySource } from './accessibility/native'
 import { createAccessibilityStore } from './accessibility/store'
 import { createBankStore } from './bank/store'
+import { createCompanionSettings, type CompanionSettingsState } from './companion/settings'
 import { eraseAllData } from './erase'
 import starterBank from './content/starter-bank.json'
 import { createConsentController, type ConsentState } from './consent/controller'
@@ -39,6 +40,7 @@ type Ready = {
   bank: ReturnType<typeof createBankStore>
   speech: ReturnType<typeof createSpeechController>
   voiceSettings: ReturnType<typeof createVoiceSettings>
+  companion: ReturnType<typeof createCompanionSettings>
   listen: ReturnType<typeof createLiveListenSession>
   consent: ReturnType<typeof createConsentController>
   nameTagger: typeof turnListen
@@ -126,7 +128,8 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         requestPersonalVoice: turnVoice.requestPersonalVoice,
         personalVoice: turnVoice.personalVoice
       })
-      await voiceSettings.loadSaved()
+      const companion = createCompanionSettings({ setting: bank.setting, setSetting: bank.setSetting })
+      await Promise.all([voiceSettings.loadSaved(), companion.loadSaved()])
       if (!active) return
       void voiceSettings.refresh().catch(() => {})
       unsubscribeVoiceChanges = turnVoice.onVoicesChanged(() => {
@@ -220,6 +223,7 @@ export function TurnProvider({ children }: { children: ReactNode }) {
         bank,
         speech,
         voiceSettings,
+        companion,
         listen: liveListen,
         consent,
         nameTagger,
@@ -330,4 +334,18 @@ export function usePurchases() {
   const getSnapshot = purchases?.snapshot ?? emptyPurchasesSnapshot
   const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
   return { purchases, state }
+}
+
+const emptyCompanionState: CompanionSettingsState = { model: null, moves: true }
+
+const noCompanionSubscription = (_listener: () => void) => () => {}
+const emptyCompanionSnapshot = () => emptyCompanionState
+
+export function useCompanion() {
+  const { ready } = useTurn()
+  const companion = ready?.companion ?? null
+  const subscribe = companion?.subscribe ?? noCompanionSubscription
+  const getSnapshot = companion?.snapshot ?? emptyCompanionSnapshot
+  const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
+  return { companion, state }
 }
