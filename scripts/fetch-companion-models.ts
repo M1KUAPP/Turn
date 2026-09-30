@@ -13,12 +13,11 @@ const live2d = join(root, 'app/live2d')
 const cache = join(live2d, '.cache')
 const out = join(live2d, 'build/Live2D')
 
-// BOOTH serves its models only to a signed-in account, so the three from BOOTH sit on this repo's release instead, as
-// downloaded from their BOOTH pages.
+// The four models sit on this repo's release, as downloaded from their official pages, so every build reads them from
+// one place the team keeps.
 const release = { repo: 'M1KUAPP/Turn', tag: 'companion-models' }
 
-// Each archive, from Live2D's own downloads where it has one and the release otherwise, pinned: a changed file stops
-// the build here.
+// Each archive, the SDK from Live2D and the models from the release, pinned: a changed file stops the build here.
 const archives: Record<'sdk' | CompanionModel, { url?: string; file: string; sha256: string }> = {
   sdk: {
     url: 'https://cubism.live2d.com/sdk-web/bin/CubismSdkForWeb-5-r.5.zip',
@@ -26,11 +25,7 @@ const archives: Record<'sdk' | CompanionModel, { url?: string; file: string; sha
     sha256: '67064a7fb1812cf502f5c4a03bfe12cc638c75a621bb4acf06bb28763df06ba0'
   },
   // Ren Foster, from https://www.live2d.com/en/learn/sample/ren-foster/
-  ren: {
-    url: 'https://cubism.live2d.com/sample-data/bin/ren/ren_en.zip',
-    file: 'ren_en.zip',
-    sha256: 'fd4c8a363178669721a71e57b32959d0f1da660ed1c16f08f88ba13c966388dc'
-  },
+  ren: { file: 'ren_en.zip', sha256: 'fd4c8a363178669721a71e57b32959d0f1da660ed1c16f08f88ba13c966388dc' },
   // Suit Male, from https://booth.pm/ja/items/5178925
   suit: { file: 'office_m2.zip', sha256: '73bf53495a7b51a22e2ddc10e0748383a02048038eba7313fac5947ae482dcb5' },
   // Ice Girl, from https://booth.pm/ja/items/5975192
@@ -66,8 +61,8 @@ async function fetchArchive(name: keyof typeof archives) {
   if (!existsSync(path) || (await sha256(path)) !== expected) {
     console.log(`Downloading ${file}`)
     if (url) {
-      // Over HTTP/1.1, with a stalled transfer given up after 30 seconds and retried: on the Simulator build's runner,
-      // Live2D's HTTP/2 stream for Ren stalled for 23 minutes and then failed, which --retry alone doesn't retry.
+      // Over HTTP/1.1, with a stalled transfer given up after 30 seconds and retried: on the Simulator build's runner, a
+      // Live2D download's HTTP/2 stream stalled for 23 minutes and then failed, which --retry alone doesn't retry.
       await $`curl --fail --silent --show-error --location --http1.1 --connect-timeout 30 --speed-limit 10000 --speed-time 30 --retry 3 --retry-all-errors --output ${path} ${url}`
     } else {
       if (!Bun.which('gh'))
