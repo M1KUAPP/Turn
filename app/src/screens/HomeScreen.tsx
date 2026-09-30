@@ -29,6 +29,7 @@ import Caption from './Caption'
 import { captionView } from './caption-view'
 import { categoryHue, placeSymbol } from './category-style'
 import CategoryTabs from './CategoryTabs'
+import EdgeFade from './EdgeFade'
 import { useDepth } from './home-depth'
 import { homeLayout, modelSecondsLeft, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
 import { homePreview } from './home-preview'
@@ -573,6 +574,7 @@ export default function HomeScreen({
           tabMargin={layout.tabMargin}
           fontScale={fontScale}
           boldText={boldText}
+          increaseContrast={increaseContrast}
           onChoose={chooseCategory}
         />
       )}
@@ -736,53 +738,63 @@ export default function HomeScreen({
           <>
             {topBar}
             {!layout.wholeMiddleScroll && middleHeader}
-            <FlatList
-              key={`${layout.gridColumns}-${layout.wholeMiddleScroll}`}
-              ref={list}
-              data={phrases}
-              keyExtractor={(item) => item.id}
-              renderItem={renderPhrase}
-              numColumns={layout.gridColumns}
-              columnWrapperStyle={layout.gridColumns === 2 ? { gap: layout.gridGap, alignItems: 'stretch' } : undefined}
-              ListHeaderComponent={layout.wholeMiddleScroll ? middleHeader : null}
-              contentContainerStyle={{
-                paddingHorizontal: 16,
-                paddingTop: layout.wholeMiddleScroll ? 8 : 4,
-                paddingBottom: 4,
-                gap: layout.gridGap
-              }}
-              onScroll={(event) => setOffset(event.nativeEvent.contentOffset.y)}
-              scrollEventThrottle={100}
-              onLayout={(event) => setViewportHeight(event.nativeEvent.layout.height)}
-              onContentSizeChange={(_, content) => setContentHeight(content)}
-              showsVerticalScrollIndicator
-              ListFooterComponent={
-                __DEV__ ? (
-                  <View style={{ alignItems: 'center' }}>
-                    <Pressable
-                      accessibilityRole="button"
-                      onPress={() => setReplyPreview((current) => (current + 1) % 3)}
-                      style={{ minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
-                    >
-                      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        Preview row: {['empty', 'six replies', 'big button'][replyPreview]}
-                      </TurnText>
-                    </Pressable>
-                    <Pressable
-                      accessibilityRole="button"
-                      onPress={() => {
-                        void bank.seedDebugPhrases()
-                      }}
-                      style={{ minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
-                    >
-                      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        Seed 2,000 test phrases
-                      </TurnText>
-                    </Pressable>
-                  </View>
-                ) : null
-              }
-            />
+            {/* The grid's edges fade into the board while it scrolls on past them, so a card cut by the tabs or the
+                toolbar fades out rather than stopping at a hard line. */}
+            <View style={{ flex: 1 }}>
+              <FlatList
+                key={`${layout.gridColumns}-${layout.wholeMiddleScroll}`}
+                ref={list}
+                data={phrases}
+                keyExtractor={(item) => item.id}
+                renderItem={renderPhrase}
+                numColumns={layout.gridColumns}
+                columnWrapperStyle={
+                  layout.gridColumns === 2 ? { gap: layout.gridGap, alignItems: 'stretch' } : undefined
+                }
+                ListHeaderComponent={layout.wholeMiddleScroll ? middleHeader : null}
+                contentContainerStyle={{
+                  paddingHorizontal: 16,
+                  paddingTop: layout.wholeMiddleScroll ? 8 : 4,
+                  paddingBottom: 4,
+                  gap: layout.gridGap
+                }}
+                onScroll={(event) => setOffset(event.nativeEvent.contentOffset.y)}
+                scrollEventThrottle={100}
+                onLayout={(event) => setViewportHeight(event.nativeEvent.layout.height)}
+                onContentSizeChange={(_, content) => setContentHeight(content)}
+                showsVerticalScrollIndicator
+                ListFooterComponent={
+                  __DEV__ ? (
+                    <View style={{ alignItems: 'center' }}>
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() => setReplyPreview((current) => (current + 1) % 3)}
+                        style={{ minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
+                      >
+                        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          Preview row: {['empty', 'six replies', 'big button'][replyPreview]}
+                        </TurnText>
+                      </Pressable>
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() => {
+                          void bank.seedDebugPhrases()
+                        }}
+                        style={{ minHeight: 44, justifyContent: 'center', paddingVertical: 8 }}
+                      >
+                        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                          Seed 2,000 test phrases
+                        </TurnText>
+                      </Pressable>
+                    </View>
+                  ) : null
+                }
+              />
+              {offset > 1 && <EdgeFade side="top" size={16} token="board" increaseContrast={increaseContrast} />}
+              {offset < contentHeight - viewportHeight - 1 && (
+                <EdgeFade side="bottom" size={16} token="board" increaseContrast={increaseContrast} />
+              )}
+            </View>
             <Toolbar
               width={width}
               fontScale={fontScale}
