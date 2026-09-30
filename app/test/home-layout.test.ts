@@ -9,6 +9,7 @@ import {
   gridTextKind,
   slotTextKind,
   starterCardShown,
+  toolbarBottom,
   toolbarLayout
 } from '../src/screens/home-layout'
 
@@ -71,6 +72,17 @@ describe('home layout', () => {
     expect(pageOffset(0, 200, 650, 1)).toBe(200)
     expect(pageOffset(400, 200, 650, 1)).toBe(450)
     expect(pageOffset(100, 200, 650, -1)).toBe(0)
+  })
+
+  test('pages by the part of the grid above the floating toolbar', () => {
+    expect(pageOffset(0, 300, 1000, 1, 214)).toBe(214)
+    expect(pageOffset(214, 300, 1000, -1, 214)).toBe(0)
+    expect(pageOffset(600, 300, 1000, 1, 214)).toBe(700)
+  })
+
+  test('floats the toolbar clear of the home indicator', () => {
+    expect(toolbarBottom(34)).toBe(22)
+    expect(toolbarBottom(0)).toBe(8)
   })
 })
 
