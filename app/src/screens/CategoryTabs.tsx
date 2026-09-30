@@ -1,5 +1,7 @@
+import { useRef, useState } from 'react'
 import { Pressable, ScrollView, View, type ColorValue } from 'react-native'
 import { colors } from '../constants/theme'
+import EdgeFade from './EdgeFade'
 import { Layer, usePress } from './home-press'
 import TurnText from './TurnText'
 
@@ -12,6 +14,7 @@ type Props = {
   tabMargin: number
   fontScale: number
   boldText: boolean
+  increaseContrast: boolean
   onChoose: (id: string) => void
 }
 
@@ -90,7 +93,8 @@ function Tab({
 }
 
 /** The grid's tabs (DESIGN, the tabs): one chip per category with its 10-point dot, the selected one on `ink`, and All
- * pinned at the trailing end outside the scroll. */
+ * pinned at the trailing end outside the scroll. While tabs run on past All, the last visible one fades into the board
+ * before it, so a cut-off name reads as more to scroll rather than a hard stop. */
 export default function CategoryTabs({
   categories,
   selectedId,
@@ -100,31 +104,45 @@ export default function CategoryTabs({
   tabMargin,
   fontScale,
   boldText,
+  increaseContrast,
   onChoose
 }: Props) {
   const dotSize = Math.round(10 * Math.min(fontScale, 2))
+  const scroll = useRef({ offset: 0, content: 0, viewport: 0 })
+  const [moreAfter, setMoreAfter] = useState(false)
+  const measure = (next: Partial<typeof scroll.current>) => {
+    const current = Object.assign(scroll.current, next)
+    setMoreAfter(current.content - current.offset - current.viewport > 1)
+  }
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: tabHeight + 2 * tabMargin }}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator
-        style={{ flexGrow: 1, height: tabHeight + 2 * tabMargin }}
-        contentContainerStyle={{ paddingLeft: 16, paddingRight: 8, paddingVertical: tabMargin, gap: 8 }}
-      >
-        {categories.map((category) => (
-          <Tab
-            key={category.id}
-            name={category.name}
-            selected={selectedId === category.id}
-            suggested={suggestedId === category.id}
-            dot={paletteFor(category.id).edge}
-            height={tabHeight}
-            dotSize={dotSize}
-            boldText={boldText}
-            onPress={() => onChoose(category.id)}
-          />
-        ))}
-      </ScrollView>
+      <View style={{ flex: 1, height: tabHeight + 2 * tabMargin }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator
+          style={{ flexGrow: 1, height: tabHeight + 2 * tabMargin }}
+          contentContainerStyle={{ paddingLeft: 16, paddingRight: 8, paddingVertical: tabMargin, gap: 8 }}
+          onLayout={(event) => measure({ viewport: event.nativeEvent.layout.width })}
+          onContentSizeChange={(content) => measure({ content })}
+          onScroll={(event) => measure({ offset: event.nativeEvent.contentOffset.x })}
+          scrollEventThrottle={32}
+        >
+          {categories.map((category) => (
+            <Tab
+              key={category.id}
+              name={category.name}
+              selected={selectedId === category.id}
+              suggested={suggestedId === category.id}
+              dot={paletteFor(category.id).edge}
+              height={tabHeight}
+              dotSize={dotSize}
+              boldText={boldText}
+              onPress={() => onChoose(category.id)}
+            />
+          ))}
+        </ScrollView>
+        {moreAfter && <EdgeFade side="right" size={32} token="board" increaseContrast={increaseContrast} />}
+      </View>
       <View style={{ marginLeft: 8, marginRight: 16 }}>
         <Tab
           name="All"
