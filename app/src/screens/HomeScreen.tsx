@@ -678,7 +678,15 @@ export default function HomeScreen({
           tintColor={colors.ink}
           accessible={false}
         />
-        <TurnText kind="button" boldText={boldText} style={{ color: colors.ink, flexShrink: 1 }}>
+        {/* Beside the Listen control the name keeps one line, so a long one ends in an ellipsis rather than breaking
+            mid-word and growing the bar; from AX3 the chip has its own row and wraps. VoiceOver and the menu read it
+            whole. */}
+        <TurnText
+          kind="button"
+          boldText={boldText}
+          numberOfLines={oneControlColumn ? undefined : 1}
+          style={{ color: colors.ink, flexShrink: 1 }}
+        >
           {selectedPlace?.name ?? 'Place'}
         </TurnText>
         <SymbolView
