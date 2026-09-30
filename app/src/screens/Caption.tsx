@@ -282,34 +282,37 @@ export default function Caption({
       </TurnText>
     </View>
   ) : view.kind === 'off' || view.kind === 'mic-off' || view.kind === 'paused' ? (
-    // From AX1 the disc sits above the message, so a long word keeps the panel's width.
     <View
       style={{
         flex: 1,
-        flexDirection: grows ? 'column' : 'row',
-        alignItems: grows ? 'flex-start' : 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
         gap: 14,
         paddingRight: besidePill
       }}
     >
-      <View
-        style={{
-          width: Math.round(48 * scale),
-          height: Math.round(48 * scale),
-          borderRadius: 999,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: view.discSymbol === 'keyboard' ? colors['listen-soft'] : colors['surface-sunken']
-        }}
-      >
-        <SymbolView
-          name={view.discSymbol}
-          size={Math.round(24 * scale)}
-          weight="semibold"
-          tintColor={view.kind === 'mic-off' ? colors.ink : colors['ink-secondary']}
-          accessible={false}
-        />
-      </View>
+      {/* From AX1 the disc gives its room to the words, which say what it shows, so a long word keeps the panel's
+          width and Mic off's message fits on the screen. */}
+      {!grows && (
+        <View
+          style={{
+            width: Math.round(48 * scale),
+            height: Math.round(48 * scale),
+            borderRadius: 999,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: view.discSymbol === 'keyboard' ? colors['listen-soft'] : colors['surface-sunken']
+          }}
+        >
+          <SymbolView
+            name={view.discSymbol}
+            size={Math.round(24 * scale)}
+            weight="semibold"
+            tintColor={view.kind === 'mic-off' ? colors.ink : colors['ink-secondary']}
+            accessible={false}
+          />
+        </View>
+      )}
       <TurnText
         kind="title"
         boldText={boldText}
