@@ -1,35 +1,33 @@
+import { useNavigation } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { SymbolView } from 'expo-symbols'
-import {
-  ActionSheetIOS,
-  Alert,
-  KeyboardAvoidingView,
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  useWindowDimensions,
-  View
-} from 'react-native'
+import { Alert, Modal, ScrollView, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Place } from '../bank/store'
-import { colors, textStyle } from '../constants/theme'
+import { categoryColors, colors, textStyle } from '../constants/theme'
 import { useTurn } from '../turn-context'
-import SheetHeader from './SheetHeader'
+import Button from './Button'
+import { placeSymbol } from './category-style'
+import { GroupNote, ListGroup, ListRow, ScreenTitle, useScreenTitle } from './ListGroup'
+import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
 import TurnText from './TurnText'
 
 type Editor = { id: string | null; name: string }
 
+// Places wear Out and about's hue, the category of being somewhere (DESIGN, buttons and lists).
+const placeTone = { fill: categoryColors['out-and-about'].fill, ink: categoryColors['out-and-about'].edge }
+
 export default function PlacesScreen() {
+  const navigation = useNavigation()
   const { ready, boldText } = useTurn()
   const bank = ready?.bank
   const [places, setPlaces] = useState<Place[]>([])
   const [selected, setSelected] = useState<Place | null>(null)
   const [editor, setEditor] = useState<Editor | null>(null)
+  const [focused, setFocused] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
-  const { fontScale } = useWindowDimensions()
+  const { onTitleLayout, scrollProps } = useScreenTitle('Places')
+  const atLimit = places.length >= 12
 
   useEffect(() => {
     if (!bank) return
@@ -49,56 +47,53 @@ export default function PlacesScreen() {
     }
   }, [bank])
 
-  const move = (id: string, direction: -1 | 1) => {
-    if (!bank) return
-    void bank.movePlace(id, direction).catch((cause) => setError(String(cause)))
+  useEffect(() => {
+    navigation.setOptions({
+      // A native bar button, like the back button beside it, so iOS keeps it at bar size at every text size.
+      unstable_headerRightItems: () => [
+        {
+          type: 'button',
+          label: 'Add place',
+          accessibilityLabel: 'Add place',
+          icon: { type: 'sfSymbol', name: 'plus' },
+          variant: 'prominent',
+          tintColor: colors.accent,
+          disabled: !bank || atLimit,
+          onPress: () => {
+            setError(null)
+            setEditor({ id: null, name: '' })
+          }
+        }
+      ]
+    })
+  }, [navigation, bank, atLimit])
+
+  const close = () => {
+    setEditor(null)
+    setError(null)
   }
 
-  const confirmDelete = (place: Place) => {
-    if (!bank) return
-    Alert.alert(`Delete ${place.name}?`, 'Phrases linked to this place will no longer use it.', [
+  const editing = editor?.id ? places.findIndex((place) => place.id === editor.id) : -1
+
+  const move = (direction: -1 | 1) => {
+    if (!bank || !editor?.id) return
+    void bank.movePlace(editor.id, direction).catch((cause) => setError(String(cause)))
+  }
+
+  const confirmDelete = () => {
+    const place = places[editing]
+    if (!bank || !place) return
+    Alert.alert(`Delete ${place.name}?`, `Your phrases stay in the bank. They just stop being tied to ${place.name}.`, [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Delete',
         style: 'destructive',
         onPress: () => {
+          close()
           void bank.deletePlace(place.id).catch((cause) => setError(String(cause)))
         }
       }
     ])
-  }
-
-  // Move, Rename, and Delete sit one tap away, in iOS's own action sheet, and stay named accessibility actions (A11Y-8).
-  const placeActions = (index: number) => [
-    ...(index > 0 ? [{ name: 'move-up', label: 'Move up' }] : []),
-    ...(index < places.length - 1 ? [{ name: 'move-down', label: 'Move down' }] : []),
-    { name: 'rename', label: 'Rename' },
-    { name: 'delete', label: 'Delete' }
-  ]
-
-  const run = (place: Place, action: string) => {
-    if (action === 'move-up') move(place.id, -1)
-    if (action === 'move-down') move(place.id, 1)
-    if (action === 'rename') {
-      setError(null)
-      setEditor({ id: place.id, name: place.name })
-    }
-    if (action === 'delete') confirmDelete(place)
-  }
-
-  const showActions = (place: Place, index: number) => {
-    const actions = placeActions(index)
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: place.name,
-        options: [...actions.map(({ label }) => label), 'Cancel'],
-        destructiveButtonIndex: actions.length - 1,
-        cancelButtonIndex: actions.length
-      },
-      (chosen) => {
-        if (chosen < actions.length) run(place, actions[chosen].name)
-      }
-    )
   }
 
   const save = async () => {
@@ -127,167 +122,126 @@ export default function PlacesScreen() {
   }
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
-      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32, gap: 12 }}>
+    <>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        {...scrollProps}
+        style={{ flex: 1, backgroundColor: colors.board }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 40 }}
+      >
+        <View style={{ marginBottom: 16 }}>
+          <ScreenTitle title="Places" boldText={boldText} onLayout={onTitleLayout} />
+        </View>
         {places.length === 0 ? (
-          <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
+          <TurnText kind="body" boldText={boldText} style={{ color: colors.ink, marginHorizontal: 16 }}>
             No places yet. Add one to use the place picker.
           </TurnText>
         ) : (
-          <View style={{ borderRadius: 12, backgroundColor: colors.surface, overflow: 'hidden' }}>
-            {places.map((place, index) => {
-              const current = selected?.id === place.id
-              return (
-                <Pressable
-                  key={place.id}
-                  accessibilityRole="button"
-                  // Named explicitly: left to iOS, the trailing symbol adds its own name.
-                  accessibilityLabel={current ? `${place.name}, Current place` : place.name}
-                  accessibilityHint="Shows Move, Rename, and Delete."
-                  accessibilityActions={placeActions(index)}
-                  onAccessibilityAction={(event) => run(place, event.nativeEvent.actionName)}
-                  onPress={() => showActions(place, index)}
-                  style={({ pressed }) => ({
-                    minHeight: 52,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: 12,
-                    paddingHorizontal: 16,
-                    paddingVertical: 12,
-                    backgroundColor: pressed ? colors['surface-pressed'] : colors.surface
-                  })}
-                >
-                  {index > 0 && (
-                    <View
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 16,
-                        right: 0,
-                        height: StyleSheet.hairlineWidth,
-                        backgroundColor: colors.edge
-                      }}
-                    />
-                  )}
-                  <View style={{ flex: 1, gap: 2 }}>
-                    <TurnText kind="body" boldText={boldText} style={{ color: colors.ink }}>
-                      {place.name}
-                    </TurnText>
-                    {current && (
-                      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                        Current place
-                      </TurnText>
-                    )}
-                  </View>
-                  <SymbolView
-                    name="ellipsis.circle"
-                    size={Math.round(22 * Math.min(fontScale, 2.6))}
-                    tintColor={colors.accent}
-                    accessible={false}
-                  />
-                </Pressable>
-              )
-            })}
-          </View>
-        )}
-        <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], marginHorizontal: 16 }}>
-          Choose a place from the Home screen. Move places here to change the picker order.
-        </TurnText>
-        {error && !editor && (
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            {error}
-          </TurnText>
-        )}
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Add place"
-          accessibilityState={{ disabled: places.length >= 12 }}
-          disabled={places.length >= 12}
-          onPress={() => {
-            setError(null)
-            setEditor({ id: null, name: '' })
-          }}
-          style={({ pressed }) => ({
-            minHeight: 52,
-            borderRadius: 26,
-            backgroundColor: places.length >= 12 ? colors.surface : pressed ? colors['accent-pressed'] : colors.accent,
-            alignItems: 'center',
-            justifyContent: 'center'
-          })}
-        >
-          <TurnText
-            kind="headline"
-            boldText={boldText}
-            style={{ color: places.length >= 12 ? colors['ink-secondary'] : colors['on-accent'] }}
-          >
-            Add place
-          </TurnText>
-        </Pressable>
-        {places.length >= 12 && (
-          <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-            You can have up to 12 places.
-          </TurnText>
-        )}
-      </ScrollView>
-
-      <Modal
-        visible={!!editor}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => {
-          setEditor(null)
-          setError(null)
-        }}
-      >
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
-          <KeyboardAvoidingView behavior="padding" style={{ flex: 1, padding: 16 }}>
-            <SheetHeader
-              title={editor?.id ? 'Rename place' : 'Add place'}
-              boldText={boldText}
-              canSave={!!editor?.name.trim() && !saving}
-              onCancel={() => {
-                setEditor(null)
-                setError(null)
-              }}
-              onSave={() => void save()}
-            />
-            <View style={{ gap: 20 }}>
-              <TextInput
-                autoFocus
-                accessibilityLabel="Place name"
-                maxLength={40}
-                value={editor?.name ?? ''}
-                onChangeText={(name) =>
-                  setEditor((current) => (current ? { ...current, name: name.slice(0, 40) } : null))
-                }
-                placeholder="Place name"
-                placeholderTextColor={colors['ink-secondary']}
-                selectionColor={colors.accent}
-                style={{
-                  ...textStyle('body', boldText),
-                  minHeight: 52,
-                  padding: 12,
-                  borderWidth: 2,
-                  borderColor: colors.edge,
-                  borderRadius: 12,
-                  color: colors.ink,
-                  backgroundColor: colors.surface
+          <ListGroup>
+            {places.map((place) => (
+              <ListRow
+                key={place.id}
+                label={place.name}
+                boldText={boldText}
+                symbol={placeSymbol(place.id)}
+                tone={placeTone}
+                subtitle={selected?.id === place.id ? 'Current place' : undefined}
+                accessibilityLabel={place.name}
+                accessibilityValue={selected?.id === place.id ? 'Current place' : undefined}
+                accessibilityHint="Shows Rename, Move, and Delete."
+                chevron
+                onPress={() => {
+                  setError(null)
+                  setEditor({ id: place.id, name: place.name })
                 }}
               />
-              {!!editor && editor.name.length >= 35 && (
-                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                  {40 - editor.name.length} characters left
-                </TurnText>
-              )}
-              {error && (
-                <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
-                  {error}
-                </TurnText>
-              )}
-            </View>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
+            ))}
+          </ListGroup>
+        )}
+        <GroupNote boldText={boldText}>Pick a place on Home with one tap. Turn never reads your location.</GroupNote>
+        {atLimit && <GroupNote boldText={boldText}>You can have up to 12 places.</GroupNote>}
+        {error && !editor && <GroupNote boldText={boldText}>{error}</GroupNote>}
+      </ScrollView>
+      <Modal visible={!!editor} animationType="slide" presentationStyle="pageSheet" onRequestClose={close}>
+        <SheetBody>
+          <SheetHeader title={editor?.id ? 'Edit place' : 'Add place'} boldText={boldText} onClose={close} />
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 16, gap: 16 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <TextInput
+              autoFocus
+              accessibilityLabel="Place name"
+              maxLength={40}
+              value={editor?.name ?? ''}
+              onChangeText={(name) =>
+                setEditor((current) => (current ? { ...current, name: name.slice(0, 40) } : null))
+              }
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              placeholder="Place name"
+              placeholderTextColor={colors['ink-secondary']}
+              selectionColor={colors.accent}
+              style={{
+                ...textStyle('body', boldText),
+                minHeight: 56,
+                paddingHorizontal: 18,
+                paddingVertical: 14,
+                borderWidth: focused ? 2.5 : 1.5,
+                borderColor: focused ? colors.accent : colors.edge,
+                borderRadius: 24,
+                borderCurve: 'continuous',
+                color: colors.ink,
+                backgroundColor: colors.surface
+              }}
+            />
+            {!!editor && editor.name.length >= 35 && (
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                {40 - editor.name.length} characters left
+              </TurnText>
+            )}
+            {error && (
+              <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+                {error}
+              </TurnText>
+            )}
+            {/* The picker's order, one tap a step (A11Y-5). */}
+            {editing >= 0 && places.length > 1 && (
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+                {editing > 0 && (
+                  <Button
+                    label="Move up"
+                    symbol="chevron.up"
+                    boldText={boldText}
+                    onPress={() => move(-1)}
+                    style={{ flexGrow: 1 }}
+                  />
+                )}
+                {editing < places.length - 1 && (
+                  <Button
+                    label="Move down"
+                    symbol="chevron.down"
+                    boldText={boldText}
+                    onPress={() => move(1)}
+                    style={{ flexGrow: 1 }}
+                  />
+                )}
+              </View>
+            )}
+          </ScrollView>
+          <SheetActions>
+            {editor?.id ? <Button label="Delete" boldText={boldText} onPress={confirmDelete} /> : null}
+            <Button
+              variant="primary"
+              label="Save"
+              boldText={boldText}
+              disabled={!editor?.name.trim() || saving}
+              onPress={() => void save()}
+            />
+          </SheetActions>
+        </SheetBody>
       </Modal>
-    </SafeAreaView>
+    </>
   )
 }

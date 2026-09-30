@@ -65,7 +65,8 @@ describe('the native Listen engine adapter', () => {
       onLine: vi.fn(),
       onState: vi.fn(),
       onAssetProgress: vi.fn(),
-      onVoice: vi.fn()
+      onVoice: vi.fn(),
+      onLevel: vi.fn()
     }
     const unsubscribe = engine?.listen(events)
 

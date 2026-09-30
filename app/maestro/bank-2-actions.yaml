@@ -95,17 +95,18 @@ name: Phrase bank actions and category limit
     text: Add category
     enabled: true
 - takeScreenshot: bank-2-actions-limit-at-12
+# A category's Rename, Move, and Delete show in edit mode, which grows the rows, so Automation's are further down;
+# the strip now leads the list.
+- tapOn: Edit
 - scrollUntilVisible:
     element:
       text: Rename
       below: Automation
-      above: Conversation strip
-    direction: UP
+    direction: DOWN
     speed: 10
 - tapOn:
     text: Rename
     below: Automation
-    above: Conversation strip
 - extendedWaitUntil:
     visible: Rename category
     timeout: 10000
@@ -129,13 +130,11 @@ name: Phrase bank actions and category limit
     element:
       text: Move up
       below: Flow category
-      above: Conversation strip
     direction: DOWN
     speed: 10
 - tapOn:
     text: Move up
     below: Flow category
-    above: Conversation strip
 # Moving a card keeps the scroll position, so at AX5 the moved card's name ends up above the screen.
 - scrollUntilVisible:
     element:
@@ -208,6 +207,15 @@ name: Phrase bank actions and category limit
       text: Phrase
       below: Phrase
 - waitForAnimationToEnd
+# The places are chosen on their own page of the sheet, whose Done sits under its Places title.
+# At AX5 the pinned Save and Delete can cover the form's last rows, which Maestro still counts as on screen, so the
+# form scrolls to its end first.
+- swipe:
+    start: '50%, 60%'
+    end: '50%, 25%'
+- waitForAnimationToEnd
+- tapOn: Places
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: Home
@@ -224,6 +232,10 @@ name: Phrase bank actions and category limit
 - tapOn:
     text: Clinic
     below: Places
+- tapOn:
+    text: Done
+    below: Places
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Save
     direction: UP
@@ -261,14 +273,12 @@ name: Phrase bank actions and category limit
     element:
       text: Delete
       below: Flow category
-      above: Conversation strip
     direction: DOWN
     speed: 10
     timeout: 90000
 - tapOn:
     text: Delete
     below: Flow category
-    above: Conversation strip
 - extendedWaitUntil:
     visible: 'Choose where its phrases will go\.'
     timeout: 10000
@@ -281,6 +291,10 @@ name: Phrase bank actions and category limit
     speed: 10
 - tapOn:
     text: Chat
+    below: 'Choose where its phrases will go\.'
+# Choosing a category marks it, and Delete then moves the phrases there and deletes (frame 61).
+- tapOn:
+    text: Delete
     below: 'Choose where its phrases will go\.'
 - waitForAnimationToEnd
 - assertNotVisible: Flow category
@@ -324,13 +338,11 @@ name: Phrase bank actions and category limit
     element:
       text: Edit
       below: Flow phrase
-      above: Add phrase
     direction: DOWN
     timeout: 180000
 - tapOn:
     text: Edit
     below: Flow phrase
-    above: Add phrase
 - extendedWaitUntil:
     visible: Edit phrase
     timeout: 10000
@@ -354,11 +366,29 @@ name: Phrase bank actions and category limit
       text: Phrase
       below: Phrase
 - waitForAnimationToEnd
+# The category and the places are chosen on their own pages of the sheet.
+# At AX5 the pinned Save and Delete can cover the form's last rows, which Maestro still counts as on screen, so the
+# form scrolls to its end first.
+- swipe:
+    start: '50%, 60%'
+    end: '50%, 25%'
+- waitForAnimationToEnd
+- tapOn: Category
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Quick
     direction: LEFT
     speed: 10
 - tapOn: Quick
+- waitForAnimationToEnd
+# At AX5 the pinned Save and Delete can cover the form's last rows, which Maestro still counts as on screen, so the
+# form scrolls to its end first.
+- swipe:
+    start: '50%, 60%'
+    end: '50%, 25%'
+- waitForAnimationToEnd
+- tapOn: Places
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: Clinic
@@ -375,6 +405,10 @@ name: Phrase bank actions and category limit
 - tapOn:
     text: Shop
     below: Places
+- tapOn:
+    text: Done
+    below: Places
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Save
     direction: UP
