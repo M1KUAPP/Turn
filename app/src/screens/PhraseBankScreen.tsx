@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Alert, Keyboard, Modal, Pressable, ScrollView, TextInput, useWindowDimensions, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import type { Category, Phrase, Place } from '../bank/store'
@@ -28,6 +28,7 @@ const placeTone = { fill: categoryColors['out-and-about'].fill, ink: categoryCol
 export default function PhraseBankScreen() {
   const navigation = useNavigation()
   const { fontScale } = useWindowDimensions()
+  const insets = useSafeAreaInsets()
   const cardShadow = useShadow('card')
   const undoShadow = useShadow('raised')
   const { ready, boldText } = useTurn()
@@ -274,8 +275,10 @@ export default function PhraseBankScreen() {
   const editorPhrase = phrases.find((p) => p.id === editor?.id)
   const editorCanDelete = !!editorPhrase && !isStrip && editorPhrase.fixed !== 1
 
+  // The list runs to the screen's bottom edge, as Settings' lists do, and its automatic inset keeps the last phrase
+  // above the home indicator; only the Undo bar takes the bottom inset, so the list never stops at a hard line.
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
+    <SafeAreaView edges={['left', 'right']} style={{ flex: 1, backgroundColor: colors.board }}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         {...scrollProps}
@@ -446,7 +449,7 @@ export default function PhraseBankScreen() {
         <View
           style={{
             marginHorizontal: 16,
-            marginBottom: 8,
+            marginBottom: 8 + insets.bottom,
             minHeight: 60,
             flexDirection: 'row',
             flexWrap: 'wrap',
