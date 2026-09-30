@@ -11,11 +11,15 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets/pitch"
 FONT = OUT / "fonts/AtkinsonHyperlegibleNext.ttf"
-BOARD = "#F2F2F7"
-INK = "#1C1C1E"
-MUTED = "#55565D"
-BLUE = "#1747B8"
-DARK = "#0B1530"
+BOARD = "#F4EFE7"
+SURFACE = "#FFFCF7"
+INK = "#1E1A15"
+MUTED = "#5B5347"
+EDGE = "#8A8072"
+BLUE = "#2438C9"
+DARK = "#15120F"
+REPLY_FILL = "#D4EEF0"
+REPLY_EDGE = "#15707B"
 
 
 def font(size: int, weight: int = 400) -> ImageFont.FreeTypeFont:
@@ -37,7 +41,7 @@ def rounded_image(canvas: Image.Image, image: Image.Image, xy: tuple[int, int], 
     ImageDraw.Draw(shadow).rounded_rectangle(
         (xy[0] + 8, xy[1] + 18, xy[0] + width + 8, xy[1] + height + 18),
         radius=radius,
-        fill=(11, 21, 48, 54),
+        fill=(30, 26, 21, 54),
     )
     canvas.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(25)))
     canvas.paste(image, xy, mask)
@@ -70,7 +74,7 @@ def gallery(name: str, title: str, screens: tuple[str, str], captions: tuple[str
 def hero(dark: bool) -> None:
     background = DARK if dark else BOARD
     foreground = "#FFFFFF" if dark else INK
-    muted = "#A6B8E3" if dark else "#3D4C74"
+    muted = "#B9AFA1" if dark else MUTED
     canvas = Image.new("RGBA", (1800, 860), background)
     draw = ImageDraw.Draw(canvas)
     draw.rounded_rectangle((105, 95, 116, 765), radius=5, fill=BLUE if not dark else "#8FAFFF")
@@ -91,18 +95,17 @@ def aha() -> None:
         canvas = Image.new("RGB", (960, 540), BOARD)
         draw = ImageDraw.Draw(canvas)
         text(draw, (55, 32), "TURN", 36, BLUE, 700)
-        draw.rounded_rectangle((55, 105, 905, 265), radius=24, fill="#FFFFFF", outline="#85868D", width=3)
+        draw.rounded_rectangle((55, 105, 905, 265), radius=24, fill=SURFACE, outline=EDGE, width=3)
         text(draw, (86, 155), "How was physio?", 57, INK, 600)
-        edge = "#0D318C" if step else BLUE
-        draw.rounded_rectangle((55, 299, 905, 474), radius=28, fill=BLUE, outline=edge, width=7 + step * 3)
-        text(draw, (91, 348), "It was hard", 67, "#FFFFFF", 700)
+        draw.rounded_rectangle((55, 299, 905, 474), radius=28, fill=REPLY_FILL, outline=REPLY_EDGE, width=5 + step * 2)
+        text(draw, (91, 348), "It was hard", 67, INK, 700)
         if step == 1:
-            draw.ellipse((779, 343, 859, 423), outline="#FFFFFF", width=8)
-            draw.ellipse((802, 366, 836, 400), fill="#FFFFFF")
+            draw.ellipse((779, 343, 859, 423), outline=REPLY_EDGE, width=8)
+            draw.ellipse((802, 366, 836, 400), fill=REPLY_EDGE)
         if step == 2:
-            draw.polygon(((755, 369), (772, 369), (790, 352), (790, 418), (772, 400), (755, 400)), fill="#FFFFFF")
-            draw.arc((786, 354, 837, 414), 295, 65, fill="#FFFFFF", width=7)
-            draw.arc((786, 337, 863, 431), 295, 65, fill="#FFFFFF", width=6)
+            draw.polygon(((755, 369), (772, 369), (790, 352), (790, 418), (772, 400), (755, 400)), fill=INK)
+            draw.arc((786, 354, 837, 414), 295, 65, fill=INK, width=7)
+            draw.arc((786, 337, 863, 431), 295, 65, fill=INK, width=6)
             text(draw, (758, 491), "SPEAKING", 28, BLUE, 700)
         frames.append(canvas.quantize(colors=128, method=Image.Quantize.FASTOCTREE))
     frames[0].save(
