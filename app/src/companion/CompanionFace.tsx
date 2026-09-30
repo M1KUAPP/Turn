@@ -5,6 +5,7 @@ import { colors } from '../constants/theme'
 import { useDepth } from '../screens/home-depth'
 import { Layer, usePress } from '../screens/home-press'
 import { companionFrames, FACE_FRAMES } from './frames'
+import Live2DView, { useLive } from './Live2DView'
 import type { CompanionModel } from './settings'
 import { faceMotion, playFace, type CompanionState, type FaceFrame } from './state'
 
@@ -41,6 +42,7 @@ export default function CompanionFace({
   const depth = useDepth()
   const press = usePress()
   const frame = useFaceFrame(state, animate)
+  const { live, onLive } = useLive(model)
   const edge = ring(state)
   const glass = isLiquidGlassAvailable() && !reduceTransparency
   const circle = { width: 64, height: 64, borderRadius: 32, alignItems: 'center', justifyContent: 'center' } as const
@@ -57,15 +59,17 @@ export default function CompanionFace({
           backgroundColor: colors['surface-sunken']
         }}
       >
-        {/* Every frame stays mounted, so a frame change never waits on an image to load. */}
+        {/* Every frame stays mounted, so a frame change never waits on an image to load, and they give way to the
+            live model once it has drawn. */}
         {FACE_FRAMES.map((name) => (
           <Image
             key={name}
             source={companionFrames[model].face[name]}
             accessibilityIgnoresInvertColors
-            style={{ position: 'absolute', width: 52, height: 52, opacity: name === frame ? 1 : 0 }}
+            style={{ position: 'absolute', width: 52, height: 52, opacity: name === frame && !live ? 1 : 0 }}
           />
         ))}
+        <Live2DView key={model} model={model} fit="face" frame={frame} animate={animate} onLive={onLive} />
         <View
           pointerEvents="none"
           style={[StyleSheet.absoluteFill, { borderRadius: 26, borderWidth: edge.width, borderColor: edge.color }]}
