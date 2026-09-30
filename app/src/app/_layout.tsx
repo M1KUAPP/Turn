@@ -41,10 +41,19 @@ export default function RootLayout() {
                 contentStyle: { backgroundColor: colors.board }
               }}
             />
+            <Stack.Screen
+              name="partner"
+              options={{
+                presentation: 'fullScreenModal',
+                headerShown: false,
+                contentStyle: { backgroundColor: colors.board }
+              }}
+            />
             <Stack.Screen name="settings/index" options={{ ...listScreen, title: 'Settings' }} />
             <Stack.Screen name="settings/listen" options={{ ...listScreen, title: 'Listen mode' }} />
             <Stack.Screen name="settings/places" options={{ ...listScreen, title: 'Places' }} />
             <Stack.Screen name="settings/voice" options={{ ...listScreen, title: 'Voice' }} />
+            <Stack.Screen name="settings/companion" options={{ ...listScreen, title: 'Companion' }} />
             <Stack.Screen name="settings/privacy" options={{ ...listScreen, title: 'Privacy notice' }} />
             <Stack.Screen name="settings/stats" options={{ ...listScreen, title: 'Stats on this phone' }} />
             <Stack.Screen name="settings/licenses" options={{ ...listScreen, title: 'Licenses' }} />
