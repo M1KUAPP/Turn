@@ -1339,7 +1339,7 @@ A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point
 
 ### The companion
 
-An opt-in face for the user's voice, chosen in Settings, drawn from Live2D models as still frames ([plan 0048](/docs/plans/0048-turn-companion.md)):
+An opt-in face for the user's voice, chosen in Settings, drawn from Live2D models as still frames ([plan 0048](/docs/plans/0048-turn-companion.md)), and live, by the Cubism SDK in a web view, once the model has loaded in a build that carries it ([plan 0049](/docs/plans/0049-live-companion.md)):
 
 - **Where it sits.** On Home, a 64-point glass circle left of the bottom bar, which narrows to 298 points with 70-point pills; in the composer, left of the field, below AX1. It never moves between states, so nothing shifts under a finger.
 - **Its state, first match wins.** Speaking while Turn speaks, in a 2.5 `accent` ring; Typing while the composer has focus, looking down, in the 1.5 `edge`; Listening while the partner's words arrive, looking up, in a 2.5 `listen` ring; and Rest.
@@ -1373,7 +1373,7 @@ Motion is feedback, never decoration. The format has no motion tokens, and its m
 | The meter         | Five bars follow the input level, and lie flat where the engine measures none                                         | The recognizer's level, up to 10 Hz; spring (damping 18, stiffness 220)            | Bars hidden; "They're saying" stays                               |
 | Words arrive      | Each new word fades in, and the newest sits on a `listen-soft` highlight that fades                                   | 120 ms a word; highlight 600 ms                                                    | No fade; the highlight stays on the last word until the line ends |
 | Speaking          | The slot's waveform symbol animates, and Repeat cross-fades to Stop                                                   | SF Symbol `variableColor.iterative`; 150 ms                                        | Static symbol                                                     |
-| The companion     | While Turn speaks, the face cycles its rest, half, and open frames; at rest it blinks                                 | About 8 frames a second; a 120 ms blink every 4 to 6 s                             | The half frame while speaking, and no blink; Let it move off too  |
+| The companion     | While Turn speaks, the face cycles its rest, half, and open frames; at rest it blinks; the live model also breathes   | About 8 frames a second; a 120 ms blink every 4 to 6 s; drawn at 30 a second       | The half frame while speaking, and no blink; Let it move off too  |
 | Sheets and alerts | System                                                                                                                | System                                                                             | System                                                            |
 
 - **Nothing else moves.** No entrances, springs, parallax, shimmer, skeletons, or loops beyond the light's ring; the grid never animates; and a press changes the fill, never the size, so the target stays where the finger is ([motionsites notes][ms-app]).

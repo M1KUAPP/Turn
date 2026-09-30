@@ -84,6 +84,10 @@ node_modules/
 .expo/
 app/ios/
 
+# The companion's Live2D models and page, fetched and built by scripts/fetch-companion-models.ts
+app/live2d/.cache/
+app/live2d/build/
+
 # Environment
 .env*
 !.env.example

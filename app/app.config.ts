@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import type { ConfigContext, ExpoConfig } from 'expo/config'
 
-export default ({ config }: ConfigContext): ExpoConfig => ({
+export default ({ config, projectRoot }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'Turn',
   slug: 'turn',
@@ -29,6 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-secure-store',
     ['expo-build-properties', { ios: { enableSceneSupport: true } }],
     ['./plugins/withBoardSplash', { backgroundColor: '#F4EFE7' }],
+    './plugins/withLive2D',
     [
       'expo-speech-recognition',
       {
@@ -44,6 +47,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     relayUrl: process.env.EXPO_PUBLIC_RELAY_URL ?? 'https://turn-relay.m1ku-turn.workers.dev',
     revenueCatTestStoreKey: process.env.EXPO_PUBLIC_RC_TEST_STORE_KEY ?? 'test_TXxJjdDavsAIFUJqzvnenrRIqBc',
     buildKind: process.env.EXPO_PUBLIC_BUILD_KIND ?? 'simulator',
-    listenEngine: 'auto'
+    listenEngine: 'auto',
+    // The companion's live renderer is in this build, so the face draws live over its frames; withLive2D copies the
+    // same folder into the app (plan 0049).
+    live2d: Boolean(projectRoot) && existsSync(join(projectRoot, 'live2d/build/Live2D/index.html'))
   }
 })

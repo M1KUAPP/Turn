@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest'
-import { companionName, createCompanionSettings } from '../src/companion/settings'
+import { liveFraming, livePose } from '../src/companion/live2d'
+import { COMPANION_MODELS, companionName, createCompanionSettings } from '../src/companion/settings'
 import { BLINK_MS, MOUTH_MS, companionState, faceMotion, playFace, type FaceFrame } from '../src/companion/state'
 
 function ports(values: Record<string, string> = {}) {
@@ -77,6 +78,30 @@ describe('the face player', () => {
     expect(shown).toEqual(['rest', 'half', 'open', 'rest', 'half'])
     stop()
     expect(vi.getTimerCount()).toBe(0)
+  })
+})
+
+describe('the live model', () => {
+  test('poses each frame: the mouth half and open, shut eyes for a blink, up to listen, and down to type', () => {
+    expect(livePose('rest')).toEqual({ eyes: 1, mouth: 0, look: 0 })
+    expect(livePose('half')).toEqual({ eyes: 1, mouth: 0.5, look: 0 })
+    expect(livePose('open')).toEqual({ eyes: 1, mouth: 1, look: 0 })
+    expect(livePose('blink')).toEqual({ eyes: 0, mouth: 0, look: 0 })
+    expect(livePose('listen')).toEqual({ eyes: 1, mouth: 0, look: 0.75 })
+    expect(livePose('type')).toEqual({ eyes: 1, mouth: 0, look: -1 })
+  })
+
+  test('frames every model for the face and the portrait, the face closer in', () => {
+    for (const { model } of COMPANION_MODELS) {
+      const { face, portrait } = liveFraming[model]
+      for (const framing of [face, portrait]) {
+        expect(framing.x).toBeGreaterThan(0)
+        expect(framing.x).toBeLessThan(1)
+        expect(framing.y).toBeGreaterThan(0)
+        expect(framing.y).toBeLessThan(1)
+      }
+      expect(face.height).toBeLessThan(portrait.height)
+    }
   })
 })
 
