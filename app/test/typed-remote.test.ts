@@ -44,7 +44,7 @@ describe('typed lines with a remote ranker', () => {
     const source = {
       ...bank(),
       categories: async () => [{ id: 'food', name: 'Food', position: 0, fixed: 0 }],
-      places: async () => [{ id: 'home', name: 'Home', position: 0 }]
+      places: async () => [{ id: 'home', name: 'Home', position: 0, show_companion: 1 }]
     }
     const rank = createRelayRanker({
       bank: source,
