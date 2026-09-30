@@ -255,14 +255,14 @@ Every section below names its requirements in the order [the product requirement
 
 ### Submission requirements
 
-| ID       | Check                                                       | Where                         | Result    | Build |
-| -------- | ----------------------------------------------------------- | ----------------------------- | --------- | ----- |
-| SUBMIT-1 | GitHub shows the repository as public with the MIT license. | #66, #119                     | RELEASE-4 | —     |
-| SUBMIT-2 | Someone outside the team follows it to a spoken reply.      | #68; the draft README in #119 | RELEASE-4 | —     |
-| SUBMIT-3 | Install it on a clean Simulator.                            | #63; the draft README in #119 | RELEASE-4 | —     |
-| SUBMIT-4 | Watch it logged out.                                        | #67                           | RELEASE-4 | —     |
-| SUBMIT-5 | Devpost shows the entry as submitted.                       | #69                           | RELEASE-4 | —     |
-| SUBMIT-6 | Search each for the names.                                  | #66                           | RELEASE-4 | —     |
+| ID       | Check                                                       | Where                                                                                                                                                                                                                                                                                                                         | Result    | Build   |
+| -------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| SUBMIT-1 | GitHub shows the repository as public with the MIT license. | #66, #119                                                                                                                                                                                                                                                                                                                     | RELEASE-4 | —       |
+| SUBMIT-2 | Someone outside the team follows it to a spoken reply.      | #68; the draft README in #119                                                                                                                                                                                                                                                                                                 | RELEASE-4 | —       |
+| SUBMIT-3 | Install it on a clean Simulator.                            | [`v0.1.0`](https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0), published from `76a1dca` by run 36752013112 once its `Turn.app.zip` passed `home`, `judge`, `listen`, `paywall-buy`, `paywall-failed`, and `settings` on a fresh iPhone 16 Simulator at the default size and AX5; the README links the latest release (#190) | RELEASE-4 | 76a1dca |
+| SUBMIT-4 | Watch it logged out.                                        | #67                                                                                                                                                                                                                                                                                                                           | RELEASE-4 | —       |
+| SUBMIT-5 | Devpost shows the entry as submitted.                       | #69                                                                                                                                                                                                                                                                                                                           | RELEASE-4 | —       |
+| SUBMIT-6 | Search each for the names.                                  | #66                                                                                                                                                                                                                                                                                                                           | RELEASE-4 | —       |
 
 ### Release criteria
 
