@@ -15,7 +15,7 @@ import {
   View
 } from 'react-native'
 import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
 import CompanionFace from '../companion/CompanionFace'
 import { companionState } from '../companion/state'
@@ -175,6 +175,7 @@ export default function HomeScreen({
   const composerContent = useRef<ScrollView>(null)
   const placeChip = useRef<View>(null)
   const { width, height, fontScale } = useWindowDimensions()
+  const insets = useSafeAreaInsets()
   const layout = homeLayout(width, height, fontScale)
   const minPhraseHeight = layout.short ? 64 : 78
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
@@ -715,12 +716,15 @@ export default function HomeScreen({
     </View>
   )
 
+  // The composer keeps the bottom inset: the keyboard's padding gives it back while the keyboard is up, so the composer
+  // sits on the keyboard, and with the keyboard down, as after the partner view, it stays above the home indicator.
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={composerOpen ? 'padding' : undefined}>
-      <SafeAreaView
-        edges={composerOpen ? ['top', 'left', 'right'] : undefined}
-        style={{ flex: 1, backgroundColor: colors.board }}
-      >
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={composerOpen ? 'padding' : undefined}
+      keyboardVerticalOffset={-insets.bottom}
+    >
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
         <BoardGlow on={view.micOn} width={width} reduceMotion={reduceMotion} />
         {composerOpen ? (
           <ScrollView
