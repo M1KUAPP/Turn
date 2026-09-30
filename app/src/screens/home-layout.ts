@@ -27,8 +27,22 @@ export function homeLayout(width: number, height: number, fontScale: number) {
   }
 }
 
-export function pageOffset(offset: number, viewportHeight: number, contentHeight: number, direction: -1 | 1) {
-  return Math.max(0, Math.min(contentHeight - viewportHeight, offset + direction * viewportHeight))
+/** Where Up or Down scrolls the grid: a page further, clamped to its ends. A page is the part of the grid in view, which
+ * stops at the floating toolbar's top, so no phrase hides under the bar between pages. */
+export function pageOffset(
+  offset: number,
+  viewportHeight: number,
+  contentHeight: number,
+  direction: -1 | 1,
+  pageHeight = viewportHeight
+) {
+  return Math.max(0, Math.min(contentHeight - viewportHeight, offset + direction * pageHeight))
+}
+
+/** How far the floating toolbar sits above the screen's bottom edge: 22 points on an iPhone with a home indicator,
+ * whose 34-point area it overlaps while staying clear of the indicator itself, and 8 on one without. */
+export function toolbarBottom(bottomInset: number) {
+  return Math.max(8, bottomInset - 12)
 }
 
 /** Whether the row offers the starter card (BANK-10): only on an idle Home, never over Listen mode, typing's matches, or the under-18 note. */

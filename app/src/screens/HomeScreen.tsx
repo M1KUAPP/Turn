@@ -38,7 +38,8 @@ import {
   pageOffset,
   replyStat,
   selectedTab,
-  starterCardShown
+  starterCardShown,
+  toolbarBottom
 } from './home-layout'
 import { homePreview } from './home-preview'
 import { Layer, usePress } from './home-press'
@@ -172,6 +173,7 @@ export default function HomeScreen({
   const [viewportHeight, setViewportHeight] = useState(1)
   const [contentHeight, setContentHeight] = useState(1)
   const [headerHeight, setHeaderHeight] = useState(0)
+  const [barHeight, setBarHeight] = useState(64)
   const [replyPreview, setReplyPreview] = useState(0)
   const [composerMode, setComposerMode] = useState<'speak' | 'partner' | null>(null)
   const [draft, setDraft] = useState('')
@@ -185,6 +187,10 @@ export default function HomeScreen({
   const { width, height, fontScale } = useWindowDimensions()
   const insets = useSafeAreaInsets()
   const layout = homeLayout(width, height, fontScale)
+  // The toolbar floats over the grid, which runs to the screen's bottom edge; `barSpace` is how much of the grid's
+  // bottom the bar and the space under it cover.
+  const barBottom = toolbarBottom(insets.bottom)
+  const barSpace = barBottom + barHeight
   const minPhraseHeight = layout.short ? 64 : 78
   const tabHeight = Math.max(44, 20 * Math.min(fontScale, 2.9) + 24)
   const controlHeight = Math.max(44, 22 * Math.min(fontScale, 2.82) + 16)
@@ -401,7 +407,7 @@ export default function HomeScreen({
 
   const page = (direction: -1 | 1) => {
     list.current?.scrollToOffset({
-      offset: pageOffset(offset, viewportHeight, contentHeight, direction),
+      offset: pageOffset(offset, viewportHeight, contentHeight, direction, viewportHeight - barSpace),
       animated: false
     })
   }
@@ -740,13 +746,17 @@ export default function HomeScreen({
 
   // The composer keeps the bottom inset: the keyboard's padding gives it back while the keyboard is up, so the composer
   // sits on the keyboard, and with the keyboard down, as after the partner view, it stays above the home indicator.
+  // Otherwise the grid runs under the home indicator, beneath the floating toolbar.
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={composerOpen ? 'padding' : undefined}
       keyboardVerticalOffset={-insets.bottom}
     >
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
+      <SafeAreaView
+        edges={composerOpen ? ['top', 'right', 'bottom', 'left'] : ['top', 'right', 'left']}
+        style={{ flex: 1, backgroundColor: colors.board }}
+      >
         <BoardGlow on={view.micOn} width={width} reduceMotion={reduceMotion} />
         {composerOpen ? (
           <ScrollView
@@ -764,8 +774,9 @@ export default function HomeScreen({
           <>
             {topBar}
             {!layout.wholeMiddleScroll && middleHeader}
-            {/* The grid's edges fade into the board while it scrolls on past them, so a card cut by the tabs or the
-                toolbar fades out rather than stopping at a hard line. */}
+            {/* The grid's top edge fades into the board while it scrolls on past it, so a card cut by the tabs fades
+                out rather than stopping at a hard line. At the bottom, the grid scrolls under the floating toolbar,
+                fading into the board beneath it, and ends 8 points above it, so its last row scrolls clear. */}
             <View style={{ flex: 1 }}>
               <FlatList
                 key={`${layout.gridColumns}-${layout.wholeMiddleScroll}`}
@@ -781,9 +792,11 @@ export default function HomeScreen({
                 contentContainerStyle={{
                   paddingHorizontal: 16,
                   paddingTop: layout.wholeMiddleScroll ? 8 : 4,
-                  paddingBottom: 4,
+                  paddingBottom: barSpace + 8,
                   gap: layout.gridGap
                 }}
+                automaticallyAdjustsScrollIndicatorInsets={false}
+                scrollIndicatorInsets={{ bottom: barSpace }}
                 onScroll={(event) => setOffset(event.nativeEvent.contentOffset.y)}
                 scrollEventThrottle={100}
                 onLayout={(event) => setViewportHeight(event.nativeEvent.layout.height)}
@@ -817,27 +830,31 @@ export default function HomeScreen({
                 }
               />
               {offset > 1 && <EdgeFade side="top" size={16} token="board" increaseContrast={increaseContrast} />}
-              {offset < contentHeight - viewportHeight - 1 && (
-                <EdgeFade side="bottom" size={16} token="board" increaseContrast={increaseContrast} />
-              )}
+              <EdgeFade side="bottom" size={barSpace + 24} token="board" increaseContrast={increaseContrast} />
+              <View
+                pointerEvents="box-none"
+                onLayout={(event) => setBarHeight(Math.ceil(event.nativeEvent.layout.height))}
+                style={{ position: 'absolute', left: 0, right: 0, bottom: barBottom }}
+              >
+                <Toolbar
+                  width={width}
+                  fontScale={fontScale}
+                  boldText={boldText}
+                  reduceMotion={reduceMotion}
+                  reduceTransparency={reduceTransparency}
+                  speaking={speaking.speaking}
+                  canRepeat={Boolean(speaking.lastText)}
+                  canPageUp={offset > 0}
+                  canPageDown={offset < contentHeight - viewportHeight}
+                  onType={() => setComposerMode('speak')}
+                  onRepeat={() => void speech.repeat()}
+                  onStop={() => void speech.stop()}
+                  onPageUp={() => page(-1)}
+                  onPageDown={() => page(1)}
+                  face={face(false)}
+                />
+              </View>
             </View>
-            <Toolbar
-              width={width}
-              fontScale={fontScale}
-              boldText={boldText}
-              reduceMotion={reduceMotion}
-              reduceTransparency={reduceTransparency}
-              speaking={speaking.speaking}
-              canRepeat={Boolean(speaking.lastText)}
-              canPageUp={offset > 0}
-              canPageDown={offset < contentHeight - viewportHeight}
-              onType={() => setComposerMode('speak')}
-              onRepeat={() => void speech.repeat()}
-              onStop={() => void speech.stop()}
-              onPageUp={() => page(-1)}
-              onPageDown={() => page(1)}
-              face={face(false)}
-            />
           </>
         )}
         {composerMode === 'speak' && (
