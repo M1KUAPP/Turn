@@ -50,7 +50,12 @@ export function createSpeechController(
     await gate.beforeSpeak()
     if (ticket !== generation) return
     if (options.remember !== false) last = { text, id }
-    setState({ speaking: true, lastText: text, activePhraseId: id ?? null })
+    // A preview isn't said to anyone, so the last text, which Repeat and the partner view show, stays the last line.
+    setState({
+      speaking: true,
+      lastText: options.remember === false ? state.lastText : text,
+      activePhraseId: id ?? null
+    })
     let counted = false
     const voice = options.overrideVoice ? (options.previewVoice ?? null) : settings.voice()
     try {
