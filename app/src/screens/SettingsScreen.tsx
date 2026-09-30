@@ -331,6 +331,7 @@ export default function SettingsScreen() {
             label="Stats on this phone"
             boldText={boldText}
             symbol="chart.bar.fill"
+            tone={tileTones.neutral}
             chevron
             onPress={() => router.push('/settings/stats')}
           />

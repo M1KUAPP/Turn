@@ -27,6 +27,8 @@ export const previewText = 'Hello. This is how I sound.'
 export default function VoiceScreen() {
   const { ready, boldText } = useTurn()
   const { tile, mark } = useListMetrics()
+  // A voice's Preview button is at least 44 points around its tile, with corners concentric with the tile's 14.
+  const previewRadius = 14 + (Math.max(44, tile) - tile) / 2
   const voiceSettings = ready?.voiceSettings
   const [voices, setVoices] = useState<readonly VoiceOption[]>([])
   const [selected, setSelected] = useState<VoiceOption | null>(null)
@@ -108,12 +110,12 @@ export default function VoiceScreen() {
                       height: Math.max(44, tile),
                       alignItems: 'center',
                       justifyContent: 'center',
-                      borderRadius: 14
+                      borderRadius: previewRadius
                     }}
                   >
                     {({ pressed }) => (
                       <>
-                        <PressFill pressed={pressed} color={colors['surface-pressed']} radius={14} />
+                        <PressFill pressed={pressed} color={colors['surface-pressed']} radius={previewRadius} />
                         <SymbolTile symbol="speaker.wave.2.fill" tone={tileTones.accent} />
                       </>
                     )}
@@ -186,7 +188,7 @@ export default function VoiceScreen() {
             closeLabel="Close"
             onClose={() => setPersonalNote(null)}
           />
-          <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 16, gap: 16 }}>
+          <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 16, gap: 16 }}>
             <View
               style={{
                 width: 56,

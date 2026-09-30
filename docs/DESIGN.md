@@ -383,7 +383,7 @@ colors:
 | `accent-tag`      | Blue tag             | The big reply's category tag                                                                                                                       |
 | `listen`          | Lamp orange          | The light while the microphone is on, the caption's label and edge, and Listen mode's entry: the consent card's edge and the permission step's ear |
 | `on-listen`       | On orange            | "Listening" and its symbol                                                                                                                         |
-| `listen-soft`     | Orange wash          | The free lines' pill, a caption word as it arrives, the consent card's fact discs, and Listen mode's tiles                                         |
+| `listen-soft`     | Orange wash          | The free lines' pill, a caption word as it arrives, the consent card's and permission step's fact discs, and Listen mode's tiles                   |
 | `listen-glow`     | Lamp glow            | The glow behind the board while listening, the light's ring, and the consent card's warm glow                                                      |
 | `yes-fill`        | Yes                  | Yes's fill, in the row and in the Quick category                                                                                                   |
 | `yes-edge`        | Yes, edge            | Yes's edge                                                                                                                                         |
@@ -1355,7 +1355,7 @@ An opt-in face for the user's voice, chosen in Settings, drawn from Live2D model
 - **Equal pairs.** "Allow" and "Not now", and "They agreed" and "They said no", are two secondary buttons of one size and style, side by side, stacked from AX1: Apple marks a preferred choice by "style — not size", and neither of these is preferred ([Turn's iOS design notes][ios-hig-changes]).
 - **Lists.** Settings and the editor use inset groups on the board: rows at least 56 points tall in a `surface` group with a 1.5 `edge` and hairline dividers, each with a 32-point symbol tile in `chip` corners colored by meaning, with `body` text, values in `ink-secondary`, and `link` for links. The tile is `accent` on `accent-soft` for voice and purchase, `ink` on `listen-soft` for Listen mode, the category's edge on its fill for the bank and Out and about's for places, and `ink` on `surface-sunken` for the rest. From AX1 the tile sits above the row's words, so a long word keeps the row's width.
 - **Symbol buttons.** At least 44 by 44 points, each with a label, on `surface-sunken` with a 1.5 `edge`.
-- **Sheets.** On the `board`, with a grabber, the title in `title`, and a 44-point close; the sheet's buttons stay pinned above the keyboard, stacked from AX1.
+- **Sheets.** On the `board`, with a grabber, the title in `title`, and a 44-point close; the sheet's buttons stay pinned above the keyboard, stacked from AX1, and what scrolls on under them fades into the `board` over the 16 points above them. The editor's Undo bar does the same, and so do the consent card's answers, whose words fade into the card's `surface`.
 
 [ios-hig-changes]: /docs/research/0029-turn-ios-design.md#hig-changes-since-june-2025
 
@@ -1433,7 +1433,7 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 `/permission`, a form sheet at full height, since it's for reading, on the `board`, as every sheet is (CONSENT-1):
 
-- A title in `title` beside a 44-point close that means Not now, the ear on a `listen` disc, then a paragraph in `body` that says what leaves the phone with each partner line and to whom it goes (ROW-2), and the rest as facts beside symbol tiles: that names Turn recognizes are swapped for tags, that audio and the rest of the bank never leave, and that the service may keep data to monitor its service.
+- A title in `title` beside a 44-point close that means Not now, the ear on a `listen` disc, then a paragraph in `body` that says what leaves the phone with each partner line and to whom it goes (ROW-2), and the rest as facts beside symbols in `ink` on `listen-soft` discs, as the consent card's are: that names Turn recognizes are swapped for tags, that audio and the rest of the bank never leave, and that the service may keep data to monitor its service.
 - A link to the privacy notice, which reads with no network (SET-2).
 - "Allow" and "Not now" as an equal pair at the bottom.
 - Every word is text, never an image, so Accessibility Reader and VoiceOver read it ([Turn's iOS design notes][ios-reader]).
