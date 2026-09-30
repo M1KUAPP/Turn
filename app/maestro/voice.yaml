@@ -25,10 +25,21 @@ name: Voice
     visible: 'Choose a voice or preview how it sounds\.'
     timeout: 10000
 - waitForAnimationToEnd
+# The note now sits under the voices, so System default is back up the list.
 - scrollUntilVisible:
     element: '.*System default.*'
+    direction: UP
 - assertVisible: System default
 - takeScreenshot: voice-list
+# That scroll can leave the first voice's tile, its Preview button, under the header, where a tap lands on the
+# header, so the list goes back to its top first.
+- scrollUntilVisible:
+    element: Personal Voice
+    direction: UP
+- swipe:
+    start: '50%, 30%'
+    end: '50%, 90%'
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: Preview
@@ -52,10 +63,7 @@ name: Voice
     text: Samantha
     selected: true
 - takeScreenshot: voice-samantha-selected
-- swipe:
-    start: '1%, 50%'
-    end: '80%, 50%'
-- waitForAnimationToEnd
+# The speech rate sits on the Voice screen, under the voices.
 - scrollUntilVisible:
     element: Slowest
 - tapOn: Slowest
@@ -114,12 +122,22 @@ name: Voice
 - scrollUntilVisible:
     element: '.*Voice, Samantha.*'
 - assertVisible: '.*Voice, Samantha.*'
+- tapOn: '.*Voice, Samantha.*'
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Fastest
 - assertVisible:
     text: Fastest
     selected: true
 - takeScreenshot: voice-persistence
+# Personal Voice now leads the Voice screen, above the voices and the speech rate, so the list goes back to its top.
+- scrollUntilVisible:
+    element: Personal Voice
+    direction: UP
+- swipe:
+    start: '50%, 30%'
+    end: '50%, 90%'
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: Personal Voice
 - tapOn: Personal Voice
