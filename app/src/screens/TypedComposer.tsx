@@ -3,6 +3,7 @@ import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
 import { Layer, usePress } from './home-press'
+import { CloseButton } from './SheetHeader'
 import TurnText from './TurnText'
 
 type Props = {
@@ -77,14 +78,7 @@ export default function TypedComposer({
             Type what to say
           </TurnText>
         )}
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Close composer"
-          onPress={onClose}
-          style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <SymbolView name="xmark" size={18} weight="semibold" tintColor={colors.ink} accessible={false} />
-        </Pressable>
+        <CloseButton label="Close composer" onPress={onClose} />
       </View>
       {replyingTo && (
         // The field keeps its visible name while it replies, as DESIGN's composer strings have it.
@@ -112,9 +106,9 @@ export default function TypedComposer({
             flex: 1,
             color: colors.ink,
             backgroundColor: colors.surface,
-            borderColor: colors.edge,
-            borderWidth: 1.5,
-            borderRadius: 20,
+            borderColor: focused ? colors.accent : colors.edge,
+            borderWidth: focused ? 2.5 : 1.5,
+            borderRadius: 24,
             paddingHorizontal: 16,
             paddingTop: 15,
             paddingBottom: 15,

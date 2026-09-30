@@ -7,6 +7,7 @@ import { useConsent, useTurn } from '../turn-context'
 import Button from './Button'
 import type { SymbolName } from './category-style'
 import { useShadow } from './depth'
+import EdgeFade from './EdgeFade'
 import SheetHeader from './SheetHeader'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
@@ -16,7 +17,7 @@ const factSymbols: SymbolName[] = ['person.text.rectangle', 'lock.fill', 'info.c
 
 export default function PermissionStepScreen() {
   const router = useRouter()
-  const { boldText } = useTurn()
+  const { boldText, increaseContrast } = useTurn()
   const { consent, state } = useConsent()
   const step = state.step
   const disabled = consent === null
@@ -31,7 +32,7 @@ export default function PermissionStepScreen() {
     <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1, backgroundColor: colors.board }}>
       <SheetHeader title={step.title} boldText={boldText} closeLabel="Close" onClose={() => consent?.notNow()} />
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16, gap: 14 }}
+        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16, gap: 14 }}
       >
         <View
           style={{
@@ -58,14 +59,14 @@ export default function PermissionStepScreen() {
                 borderRadius: disc / 2,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: colors['accent-soft']
+                backgroundColor: colors['listen-soft']
               }}
             >
               <SymbolView
                 name={factSymbols[index] ?? 'info.circle'}
                 size={Math.round(disc / 2)}
                 weight="semibold"
-                tintColor={colors.accent}
+                tintColor={colors.ink}
                 accessible={false}
               />
             </View>
@@ -84,12 +85,14 @@ export default function PermissionStepScreen() {
             alignItems: 'center',
             alignSelf: 'flex-start',
             gap: 6,
-            borderRadius: 12
+            marginLeft: -8,
+            paddingHorizontal: 8,
+            borderRadius: 14
           }}
         >
           {({ pressed }) => (
             <>
-              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={12} />
+              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={14} />
               <SymbolView
                 name="checkmark.shield.fill"
                 size={symbolSize(18)}
@@ -104,8 +107,12 @@ export default function PermissionStepScreen() {
           )}
         </Pressable>
       </ScrollView>
-      {/* Allow and Not now carry equal weight (CONSENT-1): one size and style side by side, stacked from AX1. */}
-      <View style={{ flexDirection: stacked ? 'column' : 'row', paddingHorizontal: 20, paddingTop: 8, gap: 12 }}>
+      {/* Allow and Not now carry equal weight (CONSENT-1): one size and style side by side, stacked from AX1. Where the
+          step scrolls, its words fade into the board above them rather than stopping at a hard line. */}
+      <View style={{ flexDirection: stacked ? 'column' : 'row', paddingHorizontal: 16, paddingTop: 8, gap: 12 }}>
+        <View pointerEvents="none" style={{ position: 'absolute', top: -16, left: 0, right: 0, height: 16 }}>
+          <EdgeFade side="bottom" size={16} token="board" increaseContrast={increaseContrast} />
+        </View>
         <Button
           label={step.allow}
           boldText={boldText}

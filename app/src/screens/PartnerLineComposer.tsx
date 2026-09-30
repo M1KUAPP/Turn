@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
 import { Layer, usePress } from './home-press'
+import { CloseButton } from './SheetHeader'
 import TurnText from './TurnText'
 
 type Props = {
@@ -22,6 +24,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
   const disabled = !text.trim()
   const symbol = Math.round(17 * Math.min(fontScale, 2.6))
   const press = usePress()
+  const [focused, setFocused] = useState(false)
 
   return (
     <View
@@ -51,14 +54,7 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
             What did they say?
           </TurnText>
         </View>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Close composer"
-          onPress={onClose}
-          style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <SymbolView name="xmark" size={18} weight="semibold" tintColor={colors.ink} accessible={false} />
-        </Pressable>
+        <CloseButton label="Close composer" onPress={onClose} />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10, flexShrink: 1 }}>
         <TextInput
@@ -72,14 +68,16 @@ export default function PartnerLineComposer({ text, onChangeText, onSend, onClos
           selectionColor={colors.accent}
           value={text}
           onChangeText={(value) => onChangeText(value.slice(0, 500))}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           style={{
             ...textStyle('partner-line-small', boldText),
             flex: 1,
             color: colors.ink,
             backgroundColor: colors.surface,
-            borderColor: colors.edge,
-            borderWidth: 1.5,
-            borderRadius: 20,
+            borderColor: focused ? colors.accent : colors.edge,
+            borderWidth: focused ? 2.5 : 1.5,
+            borderRadius: 24,
             paddingHorizontal: 16,
             paddingTop: 13,
             paddingBottom: 13,
