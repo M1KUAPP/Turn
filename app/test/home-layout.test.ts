@@ -6,6 +6,7 @@ import {
   pageOffset,
   replyStat,
   selectedTab,
+  gridTextKind,
   slotTextKind,
   starterCardShown,
   toolbarLayout
@@ -181,6 +182,25 @@ describe('row slot text', () => {
     expect(slotTextKind(20, 335, 2.6, false)).toBe('phrase')
     expect(slotTextKind(21, 335, 2.6, false)).toBe('button')
     expect(slotTextKind(4, 144, 1, true)).toBe('button')
+  })
+})
+
+describe('grid text size', () => {
+  // A grid card's line on a 393-point iPhone: half the grid, less its padding and the speaking mark's room.
+  const line = (393 - 32 - 12) / 2 - 35 - 18
+
+  test('keeps phrase while every word fits its line', () => {
+    expect(gridTextKind('I understand everything you say', line, 1, false)).toBe('phrase')
+    expect(gridTextKind("That's everything, thanks", line, 1, false)).toBe('phrase')
+  })
+
+  test("steps down when a word would break mid-way, as 'appointment' would", () => {
+    expect(gridTextKind('When is my next appointment?', line, 1, false)).toBe('button')
+    expect(gridTextKind('I understand', line, 1.2, false)).toBe('button')
+  })
+
+  test('takes button on short screens, as the grid always has', () => {
+    expect(gridTextKind('Yes', line, 1, true)).toBe('button')
   })
 })
 
