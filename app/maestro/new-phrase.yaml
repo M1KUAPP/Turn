@@ -56,8 +56,11 @@ name: A new phrase
 - extendedWaitUntil:
     visible: Mic off
     timeout: 10000
+# From AX1 Mic off's message fills the top of the column and can end a line past the screen's edge, so most of it
+# is enough, as in listen.yaml.
 - scrollUntilVisible:
     element: '.*Tap here to type what they say\..*'
+    visibilityPercentage: 90
 - tapOn: '.*Tap here to type what they say\..*'
 - inputText: 'What do you think of the new nurse?'
 - scrollUntilVisible:
