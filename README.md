@@ -142,6 +142,7 @@ The steps below follow the Simulator preview, where the partner's line is typed;
 - **Replies from what the partner said.** One big button when Turn is confident, up to six replies otherwise, and no change when nothing fits. Yes, No, and Not sure come first for a yes-or-no question and always keep their places.
 - **A steady row.** A reply keeps its slot until a new one wins by a clear margin, and the grid never reorders itself.
 - **A conversation strip.** Five fixed phrases that manage the conversation, such as "Wait, I'm typing" and "Sorry, say that again".
+- **A face for your voice.** An optional companion beside the toolbar mouths what Turn says, looks up while the partner talks, and turns the screen to the partner with the line in big text.
 - **Listening that's agreed and visible.** Your permission before any phrase leaves the phone, the partner's consent card each time listening starts, a light while it listens, and a switch that keeps a partner under 18 from being heard.
 - **Private by default.** No accounts. The phrase bank stays on the phone, names become tags before a line leaves it, and no audio is recorded. The [privacy notice](PRIVACY.md) is also in the app, under **Settings** and **About**.
 - **Useful offline.** Without a network, or when the model service is slow or down, the phone ranks phrases itself and says Listen mode is degraded.
@@ -269,6 +270,7 @@ See [LICENSE](LICENSE) for more information.
 - [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/), the font in the banner ([OFL](assets/pitch/fonts/OFL.txt))
 - [Shields.io](https://shields.io)
 - [contrib.rocks](https://contrib.rocks)
+- The companion's faces, drawn with Live2D: Ren is Ren Foster, © Live2D Inc., under the Live2D Free Material License; Suit and Office are Suit Male and Office Girl by Ooie; and Ice is Ice Girl, "Live2D: @TianYeLulu"
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
