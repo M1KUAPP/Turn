@@ -26,6 +26,12 @@ name: Turn Listen purchase
 - waitForAnimationToEnd
 - takeScreenshot: paywall-open
 # The published paywall hides Settings' row of the same words, so this is the paywall's button.
+- scrollUntilVisible:
+    element: Unlock Listen mode
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
 - tapOn: Unlock Listen mode
 - extendedWaitUntil:
     visible: Test Store Purchase
