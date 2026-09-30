@@ -31,13 +31,21 @@ import { categoryHue, placeSymbol } from './category-style'
 import CategoryTabs from './CategoryTabs'
 import EdgeFade from './EdgeFade'
 import { useDepth } from './home-depth'
-import { homeLayout, modelSecondsLeft, pageOffset, replyStat, selectedTab, starterCardShown } from './home-layout'
+import {
+  gridTextKind,
+  homeLayout,
+  modelSecondsLeft,
+  pageOffset,
+  replyStat,
+  selectedTab,
+  starterCardShown
+} from './home-layout'
 import { homePreview } from './home-preview'
 import { Layer, usePress } from './home-press'
 import { listenControl } from './listen-control'
 import ListenButton from './ListenButton'
 import PartnerLineComposer from './PartnerLineComposer'
-import PhraseCard from './PhraseCard'
+import PhraseCard, { speakingRoom } from './PhraseCard'
 import PlaceMenu from './PlaceMenu'
 import ReplyRow, { type Reply } from './ReplyRow'
 import Toolbar from './Toolbar'
@@ -433,14 +441,20 @@ export default function HomeScreen({
         ? withCategory({ id: 'i-have-something-to-say', text: 'I have something to say' })
         : null
 
+  const gridCardWidth = layout.gridColumns === 2 ? (width - 32 - layout.gridGap) / 2 : width - 32
   const renderPhrase = ({ item }: { item: Phrase }) => (
-    <View style={{ flex: 1, maxWidth: layout.gridColumns === 2 ? (width - 44) / 2 : undefined }}>
+    <View style={{ flex: 1, maxWidth: layout.gridColumns === 2 ? gridCardWidth : undefined }}>
       <PhraseCard
         id={item.id}
         text={item.text}
         palette={paletteFor(item.category_id)}
         speaking={speaking.activePhraseId === item.id}
-        kind={layout.short ? 'button' : 'phrase'}
+        kind={gridTextKind(
+          item.text,
+          gridCardWidth - (layout.short ? 23 : 35) - speakingRoom(fontScale, layout.short),
+          fontScale,
+          layout.short
+        )}
         short={layout.short}
         boldText={boldText}
         fontScale={fontScale}
