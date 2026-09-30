@@ -517,8 +517,8 @@ export default function Caption({
             borderRadius: 999
           }}
         >
-          <Layer fill={colors['surface-sunken']} radius={999} />
-          <Layer fill={colors['surface-pressed']} radius={999} style={press.style} />
+          <Layer fill={colors['surface-sunken']} edge={colors.edge} edgeWidth={1.5} radius={999} />
+          <Layer fill={colors['surface-pressed']} edge={colors.edge} edgeWidth={2.5} radius={999} style={press.style} />
           {view.button === 'clear' && (
             <SymbolView
               name="xmark"
