@@ -63,16 +63,25 @@ name: A new phrase
 - scrollUntilVisible:
     element: Send
 - tapOn: Send
+# At the default size, run 36644149652 never saw Repeat after this tap, as if
+# the composer stayed open, so a Send still on screen gets one more. "They said"
+# labels only the caption, not the composer's field, so the wait below passes
+# once the line is sent.
+- runFlow:
+    when:
+      visible: Send
+    commands:
+      - tapOn: Send
 - extendedWaitUntil:
-    visible: '.*What do you think of the new nurse\?.*'
-    timeout: 10000
+    visible: '.*They said.*What do you think of the new nurse\?.*'
+    timeout: 30000
 # The bottom bar is back once the partner's composer closes, so the size checks
 # below read it, as in stats.yaml. The grid shows Quick, which doesn't hold the
 # typed sentence, but at the default size the row's copy is the one above the
 # All tab, as in judge.yaml.
 - extendedWaitUntil:
     visible: Repeat
-    timeout: 15000
+    timeout: 30000
 - runFlow:
     when:
       notVisible:
