@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useState, useSyncExternalStore } from 'react'
 import { Image, Pressable, ScrollView, StyleSheet, useColorScheme, useWindowDimensions, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useFaceFrame } from '../companion/CompanionFace'
 import { companionFrames, PORTRAIT_FRAMES, type PortraitFrame } from '../companion/frames'
 import { colorValues, colors } from '../constants/theme'
@@ -23,6 +23,9 @@ export default function PartnerViewScreen() {
   const { ready, boldText, reduceMotion } = useTurn()
   const { state: companion } = useCompanion()
   const { width, height, fontScale } = useWindowDimensions()
+  // The root's insets, not a SafeAreaView's: a full-screen modal sits outside the root's safe-area provider, where
+  // SafeAreaView reads no top inset and Done lands on the clock.
+  const insets = useSafeAreaInsets()
   const scheme = useColorScheme()
   const card = useShadow('card')
   const flipPress = usePress()
@@ -44,7 +47,16 @@ export default function PartnerViewScreen() {
   const glow = colorValues['listen-glow'][scheme === 'dark' ? 'dark' : 'light']
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.board }}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+        backgroundColor: colors.board
+      }}
+    >
       <View style={{ flex: 1, transform: [{ rotate: flipped ? '180deg' : '0deg' }] }}>
         {/* The frame's warm glow: `listen-glow` at 22%, 560 by 420 points, behind the portrait. */}
         <View
@@ -208,6 +220,6 @@ export default function PartnerViewScreen() {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
