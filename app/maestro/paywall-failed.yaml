@@ -24,6 +24,12 @@ name: Turn Listen failed purchase
     timeout: 30000
 - waitForAnimationToEnd
 # The published paywall hides Settings' row of the same words, so this is the paywall's button.
+- scrollUntilVisible:
+    element: Unlock Listen mode
+    direction: DOWN
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
 - tapOn: Unlock Listen mode
 - extendedWaitUntil:
     visible: Test Store Purchase
@@ -39,6 +45,12 @@ name: Turn Listen failed purchase
       - tapOn: OK
 - takeScreenshot: paywall-failed-dismissed
 # The published paywall labels its close button ✕; the fallback's said Close.
+- scrollUntilVisible:
+    element: 'Close|✕'
+    direction: UP
+    speed: 20
+    visibilityPercentage: 50
+    timeout: 60000
 - tapOn: 'Close|✕'
 # v2's Settings sets the purchase's note under the Turn Listen group, below the fold at AX5.
 - scrollUntilVisible:
