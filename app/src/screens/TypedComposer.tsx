@@ -1,3 +1,4 @@
+import { useState, type ReactNode } from 'react'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, TextInput, View } from 'react-native'
 import { colors, textStyle } from '../constants/theme'
@@ -15,6 +16,9 @@ type Props = {
   fontScale: number
   // The partner's line the words answer, in Listen mode (DESIGN, with the keyboard up).
   replyingTo: string | null
+  // The companion's face at the field's left (frame 22), given whether the field has focus. From AX1 the field needs
+  // the room, so the face stays on Home's toolbar.
+  face?: (typing: boolean) => ReactNode
 }
 
 export default function TypedComposer({
@@ -26,7 +30,8 @@ export default function TypedComposer({
   speaking,
   boldText,
   fontScale,
-  replyingTo
+  replyingTo,
+  face
 }: Props) {
   const lineHeight = 22 * fontScale
   const minInputHeight = Math.max(56, lineHeight + 30)
@@ -34,6 +39,7 @@ export default function TypedComposer({
   const disabled = !speaking && !text.trim()
   const symbol = Math.round(17 * Math.min(fontScale, 2.6))
   const press = usePress()
+  const [focused, setFocused] = useState(false)
 
   return (
     <View
@@ -87,6 +93,7 @@ export default function TypedComposer({
         </TurnText>
       )}
       <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10, flexShrink: 1 }}>
+        {fontScale < 1.786 && face?.(focused)}
         <TextInput
           autoFocus
           multiline
@@ -98,6 +105,8 @@ export default function TypedComposer({
           selectionColor={colors.accent}
           value={text}
           onChangeText={(value) => onChangeText(value.slice(0, 500))}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           style={{
             ...textStyle('body', boldText),
             flex: 1,

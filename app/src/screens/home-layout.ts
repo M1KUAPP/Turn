@@ -79,14 +79,15 @@ const toolbarGap = 6
 /** The floating toolbar's rows (DESIGN, the bottom bar). The four pills share one row, each a symbol above its label and
  * up to 84 points wide, while they fit; otherwise each pill puts its symbol beside its label, and a pair, Type and Repeat
  * or Up and Down, shares a row only when both fit, so no label is ever cut. `labels` are the labels' natural widths,
- * Repeat's standing for Stop's too, so the bar doesn't change while Turn speaks. */
-export function toolbarLayout(labels: Record<ToolbarItem, number>, symbol: number, space: number) {
+ * Repeat's standing for Stop's too, so the bar doesn't change while Turn speaks. Beside the companion's face the pills
+ * sit 2 points apart, so four fit at 70 points in the 298-point bar. */
+export function toolbarLayout(labels: Record<ToolbarItem, number>, symbol: number, space: number, gap = toolbarGap) {
   const items: ToolbarItem[] = ['type', 'repeat', 'up', 'down']
   const stacked = Math.max(...items.map((item) => Math.max(symbol, labels[item]) + 23))
-  const pillWidth = Math.max(stacked, Math.min(84, (space - 3 * toolbarGap) / 4))
-  if (4 * pillWidth + 3 * toolbarGap <= space) return { stacked: true, pillWidth, rows: [items] }
+  const pillWidth = Math.max(stacked, Math.min(84, (space - 3 * gap) / 4))
+  if (4 * pillWidth + 3 * gap <= space) return { stacked: true, pillWidth, rows: [items] }
   const beside = (item: ToolbarItem) => symbol + 6 + labels[item] + 27
-  const pair = (a: ToolbarItem, b: ToolbarItem) => (beside(a) + toolbarGap + beside(b) <= space ? [[a, b]] : [[a], [b]])
+  const pair = (a: ToolbarItem, b: ToolbarItem) => (beside(a) + gap + beside(b) <= space ? [[a, b]] : [[a], [b]])
   return { stacked: false, pillWidth, rows: [...pair('type', 'repeat'), ...pair('up', 'down')] }
 }
 

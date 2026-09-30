@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { SymbolView } from 'expo-symbols'
 import { Pressable, StyleSheet, View, type ColorValue } from 'react-native'
@@ -24,6 +24,8 @@ type Props = {
   onStop: () => void
   onPageUp: () => void
   onPageDown: () => void
+  // The companion's face, when one shows, at the bar's left.
+  face?: ReactNode
 }
 
 const labels: Record<ToolbarItem, string> = { type: 'Type', repeat: 'Repeat', up: 'Up', down: 'Down' }
@@ -144,7 +146,8 @@ function Pill({
 
 /** The floating bottom bar (DESIGN, the bottom bar): a glass capsule, opaque `surface` under Reduce Transparency, whose
  * items each sit on a solid pill, so no label is ever on the glass: Type on `accent`, and Repeat, Up, and Down on
- * `surface` with an `edge`, Repeat turning into Stop on `ink` while Turn speaks. */
+ * `surface` with an `edge`, Repeat turning into Stop on `ink` while Turn speaks. With the companion's face at its left
+ * (frames 02 to 16), the bar narrows by the face's 64 points and an 8-point gap, and its pills come closer. */
 export default function Toolbar({
   width,
   fontScale,
@@ -159,7 +162,8 @@ export default function Toolbar({
   onRepeat,
   onStop,
   onPageUp,
-  onPageDown
+  onPageDown,
+  face
 }: Props) {
   const depth = useDepth()
   const [measured, setMeasured] = useState<Partial<Record<ToolbarItem, { width: number; height: number }>>>({})
@@ -172,7 +176,9 @@ export default function Toolbar({
       measured[item]?.width ?? labels[item].length * 12 * fontScale * 0.6
     ])
   ) as Record<ToolbarItem, number>
-  const layout = toolbarLayout(widths, symbol, width - 32 - 14)
+  const padding = face ? 6 : 7
+  const gap = face ? 2 : 6
+  const layout = toolbarLayout(widths, symbol, width - 32 - (face ? 72 : 0) - 2 * padding, gap)
   const labelHeight = measured.type?.height ?? Math.ceil(16 * fontScale)
   const pillHeight = layout.stacked
     ? Math.max(52, symbol + 3 + labelHeight + 12)
@@ -226,16 +232,21 @@ export default function Toolbar({
   const rows = layout.rows.map((row) => (
     <View
       key={row.join('-')}
-      style={{ flexDirection: 'row', gap: 6, justifyContent: layout.stacked ? 'space-between' : 'flex-start' }}
+      style={{ flexDirection: 'row', gap, justifyContent: layout.stacked ? 'space-between' : 'flex-start' }}
     >
       {row.map(pill)}
     </View>
   ))
   const glass = isLiquidGlassAvailable() && !reduceTransparency
-  const capsule = { borderRadius: 32, paddingHorizontal: 7, paddingVertical: 6, gap: 6 }
+  const capsule = { borderRadius: 32, paddingHorizontal: padding, paddingVertical: 6, gap: 6 }
 
-  return (
-    <View style={{ marginHorizontal: 16, marginTop: 8, marginBottom: 2, borderRadius: 32, boxShadow: depth.raised }}>
+  const bar = (
+    <View
+      style={[
+        { borderRadius: 32, boxShadow: depth.raised },
+        face ? { flex: 1 } : { marginHorizontal: 16, marginTop: 8, marginBottom: 2 }
+      ]}
+    >
       {/* Measures each label at its natural width, so the bar takes one row, or splits, without cutting a label. */}
       <View
         pointerEvents="none"
@@ -269,5 +280,23 @@ export default function Toolbar({
         <View style={[capsule, { backgroundColor: colors.surface }]}>{rows}</View>
       )}
     </View>
+  )
+
+  return face ? (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginHorizontal: 16,
+        marginTop: 8,
+        marginBottom: 2
+      }}
+    >
+      {face}
+      {bar}
+    </View>
+  ) : (
+    bar
   )
 }
