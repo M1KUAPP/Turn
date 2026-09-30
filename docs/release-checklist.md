@@ -41,7 +41,7 @@ Contents:
 | RELEASE-4   | 7    |
 | RELEASE-5   | 3    |
 
-The 115 rows are the PRD's 115 Musts, the five release criteria among them. The Simulator rows come from [run 36323630432], all 42 flows passing on `c0a1180`. The video iPhone's come from #92, #128, #136, #61, #62, and #55, on an iPhone 15 Pro Max with iOS 27.0, and those that #147 to #153 fixed from a Debug build of `d5386ca`; PERF-1, PERF-3, and PERF-4 ran on production JavaScript from Metro, as the TRD asks, and PERF-2 on the Debug build's. The paywall's rows come from #53, on the published Simulator preview on a fresh iPhone 16 Simulator. EVAL-6 and RELEASE-2 read the README at `a2573b7`, where every test suite and typecheck also pass. STATE-2 and scenarios 7 and 11 come from [run 36648217708], whose app is `a2573b7`'s with two new flows. `RELEASE-4` and `RELEASE-5` rows run before the Devpost deadline and through judging, outside RELEASE-1.
+The 115 rows are the PRD's 115 Musts, the five release criteria among them. The Simulator rows come from [run 36323630432], all 42 flows passing on `c0a1180`. The video iPhone's come from #92, #128, #136, #61, #62, and #55, on an iPhone 15 Pro Max with iOS 27.0, and those that #147 to #153 fixed from a Debug build of `d5386ca`; PERF-1, PERF-3, and PERF-4 ran on production JavaScript from Metro, as the TRD asks, and PERF-2 on the Debug build's. The paywall's rows come from #53, on the published Simulator preview on a fresh iPhone 16 Simulator. EVAL-6 and RELEASE-2 read the README at `a2573b7`, where every test suite and typecheck also pass. STATE-2 and scenarios 7 and 11 come from [run 36648217708], whose app is `a2573b7`'s with two new flows. Every flow also passes on `a2573b7`, #165's theme included: [run 36641397957] passed 52 of 56 at both sizes, and [run 36654009257] passed the other four, `listen` and `stats` at AX5 and `paywall-failed` at both sizes, which fails only straight after `paywall-buy`'s purchase. `RELEASE-4` and `RELEASE-5` rows run before the Devpost deadline and through judging, outside RELEASE-1.
 
 ## Failures
 
@@ -305,4 +305,6 @@ Each of [the product requirements' 13 scenarios](/docs/PRD.md#user-scenarios) mu
 
 [run 36311733499]: https://github.com/M1KUAPP/Turn/actions/runs/36311733499
 [run 36323630432]: https://github.com/M1KUAPP/Turn/actions/runs/36323630432
+[run 36641397957]: https://github.com/M1KUAPP/Turn/actions/runs/36641397957
 [run 36648217708]: https://github.com/M1KUAPP/Turn/actions/runs/36648217708
+[run 36654009257]: https://github.com/M1KUAPP/Turn/actions/runs/36654009257
