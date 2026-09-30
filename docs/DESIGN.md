@@ -1308,7 +1308,7 @@ The top bar's trailing control, in `button`, with its symbol before its word:
 
 ### The place picker
 
-A chip in the top bar with the place's symbol, its name, and `chevron.down`. A tap opens a raised `surface` menu under the chip, with `panel` corners and the raised shadow: each of the user's places with its symbol, the current one on `accent-soft` with a check, then Edit places under a hairline. One tap on a place chooses it (PLACE-1). A tap anywhere outside closes the menu; the board behind it stays as it is, with no scrim.
+A chip in the top bar with the place's symbol, its name, and `chevron.down`; below AX3 the name keeps one line and ends in an ellipsis rather than breaking mid-word, and VoiceOver reads it whole. A tap opens a raised `surface` menu under the chip, with `panel` corners and the raised shadow: each of the user's places with its symbol, the current one on `accent-soft` with a check, then Edit places under a hairline. Rows sit 6 points in from the menu's edge with 18-point corners, concentric with the menu's. One tap on a place chooses it (PLACE-1). A tap anywhere outside closes the menu; the board behind it stays as it is, with no scrim.
 
 ### The tabs
 
@@ -1319,7 +1319,7 @@ A chip in the top bar with the place's symbol, its name, and `chevron.down`. A t
 
 ### The grid
 
-- **Look.** The selected category's phrases as phrase buttons, in the bank's order (BANK-4), in the columns [Widths](#widths) gives; every button in a grid row takes the row's tallest height, and text is never cut.
+- **Look.** The selected category's phrases as phrase buttons, in the bank's order (BANK-4), in the columns [Widths](#widths) gives; every button in a grid row takes the row's tallest height, and text is never cut. A phrase whose longest word is wider than its line takes `button`'s size, as a slot's does, so no word breaks mid-way, as "appointment" would on a 6.1-inch iPhone.
 - **Scrolling.** Up and down only, with the system's scroll indicator, and the floating toolbar's Up and Down move it a screen at a tap, so it never needs a swipe (A11Y-5), as the AAC notes advise ([AAC design notes][aac-grid]). The grid ends 8 points above the toolbar, and nothing scrolls under it.
 - **Soft edges.** While there's more to scroll past its top or bottom, that edge fades into the `board` over 16 points, so a card cut by the tabs or the toolbar fades out rather than stopping at a line; an edge with nothing past it stays clear.
 
