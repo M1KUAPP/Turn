@@ -11,8 +11,10 @@ on:
       - 'app/package.json'
       - 'app/app.config.ts'
       - 'app/plugins/**'
+      - 'app/live2d/**'
       - 'bun.lock'
       - 'scripts/build-simulator.sh'
+      - 'scripts/fetch-companion-models.ts'
       - '.github/workflows/ios-simulator-build.yml'
   workflow_dispatch:
     inputs:
