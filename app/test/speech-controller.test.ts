@@ -184,6 +184,7 @@ describe('speech controller', () => {
     })
     app.utterances[1].options.onStart()
     expect(app.counts).toEqual([])
+    expect(app.controller.getSnapshot().lastText).toBe('Water, please')
 
     await app.controller.repeat()
     expect(app.utterances[2].text).toBe('Water, please')

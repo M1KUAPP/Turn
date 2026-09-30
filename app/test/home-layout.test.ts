@@ -215,6 +215,14 @@ describe('toolbar layout', () => {
       ['up', 'down']
     ])
   })
+
+  test('fits four 70-point pills beside the companion face, 2 points apart, in the 298-point bar', () => {
+    expect(toolbarLayout(defaultLabels, 18, 298 - 12, 2)).toEqual({
+      stacked: true,
+      pillWidth: 70,
+      rows: [['type', 'repeat', 'up', 'down']]
+    })
+  })
 })
 
 describe('speech model progress', () => {
