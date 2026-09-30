@@ -45,10 +45,17 @@ name: Starter bank review
     visible: Listen
     timeout: 10000
 - waitForAnimationToEnd
-# Chat and the rest remain, so the card is back; from AX1 Home kept its scroll, which is past the words.
+# Chat and the rest remain, so the card is back. From AX1 Home can come back where it was, past the words, or at
+# its top, above them, so look up, then down.
 - scrollUntilVisible:
     element: 'The Turn team wrote these starter phrases\. Review them to make them yours\.'
     direction: UP
+    timeout: 20000
+    optional: true
+- scrollUntilVisible:
+    element: 'The Turn team wrote these starter phrases\. Review them to make them yours\.'
+    direction: DOWN
+    speed: 10
     timeout: 60000
 - takeScreenshot: bank-10-card-returns
 # The check: Quick's marks are gone.
