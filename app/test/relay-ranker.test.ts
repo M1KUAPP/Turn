@@ -37,7 +37,7 @@ function harness(
   const rank = createRelayRanker({
     bank: {
       categories: async () => [{ id: 'food', name: 'Food', fixed: 0, position: 0 }],
-      places: async () => [{ id: 'clinic', name: 'Clinic', position: 0 }],
+      places: async () => [{ id: 'clinic', name: 'Clinic', position: 0, show_companion: 1 }],
       rankingData: async () => ({ bank: fullBank, taps: new Map<string, number>() })
     },
     config: {
