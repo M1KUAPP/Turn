@@ -4,6 +4,7 @@ import * as ts from 'typescript'
 
 const phraseBankSource = readFileSync(new URL('../src/screens/PhraseBankScreen.tsx', import.meta.url), 'utf8')
 const categoriesSource = readFileSync(new URL('../src/screens/CategoriesScreen.tsx', import.meta.url), 'utf8')
+const turnTextSource = readFileSync(new URL('../src/screens/TurnText.tsx', import.meta.url), 'utf8')
 
 function jsxElements(source: string, filename: string) {
   const file = ts.createSourceFile(filename, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
@@ -62,5 +63,14 @@ describe('screen accessibility names', () => {
     expect(attributeText(field!, 'accessibilityLabel')).toBe('Phrase')
     expect(attributeText(field!, 'accessibilityHint')).toBe('Type the phrase you want to say, up to 200 characters.')
     expect(attributeText(field!, 'placeholder')).toBeUndefined()
+  })
+})
+
+describe('text size changes with Turn running', () => {
+  test('every TurnText is keyed by the font scale, so its text measures again at the new size (#178)', () => {
+    const text = jsxElements(turnTextSource, 'TurnText.tsx').find((element) => element.tagName.getText() === 'Text')
+    expect(text).toBeDefined()
+    expect(attributeText(text!, 'key')).toBe('fontScale')
+    expect(turnTextSource).toContain('const { fontScale } = useWindowDimensions()')
   })
 })
