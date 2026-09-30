@@ -139,7 +139,7 @@ export default function CompanionScreen() {
   const [, setVoiceRevision] = useState(0)
   // One column from AX1, so a face's name keeps its tile's width.
   const oneColumn = fontScale >= 1.786
-  const tileWidth = oneColumn ? width - 32 : (width - 48) / 2
+  const tileWidth = oneColumn ? width - 32 : (width - 44) / 2
 
   useEffect(() => {
     const voiceSettings = ready?.voiceSettings
@@ -201,7 +201,7 @@ export default function CompanionScreen() {
       </View>
       <View style={{ gap: 12 }}>
         {rows.map((row, index) => (
-          <View key={index} style={{ flexDirection: 'row', gap: 16 }}>
+          <View key={index} style={{ flexDirection: 'row', gap: 12 }}>
             {row}
           </View>
         ))}

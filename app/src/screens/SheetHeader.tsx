@@ -3,6 +3,8 @@ import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Dimensions, Keyboard, Pressable, useWindowDimensions, View, type KeyboardEvent } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors } from '../constants/theme'
+import { useTurn } from '../turn-context'
+import EdgeFade from './EdgeFade'
 import PressFill from './PressFill'
 import { keyboardInset } from './sheet-layout'
 import TurnText from './TurnText'
@@ -14,9 +16,45 @@ type Props = {
   closeLabel?: string
 }
 
+/** A 44-point close button (DESIGN, symbol buttons): `xmark` on `surface-sunken` with a 1.5 `edge`, as sheets and the
+ * composers use it. */
+export function CloseButton({ label, onPress }: { label: string; onPress: () => void }) {
+  const { fontScale } = useWindowDimensions()
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      onPress={onPress}
+      style={{
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'flex-start',
+        borderWidth: 1.5,
+        borderColor: colors.edge,
+        backgroundColor: colors['surface-sunken']
+      }}
+    >
+      {({ pressed }) => (
+        <>
+          <PressFill pressed={pressed} color={colors['surface-pressed']} radius={20.5} />
+          <SymbolView
+            name="xmark"
+            size={Math.round(16 * Math.min(fontScale, 1.4))}
+            weight="semibold"
+            tintColor={colors.ink}
+            accessible={false}
+          />
+        </>
+      )}
+    </Pressable>
+  )
+}
+
 // Plan 0044's Sheet header: a grabber, the title in `title`, and a 44-point close button, on the sheet's board.
 export default function SheetHeader({ title, boldText, onClose, closeLabel = 'Cancel' }: Props) {
-  const { fontScale } = useWindowDimensions()
   return (
     <View style={{ paddingTop: 6, paddingHorizontal: 16, paddingBottom: 12 }}>
       <View
@@ -28,44 +66,18 @@ export default function SheetHeader({ title, boldText, onClose, closeLabel = 'Ca
         <TurnText kind="title" boldText={boldText} accessibilityRole="header" style={{ flex: 1, color: colors.ink }}>
           {title}
         </TurnText>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={closeLabel}
-          onPress={onClose}
-          style={{
-            width: 44,
-            height: 44,
-            borderRadius: 22,
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'flex-start',
-            borderWidth: 1.5,
-            borderColor: colors.edge,
-            backgroundColor: colors['surface-sunken']
-          }}
-        >
-          {({ pressed }) => (
-            <>
-              <PressFill pressed={pressed} color={colors['surface-pressed']} radius={20.5} />
-              <SymbolView
-                name="xmark"
-                size={Math.round(16 * Math.min(fontScale, 1.4))}
-                weight="semibold"
-                tintColor={colors.ink}
-                accessible={false}
-              />
-            </>
-          )}
-        </Pressable>
+        <CloseButton label={closeLabel} onPress={onClose} />
       </View>
     </View>
   )
 }
 
 /** A sheet's buttons, pinned under its content so they stay above the keyboard; from AX1 they stack, the last, the
- * sheet's main button, on top. */
+ * sheet's main button, on top. Content that scrolls on under them fades into the board over the 16 points above them,
+ * rather than stopping at a hard line. */
 export function SheetActions({ children }: { children: ReactNode }) {
   const stacked = useWindowDimensions().fontScale >= 1.786
+  const { increaseContrast } = useTurn()
   const buttons = Children.toArray(children)
   return (
     <View
@@ -77,6 +89,9 @@ export function SheetActions({ children }: { children: ReactNode }) {
         paddingBottom: 16
       }}
     >
+      <View pointerEvents="none" style={{ position: 'absolute', top: -16, left: 0, right: 0, height: 16 }}>
+        <EdgeFade side="bottom" size={16} token="board" increaseContrast={increaseContrast} />
+      </View>
       {buttons.map((button, index) => (
         <View key={index} style={stacked ? undefined : { flex: 1 }}>
           {button}
