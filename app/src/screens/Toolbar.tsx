@@ -144,10 +144,11 @@ function Pill({
   )
 }
 
-/** The floating bottom bar (DESIGN, the bottom bar): a glass capsule, opaque `surface` under Reduce Transparency, whose
- * items each sit on a solid pill, so no label is ever on the glass: Type on `accent`, and Repeat, Up, and Down on
- * `surface` with an `edge`, Repeat turning into Stop on `ink` while Turn speaks. With the companion's face at its left
- * (frames 02 to 16), the bar narrows by the face's 64 points and an 8-point gap, and its pills come closer. */
+/** The floating bottom bar (DESIGN, the bottom bar): a glass capsule over the grid, opaque `surface` under Reduce
+ * Transparency, whose items each sit on a solid pill, so no label is ever on the glass: Type on `accent`, and Repeat,
+ * Up, and Down on `surface` with an `edge`, Repeat turning into Stop on `ink` while Turn speaks. With the companion's
+ * face at its left (frames 02 to 16), the bar narrows by the face's 64 points and an 8-point gap, and its pills come
+ * closer. Home places it; it sets only its 16-point side margins. */
 export default function Toolbar({
   width,
   fontScale,
@@ -241,12 +242,7 @@ export default function Toolbar({
   const capsule = { borderRadius: 32, paddingHorizontal: padding, paddingVertical: 6, gap: 6 }
 
   const bar = (
-    <View
-      style={[
-        { borderRadius: 32, boxShadow: depth.raised },
-        face ? { flex: 1 } : { marginHorizontal: 16, marginTop: 8, marginBottom: 2 }
-      ]}
-    >
+    <View style={[{ borderRadius: 32, boxShadow: depth.raised }, face ? { flex: 1 } : { marginHorizontal: 16 }]}>
       {/* Measures each label at its natural width, so the bar takes one row, or splits, without cutting a label. */}
       <View
         pointerEvents="none"
@@ -283,16 +279,7 @@ export default function Toolbar({
   )
 
   return face ? (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        marginHorizontal: 16,
-        marginTop: 8,
-        marginBottom: 2
-      }}
-    >
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginHorizontal: 16 }}>
       {face}
       {bar}
     </View>
