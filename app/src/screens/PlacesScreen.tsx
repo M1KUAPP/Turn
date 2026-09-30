@@ -4,14 +4,15 @@ import { Alert, Modal, ScrollView, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Place } from '../bank/store'
 import { categoryColors, colors, textStyle } from '../constants/theme'
-import { useTurn } from '../turn-context'
+import { useCompanion, useTurn } from '../turn-context'
 import Button from './Button'
 import { placeSymbol } from './category-style'
 import { GroupNote, ListGroup, ListRow, ScreenTitle, useScreenTitle } from './ListGroup'
 import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
 import TurnText from './TurnText'
 
-type Editor = { id: string | null; name: string }
+// showFace is the sheet's Show the face here, saved with the place (frames 40 and 41).
+type Editor = { id: string | null; name: string; showFace: boolean }
 
 // Places wear Out and about's hue, the category of being somewhere (DESIGN, buttons and lists).
 const placeTone = { fill: categoryColors['out-and-about'].fill, ink: categoryColors['out-and-about'].edge }
@@ -19,6 +20,7 @@ const placeTone = { fill: categoryColors['out-and-about'].fill, ink: categoryCol
 export default function PlacesScreen() {
   const navigation = useNavigation()
   const { ready, boldText } = useTurn()
+  const { state: companion } = useCompanion()
   const bank = ready?.bank
   const [places, setPlaces] = useState<Place[]>([])
   const [selected, setSelected] = useState<Place | null>(null)
@@ -61,7 +63,7 @@ export default function PlacesScreen() {
           disabled: !bank || atLimit,
           onPress: () => {
             setError(null)
-            setEditor({ id: null, name: '' })
+            setEditor({ id: null, name: '', showFace: true })
           }
         }
       ]
@@ -102,7 +104,8 @@ export default function PlacesScreen() {
     setError(null)
     try {
       if (editor.id) await bank.renamePlace(editor.id, editor.name)
-      else await bank.addPlace(editor.name)
+      const id = editor.id ?? (await bank.addPlace(editor.name)).id
+      await bank.showCompanionAt(id, editor.showFace)
       setEditor(null)
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : String(cause))
@@ -152,7 +155,7 @@ export default function PlacesScreen() {
                 chevron
                 onPress={() => {
                   setError(null)
-                  setEditor({ id: place.id, name: place.name })
+                  setEditor({ id: place.id, name: place.name, showFace: place.show_companion !== 0 })
                 }}
               />
             ))}
@@ -200,6 +203,21 @@ export default function PlacesScreen() {
               <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
                 {40 - editor.name.length} characters left
               </TurnText>
+            )}
+            {/* Only while a companion is chosen: with none, there's no face to hide. */}
+            {companion.model && (
+              <ListGroup>
+                <ListRow
+                  label="Show the face here"
+                  boldText={boldText}
+                  symbol="mappin.and.ellipse"
+                  subtitle="Off hides it at this place only"
+                  toggle={{
+                    value: editor?.showFace ?? true,
+                    onValueChange: (showFace) => setEditor((current) => (current ? { ...current, showFace } : null))
+                  }}
+                />
+              </ListGroup>
             )}
             {error && (
               <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'] }}>

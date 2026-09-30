@@ -454,6 +454,55 @@ describe('place storage', () => {
     expect(await last.places()).toEqual([])
     expect(await last.selectedPlace()).toBeNull()
   })
+
+  test('shows the companion at every place until it is hidden at one, and notifies only on real changes', async () => {
+    const db = database()
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+    const added = await store.addPlace('Interview')
+    expect(added.show_companion).toBe(1)
+    expect((await store.places()).every((place) => place.show_companion === 1)).toBe(true)
+
+    let changes = 0
+    store.subscribe(() => {
+      changes++
+    })
+    await store.showCompanionAt(added.id, false)
+    await store.showCompanionAt(added.id, false)
+    expect(changes).toBe(1)
+    await store.choosePlace(added.id)
+    expect((await store.selectedPlace())?.show_companion).toBe(0)
+    expect((await store.places()).find((place) => place.id === 'home')?.show_companion).toBe(1)
+    await expect(store.showCompanionAt('nowhere', true)).rejects.toThrow('Unknown place')
+
+    const next = createBankStore(db, starterBank)
+    await next.initialize()
+    expect((await next.selectedPlace())?.show_companion).toBe(0)
+    await next.showCompanionAt(added.id, true)
+    expect((await next.selectedPlace())?.show_companion).toBe(1)
+  })
+
+  test('gives a bank from before the companion the column, with the face showing at its places', async () => {
+    const db = database()
+    await db.execAsync(`
+      CREATE TABLE place (
+        id TEXT PRIMARY KEY, name TEXT NOT NULL CHECK (length(name) BETWEEN 1 AND 40),
+        position INTEGER NOT NULL
+      );
+      INSERT INTO place (id, name, position) VALUES ('clinic', 'Clinic', 0);
+      CREATE TABLE setting (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+      INSERT INTO setting (key, value) VALUES ('starter_seeded', '1');
+    `)
+    const store = createBankStore(db, starterBank)
+    await store.initialize()
+
+    expect((await store.places()).find((place) => place.id === 'clinic')).toEqual({
+      id: 'clinic',
+      name: 'Clinic',
+      position: 0,
+      show_companion: 1
+    })
+  })
 })
 
 describe('category storage', () => {
