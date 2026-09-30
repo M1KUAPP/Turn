@@ -1315,11 +1315,13 @@ A chip in the top bar with the place's symbol, its name, and `chevron.down`. A t
 - **Look.** One chip per category, in the bank's order with Quick first (BANK-5), as `tab`, each with a 10-point dot in its category's color; the selected one is `tab-selected`, `surface` words on an `ink` fill.
 - **The mark.** The tab ROW-9 marks keeps the dot before its name, in its category's color, and gets "suggested" as its accessibility value; the tabs never scroll or reorder to show it.
 - **All.** The tabs scroll sideways when they don't fit, but All, pinned at the trailing end outside the scroll, lists every category at once, the marked one with its dot, since older adults miss sideways scrolling ([AAC design notes][aac-grid]).
+- **A soft end.** While tabs run on past All, the last one in view fades into the `board` over 32 points before it, so a cut name reads as more to scroll rather than a hard stop.
 
 ### The grid
 
 - **Look.** The selected category's phrases as phrase buttons, in the bank's order (BANK-4), in the columns [Widths](#widths) gives; every button in a grid row takes the row's tallest height, and text is never cut.
 - **Scrolling.** Up and down only, with the system's scroll indicator, and the floating toolbar's Up and Down move it a screen at a tap, so it never needs a swipe (A11Y-5), as the AAC notes advise ([AAC design notes][aac-grid]). The grid ends 8 points above the toolbar, and nothing scrolls under it.
+- **Soft edges.** While there's more to scroll past its top or bottom, that edge fades into the `board` over 16 points, so a card cut by the tabs or the toolbar fades out rather than stopping at a line; an edge with nothing past it stays clear.
 
 ### The bottom bar
 
@@ -1457,7 +1459,7 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 `/settings`, a native stack screen with grouped lists on the board, in the order SET-1 gives:
 
-- **Voice.** The voice and the speech rate, each opening the Voice screen, and the companion, which opens `/settings/companion`: four faces, each previewed in the chosen voice when tapped, No companion, the voice, and Let it move. The Voice screen has Personal Voice first, with VOICE-2's explanation in a sheet when iOS says no; the voices, each tile its preview; and the speech rate as a segmented control of five steps, each chosen with one tap, since a slider needs a drag (A11Y-5).
+- **Voice.** The voice and the speech rate, each opening the Voice screen, and the companion, which opens `/settings/companion`: four faces, each a head-and-shoulders portrait that fades into the `surface` of its name's bar and is previewed in the chosen voice when tapped, No companion, the voice, and Let it move. The Voice screen has Personal Voice first, with VOICE-2's explanation in a sheet when iOS says no; the voices, each tile its preview; and the speech rate as a segmented control of five steps, each chosen with one tap, since a slider needs a drag (A11Y-5).
 - **Listen mode.** Its permission and the relay's status. The permission opens the Listen mode screen, `/settings/listen`: the permission's words, Withdraw or Allow (CONSENT-3), the privacy notice, and the under-18 switch, "Asked on the consent card each time" (CONSENT-6).
 - **Your words.** Places and the phrase bank, each with its count.
 - **Turn Listen.** "Unlock Listen mode", which opens the paywall, with the free lines left under it, as "12 of 20 free lines left", or "Unlocked"; and Restore Purchases (PAY-6). A purchase or restore's note follows in a `surface-sunken` pill, and "Listen mode is unlocked." takes "Turn Listen is yours on this phone. Speaking stays free, as always." under it.
