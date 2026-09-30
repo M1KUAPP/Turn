@@ -17,12 +17,14 @@ import {
 import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { Category, Phrase, Place, createBankStore } from '../bank/store'
+import CompanionFace from '../companion/CompanionFace'
+import { companionState } from '../companion/state'
 import { colorValues, colors } from '../constants/theme'
 import { consentWords } from '../consent/strings'
 import type { createLiveListenSession } from '../listen/live-session'
 import type { TypedListenState } from '../listen/typed-session'
 import type { createSpeechController } from '../speech/controller'
-import { useConsent, usePurchases, useTurn } from '../turn-context'
+import { useCompanion, useConsent, usePurchases, useTurn } from '../turn-context'
 import Caption from './Caption'
 import { captionView } from './caption-view'
 import { categoryHue, placeSymbol } from './category-style'
@@ -146,6 +148,7 @@ export default function HomeScreen({
   const placePress = usePress()
   const { consent, state: consentState } = useConsent()
   const { purchases, state: purchasesLive } = usePurchases()
+  const { state: companion } = useCompanion()
   const { ready } = useTurn()
   const params = useLocalSearchParams<{ preview?: string }>()
   const [categories, setCategories] = useState<Category[]>([])
@@ -231,6 +234,21 @@ export default function HomeScreen({
         }
   const categoryIds = categories.map((category) => category.id)
   const paletteFor = (id: string) => categoryHue(id, categoryIds)
+  // The companion's face, once one is chosen in Settings, except at a place where it's hidden (frames 02 to 16, 22).
+  const faceModel = selectedPlace?.show_companion === 0 ? null : companion.model
+  const face = (typing: boolean) =>
+    faceModel ? (
+      <CompanionFace
+        model={faceModel}
+        state={companionState({ speaking: speaking.speaking, typing, listening: view.lineOpen })}
+        animate={companion.moves && !reduceMotion}
+        reduceTransparency={reduceTransparency}
+        onPress={() => {
+          Keyboard.dismiss()
+          router.push('/partner')
+        }}
+      />
+    ) : null
 
   useEffect(() => {
     if (listening.assetProgress === null) modelStart.current = null
@@ -780,6 +798,7 @@ export default function HomeScreen({
               onStop={() => void speech.stop()}
               onPageUp={() => page(-1)}
               onPageDown={() => page(1)}
+              face={face(false)}
             />
           </>
         )}
@@ -798,6 +817,7 @@ export default function HomeScreen({
             boldText={boldText}
             fontScale={fontScale}
             replyingTo={listening.active && caption.words ? caption.words : null}
+            face={faceModel ? face : undefined}
           />
         )}
         {composerMode === 'partner' && (
