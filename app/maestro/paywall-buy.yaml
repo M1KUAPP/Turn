@@ -43,6 +43,12 @@ name: Turn Listen purchase
     timeout: 60000
 - takeScreenshot: paywall-unlocked
 - tapOn: Restore Purchases
+# The note sits under Restore Purchases, which the scroll above leaves as low as half on screen, so at the default size
+# the note can be below the fold, as in paywall-failed.yaml.
+- scrollUntilVisible:
+    element: Listen mode is unlocked.
+    direction: DOWN
+    timeout: 30000
 - extendedWaitUntil:
     visible: Listen mode is unlocked.
     timeout: 30000
