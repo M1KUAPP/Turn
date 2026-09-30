@@ -2,7 +2,8 @@
 # Builds the Simulator app judges install (SUBMIT-3): Turn in the Debug configuration for the iphonesimulator SDK,
 # with the JavaScript bundle embedded so it runs without Metro, pointed at the team's relay, marked as the
 # Simulator build, and zipped as Turn.app.zip in the directory it runs from. The iOS Simulator build workflow runs
-# it on every native pull request. Needs macOS with Xcode 27, CocoaPods, Node, and Bun 1.4.2.
+# it on every native pull request. Needs macOS with Xcode 27, CocoaPods, Node, and Bun 1.4.2, and gh signed in for the
+# companion's live models.
 set -euo pipefail
 
 usage() {
