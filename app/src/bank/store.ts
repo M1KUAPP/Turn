@@ -1,7 +1,8 @@
 import type { Phrase as RankablePhrase } from '@turn/shared/shortlist'
 
 export type Category = { id: string; name: string; position: number; fixed: number }
-export type Place = { id: string; name: string; position: number }
+// show_companion is 1 where the companion's face shows on Home, and 0 where the user hid it (Places, frames 40 and 41).
+export type Place = { id: string; name: string; position: number; show_companion: number }
 export type Phrase = {
   id: string
   category_id: string
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS phrase (
 );
 CREATE TABLE IF NOT EXISTS place (
   id TEXT PRIMARY KEY, name TEXT NOT NULL CHECK (length(name) BETWEEN 1 AND 40),
-  position INTEGER NOT NULL
+  position INTEGER NOT NULL, show_companion INTEGER NOT NULL DEFAULT 1
 );
 CREATE TABLE IF NOT EXISTS phrase_place (
   phrase_id TEXT NOT NULL REFERENCES phrase (id) ON DELETE CASCADE,
@@ -115,6 +116,11 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
     async initialize() {
       await db.execAsync('PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;')
       await db.execAsync(schema)
+      // A bank from before the companion gains the column, with every place showing the face.
+      const placeColumns = await db.getAllAsync<{ name: string }>('PRAGMA table_info(place)')
+      if (!placeColumns.some((column) => column.name === 'show_companion')) {
+        await db.execAsync('ALTER TABLE place ADD COLUMN show_companion INTEGER NOT NULL DEFAULT 1')
+      }
       const marker = await db.getFirstAsync<{ value: string }>("SELECT value FROM setting WHERE key = 'starter_seeded'")
       if (!marker) {
         await db.withExclusiveTransactionAsync(async (tx) => {
@@ -280,15 +286,15 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       }
     },
     places() {
-      return db.getAllAsync<Place>('SELECT id, name, position FROM place ORDER BY position, id')
+      return db.getAllAsync<Place>('SELECT id, name, position, show_companion FROM place ORDER BY position, id')
     },
     async selectedPlace() {
       return db.getFirstAsync<Place>(
-        "SELECT id, name, position FROM place ORDER BY id = (SELECT value FROM setting WHERE key = 'selected_place') DESC, position, id LIMIT 1"
+        "SELECT id, name, position, show_companion FROM place ORDER BY id = (SELECT value FROM setting WHERE key = 'selected_place') DESC, position, id LIMIT 1"
       )
     },
     async choosePlace(id: string) {
-      const place = await db.getFirstAsync<Place>('SELECT id, name, position FROM place WHERE id = ?', id)
+      const place = await db.getFirstAsync<{ id: string }>('SELECT id FROM place WHERE id = ?', id)
       if (!place) throw new Error('Unknown place')
       await db.runAsync(
         "INSERT INTO setting (key, value) VALUES ('selected_place', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value",
@@ -362,7 +368,7 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
             ? crypto.randomUUID()
             : `place-${now().getTime()}-${Math.random().toString(36).slice(2, 9)}`
         await tx.runAsync('INSERT INTO place (id, name, position) VALUES (?, ?, ?)', id, trimmed, position)
-        result = { id, name: trimmed, position }
+        result = { id, name: trimmed, position, show_companion: 1 }
       })
 
       notify()
@@ -390,6 +396,16 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       if (notifyNeeded) {
         notify()
       }
+    },
+    async showCompanionAt(id: string, show: boolean): Promise<void> {
+      const place = await db.getFirstAsync<{ show_companion: number }>(
+        'SELECT show_companion FROM place WHERE id = ?',
+        id
+      )
+      if (!place) throw new Error('Unknown place')
+      if (place.show_companion === Number(show)) return
+      await db.runAsync('UPDATE place SET show_companion = ? WHERE id = ?', Number(show), id)
+      notify()
     },
     async movePlace(id: string, direction: -1 | 1): Promise<void> {
       let notifyNeeded = false
