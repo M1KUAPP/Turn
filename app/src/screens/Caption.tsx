@@ -259,8 +259,8 @@ export default function Caption({
       : view.words
 
   const content = oneLine ? (
-    // One line on short screens: the note, or else the label, then the newest words.
-    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+    // One line on short screens: the note, or else the label, then the newest words, which end before Done or Clear.
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 6, paddingRight: besidePill }}>
       {(view.note ?? view.label) && (
         <TurnText
           kind="label"
@@ -502,12 +502,13 @@ export default function Caption({
           style={{
             position: 'absolute',
             right: 16 - edgeWidth,
+            // On one line the pill centers in the panel's inside; an absolute view's alignSelf would only center it
+            // across.
             top: oneLine
-              ? undefined
+              ? Math.max(0, (height - 2 * edgeWidth - pill.height) / 2)
               : grows
                 ? 12.5 - edgeWidth
                 : Math.max(0, 12.5 - edgeWidth + labelRow.y + labelRow.height / 2 - pill.height / 2),
-            alignSelf: oneLine ? 'center' : undefined,
             minHeight: 32,
             flexDirection: 'row',
             alignItems: 'center',

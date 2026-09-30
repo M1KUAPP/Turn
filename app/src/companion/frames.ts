@@ -10,11 +10,10 @@ export const PORTRAIT_FRAMES: readonly PortraitFrame[] = ['rest', 'half', 'open'
 type Frames = {
   face: Record<FaceFrame, ImageSourcePropType>
   portrait: Record<PortraitFrame, ImageSourcePropType>
-  tile: ImageSourcePropType
 }
 
 // Each model's frames, drawn by Live2D's own SDK and exported from the handoff's board at 2x and 3x: 52-point faces
-// for the circle, 370 by 440 portraits for the partner view, and Settings' 177 by 120 tile.
+// for the circle, and 370 by 440 portraits for the partner view and Settings' tiles.
 export const companionFrames: Record<CompanionModel, Frames> = {
   ren: {
     face: {
@@ -30,8 +29,7 @@ export const companionFrames: Record<CompanionModel, Frames> = {
       half: require('../../assets/companion/ren/portrait-half.png'),
       open: require('../../assets/companion/ren/portrait-open.png'),
       blink: require('../../assets/companion/ren/portrait-blink.png')
-    },
-    tile: require('../../assets/companion/ren/tile.png')
+    }
   },
   suit: {
     face: {
@@ -47,8 +45,7 @@ export const companionFrames: Record<CompanionModel, Frames> = {
       half: require('../../assets/companion/suit/portrait-half.png'),
       open: require('../../assets/companion/suit/portrait-open.png'),
       blink: require('../../assets/companion/suit/portrait-blink.png')
-    },
-    tile: require('../../assets/companion/suit/tile.png')
+    }
   },
   ice: {
     face: {
@@ -64,8 +61,7 @@ export const companionFrames: Record<CompanionModel, Frames> = {
       half: require('../../assets/companion/ice/portrait-half.png'),
       open: require('../../assets/companion/ice/portrait-open.png'),
       blink: require('../../assets/companion/ice/portrait-blink.png')
-    },
-    tile: require('../../assets/companion/ice/tile.png')
+    }
   },
   office: {
     face: {
@@ -81,7 +77,6 @@ export const companionFrames: Record<CompanionModel, Frames> = {
       half: require('../../assets/companion/office/portrait-half.png'),
       open: require('../../assets/companion/office/portrait-open.png'),
       blink: require('../../assets/companion/office/portrait-blink.png')
-    },
-    tile: require('../../assets/companion/office/tile.png')
+    }
   }
 }
