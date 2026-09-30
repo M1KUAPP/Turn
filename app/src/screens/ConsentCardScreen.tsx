@@ -6,6 +6,7 @@ import { useConsent, useTurn } from '../turn-context'
 import Button from './Button'
 import type { SymbolName } from './category-style'
 import { useShadow } from './depth'
+import EdgeFade from './EdgeFade'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
 
@@ -23,7 +24,7 @@ export default function ConsentCardScreen() {
   const { fontScale } = useWindowDimensions()
   const dark = useColorScheme() === 'dark'
   const cardShadow = useShadow('raised')
-  const { boldText } = useTurn()
+  const { boldText, increaseContrast } = useTurn()
   const { consent, state } = useConsent()
   const card = state.card
   const disabled = consent === null
@@ -211,15 +212,20 @@ export default function ConsentCardScreen() {
               </View>
             </ScrollView>
             {/* The answers are an equal pair, one size and style side by side, stacked from AX1 (CONSENT-4, DESIGN);
-                they stay pinned within a thumb's reach, and above them the card scrolls at large sizes. */}
+                they stay pinned within a thumb's reach, and above them the card scrolls at large sizes, its words
+                fading into the card rather than stopping at a hard line. */}
             <View
               style={{
                 flexDirection: stackedAnswers ? 'column' : 'row',
                 paddingHorizontal: 24,
+                paddingTop: 8,
                 paddingBottom: 22,
                 gap: 12
               }}
             >
+              <View pointerEvents="none" style={{ position: 'absolute', top: -16, left: 0, right: 0, height: 16 }}>
+                <EdgeFade side="bottom" size={16} token="surface" increaseContrast={increaseContrast} />
+              </View>
               <Button
                 label={card.agreed}
                 boldText={boldText}

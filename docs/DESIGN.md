@@ -383,7 +383,7 @@ colors:
 | `accent-tag`      | Blue tag             | The big reply's category tag                                                                                                                       |
 | `listen`          | Lamp orange          | The light while the microphone is on, the caption's label and edge, and Listen mode's entry: the consent card's edge and the permission step's ear |
 | `on-listen`       | On orange            | "Listening" and its symbol                                                                                                                         |
-| `listen-soft`     | Orange wash          | The free lines' pill, a caption word as it arrives, the consent card's fact discs, and Listen mode's tiles                                         |
+| `listen-soft`     | Orange wash          | The free lines' pill, a caption word as it arrives, the consent card's and permission step's fact discs, and Listen mode's tiles                   |
 | `listen-glow`     | Lamp glow            | The glow behind the board while listening, the light's ring, and the consent card's warm glow                                                      |
 | `yes-fill`        | Yes                  | Yes's fill, in the row and in the Quick category                                                                                                   |
 | `yes-edge`        | Yes, edge            | Yes's edge                                                                                                                                         |
@@ -646,7 +646,7 @@ Sizes are points: the format's `px` means a point on the iPhone. `target` is the
 
 - **Why 78 points.** Speech buttons should be at least 12 mm on their short side for people with tremor or weakness, and errors kept falling up to 18 mm in one study ([AAC design notes][aac-targets]). Seventy-eight points is 12.2 mm on a 326-ppi iPhone and 12.9 mm on a 460-ppi one, above A11Y-1's 64.
 - **Why wide, with gaps.** Keys should be "wider instead of taller" for older hands, and zero spacing was least accurate, so phrase buttons are wider than tall, with 12 points between them ([AAC design notes][aac-targets]).
-- **The toolbar floats.** The bottom toolbar sits 2 points above the home indicator's 34-point area, and the grid ends 8 points above the toolbar, so no phrase ever sits under its glass.
+- **The toolbar floats.** The bottom toolbar floats over the grid, 22 points above the screen's bottom edge, inside the home indicator's 34-point area but clear of the indicator, or 8 points up on an iPhone without one. The grid runs to the screen's bottom edge and scrolls under the toolbar, fading into the board beneath it, and ends 8 points above it, so its last phrase always scrolls clear of the glass.
 
 ### The home screen
 
@@ -674,10 +674,10 @@ bottom bar  Type  ·  Repeat or Stop  ·  Up  ·  Down
 | The row     | 258 points                      | Three rows of 78-point slots and two 12-point gaps                   |
 | Tabs        | 44 points                       | `target`                                                             |
 | The grid    | The rest                        | About 100 points, one row, on a 6.1-inch iPhone; 200 on a 6.9-inch   |
-| Bottom bar  | 64 points                       | `toolbar`, floating above the home indicator                         |
+| Bottom bar  | 64 points                       | `toolbar`, floating over the grid                                    |
 
 - **The grid gets what's left.** The PRD puts the strip and the row above the grid, and the row's 12-mm slots take their room, so on a 6.1-inch iPhone the grid shows one row of phrases at a time, and its page buttons move it a screen at a tap.
-- **Gaps.** 8 points between bands, 12 inside the row and the grid, and 16 from the screen's edges; the board's color runs under the status bar and the home indicator, and content stays inside the safe areas.
+- **Gaps.** 8 points between bands, 12 inside the row and the grid, and 16 from the screen's edges; the board's color runs under the status bar and the home indicator, and content stays inside the safe areas, except the grid, which scrolls under the floating toolbar to the screen's bottom edge.
 - **What doesn't scroll.** The top bar, the caption, the strip, the row, the tabs, and the bottom bar sit outside the grid's scroll view, so nothing collapses or slides them away ([Turn's iOS design notes][ios-bars]); only the grid scrolls.
 - **The thumb's band.** The strip and the row fill the middle of the screen, where one thumb reaches best, and the top bar holds only what isn't speech ([AAC design notes][aac-reach]).
 
@@ -714,7 +714,7 @@ Turn lays out by the width it's given, not by the device, since an app built wit
 
 - **Depth by shadow and edges.** The board is the floor and cards sit on it with a two-layer shadow and a 1.5-point `edge`; a press darkens the fill and thickens the edge, and the card never moves or scales. The shadows are React Native 0.86's `boxShadow` strings, in the table below. No view uses the `filter` prop's drop shadow, since it clips children.
 - **Glass on the floating toolbar only.** Turn's one `GlassView` is the bottom toolbar's capsule, with `GlassView` from expo-glass-effect where `isLiquidGlassAvailable()`, and opaque `surface` otherwise or when `AccessibilityInfo.isReduceTransparencyEnabled()`. Turn needs iOS 26 and builds with Xcode 27, so Liquid Glass is always there and no `BlurView` is needed. No `GlassView` is ever faded with `opacity`.
-- **No word on glass.** Each toolbar item sits on its own solid pill, so its label keeps its contrast at every point of the Liquid Glass slider, which Turn can't read; and nothing scrolls under the capsule.
+- **No word on glass.** Each toolbar item sits on its own solid pill, so its label keeps its contrast at every point of the Liquid Glass slider, which Turn can't read. The grid scrolls under the capsule, fading into the board beneath it, so the glass picks up the cards' colors while no label ever sits on them.
 - **The system's glass elsewhere.** Bars, sheets, alerts, and switches turn to glass by themselves, and Xcode 27 ignores `UIDesignRequiresCompatibility`, so an app can no longer opt out ([Turn's iOS design notes][ios-key]). Settings' and the editor's navigation bars, the permission step's sheet, RevenueCat's paywall sheet, alerts, and the under-18 switch show it ([Turn's iOS design notes][ios-chrome]). The home screen has no navigation bar, and the composer above the keyboard is solid, like every other place that holds words.
 - **Nothing glass behind words.** Phrases, the caption, notes, and the consent card are content, where Apple says not to use glass ([Turn's iOS design notes][ios-glass-content]).
 - **Sheets that hold reading text set a background.** Expo Router makes a form sheet's header and content transparent where glass is available, so the permission step sets `headerTransparent: false` and the `board` background every sheet takes ([Turn's iOS design notes][ios-glass-expo]).
@@ -1320,12 +1320,12 @@ A chip in the top bar with the place's symbol, its name, and `chevron.down`; bel
 ### The grid
 
 - **Look.** The selected category's phrases as phrase buttons, in the bank's order (BANK-4), in the columns [Widths](#widths) gives; every button in a grid row takes the row's tallest height, and text is never cut. A phrase whose longest word is wider than its line takes `button`'s size, as a slot's does, so no word breaks mid-way, as "appointment" would on a 6.1-inch iPhone.
-- **Scrolling.** Up and down only, with the system's scroll indicator, and the floating toolbar's Up and Down move it a screen at a tap, so it never needs a swipe (A11Y-5), as the AAC notes advise ([AAC design notes][aac-grid]). The grid ends 8 points above the toolbar, and nothing scrolls under it.
-- **Soft edges.** While there's more to scroll past its top or bottom, that edge fades into the `board` over 16 points, so a card cut by the tabs or the toolbar fades out rather than stopping at a line; an edge with nothing past it stays clear.
+- **Scrolling.** Up and down only, with the system's scroll indicator, and the floating toolbar's Up and Down move it a screen at a tap, so it never needs a swipe (A11Y-5), as the AAC notes advise ([AAC design notes][aac-grid]). A screen is the part of the grid above the toolbar, so no phrase hides under the bar between pages. The grid scrolls under the toolbar and ends 8 points above it, so its last row scrolls clear, and its scroll indicator stops at the toolbar's top.
+- **Soft edges.** While there's more to scroll past its top, that edge fades into the `board` over 16 points, so a card cut by the tabs fades out rather than stopping at a line; an edge with nothing past it stays clear. At the bottom, cards fade into the `board` from 24 points above the toolbar to the screen's edge as they pass under it.
 
 ### The bottom bar
 
-A 370 by 64 floating glass capsule, 2 points above the home indicator's 34-point area, with four items 84 by 52, each a symbol above its label in `caption` on a solid pill: `toolbar-item`, a `surface` pill with a 1.5-point `edge`, since a button's edge reaches 3 to 1 (rule 2), unless a bullet below names another:
+A 370 by 64 glass capsule floating over the grid, 22 points above the screen's bottom edge, clear of the home indicator, with four items 84 by 52, each a symbol above its label in `caption` on a solid pill: `toolbar-item`, a `surface` pill with a 1.5-point `edge`, since a button's edge reaches 3 to 1 (rule 2), unless a bullet below names another:
 
 - **Type** (`keyboard`) opens the composer (SPEAK-1, SPEAK-3), on an `accent` pill.
 - **Repeat** (`arrow.counterclockwise`) says the last spoken text again (SPEAK-6), and becomes **Stop** (`stop.fill`) on an `ink` pill while Turn speaks (SPEAK-2), in the same place; pressed, Stop's pill turns `ink-secondary`.
@@ -1355,7 +1355,7 @@ An opt-in face for the user's voice, chosen in Settings, drawn from Live2D model
 - **Equal pairs.** "Allow" and "Not now", and "They agreed" and "They said no", are two secondary buttons of one size and style, side by side, stacked from AX1: Apple marks a preferred choice by "style — not size", and neither of these is preferred ([Turn's iOS design notes][ios-hig-changes]).
 - **Lists.** Settings and the editor use inset groups on the board: rows at least 56 points tall in a `surface` group with a 1.5 `edge` and hairline dividers, each with a 32-point symbol tile in `chip` corners colored by meaning, with `body` text, values in `ink-secondary`, and `link` for links. The tile is `accent` on `accent-soft` for voice and purchase, `ink` on `listen-soft` for Listen mode, the category's edge on its fill for the bank and Out and about's for places, and `ink` on `surface-sunken` for the rest. From AX1 the tile sits above the row's words, so a long word keeps the row's width.
 - **Symbol buttons.** At least 44 by 44 points, each with a label, on `surface-sunken` with a 1.5 `edge`.
-- **Sheets.** On the `board`, with a grabber, the title in `title`, and a 44-point close; the sheet's buttons stay pinned above the keyboard, stacked from AX1.
+- **Sheets.** On the `board`, with a grabber, the title in `title`, and a 44-point close; the sheet's buttons stay pinned above the keyboard, stacked from AX1, and what scrolls on under them fades into the `board` over the 16 points above them. The editor's Undo bar does the same, and so do the consent card's answers, whose words fade into the card's `surface`.
 
 [ios-hig-changes]: /docs/research/0029-turn-ios-design.md#hig-changes-since-june-2025
 
@@ -1433,7 +1433,7 @@ The composer docks above the keyboard, with "Replying to" and the partner's line
 
 `/permission`, a form sheet at full height, since it's for reading, on the `board`, as every sheet is (CONSENT-1):
 
-- A title in `title` beside a 44-point close that means Not now, the ear on a `listen` disc, then a paragraph in `body` that says what leaves the phone with each partner line and to whom it goes (ROW-2), and the rest as facts beside symbol tiles: that names Turn recognizes are swapped for tags, that audio and the rest of the bank never leave, and that the service may keep data to monitor its service.
+- A title in `title` beside a 44-point close that means Not now, the ear on a `listen` disc, then a paragraph in `body` that says what leaves the phone with each partner line and to whom it goes (ROW-2), and the rest as facts beside symbols in `ink` on `listen-soft` discs, as the consent card's are: that names Turn recognizes are swapped for tags, that audio and the rest of the bank never leave, and that the service may keep data to monitor its service.
 - A link to the privacy notice, which reads with no network (SET-2).
 - "Allow" and "Not now" as an equal pair at the bottom.
 - Every word is text, never an image, so Accessibility Reader and VoiceOver read it ([Turn's iOS design notes][ios-reader]).

@@ -9,6 +9,7 @@ import { useTurn } from '../turn-context'
 import Button from './Button'
 import { categoryHue, categorySymbol, placeSymbol } from './category-style'
 import { useShadow } from './depth'
+import EdgeFade from './EdgeFade'
 import IconButton from './IconButton'
 import { GroupNote, ListGroup, ListRow, ScreenTitle, useScreenTitle } from './ListGroup'
 import SheetHeader, { SheetActions, SheetBody } from './SheetHeader'
@@ -31,7 +32,7 @@ export default function PhraseBankScreen() {
   const insets = useSafeAreaInsets()
   const cardShadow = useShadow('card')
   const undoShadow = useShadow('raised')
-  const { ready, boldText } = useTurn()
+  const { ready, boldText, increaseContrast } = useTurn()
   const bank = ready?.bank
   const { category: categoryParam, editPhraseId } = useLocalSearchParams<{
     category: string
@@ -444,7 +445,15 @@ export default function PhraseBankScreen() {
       </ScrollView>
 
       {/* The Undo bar stays at the bottom while any deletion is staged, with no timer (BANK-9, A11Y-5). It sits under
-          the list rather than over it, and from AX1 Undo wraps to its own line, so nothing goes out of reach. */}
+          the list rather than over it, the list fading into the board above it, and from AX1 Undo wraps to its own
+          line, so nothing goes out of reach. */}
+      {hasUndo && (
+        <View style={{ height: 0 }}>
+          <View pointerEvents="none" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 16 }}>
+            <EdgeFade side="bottom" size={16} token="board" increaseContrast={increaseContrast} />
+          </View>
+        </View>
+      )}
       {hasUndo && (
         <View
           style={{
