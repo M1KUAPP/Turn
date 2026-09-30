@@ -37,6 +37,10 @@ on:
         description: 'Only these Maestro flows, space- or comma-separated without .yaml; every flow when empty'
         required: false
         default: ''
+      release:
+        description: 'Publish Turn.app.zip as this release tag, such as v0.1.0, once the chosen flows pass; none when empty'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -52,11 +56,17 @@ jobs:
     # GitHub's Xcode 27 image, in preview: the TRD's Xcode 27 and iOS 27 SDK.
     runs-on: xcode-27
     timeout-minutes: 75
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.ref }}
           persist-credentials: false
+      # The commit this zip comes from, which a release tags.
+      - name: Name the commit
+        id: commit
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version: 1.4.2
@@ -138,3 +148,60 @@ jobs:
       - name: Fail if a flow failed
         if: always() && steps.capture.outcome == 'failure'
         run: exit 1
+
+  # Publishes the build judges install (SUBMIT-3) as a release of the commit it came from, only when every flow the run
+  # chose passed on this zip. gh refuses a tag that already exists, so a release is never replaced.
+  release:
+    needs: [build, screenshots]
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release != '' && needs.screenshots.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: Turn-simulator
+          path: ${{ runner.temp }}/turn-simulator
+      - name: Publish the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.release }}
+          SHA: ${{ needs.build.outputs.sha }}
+          MODE: ${{ inputs.screenshots }}
+          FLOWS: ${{ inputs.flows }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          version="${TAG#v}"
+          flows='every Maestro flow'
+          if [[ -n "$FLOWS" ]]; then
+            flows="$(printf '%s\n' ${FLOWS//,/ } | sed 's/.*/`&`/' | paste -sd, - | sed 's/,/, /g')"
+          fi
+          sizes="in its \`${MODE}\` screenshot mode"
+          [[ "$MODE" == pr ]] && sizes='at the default text size and AX5'
+          notes="$RUNNER_TEMP/notes.md"
+          cat > "$notes" <<NOTES
+          Turn ${version} for the iOS Simulator, built from \`${SHA}\` by \`scripts/build-simulator.sh\`: a Debug build with its JavaScript embedded, so it runs without Metro, pointed at the team's relay. [This run](${RUN_URL}) installed the zip on a fresh iPhone 16 Simulator and passed ${flows} ${sizes}.
+
+          ## Install
+
+          On a Mac with Xcode 27 and the iOS 27 Simulator runtime, download \`Turn.app.zip\` below, boot an iOS 27 Simulator, and run:
+
+          \`\`\`shell
+          unzip Turn.app.zip
+          xcrun simctl install booted Turn.app
+          xcrun simctl launch booted com.m1ku.turn
+          \`\`\`
+
+          ## Try it
+
+          1. At the top of Home, tap **Home** and choose **Clinic**.
+          2. Tap **Listen**, then **Allow**, then **They agreed**.
+          3. Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**.
+          4. "It was hard" appears in the row of replies. Tap it to hear it.
+
+          Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall, which RevenueCat's Test Store completes as a test purchase. Live transcription needs a physical iPhone, so the Simulator takes typed partner lines.
+          NOTES
+          gh release create "$TAG" "$RUNNER_TEMP/turn-simulator/Turn.app.zip" \
+            --repo "$GITHUB_REPOSITORY" --target "$SHA" --latest \
+            --title "Turn ${version} for the iOS Simulator" --notes-file "$notes"
