@@ -66,7 +66,9 @@ async function fetchArchive(name: keyof typeof archives) {
   if (!existsSync(path) || (await sha256(path)) !== expected) {
     console.log(`Downloading ${file}`)
     if (url) {
-      await $`curl --fail --silent --show-error --location --retry 3 --output ${path} ${url}`
+      // Over HTTP/1.1, with a stalled transfer given up after 30 seconds and retried: on the Simulator build's runner,
+      // Live2D's HTTP/2 stream for Ren stalled for 23 minutes and then failed, which --retry alone doesn't retry.
+      await $`curl --fail --silent --show-error --location --http1.1 --connect-timeout 30 --speed-limit 10000 --speed-time 30 --retry 3 --retry-all-errors --output ${path} ${url}`
     } else {
       if (!Bun.which('gh'))
         throw new Error(`${file} is on the ${release.tag} release: install gh and run gh auth login`)
