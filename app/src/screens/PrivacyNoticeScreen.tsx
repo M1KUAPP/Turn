@@ -19,14 +19,14 @@ export default function PrivacyNoticeScreen() {
     >
       <ScreenTitle title="Privacy notice" boldText={boldText} onLayout={onTitleLayout} />
       {!ready && !error && (
-        <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'] }}>
+        <TurnText kind="body" boldText={boldText} style={{ color: colors['ink-secondary'], marginHorizontal: 4 }}>
           Loading notice…
         </TurnText>
       )}
       {sections.map((section) => {
         const url = section.url
         return (
-          <View key={section.title} style={{ gap: 8 }}>
+          <View key={section.title} style={{ gap: 8, marginHorizontal: 4 }}>
             <TurnText kind="title" boldText={boldText} accessibilityRole="header" style={{ color: colors.ink }}>
               {section.title}
             </TurnText>
