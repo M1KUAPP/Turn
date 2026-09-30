@@ -2,7 +2,8 @@
 # Builds the Simulator app judges install (SUBMIT-3): Turn in the Debug configuration for the iphonesimulator SDK,
 # with the JavaScript bundle embedded so it runs without Metro, pointed at the team's relay, marked as the
 # Simulator build, and zipped as Turn.app.zip in the directory it runs from. The iOS Simulator build workflow runs
-# it on every native pull request. Needs macOS with Xcode 27, CocoaPods, Node, and Bun 1.4.2.
+# it on every native pull request. Needs macOS with Xcode 27, CocoaPods, Node, and Bun 1.4.2, and gh signed in for the
+# companion's live models.
 set -euo pipefail
 
 usage() {
@@ -29,6 +30,11 @@ export EXPO_PUBLIC_BUILD_KIND=simulator
 export EXPO_NO_GIT_STATUS=1
 
 bun install --frozen-lockfile
+# The companion's live Live2D renderer, fetched and built before prebuild copies it in (plan 0049). Without it the face
+# keeps to its frames, so a failed fetch warns rather than stopping the build judges run.
+if ! bun scripts/fetch-companion-models.ts; then
+  printf '::warning::The companion'"'"'s Live2D models did not build, so Turn.app shows the face'"'"'s frames.\n' >&2
+fi
 (cd app && bunx expo prebuild --platform ios --clean --no-install)
 (cd app/ios && pod install)
 

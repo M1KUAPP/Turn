@@ -1,3 +1,6 @@
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { describe, expect, test } from 'vitest'
 import type { ConfigContext } from 'expo/config'
 import appConfig from '../app.config'
@@ -64,6 +67,19 @@ describe('iOS app configuration', () => {
         if (value === undefined) delete process.env[key]
         else process.env[key] = value
       }
+    }
+  })
+
+  test('marks the companion live only in a build that carries its renderer', () => {
+    const root = mkdtempSync(join(tmpdir(), 'turn-'))
+    try {
+      expect(appConfig({ ...context, projectRoot: root }).extra?.live2d).toBe(false)
+      mkdirSync(join(root, 'live2d/build/Live2D'), { recursive: true })
+      writeFileSync(join(root, 'live2d/build/Live2D/index.html'), '')
+      expect(appConfig({ ...context, projectRoot: root }).extra?.live2d).toBe(true)
+      expect(appConfig(context).plugins).toContain('./plugins/withLive2D')
+    } finally {
+      rmSync(root, { recursive: true, force: true })
     }
   })
 
