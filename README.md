@@ -271,6 +271,7 @@ See [LICENSE](LICENSE) for more information.
 - [Shields.io](https://shields.io)
 - [contrib.rocks](https://contrib.rocks)
 - The companion's faces, drawn with Live2D: Ren is Ren Foster, © Live2D Inc., under the Live2D Free Material License; Suit and Office are Suit Male and Office Girl by Ooie; and Ice is Ice Girl, "Live2D: @TianYeLulu"
+- [Live2D Cubism SDK for Web](https://www.live2d.com/en/sdk/about/), which draws the live companion: Cubism Core under the Live2D Proprietary Software License, and the Cubism Framework under the Live2D Open Software License
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 

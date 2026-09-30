@@ -5,6 +5,7 @@ import { Image, Pressable, ScrollView, StyleSheet, useColorScheme, useWindowDime
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useFaceFrame } from '../companion/CompanionFace'
 import { companionFrames, PORTRAIT_FRAMES, type PortraitFrame } from '../companion/frames'
+import Live2DView, { useLive } from '../companion/Live2DView'
 import { colorValues, colors } from '../constants/theme'
 import { useCompanion, useTurn } from '../turn-context'
 import Button from './Button'
@@ -36,10 +37,12 @@ export default function PartnerViewScreen() {
     speech?.getSnapshot ?? noSpeechSnapshot,
     speech?.getSnapshot ?? noSpeechSnapshot
   )
-  const frame = useFaceFrame(spoken.speaking ? 'speaking' : 'rest', companion.moves && !reduceMotion)
+  const animate = companion.moves && !reduceMotion
+  const frame = useFaceFrame(spoken.speaking ? 'speaking' : 'rest', animate)
   const portraitFrame = PORTRAIT_FRAMES.find((name) => name === frame) ?? 'rest'
   const line = spoken.lastText
   const model = companion.model
+  const { live, onLive } = useLive(model)
   // The frame's 370 by 440 portrait, shorter on a shorter screen, so the line and Say it again keep the 434 points the
   // frame leaves them; a large text size scrolls the line instead.
   const portraitHeight = Math.min(440, Math.max(200, height - 434))
@@ -136,8 +139,8 @@ export default function PartnerViewScreen() {
                   backgroundColor: colors['surface-sunken']
                 }}
               >
-                {/* Every frame stays mounted, so a frame change never waits on an image to load; the picture is
-                    decoration, and the line below is the words. */}
+                {/* Every frame stays mounted, so a frame change never waits on an image to load, and they give way to
+                    the live model once it has drawn; the picture is decoration, and the line below is the words. */}
                 {PORTRAIT_FRAMES.map((name: PortraitFrame) => (
                   <Image
                     key={name}
@@ -146,10 +149,11 @@ export default function PartnerViewScreen() {
                     accessibilityIgnoresInvertColors
                     style={[
                       StyleSheet.absoluteFill,
-                      { width: '100%', height: '100%', opacity: name === portraitFrame ? 1 : 0 }
+                      { width: '100%', height: '100%', opacity: name === portraitFrame && !live ? 1 : 0 }
                     ]}
                   />
                 ))}
+                <Live2DView key={model} model={model} fit="portrait" frame={frame} animate={animate} onLive={onLive} />
                 {spoken.speaking && (
                   <View
                     style={{
