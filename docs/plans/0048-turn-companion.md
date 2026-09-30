@@ -47,4 +47,4 @@ The README's Acknowledgments credit the four models, and the app itself carries 
 - **Large text:** beside the face the toolbar's pairs stop fitting from about AX2, so at AX5 it takes four rows where it took two. The face stays, since the handoff keeps it in one place, but this is worth a look on a device. In the composer the face shows only below AX1, so the field keeps its width.
 - **Type:** the tiles' names are in `title`, the nearest token to the frame's 20 points, and the screen's line under its title is the subheadline ramp at regular weight, as frame 67 has it.
 - **Ice Girl** is in the app, as frame 67 has it, but the handoff asks the team to message TianYeLuLu before shipping her; the other three can ship now.
-- **Left out:** step 6, the live Live2D renderer.
+- **Left out:** step 6, the live Live2D renderer, which [plan 0049](/docs/plans/0049-live-companion.md) adds.
