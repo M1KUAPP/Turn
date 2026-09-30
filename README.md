@@ -101,11 +101,11 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 
 ### Screenshots
 
-|     Speaking grid      |     Partner consent     | Suggested replies |
-| :--------------------: | :---------------------: | :---------------: |
-|      [SCREENSHOT]      |      [SCREENSHOT]       |   [SCREENSHOT]    |
-| **Phrase bank editor** | **Turn Listen paywall** |   **Settings**    |
-|      [SCREENSHOT]      |      [SCREENSHOT]       |   [SCREENSHOT]    |
+|                                                                  Speaking grid                                                                  |                                                               Partner consent                                                               |                                                               Suggested replies                                                                |
+| :---------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="assets/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with conversation phrases and the Quick category" width="240"> | <img src="assets/readme/screenshots/partner-consent.png" alt="Consent card asking whether Turn may listen to the conversation" width="240"> | <img src="assets/readme/screenshots/suggested-replies.png" alt="Turn offers saved replies after the partner asks How was physio?" width="240"> |
+|                                                             **Phrase bank editor**                                                              |                                                           **Turn Listen paywall**                                                           |                                                                  **Settings**                                                                  |
+|   <img src="assets/readme/screenshots/phrase-bank-editor.png" alt="Chat category in the phrase bank with editable saved phrases" width="240">   | <img src="assets/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen one-time purchase in the RevenueCat Test Store" width="240">  | <img src="assets/readme/screenshots/settings.png" alt="Turn Settings with voice, Listen mode, phrase bank, and purchase options" width="240">  |
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -113,25 +113,25 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 
 The steps below follow the Simulator preview, where the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech.
 
-1. **Pick a place.** The first launch opens the speaking grid with about 150 starter phrases in categories. Choose **Clinic** as the place at the top of the grid.
+1. **Pick a place.** After reviewing the starter bank, the speaking grid has about 150 phrases in categories. Choose **Clinic** as the place at the top of the grid.
 
-   [SCREENSHOT]
+   <img src="assets/readme/screenshots/step-1-pick-a-place.png" alt="Place picker showing Home, Clinic, Shop, and Out" width="300">
 
 2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank.
 
-   [SCREENSHOT]
+   <img src="assets/readme/screenshots/step-2-speak.png" alt="Type composer with I need a break ready to speak" width="300">
 
 3. **Start Listen mode.** Tap **Listen**, then **Allow** to let Turn send your phrases and the partner's words to the hosted decision model. Show the partner the consent card and tap **They agreed**.
 
-   [SCREENSHOT]
+   <img src="assets/readme/screenshots/step-3-listen.png" alt="Privacy step shown before Listen mode begins, with Allow and Not now buttons" width="300">
 
 4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it.
 
-   [SCREENSHOT]
+   <img src="assets/readme/screenshots/step-4-answer.png" alt="Suggested replies include It was hard after the partner asks How was physio?" width="300">
 
 5. **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
 
-   [SCREENSHOT]
+   <img src="assets/readme/screenshots/step-5-keep-listening.png" alt="Turn Listen paywall with one-time price, Unlock, and Restore Purchases" width="300">
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
