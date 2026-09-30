@@ -1,0 +1,58 @@
+appId: com.m1ku.turn
+name: Companion
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+# The companion is opt-in, so a first launch shows no face.
+- assertNotVisible:
+    id: 'companion-face-.*'
+- scrollUntilVisible:
+    element: Settings
+- tapOn: Settings
+- scrollUntilVisible:
+    element: '.*Companion, Off.*'
+- tapOn: '.*Companion, Off.*'
+- extendedWaitUntil:
+    visible: 'A face for your voice: it mouths what Turn says in the voice you chose\. Tap a face to preview it\.'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: companion-settings
+- scrollUntilVisible:
+    element: Ren
+- tapOn: Ren
+- assertVisible:
+    text: Ren
+    selected: true
+- takeScreenshot: companion-ren-chosen
+# The choice is saved, so a relaunch opens Home with the face beside the toolbar.
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: companion-face-rest
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: companion-home
+- scrollUntilVisible:
+    element: I have something to say
+    centerElement: true
+- tapOn: I have something to say
+- extendedWaitUntil:
+    visible:
+      id: companion-face-speaking
+    timeout: 5000
+- takeScreenshot: companion-speaking
+- tapOn:
+    id: 'companion-face-.*'
+- extendedWaitUntil:
+    visible: Say it again
+    timeout: 10000
+- assertVisible: I have something to say
+- takeScreenshot: companion-partner-view
+- tapOn: Done
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 10000
