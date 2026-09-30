@@ -16,7 +16,7 @@
   <p>
     Your own words, in time for your turn.
     <br />
-    <a href="https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0-preview.1"><strong>Try the Simulator preview »</strong></a>
+    <a href="https://github.com/M1KUAPP/Turn/releases/latest"><strong>Try the Simulator build »</strong></a>
     &middot;
     <a href="eval/results.md">Evaluation</a>
     &middot;
@@ -111,7 +111,7 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 
 ### How It Works
 
-The steps below follow the Simulator preview, where the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech.
+The steps below follow the Simulator build, where the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech.
 
 1. **Pick a place.** After reviewing the starter bank, the speaking grid has about 150 phrases in categories. Choose **Clinic** as the place at the top of the grid.
 
@@ -179,7 +179,7 @@ The diagram was made with [archify](https://github.com/tt-a1i/archify) and tinte
 
 ## Getting Started
 
-Install the Simulator preview to try Turn, or build it from source. Live transcription needs a physical iPhone; the Simulator build takes typed partner lines.
+Install the Simulator build to try Turn, or build it from source. Live transcription needs a physical iPhone; the Simulator build takes typed partner lines.
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -194,7 +194,7 @@ Install the Simulator preview to try Turn, or build it from source. Live transcr
 
 ### Installation
 
-1. **The Simulator preview.** Download `Turn.app.zip` from the [Simulator preview release](https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0-preview.1), boot an iOS 27 Simulator, and install it. It embeds its JavaScript, so it runs without Metro.
+1. **The Simulator build.** Download `Turn.app.zip` from the [latest release](https://github.com/M1KUAPP/Turn/releases/latest), boot an iOS 27 Simulator, and install it. It embeds its JavaScript, so it runs without Metro.
 
    ```shell
    unzip Turn.app.zip
