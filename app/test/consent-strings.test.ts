@@ -6,7 +6,8 @@ describe('consent copy', () => {
     expect(permissionStep(false)).toEqual({
       title: 'Before Listen mode starts',
       paragraphs: [
-        'When your partner finishes speaking, Turn sends their words, the place you picked, your category names, and 40 of your phrases to a third-party AI service in the United States, which picks the phrases that answer. Names Turn recognizes are swapped for tags first.',
+        'When your partner finishes speaking, Turn sends their words, the place you picked, your category names, and 40 of your phrases to a third-party AI service in the United States, which picks the phrases that answer.',
+        'Names Turn recognizes are swapped for tags first.',
         'Your audio and the rest of your phrases never leave this phone.',
         'The service may keep what it receives to monitor its service.'
       ],
@@ -17,7 +18,8 @@ describe('consent copy', () => {
     expect(permissionStep(true)).toEqual({
       title: 'Before Listen mode starts',
       paragraphs: [
-        'When your partner finishes speaking, Turn sends their words, the place you picked, your category names, and 40 of your phrases to TypeSafe, which picks the phrases that answer. Names Turn recognizes are swapped for tags first.',
+        'When your partner finishes speaking, Turn sends their words, the place you picked, your category names, and 40 of your phrases to TypeSafe, which picks the phrases that answer.',
+        'Names Turn recognizes are swapped for tags first.',
         'Your audio and the rest of your phrases never leave this phone.',
         'The service may keep what it receives to monitor its service.'
       ],
@@ -35,6 +37,8 @@ describe('consent copy', () => {
       ],
       readAloud: 'Read aloud',
       under18: 'My partner is under 18',
+      under18Never: 'Turn never listens to someone under 18.',
+      under18Off: 'Listen mode stays off for this partner.',
       agreed: 'They agreed',
       declined: 'They said no'
     })
@@ -48,6 +52,8 @@ describe('consent copy', () => {
       ],
       readAloud: 'Read aloud',
       under18: 'My partner is under 18',
+      under18Never: 'Turn never listens to someone under 18.',
+      under18Off: 'Listen mode stays off for this partner.',
       agreed: 'They agreed',
       declined: 'They said no'
     })
