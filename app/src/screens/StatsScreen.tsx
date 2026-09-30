@@ -101,7 +101,11 @@ function StatsContent({
           ))}
         </View>
       ))}
-      <TurnText kind="footnote" boldText={boldText} style={{ color: colors['ink-secondary'], marginTop: 10 }}>
+      <TurnText
+        kind="footnote"
+        boldText={boldText}
+        style={{ color: colors['ink-secondary'], marginTop: 10, marginHorizontal: 4 }}
+      >
         These counts stay on this phone.
       </TurnText>
       <View style={{ marginTop: 10 }}>
