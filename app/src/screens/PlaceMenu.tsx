@@ -47,17 +47,20 @@ function MenuRow({
       onPressIn={press.onPressIn}
       onPressOut={press.onPressOut}
       onPress={onPress}
+      // Inset 6 points, as the menu's padding is, so a row's fill takes the menu's 24-point corners less 6 and stays
+      // concentric with them, rather than being clipped by their curve.
       style={{
         minHeight: 52,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,
-        paddingHorizontal: 18,
+        marginHorizontal: 6,
+        paddingHorizontal: 12,
         paddingVertical: 8
       }}
     >
-      <Layer fill={current ? colors['accent-soft'] : colors.surface} radius={0} />
-      <Layer fill={colors['surface-pressed']} radius={0} style={press.style} />
+      <Layer fill={current ? colors['accent-soft'] : colors.surface} radius={18} />
+      <Layer fill={colors['surface-pressed']} radius={18} style={press.style} />
       <SymbolView name={symbol} size={size} weight="semibold" tintColor={colors.ink} accessible={false} />
       <TurnText kind={current ? 'headline' : 'body'} boldText={boldText} style={{ color: colors.ink, flex: 1 }}>
         {label}
