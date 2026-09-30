@@ -1,8 +1,8 @@
-// Builds the companion's live renderer, app/live2d/build/Live2D (plan 0049): fetches the four Live2D models from the
-// team's Drive folder and the Cubism SDK for Web 5-r.5 from Live2D, checks each against its SHA-256, and packs them with
-// app/live2d/renderer.ts into a page the app's web view loads. The models stay out of the repo, as the handoff asks.
-// The Simulator build runs it before prebuild; run it by hand with `bun scripts/fetch-companion-models.ts`, then
-// prebuild, to see the live face in a local build. Needs curl, unzip, and bsdtar (macOS's tar), and sips or Pillow.
+// Builds the companion's live renderer, app/live2d/build/Live2D (plan 0049): fetches the Cubism SDK for Web 5-r.5 and
+// the four Live2D models, checks each against its SHA-256, and packs them with app/live2d/renderer.ts into a page the
+// app's web view loads. The models stay out of the repo, as the handoff asks. The Simulator build runs it before
+// prebuild; run it by hand with `bun scripts/fetch-companion-models.ts`, then prebuild, to see the live face in a local
+// build. Needs curl, gh signed in to GitHub, unzip, and bsdtar (macOS's tar), and sips or Pillow.
 import { $ } from 'bun'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
@@ -13,36 +13,31 @@ const live2d = join(root, 'app/live2d')
 const cache = join(live2d, '.cache')
 const out = join(live2d, 'build/Live2D')
 
-const drive = (id: string) => `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`
+// BOOTH serves its models only to a signed-in account, so the three from BOOTH sit on this repo's release instead, as
+// downloaded from their BOOTH pages.
+const release = { repo: 'M1KUAPP/Turn', tag: 'companion-models' }
 
-// The Drive folder "Turn Companion Screen Assets" and the SDK, pinned: a changed file stops the build here.
-const archives = {
+// Each archive, from Live2D's own downloads where it has one and the release otherwise, pinned: a changed file stops
+// the build here.
+const archives: Record<'sdk' | CompanionModel, { url?: string; file: string; sha256: string }> = {
   sdk: {
     url: 'https://cubism.live2d.com/sdk-web/bin/CubismSdkForWeb-5-r.5.zip',
     file: 'CubismSdkForWeb-5-r.5.zip',
     sha256: '67064a7fb1812cf502f5c4a03bfe12cc638c75a621bb4acf06bb28763df06ba0'
   },
+  // Ren Foster, from https://www.live2d.com/en/learn/sample/ren-foster/
   ren: {
-    url: drive('19cxZTGS6aMOFEkk4soRI5kjD6m39rHtz'),
+    url: 'https://cubism.live2d.com/sample-data/bin/ren/ren_en.zip',
     file: 'ren_en.zip',
     sha256: 'fd4c8a363178669721a71e57b32959d0f1da660ed1c16f08f88ba13c966388dc'
   },
-  suit: {
-    url: drive('1c2QaCwah7C2NxZt5-rgMIc8AY4A1aCOJ'),
-    file: 'office_m2.zip',
-    sha256: '73bf53495a7b51a22e2ddc10e0748383a02048038eba7313fac5947ae482dcb5'
-  },
-  ice: {
-    url: drive('10auLz0m23ssjdofB552TlwGhWsCunaSE'),
-    file: 'IceGirl_Live2d.rar',
-    sha256: 'eb747c3b334ea28554e14a0f29183f0cac3816864cf49e2c61c5a5ee04a1daa1'
-  },
-  office: {
-    url: drive('17QNsIgBhj4WHxZATbOlrFUp_3_s2GkbY'),
-    file: 'office_f_vts.zip',
-    sha256: '87daa99434b5c75a064e18c777d9c1ab2c784c77ccf9d4473b69371b656651ce'
-  }
-} as const
+  // Suit Male, from https://booth.pm/ja/items/5178925
+  suit: { file: 'office_m2.zip', sha256: '73bf53495a7b51a22e2ddc10e0748383a02048038eba7313fac5947ae482dcb5' },
+  // Ice Girl, from https://booth.pm/ja/items/5975192
+  ice: { file: 'IceGirl_Live2d.rar', sha256: 'eb747c3b334ea28554e14a0f29183f0cac3816864cf49e2c61c5a5ee04a1daa1' },
+  // Office Girl, from https://booth.pm/ja/items/4304615
+  office: { file: 'office_f_vts.zip', sha256: '87daa99434b5c75a064e18c777d9c1ab2c784c77ccf9d4473b69371b656651ce' }
+}
 
 // Each model's settings inside its archive, and its textures' scale in the portrait. Ice Girl's 8192-pixel textures
 // are halved, as the handoff asks; the face's 52-point circle takes a quarter of the portrait's, to save memory.
@@ -70,7 +65,13 @@ async function fetchArchive(name: keyof typeof archives) {
   const path = join(cache, file)
   if (!existsSync(path) || (await sha256(path)) !== expected) {
     console.log(`Downloading ${file}`)
-    await $`curl --fail --silent --show-error --location --retry 3 --output ${path} ${url}`
+    if (url) {
+      await $`curl --fail --silent --show-error --location --retry 3 --output ${path} ${url}`
+    } else {
+      if (!Bun.which('gh'))
+        throw new Error(`${file} is on the ${release.tag} release: install gh and run gh auth login`)
+      await $`gh release download ${release.tag} --repo ${release.repo} --pattern ${file} --dir ${cache} --clobber`
+    }
     const actual = await sha256(path)
     if (actual !== expected) throw new Error(`${file} has SHA-256 ${actual}, not the pinned ${expected}`)
   }

@@ -68,6 +68,9 @@ jobs:
           xcodebuild -version
       # The one command that makes the build judges run (#50), so every run here proves it.
       - name: Build Turn.app.zip
+        env:
+          # For gh, which fetches the companion's BOOTH models from this repo's companion-models release (plan 0049).
+          GH_TOKEN: ${{ github.token }}
         run: bash scripts/build-simulator.sh
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

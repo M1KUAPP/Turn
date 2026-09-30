@@ -23,7 +23,17 @@ The face keeps the frames' states and timing: the app still steps through `useFa
 
 ## How a build gets the models
 
-`scripts/fetch-companion-models.ts` downloads the four archives from the team's Drive folder, "Turn Companion Screen Assets", and `CubismSdkForWeb-5-r.5.zip` from Live2D, and checks each against its pinned SHA-256, so a changed file stops the build. It unpacks them, needing `unzip` and, for Ice Girl's RAR, `bsdtar`, which is macOS's `tar`. Then it writes `app/live2d/build/Live2D`, which Git ignores:
+`scripts/fetch-companion-models.ts` downloads five archives and checks each against its pinned SHA-256, so a changed file stops the build:
+
+| Archive                     | Source                                                                                                                     |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `CubismSdkForWeb-5-r.5.zip` | Live2D, `cubism.live2d.com/sdk-web/bin/`                                                                                   |
+| `ren_en.zip`                | Live2D's [Ren Foster sample](https://www.live2d.com/en/learn/sample/ren-foster/), `cubism.live2d.com/sample-data/bin/ren/` |
+| `office_m2.zip`             | The `companion-models` release on this repo, from Ooie's free [Suit Male on BOOTH](https://booth.pm/ja/items/5178925)      |
+| `office_f_vts.zip`          | The `companion-models` release, from Ooie's free [Office Girl on BOOTH](https://booth.pm/ja/items/4304615)                 |
+| `IceGirl_Live2d.rar`        | The `companion-models` release, from TianYeLuLu's free [Ice Girl on BOOTH](https://booth.pm/ja/items/5975192)              |
+
+BOOTH serves even its free downloads only to a signed-in account, so the three BOOTH models sit on a release, which `gh release download` fetches with the build's GitHub token. It unpacks them, needing `unzip` and, for Ice Girl's RAR, `bsdtar`, which is macOS's `tar`. Then it writes `app/live2d/build/Live2D`, which Git ignores:
 
 - `core.js`, the SDK's Cubism Core 6.0.
 - `renderer.js`, the page's code bundled with the SDK's framework by Bun.
@@ -33,7 +43,17 @@ The face keeps the frames' states and timing: the app still steps through `useFa
 
 The portrait's textures keep their size, except Ice Girl's, which halve from 8192 to 4096 pixels. The face's 52-point circle takes a quarter of the portrait's, scaled with `sips` on a Mac and Pillow elsewhere. The page comes to about 35 MB.
 
-`scripts/build-simulator.sh` runs it before prebuild, so the Simulator build and its workflow carry the live face. A failed fetch warns and the build goes on with the frames, since the build is what judges install. For a local build, run `bun scripts/fetch-companion-models.ts` before `expo prebuild`. `app.config.ts` sets `extra.live2d` only when the page is built, and without it the app never makes a web view.
+`scripts/build-simulator.sh` runs it before prebuild, so the Simulator build and its workflow carry the live face; the workflow gives it `GH_TOKEN` for the release. A failed fetch warns and the build goes on with the frames, since the build is what judges install. For a local build, sign in with `gh auth login` and run `bun scripts/fetch-companion-models.ts` before `expo prebuild`. `app.config.ts` sets `extra.live2d` only when the page is built, and without it the app never makes a web view.
+
+To make the release, or to replace a model on it, download the archive from its BOOTH page while signed in, and upload it under its file name above:
+
+```shell
+gh release create companion-models --repo M1KUAPP/Turn --prerelease --title "Companion models" \
+  --notes "The companion's BOOTH models, which scripts/fetch-companion-models.ts fetches at build time (plan 0049)." \
+  office_m2.zip office_f_vts.zip IceGirl_Live2d.rar
+```
+
+A replaced archive has a new SHA-256, so update its hash in the script, and check its framing against its frames, as a new version may move the model.
 
 ## Checks
 
@@ -47,6 +67,6 @@ The portrait's textures keep their size, except Ice Girl's, which halve from 819
 - **Frames first, then live.** The frames show until the model has drawn, about a second in Chromium, and come back if the web view fails or its process ends, so the face is never blank and the Maestro flow's IDs don't change.
 - **The face's textures** are a quarter of the portrait's. Home shows a face whenever one is chosen, and Ice Girl's four halved textures alone would take 256 MB of GPU memory. The face shows the head at 52 points, so a quarter still has more texels than pixels.
 - **Packed as scripts**, base64 encoded, rather than read from files, since the web view's `fetch` can't read file URLs and a texture read from one would taint WebGL; scripts cost a third more space and load for certain.
-- **Drive as the source**, pinned by hash, as the handoff keeps the models out of the repo. If the folder's files change, update the hashes in the script.
+- **Official sources where a build can reach them**, pinned by hash, as the handoff keeps the models out of the repo. Live2D serves the SDK and Ren to anyone. BOOTH serves Suit, Office, and Ice only to a signed-in account, and a BOOTH session in CI would expire and may break BOOTH's terms, so the team uploads them to a release once instead. The hashes are those of the files the frames were fitted to, first shared in a Drive folder; Ren's matched Live2D's file byte for byte.
 - **Licenses.** Cubism Core is Live2D's Redistributable Code under its Proprietary Software License, and the framework is under its Open Software License. A business with more than 10 million yen of annual revenue needs a Cubism SDK Release License before releasing the app. The README credits the SDK. The in-app iOS license list, generated by `scripts/generate-ios-licenses.ts`, needs a Mac with CocoaPods to pick up react-native-webview's pod.
-- **Ice Girl** is still in, as plan 0048 has her; the handoff asks the team to message TianYeLuLu before shipping her, and now her model files ship in the app, not only pictures of her.
+- **Ice Girl** is still in, as plan 0048 has her; the handoff asks the team to message TianYeLuLu before shipping her, and now her model files ship in the app, not only pictures of her. Her BOOTH page allows commercial streams with the credit "Live2D: @TianYeLulu", forbids resale, and asks to be consulted before making goods with her.
