@@ -39,8 +39,11 @@ name: Judge scenario
 - extendedWaitUntil:
     visible: Mic off
     timeout: 10000
+# From AX1 Mic off's message fills the top of the column and can end a line past the screen's edge, so most of it
+# is enough; its middle stays above the bottom bar.
 - scrollUntilVisible:
     element: '.*Tap here to type what they say\..*'
+    visibilityPercentage: 90
 - tapOn: '.*Tap here to type what they say\..*'
 - inputText: 'How was physio?'
 - scrollUntilVisible:
