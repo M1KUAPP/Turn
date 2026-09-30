@@ -8,27 +8,40 @@ import { COMPANION_MODELS, type CompanionModel } from '../companion/settings'
 import { colors } from '../constants/theme'
 import { useCompanion, useTurn } from '../turn-context'
 import { useShadow } from './depth'
+import EdgeFade, { fadeToward, useTokenHex } from './EdgeFade'
 import { GroupNote, ListGroup, ListRow, ScreenTitle, useScreenTitle } from './ListGroup'
 import PressFill from './PressFill'
 import TurnText from './TurnText'
 import { previewText } from './VoiceScreen'
 
-// A face's tile (frame 67): its picture over its name, with a 2.5 `accent` edge and a check once chosen. Pressed, the
-// name's bar turns `surface-pressed` and the edge 2.5, as other cards do.
+// A face's tile (frame 67): its portrait over its name, with a 2.5 `accent` edge and a check once chosen. The portrait
+// shows the head and shoulders and fades into the name's bar, so the picture never stops at a hard line. Pressed, the
+// bar and its fade turn `surface-pressed` and the edge 2.5, as other cards do.
 function Choice({
   model,
   name,
+  width,
   selected,
   boldText,
+  increaseContrast,
   onPress
 }: {
   model: CompanionModel
   name: string
+  width: number
   selected: boolean
   boldText: boolean
+  increaseContrast: boolean
   onPress: () => void
 }) {
   const card = useShadow('card')
+  const pressedHex = useTokenHex('surface-pressed', increaseContrast)
+  // The 370 by 440 portrait at the tile's width, up to 200 points, cut at 70% of its height; the fade takes the last
+  // 17%, which starts below every face's chin.
+  const portraitWidth = Math.min(width, 200)
+  const portraitHeight = (portraitWidth * 440) / 370
+  const pictureHeight = Math.round(portraitHeight * 0.7)
+  const fade = Math.round(portraitHeight * 0.17)
   return (
     <Pressable
       accessibilityRole="button"
@@ -42,12 +55,22 @@ function Choice({
         <View
           style={{ borderRadius: 24, borderCurve: 'continuous', overflow: 'hidden', backgroundColor: colors.surface }}
         >
-          <Image
-            source={companionFrames[model].tile}
-            resizeMode="cover"
-            accessibilityIgnoresInvertColors
-            style={{ width: '100%', height: 120, backgroundColor: colors['surface-sunken'] }}
-          />
+          <View
+            style={{
+              height: pictureHeight,
+              alignItems: 'center',
+              overflow: 'hidden',
+              backgroundColor: colors['surface-sunken']
+            }}
+          >
+            <Image
+              source={companionFrames[model].portrait.rest}
+              resizeMode="cover"
+              accessibilityIgnoresInvertColors
+              style={{ width: portraitWidth, height: portraitHeight }}
+            />
+            <EdgeFade side="bottom" size={fade} token="surface" increaseContrast={increaseContrast} />
+          </View>
           <View
             style={{
               minHeight: 50,
@@ -58,7 +81,10 @@ function Choice({
               paddingVertical: 8
             }}
           >
-            <PressFill pressed={pressed} color={colors['surface-pressed']} />
+            <PressFill
+              pressed={pressed}
+              style={{ top: -fade, experimental_backgroundImage: fadeToward('bottom', pressedHex, fade) }}
+            />
             <TurnText kind="title" boldText={boldText} style={{ flex: 1, color: colors.ink }}>
               {name}
             </TurnText>
@@ -105,14 +131,15 @@ function Choice({
  * the voice and Let it move beside them. */
 export default function CompanionScreen() {
   const router = useRouter()
-  const { ready, boldText } = useTurn()
+  const { ready, boldText, increaseContrast } = useTurn()
   const { companion, state } = useCompanion()
-  const { fontScale } = useWindowDimensions()
+  const { width, fontScale } = useWindowDimensions()
   const { onTitleLayout, scrollProps } = useScreenTitle('Companion')
   const [note, setNote] = useState<string | null>(null)
   const [, setVoiceRevision] = useState(0)
   // One column from AX1, so a face's name keeps its tile's width.
   const oneColumn = fontScale >= 1.786
+  const tileWidth = oneColumn ? width - 32 : (width - 48) / 2
 
   useEffect(() => {
     const voiceSettings = ready?.voiceSettings
@@ -145,8 +172,10 @@ export default function CompanionScreen() {
       key={model}
       model={model}
       name={name}
+      width={tileWidth}
       selected={state.model === model}
       boldText={boldText}
+      increaseContrast={increaseContrast}
       onPress={() => choose(model)}
     />
   ))
