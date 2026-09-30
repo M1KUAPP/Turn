@@ -72,6 +72,14 @@ export function slotTextKind(
   return !short && length <= 2 * perLine ? 'phrase' : 'button'
 }
 
+/** The text size a grid card shows its phrase at (DESIGN, the grid): phrase, unless its longest word is wider than the
+ * line, where iOS would break the word mid-way, and then button's size; short screens always take button's size.
+ * Estimated from the word's letters, at about half an em each, as slotTextKind does. */
+export function gridTextKind(text: string, textWidth: number, fontScale: number, short: boolean): 'phrase' | 'button' {
+  const longest = Math.max(0, ...text.split(/\s+/).map((word) => word.replace(/[^\p{L}\p{N}]/gu, '').length))
+  return !short && longest * 22 * Math.min(fontScale, 2.6) * 0.55 <= textWidth ? 'phrase' : 'button'
+}
+
 export type ToolbarItem = 'type' | 'repeat' | 'up' | 'down'
 
 const toolbarGap = 6
