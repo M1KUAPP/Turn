@@ -13,7 +13,8 @@ export function homeLayout(width: number, height: number, fontScale: number) {
   return {
     short,
     oneLineCaption,
-    captionHeight: oneLineCaption ? 48 : Math.max(86, 24 + 70 * fontScale),
+    // A label and two lines of partner-line inside the panel's padding: 114 points at the default size.
+    captionHeight: oneLineCaption ? 48 : Math.max(86, Math.ceil(28 + 86 * fontScale)),
     gridGap: short ? 8 : 12,
     tabMargin: short ? 0 : 4,
     rowColumns,
@@ -57,4 +58,59 @@ export function replyStat(
  * selected category is deleted. */
 export function selectedTab(categoryId: string, categories: { id: string }[]): string {
   return categoryId === 'all' || categories.some((category) => category.id === categoryId) ? categoryId : 'quick'
+}
+
+/** The text size a row slot shows its phrase at (DESIGN, the row): phrase while it fits two lines, then button's size,
+ * past which the slot ends it with an ellipsis. Estimated from its length, at about half an em a character. */
+export function slotTextKind(
+  length: number,
+  textWidth: number,
+  fontScale: number,
+  short: boolean
+): 'phrase' | 'button' {
+  const perLine = Math.floor(textWidth / (22 * Math.min(fontScale, 2.6) * 0.55))
+  return !short && length <= 2 * perLine ? 'phrase' : 'button'
+}
+
+export type ToolbarItem = 'type' | 'repeat' | 'up' | 'down'
+
+const toolbarGap = 6
+
+/** The floating toolbar's rows (DESIGN, the bottom bar). The four pills share one row, each a symbol above its label and
+ * up to 84 points wide, while they fit; otherwise each pill puts its symbol beside its label, and a pair, Type and Repeat
+ * or Up and Down, shares a row only when both fit, so no label is ever cut. `labels` are the labels' natural widths,
+ * Repeat's standing for Stop's too, so the bar doesn't change while Turn speaks. */
+export function toolbarLayout(labels: Record<ToolbarItem, number>, symbol: number, space: number) {
+  const items: ToolbarItem[] = ['type', 'repeat', 'up', 'down']
+  const stacked = Math.max(...items.map((item) => Math.max(symbol, labels[item]) + 23))
+  const pillWidth = Math.max(stacked, Math.min(84, (space - 3 * toolbarGap) / 4))
+  if (4 * pillWidth + 3 * toolbarGap <= space) return { stacked: true, pillWidth, rows: [items] }
+  const beside = (item: ToolbarItem) => symbol + 6 + labels[item] + 27
+  const pair = (a: ToolbarItem, b: ToolbarItem) => (beside(a) + toolbarGap + beside(b) <= space ? [[a, b]] : [[a], [b]])
+  return { stacked: false, pillWidth, rows: [...pair('type', 'repeat'), ...pair('up', 'down')] }
+}
+
+/** The speech model's progress where the caption was (plan 0044's strings): "62%, about a minute. Speaking works now."
+ * The time is left out until the pace is known. */
+export function modelProgressWords(progress: number, secondsLeft: number | null): string {
+  const percent = Math.min(99, Math.floor(progress * 100))
+  const time =
+    secondsLeft === null
+      ? ''
+      : secondsLeft < 90
+        ? ', about a minute'
+        : `, about ${Math.round(secondsLeft / 60)} minutes`
+  return `${percent}%${time}. Speaking works now.`
+}
+
+/** Seconds the download has left at its pace so far, from its first and latest readings (times in milliseconds); null
+ * until a second has passed with progress made. */
+export function modelSecondsLeft(
+  first: { at: number; progress: number },
+  latest: { at: number; progress: number }
+): number | null {
+  const elapsed = latest.at - first.at
+  const rate = (latest.progress - first.progress) / elapsed
+  if (elapsed < 1000 || !(rate > 0)) return null
+  return (1 - latest.progress) / rate / 1000
 }

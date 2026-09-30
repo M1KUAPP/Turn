@@ -23,6 +23,8 @@ export type ListenEngineEvents = {
   onAssetProgress(fraction: number | null): void
   /** True while the partner's voice is above the silence level. */
   onVoice(active: boolean): void
+  /** The input's loudness, 0 for silence to 1, as the engine measures it. An engine with no meter never calls it. */
+  onLevel(level: number): void
 }
 
 export type ListenEngine = {
