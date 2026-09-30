@@ -1283,7 +1283,7 @@ The caption shows the partner's words in Listen mode; outside it, it says so: "L
 - **The button.** Done while a partner line is open (LISTEN-2), and Clear when the row holds replies (ROW-10) as a 32-tall pill with a 44-point hit area; it never moves, so a hand learns it.
 - **Notes.** A `note` pill replaces the speaker label's right half, with its symbol, on `surface-sunken`: the phone ranked the replies (STATE-1), Listen mode is degraded (STATE-2, STATE-3), Listen mode is off for this partner (CONSENT-6), live transcription isn't available (LISTEN-9), or the speech model is downloading, with a progress bar under the words (LISTEN-1).
 - **Tap.** In Listen mode, a tap on the words opens the composer for the partner's words (LISTEN-4).
-- **From AX1.** The caption grows to fit its label, note, and message, and the disc that heads "Listen mode is off.", Mic off's message, and Paused sits above the words, so a long word keeps the panel's width.
+- **From AX1.** The caption grows to fit its label, note, and message, and "Listen mode is off.", Mic off's message, and Paused drop their disc, whose symbol their words already say, so a long word keeps the panel's width and Mic off's message fits on the screen.
 
 ### The Listen control
 
