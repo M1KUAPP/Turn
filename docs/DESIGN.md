@@ -1495,8 +1495,8 @@ The home screen is ready to speak within two seconds (PERF-3), with the grid sho
 
 RevenueCat's paywall, over the current screen (PAY-2), built in RevenueCat's editor to match:
 
-- **Content.** Text only: a title, one line saying Turn Listen is one payment and speaking stays free, the package's price, a marker-blue purchase button with `on-accent` text, white in light and near-black in dark, Restore Purchases, the legal links, and the close button.
-- **Nothing that moves.** No images, carousel, video, or transitions, since paywalls keep carousels and component transitions moving under Reduce Motion ([Turn's iOS design notes][ios-paywall-a11y]).
+- **Content.** The still Listen hero, "Keep Listen mode on", the one-payment subtitle, three promises with ear, lock, and shield symbols, the lifetime package and dynamic price, the `accent` purchase button with `on-accent` text, Restore Purchases, the legal links, and the close button. The selected package has an `accent` edge.
+- **Nothing that moves.** The hero is a static image. There is no carousel, video, or component transition, since paywalls keep carousels and component transitions moving under Reduce Motion ([Turn's iOS design notes][ios-paywall-a11y]).
 - **Colors and type.** The tokens' light and dark values, each pair at 4.5 to 1 or more without Increase Contrast, since paywalls have no increased-contrast values ([Turn's iOS design notes][ios-paywall-limits]); the system font, since Apple's license bars uploading SF Pro; and sizes that follow Dynamic Type, which paywalls do unless the dashboard turns it off ([Turn's iOS design notes on paywall accessibility][ios-paywall-a11y]).
 - **Test Store's alert.** Test Store's purchase alert is UIKit's own, so there's nothing to design, and the video names it as a test purchase ([Turn's iOS design notes][ios-test-store]).
 
