@@ -18,9 +18,9 @@ type Scene = {
 }
 
 const SCENES: readonly Scene[] = [
-  { start: 0, settled: 0, fadeOut: 0.18, end: 0.25 },
-  { start: 0.25, settled: 0.32, fadeOut: 0.43, end: 0.5 },
-  { start: 0.51, settled: 0.58, fadeOut: 0.66, end: 0.73 },
+  { start: 0, settled: 0, fadeOut: 0.15, end: 0.23 },
+  { start: 0.23, settled: 0.29, fadeOut: 0.42, end: 0.49 },
+  { start: 0.49, settled: 0.55, fadeOut: 0.66, end: 0.73 },
   { start: 0.74, settled: 0.82, fadeOut: 1, end: 1 }
 ]
 const SPEED_VALUES = [125, 185, 8, 10] as const
@@ -59,9 +59,9 @@ function loadImage(source: string, pending: Set<HTMLImageElement>) {
   })
 }
 
-function lerpStep(current: number, target: number, seconds: number) {
-  const next = current + (target - current) * (1 - Math.exp(-seconds * 8))
-  return Math.abs(target - next) < 0.002 ? target : next
+function lerpStep(current: number, target: number, seconds: number, rate = 8, snap = 0.002) {
+  const next = current + (target - current) * (1 - Math.exp(-seconds * rate))
+  return Math.abs(target - next) < snap ? target : next
 }
 
 export function Story() {
@@ -72,6 +72,7 @@ export function Story() {
   const dotRefs = useRef<Array<HTMLSpanElement | null>>([])
   const typedTextRef = useRef<HTMLSpanElement | null>(null)
   const answerCardRef = useRef<HTMLDivElement | null>(null)
+  const stageRef = useRef<HTMLDivElement | null>(null)
   const [mediaMode, setMediaMode] = useState<'still' | 'frames'>('still')
   const [stillReady, setStillReady] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion)
@@ -99,8 +100,8 @@ export function Story() {
     let running = false
     let raf = 0
     let lastTime = performance.now()
-    let currentFrame = 0
-    let drawnFrame = -1
+    let smooth = -1
+    let drawnAt = -1
     let drawnSurface = ''
     let frameCount = 0
     let frameWidth = 1280
@@ -119,23 +120,38 @@ export function Story() {
 
     const updateStory = (progress: number) => {
       beatRefs.current.forEach((beat, index) => {
-        if (beat) beat.style.setProperty('--story-opacity', String(sceneOpacity(progress, SCENES[index])))
+        if (!beat) return
+        const scene = SCENES[index]
+        const opacity = sceneOpacity(progress, scene)
+        const enter =
+          scene.settled > scene.start ? clamp01((progress - scene.start) / (scene.settled - scene.start)) : 1
+        const leave = scene.end > scene.fadeOut ? clamp01((progress - scene.fadeOut) / (scene.end - scene.fadeOut)) : 0
+        beat.style.setProperty('--story-opacity', opacity.toFixed(3))
+        beat.style.setProperty('--story-y', `${((1 - enter) * 56 - leave * 56).toFixed(1)}px`)
+        beat.style.setProperty('--story-scale', (1 - (1 - enter) * 0.04 + leave * 0.03).toFixed(4))
+        beat.style.setProperty('--story-blur', `${((1 - opacity) * 10).toFixed(2)}px`)
       })
+      const stage = stageRef.current
+      if (stage) {
+        stage.style.setProperty('--story-p', progress.toFixed(4))
+        stage.style.setProperty('--story-lamp', clamp01((progress - 0.8) / 0.14).toFixed(3))
+        stage.style.setProperty('--story-close', clamp01((progress - 0.72) / 0.1).toFixed(3))
+      }
 
-      const typingProgress = clamp01((progress - 0.31) / 0.1)
+      const typingProgress = clamp01((progress - 0.27) / 0.1)
       const typedLength = Math.floor(typingProgress * 4)
       const typedText = 'It was hard'.slice(0, typedLength)
       if (typedTextRef.current && typedTextRef.current.textContent !== typedText) {
         typedTextRef.current.textContent = typedText
       }
 
-      const crossingProgress = clamp01((progress - 0.52) / 0.1)
+      const crossingProgress = clamp01((progress - 0.54) / 0.08)
       if (answerCardRef.current) {
         answerCardRef.current.style.setProperty('--story-answer-opacity', String(1 - crossingProgress * 0.65))
         answerCardRef.current.style.setProperty('--story-strike', String(crossingProgress))
       }
 
-      const activeBeat = progress < 0.25 ? 0 : progress < 0.51 ? 1 : progress < 0.74 ? 2 : 3
+      const activeBeat = progress < 0.23 ? 0 : progress < 0.49 ? 1 : progress < 0.735 ? 2 : 3
       dotRefs.current.forEach((dot, index) => {
         if (!dot) return
         const active = index === activeBeat ? 'true' : 'false'
@@ -143,33 +159,34 @@ export function Story() {
       })
     }
 
-    const drawFrame = (now: number, progress: number) => {
-      if (frameCount === 0) return
-      const targetFrame = progress * (frameCount - 1)
-      const seconds = Math.min(0.1, Math.max(0, now - lastTime) / 1000)
-      currentFrame = lerpStep(currentFrame, targetFrame, seconds)
-      const requestedIndex = Math.round(currentFrame)
-
-      let image = decodedFrames[requestedIndex]
-      let imageIndex = requestedIndex
-      if (!image) {
-        let bestDistance = Number.POSITIVE_INFINITY
-        for (let index = 0; index < decodedFrames.length; index += 1) {
-          const candidate = decodedFrames[index]
-          if (!candidate) continue
-          const distance = Math.abs(index - requestedIndex)
-          if (distance < bestDistance) {
-            image = candidate
-            imageIndex = index
-            bestDistance = distance
-          }
-        }
+    const nearest = (index: number) => {
+      if (decodedFrames[index]) return decodedFrames[index]
+      for (let d = 1; d < frameCount; d += 1) {
+        const before = decodedFrames[index - d]
+        if (before) return before
+        const after = decodedFrames[index + d]
+        if (after) return after
       }
-      if (!image) return
+      return undefined
+    }
 
+    const cover = (image: HTMLImageElement, width: number, height: number) => {
+      const sourceWidth = image.naturalWidth || frameWidth
+      const sourceHeight = image.naturalHeight || frameHeight
+      const scale = Math.max(width / sourceWidth, height / sourceHeight)
+      const w = sourceWidth * scale
+      const h = sourceHeight * scale
+      context.drawImage(image, (width - w) / 2, (height - h) / 2, w, h)
+    }
+
+    // Draws the film at a fractional frame: the frame below, with the frame
+    // above blended in by the remainder, so a slow scroll never steps.
+    const drawFrame = (progress: number) => {
+      if (frameCount === 0) return
+      const position = progress * (frameCount - 1)
       const rect = canvas.getBoundingClientRect()
       if (rect.width === 0 || rect.height === 0) return
-      const dpr = Math.max(1, window.devicePixelRatio || 1)
+      const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1))
       const pixelWidth = Math.round(rect.width * dpr)
       const pixelHeight = Math.round(rect.height * dpr)
       const surface = `${pixelWidth}x${pixelHeight}@${dpr}`
@@ -179,17 +196,24 @@ export function Story() {
         canvas.height = pixelHeight
         drawnSurface = surface
       }
-      if (imageIndex === drawnFrame && !resized) return
+      if (!resized && Math.abs(position - drawnAt) < 0.004) return
 
+      const below = Math.floor(position)
+      const above = Math.min(frameCount - 1, below + 1)
+      const mix = position - below
+      const first = nearest(below)
+      if (!first) return
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
-      context.clearRect(0, 0, rect.width, rect.height)
-      const sourceWidth = image.naturalWidth || frameWidth
-      const sourceHeight = image.naturalHeight || frameHeight
-      const scale = Math.max(rect.width / sourceWidth, rect.height / sourceHeight)
-      const width = sourceWidth * scale
-      const height = sourceHeight * scale
-      context.drawImage(image, (rect.width - width) / 2, (rect.height - height) / 2, width, height)
-      drawnFrame = imageIndex
+      context.imageSmoothingQuality = 'high'
+      context.globalAlpha = 1
+      cover(first, rect.width, rect.height)
+      const second = decodedFrames[above]
+      if (second && second !== first && mix > 0.01) {
+        context.globalAlpha = mix
+        cover(second, rect.width, rect.height)
+        context.globalAlpha = 1
+      }
+      drawnAt = position
     }
 
     const tick = (now: number) => {
@@ -198,12 +222,14 @@ export function Story() {
         running = false
         return
       }
-      const progress = progressForSection()
-      updateStory(progress)
+      const target = progressForSection()
+      const seconds = Math.min(0.1, Math.max(0, now - lastTime) / 1000)
+      smooth = smooth < 0 ? target : lerpStep(smooth, target, seconds, 9, 0.0004)
+      updateStory(smooth)
       if (stillRef.current) {
-        stillRef.current.style.transform = `scale(${1 + progress * 0.12})`
+        stillRef.current.style.transform = `scale(${1 + smooth * 0.12})`
       }
-      drawFrame(now, progress)
+      drawFrame(smooth)
       lastTime = now
       raf = requestAnimationFrame(tick)
     }
@@ -241,14 +267,24 @@ export function Story() {
         setMediaMode('frames')
         if (near) startLoop()
 
-        for (let index = 1; index < frameCount; index += 1) {
-          if (controller.signal.aborted) return
-          try {
-            decodedFrames[index] = await loadImage(frameUrl(pattern, index + 1), pendingImages)
-          } catch {
-            // Keep the nearest decoded image available if an individual frame is missing.
+        // Coarse to fine, six at a time: every 8th frame first, so an early
+        // scroll already scrubs, then the gaps fill in.
+        const order: number[] = []
+        for (const step of [8, 4, 2, 1]) {
+          for (let index = step; index < frameCount; index += step) if (!order.includes(index)) order.push(index)
+        }
+        let cursor = 0
+        const worker = async () => {
+          while (cursor < order.length && !controller.signal.aborted) {
+            const index = order[cursor++]
+            try {
+              decodedFrames[index] = await loadImage(frameUrl(pattern, index + 1), pendingImages)
+            } catch {
+              // Keep the nearest decoded image available if an individual frame is missing.
+            }
           }
         }
+        await Promise.all(Array.from({ length: 6 }, worker))
       } catch {
         setMediaMode('still')
       }
@@ -289,7 +325,7 @@ export function Story() {
       data-still-ready={stillReady ? 'true' : 'false'}
     >
       <div className="story-cinematic" ref={cinematicRef}>
-        <div className="story-stage">
+        <div className="story-stage" ref={stageRef}>
           <div className="story-media" aria-hidden="true">
             <img
               className="story-still"
@@ -302,6 +338,7 @@ export function Story() {
             <canvas className="story-canvas" ref={canvasRef} />
           </div>
           <div className="story-scrim" aria-hidden="true" />
+          <div className="story-lamp" aria-hidden="true" />
 
           <div className="story-beats">
             <div
@@ -312,7 +349,8 @@ export function Story() {
             >
               <div className="story-beat-inner">
                 <h3 className="story-opening">
-                  <span className="story-serif">You have ALS. Your mind is sharp.</span>
+                  <span className="story-serif">You have ALS.</span>
+                  <span className="story-serif">Your mind is sharp.</span>
                   <span className="story-voice">Your voice and hands aren&apos;t.</span>
                 </h3>
               </div>
