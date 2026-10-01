@@ -55,37 +55,28 @@ export function HowItWorks() {
     const list = stepsRef.current
     if (!list) return
 
-    let observer: IntersectionObserver | undefined
-    const observeAtViewportCenter = () => {
-      observer?.disconnect()
-      const inset = Math.round(window.innerHeight * 0.45)
-      observer = new IntersectionObserver(
-        (entries) => {
-          const centered = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => {
-              const center = window.innerHeight / 2
-              const aDistance = Math.abs(a.boundingClientRect.top + a.boundingClientRect.height / 2 - center)
-              const bDistance = Math.abs(b.boundingClientRect.top + b.boundingClientRect.height / 2 - center)
-              return aDistance - bDistance
-            })[0]
-
-          if (centered) {
-            const index = Number((centered.target as HTMLElement).dataset.howStep)
-            if (Number.isFinite(index)) setActiveStep(index)
-          }
-        },
-        { rootMargin: `-${inset}px 0px -${inset}px 0px`, threshold: 0 }
-      )
-
-      list.querySelectorAll<HTMLElement>('[data-how-step]').forEach((step) => observer?.observe(step))
+    // The active step is the last one whose text has risen past 60% of the
+    // viewport, so the phone changes as each step comes into reading position.
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const line = window.innerHeight * 0.6
+      let index = 0
+      list.querySelectorAll<HTMLElement>('[data-how-step]').forEach((step) => {
+        if (step.getBoundingClientRect().top < line) index = Number(step.dataset.howStep) || 0
+      })
+      setActiveStep(index)
     }
-
-    observeAtViewportCenter()
-    window.addEventListener('resize', observeAtViewportCenter)
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
     return () => {
-      observer?.disconnect()
-      window.removeEventListener('resize', observeAtViewportCenter)
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
     }
   }, [])
 

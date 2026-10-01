@@ -154,13 +154,17 @@ function CompanionCard({ name }: { name: Companion }) {
         onClick={sayPhrase}
       >
         <span className="faces-portrait">
-          <img
-            src={`/img/faces/${name.toLowerCase()}-portrait-${frame}.webp`}
-            alt={`${name}, a Turn companion`}
-            width="800"
-            height="1000"
-            decoding="async"
-          />
+          {(['rest', 'half', 'open', 'blink'] as const).map((f) => (
+            <img
+              key={f}
+              src={`/img/faces/${name.toLowerCase()}-portrait-${f}.webp`}
+              alt={f === 'rest' ? `${name}, a Turn companion` : ''}
+              width="800"
+              height="1000"
+              decoding="async"
+              className={`faces-frame${f === frame ? ' faces-frame-on' : ''}`}
+            />
+          ))}
           <span
             className={`card speaking faces-bubble${speaking ? ' faces-bubble-visible' : ''}`}
             aria-hidden={!speaking}
