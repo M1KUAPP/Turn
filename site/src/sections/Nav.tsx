@@ -7,8 +7,7 @@ const ITEMS = [
   ['How it works', '#how'],
   ['The model', '#picks'],
   ['Companions', '#faces'],
-  ['Pricing', '#pricing'],
-  ['Team', '#team']
+  ['Pricing', '#pricing']
 ] as const
 
 export function Nav() {
@@ -21,7 +20,7 @@ export function Nav() {
   }, [])
 
   return (
-    <header className={`nav${scrolled ? ' scrolled' : ''}`}>
+    <header className={`nav frost${scrolled ? ' scrolled' : ''}`}>
       <div className="wrap nav-inner">
         <a href="#top" className="nav-brand" aria-label="Turn, back to top">
           <img src="/img/turn-icon.webp" alt="" width={36} height={36} />
