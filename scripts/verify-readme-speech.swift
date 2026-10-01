@@ -21,7 +21,7 @@ let output = AVAssetReaderTrackOutput(
 )
 reader.add(output)
 guard reader.startReading() else { fatalError("Cannot read recording: \(String(describing: reader.error))") }
-// GitHub's virtualized Mac has no usable GPU/Neural Engine for Vision or Core Image.
+// Use software rendering on GitHub's virtualized Mac.
 let context = CIContext(options: [.useSoftwareRenderer: true])
 let states = ["Repeat", "Stop", "Repeat"]
 let files = ["readme-before-speech.png", "readme-speaking.png", "readme-after-speech.png"]
@@ -36,7 +36,8 @@ while let sample = output.copyNextSampleBuffer() {
     lastTime = time
     let request = VNRecognizeTextRequest()
     request.usesCPUOnly = true
-    request.recognitionLevel = .accurate
+    // Accurate recognition fails on the xcode-27 VM; fast recognition reads these UI labels.
+    request.recognitionLevel = .fast
     request.recognitionLanguages = ["en-US"]
     try VNImageRequestHandler(cvPixelBuffer: pixels).perform([request])
     let words = (request.results ?? []).compactMap { result -> (String, CGRect)? in
