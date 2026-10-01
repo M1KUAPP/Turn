@@ -1,0 +1,650 @@
+/* Picks section. Class prefix: .picks */
+
+.picks-funnel {
+  --picks-funnel-gap: clamp(18px, 2.5vw, 34px);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.78fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--picks-funnel-gap);
+  padding: clamp(22px, 3vw, 38px);
+  overflow: hidden;
+}
+
+.picks-funnel-lines {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.picks-funnel-lines path {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.62;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 440ms var(--ease-out);
+  transition-delay: 1080ms;
+}
+
+.picks-funnel.is-in-view .picks-funnel-lines path {
+  stroke-dashoffset: 0;
+}
+
+.picks-source,
+.picks-model,
+.picks-output {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.picks-source {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.picks-count {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.picks-count-number {
+  flex: none;
+  font-size: clamp(58px, 6.2vw, 82px);
+}
+
+.picks-count-label {
+  max-width: 140px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.picks-source-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 10px;
+  list-style: none;
+}
+
+.picks-source-item {
+  min-width: 0;
+}
+
+.picks-source-item:nth-child(5n + 1) {
+  --picks-tilt: -0.55deg;
+}
+.picks-source-item:nth-child(5n + 2) {
+  --picks-tilt: 0.4deg;
+}
+.picks-source-item:nth-child(5n + 3) {
+  --picks-tilt: -0.25deg;
+}
+.picks-source-item:nth-child(5n + 4) {
+  --picks-tilt: 0.65deg;
+}
+.picks-source-item:nth-child(5n) {
+  --picks-tilt: -0.35deg;
+}
+
+.picks-source-card {
+  width: 100%;
+  min-height: 34px;
+  padding: 0.47em 0.56em;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  transform: translateY(5px) rotate(var(--picks-tilt, 0deg));
+  opacity: 0;
+  transition:
+    opacity 240ms var(--ease-out),
+    transform 280ms var(--ease-out);
+  transition-delay: var(--picks-delay, 0ms);
+}
+
+.picks-funnel.is-in-view .picks-source-card {
+  transform: translateY(0) rotate(var(--picks-tilt, 0deg));
+  opacity: 1;
+}
+
+.picks-model {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 268px;
+  padding: clamp(22px, 2.5vw, 34px);
+  box-shadow: var(--shadow-raised);
+}
+
+.picks-model-label {
+  color: var(--surface);
+  opacity: 0.72;
+  letter-spacing: 0.16em;
+}
+
+.picks-heard-label {
+  margin-top: 30px;
+  color: var(--surface);
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.68;
+}
+
+.picks-partner-line {
+  margin-top: 5px;
+  font-size: clamp(34px, 3.1vw, 48px);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.picks-model-rule {
+  height: 1px;
+  margin-block: 25px 11px;
+  background: var(--edge);
+  opacity: 0.56;
+}
+
+.picks-model-note {
+  color: var(--surface);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  opacity: 0.8;
+}
+
+.picks-output {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.picks-output-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  list-style: none;
+}
+
+.picks-output-item {
+  min-width: 0;
+}
+
+.picks-output-card {
+  width: 100%;
+  min-height: 54px;
+  padding: 0.55em 0.62em;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+  transform: translateY(7px);
+  opacity: 0;
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 260ms var(--ease-out);
+  transition-delay: var(--picks-delay, 0ms);
+}
+
+.picks-funnel.is-in-view .picks-output-card {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.picks-count--out {
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.picks-zero {
+  flex: none;
+  font-size: clamp(72px, 7.4vw, 100px);
+  transform: translateY(9px) scale(0.96);
+  transform-origin: left center;
+  opacity: 0;
+  transition:
+    opacity 360ms var(--ease-out),
+    transform 360ms var(--ease-out);
+  transition-delay: 2050ms;
+}
+
+.picks-funnel.is-in-view .picks-zero {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.picks-count--out .picks-count-label {
+  font-size: 17px;
+}
+
+.picks-mobile-arrow {
+  display: none;
+}
+
+.picks-evaluation {
+  margin-top: clamp(26px, 3vw, 38px);
+  padding: clamp(24px, 3.3vw, 42px);
+}
+
+.picks-evaluation-eyebrow {
+  margin-bottom: 14px;
+}
+
+.picks-evaluation-title {
+  max-width: 870px;
+  margin-bottom: 47px;
+  font-size: clamp(34px, 4.1vw, 54px);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.picks-evaluation-rows {
+  display: grid;
+  gap: 17px;
+  list-style: none;
+}
+
+.picks-evaluation-row {
+  display: grid;
+  grid-template-columns: minmax(175px, 0.9fr) minmax(0, 2fr) minmax(105px, 0.54fr);
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 32px);
+  min-height: 48px;
+}
+
+.picks-evaluation-name {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.picks-evaluation-row--featured .picks-evaluation-name {
+  font-size: 18px;
+}
+
+.picks-evaluation-plot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 34px;
+}
+
+.picks-evaluation-plot::before {
+  position: absolute;
+  z-index: 2;
+  top: -6px;
+  bottom: -6px;
+  left: 26%;
+  border-left: 1.5px dashed var(--edge);
+  content: '';
+  pointer-events: none;
+}
+
+.picks-evaluation-rail {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: var(--hairline);
+}
+
+.picks-evaluation-bar {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--picks-bar-width);
+  height: 15px;
+  border-radius: 999px;
+  background: var(--edge);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  transition: transform 780ms var(--ease-out);
+}
+
+.picks-evaluation-row--featured .picks-evaluation-bar {
+  height: 28px;
+  background: var(--accent);
+}
+
+.picks-evaluation.is-in-view .picks-evaluation-bar {
+  transform: translateY(-50%) scaleX(1);
+}
+
+.picks-chance-label {
+  position: absolute;
+  z-index: 3;
+  top: -27px;
+  left: 26%;
+  padding-inline: 5px;
+  background: var(--surface);
+  color: var(--ink2);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.picks-evaluation-score {
+  display: grid;
+  justify-items: end;
+  gap: 1px;
+}
+
+.picks-evaluation-percent {
+  font-size: 46px;
+  line-height: 0.9;
+}
+
+.picks-evaluation-total {
+  color: var(--ink2);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.picks-evaluation-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  margin-top: 32px;
+  padding-top: 19px;
+  border-top: 1px solid var(--hairline);
+}
+
+.picks-evaluation-method {
+  max-width: 800px;
+  font-size: 14px;
+}
+
+.picks-evaluation-link {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding-inline: 2px;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+
+.picks-evaluation-link svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 180ms var(--ease-out);
+}
+
+.picks-evaluation-link:hover svg {
+  transform: translateX(3px);
+}
+
+.picks-privacy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 20px;
+  margin-top: clamp(24px, 3vw, 38px);
+}
+
+.picks-privacy-panel {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 38px);
+}
+
+.picks-privacy-eyebrow {
+  margin-bottom: 15px;
+}
+
+.picks-privacy-title {
+  font-size: clamp(27px, 3.1vw, 40px);
+  line-height: 1.08;
+  text-wrap: pretty;
+}
+
+.picks-privacy-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+.picks-privacy-chips .chip {
+  white-space: normal;
+}
+
+.picks-privacy-panel--quiet .picks-privacy-title {
+  max-width: 540px;
+}
+
+@media (max-width: 900px) {
+  .picks-funnel {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'source'
+      'first-arrow'
+      'model'
+      'second-arrow'
+      'output';
+    gap: 7px;
+  }
+
+  .picks-funnel-lines {
+    display: none;
+  }
+
+  .picks-source {
+    grid-area: source;
+  }
+
+  .picks-model {
+    grid-area: model;
+    min-height: 0;
+    padding: clamp(24px, 4vw, 36px);
+  }
+
+  .picks-output {
+    grid-area: output;
+  }
+
+  .picks-mobile-arrow {
+    display: block;
+    justify-self: center;
+    width: 24px;
+    height: 37px;
+    fill: none;
+    stroke: var(--edge);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 240ms var(--ease-out),
+      transform 200ms var(--ease-out);
+  }
+
+  .picks-mobile-arrow--first {
+    grid-area: first-arrow;
+    transition-delay: 1080ms;
+  }
+
+  .picks-mobile-arrow--second {
+    grid-area: second-arrow;
+    transition-delay: 1340ms;
+  }
+
+  .picks-funnel.is-in-view .picks-mobile-arrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .picks-source-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .picks-count-number {
+    font-size: clamp(62px, 8vw, 82px);
+  }
+
+  .picks-partner-line {
+    font-size: clamp(38px, 5vw, 54px);
+  }
+}
+
+@media (max-width: 620px) {
+  .picks-source-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .picks-source-card {
+    min-height: 35px;
+    font-size: 11.5px;
+  }
+
+  .picks-output-grid {
+    gap: 8px;
+  }
+
+  .picks-output-card {
+    min-height: 50px;
+    font-size: 14px;
+  }
+
+  .picks-count--out {
+    margin-top: 19px;
+  }
+
+  .picks-evaluation {
+    padding: 24px 20px;
+  }
+
+  .picks-evaluation-title {
+    margin-bottom: 40px;
+    font-size: clamp(32px, 9vw, 42px);
+  }
+
+  .picks-evaluation-rows {
+    gap: 19px;
+  }
+
+  .picks-evaluation-row {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas:
+      'name score'
+      'plot plot';
+    gap: 7px 12px;
+    min-height: 0;
+  }
+
+  .picks-evaluation-name {
+    grid-area: name;
+    font-size: 15px;
+  }
+
+  .picks-evaluation-row--featured .picks-evaluation-name {
+    font-size: 16px;
+  }
+
+  .picks-evaluation-plot {
+    grid-area: plot;
+    height: 31px;
+  }
+
+  .picks-evaluation-score {
+    grid-area: score;
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+  }
+
+  .picks-evaluation-percent {
+    font-size: 31px;
+  }
+
+  .picks-evaluation-total {
+    font-size: 12px;
+  }
+
+  .picks-evaluation-foot {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 16px;
+  }
+
+  .picks-evaluation-method {
+    font-size: 13px;
+  }
+
+  .picks-privacy-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .picks-privacy-panel {
+    padding: 25px 22px;
+  }
+
+  .picks-privacy-title {
+    font-size: clamp(29px, 8vw, 37px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .picks-source-card,
+  .picks-output-card,
+  .picks-zero {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .picks-funnel-lines path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
+  .picks-mobile-arrow {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+
+  .picks-evaluation-bar {
+    transform: translateY(-50%) scaleX(1);
+    transition: none;
+  }
+
+  .picks-evaluation-link svg {
+    transition: none;
+  }
+}
+
+/* On phones the row label sits above the bar, so the chance label moves under it. */
+@media (max-width: 600px) {
+  .picks-chance-label {
+    top: auto;
+    bottom: -22px;
+    transform: translateX(-50%);
+  }
+}
