@@ -1,0 +1,92 @@
+name: README Simulator walkthrough
+
+on:
+  pull_request:
+    paths:
+      - 'README.md'
+      - 'app/maestro/readme.yaml'
+      - '.github/workflows/readme-walkthrough.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readme:
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Use Xcode 27 and a fresh iOS 27 Simulator
+        shell: bash
+        run: |
+          xcode="$(printf '%s\n' /Applications/Xcode_27*.app | sort -V | tail -1)"
+          sudo xcode-select -s "$xcode"
+          xcodebuild -version
+          xcrun simctl shutdown all
+          runtime="$(xcrun simctl list runtimes --json | jq -er '
+            [.runtimes[] | select(.isAvailable and .platform == "iOS" and (.version | startswith("27.")))]
+            | sort_by(.version | split(".") | map(tonumber)) | last | .identifier')"
+          device="$(xcrun simctl create 'Turn README' com.apple.CoreSimulator.SimDeviceType.iPhone-16 "$runtime")"
+          xcrun simctl boot "$device"
+          xcrun simctl bootstatus "$device" -b
+          echo "DEVICE_ID=$device" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/readme-evidence" "$RUNNER_TEMP/turn-readme"
+      # No token, dependency install, build, cache restore, or Metro: this is the public download a judge gets.
+      - name: Download the latest public release
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" \
+            --output "$RUNNER_TEMP/readme-evidence/release.json"
+          url="$(jq -er '.assets[] | select(.name == "Turn.app.zip") | .browser_download_url' \
+            "$RUNNER_TEMP/readme-evidence/release.json")"
+          curl --fail --silent --show-error --location "$url" --output "$RUNNER_TEMP/turn-readme/Turn.app.zip"
+          shasum -a 256 "$RUNNER_TEMP/turn-readme/Turn.app.zip" | tee "$RUNNER_TEMP/readme-evidence/sha256.txt"
+          {
+            echo "README checkout: $(git rev-parse HEAD)"
+            jq -r '"Release: \(.html_url)\nRelease build commit: \(.target_commitish)"' \
+              "$RUNNER_TEMP/readme-evidence/release.json"
+            echo 'Fresh xcode-27 runner; no cache; public download without authentication.'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Run the README installation commands verbatim
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, re, textwrap
+          readme = pathlib.Path("README.md").read_text()
+          installation = readme.split("### Installation\n", 1)[1]
+          commands = re.search(r"```shell\n(.*?)```", installation, re.S).group(1)
+          path = pathlib.Path(os.environ["RUNNER_TEMP"]) / "readme-evidence/install-readme.sh"
+          path.write_text(textwrap.dedent(commands))
+          PY
+          cd "$RUNNER_TEMP/turn-readme"
+          bash -ex "$RUNNER_TEMP/readme-evidence/install-readme.sh" \
+            2>&1 | tee "$RUNNER_TEMP/readme-evidence/install.log"
+      - name: Install Maestro CLI 2.10.0
+        shell: bash
+        run: |
+          export MAESTRO_VERSION=2.10.0
+          curl -fsSL https://get.maestro.mobile.dev | bash
+          maestro_version="$("$HOME/.maestro/bin/maestro" --version)"
+          printf '%s\n' "$maestro_version"
+          [[ "$maestro_version" == *2.10.0* ]]
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Follow How It Works through a spoken reply
+        shell: bash
+        run: |
+          cd "$RUNNER_TEMP/readme-evidence"
+          xcrun simctl io "$DEVICE_ID" recordVideo walkthrough.mp4 > recording.log 2>&1 &
+          recording_pid=$!
+          trap 'kill -INT "$recording_pid"; wait "$recording_pid" || true' EXIT
+          maestro --device "$DEVICE_ID" test --test-output-dir maestro \
+            "$GITHUB_WORKSPACE/app/maestro/readme.yaml" 2>&1 | tee maestro.log
+          echo 'README steps 1–4 passed: Repeat → Stop → Repeat after tapping It was hard.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: README-walkthrough
+          path: ${{ runner.temp }}/readme-evidence
+          retention-days: 30
