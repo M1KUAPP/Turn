@@ -60,6 +60,8 @@ export function Footer() {
       const reveal = Math.min(1, Math.max(0, (window.innerHeight - bottom) / h))
       foot.style.setProperty('--reveal', reveal.toFixed(3))
       foot.classList.toggle('lit', reveal > 0.62)
+      // The nav steps aside while the drawer is open.
+      document.documentElement.toggleAttribute('data-drawer-open', reveal > 0.35)
     }
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update)

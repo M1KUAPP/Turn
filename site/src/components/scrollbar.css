@@ -1,0 +1,44 @@
+/* The native bar hides only where the custom one takes over (fine pointers). */
+html.has-scrollbar {
+  scrollbar-width: none;
+}
+html.has-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.sbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  width: 14px;
+  cursor: default;
+}
+.sbar-thumb {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  width: 3px;
+  border-radius: 999px;
+  /* The card edge's warm gray, half strength: quiet on paper, still there on the dark sheets. */
+  background: rgba(138, 128, 114, 0.42);
+  opacity: 0;
+  transition:
+    opacity 0.45s ease,
+    width 0.2s var(--ease-out),
+    background-color 0.2s;
+  will-change: transform;
+}
+.sbar.active .sbar-thumb,
+.sbar:hover .sbar-thumb {
+  opacity: 1;
+}
+.sbar:hover .sbar-thumb,
+.sbar.dragging .sbar-thumb {
+  width: 6px;
+  background: rgba(138, 128, 114, 0.7);
+}
+.sbar.dragging .sbar-thumb {
+  opacity: 1;
+}
