@@ -1,0 +1,160 @@
+/* Turn v2 "Warm Voice" tokens for the web (docs/plans/0044-turn-v2-redesign.md).
+   A warm table, the person's own cards with inked edges, the partner in the serif,
+   the person and Turn in rounded bold ultramarine, orange only for the listening lamp. */
+
+@font-face {
+  font-family: 'Nunito';
+  src: url(/fonts/Nunito.woff2) format('woff2');
+  font-weight: 200 1000;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url(/fonts/Newsreader.woff2) format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* The table */
+  --paper: #f4efe7;
+  --paper-light: #fbf7f1;
+  --surface: #fffcf7;
+  --sunken: #eae3d8;
+  --pressed: #e6ddcf;
+  --ink: #1e1a15;
+  --ink2: #5b5347;
+  --edge: #8a8072;
+  --hairline: #ddd4c6;
+
+  /* Turn's own ink: actions and the one reply it's sure of */
+  --accent: #2438c9;
+  --accent-pressed: #1a2ba6;
+  --accent-soft: #e4e8fc;
+  --on-accent: #ffffff;
+
+  /* The lamp: listening, and nothing else */
+  --listen: #b84300;
+  --listen-soft: #fce6d6;
+  --glow: #ff8a3d;
+  --on-listen: #ffffff;
+
+  /* Yes, No, Not sure */
+  --yes-fill: #dcf1e1;
+  --yes-edge: #1d7a3c;
+  --no-fill: #fbe0db;
+  --no-edge: #b3261e;
+  --unsure-fill: #ece6dd;
+  --unsure-edge: #6b6357;
+
+  /* Categories: fill / edge */
+  --c-quick-f: #fffcf7;
+  --c-quick-e: #8a8072;
+  --c-chat-f: #dcebfa;
+  --c-chat-e: #2b64b0;
+  --c-care-f: #d6f0e2;
+  --c-care-e: #1e7650;
+  --c-pain-f: #fbdde0;
+  --c-pain-e: #b02e48;
+  --c-food-f: #faebc2;
+  --c-food-e: #8a6500;
+  --c-feel-f: #ffe2d0;
+  --c-feel-e: #b4531c;
+  --c-family-f: #e8e0fb;
+  --c-family-e: #6444c4;
+  --c-health-f: #d4eef0;
+  --c-health-e: #15707b;
+  --c-out-f: #eef3d2;
+  --c-out-e: #5c7412;
+
+  --bezel: #15120f;
+  --grain-opacity: 0.32;
+
+  --shadow-card: 0 2px 3px rgba(30, 26, 21, 0.1), 0 14px 30px -8px rgba(30, 26, 21, 0.2);
+  --shadow-panel: 0 1px 0 rgba(30, 26, 21, 0.08), 0 18px 40px -22px rgba(30, 26, 21, 0.45);
+  --shadow-raised: 0 2px 4px rgba(30, 26, 21, 0.08), 0 24px 48px -16px rgba(30, 26, 21, 0.28);
+  --shadow-accent: 0 10px 28px rgba(36, 56, 201, 0.35);
+  --shadow-glow: 0 0 22px 3px rgba(255, 138, 61, 0.55);
+
+  /* Type */
+  --serif: 'Newsreader', 'New York', ui-serif, Georgia, serif;
+  --round: 'Nunito', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --fs-display: clamp(52px, 8.6vw, 128px);
+  --fs-h1: clamp(44px, 6.2vw, 92px);
+  --fs-h2: clamp(36px, 4.6vw, 68px);
+  --fs-h3: clamp(23px, 2.1vw, 30px);
+  --fs-lede: clamp(18px, 1.45vw, 22px);
+  --fs-body: 17px;
+  --fs-small: 15px;
+
+  /* Shape */
+  --r-chip: 14px;
+  --r-card: 20px;
+  --r-panel: 28px;
+  --r-big: 36px;
+
+  /* Layout */
+  --max: 1240px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --section-y: clamp(88px, 11vw, 168px);
+
+  /* Motion: feedback, never decoration */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Dark is opt-in for now: the pitch assets are light. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #15120f;
+  --paper-light: #1d1915;
+  --surface: #221e19;
+  --sunken: #0f0d0b;
+  --pressed: #322c25;
+  --ink: #f6f1e9;
+  --ink2: #b9afa1;
+  --edge: #8c8274;
+  --hairline: #3a342c;
+  --accent: #8fa0ff;
+  --accent-pressed: #a9b6ff;
+  --accent-soft: #1d2244;
+  --on-accent: #0b1033;
+  --listen: #ff9a4d;
+  --listen-soft: #3a1f0c;
+  --glow: #ff7a1f;
+  --on-listen: #1e0c00;
+  --yes-fill: #11291a;
+  --yes-edge: #58c77d;
+  --no-fill: #361512;
+  --no-edge: #ff7b6e;
+  --unsure-fill: #2a2621;
+  --unsure-edge: #a39a8c;
+  --c-quick-f: #221e19;
+  --c-quick-e: #8c8274;
+  --c-chat-f: #16263a;
+  --c-chat-e: #6fa3e6;
+  --c-care-f: #12291e;
+  --c-care-e: #5cc08e;
+  --c-pain-f: #33171c;
+  --c-pain-e: #ee7a8f;
+  --c-food-f: #2e2510;
+  --c-food-e: #d9ae3b;
+  --c-feel-f: #35200f;
+  --c-feel-e: #f08c4e;
+  --c-family-f: #241c3a;
+  --c-family-e: #a78bf2;
+  --c-health-f: #0f2a2d;
+  --c-health-e: #4fc3cf;
+  --c-out-f: #232a10;
+  --c-out-e: #a8c24a;
+  --bezel: #050404;
+  --grain-opacity: 0.1;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 20px rgba(0, 0, 0, 0.35);
+  --shadow-panel: 0 1px 0 rgba(0, 0, 0, 0.4), 0 18px 40px -22px rgba(0, 0, 0, 0.7);
+  --shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.5), 0 14px 32px rgba(0, 0, 0, 0.45);
+  --shadow-accent: 0 10px 28px rgba(0, 0, 0, 0.5);
+}
