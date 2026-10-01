@@ -1,0 +1,210 @@
+/* Pricing section. Class prefix: .pricing */
+.pricing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(176px, 0.66fr);
+  align-items: stretch;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+
+.pricing-reveal {
+  height: 100%;
+}
+
+.pricing-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: clamp(22px, 2.4vw, 34px);
+}
+
+.pricing-tier {
+  color: var(--accent);
+}
+
+.pricing-card--listen .pricing-tier {
+  color: var(--on-accent);
+  opacity: 0.8;
+}
+
+.pricing-price {
+  margin-top: 18px;
+  font-size: clamp(50px, 5.3vw, 72px);
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.pricing-period {
+  margin-top: 3px;
+  color: var(--ink2);
+  font-family: var(--round);
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.pricing-card--listen .pricing-period {
+  color: var(--on-accent);
+  opacity: 0.88;
+}
+
+.pricing-list {
+  display: grid;
+  gap: 15px;
+  margin-top: 26px;
+  list-style: none;
+}
+
+.pricing-feature {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+  color: var(--ink2);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.pricing-feature svg {
+  width: 21px;
+  height: 21px;
+  margin-top: 1px;
+  color: var(--accent);
+}
+
+.pricing-list--inverse .pricing-feature {
+  color: var(--on-accent);
+}
+
+.pricing-list--inverse .pricing-feature svg {
+  color: var(--on-accent);
+}
+
+.pricing-note {
+  margin-top: auto;
+  padding-top: 22px;
+  color: var(--ink2);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.pricing-revenuecat {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 9px 14px;
+  border-color: var(--on-accent);
+  background: transparent;
+  color: var(--on-accent);
+  font-size: 14px;
+}
+
+.pricing-revenuecat img {
+  width: auto;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+.pricing-phone-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.pricing-phone {
+  max-width: 100%;
+}
+
+.pricing-phone > img {
+  height: auto;
+}
+
+.pricing-quote {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  margin: clamp(56px, 7vw, 92px) auto 0;
+  text-align: center;
+}
+
+.pricing-quote-text {
+  max-width: 900px;
+  font-size: clamp(29px, 3vw, 38px);
+  line-height: 1.13;
+  text-wrap: balance;
+}
+
+.pricing-quote-byline {
+  font-size: 12px;
+}
+
+@media (max-width: 920px) {
+  .pricing-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .pricing-phone-wrap {
+    grid-column: 1 / -1;
+    padding-top: 24px;
+  }
+
+  .pricing-phone {
+    --w: 216px;
+  }
+}
+
+@media (max-width: 580px) {
+  .pricing-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .pricing-card {
+    padding: 24px 22px;
+  }
+
+  .pricing-price {
+    margin-top: 14px;
+    font-size: clamp(50px, 14vw, 62px);
+  }
+
+  .pricing-period {
+    font-size: 18px;
+  }
+
+  .pricing-list {
+    gap: 13px;
+    margin-top: 22px;
+  }
+
+  .pricing-feature {
+    font-size: 16px;
+  }
+
+  .pricing-note {
+    padding-top: 24px;
+  }
+
+  .pricing-revenuecat {
+    margin-top: 28px;
+  }
+
+  .pricing-phone-wrap {
+    grid-column: auto;
+    padding-top: 24px;
+  }
+
+  .pricing-phone {
+    --w: 210px;
+  }
+
+  .pricing-quote {
+    gap: 10px;
+    margin-top: 60px;
+  }
+
+  .pricing-quote-text {
+    font-size: clamp(28px, 8vw, 34px);
+  }
+}
