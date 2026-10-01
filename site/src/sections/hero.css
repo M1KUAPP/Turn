@@ -689,9 +689,6 @@
   height: calc(62 * var(--pt));
   padding: 0 calc(10 * var(--pt));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
-  backdrop-filter: blur(18px) saturate(1.8);
-  -webkit-backdrop-filter: blur(18px) saturate(1.8);
   border: calc(1 * var(--pt)) solid var(--hairline);
   box-shadow: var(--shadow-raised);
 }

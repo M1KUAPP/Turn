@@ -18,7 +18,6 @@ const PREVIEWS: Record<string, () => Promise<ComponentType>> = {
   faces: () => import('./sections/Faces').then((m) => m.Faces),
   pricing: () => import('./sections/Pricing').then((m) => m.Pricing),
   made: () => import('./sections/MadeWith').then((m) => m.MadeWith),
-  team: () => import('./sections/Team').then((m) => m.Team),
   footer: () =>
     import('./sections/Footer').then((m) => {
       const Footer = m.Footer
