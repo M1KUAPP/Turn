@@ -73,9 +73,51 @@
   opacity: 1;
 }
 
+.story-media {
+  transform: scale(calc(1.02 + var(--story-p, 0) * 0.06));
+  transform-origin: 50% 60%;
+}
+
+/* Let the film breathe: weight the shade to the left, where the words sit,
+   and to the floor; the last beat centers, so the middle darkens with it. */
 .story-scrim {
   z-index: -1;
-  background: linear-gradient(180deg, rgba(21, 18, 15, 0.55), rgba(21, 18, 15, 0.25) 40%, rgba(21, 18, 15, 0.85));
+  background:
+    radial-gradient(60% 55% at 50% 50%, rgba(21, 18, 15, calc(var(--story-close, 0) * 0.55)), rgba(21, 18, 15, 0) 70%),
+    linear-gradient(
+      90deg,
+      rgba(21, 18, 15, calc(0.74 - var(--story-close, 0) * 0.3)) 0%,
+      rgba(21, 18, 15, 0.38) 42%,
+      rgba(21, 18, 15, 0.08) 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(21, 18, 15, 0.42),
+      rgba(21, 18, 15, 0) 26%,
+      rgba(21, 18, 15, 0) 62%,
+      rgba(21, 18, 15, 0.78)
+    );
+}
+
+/* The lamp comes on in the phone's glow as the last line lands. */
+.story-lamp {
+  position: absolute;
+  left: 50%;
+  top: 64%;
+  z-index: 0;
+  width: min(70vw, 980px);
+  aspect-ratio: 1.6;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 150, 70, 0.55),
+    rgba(255, 138, 61, 0.18) 48%,
+    rgba(255, 138, 61, 0)
+  );
+  mix-blend-mode: screen;
+  opacity: var(--story-lamp, 0);
+  transform: translate(-50%, -50%) scale(calc(0.8 + var(--story-lamp, 0) * 0.25));
+  pointer-events: none;
 }
 
 .story-beats {
@@ -92,22 +134,26 @@
   inset: 0;
   display: flex;
   align-items: center;
+  padding-inline: var(--gutter);
   opacity: var(--story-opacity, 0);
-  transform: translate3d(0, calc((1 - var(--story-opacity, 0)) * 14px), 0);
-  will-change: opacity, transform;
+  transform: translate3d(0, var(--story-y, 0px), 0) scale(var(--story-scale, 1));
+  transform-origin: 30% 50%;
+  filter: blur(var(--story-blur, 0px));
+  will-change: opacity, transform, filter;
 }
 
 .story-beat-inner {
   width: 100%;
-  max-width: 900px;
+  max-width: 1100px;
+  text-shadow: 0 2px 30px rgba(21, 18, 15, 0.45);
 }
 
 .story-opening,
 .story-close-line {
   display: grid;
-  gap: 0.08em;
-  font-size: var(--fs-h1);
-  line-height: 1.04;
+  gap: 0.04em;
+  font-size: clamp(46px, min(7.2vw, 11.5svh), 124px);
+  line-height: 1;
   letter-spacing: -0.035em;
   text-wrap: balance;
 }
@@ -131,7 +177,7 @@
 .story-label {
   color: var(--story-secondary);
   font-family: var(--round);
-  font-size: clamp(11px, 0.95vw, 14px);
+  font-size: clamp(12px, 1vw, 15px);
   font-weight: 800;
   letter-spacing: 0.17em;
   line-height: 1.4;
@@ -142,7 +188,7 @@
   margin-top: 8px;
   color: var(--story-ink);
   font-family: var(--serif);
-  font-size: var(--fs-h1);
+  font-size: clamp(54px, min(8.6vw, 14svh), 150px);
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.02;
@@ -224,7 +270,7 @@
 }
 
 .story-close-line {
-  font-size: var(--fs-h2);
+  font-size: clamp(40px, min(6.2vw, 10svh), 104px);
 }
 
 .story-rail {
