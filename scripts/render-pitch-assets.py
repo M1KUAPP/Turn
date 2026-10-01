@@ -84,8 +84,8 @@ def hero(dark: bool) -> None:
     text(draw, (162, 332), "Turn", 158, foreground, 700)
     text(draw, (168, 545), "SPEAK / LISTEN / REPLY", 38, muted, 700)
     draw.line((166, 630, 686, 630), fill=muted, width=3)
-    rounded_image(canvas, Image.open(OUT / "turn-iphone16-ios27.png"), (910, 48), 764, 32)
-    rounded_image(canvas, Image.open(OUT / "listen-consent.png"), (1340, 48), 764, 32)
+    rounded_image(canvas, Image.open(OUT / "turn-iphone18-pro-ios27.png"), (910, 48), 764, 32)
+    rounded_image(canvas, Image.open(OUT / "listen-consent-iphone18-pro-ios27.png"), (1340, 48), 764, 32)
     canvas.convert("RGB").save(OUT / ("readme-hero-dark.png" if dark else "readme-hero-light.png"), optimize=True)
 
 
@@ -121,6 +121,8 @@ def aha() -> None:
 
 if __name__ == "__main__":
     assert Image.open(OUT / "turn-iphone16-ios27.png").size == (1179, 2556)
+    assert Image.open(OUT / "turn-iphone18-pro-ios27.png").size == (1206, 2622)
+    assert Image.open(OUT / "listen-consent-iphone18-pro-ios27.png").size == (1206, 2622)
     thumbnail()
     gallery(
         "devpost-gallery-replies.png",
