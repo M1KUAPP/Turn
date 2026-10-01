@@ -35,18 +35,6 @@ const steps = [
   }
 ] as const
 
-function ListeningChip({ active, mobile = false }: { active: boolean; mobile?: boolean }) {
-  return (
-    <span
-      className={`chip listen how-listening-chip${mobile ? ' how-listening-chip-mobile' : ''}${active ? ' how-visible' : ''}`}
-      aria-hidden={!active}
-    >
-      <span className="light" aria-hidden="true" />
-      Listening
-    </span>
-  )
-}
-
 export function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0)
   const stepsRef = useRef<HTMLOListElement>(null)
@@ -129,7 +117,6 @@ export function HowItWorks() {
                         height={2556}
                       />
                     </Phone>
-                    {(index === 1 || index === 2) && <ListeningChip active={activeStep === index} mobile />}
                   </Reveal>
                 </div>
               </li>
@@ -154,7 +141,6 @@ export function HowItWorks() {
                   ))}
                 </div>
               </Phone>
-              <ListeningChip active={listening} />
             </div>
           </aside>
         </div>
