@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { SectionHead } from '../components/SectionHead'
 import { LINKS } from '../lib/links'
 import { useInView } from '../lib/useInView'
@@ -69,19 +69,51 @@ const EVALUATION = [
   { name: 'Keyword ranking', percent: 23, result: '15 of 64', featured: false }
 ] as const
 
-const DESKTOP_CONNECTORS = [
-  'M 452 64 C 498 96 516 184 600 288',
-  'M 452 120 C 500 142 524 210 600 288',
-  'M 452 176 C 506 194 530 238 600 288',
-  'M 452 232 C 510 246 542 270 600 288',
-  'M 452 344 C 508 326 542 306 600 288',
-  'M 452 400 C 506 366 532 326 600 288',
-  'M 452 456 C 500 398 524 344 600 288'
-]
+type Connectors = { width: number; height: number; paths: string[] }
+
+// One line per row of phrases, from the row's right end to the middle of the
+// model's left edge. Both ends tuck under the cards, so only the gap shows.
+function measureConnectors(funnel: HTMLElement): Connectors | null {
+  const model = funnel.querySelector('.picks-model')
+  const items = funnel.querySelectorAll('.picks-source-item')
+  if (!model || !items.length) return null
+
+  // The lines sit inside the panel's border, so measure from its padding box.
+  const box = funnel.getBoundingClientRect()
+  const left = box.left + funnel.clientLeft
+  const top = box.top + funnel.clientTop
+  const modelBox = model.getBoundingClientRect()
+  const rows = new Map<number, number>()
+  let right = 0
+  items.forEach((item) => {
+    const itemBox = item.getBoundingClientRect()
+    rows.set(Math.round(itemBox.top), itemBox.top + itemBox.height / 2 - top)
+    right = Math.max(right, itemBox.right - left)
+  })
+
+  const startX = right - 6
+  const endX = modelBox.left - left + 6
+  const endY = modelBox.top + modelBox.height / 2 - top
+  const bend = (endX - startX) * 0.55
+  const paths = [...rows.values()].map(
+    (y) => `M ${startX} ${y} C ${startX + bend} ${y} ${endX - bend} ${endY} ${endX} ${endY}`
+  )
+  return { width: funnel.clientWidth, height: funnel.clientHeight, paths }
+}
 
 export function Picks() {
   const [funnelRef, funnelInView] = useInView<HTMLDivElement>({ threshold: 0.12 })
   const [evaluationRef, evaluationInView] = useInView<HTMLDivElement>({ threshold: 0.18 })
+  const [connectors, setConnectors] = useState<Connectors | null>(null)
+
+  useEffect(() => {
+    const funnel = funnelRef.current
+    if (!funnel) return
+    const observer = new ResizeObserver(() => setConnectors(measureConnectors(funnel)))
+    observer.observe(funnel)
+    funnel.querySelectorAll('.picks-source-grid, .picks-model').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [funnelRef])
 
   return (
     <section className="section picks" id="picks" data-section="picks">
@@ -99,11 +131,17 @@ export function Picks() {
           role="group"
           aria-label="Forty saved phrases go in. The model picks replies from them or passes."
         >
-          <svg className="picks-funnel-lines" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true">
-            {DESKTOP_CONNECTORS.map((path) => (
-              <path key={path} d={path} pathLength="1" />
-            ))}
-          </svg>
+          {connectors && (
+            <svg
+              className="picks-funnel-lines"
+              viewBox={`0 0 ${connectors.width} ${connectors.height}`}
+              aria-hidden="true"
+            >
+              {connectors.paths.map((path, index) => (
+                <path key={index} d={path} pathLength="1" />
+              ))}
+            </svg>
+          )}
 
           <div className="picks-source">
             <div className="picks-count picks-count--in">
