@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'README.md'
-      - 'app/maestro/readme.yaml'
+      - 'app/maestro/readme/**'
       - '.github/workflows/readme-walkthrough.yml'
   workflow_dispatch:
 
@@ -82,7 +82,7 @@ jobs:
           recording_pid=$!
           trap 'kill -INT "$recording_pid"; wait "$recording_pid" || true' EXIT
           maestro --device "$DEVICE_ID" test --test-output-dir maestro \
-            "$GITHUB_WORKSPACE/app/maestro/readme.yaml" 2>&1 | tee maestro.log
+            "$GITHUB_WORKSPACE/app/maestro/readme/walkthrough.yaml" 2>&1 | tee maestro.log
           echo 'README steps 1–4 passed: Repeat → Stop → Repeat after tapping It was hard.' >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
