@@ -28,10 +28,20 @@ The two README heroes use their own iPhone 18 Pro inputs: [`turn-iphone18-pro-io
 
 ![Turn thumbnail with the words Your own words, in time for your turn and an It was hard reply button.](/assets/pitch/devpost-thumbnail.png)
 
-![Turn consent screen beside the conversation screen with How was physio? and the saved replies It was hard and It went well.](/assets/pitch/devpost-gallery-replies.png)
+The six gallery banners each set two of the README captures side by side, so together they show each of its 12 distinct screens once:
 
-![Turn's privacy step beside its partner consent card, showing the two steps before Listen mode begins.](/assets/pitch/devpost-gallery-consent.png)
+![The place menu beside the Clinic reply row, where How was physio? brings It was hard and It went well.](/assets/pitch/devpost-gallery-replies.png)
 
-The [required portrait screenshot](/assets/pitch/turn-iphone16-ios27.png) is 1179 by 2556 pixels, exported from a frame-free iPhone 16 iOS 27 Simulator capture with a 9:41 status bar. Its caption and replies are actual app UI: the partner's line was typed after consent, and Turn ranked saved Clinic phrases. The Devpost galleries continue to use this iPhone 16 capture with `listen-consent.png` and `listen-permission.png`. The README’s paywall capture comes from the current Test Store flow on the iPhone 18 Pro.
+![The Before Listen mode starts sheet beside the partner consent card, the two steps before Listen mode begins.](/assets/pitch/devpost-gallery-consent.png)
 
-Run `python3 scripts/render-pitch-assets.py` with Pillow installed to rebuild the thumbnail, gallery images, README heroes, and GIF from the committed Simulator captures and Atkinson Hyperlegible Next font. The font's OFL license is in [`assets/pitch/fonts/OFL.txt`](/assets/pitch/fonts/OFL.txt).
+![The Clinic speaking grid beside the Type composer with I need a break and the Speak button.](/assets/pitch/devpost-gallery-speak.png)
+
+![The Chat phrase bank with edit buttons beside Home with Ren next to the floating toolbar.](/assets/pitch/devpost-gallery-phrases.png)
+
+![The Turn Listen paywall with its US$24.99 one-time price beside Settings with Unlock Listen mode and Restore Purchases.](/assets/pitch/devpost-gallery-free.png)
+
+![Companion settings with the Ren, Suit, Ice, and Office faces beside the partner view with I have something to say and Say it again.](/assets/pitch/devpost-gallery-companion.png)
+
+The [required portrait screenshot](/assets/pitch/devpost-screenshot.png) is 1179 by 2556 pixels with no device frame: the README's `suggested-replies.png` capture scaled to 1179 pixels wide, with the 7 pixels of empty background below the home indicator cropped off.
+
+Run `python3 scripts/render-pitch-assets.py` with Pillow installed to rebuild the thumbnail, gallery images, required screenshot, README heroes, and GIF from the committed Simulator captures and Atkinson Hyperlegible Next font. The font's OFL license is in [`assets/pitch/fonts/OFL.txt`](/assets/pitch/fonts/OFL.txt).
