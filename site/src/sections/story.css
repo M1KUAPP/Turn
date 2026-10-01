@@ -1,7 +1,7 @@
 /* Story section. Class prefix: .story */
 
 .story {
-  background: var(--paper);
+  /* No fill of its own: the sheet it sits on shows through the film's rounded corners. */
   color: var(--ink);
 }
 
