@@ -113,7 +113,7 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 
 The steps below follow the Simulator build, where the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech.
 
-1. **Pick a place.** After reviewing the starter bank, the speaking grid has about 150 phrases in categories. Choose **Clinic** as the place at the top of the grid.
+1. **Pick a place.** On first launch, tap **Review** to edit the starter phrases, or **Not now** to try them as supplied. The speaking grid has about 150 phrases in categories. Tap **Home** at the top of the grid and choose **Clinic**.
 
    <img src="assets/readme/screenshots/step-1-pick-a-place.png" alt="Place picker showing Home, Clinic, Shop, and Out" width="300">
 
@@ -125,7 +125,7 @@ The steps below follow the Simulator build, where the partner's line is typed; o
 
    <img src="assets/readme/screenshots/step-3-listen.png" alt="Privacy step shown before Listen mode begins, with Allow and Not now buttons" width="300">
 
-4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it.
+4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
 
    <img src="assets/readme/screenshots/step-4-answer.png" alt="Suggested replies include It was hard after the partner asks How was physio?" width="300">
 
