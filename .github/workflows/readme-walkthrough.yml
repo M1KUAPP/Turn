@@ -39,14 +39,26 @@ jobs:
       - name: Download the latest public release
         shell: bash
         run: |
-          curl --fail-with-body --silent --show-error --location \
+          release_url="$(curl --fail --silent --show-error --location \
             --retry 3 --retry-all-errors --retry-delay 5 --retry-max-time 180 \
             --connect-timeout 30 --max-time 300 \
             --dump-header "$RUNNER_TEMP/readme-evidence/release-headers.txt" \
-            "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" \
-            --output "$RUNNER_TEMP/readme-evidence/release.json"
-          url="$(jq -er '.assets[] | select(.name == "Turn.app.zip") | .browser_download_url' \
-            "$RUNNER_TEMP/readme-evidence/release.json")"
+            --write-out '%{url_effective}' \
+            "https://github.com/$GITHUB_REPOSITORY/releases/latest" \
+            --output "$RUNNER_TEMP/readme-evidence/release.html")"
+          # Follow the README's public release page; anonymous REST API quota is shared by CI runners.
+          prefix="https://github.com/$GITHUB_REPOSITORY/releases/tag/"
+          [[ "$release_url" == "$prefix"* ]]
+          encoded_tag="${release_url#"$prefix"}"
+          tag="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.unquote(sys.argv[1]))' "$encoded_tag")"
+          release_sha="$(git -c credential.helper= ls-remote "https://github.com/$GITHUB_REPOSITORY.git" \
+            "refs/tags/$tag" "refs/tags/$tag^{}" | sort -k2 | tail -1 | cut -f1)"
+          [[ "$release_sha" =~ ^[0-9a-f]{40}$ ]]
+          # Record metadata from the public page and Git tag, including peeled annotated tags.
+          jq -n --arg tag "$tag" --arg sha "$release_sha" --arg url "$release_url" \
+            '{tag_name: $tag, target_commitish: $sha, html_url: $url}' \
+            > "$RUNNER_TEMP/readme-evidence/release.json"
+          url="https://github.com/$GITHUB_REPOSITORY/releases/download/$encoded_tag/Turn.app.zip"
           curl --fail --silent --show-error --location \
             --retry 3 --retry-all-errors --retry-delay 5 --retry-max-time 180 \
             --connect-timeout 30 --max-time 300 \
@@ -84,6 +96,9 @@ jobs:
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
       - name: Follow How It Works through a spoken reply
         shell: bash
+        env:
+          # A cold Xcode 27 runner can start XCTest just beyond Maestro's default two minutes.
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
         run: |
           cd "$RUNNER_TEMP/readme-evidence"
           xcrun simctl io "$DEVICE_ID" recordVideo walkthrough.mp4 > recording.log 2>&1 &
