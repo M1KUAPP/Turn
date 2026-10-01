@@ -5,6 +5,7 @@ on:
     paths:
       - 'README.md'
       - 'app/maestro/readme/**'
+      - 'scripts/verify-readme-speech.swift'
       - '.github/workflows/readme-walkthrough.yml'
   workflow_dispatch:
 
@@ -83,7 +84,12 @@ jobs:
           trap 'kill -INT "$recording_pid"; wait "$recording_pid" || true' EXIT
           maestro --device "$DEVICE_ID" test --test-output-dir maestro \
             "$GITHUB_WORKSPACE/app/maestro/readme/walkthrough.yaml" 2>&1 | tee maestro.log
-          echo 'README steps 1–4 passed: Repeat → Stop → Repeat after tapping It was hard.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify the recorded Repeat to Stop to Repeat transition
+        shell: bash
+        run: |
+          swift scripts/verify-readme-speech.swift \
+            "$RUNNER_TEMP/readme-evidence/walkthrough.mp4" "$RUNNER_TEMP/readme-evidence/speech" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
