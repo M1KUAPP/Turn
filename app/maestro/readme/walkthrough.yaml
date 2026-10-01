@@ -17,7 +17,13 @@ name: Public README walkthrough
 # How It Works 2: speak a saved phrase, then the typed words shown in the README.
 - tapOn: 'Yes'
 - tapOn: Type
+- runFlow:
+    when:
+      visible: Continue
+    commands:
+      - tapOn: Continue
 - inputText: I need a break
+- assertVisible: I need a break
 - tapOn: Speak
 - tapOn: Close composer
 - extendedWaitUntil:
@@ -42,13 +48,10 @@ name: Public README walkthrough
     timeout: 60000
 - assertVisible: Repeat
 - takeScreenshot: readme-before-speech
-# This short utterance can finish during Maestro's normal settle wait.
+# The CI video check captures Stop during this short utterance, before Maestro's tap returns.
 - tapOn:
     text: It was hard
     above: All
-    waitToSettleTimeoutMs: 0
-- assertVisible: Stop
-- takeScreenshot: readme-speaking
 - extendedWaitUntil:
     visible: Repeat
     timeout: 15000

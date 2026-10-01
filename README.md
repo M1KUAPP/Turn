@@ -117,7 +117,7 @@ The steps below follow the Simulator build, where the partner's line is typed; o
 
    <img src="assets/readme/screenshots/step-1-pick-a-place.png" alt="Place picker showing Home, Clinic, Shop, and Out" width="300">
 
-2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank.
+2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank. If iOS shows its typing tutorial, tap **Continue**.
 
    <img src="assets/readme/screenshots/step-2-speak.png" alt="Type composer with I need a break ready to speak" width="300">
 
