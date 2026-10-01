@@ -183,26 +183,6 @@
   opacity: 0.28;
 }
 
-.how-listening-chip {
-  position: absolute;
-  z-index: 4;
-  top: 14px;
-  right: -4px;
-  padding: 7px 12px;
-  font-size: 14px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-5px);
-  transition:
-    opacity 300ms var(--ease-out),
-    transform 300ms var(--ease-out);
-}
-
-.how-listening-chip.how-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .how-mobile-visual {
   display: none;
 }
@@ -273,11 +253,6 @@
     object-fit: cover;
     object-position: top;
   }
-
-  .how-listening-chip-mobile {
-    top: 10px;
-    right: -4px;
-  }
 }
 
 @media (max-width: 520px) {
@@ -310,8 +285,7 @@
   .how-marker,
   .how-steps::after,
   .how-capture,
-  .how-lamp,
-  .how-listening-chip {
+  .how-lamp {
     transition: none;
   }
 }
