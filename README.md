@@ -117,11 +117,11 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 
 The steps below follow the Simulator build, where the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech.
 
-1. **Pick a place.** After reviewing the starter bank, the speaking grid has about 150 phrases in categories. Choose **Clinic** as the place at the top of the grid.
+1. **Pick a place.** On first launch, tap **Review** to edit the starter phrases, or **Not now** to try them as supplied. The speaking grid has about 150 phrases in categories. Tap **Home** at the top of the grid and choose **Clinic**.
 
    <img src="assets/readme/screenshots/step-1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
 
-2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank.
+2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank. If iOS shows its typing tutorial, tap **Continue**.
 
    <img src="assets/readme/screenshots/step-2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
 
@@ -129,7 +129,7 @@ The steps below follow the Simulator build, where the partner's line is typed; o
 
    <img src="assets/readme/screenshots/step-3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
 
-4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it.
+4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
 
    <img src="assets/readme/screenshots/step-4-answer.png" alt="How was physio? above four saved replies including It was hard, with the floating speaking toolbar below" width="300">
 
