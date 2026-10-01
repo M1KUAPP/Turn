@@ -11,14 +11,18 @@ Contents:
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="../assets/pitch/readme-hero-dark.png">
-  <img src="../assets/pitch/readme-hero-light.png" alt="Turn app icon beside the Listen consent screen and a conversation where How was physio? has It was hard ready to say.">
+  <img src="../assets/pitch/readme-hero-light.png" alt="Turn app icon beside iPhone 18 Pro captures of the Clinic reply row and partner consent card.">
 </picture>
 
 Your own words, in time for your turn.
 
 ![A partner asks How was physio? and Turn shows the saved reply It was hard.](/assets/pitch/readme-aha.gif)
 
-The logline is text so it remains readable and selectable. The GIF's first frame shows both the question and answer when animation is paused. The repository README embeds these images and the v2 screen captures in [`assets/readme/screenshots`](/assets/readme/screenshots).
+The logline is text so it remains readable and selectable. The GIF's first frame shows both the question and answer when animation is paused. The repository README embeds these images and the screen captures in [`assets/readme/screenshots`](/assets/readme/screenshots), including the companion settings, Home with Ren, and partner view.
+
+The README captures use the iPhone 18 Pro Simulator on iOS 27, in light mode at the default text size, with a 9:41 status bar. Each portrait is 1206 by 2622 pixels. They were captured from the [v0.1.0 Simulator release](https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0), built at [`76a1dca`](https://github.com/M1KUAPP/Turn/commit/76a1dcab30c924f87da30c3163b92fb7abda8740).
+
+The two README heroes use their own iPhone 18 Pro inputs: [`turn-iphone18-pro-ios27.png`](/assets/pitch/turn-iphone18-pro-ios27.png), showing the Clinic reply row after “How was physio?”, and [`listen-consent-iphone18-pro-ios27.png`](/assets/pitch/listen-consent-iphone18-pro-ios27.png), showing the partner consent card. These are the same captures as `suggested-replies.png` and `partner-consent.png` in the README screenshot directory.
 
 ## Devpost images
 
@@ -28,6 +32,6 @@ The logline is text so it remains readable and selectable. The GIF's first frame
 
 ![Turn's privacy step beside its partner consent card, showing the two steps before Listen mode begins.](/assets/pitch/devpost-gallery-consent.png)
 
-The [required portrait screenshot](/assets/pitch/turn-iphone16-ios27.png) is 1179 by 2556 pixels, exported from a frame-free iPhone 16 iOS 27 Simulator capture with a 9:41 status bar. Its caption and replies are actual app UI: the partner's line was typed after consent, and Turn ranked saved Clinic phrases. The paywall capture in the README comes from the current Test Store flow.
+The [required portrait screenshot](/assets/pitch/turn-iphone16-ios27.png) is 1179 by 2556 pixels, exported from a frame-free iPhone 16 iOS 27 Simulator capture with a 9:41 status bar. Its caption and replies are actual app UI: the partner's line was typed after consent, and Turn ranked saved Clinic phrases. The Devpost galleries continue to use this iPhone 16 capture with `listen-consent.png` and `listen-permission.png`. The README’s paywall capture comes from the current Test Store flow on the iPhone 18 Pro.
 
 Run `python3 scripts/render-pitch-assets.py` with Pillow installed to rebuild the thumbnail, gallery images, README heroes, and GIF from the committed Simulator captures and Atkinson Hyperlegible Next font. The font's OFL license is in [`assets/pitch/fonts/OFL.txt`](/assets/pitch/fonts/OFL.txt).
