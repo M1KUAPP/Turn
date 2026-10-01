@@ -9,6 +9,14 @@
   position: sticky;
   top: 0;
   z-index: 0;
+}
+/* The pinned page settles back and dims as the sheet covers it. */
+.fold-pin-body {
+  transform: translateY(calc(var(--cover) * -5svh)) scale(calc(1 - var(--cover) * 0.06));
+  transform-origin: 50% 30%;
+  will-change: transform;
+}
+.fold-screen {
   display: grid;
   place-items: center;
   height: 100svh;
@@ -19,6 +27,7 @@
 .fold-pin::after {
   content: '';
   position: absolute;
+  z-index: 1;
   inset: 0;
   background: #15120f;
   opacity: calc(var(--cover) * 0.32);
@@ -29,9 +38,6 @@
   justify-items: center;
   gap: clamp(16px, 2.2vh, 26px);
   text-align: center;
-  transform: translateY(calc(var(--cover) * -6svh)) scale(calc(1 - var(--cover) * 0.07));
-  transform-origin: 50% 40%;
-  will-change: transform;
 }
 .fold-title {
   display: grid;
@@ -117,7 +123,7 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fold-pin-inner {
+  .fold-pin-body {
     transform: none;
   }
 }

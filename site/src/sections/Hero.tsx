@@ -341,7 +341,7 @@ function LiveDemo() {
               </button>
             </div>
 
-            <div className="app-bar" aria-hidden="true">
+            <div className="app-bar frost" aria-hidden="true">
               <span className="app-face">
                 <img src="/img/faces/ren-face-rest.webp" alt="" />
               </span>

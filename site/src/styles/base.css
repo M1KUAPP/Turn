@@ -487,3 +487,33 @@ a {
 .shead-lede {
   max-width: 680px;
 }
+
+/* ---------- Frosted glass (chrome only: the nav, toolbars, the to-top button) ---------- */
+
+.frost {
+  position: relative;
+  isolation: isolate;
+  background-color: color-mix(in srgb, var(--paper) 86%, transparent);
+  -webkit-backdrop-filter: blur(40px) saturate(1.7);
+  backdrop-filter: blur(40px) saturate(1.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+/* The frost itself: a fine grain over the blur, so it reads as etched glass. */
+.frost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: url(/img/paper-grain.webp) 0 0 / 420px 420px;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .frost {
+    background-color: var(--paper);
+  }
+}

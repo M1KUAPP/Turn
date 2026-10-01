@@ -28,8 +28,7 @@ const COLUMNS = [
     title: 'Shipaton 2026',
     links: [
       ['Devpost gallery', LINKS.devpost],
-      ['RevenueCat', LINKS.revenuecat],
-      ['Team M1KU', '#team']
+      ['RevenueCat', LINKS.revenuecat]
     ]
   }
 ] as const
@@ -52,6 +51,13 @@ export function Footer() {
       return
     }
     let raf = 0
+    // The drawer opens to exactly one window; when its words alone need more
+    // than that (phones, very short windows), it becomes an ordinary footer.
+    const fit = () => {
+      const body = foot.querySelector<HTMLElement>('.foot-body')
+      const need = (body?.offsetHeight ?? 0) + 150
+      foot.classList.toggle('foot--tall', need > window.innerHeight)
+    }
     const update = () => {
       raf = 0
       const main = document.querySelector('main')
@@ -66,12 +72,17 @@ export function Footer() {
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update)
     }
+    const onResize = () => {
+      fit()
+      onScroll()
+    }
+    fit()
     update()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
+    window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      window.removeEventListener('resize', onResize)
       cancelAnimationFrame(raf)
     }
   }, [])
@@ -149,17 +160,19 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="foot-art" aria-hidden="true">
-        <img
-          src="/img/footer/lamp-night.webp"
-          srcSet="/img/footer/lamp-night-1100.webp 1100w, /img/footer/lamp-night.webp 1926w"
-          sizes="max(100vw, 760px)"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <span className="foot-glow" />
-        <span className="foot-core" />
+      <div className="foot-stage" aria-hidden="true">
+        <div className="foot-art">
+          <img
+            src="/img/footer/lamp-night.webp"
+            srcSet="/img/footer/lamp-night-1100.webp 1100w, /img/footer/lamp-night.webp 1926w"
+            sizes="max(100vw, 760px)"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="foot-glow" />
+          <span className="foot-core" />
+        </div>
       </div>
     </footer>
   )
