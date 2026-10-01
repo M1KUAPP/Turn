@@ -98,7 +98,7 @@ export function HowItWorks() {
             className="how-steps"
             ref={stepsRef}
             aria-label="How Listen mode works"
-            style={{ '--how-rail-length': `${activeStep * 70}vh` } as CSSProperties}
+            style={{ '--how-rail-length': `${activeStep * 44}svh` } as CSSProperties}
           >
             {steps.map((step, index) => (
               <li
@@ -157,12 +157,6 @@ export function HowItWorks() {
               <ListeningChip active={listening} />
             </div>
           </aside>
-        </div>
-
-        <div className="how-closing">
-          <p className="caps how-closing-label">When nothing fits</p>
-          <p className="how-closing-line">The row holds. Turn changes nothing rather than guess.</p>
-          <p className="body how-closing-body">Type a reply instead, and Turn speaks it and saves it for next time.</p>
         </div>
       </div>
     </section>

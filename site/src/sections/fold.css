@@ -1,0 +1,123 @@
+/* The fold: a pinned statement, and a new sheet that slides up over it. */
+
+.fold {
+  position: relative;
+}
+
+.fold-pin {
+  --cover: 0;
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+}
+/* The sheet's shadow deepens on the pinned page as it covers it. */
+.fold-pin::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #15120f;
+  opacity: calc(var(--cover) * 0.32);
+  pointer-events: none;
+}
+.fold-pin-inner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 2.2vh, 26px);
+  text-align: center;
+  transform: translateY(calc(var(--cover) * -6svh)) scale(calc(1 - var(--cover) * 0.07));
+  transform-origin: 50% 40%;
+  will-change: transform;
+}
+.fold-title {
+  display: grid;
+  gap: 6px;
+  max-width: 1000px;
+}
+.fold-serif {
+  font-size: clamp(44px, min(6.4vw, 10svh), 104px);
+  line-height: 1;
+}
+.fold-voice {
+  font-size: clamp(26px, min(3.2vw, 5.4svh), 50px);
+  text-wrap: balance;
+}
+.fold-demo {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: min(560px, 100%);
+  margin-top: clamp(4px, 1.2vh, 14px);
+}
+.fold-said {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 22px;
+  border: 1.5px solid var(--hairline);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+.fold-said .caps {
+  font-size: 11px;
+}
+.fold-said .serif {
+  font-size: clamp(20px, 2.6svh, 26px);
+  line-height: 1.2;
+}
+.fold-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+.fold-row .card {
+  min-height: clamp(44px, 6.4svh, 60px);
+  font-size: clamp(15px, 2svh, 19px);
+  border-width: 2px;
+}
+.fold-held {
+  margin-top: 2px;
+  font-size: 13px;
+}
+.fold-lede {
+  max-width: 560px;
+}
+
+.fold-layer {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  border-radius: clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) 0 0;
+  box-shadow:
+    0 -1px 0 rgba(30, 26, 21, 0.08),
+    0 -36px 70px -30px rgba(30, 26, 21, 0.5);
+}
+.fold-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: url(/img/paper-grain.webp) 0 0 / 1024px 1024px;
+  mix-blend-mode: multiply;
+  opacity: var(--grain-opacity);
+}
+
+@media (max-height: 640px), (max-width: 520px) {
+  .fold-demo {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fold-pin-inner {
+    transform: none;
+  }
+}
