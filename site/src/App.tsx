@@ -9,6 +9,8 @@ import { Pricing } from './sections/Pricing'
 import { MadeWith } from './sections/MadeWith'
 import { Team } from './sections/Team'
 import { Footer } from './sections/Footer'
+import { Fold } from './sections/Fold'
+import { Scrollbar } from './components/Scrollbar'
 
 export function App() {
   return (
@@ -18,14 +20,17 @@ export function App() {
         <Hero />
         <Story />
         <HowItWorks />
-        <Picks />
-        <YourWords />
-        <Faces />
-        <Pricing />
-        <MadeWith />
-        <Team />
+        <Fold>
+          <Picks />
+          <YourWords />
+          <Faces />
+          <Pricing />
+          <MadeWith />
+          <Team />
+        </Fold>
       </main>
       <Footer />
+      <Scrollbar />
     </>
   )
 }

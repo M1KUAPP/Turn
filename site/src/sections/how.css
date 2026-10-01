@@ -14,7 +14,7 @@
 .how-steps {
   position: relative;
   display: grid;
-  grid-template-rows: repeat(4, 70vh);
+  grid-template-rows: repeat(4, 44svh);
   list-style: none;
   min-width: 0;
 }
@@ -29,14 +29,14 @@
 }
 
 .how-steps::before {
-  top: 35vh;
-  bottom: 35vh;
+  top: 22svh;
+  bottom: 22svh;
   background: repeating-linear-gradient(to bottom, var(--ink) 0 8px, transparent 8px 16px);
   opacity: 0.48;
 }
 
 .how-steps::after {
-  top: 35vh;
+  top: 22svh;
   height: var(--how-rail-length, 0vh);
   background: var(--ink);
   transition: height 400ms var(--ease-out);
@@ -100,7 +100,7 @@
 }
 
 .how-step-words {
-  max-width: 440px;
+  max-width: 480px;
   opacity: 0.45;
   transition: opacity 400ms var(--ease-out);
 }
@@ -111,14 +111,14 @@
 
 .how-step-title {
   color: inherit;
-  font-size: var(--fs-h3);
+  font-size: clamp(26px, 2.5vw, 36px);
 }
 
 .how-step-description {
-  margin-top: 9px;
+  margin-top: 10px;
   color: inherit;
-  font-size: var(--fs-body);
-  max-width: 440px;
+  font-size: clamp(17px, 1.3vw, 19px);
+  max-width: 460px;
 }
 
 .how-stage {
@@ -207,33 +207,6 @@
   display: none;
 }
 
-.how-closing {
-  max-width: 860px;
-  margin: clamp(76px, 9vw, 124px) auto 0;
-  text-align: center;
-}
-
-.how-closing-label {
-  color: var(--ink2);
-}
-
-.how-closing-line {
-  max-width: 820px;
-  margin: 16px auto 0;
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: clamp(32px, 4.5vw, 56px);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-
-.how-closing-body {
-  max-width: 620px;
-  margin: 18px auto 0;
-}
-
 @media (max-width: 959px) {
   .how-layout {
     display: block;
@@ -305,10 +278,6 @@
     top: 10px;
     right: -4px;
   }
-
-  .how-closing {
-    margin-top: 42px;
-  }
 }
 
 @media (max-width: 520px) {
@@ -332,10 +301,6 @@
 
   .how-mobile-visual {
     margin-top: 23px;
-  }
-
-  .how-closing-line {
-    font-size: clamp(31px, 9vw, 38px);
   }
 }
 
