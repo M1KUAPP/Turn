@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets/pitch"
+SCREENS = ROOT / "assets/readme/screenshots"
 FONT = OUT / "fonts/AtkinsonHyperlegibleNext.ttf"
 BOARD = "#F4EFE7"
 SURFACE = "#FFFCF7"
@@ -59,16 +60,22 @@ def thumbnail() -> None:
     canvas.save(OUT / "devpost-thumbnail.png", optimize=True)
 
 
-def gallery(name: str, title: str, screens: tuple[str, str], captions: tuple[str, str]) -> None:
+def gallery(name: str, title: str, label: str, screens: tuple[str, str], captions: tuple[str, str]) -> None:
     canvas = Image.new("RGBA", (1800, 1200), BOARD)
     draw = ImageDraw.Draw(canvas)
     draw.rounded_rectangle((92, 98, 173, 111), radius=6, fill=BLUE)
     text(draw, (92, 181), title, 94, INK, 700)
-    text(draw, (94, 500), "TURN / LISTEN MODE", 36, MUTED, 700)
+    text(draw, (94, 500), label, 36, MUTED, 700)
     for x, screen, caption in zip((829, 1310), screens, captions):
-        rounded_image(canvas, Image.open(OUT / screen), (x, 98), 928)
+        rounded_image(canvas, Image.open(SCREENS / screen), (x, 98), 928)
         text(draw, (x, 1064), caption, 42, INK, 600)
     canvas.convert("RGB").save(OUT / name, optimize=True)
+
+
+def screenshot() -> None:
+    image = Image.open(SCREENS / "suggested-replies.png").convert("RGB")
+    image = image.resize((1179, round(image.height * 1179 / image.width)), Image.Resampling.LANCZOS)
+    image.crop((0, 0, 1179, 2556)).save(OUT / "devpost-screenshot.png", optimize=True)
 
 
 def hero(dark: bool) -> None:
@@ -120,21 +127,52 @@ def aha() -> None:
 
 
 if __name__ == "__main__":
-    assert Image.open(OUT / "turn-iphone16-ios27.png").size == (1179, 2556)
     assert Image.open(OUT / "turn-iphone18-pro-ios27.png").size == (1206, 2622)
     assert Image.open(OUT / "listen-consent-iphone18-pro-ios27.png").size == (1206, 2622)
+    assert all(Image.open(path).size == (1206, 2622) for path in SCREENS.glob("*.png"))
     thumbnail()
+    screenshot()
     gallery(
         "devpost-gallery-replies.png",
         "A question.\nYour words.",
-        ("listen-consent.png", "turn-iphone16-ios27.png"),
-        ("Partner agrees", "Reply is ready"),
+        "TURN / LISTEN MODE",
+        ("step-1-pick-a-place.png", "suggested-replies.png"),
+        ("Pick a place", "Replies are ready"),
     )
     gallery(
         "devpost-gallery-consent.png",
         "Consent\ncomes first.",
-        ("listen-permission.png", "listen-consent.png"),
-        ("Clear privacy step", "Partner says yes"),
+        "TURN / PRIVACY",
+        ("step-3-listen.png", "partner-consent.png"),
+        ("You allow it", "Partner agrees"),
+    )
+    gallery(
+        "devpost-gallery-speak.png",
+        "Tap a phrase,\nor type.",
+        "TURN / SPEAK",
+        ("speaking-grid.png", "step-2-speak.png"),
+        ("Tap a phrase", "Or type it"),
+    )
+    gallery(
+        "devpost-gallery-phrases.png",
+        "Your words,\nyour way.",
+        "TURN / PHRASE BANK",
+        ("phrase-bank-editor.png", "companion-home.png"),
+        ("Edit every phrase", "Ren by your grid"),
+    )
+    gallery(
+        "devpost-gallery-free.png",
+        "Speaking\nstays free.",
+        "TURN / TURN LISTEN",
+        ("turn-listen-paywall.png", "settings.png"),
+        ("Paid once", "Restore anytime"),
+    )
+    gallery(
+        "devpost-gallery-companion.png",
+        "A face for\nyour voice.",
+        "TURN / COMPANION",
+        ("companion-settings.png", "companion-partner-view.png"),
+        ("Choose a face", "Show your partner"),
     )
     hero(False)
     hero(True)
