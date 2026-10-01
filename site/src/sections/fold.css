@@ -9,6 +9,19 @@
   position: sticky;
   top: 0;
   z-index: 0;
+  /* Its own paper and grain, so the sheet's rounded corners always open onto the page beneath. */
+  background: var(--paper);
+  isolation: isolate;
+}
+.fold-pin::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url(/img/paper-grain.webp) 0 0 / 1024px 1024px;
+  mix-blend-mode: multiply;
+  opacity: var(--grain-opacity);
 }
 /* The pinned page settles back and dims as the sheet covers it. */
 .fold-pin-body {
