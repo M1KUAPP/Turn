@@ -1,0 +1,104 @@
+/* Nav: chrome, so it may turn to glass once the page scrolls under it. */
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: 76px;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s,
+    backdrop-filter 0.3s;
+}
+.nav.scrolled {
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(16px);
+  -webkit-backdrop-filter: saturate(1.4) blur(16px);
+  box-shadow: 0 1px 0 var(--hairline);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+}
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-weight: 850;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+}
+.nav-brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  box-shadow:
+    0 1px 2px rgba(30, 26, 21, 0.18),
+    0 8px 16px -6px rgba(36, 56, 201, 0.4);
+}
+.nav-links {
+  display: flex;
+  gap: 4px;
+  margin-inline: auto;
+}
+.nav-links a {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--ink2);
+  font-weight: 750;
+  font-size: 15px;
+  transition:
+    color 0.15s,
+    background-color 0.15s;
+}
+.nav-links a:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.nav-links + .nav-actions {
+  margin-left: 0;
+}
+.nav-actions .btn svg {
+  width: 16px;
+  height: 16px;
+}
+.nav-demo-short {
+  display: none;
+}
+.nav-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  transition: background-color 0.15s;
+}
+.nav-icon:hover {
+  background: var(--pressed);
+}
+.nav-icon svg {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 980px) {
+  .nav-links {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .nav-demo-long {
+    display: none;
+  }
+  .nav-demo-short {
+    display: inline;
+  }
+}
