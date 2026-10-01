@@ -200,3 +200,13 @@
     transform: translateX(-50%);
   }
 }
+
+/* All four frames stay mounted and decoded; only the current one shows. */
+.faces-portrait > img.faces-frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.faces-portrait > img.faces-frame-on {
+  opacity: 1;
+}
