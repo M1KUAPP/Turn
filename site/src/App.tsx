@@ -7,29 +7,30 @@ import { YourWords } from './sections/YourWords'
 import { Faces } from './sections/Faces'
 import { Pricing } from './sections/Pricing'
 import { MadeWith } from './sections/MadeWith'
-import { Team } from './sections/Team'
 import { Footer } from './sections/Footer'
-import { Fold } from './sections/Fold'
+import { Fold, NothingFits } from './sections/Fold'
 import { Scrollbar } from './components/Scrollbar'
+import { ToTop } from './components/ToTop'
 
 export function App() {
   return (
     <>
       <Nav />
       <main>
-        <Hero />
-        <Story />
-        <HowItWorks />
-        <Fold>
-          <Picks />
-          <YourWords />
-          <Faces />
-          <Pricing />
-          <MadeWith />
-          <Team />
+        <Fold variant="hero" pin={<Hero />}>
+          <Story />
+          <HowItWorks />
+          <Fold pin={<NothingFits />}>
+            <Picks />
+            <YourWords />
+            <Faces />
+            <Pricing />
+            <MadeWith />
+          </Fold>
         </Fold>
       </main>
       <Footer />
+      <ToTop />
       <Scrollbar />
     </>
   )
