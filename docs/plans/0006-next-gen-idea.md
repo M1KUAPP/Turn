@@ -2,7 +2,7 @@
 
 **Goal:** Recreate `docs/IDEA.md` for RevenueCat Shipaton 2026's Next Gen Award: an app more ambitious than Guessling, chosen through ten new rounds of ideation, with Jev at its core.
 
-**Architecture:** Three new research notes, on the [Next Gen Award](/docs/research/0019-next-gen.md), [new phone technology](/docs/research/0018-next-gen-tech.md), and [Jev patterns](/docs/research/0017-jev-patterns.md), join the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), and the [Jev notes](/docs/research/0005-jev.md) as the inputs to ten rounds of ideation. Each round is one task and one commit, logged in `docs/research/0020-next-gen-ideation.md`; round 5 adds an evidence note. The Guessling idea moves to `docs/archive/guessling-idea.md`, and the documents built on it point there and say they are superseded. The new `docs/IDEA.md` is then written section by section, linking to the brief, the context, and the log instead of repeating them.
+**Architecture:** Three new research notes, on the [Next Gen Award](/docs/research/0019-next-gen.md), [new phone technology](/docs/research/0018-next-gen-tech.md), and [Jev patterns](/docs/research/0017-jev-patterns.md), join the [brief](/docs/BRIEF.md), the [context](/CONTEXT.md), and the [Jev notes](/docs/research/0005-jev.md) as the inputs to ten rounds of ideation. Each round is one task and one commit, logged in `docs/research/0020-next-gen-ideation.md`; round 5 adds an evidence note. The Guessling idea moves to `docs/archive/guessling-idea.md`, and the documents built on it point there and say they are superseded. The new `docs/IDEA.md` is then written section by section, linking to the brief, the context, and the log instead of repeating them.
 
 **Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged, commitlint with Conventional Commits, the `gh` CLI, Python 3 for the local checks, and subagents for the rounds that need independent views.
 
@@ -315,7 +315,7 @@ Re-score the finalists with round 6's fixes, pick the winner, fold in the best p
 
 ### Task 10: Round 8, monetization
 
-Design the RevenueCat purchase from the Next Gen notes and the context's [monetization section](/docs/CONTEXT.md#monetization-and-paywalls): the entitlement, the paywall moment, the price, how the video shows a purchase without a store listing, and what Jev's cost per user means for the price. Append `## Round 8: monetization` and commit as `docs(ideation): design the purchase (round 8)`.
+Design the RevenueCat purchase from the Next Gen notes and the context's [monetization section](/CONTEXT.md#monetization-and-paywalls): the entitlement, the paywall moment, the price, how the video shows a purchase without a store listing, and what Jev's cost per user means for the price. Append `## Round 8: monetization` and commit as `docs(ideation): design the purchase (round 8)`.
 
 ### Task 11: Round 9, scope, stack, and schedule
 

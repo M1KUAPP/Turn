@@ -1,6 +1,6 @@
 # Shipaton 2026 idea
 
-Turn is the app this student team will build for RevenueCat Shipaton 2026's Next Gen Award: an augmentative and alternative communication (AAC) app for adults who can't rely on speech. It listens to what a partner says and offers replies in the user's own saved words, with Jev deciding which of them answer. It replaces Guessling, the team's first idea, which the team judged too simple; the [Guessling idea][guessling] is archived. Ten rounds of ideation chose Turn, and the [Next Gen ideation log][log] records each one. The [brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) hold the contest's rules and background, so this document links to them, with facts as of September 22, 2026.
+Turn is the app this student team will build for RevenueCat Shipaton 2026's Next Gen Award: an augmentative and alternative communication (AAC) app for adults who can't rely on speech. It listens to what a partner says and offers replies in the user's own saved words, with Jev deciding which of them answer. It replaces Guessling, the team's first idea, which the team judged too simple; the [Guessling idea][guessling] is archived. Ten rounds of ideation chose Turn, and the [Next Gen ideation log][log] records each one. The [brief](/docs/BRIEF.md) and the [context](/CONTEXT.md) hold the contest's rules and background, so this document links to them, with facts as of September 22, 2026.
 
 Contents:
 
@@ -33,7 +33,7 @@ Contents:
 - **Dates:** the video recorded and uploaded on Monday, September 28; submitted on Devpost by Wednesday, September 30 at 11:45 PM PT; the relay running until judging ends on October 13 and the winners are announced on October 21 or 22 ([key dates][brief-dates]; [official rules][ctx-rules]).
 
 [brief-dates]: /docs/BRIEF.md#key-dates
-[ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
+[ctx-rules]: /CONTEXT.md#what-the-official-rules-add
 
 ## Problem and audience
 
@@ -158,7 +158,7 @@ The context has the [paywall rules][ctx-money], and round 8 of the log has the [
 - **For Next Gen.** The purchase runs through RevenueCat's Test Store, which the organizers accept for Next Gen. The video shows the Test Store sheet, a simulated successful purchase, and Listen mode unlocking, and judges can repeat it in a debug build ([purchase paths][ng-purchase]). Test Store purchases count as sandbox data, so the entry reports no revenue.
 - **Left out:** subscriptions, which AAC users resent; web purchases, which need a Stripe account; and ads, which have no place in someone's voice.
 
-[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[ctx-money]: /CONTEXT.md#monetization-and-paywalls
 [expo-server]: /docs/research/0009-revenuecat-expo.md#checking-entitlements-from-a-server
 [ng-purchase]: /docs/research/0019-next-gen.md#purchase-paths-without-a-store-listing
 
@@ -232,7 +232,7 @@ The description, in order: what the team built, what it does, and why it matters
 The repository's front page opens with the same logline, a short clip of the "aha", and the evaluation's table, since judges may score from the video and description alone and read the code to check them.
 
 [brief-pitch]: /docs/BRIEF.md#pitch-the-submission
-[ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
+[ctx-video]: /CONTEXT.md#demo-video-and-write-up
 
 ## Risks
 
@@ -296,7 +296,7 @@ Still open, each with a safe default:
 - **Naming Jev.** Safe default: ask TypeSafe on September 22, including about its SDK in the public repository, and follow the trigger under [Risks](#risks).
 - **Personal Voice devices.** Apple's iOS 27 guide says iPhone 15 Pro and later, and another Apple page says iPhone 12. Safe default: plan the video on an iPhone 15 Pro or later.
 - **Listening and the law.** Whether live transcription that stores no audio counts as recording under California's all-party consent law is a legal question no source here settles. Safe default: the consent card, every time.
-- **More than one prize.** The context's [open questions](/docs/CONTEXT.md#open-questions) apply. Safe default: expect at most one.
+- **More than one prize.** The context's [open questions](/CONTEXT.md#open-questions) apply. Safe default: expect at most one.
 
 [jp-programs]: /docs/research/0017-jev-patterns.md#programs-and-credits
 [ng-rule]: /docs/research/0019-next-gen.md#whether-the-revenuecat-rule-applies
@@ -305,7 +305,7 @@ Still open, each with a safe default:
 ## See also
 
 - [Brief](/docs/BRIEF.md): what Shipaton 2026 requires, its dates, prizes, and judging.
-- [Context](/docs/CONTEXT.md): the official rules, past winners, monetization, and pitch guidance.
+- [Context](/CONTEXT.md): the official rules, past winners, monetization, and pitch guidance.
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why, with its principles, metrics, and roadmap.
 - [Product requirements](/docs/PRD.md): what the first version must do, as numbered requirements with checks.
 - [Technical requirements](/docs/TRD.md): how the first version is built, traced to the product requirements.
