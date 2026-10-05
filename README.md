@@ -96,51 +96,51 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 <table>
   <tr>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with the conversation strip, Quick phrases, and floating Type, Repeat, Up, and Down toolbar" width="100%">
+      <img src="docs/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with the conversation strip, Quick phrases, and floating Type, Repeat, Up, and Down toolbar" width="100%">
       <br />
       <strong>Speaking grid</strong> · The Clinic grid of saved phrases, with the conversation strip and floating toolbar.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/partner-consent.png" alt="Partner consent card explaining Listen mode, with an under-18 switch and They agreed and They said no buttons" width="100%">
+      <img src="docs/readme/screenshots/partner-consent.png" alt="Partner consent card explaining Listen mode, with an under-18 switch and They agreed and They said no buttons" width="100%">
       <br />
       <strong>Partner consent</strong> · The consent card the partner sees each time listening starts, with an under-18 switch.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/suggested-replies.png" alt="Clinic reply row offering It went well, It was hard, It’s getting worse, and I’m good, thanks after How was physio?" width="100%">
+      <img src="docs/readme/screenshots/suggested-replies.png" alt="Clinic reply row offering It went well, It was hard, It’s getting worse, and I’m good, thanks after How was physio?" width="100%">
       <br />
       <strong>Suggested replies</strong> · Saved phrases that answer what the partner said, in a row above the grid.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/phrase-bank-editor.png" alt="Chat phrase bank with starter phrases, pencil edit buttons, and controls to reorder or add phrases" width="100%">
+      <img src="docs/readme/screenshots/phrase-bank-editor.png" alt="Chat phrase bank with starter phrases, pencil edit buttons, and controls to reorder or add phrases" width="100%">
       <br />
       <strong>Phrase bank editor</strong> · A category's starter phrases, with buttons to edit, reorder, or add phrases.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen paywall showing Keep Listen mode on, a US$24.99 one-time purchase, and Restore Purchases" width="100%">
+      <img src="docs/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen paywall showing Keep Listen mode on, a US$24.99 one-time purchase, and Restore Purchases" width="100%">
       <br />
       <strong>Turn Listen paywall</strong> · A one-time purchase that keeps Listen mode on after 20 free partner lines.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/settings.png" alt="Settings with voice and speech rate, Companion Off, Listen service Working, places, phrase bank, and purchase options" width="100%">
+      <img src="docs/readme/screenshots/settings.png" alt="Settings with voice and speech rate, Companion Off, Listen service Working, places, phrase bank, and purchase options" width="100%">
       <br />
       <strong>Settings</strong> · Voice and speech rate, companion, Listen service status, places, phrase bank, and purchases.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/companion-settings.png" alt="Companion settings with Ren, Suit, Office, and Ice face choices and Let it move" width="100%">
+      <img src="docs/readme/screenshots/companion-settings.png" alt="Companion settings with Ren, Suit, Office, and Ice face choices and Let it move" width="100%">
       <br />
       <strong>Choose a companion</strong> · Choose Ren, Suit, Office, or Ice, and whether the face moves.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/companion-home.png" alt="Ren beside Home’s floating toolbar, below the Quick phrase grid" width="100%">
+      <img src="docs/readme/screenshots/companion-home.png" alt="Ren beside Home’s floating toolbar, below the Quick phrase grid" width="100%">
       <br />
       <strong>Home with Ren</strong> · Ren sits beside the floating toolbar and mouths what Turn says.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="assets/readme/screenshots/companion-partner-view.png" alt="Partner view with Ren, I have something to say in big text, and Say it again" width="100%">
+      <img src="docs/readme/screenshots/companion-partner-view.png" alt="Partner view with Ren, I have something to say in big text, and Say it again" width="100%">
       <br />
       <strong>Partner view</strong> · Tapping the face shows your line in big text, with Say it again.
     </td>
@@ -155,23 +155,23 @@ The steps below follow the Simulator build, where the partner's line is typed; o
 
 1. **Pick a place.** On first launch, tap **Review** to edit the starter phrases, or **Not now** to try them as supplied. The speaking grid has about 150 phrases in categories. Tap **Home** at the top of the grid and choose **Clinic**.
 
-   <img src="assets/readme/screenshots/step-1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
+   <img src="docs/readme/steps/1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
 
 2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank. If iOS shows its typing tutorial, tap **Continue**.
 
-   <img src="assets/readme/screenshots/step-2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
+   <img src="docs/readme/steps/2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
 
 3. **Start Listen mode.** Tap **Listen**, then **Allow** to let Turn send your phrases and the partner's words to the hosted decision model. Show the partner the consent card and tap **They agreed**.
 
-   <img src="assets/readme/screenshots/step-3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
+   <img src="docs/readme/steps/3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
 
 4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
 
-   <img src="assets/readme/screenshots/step-4-answer.png" alt="How was physio? above four saved replies including It was hard, with the floating speaking toolbar below" width="300">
+   <img src="docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard, with the floating speaking toolbar below" width="300">
 
 5. **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
 
-   <img src="assets/readme/screenshots/step-5-keep-listening.png" alt="Turn Listen paywall with the US$24.99 one-time price, Unlock Listen mode, Restore Purchases, and privacy notice" width="300">
+   <img src="docs/readme/steps/5-keep-listening.png" alt="Turn Listen paywall with the US$24.99 one-time price, Unlock Listen mode, Restore Purchases, and privacy notice" width="300">
 
 For a face beside the toolbar, open **Settings → Companion** and choose Ren, Suit, Office, or Ice. Tap the face after speaking to show the partner your line in big text with **Say it again**.
 
@@ -197,8 +197,8 @@ For a face beside the toolbar, open **Settings → Companion** and choose Ren, S
 ### Architecture
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/architecture-dark.svg">
-  <img src="assets/readme/architecture-light.svg" alt="Turn's architecture. On the iPhone, transcription passes the partner's line to the Turn app, which reads the phrase bank in SQLite and posts the line to a relay on Cloudflare Workers. The relay's per-user Durable Object counts the line, checks the listen entitlement with RevenueCat past the free lines, and asks the hosted decision model to rank 40 phrases. The person taps a reply, and the app speaks it to the partner.">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/architecture-dark.svg">
+  <img src="docs/readme/architecture-light.svg" alt="Turn's architecture. On the iPhone, transcription passes the partner's line to the Turn app, which reads the phrase bank in SQLite and posts the line to a relay on Cloudflare Workers. The relay's per-user Durable Object counts the line, checks the listen entitlement with RevenueCat past the free lines, and asks the hosted decision model to rank 40 phrases. The person taps a reply, and the app speaks it to the partner.">
 </picture>
 
 A partner's line becomes text on the iPhone, through Apple's SpeechAnalyzer or, where it isn't available, Expo's speech recognition. The app picks a shortlist of 40 phrases from the bank, swaps names for tags, and posts the line to the relay. The relay checks the request and a per-address rate limit, then the user's Durable Object counts the line, checks the `listen` entitlement with RevenueCat once the 20 free lines are used, and asks the hosted decision model to score the shortlist. When the relay fails or is switched off, the app ranks the shortlist on the phone.
