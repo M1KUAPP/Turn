@@ -35,8 +35,8 @@ Contents:
     1.  [Task 15: The TRD](#task-15-the-trd)
     1.  [Task 16: Graph, pull request, review, and merge](#task-16-graph-pull-request-review-and-merge)
 
-[harness-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/29
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[harness-issue]: https://github.com/M1KUAPP/Turn/issues/29
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 [trd-rankers]: /docs/TRD.md#the-rankers
 [trd-metrics]: /docs/TRD.md#metrics-intervals-and-thresholds
@@ -58,11 +58,11 @@ Contents:
 - **The worktree.** Another session was labeling the lines for #21 in the main checkout, so this change is built in a separate worktree, `../revenuecat-score-rankers`, on the branch `eval/score-rankers`.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[jev-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/36
-[extras-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/45
-[run-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/40
-[readme-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/64
-[labels-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/21
+[jev-ticket]: https://github.com/M1KUAPP/Turn/issues/36
+[extras-ticket]: https://github.com/M1KUAPP/Turn/issues/45
+[run-ticket]: https://github.com/M1KUAPP/Turn/issues/40
+[readme-ticket]: https://github.com/M1KUAPP/Turn/issues/64
+[labels-ticket]: https://github.com/M1KUAPP/Turn/issues/21
 
 ## Skills
 

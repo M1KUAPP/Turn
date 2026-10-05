@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57, React Native, SQLite, Vitest, iOS Simulator.
 
-**Spec:** [Issue #38](https://github.com/RevenueCat-M1KU/RevenueCat/issues/38), [DESIGN.md](/docs/DESIGN.md#the-composer), [TRD.md](/docs/TRD.md#flows-on-the-phone).
+**Spec:** [Issue #38](https://github.com/M1KUAPP/Turn/issues/38), [DESIGN.md](/docs/DESIGN.md#the-composer), [TRD.md](/docs/TRD.md#flows-on-the-phone).
 
 Contents:
 

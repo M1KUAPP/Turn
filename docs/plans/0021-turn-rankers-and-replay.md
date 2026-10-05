@@ -37,9 +37,9 @@ Contents:
 1.  [What changed while building](#what-changed-while-building)
 1.  [Review, round 1](#review-round-1)
 
-[rankers-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/36
-[replay-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/37
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[rankers-issue]: https://github.com/M1KUAPP/Turn/issues/36
+[replay-issue]: https://github.com/M1KUAPP/Turn/issues/37
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 [prd-states]: /docs/PRD.md#offline-and-degraded-states
 [trd-rankers]: /docs/TRD.md#the-rankers
@@ -139,7 +139,7 @@ Contents:
 - The run on the 80 lines and keeping its answers for re-runs, which belong to #40.
 - The replay test on the phone (PERF-1, PERF-5), which records the 50 lines this script will replay.
 
-[run-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/40
+[run-issue]: https://github.com/M1KUAPP/Turn/issues/40
 
 ## Verification gate
 
@@ -274,6 +274,6 @@ Three reviewers (Standards, Spec, and a fact-check and bug hunt) found 14, 9, an
 - **The notes** quote BAAI, PractRand, xoshiro's site, and Cloudflare's 1010 page whole, fix a link and a cost, correct the cut-off's candidates and scikit-learn's error, and nest two code blocks in their list items.
 - **Kept:** the ten sample lines stand in for recorded ones until the replay test records its own, which #37's closing comment says; the phone's rankings count in the replay's totals, since they are what the user would see; and the report's builders keep their explicit parameters, since a bundle would serve two call sites.
 
-[review-90]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/90#issuecomment-5795733811
+[review-90]: https://github.com/M1KUAPP/Turn/pull/90#issuecomment-5795733811
 [services-notes]: /docs/research/0042-turn-eval-services.md
 [stats-notes]: /docs/research/0043-turn-eval-statistics.md

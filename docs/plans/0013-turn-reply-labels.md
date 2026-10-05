@@ -29,8 +29,8 @@ Contents:
     1.  [Task 9: Review and merge](#task-9-review-and-merge)
 1.  [Appendix: the labelers' brief](#appendix-the-labelers-brief)
 
-[labels-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/21
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[labels-issue]: https://github.com/M1KUAPP/Turn/issues/21
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 
 ## Global constraints
@@ -87,7 +87,7 @@ Contents:
 - The count script, the agreement it prints, and the harness (#29), and the run (#40).
 - A teammate's labeling (#76), meeting EVAL-1's floor of 16 lines with no acceptable reply (#77), and a teammate's read of the bank ([#75][teammate-read]).
 
-[teammate-read]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/75
+[teammate-read]: https://github.com/M1KUAPP/Turn/issues/75
 
 ## Verification gate
 

@@ -27,8 +27,8 @@ Contents:
     1.  [Task 7: Local secrets](#task-7-local-secrets)
     1.  [Task 8: Graph, pull request, review, and merge](#task-8-graph-pull-request-review-and-merge)
 
-[issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/17
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[issue]: https://github.com/M1KUAPP/Turn/issues/17
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [trd-secrets]: /docs/TRD.md#secrets-and-configuration
 
 ## Global constraints
@@ -45,10 +45,10 @@ Contents:
 - **Commits** follow Conventional Commits: a lowercase subject, a header of at most 100 characters, body lines of at most 100 characters, and no attribution lines. Stage explicit paths only, never `-A` or `.`, and never `skills-lock.json`, `.agents/`, or `.claude/`.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/22
-[relay-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/24
-[shortlist-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/23
-[harness-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/29
+[app-ticket]: https://github.com/M1KUAPP/Turn/issues/22
+[relay-ticket]: https://github.com/M1KUAPP/Turn/issues/24
+[shortlist-ticket]: https://github.com/M1KUAPP/Turn/issues/23
+[harness-ticket]: https://github.com/M1KUAPP/Turn/issues/29
 
 ## Skills
 

@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57, React Native, SQLite, Vitest, iOS Simulator.
 
-**Spec:** [Issue #33](https://github.com/RevenueCat-M1KU/RevenueCat/issues/33), [DESIGN.md](/docs/DESIGN.md#the-home-screen).
+**Spec:** [Issue #33](https://github.com/M1KUAPP/Turn/issues/33), [DESIGN.md](/docs/DESIGN.md#the-home-screen).
 
 Contents:
 
@@ -36,6 +36,6 @@ Contents:
 
 - [x] Check formatting, full workspace tests, and typechecks.
 - [x] Build and inspect on an iOS 27 Simulator at normal and AX5 text sizes; record the physical iPhone Switch Control check that remains.
-- [x] Refresh Graphify, commit, push, and open [PR #103](https://github.com/RevenueCat-M1KU/RevenueCat/pull/103) against `feat/27-speak-grid` until #91 merges. Keep #33 open for the physical Switch Control check.
+- [x] Refresh Graphify, commit, push, and open [PR #103](https://github.com/M1KUAPP/Turn/pull/103) against `feat/27-speak-grid` until #91 merges. Keep #33 open for the physical Switch Control check.
 
 The issue owner completed the physical iPhone Switch Control check on September 24, 2026, and #33 is closed.
