@@ -219,14 +219,14 @@ phrases answer what was said.
 Section 16.4 of your Master Customer Agreement says a customer needs your
 prior consent to use TypeSafe's name, so we're asking:
 
-1. May we name Jev and TypeSafe in the app (its permission step, consent
-   card, and privacy notice), in our demo video, in our Devpost
-   description, and in our README?
-2. Our repository's design docs and research notes name Jev and TypeSafe
-   and quote your public docs. May we make the repository public before
-   the September 30, 2026 deadline?
-3. Our relay will use your SDK, @typesafe-ai/sdk, from npm. Is that fine in
-   a public repository?
+1.  May we name Jev and TypeSafe in the app (its permission step, consent
+    card, and privacy notice), in our demo video, in our Devpost
+    description, and in our README?
+2.  Our repository's design docs and research notes name Jev and TypeSafe
+    and quote your public docs. May we make the repository public before
+    the September 30, 2026 deadline?
+3.  Our relay will use your SDK, @typesafe-ai/sdk, from npm. Is that fine in
+    a public repository?
 
 Until we hear from you, the entry calls Jev "a hosted decision model" and
 TypeSafe "a third-party AI service in the United States".

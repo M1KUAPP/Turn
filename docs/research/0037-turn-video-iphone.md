@@ -78,7 +78,7 @@ Contents:
   ```shell
   sqlite3 -readonly /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/standalone/device_traits.db \
     "select distinct ProductType, ProductDescription from Devices
-     where ProductType like 'iPhone%' order by ProductType"
+      where ProductType like 'iPhone%' order by ProductType"
   ```
 
 - Synthesis: save one device's JSON, then find `productType`, `marketingName`, `osVersionNumber`, and `developerModeStatus` in its `properties`. Map the product type with the table above.

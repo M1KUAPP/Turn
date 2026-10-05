@@ -314,14 +314,14 @@ Give each line a `topic`: 1 to 3 lowercase words, letters and single spaces only
 
 ## Output
 
-1. `{FOLDER}/lines.jsonl`: exactly 20 lines, one JSON object per line, keys in this order, with ASCII apostrophes ('):
+1.  `{FOLDER}/lines.jsonl`: exactly 20 lines, one JSON object per line, keys in this order, with ASCII apostrophes ('):
 
-   ```json
-   {"id":"line-81","author":"claude-f","text":"...","kind":"open","place":"home","topic":"...","concerns":[]}
-   ```
+    ```json
+    {"id":"line-81","author":"claude-f","text":"...","kind":"open","place":"home","topic":"...","concerns":[]}
+    ```
 
-   Ids run from "line-81" to "line-100" in order, and `author` is always "claude-f".
-2. Before you finish, check the file with a short script in {FOLDER} (python3 is available): 20 valid JSON objects; the ids above; the places in the order above; no `yes_no` line and at least 5 of each other kind; every concern from the list above; at least 4 lines on pain or health; texts of 1 to 300 characters with no leading or trailing space; topics matching `^[a-z]+( [a-z]+)*$`; no two texts alike. Fix anything off.
+    Ids run from "line-81" to "line-100" in order, and `author` is always "claude-f".
+2.  Before you finish, check the file with a short script in {FOLDER} (python3 is available): 20 valid JSON objects; the ids above; the places in the order above; no `yes_no` line and at least 5 of each other kind; every concern from the list above; at least 4 lines on pain or health; texts of 1 to 300 characters with no leading or trailing space; topics matching `^[a-z]+( [a-z]+)*$`; no two texts alike. Fix anything off.
 
 Report back in under 100 words: the file's path and the counts by kind, place, and concern. Don't paste the lines.
 ````
@@ -569,7 +569,7 @@ second_labels = {row['id']: row['acceptable'] for row in read(second_path)}
 
 key = lambda line: hashlib.sha256(f"issue-77:{line['id']}".encode()).hexdigest()
 order = {place: sorted((l for l in lines if l['place'] == place and l['acceptable']), key=key)
-         for place in ['home', 'clinic', 'shop', 'out']}
+          for place in ['home', 'clinic', 'shop', 'out']}
 quotas = [(24, lambda l: l['kind'] == 'yes_no'),
           (8, lambda l: 'pain' in l['concerns'] or 'health' in l['concerns']),
           (4, lambda l: 'consent' in l['concerns'])]

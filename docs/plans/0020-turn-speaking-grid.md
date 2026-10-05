@@ -16,9 +16,9 @@ Contents:
 
 ## Steps
 
-1. Add `expo-sqlite`, `expo-speech`, and the minimal audio-session dependency. Write bank behavior tests first and watch them fail.
-2. Implement the database schema, first-launch seed, ordered reads, tap counting/pruning, subscriptions, and debug stress seed. Run focused tests.
-3. Write speech-controller tests first and watch them fail. Implement interruption, completion, Stop, and Repeat; configure playback at launch.
-4. Build the grid and tabs with design tokens and accessibility behavior.
-5. Run tests, TypeScript, graphify update, Expo checks, and an iOS 27 Simulator build. Exercise tabs, rapid taps, Repeat/Stop, relaunch, and large text in the Simulator where possible. Do not reinstall the iOS 26 runtime.
-6. Push the branch and open a PR linked to #27. Record physical iPhone audio, VoiceOver, and timing checks as outstanding until the teammate tests them.
+1.  Add `expo-sqlite`, `expo-speech`, and the minimal audio-session dependency. Write bank behavior tests first and watch them fail.
+2.  Implement the database schema, first-launch seed, ordered reads, tap counting/pruning, subscriptions, and debug stress seed. Run focused tests.
+3.  Write speech-controller tests first and watch them fail. Implement interruption, completion, Stop, and Repeat; configure playback at launch.
+4.  Build the grid and tabs with design tokens and accessibility behavior.
+5.  Run tests, TypeScript, graphify update, Expo checks, and an iOS 27 Simulator build. Exercise tabs, rapid taps, Repeat/Stop, relaunch, and large text in the Simulator where possible. Do not reinstall the iOS 26 runtime.
+6.  Push the branch and open a PR linked to #27. Record physical iPhone audio, VoiceOver, and timing checks as outstanding until the teammate tests them.

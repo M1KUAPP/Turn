@@ -19,7 +19,8 @@
  * (`bun add --no-save playwright && bunx playwright install chromium`) or point PLAYWRIGHT at an installed
  * playwright package directory.
  *
- * Writes: architecture-light.svg and architecture-dark.svg beside this file.
+ * Writes: architecture-light.svg and architecture-dark.svg beside this file, with trailing whitespace trimmed and a
+ * final newline, as .editorconfig asks.
  */
 
 import { execFileSync } from 'node:child_process'
@@ -140,7 +141,12 @@ async function exportSvg(browser, pageUrl, scheme) {
   const svg = fs.readFileSync(await download.path(), 'utf8')
   await context.close()
   if (!/^(<\?xml[^>]*>\s*)?<svg /.test(svg) || /<svg [^>]*data-theme=/.test(svg)) throw new Error('Unexpected SVG root')
-  return svg.replace('<svg ', `<svg data-theme="${scheme}" `)
+  return tidy(svg.replace('<svg ', `<svg data-theme="${scheme}" `))
+}
+
+// Archify's export leaves trailing spaces in its CSS and no final newline; .editorconfig allows neither.
+function tidy(text) {
+  return text.replace(/[ \t]+$/gm, '').replace(/\n*$/, '\n')
 }
 
 const archify = process.argv[2]

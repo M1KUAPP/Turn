@@ -79,7 +79,7 @@
 }
 
 /* Let the film breathe: weight the shade to the left, where the words sit,
-   and to the floor; the last beat centers, so the middle darkens with it. */
+  and to the floor; the last beat centers, so the middle darkens with it. */
 .story-scrim {
   z-index: -1;
   background:

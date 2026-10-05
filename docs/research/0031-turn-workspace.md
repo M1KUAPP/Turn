@@ -110,7 +110,7 @@ test('runs in workerd', async () => {
 
   ```text
   $ bunx wrangler deploy --dry-run --outdir dist
-   ⛅️ wrangler 4.136.2 (update available 4.136.3)
+    ⛅️ wrangler 4.136.2 (update available 4.136.3)
   Total Upload: 0.41 KiB / gzip: 0.28 KiB
   No bindings found.
   --dry-run: exiting now.

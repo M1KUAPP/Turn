@@ -153,25 +153,25 @@ Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 
 ### How It Works
 
-1. **Pick a place.** On first launch, tap **Review** to edit the starter phrases, or **Not now** to try them as supplied. The speaking grid has about 150 phrases in categories. Tap **Home** at the top of the grid and choose **Clinic**.
+1.  **Pick a place.** On first launch, tap **Review** to edit the starter phrases, or **Not now** to try them as supplied. The speaking grid has about 150 phrases in categories. Tap **Home** at the top of the grid and choose **Clinic**.
 
-   <img src="docs/readme/steps/1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
+    <img src="docs/readme/steps/1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
 
-2. **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank. If iOS shows its typing tutorial, tap **Continue**.
+2.  **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank. If iOS shows its typing tutorial, tap **Continue**.
 
-   <img src="docs/readme/steps/2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
+    <img src="docs/readme/steps/2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
 
-3. **Start Listen mode.** Tap **Listen**, then **Allow** to let Turn send your phrases and the partner's words to the hosted decision model. Show the partner the consent card and tap **They agreed**.
+3.  **Start Listen mode.** Tap **Listen**, then **Allow** to let Turn send your phrases and the partner's words to the hosted decision model. Show the partner the consent card and tap **They agreed**.
 
-   <img src="docs/readme/steps/3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
+    <img src="docs/readme/steps/3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
 
-4. **Answer.** In the Simulator build, the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech. Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
+4.  **Answer.** In the Simulator build, the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech. Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
 
-   <img src="docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard" width="300">
+    <img src="docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard" width="300">
 
-5. **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
+5.  **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
 
-   <img src="docs/readme/steps/5-keep-listening.png" alt="Turn Listen paywall with the US$24.99 one-time price, Unlock Listen mode, Restore Purchases, and privacy notice" width="300">
+    <img src="docs/readme/steps/5-keep-listening.png" alt="Turn Listen paywall with the US$24.99 one-time price, Unlock Listen mode, Restore Purchases, and privacy notice" width="300">
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -240,46 +240,46 @@ Install the Simulator build to try Turn, or build it from source, with no keys o
 
 ### Installation
 
-1. **The Simulator build.** Download `Turn.app.zip` from the [latest release](https://github.com/M1KUAPP/Turn/releases/latest), boot an iOS 27 Simulator, and install it. It embeds its JavaScript, so it runs without Metro.
+1.  **The Simulator build.** Download `Turn.app.zip` from the [latest release](https://github.com/M1KUAPP/Turn/releases/latest), boot an iOS 27 Simulator, and install it. It embeds its JavaScript, so it runs without Metro.
 
-   ```sh
-   unzip Turn.app.zip
-   xcrun simctl install booted Turn.app
-   xcrun simctl launch booted com.m1ku.turn
-   ```
+    ```sh
+    unzip Turn.app.zip
+    xcrun simctl install booted Turn.app
+    xcrun simctl launch booted com.m1ku.turn
+    ```
 
-2. **From source.** Clone the repository, install, and run the app on a Simulator. Leave Metro running.
+2.  **From source.** Clone the repository, install, and run the app on a Simulator. Leave Metro running.
 
-   ```sh
-   git clone https://github.com/M1KUAPP/Turn.git
-   cd Turn
-   bun install --frozen-lockfile
-   cd apps/mobile
-   bun run ios
-   ```
+    ```sh
+    git clone https://github.com/M1KUAPP/Turn.git
+    cd Turn
+    bun install --frozen-lockfile
+    cd apps/mobile
+    bun run ios
+    ```
 
-   For a physical iPhone, set `EXPO_PUBLIC_BUILD_KIND=device` and run `bunx expo run:ios --device`, with your own signing team.
+    For a physical iPhone, set `EXPO_PUBLIC_BUILD_KIND=device` and run `bunx expo run:ios --device`, with your own signing team.
 
-3. **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`apps/relay/.dev.vars.example`](apps/relay/.dev.vars.example) to `apps/relay/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`apps/relay/wrangler.jsonc`](apps/relay/wrangler.jsonc). Then start the relay:
+3.  **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`apps/relay/.dev.vars.example`](apps/relay/.dev.vars.example) to `apps/relay/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`apps/relay/wrangler.jsonc`](apps/relay/wrangler.jsonc). Then start the relay:
 
-   ```sh
-   cd apps/relay
-   bunx wrangler dev --port 8787
-   ```
+    ```sh
+    cd apps/relay
+    bunx wrangler dev --port 8787
+    ```
 
-   In [`apps/mobile/.env`](apps/mobile/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
+    In [`apps/mobile/.env`](apps/mobile/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
 
-4. **The evaluation.** Set the environment variables that [`packages/eval/src/report.ts`](packages/eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
+4.  **The evaluation.** Set the environment variables that [`packages/eval/src/report.ts`](packages/eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
 
-   ```sh
-   bun run eval --unnamed --out packages/eval/your-results.md
-   ```
+    ```sh
+    bun run eval --unnamed --out packages/eval/your-results.md
+    ```
 
-5. **Run the checks.** Run this from the repository root to check a change: it runs the lint, typecheck, and tests.
+5.  **Run the checks.** Run this from the repository root to check a change: it runs the lint, typecheck, and tests.
 
-   ```sh
-   bun run check
-   ```
+    ```sh
+    bun run check
+    ```
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
