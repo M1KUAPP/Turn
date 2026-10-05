@@ -4,13 +4,6 @@ Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-s
 
 **Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
 
-Contents:
-
-1.  [1. Think Before Coding](#1-think-before-coding)
-1.  [2. Simplicity First](#2-simplicity-first)
-1.  [3. Surgical Changes](#3-surgical-changes)
-1.  [4. Goal-Driven Execution](#4-goal-driven-execution)
-
 ## 1. Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
@@ -64,7 +57,7 @@ Transform tasks into verifiable goals:
 
 For multi-step tasks, state a brief plan:
 
-```text
+```
 1. [Step] → verify: [check]
 2. [Step] → verify: [check]
 3. [Step] → verify: [check]
