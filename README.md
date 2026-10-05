@@ -7,14 +7,14 @@
   <a href="https://github.com/M1KUAPP/Turn">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="assets/pitch/readme-hero-dark.png">
-      <img src="assets/pitch/readme-hero-light.png" alt="Turn app icon beside iPhone 18 Pro captures of the Clinic reply row and partner consent card.">
+      <img src="assets/pitch/readme-hero-light.png" alt="Banner">
     </picture>
   </a>
 
   <h3>Turn</h3>
 
   <p>
-    Your own words, in time for your turn.
+    An AAC app for iPhone that listens to a conversation partner and offers replies from the user's own saved phrases, so they can answer in time, in their own words.
     <br />
     <a href="https://github.com/M1KUAPP/Turn/releases/latest"><strong>Try the Simulator build »</strong></a>
     &middot;
@@ -23,14 +23,6 @@
     <a href="PRIVACY.md">Privacy notice</a>
     <br />
   </p>
-
-[![Release][release-shield]][release-url]
-[![License][license-shield]][license-url]
-[![Last commit][last-commit-shield]][last-commit-url]
-[![Issues][issues-shield]][issues-url]
-[![Contributors][contributors-shield]][contributors-url]
-[![iOS 26+][ios-shield]][ios-url]
-[![RevenueCat Shipaton 2026][shipaton-shield]][shipaton-url]
 
 [![Expo][Expo.dev]][Expo-url]
 [![React Native][ReactNative.dev]][ReactNative-url]
@@ -81,7 +73,7 @@
 
 ## About The Project
 
-Turn is an augmentative and alternative communication (AAC) app for iPhone, for adults who can read and tap but can't rely on their speech, such as people living with ALS or recovering from a stroke. It speaks their saved phrases and typed words aloud. In Listen mode, when a conversation partner finishes speaking, a row above the grid offers the person's own saved phrases that answer what was said, so they can reply before the conversation moves on.
+Your own words, in time for your turn. Turn is an augmentative and alternative communication (AAC) app for iPhone, for adults who can read and tap but can't rely on their speech, such as people living with ALS or recovering from a stroke. It speaks their saved phrases and typed words aloud. In Listen mode, when a conversation partner finishes speaking, a row above the grid offers the person's own saved phrases that answer what was said, so they can reply before the conversation moves on.
 
 A hosted decision model chooses which of the person's phrases answer each line, and whether any do. It never writes a word, and nothing speaks until the person taps. Speaking is always free; Turn Listen, a one-time purchase through RevenueCat, keeps Listen mode on after 20 free partner lines. Turn was built for RevenueCat's Shipaton 2026.
 
@@ -193,6 +185,7 @@ Install the Simulator build to try Turn, or build it from source. Live transcrip
 
 ### Prerequisites
 
+- Turn runs on iOS 26+.
 - A Mac with Xcode 27 and the iOS 27 Simulator runtime.
 - To build from source: [Bun](https://bun.sh) 1.4.2 and CocoaPods.
 - To run your own relay: a Cloudflare account, a RevenueCat project with a `listen` entitlement, and an API key for the hosted decision model.
@@ -276,29 +269,15 @@ See [LICENSE](LICENSE) for more information.
 - [RevenueCat Shipaton 2026](https://www.shipaton.com)
 - [archify](https://github.com/tt-a1i/archify)
 - [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/), the font in the banner ([OFL](assets/pitch/fonts/OFL.txt))
-- [Shields.io](https://shields.io)
-- [contrib.rocks](https://contrib.rocks)
 - The companion's faces, drawn with Live2D: Ren is Ren Foster, © Live2D Inc., under the Live2D Free Material License; Suit and Office are Suit Male and Office Girl by Ooie; and Ice is Ice Girl, "Live2D: @TianYeLulu"
 - [Live2D Cubism SDK for Web](https://www.live2d.com/en/sdk/about/), which draws the live companion: Cubism Core under the Live2D Proprietary Software License, and the Cubism Framework under the Live2D Open Software License
+- [Shields.io](https://shields.io)
+- [contrib.rocks](https://contrib.rocks)
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[release-shield]: https://img.shields.io/github/v/release/M1KUAPP/Turn?include_prereleases&style=for-the-badge
-[release-url]: https://github.com/M1KUAPP/Turn/releases
-[license-shield]: https://img.shields.io/github/license/M1KUAPP/Turn?style=for-the-badge
-[license-url]: LICENSE
-[last-commit-shield]: https://img.shields.io/github/last-commit/M1KUAPP/Turn?style=for-the-badge
-[last-commit-url]: https://github.com/M1KUAPP/Turn/commits/main
-[issues-shield]: https://img.shields.io/github/issues/M1KUAPP/Turn?style=for-the-badge
-[issues-url]: https://github.com/M1KUAPP/Turn/issues
-[contributors-shield]: https://img.shields.io/github/contributors/M1KUAPP/Turn?style=for-the-badge
-[contributors-url]: https://github.com/M1KUAPP/Turn/graphs/contributors
-[ios-shield]: https://img.shields.io/badge/iOS-26%2B-000000?style=for-the-badge&logo=apple&logoColor=white
-[ios-url]: https://www.apple.com/ios/
-[shipaton-shield]: https://img.shields.io/badge/RevenueCat_Shipaton-2026-F2545B?style=for-the-badge&logo=revenuecat&logoColor=white
-[shipaton-url]: https://www.shipaton.com
 [React.dev]: https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://react.dev/
 [SQLite.org]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white
