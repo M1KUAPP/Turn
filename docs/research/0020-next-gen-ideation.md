@@ -1,6 +1,6 @@
 # Next Gen ideation log
 
-The ten rounds of ideation behind [the idea](/docs/IDEA.md), run on September 22, 2026, after the team gave this feedback on its first idea, Guessling: "The idea is too simple and our team is aiming for Next Gen category." The [first log](/docs/research/0007-ideation.md) records why Guessling was chosen for Best Game. This one starts from the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), the [Next Gen notes](/docs/research/0019-next-gen.md), the [technology notes](/docs/research/0018-next-gen-tech.md), the [Jev notes](/docs/research/0005-jev.md), and the [Jev pattern notes](/docs/research/0017-jev-patterns.md), and narrows thirty candidates to one; each round ends with a decision the next one builds on. Rounds 8 to 10 record each round's decisions, with the corrections that review made to them; where the idea differs, it holds the current version.
+The ten rounds of ideation behind [the idea](/docs/IDEA.md), run on September 22, 2026, after the team gave this feedback on its first idea, Guessling: "The idea is too simple and our team is aiming for Next Gen category." The [first log](/docs/research/0007-ideation.md) records why Guessling was chosen for Best Game. This one starts from the [brief](/docs/BRIEF.md), the [context](/CONTEXT.md), the [Next Gen notes](/docs/research/0019-next-gen.md), the [technology notes](/docs/research/0018-next-gen-tech.md), the [Jev notes](/docs/research/0005-jev.md), and the [Jev pattern notes](/docs/research/0017-jev-patterns.md), and narrows thirty candidates to one; each round ends with a decision the next one builds on. Rounds 8 to 10 record each round's decisions, with the corrections that review made to them; where the idea differs, it holds the current version.
 
 Contents:
 
@@ -47,7 +47,7 @@ An idea that breaks one is out.
 [jev-what]: /docs/research/0005-jev.md#what-jev-is
 [ng-judge]: /docs/research/0019-next-gen.md#what-a-judge-needs-to-run-the-app
 [ng-free]: /docs/research/0019-next-gen.md#building-without-a-paid-developer-account
-[ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
+[ctx-video]: /CONTEXT.md#demo-video-and-write-up
 [ng-minors]: /docs/research/0019-next-gen.md#minors-ages-and-accounts
 [jev-data]: /docs/research/0005-jev.md#offline-behavior-and-data-handling
 [jev-store]: /docs/research/0005-jev.md#store-review-and-jev
@@ -365,7 +365,7 @@ Verdict: not worth building over the other two, with about 25 hours of fixes on 
 - **For Next Gen.** The purchase runs through RevenueCat's Test Store, which the organizers accept. The video shows the Test Store sheet, a simulated successful purchase, and Listen mode unlocking, and judges can repeat it in a debug build. Test Store purchases count as sandbox data, so the entry reports no revenue. RevenueCat's [Test Store page][rc-test-store] describes products by identifier, price, and duration without saying whether a one-time product can be made there. If it can't, the demo sells Listen as a yearly Test Store product, which renews at most five times before it ends, and the one-time design stays for a store release. ([purchase paths][ng-purchase])
 - **Left out:** subscriptions, which AAC users resent; web purchases, which need a Stripe account; and ads, which have no place in someone's voice.
 
-[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[ctx-money]: /CONTEXT.md#monetization-and-paywalls
 [ev-sayso]: /docs/research/0008-idea-evidence.md#sayso-an-aac-phrase-finder
 [ev-turn-rivals]: /docs/research/0021-next-gen-evidence.md#turn-rival-apps
 [jev-prices]: /docs/research/0005-jev.md#jev-prices

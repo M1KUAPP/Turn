@@ -1,6 +1,6 @@
 # Shipaton 2026 ideation log
 
-The ten rounds of ideation behind [the idea](/docs/archive/guessling-idea.md), run on September 22, 2026 for RevenueCat Shipaton 2026. They start from the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), the [Jev notes](/docs/research/0005-jev.md), and the [gallery notes](/docs/research/0006-gallery-2026.md), and narrow thirty candidates to one idea; each round ends with a decision the next one builds on.
+The ten rounds of ideation behind [the idea](/docs/archive/guessling-idea.md), run on September 22, 2026 for RevenueCat Shipaton 2026. They start from the [brief](/docs/BRIEF.md), the [context](/CONTEXT.md), the [Jev notes](/docs/research/0005-jev.md), and the [gallery notes](/docs/research/0006-gallery-2026.md), and narrow thirty candidates to one idea; each round ends with a decision the next one builds on.
 
 Contents:
 
@@ -40,12 +40,12 @@ An idea that breaks one is out.
 - **C6. Nothing that slows review.** An account only if the product needs one, since accounts need in-app deletion; no third-party login; explicit permission before personal data goes to a third-party AI such as Jev, under guideline 5.1.2(i); and, by the team's own choice, no feed of user-generated content. ([Apple essentials][ctx-apple]; [guideline 5.1.2(i)][bp-apple])
 - **C7. At most one Influencer Award, and no creator's likeness.** The rules allow one per project, and a creator's name or image needs express written consent. ([official rules][ctx-rules])
 
-[ctx-review]: /docs/CONTEXT.md#getting-through-store-review
+[ctx-review]: /CONTEXT.md#getting-through-store-review
 [brief-review]: /docs/BRIEF.md#app-review-timing
 [jev]: 0005-jev.md
-[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
-[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
-[ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
+[ctx-apple]: /CONTEXT.md#apple-app-store-review-essentials
+[ctx-money]: /CONTEXT.md#monetization-and-paywalls
+[ctx-rules]: /CONTEXT.md#what-the-official-rules-add
 [bp-apple]: /docs/research/0002-best-practices.md#app-review-guidelines-for-a-subscription-app
 
 ### Assumptions
@@ -341,7 +341,7 @@ Borrowed from the runners-up:
 
 **Decision:** free daily puzzle; Guessling+ archive at $19.99 a year with a 3-day trial or $2.99 a month; paywall after today's result; one-month offer codes that cover judging to October 13.
 
-[ctx-money-r8]: /docs/CONTEXT.md#monetization-and-paywalls
+[ctx-money-r8]: /CONTEXT.md#monetization-and-paywalls
 [ev-hunch]: 0008-idea-evidence.md#hunch-a-daily-20-questions-game
 
 ## Round 9: scope, stack, and schedule
@@ -387,7 +387,7 @@ From the context's [review essentials][ctx-apple-r9]:
 - Screenshots are final before submitting, because they can't change while the app is "Waiting for Review".
 - Not in the Kids category.
 
-[ctx-apple-r9]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[ctx-apple-r9]: /CONTEXT.md#apple-app-store-review-essentials
 
 **Decision:** in review by the end of Thursday, September 24, live by Sunday, September 27, and submitted to Devpost on September 30.
 
