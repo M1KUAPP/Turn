@@ -17,7 +17,7 @@ type PackageJson = {
 type Entry = { name: string; version: string; license: string; text: string | null }
 
 const root = resolve(import.meta.dirname, '..')
-const app = join(root, 'app')
+const app = join(root, 'apps/mobile')
 const output = join(app, 'src/content/open-source-licenses.json')
 const initial = JSON.parse(readFileSync(join(app, 'package.json'), 'utf8')) as PackageJson
 const visited = new Set<string>()

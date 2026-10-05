@@ -1,0 +1,74 @@
+appId: com.m1ku.turn
+name: Busy relay
+# PRD scenario 7, STATE-2: with the relay's address blocked, each line is ranked
+# on the phone, and after two failures in three lines Listen mode says it's
+# degraded. Block the relay's host on the Mac by hand for this flow only, as
+# scripts/simulator-screenshots.sh did until 679b340: point
+# turn-relay.m1ku-turn.workers.dev at 127.0.0.1 and ::1 in /etc/hosts, flush
+# the DNS cache, and remove the entries after. `apps/mobile/test/typed-remote.test.ts`
+# covers a success clearing the note, since the flow can't unblock the host
+# partway.
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: Listen
+    timeout: 60000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: Listen
+- tapOn: Listen
+- scrollUntilVisible:
+    element: Before Listen mode starts
+- extendedWaitUntil:
+    visible: Before Listen mode starts
+    timeout: 10000
+- scrollUntilVisible:
+    element: Allow
+- tapOn: Allow
+- scrollUntilVisible:
+    element: 'Can my phone listen while we talk\?'
+- extendedWaitUntil:
+    visible: Can my phone listen while we talk\?
+    timeout: 10000
+- scrollUntilVisible:
+    element: They agreed
+- tapOn: They agreed
+- scrollUntilVisible:
+    element: Mic off
+- extendedWaitUntil:
+    visible: Mic off
+    timeout: 10000
+# The first line fails at the relay, so the phone ranks it.
+# From AX1 Mic off's message fills the top of the column and can end a line past the screen's edge, so most of it
+# is enough, as in listen.yaml.
+- scrollUntilVisible:
+    element: '.*Tap here to type what they say\..*'
+    visibilityPercentage: 90
+- tapOn: '.*Tap here to type what they say\..*'
+- inputText: 'Are you tired?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+- extendedWaitUntil:
+    visible: '.*Ranked on this phone.*Are you tired\?.*'
+    timeout: 20000
+- assertNotVisible: '.*Listen mode is degraded.*'
+- takeScreenshot: busy-relay-first
+# The caption holds the last line now, and a tap on it opens the partner's
+# composer for the second, which fails too.
+- tapOn: '.*Are you tired\?.*'
+- inputText: 'Do you want some water?'
+- scrollUntilVisible:
+    element: Send
+- tapOn: Send
+- extendedWaitUntil:
+    visible: '.*Listen mode is degraded.*Ranked on this phone.*Do you want some water\?.*'
+    timeout: 20000
+- takeScreenshot: busy-relay-degraded
+- scrollUntilVisible:
+    element: End
+- tapOn: End
+- scrollUntilVisible:
+    element: '^Listen$'
+- assertVisible: '^Listen$'

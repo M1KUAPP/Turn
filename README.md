@@ -87,7 +87,7 @@ On September 23, 2026, at commit [`8ea25eb`](https://github.com/M1KUAPP/Turn/com
 | embeddings            | 14 of 64, 22% (14% to 33%)   | 29 of 64, 45% (34% to 57%) | 0.34                 |
 | hosted decision model | 43 of 64, 67% (55% to 77%)   | 48 of 64, 75% (63% to 84%) | 0.72                 |
 
-Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. The [evaluation report](eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
+Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. The [evaluation report](packages/eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
 
 Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 
@@ -208,11 +208,11 @@ A partner's line becomes text on the iPhone, through Apple's SpeechAnalyzer or, 
 ### Tech Stack
 
 - **Languages:** TypeScript and Swift.
-- **Frontend:** Expo SDK 57, React Native 0.86, React 19.2, Expo Router, expo-speech, and expo-speech-recognition; Swift Expo modules for on-device transcription with SpeechAnalyzer ([`turn-listen`](modules/turn-listen)) and Personal Voice ([`turn-voice`](modules/turn-voice)); and the shortlist and the relay's types in [`shared`](shared), with MiniSearch for the phone's own ranking.
-- **Backend:** the relay, a Cloudflare Worker with SQLite-backed Durable Objects, in [`worker`](worker).
+- **Frontend:** Expo SDK 57, React Native 0.86, React 19.2, Expo Router, expo-speech, and expo-speech-recognition; Swift Expo modules for on-device transcription with SpeechAnalyzer ([`turn-listen`](packages/turn-listen)) and Personal Voice ([`turn-voice`](packages/turn-voice)); and the shortlist and the relay's types in [`packages/shared`](packages/shared), with MiniSearch for the phone's own ranking.
+- **Backend:** the relay, a Cloudflare Worker with SQLite-backed Durable Objects, in [`apps/relay`](apps/relay).
 - **Data:** expo-sqlite on the phone.
 - **AI and services:** RevenueCat's `react-native-purchases` and `react-native-purchases-ui`, with the Test Store, and its REST API v2 on the relay; and, for the evaluation, Workers AI embeddings and Apple's sentence embeddings through Swift.
-- **Tooling:** Bun workspaces, Vitest, Prettier, Husky with commitlint, Maestro flows, and the evaluation's Bun scripts in [`eval`](eval).
+- **Tooling:** Bun workspaces, Vitest, Prettier, Husky with commitlint, Maestro flows, and the evaluation's Bun scripts in [`packages/eval`](packages/eval).
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -232,7 +232,7 @@ Install the Simulator build to try Turn, or build it from source, with no keys o
 - [CocoaPods](https://cocoapods.org/) — to build from source.
 - [Cloudflare](https://www.cloudflare.com/) account — to run your own relay.
 - [RevenueCat](https://www.revenuecat.com/) project with a `listen` entitlement — to run your own relay.
-- [Hosted decision model](worker/.dev.vars.example) API key — to run your own relay or the evaluation.
+- [Hosted decision model](apps/relay/.dev.vars.example) API key — to run your own relay or the evaluation.
 - [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) credentials — to run the evaluation.
 - [Swift](https://www.swift.org/) — to run the evaluation's Apple sentence embeddings.
 
@@ -254,25 +254,25 @@ Install the Simulator build to try Turn, or build it from source, with no keys o
    git clone https://github.com/M1KUAPP/Turn.git
    cd Turn
    bun install --frozen-lockfile
-   cd app
+   cd apps/mobile
    bun run ios
    ```
 
    For a physical iPhone, set `EXPO_PUBLIC_BUILD_KIND=device` and run `bunx expo run:ios --device`, with your own signing team.
 
-3. **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`worker/.dev.vars.example`](worker/.dev.vars.example) to `worker/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`worker/wrangler.jsonc`](worker/wrangler.jsonc). Then start the relay:
+3. **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`apps/relay/.dev.vars.example`](apps/relay/.dev.vars.example) to `apps/relay/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`apps/relay/wrangler.jsonc`](apps/relay/wrangler.jsonc). Then start the relay:
 
    ```sh
-   cd worker
+   cd apps/relay
    bunx wrangler dev --port 8787
    ```
 
-   In [`app/.env`](app/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
+   In [`apps/mobile/.env`](apps/mobile/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
 
-4. **The evaluation.** Set the environment variables that [`eval/src/report.ts`](eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
+4. **The evaluation.** Set the environment variables that [`packages/eval/src/report.ts`](packages/eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
 
    ```sh
-   bun run eval --unnamed --out eval/your-results.md
+   bun run eval --unnamed --out packages/eval/your-results.md
    ```
 
 5. **Run the checks.** Run this from the repository root to check a change: it runs the lint, typecheck, and tests.

@@ -1,15 +1,15 @@
-// Builds the companion's live renderer, app/live2d/build/Live2D (plan 0049): fetches the Cubism SDK for Web 5-r.5 and
-// the four Live2D models, checks each against its SHA-256, and packs them with app/live2d/renderer.ts into a page the
-// app's web view loads. The models stay out of the repo, as the handoff asks. The Simulator build runs it before
-// prebuild; run it by hand with `bun scripts/fetch-companion-models.ts`, then prebuild, to see the live face in a local
-// build. Needs curl, gh signed in to GitHub, unzip, and bsdtar (macOS's tar), and sips or Pillow.
+// Builds the companion's live renderer, apps/mobile/live2d/build/Live2D (plan 0049): fetches the Cubism SDK for Web
+// 5-r.5 and the four Live2D models, checks each against its SHA-256, and packs them with apps/mobile/live2d/renderer.ts
+// into a page the app's web view loads. The models stay out of the repo, as the handoff asks. The Simulator build runs
+// it before prebuild; run it by hand with `bun scripts/fetch-companion-models.ts`, then prebuild, to see the live face
+// in a local build. Needs curl, gh signed in to GitHub, unzip, and bsdtar (macOS's tar), and sips or Pillow.
 import { $ } from 'bun'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
-import type { CompanionModel } from '../app/src/companion/settings'
+import type { CompanionModel } from '../apps/mobile/src/companion/settings'
 
 const root = resolve(import.meta.dirname, '..')
-const live2d = join(root, 'app/live2d')
+const live2d = join(root, 'apps/mobile/live2d')
 const cache = join(live2d, '.cache')
 const out = join(live2d, 'build/Live2D')
 

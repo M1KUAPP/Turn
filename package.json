@@ -2,20 +2,20 @@
   "private": true,
   "packageManager": "bun@1.4.2",
   "workspaces": [
-    "app",
-    "shared",
-    "worker",
-    "eval"
+    "apps/mobile",
+    "apps/relay",
+    "packages/shared",
+    "packages/eval"
   ],
   "scripts": {
     "check": "bun run lint && bun run typecheck && bun run test",
-    "eval": "bun eval/src/report.ts",
-    "eval:count": "bun eval/src/count.ts",
+    "eval": "bun packages/eval/src/report.ts",
+    "eval:count": "bun packages/eval/src/count.ts",
     "graph": "graphify update .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
     "prepare": "husky",
-    "replay": "bun eval/src/replay.ts",
+    "replay": "bun packages/eval/src/replay.ts",
     "test": "bun run --filter '*' test",
     "typecheck": "bun run --filter '*' typecheck"
   },
