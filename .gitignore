@@ -100,13 +100,9 @@ apps/mobile/ios/
 
 # Python
 .venv/
-__pycache__/
-.pytest_cache/
 
-# Build and test output
-.next/
+# Build output
 dist/
-coverage/
 
 # The companion's Live2D models and page, fetched and built by scripts/fetch-companion-models.ts
 apps/mobile/live2d/.cache/
