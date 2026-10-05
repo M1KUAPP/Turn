@@ -275,12 +275,10 @@ Install the Simulator build to try Turn, or build it from source, with no keys o
    bun run eval --unnamed --out eval/your-results.md
    ```
 
-5. **Run the checks.** Run these from the repository root to check a change.
+5. **Run the checks.** Run this from the repository root to check a change: it runs the lint, typecheck, and tests.
 
    ```sh
-   bun run lint
-   bun run test
-   bun run typecheck
+   bun run check
    ```
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
