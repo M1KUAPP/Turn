@@ -24,17 +24,17 @@
     <br />
   </p>
 
-[![Expo][Expo.dev]][Expo-url]
-[![React Native][ReactNative.dev]][ReactNative-url]
-[![React][React.dev]][React-url]
-[![TypeScript][TypeScript.org]][TypeScript-url]
-[![Swift][Swift.org]][Swift-url]
-[![SQLite][SQLite.org]][SQLite-url]
-[![Cloudflare Workers][Workers.dev]][Workers-url]
-[![RevenueCat][RevenueCat.com]][RevenueCat-url]
-[![Bun][Bun.sh]][Bun-url]
-[![Vitest][Vitest.dev]][Vitest-url]
-[![Prettier][Prettier.io]][Prettier-url]
+[![TypeScript][typescript-badge]][typescript-url]
+[![Swift][swift-badge]][swift-url]
+[![React][react-badge]][react-url]
+[![React Native][reactnative-badge]][reactnative-url]
+[![Expo][expo-badge]][expo-url]
+[![Bun][bun-badge]][bun-url]
+[![SQLite][sqlite-badge]][sqlite-url]
+[![RevenueCat][revenuecat-badge]][revenuecat-url]
+[![Cloudflare Workers][cloudflareworkers-badge]][cloudflareworkers-url]
+[![Vitest][vitest-badge]][vitest-url]
+[![Prettier][prettier-badge]][prettier-url]
 
 </div>
 
@@ -93,15 +93,59 @@ The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% pa
 
 ### Screenshots
 
-|                                                                                       Speaking grid                                                                                        |                                                                                      Partner consent                                                                                      |                                                                                         Suggested replies                                                                                         |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="assets/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with the conversation strip, Quick phrases, and floating Type, Repeat, Up, and Down toolbar" width="240"> | <img src="assets/readme/screenshots/partner-consent.png" alt="Partner consent card explaining Listen mode, with an under-18 switch and They agreed and They said no buttons" width="240"> | <img src="assets/readme/screenshots/suggested-replies.png" alt="Clinic reply row offering It went well, It was hard, It’s getting worse, and I’m good, thanks after How was physio?" width="240"> |
-|                                                                                   **Phrase bank editor**                                                                                   |                                                                                  **Turn Listen paywall**                                                                                  |                                                                                           **Settings**                                                                                            |
-|     <img src="assets/readme/screenshots/phrase-bank-editor.png" alt="Chat phrase bank with starter phrases, pencil edit buttons, and controls to reorder or add phrases" width="240">      |   <img src="assets/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen paywall showing Keep Listen mode on, a US$24.99 one-time purchase, and Restore Purchases" width="240">    |    <img src="assets/readme/screenshots/settings.png" alt="Settings with voice and speech rate, Companion Off, Listen service Working, places, phrase bank, and purchase options" width="240">     |
-
-|                                                                     **Choose a companion**                                                                     |                                                             **Home with Ren**                                                              |                                                                        **Partner view**                                                                         |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="assets/readme/screenshots/companion-settings.png" alt="Companion settings with Ren, Suit, Office, and Ice face choices and Let it move" width="240"> | <img src="assets/readme/screenshots/companion-home.png" alt="Ren beside Home’s floating toolbar, below the Quick phrase grid" width="240"> | <img src="assets/readme/screenshots/companion-partner-view.png" alt="Partner view with Ren, I have something to say in big text, and Say it again" width="240"> |
+<table>
+  <tr>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with the conversation strip, Quick phrases, and floating Type, Repeat, Up, and Down toolbar" width="100%">
+      <br />
+      <strong>Speaking grid</strong> · The Clinic grid of saved phrases, with the conversation strip and floating toolbar.
+    </td>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/partner-consent.png" alt="Partner consent card explaining Listen mode, with an under-18 switch and They agreed and They said no buttons" width="100%">
+      <br />
+      <strong>Partner consent</strong> · The consent card the partner sees each time listening starts, with an under-18 switch.
+    </td>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/suggested-replies.png" alt="Clinic reply row offering It went well, It was hard, It’s getting worse, and I’m good, thanks after How was physio?" width="100%">
+      <br />
+      <strong>Suggested replies</strong> · Saved phrases that answer what the partner said, in a row above the grid.
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/phrase-bank-editor.png" alt="Chat phrase bank with starter phrases, pencil edit buttons, and controls to reorder or add phrases" width="100%">
+      <br />
+      <strong>Phrase bank editor</strong> · A category's starter phrases, with buttons to edit, reorder, or add phrases.
+    </td>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen paywall showing Keep Listen mode on, a US$24.99 one-time purchase, and Restore Purchases" width="100%">
+      <br />
+      <strong>Turn Listen paywall</strong> · A one-time purchase that keeps Listen mode on after 20 free partner lines.
+    </td>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/settings.png" alt="Settings with voice and speech rate, Companion Off, Listen service Working, places, phrase bank, and purchase options" width="100%">
+      <br />
+      <strong>Settings</strong> · Voice and speech rate, companion, Listen service status, places, phrase bank, and purchases.
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/companion-settings.png" alt="Companion settings with Ren, Suit, Office, and Ice face choices and Let it move" width="100%">
+      <br />
+      <strong>Choose a companion</strong> · Choose Ren, Suit, Office, or Ice, and whether the face moves.
+    </td>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/companion-home.png" alt="Ren beside Home’s floating toolbar, below the Quick phrase grid" width="100%">
+      <br />
+      <strong>Home with Ren</strong> · Ren sits beside the floating toolbar and mouths what Turn says.
+    </td>
+    <td width="33%" valign="top" align="left">
+      <img src="assets/readme/screenshots/companion-partner-view.png" alt="Partner view with Ren, I have something to say in big text, and Say it again" width="100%">
+      <br />
+      <strong>Partner view</strong> · Tapping the face shows your line in big text, with Say it again.
+    </td>
+  </tr>
+</table>
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -278,25 +322,25 @@ See [LICENSE](LICENSE) for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[React.dev]: https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://react.dev/
-[SQLite.org]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white
-[SQLite-url]: https://www.sqlite.org/
-[Vitest.dev]: https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white
-[Vitest-url]: https://vitest.dev/
-[Prettier.io]: https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black
-[Prettier-url]: https://prettier.io/
-[Expo.dev]: https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white
-[Expo-url]: https://expo.dev/
-[ReactNative.dev]: https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[ReactNative-url]: https://reactnative.dev/
-[TypeScript.org]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
-[TypeScript-url]: https://www.typescriptlang.org/
-[Swift.org]: https://img.shields.io/badge/Swift-F05138?style=for-the-badge&logo=swift&logoColor=white
-[Swift-url]: https://www.swift.org/
-[Workers.dev]: https://img.shields.io/badge/Cloudflare_Workers-F38020?style=for-the-badge&logo=cloudflareworkers&logoColor=white
-[Workers-url]: https://workers.cloudflare.com/
-[RevenueCat.com]: https://img.shields.io/badge/RevenueCat-F2545B?style=for-the-badge&logo=revenuecat&logoColor=white
-[RevenueCat-url]: https://www.revenuecat.com/
-[Bun.sh]: https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white
-[Bun-url]: https://bun.sh/
+[typescript-badge]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[typescript-url]: https://www.typescriptlang.org/
+[swift-badge]: https://img.shields.io/badge/Swift-F05138?style=for-the-badge&logo=swift&logoColor=white
+[swift-url]: https://www.swift.org/
+[react-badge]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black
+[react-url]: https://react.dev/
+[reactnative-badge]: https://img.shields.io/badge/React_Native-61DAFB?style=for-the-badge&logo=react&logoColor=black
+[reactnative-url]: https://reactnative.dev/
+[expo-badge]: https://img.shields.io/badge/Expo-1C2024?style=for-the-badge&logo=expo&logoColor=white
+[expo-url]: https://expo.dev/
+[bun-badge]: https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white
+[bun-url]: https://bun.sh/
+[sqlite-badge]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white
+[sqlite-url]: https://www.sqlite.org/
+[revenuecat-badge]: https://img.shields.io/badge/RevenueCat-F2545B?style=for-the-badge&logo=revenuecat&logoColor=white
+[revenuecat-url]: https://www.revenuecat.com/
+[cloudflareworkers-badge]: https://img.shields.io/badge/Cloudflare_Workers-F38020?style=for-the-badge&logo=cloudflareworkers&logoColor=white
+[cloudflareworkers-url]: https://workers.cloudflare.com/
+[vitest-badge]: https://img.shields.io/badge/Vitest-00FF74?style=for-the-badge&logo=vitest&logoColor=white
+[vitest-url]: https://vitest.dev/
+[prettier-badge]: https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black
+[prettier-url]: https://prettier.io/
