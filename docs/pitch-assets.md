@@ -18,7 +18,7 @@ Your own words, in time for your turn.
 
 ![A partner asks How was physio? and Turn shows the saved reply It was hard.](/assets/pitch/readme-aha.gif)
 
-The logline is text so it remains readable and selectable. The GIF's first frame shows both the question and answer when animation is paused. The repository README embeds these images and the screen captures in [`docs/readme/screenshots`](/docs/readme/screenshots) and [`docs/readme/steps`](/docs/readme/steps), including the companion settings, Home with Ren, and partner view.
+The logline is text so it remains readable and selectable. The GIF's first frame shows both the question and answer when animation is paused. The repository README embeds the screen captures in [`docs/readme/screenshots`](/docs/readme/screenshots) and [`docs/readme/steps`](/docs/readme/steps), including the companion settings, Home with Ren, and partner view.
 
 The README captures use the iPhone 18 Pro Simulator on iOS 27, in light mode at the default text size, with a 9:41 status bar. Each portrait is 1206 by 2622 pixels; the README step images for steps 4 and 5 are crops of `suggested-replies.png` and `turn-listen-paywall.png`, so no step repeats a screenshot. They were captured from the [v0.1.0 Simulator release](https://github.com/M1KUAPP/Turn/releases/tag/v0.1.0), built at [`76a1dca`](https://github.com/M1KUAPP/Turn/commit/76a1dcab30c924f87da30c3163b92fb7abda8740).
 
