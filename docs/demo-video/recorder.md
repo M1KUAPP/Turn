@@ -38,12 +38,22 @@ Report at each of these points (a run dispatched, footage downloaded, the stand-
 Add the mode to the workflow that already builds the app, not to a new file: GitHub dispatches only workflows that exist on the default branch, so a new file on your branch can't run. Dispatch your branch's copy of the existing one:
 
 ```shell
-gh workflow run ios-simulator-build.yml --repo <owner>/<repo> --ref <your-branch> \
+gh workflow run <build-workflow>.yml --repo <owner>/<repo> --ref <your-branch> \
   -f ref=<your-branch> -f screenshots=video -f flows="s1b-hook s2-consent:3" \
   -f takes=1 -f listen_engine=replay
 ```
 
-What Turn's `video` job does, in order (`.github/workflows/ios-simulator-build.yml` on `video/replay-engine-v5`):
+**Turn has no workflows now.** They were removed after [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml), so GitHub won't dispatch Turn's `video` job, and recording Turn is manual: on a Mac with Xcode 27, CocoaPods and the Maestro CLI, check out `041a528`, whose branch is gone, and run the job's commands by hand:
+
+```shell
+git fetch origin 041a5280867853a5d16e95c7d366629f5975c069
+git switch --detach 041a5280867853a5d16e95c7d366629f5975c069
+EXPO_PUBLIC_LISTEN_ENGINE=replay bash scripts/build-simulator.sh
+ditto -x -k Turn.app.zip turn-app
+bash scripts/video/record-scenes.sh turn-app/Turn.app <out> "s1b-hook s2-consent:3" 1
+```
+
+What Turn's `video` job did, in order ([`ios-simulator-build.yml` at `041a528`](https://github.com/M1KUAPP/Turn/blob/041a5280867853a5d16e95c7d366629f5975c069/.github/workflows/ios-simulator-build.yml), on `video/replay-engine-v5`):
 
 1.  **Inputs.** `screenshots: video` picks the job; `flows` lists scene flows (a name can end in `:N` for N takes); `takes` is the default count; `listen_engine` is the build flag the stand-in reads.
 1.  **Concurrency.** The group includes the `flows` input, so batches of different scenes from one commit run side by side instead of cancelling each other.
