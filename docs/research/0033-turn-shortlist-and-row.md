@@ -37,7 +37,7 @@ Bun 1.4.2 on macOS `arm64`, with `minisearch` 7.2.0, `typescript` 6.0.3, and `vi
 
 ```text
 "Do you want some water?" => [2, 7.2588, [want, water]], [6, 2.0472, [want]],
-                             [0, 1.9613, [water]], [5, 1.9613, [water]]
+                              [0, 1.9613, [water]], [5, 1.9613, [water]]
 "Is the new nurse here?"  => [3, 9.6003, [new, nurse]], [7, 2.0472, [nurse]]
 "Can you hear me?"        => []    "I don’t know" => []    "the a is" => []
 replace(5, "Cold water"); "cold water" => [5, 10.7477], [0, 1.5309], [2, 1.235]

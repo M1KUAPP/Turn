@@ -1,5 +1,5 @@
 /* Footer: a drawer under the page, in the dark appearance's warm charcoal,
-   with an etching of a lamp over a table along its floor. */
+  with an etching of a lamp over a table along its floor. */
 
 main {
   position: relative;
@@ -214,7 +214,7 @@ main::before {
 /* ---------- The etching, and its lamp ---------- */
 
 /* The etching fills whatever height the words leave: its lower 62% (hills,
-   lamp, meadow) fits the stage, and its sky rises behind the words. */
+  lamp, meadow) fits the stage, and its sky rises behind the words. */
 .foot-stage {
   position: relative;
   z-index: 1;

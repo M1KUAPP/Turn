@@ -67,25 +67,25 @@ Contents:
 ## System architecture
 
 ```text
-+------------------------+       +------------------------------+
-| iPhone app (Expo)      | HTTPS | Worker: guessling-api        |----> RevenueCat REST API v2
-| RevenueCat SDK and     |------>| validate, rate-limit,        |      (Guessling+ check)
-| Paywalls               |       | confirm Guessling+, route    |----> Analytics Engine
-+-----------+------------+       | static /privacy /terms       |      (counts)
-            |                    | reads KV: config, puzzles    |
-            |                    | cron 09:00 UTC: daily check, |
-            |                    | one test question to Jev     |
-            v                    +--------------+---------------+
-+------------------------+                      | one object per puzzle, in wnam
-| App Store, RevenueCat  |       +--------------v---------------+       +--------------+
-| (purchases, paywall)   |       | Durable Object puzzle-<n>    |------>| Jev          |
-+------------------------+       | answers, players, reports    |   ^   | (TypeSafe)   |
-                                 +--------------+---------------+   |   +--------------+
++-----------------------+       +-------------------------------+
+| iPhone app (Expo)     | HTTPS | Worker: guessling-api         |----> RevenueCat REST API v2
+| RevenueCat SDK and    |------>| validate, rate-limit,         |      (Guessling+ check)
+| Paywalls              |       | confirm Guessling+, route     |----> Analytics Engine
++-----------+-----------+       | static /privacy /terms        |      (counts)
+            |                   | reads KV: config, puzzles     |
+            |                   | cron 09:00 UTC: daily check,  |
+            |                   | one test question to Jev      |
+            v                   +---------------+---------------+
++-----------------------+                       | one object per puzzle, in wnam
+| App Store, RevenueCat |       +---------------v---------------+       +--------------+
+| (purchases, paywall)  |       | Durable Object puzzle-<n>     |------>| Jev          |
++-----------------------+       | answers, players, reports     |   ^   | (TypeSafe)   |
+                                +---------------+---------------+   |   +--------------+
                                                 |                   |
-                                 +--------------v---------------+   |   +--------------+
-                                 | Workers KV                   |   +---| budget       |
-                                 | puzzles, banks, config       |       | tokens/min   |
-                                 +------------------------------+       +--------------+
+                                +---------------v---------------+   |   +--------------+
+                                | Workers KV                    |   +---| budget       |
+                                | puzzles, banks, config        |       | tokens/min   |
+                                +-------------------------------+       +--------------+
 ```
 
 What each part owns:

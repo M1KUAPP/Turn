@@ -11,8 +11,8 @@
     "check": "bun run lint && bun run typecheck && bun run test",
     "eval": "bun packages/eval/src/report.ts",
     "eval:count": "bun packages/eval/src/count.ts",
-    "graph": "graphify update .",
-    "lint": "prettier --check .",
+    "graph": "graphify update . && EC_VERSION=v4.0.2 editorconfig-checker -fix graphify-out/graph.json",
+    "lint": "EC_VERSION=v4.0.2 editorconfig-checker && prettier --check .",
     "lint:fix": "prettier --write .",
     "prepare": "husky",
     "replay": "bun packages/eval/src/replay.ts",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
+    "editorconfig-checker": "^7.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.9"

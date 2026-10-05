@@ -66,13 +66,13 @@ Synthesis: pseudocode for a TypeScript port. Grouping tied scores first and runn
 ```text
 pav(x[1..n], y[1..n]):
   groups = one per distinct score v, ascending, with
-           w = number of lines at v, s = acceptable lines at v
+            w = number of lines at v, s = acceptable lines at v
   stack = []
   for g in groups:
     push {lo: g.v, hi: g.v, w: g.w, s: g.s}
     while stack has 2+ blocks and below.s/below.w >= top.s/top.w:
       pop top and below; push {lo: below.lo, hi: top.hi,
-                               w: below.w + top.w, s: below.s + top.s}
+                                w: below.w + top.w, s: below.s + top.s}
   return stack   # each block: scores lo..hi, recalibrated value s/w
 
 fit(blocks, v) = s/w of the block whose lo <= v <= hi
@@ -114,9 +114,9 @@ S_C  = (1/n) * sum_i (xhat_i - y_i)^2
 MCB  = BS - S_C        DSC = UNC - S_C        BS = MCB - DSC + UNC
 
 Murphy, over the K distinct scores f_k, with n_k lines and hit rate o_k:
-BS   = (1/n) * sum_k n_k (f_k - o_k)^2      reliability
-     - (1/n) * sum_k n_k (o_k - ybar)^2     resolution
-     + ybar * (1 - ybar)                    uncertainty
+BS    = (1/n) * sum_k n_k (f_k - o_k)^2      reliability
+      - (1/n) * sum_k n_k (o_k - ybar)^2     resolution
+      + ybar * (1 - ybar)                    uncertainty
 ```
 
 Synthesis:

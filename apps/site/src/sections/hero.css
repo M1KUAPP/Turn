@@ -2,7 +2,7 @@
 
 .hero {
   /* One window, whatever its size or zoom: the phone takes its width from the
-     height left after the nav, and the copy scales with the shorter side. */
+    height left after the nav, and the copy scales with the shorter side. */
   --hero-pad: clamp(14px, 3svh, 40px);
   --hero-phone: clamp(220px, min(25vw, calc((100svh - 76px - 2 * var(--hero-pad) - 54px) / 2.12)), 372px);
   position: relative;
