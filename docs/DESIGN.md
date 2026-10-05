@@ -1674,7 +1674,7 @@ Apple's Accessibility Nutrition Labels make a test plan even without a store lis
 - **Where values live.** Colors, in all four appearances, type, spacing, corners, and components are in the `yaml` blocks, each top-level key in one block; motion is in its table.
 - **Lint.** `bunx @google/design.md@0.4.0 lint docs/DESIGN.md` checks the tokens and prints JSON. Read `summary.warnings`, not the exit code, since a contrast failure is only a warning ([trends notes][ft-linter]). This file allows two warning classes: `missing-primary`, which the linter raises because it looks for a single `primary` value and Turn's colors hold four; and `orphaned-tokens`, 68 of them: the eight category colors this file lists but cannot reference, since a component takes one color pair and the nine categories are nine pairs, so `phrase-tinted` and `category-edge-out-and-about` name the last as the sample and the other eight follow it; and `accent-tag`'s four values, a fill no component can name, as [Color roles](#color-roles) says. `bunx @google/design.md@0.4.0 spec` prints the format; pin the version, since the format is alpha.
 - **Generators.** Use AI generators for sketches only; their output starts over from these tokens and rules ([trends notes][ft-generators]).
-- **Pointing agents here.** Once `app/` exists, a rule scoped to its screen files can point agents to this file, rather than an import that loads it into every session ([trends notes][ft-agents]).
+- **Pointing agents here.** Once `apps/mobile/` exists, a rule scoped to its screen files can point agents to this file, rather than an import that loads it into every session ([trends notes][ft-agents]).
 
 [ft-linter]: /docs/research/0027-turn-frontend-trends.md#what-the-linter-checks
 [ft-generators]: /docs/research/0027-turn-frontend-trends.md#generators-that-emit-expo-or-native-code
@@ -1682,7 +1682,7 @@ Apple's Accessibility Nutrition Labels make a test plan even without a store lis
 
 ### Keeping code in step
 
-- **Where the code lives.** The TRD's [accessibility in the app][trd-a11y] builds this file's tokens into `app/src/constants/theme.ts`, tests the theme against the yaml and the [contrast table](#contrast), and keeps the store of accessibility settings that motion, weight, and layout read.
+- **Where the code lives.** The TRD's [accessibility in the app][trd-a11y] builds this file's tokens into `apps/mobile/src/constants/theme.ts`, tests the theme against the yaml and the [contrast table](#contrast), and keeps the store of accessibility settings that motion, weight, and layout read.
 - **Direction.** A change starts here, then reaches the theme, never the other way.
 
 ### Checks before a screen ships
