@@ -280,7 +280,7 @@ emb = np.array([True] * 45 + [False] * 15 + [True] * 5 + [False] * 15)
 # proportion_confint defaults to method='normal', so name 'wilson'.
 low, high = proportion_confint(jev.sum(), len(jev), method='wilson')
 table = [[np.sum(jev & emb), np.sum(jev & ~emb)],
-         [np.sum(~jev & emb), np.sum(~jev & ~emb)]]
+          [np.sum(~jev & emb), np.sum(~jev & ~emb)]]
 p_value = mcnemar(table, exact=True).pvalue
 gap = bootstrap((jev, emb), lambda a, b, axis: a.mean(axis) - b.mean(axis),
                 paired=True, vectorized=True, rng=np.random.default_rng(0))

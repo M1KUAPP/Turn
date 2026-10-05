@@ -399,12 +399,12 @@ Give it each finalist's pitch paragraph, core loop, Jev job, money, categories, 
 ```text
 You are a skeptical panel reviewing three RevenueCat Shipaton 2026 finalists
 before they are built (below). Play three roles in turn:
-1. A RevenueCat prescreener who watches only the first two minutes of video
-   and reads the submission, scoring each targeted category from 1 to 5.
-2. The judge of each finalist's primary category, applying the "What judges
-   are looking for" list on its page in docs/sources/www.shipathon.com/.
-3. An App Store reviewer applying "Getting through store review" in
-   docs/CONTEXT.md.
+1.  A RevenueCat prescreener who watches only the first two minutes of video
+    and reads the submission, scoring each targeted category from 1 to 5.
+2.  The judge of each finalist's primary category, applying the "What judges
+    are looking for" list on its page in docs/sources/www.shipathon.com/.
+3.  An App Store reviewer applying "Getting through store review" in
+    docs/CONTEXT.md.
 Run `graphify query "<question>"` before grepping or reading any repo file.
 Don't write files and don't run git. For each finalist, return the scores,
 the three likeliest reasons it loses, and the one change that most improves
@@ -985,7 +985,7 @@ bad = 0
 for url in urls:
     code = subprocess.run(
         ['curl', '-sL', '-o', '/dev/null', '-w', '%{http_code}', '--max-time', '20',
-         '-A', 'Mozilla/5.0', url],
+          '-A', 'Mozilla/5.0', url],
         capture_output=True, text=True).stdout
     if not code.startswith('2'):
         bad += 1

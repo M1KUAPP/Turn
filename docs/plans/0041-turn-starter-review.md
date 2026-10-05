@@ -72,10 +72,10 @@ Four functions on the object `createBankStore` returns. **No schema change, no m
 async nextReviewCategoryId(): Promise<string | null> {
   const row = await db.getFirstAsync<{ id: string }>(
     `SELECT c.id FROM category c
-     JOIN phrase p ON p.category_id = c.id
-     WHERE p.reviewed = 0
-     ORDER BY c.position, c.id
-     LIMIT 1`
+      JOIN phrase p ON p.category_id = c.id
+      WHERE p.reviewed = 0
+      ORDER BY c.position, c.id
+      LIMIT 1`
   )
   return row?.id ?? null
 }
@@ -242,12 +242,12 @@ The reviewer writes these; workers don't touch `app/maestro/`.
 
 **New: `app/maestro/bank-10-starter-review.yaml`**, one flow for the check and Not now:
 
-1. `clearState` launch; the card's words are visible; screenshot `bank-10-card`.
-2. Tap `Review`; the Quick editor opens with "Starter" visible; screenshot `bank-10-quick-marked`.
-3. Leave the editor by its back button, as `bank-4-grid.yaml:163-170` leaves Settings (`text: '.*Turn.*'`, `leftOf` the title). **Not `back`**, which is Android's, and **not a relaunch**, since killing the app skips the editor's cleanup. The card is back, since Chat and the rest remain; screenshot `bank-10-card-returns`.
-4. Settings, Phrase bank, Quick, as `bank-1-persistence.yaml:10-30` reaches Chat: no "Starter" is visible. Screenshot `bank-10-quick-reviewed`. That is the check: "review one category, and its marks go".
-5. Relaunch without `clearState`; tap the card's `Not now`; the note "Replies to your partner appear here." is back and the card's words are gone.
-6. Relaunch again: still the note, no card.
+1.  `clearState` launch; the card's words are visible; screenshot `bank-10-card`.
+2.  Tap `Review`; the Quick editor opens with "Starter" visible; screenshot `bank-10-quick-marked`.
+3.  Leave the editor by its back button, as `bank-4-grid.yaml:163-170` leaves Settings (`text: '.*Turn.*'`, `leftOf` the title). **Not `back`**, which is Android's, and **not a relaunch**, since killing the app skips the editor's cleanup. The card is back, since Chat and the rest remain; screenshot `bank-10-card-returns`.
+4.  Settings, Phrase bank, Quick, as `bank-1-persistence.yaml:10-30` reaches Chat: no "Starter" is visible. Screenshot `bank-10-quick-reviewed`. That is the check: "review one category, and its marks go".
+5.  Relaunch without `clearState`; tap the card's `Not now`; the note "Replies to your partner appear here." is back and the card's words are gone.
+6.  Relaunch again: still the note, no card.
 
 **Existing flows the card affects.** Only `consent-not-now.yaml` and `consent-step.yaml` tap `Not now`, and on a fresh install the card's `Not now` is on Home behind the permission step, where Maestro still counts it as visible. Each flow taps the card's `Not now` first, right after launch, when it is the only one on screen; the rest of the flow is unchanged. `home.yaml`'s `home-first-view` screenshot now shows the card, as intended. Flows that open a category editor now mark that category reviewed; none reads the marks, the card, or the note.
 
@@ -275,10 +275,10 @@ Neither task changes a type another file relies on: `Ready.bank` in `app/src/tur
 
 ### 10. Decisions
 
-1. **The strip is walked, last.** Leaving it out would leave five phrases marked for good, and the card would never retire.
-2. **Leaving an editor reviews its category, however it was opened.** A `review` route parameter set only by the card would serve one edge case.
-3. **Installs from before this change get the card,** since their seeded phrases already carry `reviewed = 0`. That reaches existing testers; no backfill.
-4. **Not now is permanent,** as DESIGN says; bringing the card back would need a new string.
+1.  **The strip is walked, last.** Leaving it out would leave five phrases marked for good, and the card would never retire.
+2.  **Leaving an editor reviews its category, however it was opened.** A `review` route parameter set only by the card would serve one edge case.
+3.  **Installs from before this change get the card,** since their seeded phrases already carry `reviewed = 0`. That reaches existing testers; no backfill.
+4.  **Not now is permanent,** as DESIGN says; bringing the card back would need a new string.
 
 ## Checks
 

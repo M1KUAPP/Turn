@@ -689,8 +689,8 @@ final class ListenEngine {
     onPartial(Self.lineText(nextText))
     // Results trail the audio by a second or more, so words heard before the voice fell don't restart the window;
     // only words after it, or words from a partner too quiet to pass the speech level, do.
-    if !voiceActive, Self.hasWords(nextText),
-       !silenceWindowPending || CMTimeCompare(CMTimeRangeGetEnd(range), voiceEndedAt) > 0 {
+    let restartsWindow = !silenceWindowPending || CMTimeCompare(CMTimeRangeGetEnd(range), voiceEndedAt) > 0
+    if !voiceActive, Self.hasWords(nextText), restartsWindow {
       scheduleSilenceLineEnd()
     }
   }

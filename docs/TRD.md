@@ -89,10 +89,10 @@ Contents:
 +-------------------------------+                            |           |
 | RevenueCat (Test Store,       |<---------------------------+           | before each call
 | Paywalls, entitlements)       |   REST API v2: active entitlements     |
-+-------------------------------+                            +-----------v-------------------+
-                                                             | Durable Object jev-calls      |
-                                                             | the day's calls to Jev        |
-                                                             +-------------------------------+
++-------------------------------+                             +----------v-------------------+
+                                                              | Durable Object jev-calls     |
+                                                              | the day's calls to Jev       |
+                                                              +------------------------------+
 ```
 
 What each part owns:

@@ -429,15 +429,15 @@ for folder in sorted(os.listdir(ROOT)):
         continue
     files = set(os.listdir(base))
     text = read(os.path.join(base, 'working-prompt.md' if 'working-prompt.md' in files
-                             else 'prompt.md'))
+                              else 'prompt.md'))
     meta = json.loads(read(os.path.join(base, 'metadata.json')))
     rec = meta['record']
     hit = by_id.get(rec['id']) or by_title.get(rec['title'].strip().lower()) or {}
     body = re.sub(r'\A---\n.*?\n---\n', '', text, flags=re.S)
     rows.append({'folder': folder, 'text': text, 'live': hit,
-                 'premium': meta['workingPrompt'].get('mode') == 'premium',
-                 'ms': bool(re.match(r'\d+-|ms-', folder)),  # motionsites.ai's own
-                 'subject': ' | '.join([rec.get('title') or '', hit.get('category') or '',
+                  'premium': meta['workingPrompt'].get('mode') == 'premium',
+                  'ms': bool(re.match(r'\d+-|ms-', folder)),  # motionsites.ai's own
+                  'subject': ' | '.join([rec.get('title') or '', hit.get('category') or '',
                                         hit.get('type') or '', rec.get('originalCategory') or '',
                                         ' '.join(rec.get('tags') or []), body[:500]])})
 N, MS = len(rows), [r for r in rows if r['ms']]
@@ -492,21 +492,21 @@ SUBJECTS = {
     'care': r'health ?care|care ?giv|elder ?care|senior (?:care|living)|home ?care|nursing|\bnurses?\b|'
             r'care home|assisted living',
     'wellness or mindfulness': r'wellness|well-?being|mental health|meditat|mindful|\byoga\b|healing|'
-                               r'\bsleep\b|habit[- ]track|mood[- ](?:track|journal)',
+                                r'\bsleep\b|habit[- ]track|mood[- ](?:track|journal)',
     'accessibility or assistive tech': r'assistive|disabilit|\bdeaf|hard of hearing|hearing (?:aid|loss)|'
-                                       r'\bblind\b|low vision|visually impaired|screen reader|'
-                                       r'\bsign language|\baac\b|augmentative|speech (?:therapy|impair)|'
-                                       r'wheelchair|prosthe|\badhd\b|neurodiver',
+                                        r'\bblind\b|low vision|visually impaired|screen reader|'
+                                        r'\bsign language|\baac\b|augmentative|speech (?:therapy|impair)|'
+                                        r'wheelchair|prosthe|\badhd\b|neurodiver',
     'communication': r'chat (?:app|interface|ui|assistant|input)|\bai chat|messaging|messenger|video call|'
-                     r'voice call|\binbox\b|email (?:client|app|landing)|social (?:app|network)|'
-                     r'community app|\bconversation\b',
+                      r'voice call|\binbox\b|email (?:client|app|landing)|social (?:app|network)|'
+                      r'community app|\bconversation\b',
     'voice or speech': r'\bvoice (?:input|assistant|agent|note|call|chat|ai|memo|interface|mode)|'
-                       r'voice-(?:first|enabled|based)|\bspeech\b|text-to-speech|transcri(?:be|ption)|'
-                       r'dictation|microphone',
+                        r'voice-(?:first|enabled|based)|\bspeech\b|text-to-speech|transcri(?:be|ption)|'
+                        r'dictation|microphone',
     'audio or music': r'\baudio|podcast|headphone|earbud|\bmusic\b|vinyl|record label|\bsongs?\b|\balbum|'
                       r'\bdj\b|now playing',
     'AI assistant or agent': r'\bai[- ](?:assistant|agents?|companion|chat|copilot|coach)|assistant|copilot|'
-                             r'chatbot|\bagents?\b|agentic|companion|\bllm\b',
+                              r'chatbot|\bagents?\b|agentic|companion|\bllm\b',
     'mobile app': r'mobile app|\bios app|iphone|android|app (?:ui|screens?|showcase|mockup|interface|design|'
                   r'concept)|phone (?:mockup|frame)|smartphone|app store|google play|'
                   r'mobile (?:ui|screens?|interface)',
@@ -533,18 +533,18 @@ A11Y = {
                                 r'motion-(?:reduce|safe):',
     'contrast, any mention': r'contrast',
     'contrast as a requirement': r'contrast[- ]ratio|wcag|4\.5\s*:\s*1|(?:sufficient|enough|legib\w*|readab\w*|'
-                                 r'accessible|\baa\b)[^\n.]{0,30}contrast|'
-                                 r'contrast[^\n.]{0,30}(?:legib|readab|accessib|\baa\b)',
+                                  r'accessible|\baa\b)[^\n.]{0,30}contrast|'
+                                  r'contrast[^\n.]{0,30}(?:legib|readab|accessib|\baa\b)',
     'names a contrast number': r'(?:>=|≥|at least|minimum(?: of)?)\s*4\.5|4\.5\s*:\s*1|\b3:1\b|\b7:1\b',
     'accessibility, a11y, WCAG, or screen reader': r'accessibility|a11y|wcag|screen[- ]reader',
     'ARIA attribute or role': r'\baria-[a-z]+|\brole=["\'{]',
     'visible focus style': r'focus-visible|focus:ring|focus:border|focus:outline-(?!none)|:focus\b|'
-                           r'focus ring|focus state|focus-within',
+                            r'focus ring|focus state|focus-within',
     'removes the focus outline': r'outline-none|outline:\s*(?:none|0)\b',
     'keyboard access': r'keyboard|tabindex|onkeydown|keydown|\besc(?:ape)? key|enter key|arrow keys',
     'alt text': r'\balt=|\balt:\s|\balt text|\balt attribute',
     'captions or subtitles for video': r'<track\b|\.vtt\b|kind=["\']?(?:captions|subtitles)|closed captions|'
-                                       r'subtitles? track',
+                                        r'subtitles? track',
 }
 table('Accessibility mentions', A11Y, GROUPS)
 for label in ('accessibility, a11y, WCAG, or screen reader', 'contrast as a requirement'):
@@ -580,12 +580,12 @@ table('Text sizes and weights', {
     'smallest size under 12 px': lambda r: (r['min_size'] or 99) < 12,
     'smallest size 12 px': lambda r: r['min_size'] == 12,
     'text sized in viewport units or clamp()': r'text-\[[\d.]+vw\]|font-size:\s*[^;\n]*\b[\d.]+vw|'
-                                               r'fontSize:\s*[\'"][\d.]+vw|clamp\(',
+                                                r'fontSize:\s*[\'"][\d.]+vw|clamp\(',
     'thin weights (100 to 300)': r'font-(?:thin|extralight|light)\b|font-?weight:\s*[\'"]?(?:100|200|300)\b',
     'full-height section that hides overflow': r'(?:h-screen|h-\[100(?:vh|svh|dvh)\]|height:\s*100(?:vh|'
-                                               r'svh|dvh))[^\n]{0,120}overflow-hidden|overflow-hidden'
-                                               r'[^\n]{0,120}(?:h-screen|h-\[100(?:vh|svh|dvh)\])|'
-                                               r'(?:h-screen|100vh)[^\n]{0,60}overflow:\s*hidden',
+                                                r'svh|dvh))[^\n]{0,120}overflow-hidden|overflow-hidden'
+                                                r'[^\n]{0,120}(?:h-screen|h-\[100(?:vh|svh|dvh)\])|'
+                                                r'(?:h-screen|100vh)[^\n]{0,60}overflow:\s*hidden',
     'white text at reduced opacity': lambda r: r['alphas'],
     'white text under 45% opacity': lambda r: r['alphas'] and min(r['alphas']) < .45,
 }, GROUPS)
@@ -621,23 +621,23 @@ def floor(fg, bg, target):
 W, K, INK = [255] * 3, [0] * 3, rgb('#0a0a0a')
 print('\n## Contrast')
 for name, fg, bg in (('white on #0a0a0a', W, INK), ('white on #000000', W, K),
-                     ('white on glass white/10 over #0a0a0a', W, over(W, .1, INK)),
-                     ('black on #ffffff', K, W), ('black on #f5f5f5', K, rgb('#f5f5f5'))):
+                      ('white on glass white/10 over #0a0a0a', W, over(W, .1, INK)),
+                      ('black on #ffffff', K, W), ('black on #f5f5f5', K, rgb('#f5f5f5'))):
     print(f'  {name}: ' + ', '.join(f'{a}% {ratio(over(fg, a / 100, bg), bg):.2f}'
                                     for a in range(30, 100, 10)))
     print(f'    text floor (4.5:1) {floor(fg, bg, 4.5):.0%}, edge floor (3:1) '
           f'{floor(fg, bg, 3):.0%}')
 for fg, bg in (('#9ca3af', '#0a0a0a'), ('#9ca3af', '#ffffff'), ('#6b7280', '#0a0a0a'),
-               ('#6b7280', '#ffffff'), ('#888888', '#0a0a0a'), ('#888888', '#ffffff'),
-               ('#666666', '#0a0a0a'), ('#666666', '#ffffff')):
+                ('#6b7280', '#ffffff'), ('#888888', '#0a0a0a'), ('#888888', '#ffffff'),
+                ('#666666', '#0a0a0a'), ('#666666', '#ffffff')):
     print(f'  {fg} on {bg}: {ratio(rgb(fg), rgb(bg)):.2f}')
 print('  white edges on #0a0a0a (1.4.11): ' + ', '.join(
     f'white/{a} {ratio(over(W, a / 100, INK), INK):.2f}' for a in (5, 10, 15, 20, 30)))
 PAIRS = [('#9ca3af', 1, '#f0f0ee'), ('#3b82f6', 1, '#f0f0ee'), ('#ffffff', .15, '#2b3534'),
-         ('#ffffff', .14, '#131519'), ('#ffffff', .11, '#14151d'), ('#321c04', 1, '#f6e4cf'),
-         ('#1a1a1a', 1, '#faf6f0'), ('#c4552f', 1, '#faf6f0'), ('#a8421f', 1, '#f4ece1'),
-         ('#ffffff', 1, '#c4552f'), ('#3f6b48', 1, '#bfe3c6'), ('#a4593a', 1, '#ffd9c2'),
-         ('#8a6d1f', 1, '#ffe9b0'), ('#3a6a8a', 1, '#c9e4f6'), ('#8a90a0', 1, '#f6f7fb')]
+          ('#ffffff', .14, '#131519'), ('#ffffff', .11, '#14151d'), ('#321c04', 1, '#f6e4cf'),
+          ('#1a1a1a', 1, '#faf6f0'), ('#c4552f', 1, '#faf6f0'), ('#a8421f', 1, '#f4ece1'),
+          ('#ffffff', 1, '#c4552f'), ('#3f6b48', 1, '#bfe3c6'), ('#a4593a', 1, '#ffd9c2'),
+          ('#8a6d1f', 1, '#ffe9b0'), ('#3a6a8a', 1, '#c9e4f6'), ('#8a90a0', 1, '#f6f7fb')]
 print('  colors named in the prompts read: ' + ', '.join(  # foreground, its opacity, background
     f'{f}/{a:.0%} on {b} {ratio(over(rgb(f), a, rgb(b)), rgb(b)):.2f}' for f, a, b in PAIRS))
 scrim = next(a / 100 for a in range(101) if ratio(W, over(K, a / 100, W)) >= 4.5)
@@ -707,23 +707,23 @@ MOTION = {
                                             r'aria-label=["\'](?:pause|play)|play control|play \+ pause',
     'parallax': r'parallax',
     'scroll-triggered reveal': r'whileInView|useInView|IntersectionObserver|scroll[- ]triggered|on scroll|'
-                               r'scrolltrigger',
+                                r'scrolltrigger',
     'scroll-linked motion': r'\buseScroll\b|scrollYProgress|\buseTransform\b|\bscrub|animation-timeline|'
                             r'scroll-timeline|scroll[- ](?:driven|linked)',
     'marquee or ticker': r'marquee|(?<!gsap )(?<!gsap\.)\bticker\b',
     'infinite animation': r'\binfinite\b|repeat:\s*Infinity|animate-(?:spin|ping|pulse|bounce)\b',
     'pulsing dot': r'(?:puls\w*|ping)[ -](?:\w+[ -]){0,2}dots?\b|'
-                   r'\bdots?\b[^\n.]{0,60}(?:animate-(?:pulse|ping)|\bpuls\w*|\bping\b)',
+                    r'\bdots?\b[^\n.]{0,60}(?:animate-(?:pulse|ping)|\bpuls\w*|\bping\b)',
     'pause only while hovered': r'hover:\[animation-play-state:\s*paused\]|pauses? on hover|pauseOnHover|'
                                 r':hover[^{\n]*\{[^}]*animation-play-state:\s*paused',
     'hover styles': r'hover:|:hover|whileHover|onMouseEnter|mouseenter',
     'says something appears on hover': r'(?<!dis)\b(?:appears?|reveals?|revealed|shows?|fades? in|'
-                                       r'slides? (?:in|up))\s+on\s+hover',
+                                        r'slides? (?:in|up))\s+on\s+hover',
     'focus or touch fallback for hover': r'group-focus|focus-within|onFocus|\(hover:\s*(?:none|hover)\)|'
-                                         r'\(pointer:\s*coarse\)|touchstart|on tap',
+                                          r'\(pointer:\s*coarse\)|touchstart|on tap',
     'blur-in entrance (animates to blur 0)': r'blur\(\s*0(?:\.0+)?(?:px)?\s*\)',
     'phone frame or Dynamic Island': r'dynamic island|iphone (?:\d+ )?(?:pro )?(?:frame|mockup)|'
-                                     r'phone (?:frame|mockup)',
+                                      r'phone (?:frame|mockup)',
 }
 table('Motion, media, and pointer patterns', MOTION, GROUPS)
 RM, VID = A11Y['reduced motion, any form'], MOTION['video file or <video> element']
@@ -731,12 +731,12 @@ hov = [r for r in rows if re.search(MOTION['says something appears on hover'], r
 dots = [r for r in rows if re.search(MOTION['pulsing dot'], r['text'], I)]
 both = [r for r in rows if re.search(RM, r['text'], I) and re.search(VID, r['text'], I)]
 stop = r'reduced?[- ]motion[^\n]{0,250}(?:video|poster|autoplay)|(?:video|poster|autoplay)' \
-       r'[^\n]{0,250}reduced?[- ]motion'
+        r'[^\n]{0,250}reduced?[- ]motion'
 print(f'  hover reveals with a fallback: {count(MOTION["focus or touch fallback for hover"], hov)}'
       f' of {len(hov)}; pulsing dots with reduced motion: {count(RM, dots)} of {len(dots)}; '
       f'video and reduced motion: {len(both)}, the rule names the video: {count(stop, both)}')
 for name, keys in (('wellness or mindfulness', {'wellness or mindfulness'}),
-                   ('health, medicine, or care', {'health or medicine', 'care'})):
+                    ('health, medicine, or care', {'health or medicine', 'care'})):
     sub = [r for r in rows if r['subjects'] & keys]
     print(f'  {name}: {len(sub)} prompts, {count(VID + "|" + MOTION["infinite animation"], sub)} '
           f'loop a video or an infinite animation, {count(RM, sub)} handle reduced motion')

@@ -725,16 +725,10 @@ git checkout main && git pull --ff-only
 ```diff
 --- check_md.py (idea plan)
 +++ check_md.py (this plan)
-@@ -94,6 +94,9 @@
-     else:
-         entries = []
-         for j in range(start + 2, len(lines)):
+@@ -96,0 +97,3 @@
 +            # Nested entries for H3s may follow, indented by four spaces.
 +            if re.match(r'^(?:    )+1\.  \[[^\]]+\]\(#[^)]+\)$', lines[j]):
 +                continue
-             m = re.match(r'^1\.  \[([^\]]+)\]\(#([^)]+)\)$', lines[j])
-             if not m:
-                 break
 ```
 
 This plan adds `check_ids.py`:
