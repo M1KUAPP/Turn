@@ -11,7 +11,7 @@ Contents:
 
 ## Context
 
-The Devpost entry was submitted on October 1, 2026 with two gallery banners and a 1179 by 2556 screenshot built from pre-v2 captures: `listen-consent.png`, `listen-permission.png`, and `turn-iphone16-ios27.png`. The README's 14 captures in `assets/readme/screenshots/` show the current app, and two pairs of them are byte-identical (`step-4-answer.png` and `suggested-replies.png`, `step-5-keep-listening.png` and `turn-listen-paywall.png`), which leaves 12 distinct screens. The user asked for banners rebuilt from these captures, and for more than two.
+The Devpost entry was submitted on October 1, 2026 with two gallery banners and a 1179 by 2556 screenshot built from pre-v2 captures: `listen-consent.png`, `listen-permission.png`, and `turn-iphone16-ios27.png`. The README's 14 captures in `assets/readme/screenshots/` (since moved to `docs/readme/screenshots/` and `docs/readme/steps/`) show the current app, and two pairs of them are byte-identical (`step-4-answer.png` and `suggested-replies.png`, `step-5-keep-listening.png` and `turn-listen-paywall.png`), which leaves 12 distinct screens. The user asked for banners rebuilt from these captures, and for more than two.
 
 ## Decisions
 
