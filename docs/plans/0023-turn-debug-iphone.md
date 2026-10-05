@@ -26,9 +26,9 @@ Contents:
     1.  [Task 6: The records](#task-6-the-records)
     1.  [Task 7: Graph, pull request, review, and merge](#task-7-graph-pull-request-review-and-merge)
 
-[debug-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/88
-[app-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/22
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[debug-issue]: https://github.com/M1KUAPP/Turn/issues/88
+[app-issue]: https://github.com/M1KUAPP/Turn/issues/22
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [trd-env]: /docs/TRD.md#environments-and-release
 
 ## Global constraints

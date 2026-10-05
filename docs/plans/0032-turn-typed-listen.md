@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57, React Native, SQLite, `@turn/shared`, Vitest, Bun.
 
-**Spec:** [Issue #43](https://github.com/RevenueCat-M1KU/RevenueCat/issues/43), [PRD listening](/docs/PRD.md#listening), [home screen states](/docs/DESIGN.md#the-home-screen-state-by-state).
+**Spec:** [Issue #43](https://github.com/M1KUAPP/Turn/issues/43), [PRD listening](/docs/PRD.md#listening), [home screen states](/docs/DESIGN.md#the-home-screen-state-by-state).
 
 Contents:
 
@@ -53,4 +53,4 @@ Contents:
 - [x] Verify the Reduce Motion row transition. The setting was enabled in Device Hub, the row updated, and the user confirmed the change appeared without a fade.
 - [ ] Run the physical iPhone VoiceOver announcement check.
 - [x] Run `rtk graphify update .` and format the generated graph files.
-- [x] Push the branch and open [PR #109](https://github.com/RevenueCat-M1KU/RevenueCat/pull/109), now targeting `main`.
+- [x] Push the branch and open [PR #109](https://github.com/M1KUAPP/Turn/pull/109), now targeting `main`.

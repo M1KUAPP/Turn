@@ -30,9 +30,9 @@ Contents:
     1.  [Task 10: The TRD](#task-10-the-trd)
     1.  [Task 11: Graph, pull request, review, and merge](#task-11-graph-pull-request-review-and-merge)
 
-[shortlist-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/23
-[row-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/25
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[shortlist-issue]: https://github.com/M1KUAPP/Turn/issues/23
+[row-issue]: https://github.com/M1KUAPP/Turn/issues/25
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 
 ## Global constraints
 
@@ -60,11 +60,11 @@ Contents:
 - **The worktree.** Another session works in the main checkout, so this change is built in a separate worktree, `../revenuecat-shortlist-row`, on the branch `pipeline/shortlist-and-row`.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/43
-[relay-app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/48
-[relay-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/24
-[eval-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/29
-[replay-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/37
+[app-ticket]: https://github.com/M1KUAPP/Turn/issues/43
+[relay-app-ticket]: https://github.com/M1KUAPP/Turn/issues/48
+[relay-ticket]: https://github.com/M1KUAPP/Turn/issues/24
+[eval-ticket]: https://github.com/M1KUAPP/Turn/issues/29
+[replay-ticket]: https://github.com/M1KUAPP/Turn/issues/37
 
 ## Skills
 
@@ -113,7 +113,7 @@ Contents:
 [note-words]: /docs/research/0033-turn-shortlist-and-row.md#common-word-lists
 [note-openers]: /docs/research/0033-turn-shortlist-and-row.md#yes-or-no-question-openers
 [note-timing]: /docs/research/0033-turn-shortlist-and-row.md#timing-tests-in-vitest-41
-[bank-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/18
+[bank-ticket]: https://github.com/M1KUAPP/Turn/issues/18
 
 ### Rejected alternatives
 

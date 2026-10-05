@@ -30,7 +30,7 @@ Read at commit `c55ee46` (September 18, 2026), the head of `main`. The repo's co
 
 Neither the README nor any file above mentions `docs/plans`, `docs/specs`, or superpowers, and none describes migrating from another skill set ([README][mp-readme]). The changelog's 1.1.0 entry renamed `to-prd` to `to-spec`, making "spec" "the single through-line term", and merged `to-plan` and `to-issues` into `to-tickets` ([CHANGELOG][mp-changelog]).
 
-Synthesis: no mattpocock skill writes a plan file into the repo. New specs and tickets go to the tracker, which `docs/agents/issue-tracker.md` sets to GitHub issues in `RevenueCat-M1KU/RevenueCat`.
+Synthesis: no mattpocock skill writes a plan file into the repo. New specs and tickets go to the tracker, which `docs/agents/issue-tracker.md` sets to GitHub issues in `M1KUAPP/Turn`.
 
 [mp-to-spec]: https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/to-spec/SKILL.md
 [mp-to-tickets]: https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/to-tickets/SKILL.md

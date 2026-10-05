@@ -35,8 +35,8 @@ Contents:
 1.  [Appendix: the relay's check](#appendix-the-relays-check)
 1.  [Appendix: the relay's code check](#appendix-the-relays-code-check)
 
-[run-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/40
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[run-issue]: https://github.com/M1KUAPP/Turn/issues/40
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 [prd-release]: /docs/PRD.md#release-criteria
 [trd-metrics]: /docs/TRD.md#metrics-intervals-and-thresholds
@@ -235,7 +235,7 @@ Three reviewers (Standards, Spec, and a fact check and bug hunt) found 5, 5, and
   - the pushed commit messages, though `db1b14a`'s says the relay's check prints only the vars, the switches, and the policy, and `21391a4`'s says the test fails on a change to any setting it names.
 - **For #40's comment:** EVAL-1's tick claims only the count, since agents labeled the lines, and the count's output and the verdict go on #40.
 
-[review-95]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/95#issuecomment-5797518034
+[review-95]: https://github.com/M1KUAPP/Turn/pull/95#issuecomment-5797518034
 
 ## Appendix: the run's script
 
