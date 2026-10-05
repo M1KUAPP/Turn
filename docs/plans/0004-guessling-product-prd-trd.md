@@ -2,7 +2,7 @@
 
 > Written for obra/superpowers' `subagent-driven-development` and `executing-plans` skills, which the repo replaced with mattpocock/skills on September 22, 2026. The tasks below are done.
 
-**Goal:** Add `docs/PRODUCT.md`, `docs/PRD.md`, and `docs/TRD.md`: what Guessling is, what version 1.0 must do, and how it's built, from the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), and the [idea](/docs/IDEA.md), so the team can build it and ship it by September 30, 2026.
+**Goal:** Add `docs/PRODUCT.md`, `docs/PRD.md`, and `docs/TRD.md`: what Guessling is, what version 1.0 must do, and how it's built, from the [brief](/docs/BRIEF.md), the [context](/CONTEXT.md), and the [idea](/docs/IDEA.md), so the team can build it and ship it by September 30, 2026.
 
 **Architecture:** Four new research notes fill the gaps the existing notes leave: RevenueCat in an Expo app, the Cloudflare backend, Apple's rules for this app, and the conventions of daily puzzle games. Each document then gets its own tasks, and each task adds whole H2 sections with their `Contents:` entries, so every commit leaves a consistent document. The product document comes first because the PRD argues from its principles, and the PRD comes before the TRD because the TRD traces every requirement ID.
 

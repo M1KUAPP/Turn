@@ -180,7 +180,7 @@ Synthesis: the table applies the definitions above to the five kinds of data Gue
 - Earlier revisions: on February 6, 2026, Apple made "apps with random or anonymous chat" subject to 1.2 ([news-guidelines-feb2026]); on November 13, 2025, it added third-party AI to 5.1.2(i) and age limits for creator content and mini apps to 1.2.1(a) and 4.7.5 ([news-guidelines-nov2025]).
 
 [apple-guidelines-feb2026]: https://web.archive.org/web/20260601203454/https://developer.apple.com/app-store/review/guidelines/
-[ctx-store]: /docs/CONTEXT.md#store-documentation
+[ctx-store]: /CONTEXT.md#store-documentation
 
 ### What the privacy policy must say
 
@@ -505,7 +505,7 @@ Apple's table of the two categories a game uses ([hig-audio]):
 - [Best practices notes][bp-apple]: review timing, the first purchase, sandbox testing, screenshots, privacy policy basics, Terms of Use, account deletion, and offer code basics.
 - [Jev notes][jev-store]: TypeSafe's terms, its under-18 statement, and guideline 5.1.2(i).
 - [Idea][idea-review]: Guessling's design and its review-safety checklist.
-- [Context](/docs/CONTEXT.md#apple-app-store-review-essentials): the review essentials for any Shipaton app.
+- [Context](/CONTEXT.md#apple-app-store-review-essentials): the review essentials for any Shipaton app.
 
 [bp-apple]: /docs/research/0002-best-practices.md#apple-app-store-review
 [news-age-2025]: https://developer.apple.com/news/?id=ks775ehf

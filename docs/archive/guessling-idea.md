@@ -2,7 +2,7 @@
 
 > **Superseded on September 22, 2026.** The team moved to the Next Gen Award, and [Turn](/docs/IDEA.md) replaced this idea. It's kept because the [product](/docs/archive/guessling-product.md), [PRD](/docs/archive/guessling-prd.md), [TRD](/docs/archive/guessling-trd.md), and [design](/docs/archive/guessling-design.md) documents were built on it.
 
-Guessling is the app this team will ship for RevenueCat Shipaton 2026: a daily 20-questions game in which Jev answers any yes-or-no question a player types, the same way for every player. Ten rounds of ideation chose it, and the [ideation log](/docs/research/0007-ideation.md) records each one. The [brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) hold the contest's rules and background, so this document links to them, with facts as of September 22, 2026.
+Guessling is the app this team will ship for RevenueCat Shipaton 2026: a daily 20-questions game in which Jev answers any yes-or-no question a player types, the same way for every player. Ten rounds of ideation chose it, and the [ideation log](/docs/research/0007-ideation.md) records each one. The [brief](/docs/BRIEF.md) and the [context](/CONTEXT.md) hold the contest's rules and background, so this document links to them, with facts as of September 22, 2026.
 
 Contents:
 
@@ -33,10 +33,10 @@ Contents:
 - **Jev's job:** Jev checks every puzzle's answers before it ships, matches each typed question to a checked answer, and answers the rest live.
 - **Dates:** in App Store review by Thursday, September 24, a day after the brief's [suggested date][brief-dates], which the ideation's [constraint C2][log-r1] accepts; live as soon as it's approved, and by Sunday, September 27 at the latest; submitted on Devpost by Wednesday, September 30 at 11:45 PM PT; free for judges until judging ends on October 13, under the [official rules][ctx-rules].
 
-[ctx-review]: /docs/CONTEXT.md#getting-through-store-review
+[ctx-review]: /CONTEXT.md#getting-through-store-review
 [brief-dates]: /docs/BRIEF.md#key-dates
 [log-r1]: /docs/research/0007-ideation.md#round-1-constraints-and-rubric
-[ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
+[ctx-rules]: /CONTEXT.md#what-the-official-rules-add
 
 ## Problem and audience
 
@@ -112,7 +112,7 @@ The context has the [benchmarks and paywall rules][ctx-money]; this is how Guess
 - **Judges:** an Apple offer code for a free month of Guessling+, created once the app is live: a custom code with a small redemption limit, since one-time-use codes come in batches of at least 500 (PAY-7 in the [PRD][prd-pay]). A code redeemed on October 1 lasts past the end of judging on October 13, and the daily puzzle needs no code.
 - **What to measure:** paywall views, trial starts, and conversions from RevenueCat's charts, which count production purchases only.
 
-[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[ctx-money]: /CONTEXT.md#monetization-and-paywalls
 [prd-pay]: /docs/archive/guessling-prd.md#the-paywall-and-purchases
 
 ## Categories to enter
@@ -179,7 +179,7 @@ The context's [review essentials][ctx-apple] apply in full; these are the items 
 - The backend runs through review, and the review notes explain how to play.
 - The app stays out of the Kids category.
 
-[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[ctx-apple]: /CONTEXT.md#apple-app-store-review-essentials
 [prd-store]: /docs/archive/guessling-prd.md#app-store-listing-and-review
 
 ## Launch and pitch
@@ -201,7 +201,7 @@ The video, two minutes on an iPhone:
 The write-up, in order: the logline; the problem, daily puzzles that end in minutes and 20-questions apps that contradict themselves; how answers stay the same for everyone; the money; the difference; the numbers; what changed after launch and what was learned, for the Grand Prize; the categories and why; and the AI tools used, credited openly.
 
 [brief-pitch]: /docs/BRIEF.md#pitch-the-submission
-[ctx-video]: /docs/CONTEXT.md#demo-video-and-write-up
+[ctx-video]: /CONTEXT.md#demo-video-and-write-up
 
 ## Risks
 
@@ -258,12 +258,12 @@ Still open, each with a safe default:
 - **The Guessling's art.** Whether the team can draw the character in a day is unknown. Safe default: AI-assisted art, credited openly, as past winners did.
 - **"20 Questions" in the name.** Several App Store apps use it, but no source here says whether it is free to use. Safe default: keep it as a description after the brand name.
 - **Age rating.** TypeSafe's services aren't directed to children, it doesn't knowingly handle personal data from anyone under 18, and no source here names the right App Store age rating. Safe default: ask TypeSafe whether younger players may use the game, answer Apple's questionnaire honestly, and stay out of the Kids category.
-- **More than one prize.** The context's [open questions](/docs/CONTEXT.md#open-questions) apply. Safe default: expect at most one prize.
+- **More than one prize.** The context's [open questions](/CONTEXT.md#open-questions) apply. Safe default: expect at most one prize.
 
 ## See also
 
 - [Brief](/docs/BRIEF.md): what Shipaton 2026 requires, its dates, prizes, and judging.
-- [Context](/docs/CONTEXT.md): the official rules, past winners, store review, monetization, and pitch guidance.
+- [Context](/CONTEXT.md): the official rules, past winners, store review, monetization, and pitch guidance.
 - [Product](/docs/archive/guessling-product.md): what Guessling is, for whom, and why, with its principles, metrics, and roadmap.
 - [Product requirements](/docs/archive/guessling-prd.md): what version 1.0 must do, as numbered requirements with checks.
 - [Technical requirements](/docs/archive/guessling-trd.md): how version 1.0 is built, traced to the product requirements.
