@@ -912,7 +912,7 @@ TypeSafe keeps rights "in perpetuity" to use requests for telemetry and abuse mo
 [relay-readme]: /apps/relay/README.md#daily-counts-from-the-logs
 [alert-notes]: /docs/research/0041-turn-credit-alert.md#typesafes-balance-alerts-and-billing
 [relay-alert]: /apps/relay/README.md#the-credit-alert
-[alert-workflow]: https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/credit-alert.yml
+[alert-workflow]: https://github.com/M1KUAPP/Turn/blob/7c48b243196a1a91d765e32a90d7bd2b7c344976/.github/workflows/credit-alert.yml
 
 ### Service life
 
@@ -1047,7 +1047,7 @@ The shared code and the relay are tested with Vitest, the relay's tests running 
 
 The `iOS Simulator build` workflow captured screenshots of every flow in `apps/mobile/maestro/` on demand, on the iPhone 16 and the iPhone SE, at the default and the largest text size, and in dark mode, until the repository's workflows were removed ([its last version][sim-build-workflow]). Screenshots are now manual: on a Mac, build the app with `scripts/build-simulator.sh`, install it on a Simulator set to the size and appearance wanted, and run a flow with the Maestro CLI, `maestro test apps/mobile/maestro/<flow>.yaml`, whose `takeScreenshot` steps capture the images.
 
-[sim-build-workflow]: https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml
+[sim-build-workflow]: https://github.com/M1KUAPP/Turn/blob/7c48b243196a1a91d765e32a90d7bd2b7c344976/.github/workflows/ios-simulator-build.yml
 
 ## Environments and release
 

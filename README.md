@@ -77,7 +77,7 @@ Your own words, in time for your turn. Turn is an augmentative and alternative c
 
 A hosted decision model chooses which of the person's phrases answer each line, and whether any do. It never writes a word, and nothing speaks until the person taps. Speaking is always free; Turn Listen, a one-time purchase through RevenueCat, keeps Listen mode on after 20 free partner lines.
 
-On September 23, 2026, at commit [`213f488`](https://github.com/M1KUAPP/Turn/commit/8ea25eb), the team evaluated 80 partner lines. On the 64 lines with an acceptable saved reply besides Yes, No, and Not sure:
+On September 23, 2026, at commit [`213f488`](https://github.com/M1KUAPP/Turn/commit/213f488), the team evaluated 80 partner lines. On the 64 lines with an acceptable saved reply besides Yes, No, and Not sure:
 
 | Ranker                | Top 1                        | Top 6                      | Mean reciprocal rank |
 | --------------------- | ---------------------------- | -------------------------- | -------------------- |
