@@ -106,7 +106,7 @@ What each part owns:
 - **The budget's Durable Object,** `jev-calls`, is one for the whole relay. It counts the UTC day's calls to Jev, retries included, which each user's object takes one at a time before every attempt, and refuses them past `JEV_DAILY_CALLS` until midnight UTC (SEC-5).
 - **Jev** answers the kind of question, the topic, and one Noul, Jev's yes-or-no question with a probability, per candidate.
 - **RevenueCat** runs the Test Store purchase, the paywall, and the entitlement.
-- **The evaluation** in `eval/` calls Jev and Workers AI directly with the team's keys; it isn't part of the app's path.
+- **The evaluation** in `packages/eval/` calls Jev and Workers AI directly with the team's keys; it isn't part of the app's path.
 
 The path of one partner line:
 
@@ -157,22 +157,25 @@ The code lives in this repository, as Bun workspaces, next to `docs/`:
 
 ```text
 /
-├── app/                  # the Expo project; routes in app/src/app/
-├── modules/
+├── apps/
+│   ├── mobile/           # the Expo project; routes in apps/mobile/src/app/
+│   ├── relay/            # the relay: Worker, Durable Object, tests
+│   └── site/             # the Vite marketing site
+├── packages/
+│   ├── shared/           # shortlist, row rules, Jev request builder
+│   ├── eval/             # partner lines, split, rankers, results
 │   ├── turn-listen/      # SpeechTranscriber, line ends, name tagging
 │   └── turn-voice/       # Personal Voice authorization
-├── shared/               # shortlist, row rules, Jev request builder
-├── worker/               # the relay: Worker, Durable Object, tests
-├── eval/                 # partner lines, split, rankers, results
+├── scripts/
 ├── docs/
 ├── LICENSE               # MIT, detected by GitHub
 └── README.md
 ```
 
-- **Local modules.** `npx create-expo-module@latest --local` scaffolds each module, and autolinking finds modules in the directory named by `nativeModulesDir`, which "defaults to `./modules/`" of the Expo project; since the project is `app/`, its autolinking configuration sets `nativeModulesDir` to `../modules`. Local modules generate no barrel file, so the app imports from each module's `src` files ([iPhone build notes][ios-modules]).
-- **Shared code.** The shortlist, the row's rules, and the Jev request builder live in small TypeScript files in `shared/`, the `@turn/shared` package, which the app, the relay, and the evaluation import one file at a time, such as `@turn/shared/shortlist`, so the evaluation measures the code the app runs. The package ships its source, with no build step.
+- **Local modules.** `npx create-expo-module@latest --local` scaffolds each module, and autolinking finds modules in the directory named by `nativeModulesDir`, which "defaults to `./modules/`" of the Expo project; since the project is `apps/mobile/` and the modules sit in `packages/`, its autolinking configuration sets `nativeModulesDir` to `../../packages`, where autolinking skips every package without an `expo-module.config.json`. Local modules generate no barrel file, so the app imports from each module's `src` files ([iPhone build notes][ios-modules]).
+- **Shared code.** The shortlist, the row's rules, and the Jev request builder live in small TypeScript files in `packages/shared/`, the `@turn/shared` package, which the app, the relay, and the evaluation import one file at a time, such as `@turn/shared/shortlist`, so the evaluation measures the code the app runs. The package ships its source, with no build step.
 - **Commands.** `bun install` at the root installs every workspace, and `bun run test` and `bun run typecheck` run each package's Vitest tests and TypeScript check. Bun's own test runner, `bun test`, isn't used.
-- **The starter bank** lives in `app/src/content/starter-bank.json`, which the app loads on first launch and the evaluation reads (CONTENT-1).
+- **The starter bank** lives in `apps/mobile/src/content/starter-bank.json`, which the app loads on first launch and the evaluation reads (CONTENT-1).
 
 ## Data model
 
@@ -664,7 +667,7 @@ on line(lineId, refresh)
 
 ### Screens and navigation
 
-Expo Router, with routes under `app/src/app/`:
+Expo Router, with routes under `apps/mobile/src/app/`:
 
 | Route              | Screen                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
@@ -718,7 +721,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 - **No detection.** `AccessibilityInfo` reports VoiceOver and Reduce Motion but not Switch Control or Voice Control, so the app works the same for every input method.
 - **Text.** Every text style comes from the theme with the `dynamicTypeRamp` the [design's typography][design-type] names, font scaling stays on, and phrase text wraps everywhere but the row's slots; from AX1, when `PixelRatio.getFontScale()` reaches 1.786, the row, the strip, and the grid take one column each (A11Y-4) ([Turn's iOS design notes][ios-scale-turn]).
 - **Accessibility settings.** A store reads Reduce Motion, Bold Text, Reduce Transparency, Increase Contrast, and the text size at launch and follows each change event, since Reanimated reads Reduce Motion only at launch. Reduce Motion stills the light's pulse and the row's fades, the [design's motion][design-motion], which run with `ReduceMotion.Never` so the store decides, and Bold Text moves each text style to its heavier weight (A11Y-6) ([Turn's iOS design notes][ios-rn-settings]).
-- **The theme.** `app/src/constants/theme.ts` holds the design's tokens: each color as a `DynamicColorIOS` with its four values, and each text style with its size, leading, weights, and ramp. A unit test compares it with the design's `yaml` and recomputes every pair's contrast ([design][design-code]).
+- **The theme.** `apps/mobile/src/constants/theme.ts` holds the design's tokens: each color as a `DynamicColorIOS` with its four values, and each text style with its size, leading, weights, and ramp. A unit test compares it with the design's `yaml` and recomputes every pair's contrast ([design][design-code]).
 - **Feedback.** Speech is the only sound: no earcons. The one haptic is optional and carries no meaning, a selection tap from expo-haptics as speech starts, which iOS mutes while the microphone records, since `allowHapticsAndSystemSoundsDuringRecording` stays false ([design][design-sound]).
 - **Testing.** "VoiceOver isn't available via the simulator", so VoiceOver, Switch Control, and Voice Control are tested on a phone.
 
@@ -734,7 +737,7 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 
 ### Build configuration
 
-`app/app.config.ts` sets ([iPhone build notes][ios-modules]):
+`apps/mobile/app.config.ts` sets ([iPhone build notes][ios-modules]):
 
 - **`ios.bundleIdentifier`:** `com.m1ku.turn`, chosen on September 23 and registered by Apple for the Personal Team by the first successful build to the phone the same day ([video iPhone notes][video-iphone]). It never changes, since the Devpost entry names it (SUBMIT-5).
 - **`ios.deploymentTarget`:** `"26"`, the built-in property that replaced the build-properties setting in SDK 56 (COMPAT-1).
@@ -815,8 +818,8 @@ The relay's `wrangler.jsonc`, in the shape the services notes' local test ran un
 }
 ```
 
-- **Secrets** are set with Wrangler and listed under `secrets.required`, so a deploy without them fails. For local work they live in `worker/.dev.vars`, which Git ignores, and a committed `.dev.vars.example` names them for anyone who runs the relay with their own keys (SEC-1) ([services notes][svc-secrets]).
-- **The committed file,** `worker/wrangler.jsonc`, holds all of this.
+- **Secrets** are set with Wrangler and listed under `secrets.required`, so a deploy without them fails. For local work they live in `apps/relay/.dev.vars`, which Git ignores, and a committed `.dev.vars.example` names them for anyone who runs the relay with their own keys (SEC-1) ([services notes][svc-secrets]).
+- **The committed file,** `apps/relay/wrangler.jsonc`, holds all of this.
 - **Vars** are read at every request, so a change reaches the next answer or configuration with no app build (ROW-8, CONSENT-7):
   - `JEV_ON`, `TYPESAFE_NAMED`, and `SIMULATOR_UNLIMITED` are on only as `"true"`, so a typo turns Jev off, leaves TypeSafe unnamed, and counts the Simulator's lines. The last two start `"false"`.
   - `POLICY` holds only the values that differ from `startingPolicy` in `@turn/shared/row`: JSON in `wrangler.jsonc`, or a string from `wrangler deploy --var` or the dashboard. With no `POLICY` at all, the starting policy holds.
@@ -900,15 +903,15 @@ TypeSafe keeps rights "in perpetuity" to use requests for telemetry and abuse mo
   - `model` and `inputTokens`, as Jev reports them;
   - `jevStatus`, the status a failed call to Jev returned.
 - **What else is logged.** The relay turns off automatic invocation logs, which hold each request's details, and leaves tracing off: from October 1, 2026, traces count against the same quota, and a trace of the RevenueCat call would keep the app user ID in its URL ([services notes][svc-logs]).
-- **A script,** `bun run logs` in `worker/`, reads a UTC day of logs through Cloudflare's telemetry query API with an API token, since Wrangler's login can't, and prints the counts and latencies METRIC-2 names, the latencies over answered lines by nearest rank ([the relay's README][relay-readme]). The Free plan keeps logs for 3 days, so the team runs it daily during judging.
-- **The credit alert.** TypeSafe publishes no balance and no low-balance alert ([credit alert notes][alert-notes]), so a script, `bun scripts/credits.ts` in `worker/`, reads the last 24 hours of logs and fires when a line ran out of credits, or when the spend it estimates at $0.042 a million input tokens passes its level (AVAIL-2). A GitHub Actions workflow ran it every 3 hours and opened an issue assigned to the team until the repository's workflows were removed ([its last version][alert-workflow]); it now runs by hand, as [the README][relay-alert] says.
+- **A script,** `bun run logs` in `apps/relay/`, reads a UTC day of logs through Cloudflare's telemetry query API with an API token, since Wrangler's login can't, and prints the counts and latencies METRIC-2 names, the latencies over answered lines by nearest rank ([the relay's README][relay-readme]). The Free plan keeps logs for 3 days, so the team runs it daily during judging.
+- **The credit alert.** TypeSafe publishes no balance and no low-balance alert ([credit alert notes][alert-notes]), so a script, `bun scripts/credits.ts` in `apps/relay/`, reads the last 24 hours of logs and fires when a line ran out of credits, or when the spend it estimates at $0.042 a million input tokens passes its level (AVAIL-2). A GitHub Actions workflow ran it every 3 hours and opened an issue assigned to the team until the repository's workflows were removed ([its last version][alert-workflow]); it now runs by hand, as [the README][relay-alert] says.
 - **The daily check** during judging sends one typed line to the relay from a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
 [relay-logs]: /docs/research/0038-turn-relay.md#workers-logs
-[relay-readme]: /worker/README.md#daily-counts-from-the-logs
+[relay-readme]: /apps/relay/README.md#daily-counts-from-the-logs
 [alert-notes]: /docs/research/0041-turn-credit-alert.md#typesafes-balance-alerts-and-billing
-[relay-alert]: /worker/README.md#the-credit-alert
+[relay-alert]: /apps/relay/README.md#the-credit-alert
 [alert-workflow]: https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/credit-alert.yml
 
 ### Service life
@@ -919,8 +922,8 @@ The relay and Jev's credits run until the winners are announced on October 21 or
 
 ### The evaluation data
 
-- **`eval/lines.jsonl`:** 80 partner lines, each with an id, its author, the text, its kind, a place, the topic, whether it concerns pain, health, or consent, its `labeler`, and in `acceptable` the ids of every acceptable reply in the starter bank, or none (EVAL-1). For yes-or-no lines, acceptable replies may include the fixed buttons. No line lists a strip phrase, since the row never ranks them, so a line that only a strip phrase such as "Wait, I'm typing" answers has none, which can only add lines with none.
-- **`eval/second-labeling.jsonl`:** a second labeler's `acceptable` ids for every line, in the same order, which only the agreement reads.
+- **`packages/eval/lines.jsonl`:** 80 partner lines, each with an id, its author, the text, its kind, a place, the topic, whether it concerns pain, health, or consent, its `labeler`, and in `acceptable` the ids of every acceptable reply in the starter bank, or none (EVAL-1). For yes-or-no lines, acceptable replies may include the fixed buttons. No line lists a strip phrase, since the row never ranks them, so a line that only a strip phrase such as "Wait, I'm typing" answers has none, which can only add lines with none.
+- **`packages/eval/second-labeling.jsonl`:** a second labeler's `acceptable` ids for every line, in the same order, which only the agreement reads.
 - **No shared word.** A line shares no content word with its replies when the phone's keyword ranking, run over those replies alone, matches none of them; the fixed buttons' words count. EVAL-1's 10 and EVAL-3's subset take only lines with an acceptable reply besides the fixed buttons, which come from the question-kind call rather than the ranking ([the labels' plan][labels-plan]).
 - **Lines with no reply.** The first two labelings left 8 and 7 lines with no acceptable reply, short of EVAL-1's 16, so [#77][floor-issue] had 20 new lines written to have none and labeled among the 80 by the same rules. In an order fixed before any new label was read, each new line replaced a line with a reply at its own place until the scored labeling had 16 lines with none, which took 12 ([the floor's plan][floor-plan]).
 - **New lines.** The public conversation sets are non-commercial, share-alike, not redistributable, or unlicensed, so the lines are written for Turn, by writers who haven't seen the bank, in the mix real questions have: about seven in ten questions yes-or-no, many of them declarative, such as "You're tired?", and about a fifth of lines with no acceptable reply. A second teammate labels the acceptable replies, and the script reports their agreement ([evaluation notes][eval-data]).
@@ -952,10 +955,10 @@ The relay and Jev's credits run until the winners are announced on October 21 or
 - **The extra rankers (EVAL-8).** Each ranks the app's shortlist, as the others do ([extra rankers' notes][eval-extras]).
   - `reranker` sends the line as the query and the shortlist's phrases as the contexts, one request per line, and takes each score by its context's index. A probe's scores came between 0 and 1, but a cut-off needs only their order.
   - `qwen3` embeds the line as a query under the instruction "Given what a conversation partner just said, retrieve the reply that answers it", which Workers AI formats as Qwen's card does, and the phrases as documents, 32 to a request, since one request can't hold both.
-  - `apple` runs in a Swift helper, `eval/src/sentence-embedding.swift`, which the command starts once and keeps open, so each line's time is its embedding's. It loads English at revision 1, pinned so a Mac with another fails, answers from one thread, and names its revision, dimension, and system for the report.
+  - `apple` runs in a Swift helper, `packages/eval/src/sentence-embedding.swift`, which the command starts once and keeps open, so each line's time is its embedding's. It loads English at revision 1, pinned so a Mac with another fails, answers from one thread, and names its revision, dimension, and system for the report.
 - **Embeddings measure similarity.** General-purpose embeddings trailed reply-trained encoders by about 25 points on a response-selection benchmark, and Workers AI offers no reply-trained model, so a line such as "How was physio?" is where keyword ranking and embeddings should fail and Jev should earn its place ([evaluation notes][eval-baselines]).
 - **Calling Workers AI.** The embeddings, reranker, and qwen3 rankers post to Workers AI's REST API with `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, a token that may run Workers AI, such as the Wrangler login's from `wrangler auth token --json`. Each request to bge holds at most 100 texts and asks for `cls` pooling, and each phrase's vector is kept for the run. With no question kind of their own, the embedding rankers and the reranker take the phone's yes-or-no rule, and since their scores aren't probabilities they never bring a big button ([services notes][eval-services]).
-- **Calling Jev.** The Jev ranker sends the relay's request for the app's shortlist, with the place's name and the grid's categories, through TypeSafe's SDK with `TYPESAFE_API_KEY` and the relay's pin, `JEV_MODEL` in `worker/wrangler.jsonc`. It keeps the SDK's 10-second attempts and two retries, so a slow link from the evaluation's machine doesn't count against Jev, and a call that still fails stops the command.
+- **Calling Jev.** The Jev ranker sends the relay's request for the app's shortlist, with the place's name and the grid's categories, through TypeSafe's SDK with `TYPESAFE_API_KEY` and the relay's pin, `JEV_MODEL` in `apps/relay/wrangler.jsonc`. It keeps the SDK's 10-second attempts and two retries, so a slow link from the evaluation's machine doesn't count against Jev, and a call that still fails stops the command.
 - **Jev's answers vary.** Three calls for one line scored its top phrase 0.65, 0.71, and 0.70, so each line is scored from the first of the three timed passes, and a big button in any of the four answers a ranker gave the line is listed.
 
 [eval-baselines]: /docs/research/0025-turn-evaluation.md#similarity-embeddings-and-reply-trained-embeddings
@@ -1000,23 +1003,23 @@ Each line is scored twice, as a pure ranking and as the row a user would see ([e
 The replay script (EVAL-7) sends the replay test's lines as text, in conversation order, through the relay and the shared row rules, with no microphone, and counts slot changes per line (ROW-5):
 
 ```shell
-bun run replay --lines eval/replay.jsonl --relay http://localhost:8787
+bun run replay --lines packages/eval/replay.jsonl --relay http://localhost:8787
 ```
 
 - **As the app would.** It gets the configuration once, then sends each line's last 300 characters as one new user's (LISTEN-6), with the next sequence number, a new line ID, and a shortlist whose first phrases are the row's, and each request says `X-Turn-Build: simulator`. The row's number rises as each line starts, so an older line's answer is dropped (ROW-7), and the row takes each answer with the policy it carries. A failure, an answer out of shape, or no answer within 3 seconds has the phone rank the line (STATE-2), with Jev off the phone ranks every line (STATE-3), and a `402` stops the replay, where the app would open the paywall (STATE-4).
 - **Past the free lines.** A new user has 20 free lines (PAY-1), so the replay test's 50 lines reach a `402` unless the relay's `SIMULATOR_UNLIMITED` switch is on, which lets a Simulator build's lines go uncounted (PAY-9); for a local relay, `wrangler dev` takes `--var SIMULATOR_UNLIMITED:true`.
 - **Within the rate limit.** The relay allows one ID 30 requests a minute (SEC-3), so a request that would be the replay user's 30th in 60 seconds waits until it isn't: the replay test's 50 lines wait out the rest of the first minute after the first 28.
 - **What it prints:** a row for each line, with who ranked it, the big button or the six slots, the slot changes, whether the row held, and the times, then the totals.
-- **Where it runs:** against the relay under `wrangler dev` in `worker/`, whose secrets come from `worker/.dev.vars` or, without that file, the shell; and against the team's relay by its address, which stays out of the repository.
-- **The lines.** Until the replay test records its lines, `eval/replay.jsonl` holds ten lines of a morning at home and out, which Claude wrote for this on September 23, 2026; none is among the 80.
+- **Where it runs:** against the relay under `wrangler dev` in `apps/relay/`, whose secrets come from `apps/relay/.dev.vars` or, without that file, the shell; and against the team's relay by its address, which stays out of the repository.
+- **The lines.** Until the replay test records its lines, `packages/eval/replay.jsonl` holds ten lines of a morning at home and out, which Claude wrote for this on September 23, 2026; none is among the 80.
 
 ### The report
 
-`bun run eval` scores the rankers on the lines in `eval/lines.jsonl`, or the file `--lines` names, and writes `eval/results.md`, or the file `--out` names: the date and the commit; who wrote and labeled the lines and who wrote the bank; for all lines and each subset, one row per ranker for the ranking, each rate with its interval, and one for the row, with the six outcomes as counts and coverage and risk with their intervals; and each step's latency. The README copies the table (EVAL-6). Once a ranker calls a model, the report also names the model pin (EVAL-6) and lists every big button on a yes-or-no, pain, or consent line, in any of the four answers each ranker gave the line (EVAL-5); `place` and `keyword` call no model and show no big button, and `embeddings`, `reranker`, `qwen3`, and `apple` show none. It also names the models Jev answered as, Workers AI's three with qwen3's instruction, and Apple's sentence embedding with its revision, dimension, and system; gives Jev minus embeddings in top 6 with its paired interval (EVAL-4), Jev's question kind, and Jev's calibration, with the reliability diagram as an SVG beside it (EVAL-8); lists the five cut-offs of each ranker that has them; and plots every ranker's risk-coverage curve.
+`bun run eval` scores the rankers on the lines in `packages/eval/lines.jsonl`, or the file `--lines` names, and writes `packages/eval/results.md`, or the file `--out` names: the date and the commit; who wrote and labeled the lines and who wrote the bank; for all lines and each subset, one row per ranker for the ranking, each rate with its interval, and one for the row, with the six outcomes as counts and coverage and risk with their intervals; and each step's latency. The README copies the table (EVAL-6). Once a ranker calls a model, the report also names the model pin (EVAL-6) and lists every big button on a yes-or-no, pain, or consent line, in any of the four answers each ranker gave the line (EVAL-5); `place` and `keyword` call no model and show no big button, and `embeddings`, `reranker`, `qwen3`, and `apple` show none. It also names the models Jev answered as, Workers AI's three with qwen3's instruction, and Apple's sentence embedding with its revision, dimension, and system; gives Jev minus embeddings in top 6 with its paired interval (EVAL-4), Jev's question kind, and Jev's calibration, with the reliability diagram as an SVG beside it (EVAL-8); lists the five cut-offs of each ranker that has them; and plots every ranker's risk-coverage curve.
 
 - **Naming off.** `--unnamed` calls Jev the hosted decision model and gives its pin's version without the name, so the README can copy the table while naming is off (CONSENT-7).
 - **The 80 lines from a clean tree.** The command scores any of the 80 lines, whatever file holds them, only from a clean working tree, so the history shows Jev's settings committed before any result (EVAL-2).
-- **The two runs on the 80 lines.** The first is `eval/results.md`, at `8ea25eb`, and the README's table copies it. The second is `eval/results-extras.md`, at `1b3ff03`. It adds the three extra rankers and Jev's calibration (EVAL-8), and its first four rankers' ranking tables match the first run's. EVAL-4's verdict stays the first run's. A wrong big button on a yes-or-no, pain, or consent line in either run counts against EVAL-5, and the relay's configuration would then give those lines only the fixed buttons and the grid.
+- **The two runs on the 80 lines.** The first is `packages/eval/results.md`, at `8ea25eb`, and the README's table copies it. The second is `packages/eval/results-extras.md`, at `1b3ff03`. It adds the three extra rankers and Jev's calibration (EVAL-8), and its first four rankers' ranking tables match the first run's. EVAL-4's verdict stays the first run's. A wrong big button on a yes-or-no, pain, or consent line in either run counts against EVAL-5, and the relay's configuration would then give those lines only the fixed buttons and the grid.
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when one falls short, then the labelers' agreement ([harness notes][harness-agreement]):
 
@@ -1042,7 +1045,7 @@ The shared code and the relay are tested with Vitest, the relay's tests running 
 
 ### Simulator screenshots
 
-The `iOS Simulator build` workflow captured screenshots of every flow in `app/maestro/` on demand, on the iPhone 16 and the iPhone SE, at the default and the largest text size, and in dark mode, until the repository's workflows were removed ([its last version][sim-build-workflow]). Screenshots are now manual: on a Mac, build the app with `scripts/build-simulator.sh`, install it on a Simulator set to the size and appearance wanted, and run a flow with the Maestro CLI, `maestro test app/maestro/<flow>.yaml`, whose `takeScreenshot` steps capture the images.
+The `iOS Simulator build` workflow captured screenshots of every flow in `apps/mobile/maestro/` on demand, on the iPhone 16 and the iPhone SE, at the default and the largest text size, and in dark mode, until the repository's workflows were removed ([its last version][sim-build-workflow]). Screenshots are now manual: on a Mac, build the app with `scripts/build-simulator.sh`, install it on a Simulator set to the size and appearance wanted, and run a flow with the Maestro CLI, `maestro test apps/mobile/maestro/<flow>.yaml`, whose `takeScreenshot` steps capture the images.
 
 [sim-build-workflow]: https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml
 
@@ -1050,9 +1053,9 @@ The `iOS Simulator build` workflow captured screenshots of every flow in `app/ma
 
 - **Local:** the relay under `wrangler dev`, the app in the Simulator or on a device, pointed at it by the app's configuration.
 - **The team's relay:** one deployment on `workers.dev`, used by the video's build, the Simulator build, and judges; there is no separate staging relay, so risky changes are tested locally first.
-- **Deploys:** `wrangler deploy` from `worker/`, after its tests pass; to undo one, the team deploys the previous commit again, and `JEV_ON` can turn Jev off at once meanwhile.
+- **Deploys:** `wrangler deploy` from `apps/relay/`, after its tests pass; to undo one, the team deploys the previous commit again, and `JEV_ON` can turn Jev off at once meanwhile.
 - **Debug builds only.** A Release build with a Test Store key crashes at launch, so every build the team ships uses the Debug configuration ([services notes][svc-key]).
-- **The device build:** from `app/` on a Mac with Xcode 27, `EXPO_PUBLIC_BUILD_KIND=device bunx expo run:ios --device`, signed by a free Personal Team, with Developer Mode on and the certificate trusted on the phone. The Debug app loads its bundle from Metro over the Mac's Wi-Fi, so the phone joins that network and allows Turn under Local Network; Turn's Debug build first ran on the video iPhone this way on September 23 ([Debug iPhone notes][debug-iphone]). For timings and the video, Metro serves production JavaScript with `npx expo start --no-dev --minify`. Free profiles expire after seven days, so the video's build is installed on or after September 22 (COMPAT-4) ([iPhone build notes][ios-free-build]).
+- **The device build:** from `apps/mobile/` on a Mac with Xcode 27, `EXPO_PUBLIC_BUILD_KIND=device bunx expo run:ios --device`, signed by a free Personal Team, with Developer Mode on and the certificate trusted on the phone. The Debug app loads its bundle from Metro over the Mac's Wi-Fi, so the phone joins that network and allows Turn under Local Network; Turn's Debug build first ran on the video iPhone this way on September 23 ([Debug iPhone notes][debug-iphone]). For timings and the video, Metro serves production JavaScript with `npx expo start --no-dev --minify`. Free profiles expire after seven days, so the video's build is installed on or after September 22 (COMPAT-4) ([iPhone build notes][ios-free-build]).
 - **The Simulator build:** `scripts/build-simulator.sh`, given a commit or none for the checkout, run by hand on a Mac since the `iOS Simulator build` workflow was removed ([its last version][sim-build-workflow]): `xcodebuild` in the Debug configuration for the `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the JavaScript bundle embedded so it runs without Metro, zipped as `Turn.app.zip`. That a Debug build runs from its embedded bundle is unverified, so the September 25 check covers it; if it can't, the README's Simulator path starts Metro first. The `.app` is zipped into a GitHub release, published by hand with `gh release create`, and the README installs it with `xcrun simctl install booted Turn.app` (SUBMIT-3, COMPAT-2).
 - **The repository goes public** after the secret scan, with the MIT `LICENSE` at its root (SUBMIT-1).
 - **Work outside the build.** The clinic's review (CONTENT-5) runs on the device build with the feature chart, and its notes go in `docs/`; the video (SUBMIT-4) is recorded from the device build on September 28; while naming is off, a search of the app's strings, the README, and the description finds no TypeSafe or Jev name before submission (SUBMIT-6); and the release checklist records each Must's check with the build it ran on (RELEASE-1 to RELEASE-5).

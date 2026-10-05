@@ -180,7 +180,7 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
 - **Two Swift modules,** written with the Expo Modules API: live transcription through `SpeechTranscriber`, and Personal Voice authorization. `expo-speech` then speaks with the authorized voice, and `expo-speech-recognition` is the fallback for transcription.
 - **Shortlist on the phone:** keyword ranking, the user's most-used replies, and the place's phrases pick 40 phrases in TypeScript, so only those 40 leave the phone, per request.
 - **Relay:** one Cloudflare Worker holds the Jev key and a RevenueCat secret key. It builds the fixed questions, calls Jev through TypeSafe's JavaScript SDK or its HTTP API, counts free lines, checks the entitlement, and limits requests per device ([Workers secrets][cf-secrets]).
-- **Evaluation:** `eval/` holds 80 partner lines, each with its best replies from the starter bank, and a script that scores top-1 and top-6 accuracy, "none" handling, and latency for four rankers: the place's phrases alone, keyword ranking on the partner's line, embeddings from Workers AI, and Jev.
+- **Evaluation:** `packages/eval/` holds 80 partner lines, each with its best replies from the starter bank, and a script that scores top-1 and top-6 accuracy, "none" handling, and latency for four rankers: the place's phrases alone, keyword ranking on the partner's line, embeddings from Workers AI, and Jev.
 
 [tech-expo]: /docs/research/0018-next-gen-tech.md#expo-sdk-57-sdk-58-and-xcode-27
 [cf-secrets]: /docs/research/0010-cloudflare-workers.md#secrets-configuration-and-wrangler
@@ -193,7 +193,7 @@ Round 9 of the log has the [reasoning][r9] behind this plan.
 
 ### The repository
 
-- **Layout:** `app/`, `modules/`, `worker/`, and `eval/`, with an MIT `LICENSE` at the root, where GitHub can detect it, as the rules ask ([license][ng-license]).
+- **Layout:** `apps/mobile/`, `packages/`, `apps/relay/`, and `packages/eval/`, with an MIT `LICENSE` at the root, where GitHub can detect it, as the rules ask ([license][ng-license]).
 - **README:** setup; the Test Store purchase; a path through the paid feature in the Simulator, by typing the partner's line, since live transcription needs a physical iPhone; and the evaluation's table.
 - **Running it without the team's keys:** the app's config points at the team's relay, which runs until the winners are announced. The Test Store key is committed for judging and rotated after the winners are announced; no secret key is. A Debug Simulator build goes in the repository's releases, since a Release build with a Test Store key crashes at launch ([Test Store key][svc-key]) and building for iOS needs a Mac with Xcode 27 on macOS Tahoe 26.6 or later ([what a judge needs][ng-judge]).
 

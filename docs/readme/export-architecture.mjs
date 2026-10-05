@@ -3,10 +3,10 @@
  * Exports the README architecture diagram, tinted with Turn's color tokens.
  *
  * Archify (https://github.com/tt-a1i/archify) renders architecture.json into a standalone HTML viewer. This script
- * delivers a temporary copy of architecture.json (with the meta.output path that `deliver` needs), checks it,
- * restyles the viewer with app/src/constants/theme.ts tokens and the system font stack, and saves the viewer's own
- * SVG export once per color scheme. Archify's SVG export follows prefers-color-scheme, but a README <picture> picks
- * the file by GitHub's theme, so each file is locked to its scheme with the export's svg[data-theme] rules.
+ * delivers a temporary copy of architecture.json (with the meta.output path that `deliver` needs), checks it, restyles
+ * the viewer with apps/mobile/src/constants/theme.ts tokens and the system font stack, and saves the viewer's own SVG
+ * export once per color scheme. Archify's SVG export follows prefers-color-scheme, but a README <picture> picks the
+ * file by GitHub's theme, so each file is locked to its scheme with the export's svg[data-theme] rules.
  *
  * Re-run, from the repository root:
  *   node docs/readme/export-architecture.mjs <archify>/archify/bin/archify.mjs

@@ -1,6 +1,6 @@
 # Turn pitch assets
 
-The [Icon Composer source](/app/assets/turn.icon/icon.json) has separate vector field and mark layers. The [1024-pixel icon](/assets/pitch/turn-icon-1024.png) is its flattened default export; [dark](/assets/pitch/turn-icon-dark-1024.png) and [tinted](/assets/pitch/turn-icon-tinted-1024.png) exports are here too.
+The [Icon Composer source](/apps/mobile/assets/turn.icon/icon.json) has separate vector field and mark layers. The [1024-pixel icon](/assets/pitch/turn-icon-1024.png) is its flattened default export; [dark](/assets/pitch/turn-icon-dark-1024.png) and [tinted](/assets/pitch/turn-icon-tinted-1024.png) exports are here too.
 
 Contents:
 

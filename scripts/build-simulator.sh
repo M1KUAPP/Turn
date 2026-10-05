@@ -34,14 +34,14 @@ bun install --frozen-lockfile
 if ! bun scripts/fetch-companion-models.ts; then
   printf '::warning::The companion'"'"'s Live2D models did not build, so Turn.app shows the face'"'"'s frames.\n' >&2
 fi
-(cd app && bunx expo prebuild --platform ios --clean --no-install)
-(cd app/ios && pod install)
+(cd apps/mobile && bunx expo prebuild --platform ios --clean --no-install)
+(cd apps/mobile/ios && pod install)
 
 # Parallel targets push a compile error far above the log's tail, so a failure prints every error line. The app is
 # signed to run locally: unsigned, it gets no Keychain entitlement in the Simulator, expo-secure-store fails with
 # -34018, and the app never has the user ID the relay and RevenueCat need.
-log="$PWD/app/ios/xcodebuild.log"
-if ! (cd app/ios && xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
+log="$PWD/apps/mobile/ios/xcodebuild.log"
+if ! (cd apps/mobile/ios && xcodebuild -workspace Turn.xcworkspace -scheme Turn -configuration Debug \
   -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath build CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= build > "$log" 2>&1); then
   grep -E ': (fatal )?error: ' "$log" | sort -u
@@ -52,9 +52,9 @@ tail -n 200 "$log"
 
 # Expo's bundling phase sets SKIP_BUNDLING in every Debug build, which FORCE_BUNDLING can't override, so the
 # bundle is embedded here, from the entry the phase would use.
-app="$PWD/app/ios/build/Build/Products/Debug-iphonesimulator/Turn.app"
+app="$PWD/apps/mobile/ios/build/Build/Products/Debug-iphonesimulator/Turn.app"
 (
-  cd app
+  cd apps/mobile
   entry="$(node -e "require('expo/scripts/resolveAppEntry')" "$PWD" ios absolute | tail -n 1)"
   bunx expo export:embed --platform ios --dev false --entry-file "$entry" \
     --bundle-output "$app/main.jsbundle" --assets-dest "$app"
