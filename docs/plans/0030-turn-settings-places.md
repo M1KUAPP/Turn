@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57, Expo Router, React Native, SQLite, Vitest, iOS Simulator.
 
-**Spec:** [Issue #39](https://github.com/RevenueCat-M1KU/RevenueCat/issues/39), [Settings design](/docs/DESIGN.md#settings), [Place picker design](/docs/DESIGN.md#the-place-picker).
+**Spec:** [Issue #39](https://github.com/M1KUAPP/Turn/issues/39), [Settings design](/docs/DESIGN.md#settings), [Place picker design](/docs/DESIGN.md#the-place-picker).
 
 Contents:
 
