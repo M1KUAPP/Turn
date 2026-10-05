@@ -931,7 +931,7 @@ The relay and Jev's credits run until the winners are announced on October 21 or
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
 [labels-plan]: /docs/plans/0013-turn-reply-labels.md#decisions
 [labels-brief]: /docs/plans/0013-turn-reply-labels.md#appendix-the-labelers-brief
-[floor-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/77
+[floor-issue]: https://github.com/M1KUAPP/Turn/issues/77
 [floor-plan]: /docs/plans/0022-turn-no-reply-floor.md#decisions
 [writer-brief]: /docs/plans/0022-turn-no-reply-floor.md#appendix-the-writers-brief
 
