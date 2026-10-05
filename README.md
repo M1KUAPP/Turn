@@ -14,7 +14,7 @@
   <h3>Turn</h3>
 
   <p>
-    An AAC app for iPhone that listens to a conversation partner and offers replies from the user's own saved phrases, so they can answer in time, in their own words.
+    An AAC iPhone app that listens to a conversation partner and suggests replies from the user's own saved phrases, so they can answer in time.
     <br />
     <a href="https://github.com/M1KUAPP/Turn/releases/latest"><strong>Try the Simulator build »</strong></a>
     &middot;
