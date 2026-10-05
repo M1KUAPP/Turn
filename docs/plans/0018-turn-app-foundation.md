@@ -6,7 +6,7 @@
 
 **Tech stack:** Expo SDK 57, React Native 0.86, React 19.2, TypeScript 6, Vitest 4, and Bun workspaces.
 
-**Spec:** [Issue #22](https://github.com/RevenueCat-M1KU/RevenueCat/issues/22), the [TRD](/docs/TRD.md#build-configuration), and the [design](/docs/DESIGN.md#colors).
+**Spec:** [Issue #22](https://github.com/M1KUAPP/Turn/issues/22), the [TRD](/docs/TRD.md#build-configuration), and the [design](/docs/DESIGN.md#colors).
 
 Contents:
 

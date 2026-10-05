@@ -32,8 +32,8 @@ Contents:
 1.  [Appendix: the labelers' brief](#appendix-the-labelers-brief)
 1.  [Appendix: the scripts](#appendix-the-scripts)
 
-[floor-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/77
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[floor-issue]: https://github.com/M1KUAPP/Turn/issues/77
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 
 ## Global constraints

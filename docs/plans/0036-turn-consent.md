@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57, Expo Router, `expo-secure-store`, `expo-crypto`, SQLite's `setting` table, `expo-speech`, Vitest.
 
-**Spec:** [Issue #46](https://github.com/RevenueCat-M1KU/RevenueCat/issues/46), [Permission and consent](/docs/PRD.md#permission-and-consent), [Relay API](/docs/TRD.md#relay-api), [Networking](/docs/TRD.md#networking), [the permission step](/docs/DESIGN.md#the-permission-step), [the consent card](/docs/DESIGN.md#the-consent-card).
+**Spec:** [Issue #46](https://github.com/M1KUAPP/Turn/issues/46), [Permission and consent](/docs/PRD.md#permission-and-consent), [Relay API](/docs/TRD.md#relay-api), [Networking](/docs/TRD.md#networking), [the permission step](/docs/DESIGN.md#the-permission-step), [the consent card](/docs/DESIGN.md#the-consent-card).
 
 Contents:
 
