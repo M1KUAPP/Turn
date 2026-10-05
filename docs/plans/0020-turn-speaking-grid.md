@@ -1,6 +1,6 @@
 # Turn speaking grid
 
-Implement [issue #27](https://github.com/RevenueCat-M1KU/RevenueCat/issues/27) on `feat/27-speak-grid`. The existing starter bank is the initial data.
+Implement [issue #27](https://github.com/M1KUAPP/Turn/issues/27) on `feat/27-speak-grid`. The existing starter bank is the initial data.
 
 Contents:
 

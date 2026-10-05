@@ -31,10 +31,10 @@ Contents:
     1.  [Task 10: The TRD](#task-10-the-trd)
     1.  [Task 11: Graph, pull request, review, deploy, and merge](#task-11-graph-pull-request-review-deploy-and-merge)
 
-[count-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/30
-[script-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/31
-[alert-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/32
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[count-ticket]: https://github.com/M1KUAPP/Turn/issues/30
+[script-ticket]: https://github.com/M1KUAPP/Turn/issues/31
+[alert-ticket]: https://github.com/M1KUAPP/Turn/issues/32
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [trd-storage]: /docs/TRD.md#the-relays-storage
 [trd-api]: /docs/TRD.md#relay-api
 [trd-check]: /docs/TRD.md#the-relays-entitlement-check
@@ -69,8 +69,8 @@ Contents:
 - **Secrets and identifiers.** RevenueCat's secret key, the logs token, and the account ID never appear in a command line, an output, a tracked file, a log, or a comment: scripts read them from the environment, and `gh secret set` reads them from standard input. Tests use made-up values. The app user IDs of live checks are fresh random UUIDs made for the check, never a person's. The RevenueCat project ID and the entitlement's object ID, which #15 shared with the team and which grant nothing alone, are committed as vars, as the TRD lists them.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[limits-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/35
-[app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/48
+[limits-ticket]: https://github.com/M1KUAPP/Turn/issues/35
+[app-ticket]: https://github.com/M1KUAPP/Turn/issues/48
 
 ## Skills
 

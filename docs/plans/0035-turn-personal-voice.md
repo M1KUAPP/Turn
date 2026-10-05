@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57 local modules, Swift, AVFAudio, `expo-speech`, Expo Router, SQLite, Vitest.
 
-**Spec:** [Issue #42](https://github.com/RevenueCat-M1KU/RevenueCat/issues/42), [voices](/docs/PRD.md#voices), [the turn-voice module](/docs/TRD.md#the-turn-voice-module), [Settings](/docs/DESIGN.md#settings), [iPhone notes on Personal Voice](/docs/research/0023-turn-ios.md#personal-voice).
+**Spec:** [Issue #42](https://github.com/M1KUAPP/Turn/issues/42), [voices](/docs/PRD.md#voices), [the turn-voice module](/docs/TRD.md#the-turn-voice-module), [Settings](/docs/DESIGN.md#settings), [iPhone notes on Personal Voice](/docs/research/0023-turn-ios.md#personal-voice).
 
 Contents:
 

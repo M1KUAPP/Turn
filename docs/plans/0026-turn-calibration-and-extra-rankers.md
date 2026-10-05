@@ -40,8 +40,8 @@ Contents:
     1.  [The second pull request's review](#the-second-pull-requests-review)
 1.  [Appendix: the run's script](#appendix-the-runs-script)
 
-[extras-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/45
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[extras-issue]: https://github.com/M1KUAPP/Turn/issues/45
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-eval]: /docs/PRD.md#evaluation-requirements
 [trd-rankers]: /docs/TRD.md#the-rankers
 [trd-metrics]: /docs/TRD.md#metrics-intervals-and-thresholds
@@ -146,7 +146,7 @@ Contents:
 - `jev-rerank` (EVAL-4), which runs only when Jev trails; the first run found that Jev leads.
 - Changing the phone's shortlist or any setting of Jev's.
 
-[readme-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/64
+[readme-issue]: https://github.com/M1KUAPP/Turn/issues/64
 
 ## Verification gate
 
@@ -324,7 +324,7 @@ One round on #97, [posted there][review-97], had three reviewers: Standards, Spe
   - The helper's first-line check stays, since it checks an outside process's output as Workers AI's answers are checked, and it now stops the helper too.
   - The helper has no timeout: the run is attended, a helper that has named itself answers in milliseconds, and the report is written only at the end, so an interrupted run leaves nothing half-written.
 
-[review-97]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/97#issuecomment-5799598837
+[review-97]: https://github.com/M1KUAPP/Turn/pull/97#issuecomment-5799598837
 
 ## The second run
 
@@ -351,7 +351,7 @@ The first pull request merged as `1b3ff03` at 18:11:26 UTC on September 23, 2026
 
 `eval/results.md` stays the first run's, at `8ea25eb`, and is the table the README will copy. `eval/results-extras.md` is the second run's, at `1b3ff03`, and every result above comes from it.
 
-[legend-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/101
+[legend-issue]: https://github.com/M1KUAPP/Turn/issues/101
 
 ### The second pull request's review
 
@@ -362,7 +362,7 @@ One round on #100, [posted there][review-100], had the same three reviewers. The
 - **Kept:** commit `3d27874`'s message says decision 12, since a reword would force-push over reviewed commits.
 - **After the merge:** #45's box, its closing comment, and the note on #64, as decision 13 and Task 15 ask.
 
-[review-100]: https://github.com/RevenueCat-M1KU/RevenueCat/pull/100#issuecomment-5801021832
+[review-100]: https://github.com/M1KUAPP/Turn/pull/100#issuecomment-5801021832
 
 ## Appendix: the run's script
 

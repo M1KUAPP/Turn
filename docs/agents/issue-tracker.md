@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and specs for this repo live as GitHub issues in `RevenueCat-M1KU/RevenueCat`. Use the `gh` CLI for all operations.
+Issues and specs for this repo live as GitHub issues in `M1KUAPP/Turn`. Use the `gh` CLI for all operations.
 
 Plan files are the exception: when a change has one, it's committed on the change's branch as `docs/plans/NNNN-<topic>.md`, numbered one past the highest plan there, and its path is passed to `/code-review` as the spec. Specs from `/to-spec`, tickets, and wayfinder maps stay in GitHub issues.
 
