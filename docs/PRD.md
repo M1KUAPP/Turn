@@ -192,7 +192,7 @@ The flows follow the product's [principles][product-principles]; the TRD says ho
 - **PAY-9, Must.** Judges can use Listen mode, free of charge and without restriction, until judging ends on October 13, 2026, as the [official rules][ctx-rules] require: the Test Store purchase works in the builds they run, or the build that can't buy isn't held to the free lines. Check: on September 25, buy in the Simulator build, or run 25 lines in it.
 - **PAY-10, Should.** The user's ID survives a reinstall where iOS keeps it, so the purchase and the count of free lines do too. Check: buy, delete and reinstall Turn on the same iPhone, and see Listen mode still unlocked.
 
-[ctx-rules]: /docs/CONTEXT.md#what-the-official-rules-add
+[ctx-rules]: /CONTEXT.md#what-the-official-rules-add
 
 ### Settings
 

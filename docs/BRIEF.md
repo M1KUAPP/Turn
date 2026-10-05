@@ -264,7 +264,7 @@ Tips from RevenueCat's "How to win Shipaton" series, written for 2025, and from 
 
 ## Open questions
 
-The captured sources leave these points open or disagree on them. Confirm them in the official rules, on Discord, or at `shipaton@revenuecat.com`. The context's [summary of the official rules](/docs/CONTEXT.md#what-the-official-rules-add) settles several of them and gives a different winners date.
+The captured sources leave these points open or disagree on them. Confirm them in the official rules, on Discord, or at `shipaton@revenuecat.com`. The context's [summary of the official rules](/CONTEXT.md#what-the-official-rules-add) settles several of them and gives a different winners date.
 
 - **Official rules.** They are not captured, so the minimum age outside Next Gen, the full country list, IP ownership, taxes, disqualification terms, and the "full judging criteria" are not covered here. Shipyard's rules covered IP and disqualification, but that was a different hackathon.
 - **Multiple prizes.** You can enter several categories, but no 2026 source says whether one app can win more than one prize. Enter the categories that fit, and don't count on more than one prize.
@@ -282,7 +282,7 @@ The captured sources leave these points open or disagree on them. Confirm them i
 ## See also
 
 - [Research notes](/docs/research/0001-shipaton-2026.md): per-claim citations and the full perk, event, and livestream tables.
-- [Context](/docs/CONTEXT.md): what the official rules settle or change, what past winners did, best practices from primary sources, and related materials.
+- [Context](/CONTEXT.md): what the official rules settle or change, what past winners did, best practices from primary sources, and related materials.
 - [Idea](/docs/IDEA.md): Turn, the Next Gen Award entry chosen through ten rounds of ideation, with a hosted decision model built in.
 - [Product](/docs/PRODUCT.md): what Turn is, for whom, and why, with its principles, metrics, and roadmap.
 - [Product requirements](/docs/PRD.md): what the first version must do, as numbered requirements with checks.

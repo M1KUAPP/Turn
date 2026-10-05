@@ -492,7 +492,7 @@ What the sources don't say that DESIGN.md needs, as of September 22, 2026:
 - [Technical requirements](/docs/archive/guessling-trd.md#reactions-sound-and-haptics): how the reactions, sound, and haptics are built.
 - [Daily puzzle notes][daily]: release times, share formats, streaks, archives, and end-of-round screens.
 - [Apple notes](/docs/research/0011-apple-requirements.md#sharing-haptics-and-sound): share sheet, haptics, and sound rules, and the Accessibility Nutrition Labels.
-- [Brief](/docs/BRIEF.md#rules-to-watch) and [context](/docs/CONTEXT.md#what-the-official-rules-add): Shipaton's rules.
+- [Brief](/docs/BRIEF.md#rules-to-watch) and [context](/CONTEXT.md#what-the-official-rules-add): Shipaton's rules.
 
 [daily]: /docs/research/0012-daily-puzzles.md
 [dp-rules]: https://revenuecat-shipaton-2026.devpost.com/rules

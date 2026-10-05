@@ -1,6 +1,6 @@
 # Turn product, PRD, and TRD implementation plan
 
-**Goal:** Recreate `docs/PRODUCT.md`, `docs/PRD.md`, and `docs/TRD.md` for Turn, the Next Gen Award entry that replaced Guessling: what Turn is and why, what its first version must do, and how it's built, from the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), and the [idea](/docs/IDEA.md), so the team can build it, film it on September 28, and submit it by September 30, 2026.
+**Goal:** Recreate `docs/PRODUCT.md`, `docs/PRD.md`, and `docs/TRD.md` for Turn, the Next Gen Award entry that replaced Guessling: what Turn is and why, what its first version must do, and how it's built, from the [brief](/docs/BRIEF.md), the [context](/CONTEXT.md), and the [idea](/docs/IDEA.md), so the team can build it, film it on September 28, and submit it by September 30, 2026.
 
 **Architecture:** Four new research notes fill what the existing notes leave open for a build: AAC practice, Turn's iPhone build, its relay and services, and how to evaluate reply ranking. The Guessling product, PRD, and TRD move to `docs/archive/`, and the documents built on them point there, as the Guessling idea did in PR #7. Each new document is then written section by section, so every commit leaves a consistent document: the product first, because the PRD argues from its principles, then the PRD, then the TRD, which traces every requirement ID.
 
