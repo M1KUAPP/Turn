@@ -167,7 +167,7 @@ The steps below follow the Simulator build, where the partner's line is typed; o
 
 4. **Answer.** Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
 
-   <img src="docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard, with the floating speaking toolbar below" width="300">
+   <img src="docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard" width="300">
 
 5. **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
 
