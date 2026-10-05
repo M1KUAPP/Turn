@@ -289,14 +289,14 @@ Give each line a `topic`: 1 to 3 lowercase words, letters and single spaces only
 
 ## Output
 
-1. `{FOLDER}/lines.jsonl`: exactly 40 lines, one JSON object per line, keys in this order, with ASCII apostrophes ('):
+1.  `{FOLDER}/lines.jsonl`: exactly 40 lines, one JSON object per line, keys in this order, with ASCII apostrophes ('):
 
-   ```json
-   {"id":"{FIRST}","author":"{AUTHOR}","text":"...","kind":"yes_no","place":"home","topic":"...","concerns":["health"]}
-   ```
+    ```json
+    {"id":"{FIRST}","author":"{AUTHOR}","text":"...","kind":"yes_no","place":"home","topic":"...","concerns":["health"]}
+    ```
 
-   Ids run from "{FIRST}" to "{LAST}" in order, and `author` is always "{AUTHOR}".
-2. Before you finish, check the file with a short script in {FOLDER} (python3 is available): 40 valid JSON objects; the ids above; 10 lines per place; every kind and concern from the lists above; texts of 1 to 300 characters with no leading or trailing space; the kind and concern counts above; topics matching `^[a-z]+( [a-z]+)*$`; no two texts alike. Fix anything off.
+    Ids run from "{FIRST}" to "{LAST}" in order, and `author` is always "{AUTHOR}".
+2.  Before you finish, check the file with a short script in {FOLDER} (python3 is available): 40 valid JSON objects; the ids above; 10 lines per place; every kind and concern from the lists above; texts of 1 to 300 characters with no leading or trailing space; the kind and concern counts above; topics matching `^[a-z]+( [a-z]+)*$`; no two texts alike. Fix anything off.
 
 Report back in under 100 words: the file's path, the counts by kind, place, and concern, and how many lines you meant to have no stored reply. Don't paste the lines.
 ````
@@ -414,13 +414,13 @@ You are the second reader of Turn's starter bank. Another agent wrote it; you wr
 
 ## Read for
 
-1. **CONTENT-1:** plain US English (spelling and words), at most 120 characters, no real person named; the Quick category, the strip's five, and phrases for pain, where it hurts, and refusing or agreeing to care are all there.
-2. **Plain language:** one idea per phrase, active voice, everyday words rather than clinical ones.
-3. **Voice:** an adult's own first-person voice, warm and direct; nothing childish, patronizing, or that a user would be embarrassed to say aloud; nothing that assumes a gender, a family shape, a religion, a diet, or a budget.
-4. **Safety:** can the user stop care, refuse, agree, ask what's happening, say how bad the pain is and where, ask for help, and get attention? Name anything missing.
-5. **Places:** each tie makes sense, and phrases that belong at a place are tied to it.
-6. **Duplicates:** two phrases that say the same thing, or one that repeats the strip's or Quick's.
-7. **Mechanics:** clumsy or ambiguous wording, US spelling, the punctuation rule (no period after a one-sentence statement, a "?" after a question, full punctuation when a phrase has two sentences), straight apostrophes, and ids that don't match their text.
+1.  **CONTENT-1:** plain US English (spelling and words), at most 120 characters, no real person named; the Quick category, the strip's five, and phrases for pain, where it hurts, and refusing or agreeing to care are all there.
+2.  **Plain language:** one idea per phrase, active voice, everyday words rather than clinical ones.
+3.  **Voice:** an adult's own first-person voice, warm and direct; nothing childish, patronizing, or that a user would be embarrassed to say aloud; nothing that assumes a gender, a family shape, a religion, a diet, or a budget.
+4.  **Safety:** can the user stop care, refuse, agree, ask what's happening, say how bad the pain is and where, ask for help, and get attention? Name anything missing.
+5.  **Places:** each tie makes sense, and phrases that belong at a place are tied to it.
+6.  **Duplicates:** two phrases that say the same thing, or one that repeats the strip's or Quick's.
+7.  **Mechanics:** clumsy or ambiguous wording, US spelling, the punctuation rule (no period after a one-sentence statement, a "?" after a question, full punctuation when a phrase has two sentences), straight apostrophes, and ids that don't match their text.
 
 Keep in mind the spec's fixed items, which must not change: Quick's five phrases and their ids; the strip's five and their ids; the ids `body-pain` and `food`; "Water, please" tied to Home; "It was hard" tied to Clinic; a phrase with "tired"; 140 to 160 phrases in 9 to 11 categories; at least 10 phrases per place.
 
@@ -428,9 +428,9 @@ Keep in mind the spec's fixed items, which must not change: Quick's five phrases
 
 Under 500 words, in three parts:
 
-1. **Must fix:** each issue with the phrase's id, what's wrong, and the exact replacement text (or "delete", or a new phrase with its category, id, and places).
-2. **Could fix:** the same format, for improvements that aren't required.
-3. **Sign-off:** one sentence saying whether you'd sign off on the bank once the must-fix items are done.
+1.  **Must fix:** each issue with the phrase's id, what's wrong, and the exact replacement text (or "delete", or a new phrase with its category, id, and places).
+2.  **Could fix:** the same format, for improvements that aren't required.
+3.  **Sign-off:** one sentence saying whether you'd sign off on the bank once the must-fix items are done.
 ```
 
 The bank's writer then got this message, followed by the reader's first report, unchanged:

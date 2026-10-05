@@ -593,13 +593,13 @@ show('Files present', collections.Counter(
     (r['prefix'], ' + '.join(sorted(r['files']))) for r in rows))
 show('workingPrompt mode, recovered', collections.Counter(
     (r['prefix'], r['meta']['workingPrompt'].get('mode'),
-     r['meta']['workingPrompt'].get('recovered')) for r in rows))
+      r['meta']['workingPrompt'].get('recovered')) for r in rows))
 same = collections.Counter()
 for r in rows:
     if {'prompt.md', 'working-prompt.md'} <= r['files']:
         base = os.path.join(ROOT, r['folder'])
         same[read(os.path.join(base, 'prompt.md'))
-             == read(os.path.join(base, 'working-prompt.md'))] += 1
+              == read(os.path.join(base, 'working-prompt.md'))] += 1
 show('prompt.md identical to working-prompt.md', same)
 versus, kinds = collections.Counter(), collections.Counter()
 for r in rows:
@@ -608,8 +608,8 @@ for r in rows:
         captured = read(os.path.join(ROOT, r['folder'], 'prompt.md'))
         a, b = re.sub(r'\s+', '', res['prompt_text']), re.sub(r'\s+', '', captured)
         versus['same text' if a == b else 'same text inside a wrapper' if b in a
-               else 'reconstruction' if 'Reconstructed Working Prompt' in captured
-               else 'another version'] += 1
+                else 'reconstruction' if 'Reconstructed Working Prompt' in captured
+                else 'another version'] += 1
     if r['meta']['workingPrompt'].get('mode') == 'premium':
         flag = re.search(r'^premium:\s*(\w+)', r['text'].split('---')[1], re.M) \
             if r['text'].startswith('---') else None
@@ -649,7 +649,7 @@ show('record.created_at by month', collections.Counter(
     (x.get('created_at') or 'none')[:7] for x in rec))
 show('Preview video, preview image', collections.Counter(
     (r['prefix'], bool(r['meta']['record'].get('video_preview_url')),
-     bool(r['meta']['record'].get('image_preview_url'))) for r in rows))
+      bool(r['meta']['record'].get('image_preview_url'))) for r in rows))
 
 # 3. Optional join to the live listing, for real dates and free flags.
 if LIVE:
@@ -674,7 +674,7 @@ if LIVE:
             x.get(field) for x in newest), 6, d=len(newest))
     show('Folders found in the live listing', collections.Counter(
         (r['prefix'], r['meta']['workingPrompt']['mode'],
-         'free' if h['is_free'] else 'paid') for r, h in hits))
+          'free' if h['is_free'] else 'paid') for r, h in hits))
     show('Matched folders by live month', collections.Counter(
         h['created_at'][:7] for _r, h in hits))
     show('Matched folders by live type', collections.Counter(
@@ -694,12 +694,12 @@ STACK = {
                                 r'|\bapp router\b|framework\W{0,8}next\.?js|next\.config',
     'Tailwind CSS': r'tailwind',
     'framer-motion or motion': r'framer[- ]?motion|\bmotion/react\b'
-                               r'|(?-i:["\']motion["\']\s*:)|npm package "motion"'
-                               r'|\bmotion\.(?:div|span|h[1-6]|p|section|button|img|a|li)\b',
+                                r'|(?-i:["\']motion["\']\s*:)|npm package "motion"'
+                                r'|\bmotion\.(?:div|span|h[1-6]|p|section|button|img|a|li)\b',
     'GSAP': r'\bgsap\b|scrolltrigger',
     'Lenis': r'\blenis\b',
     'three.js or React Three Fiber': r'three\.?js|@react-three|react[- ]three[- ]fiber'
-                                     r'|\bR3F\b|from [\'"]three[\'"]',
+                                      r'|\bR3F\b|from [\'"]three[\'"]',
     'Spline': r'@splinetool|spline\.design|\bspline (?:scene|viewer|3d)',
     'hls.js': r'hls\.?js|\bnew Hls\b',
     'lucide-react': r'lucide',
@@ -713,8 +713,8 @@ print(f'  {pct(len(both)):>14} | '
 
 # 5. Fonts: Google Fonts URLs and font-family declarations.
 GENERIC = {'sans-serif', 'serif', 'monospace', 'system-ui', 'ui-sans-serif',
-           'ui-serif', 'ui-monospace', '-apple-system', 'blinkmacsystemfont',
-           'inherit', 'cursive', 'initial', 'arial', 'helvetica'}
+            'ui-serif', 'ui-monospace', '-apple-system', 'blinkmacsystemfont',
+            'inherit', 'cursive', 'initial', 'arial', 'helvetica'}
 ICONS = r'material (?:symbols|icons)|font ?awesome|phosphor|ionicons'
 
 
@@ -795,7 +795,7 @@ SAYS_LIGHT = r'\blight[- ](?:mode|theme|background|ui)\b'
 LIGHT_TEXT = (r'\btext-white\b|\bcolor:\s*(?:#fff\b|#ffffff\b|white\b)'
               r'|\bcolor:\s*rgba?\(\s*255,\s*255,\s*255')
 DARK_TEXT = (r'\btext-black\b|\btext-' + TW_GRAY + r'-(?:800|900|950)\b'
-             r'|\bcolor:\s*(?:#000\b|#000000\b|black\b|#111\b|#111111\b)')
+              r'|\bcolor:\s*(?:#000\b|#000000\b|black\b|#111\b|#111111\b)')
 FIRST_BG = (r'background(?:-color)?\**\s*[:=]\s*[`\'"]?\s*(?:pure\s+|solid\s+)?'
             r'(' + COLOR + ')')
 
@@ -829,7 +829,7 @@ def by_first_background(text):
 
 
 STEPS = [('page color', by_page_color), ('stated theme', by_stated_theme),
-         ('text color', by_text_color), ('first background', by_first_background)]
+          ('text color', by_text_color), ('first background', by_first_background)]
 
 
 def page_background(text):
@@ -856,7 +856,7 @@ table('Stated theme', {'says dark': SAYS_DARK, 'says light': SAYS_LIGHT})
 # How often the two weaker steps agree where a stronger step decides.
 for name, step in STEPS[2:]:
     pairs = [(by_page_color(r['text']) or by_stated_theme(r['text']), step(r['text']))
-             for r in rows]
+              for r in rows]
     pairs = [(a, b) for a, b in pairs if a and b]
     agree = sum(1 for a, b in pairs if a == b)
     print(f'  {name} agrees with page color or stated theme: {agree} of {len(pairs)}')
@@ -904,11 +904,11 @@ TECH = {
                                       r'|each (?:letter|word|character|char)\b'
                                       r'|\.split\(\s*[\'"]\s?[\'"]\s*\)',
     '3D, as a word or a CSS 3D transform': r'\b3d\b|three\.?js|@react-three|preserve-3d'
-                                           r'|translateZ|rotate[XY]\(',
+                                            r'|translateZ|rotate[XY]\(',
     'particles': r'particle',
     'shaders or WebGL': r'shader|webgl|\bglsl\b|gl_FragColor',
     'custom cursor': r'custom[- ]cursor|cursor:\s*none|cursor-none|cursor[- ](?:follower'
-                     r'|trail|dot|ring|glow|blob)|follows? the (?:cursor|mouse)',
+                      r'|trail|dot|ring|glow|blob)|follows? the (?:cursor|mouse)',
     'bento grid': r'bento',
     'magnetic button or hover': r'magnetic[\s"-]{1,3}(?:button|hover|effect|cursor|pull'
                                 r'|mouse|interaction|squares|attraction|force|field|link)'
@@ -916,7 +916,7 @@ TECH = {
     'beams or spotlights': r'\bbeams?\b|spotlight|light rays?|god ?rays',
     'aurora background': r'aurora[- ](?:background|glow|gradient|effect|lit|glass|blob|light)',
     'springs': r'type:\s*[\'"`]spring|useSpring|withSpring|stiffness|damping'
-               r'|spring (?:physics|animation|transition|config)',
+                r'|spring (?:physics|animation|transition|config)',
     'mask-composite border': r'mask-composite',
     'gradient text (background-clip: text)': r'background-clip:\s*text|bg-clip-text',
     'blend modes': r'mix-blend|blend-mode',
@@ -929,7 +929,7 @@ LANG = {
     'pill shapes (rounded-full, radius 9999px)': r'rounded-full|border-radius:\s*(?:9999|999|100)px',
     'white text at reduced opacity (text-white/NN)': r'text-white/\d+',
     'uppercase with letter spacing': r'uppercase[^\n]{0,80}(?:tracking|letter-spacing)'
-                                     r'|(?:tracking|letter-spacing)[^\n]{0,80}uppercase',
+                                      r'|(?:tracking|letter-spacing)[^\n]{0,80}uppercase',
     'serif italic accent': r'italic[^\n]{0,60}serif|serif[^\n]{0,60}italic',
 }
 table('Design language', LANG)
@@ -1006,7 +1006,7 @@ if LIVE:
           + ' | '.join(f'{p} n={len(groups[p])}' for p in order))
     for label, pat in TREND.items():
         cells = [f'{100 * sum(1 for t in groups[p] if re.search(pat, t, I)) / len(groups[p]):>3.0f}%'
-                 for p in order]
+                  for p in order]
         print(f'  {" | ".join(cells)}  {label}')
     print(f'  median length: {[sorted(map(len, groups[p]))[len(groups[p]) // 2] for p in order]}')
 ```

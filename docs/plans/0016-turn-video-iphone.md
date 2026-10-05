@@ -102,10 +102,10 @@ UDID=$(jq -r '.result.devices[]
 jq -r '.result.devices[]
   | select(.properties.hardware.reality == "physical") | .properties
   | [.hardware.marketingName, .hardware.productType,
-     .software.osVersionNumber.stringValue,
-     .software.osBuildVersions.buildVersion.name,
-     .connection.pairingState,
-     (.state.developerModeStatus | keys[0])] | @tsv' devices.json
+      .software.osVersionNumber.stringValue,
+      .software.osBuildVersions.buildVersion.name,
+      .connection.pairingState,
+      (.state.developerModeStatus | keys[0])] | @tsv' devices.json
 xcodebuild -project TurnProbe.xcodeproj -scheme TurnProbe \
   -configuration Debug -destination "id=${UDID:?}" -derivedDataPath build \
   -allowProvisioningUpdates -allowProvisioningDeviceRegistration \

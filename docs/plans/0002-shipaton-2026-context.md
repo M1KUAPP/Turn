@@ -688,7 +688,7 @@ bad = 0
 for url in urls:
     code = subprocess.run(
         ['curl', '-sL', '-o', '/dev/null', '-w', '%{http_code}', '--max-time', '20',
-         '-A', 'Mozilla/5.0', url],
+          '-A', 'Mozilla/5.0', url],
         capture_output=True, text=True).stdout
     if not code.startswith('2'):
         bad += 1

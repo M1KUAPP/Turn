@@ -320,10 +320,10 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
     async nextReviewCategoryId(): Promise<string | null> {
       const row = await db.getFirstAsync<{ id: string }>(
         `SELECT c.id FROM category c
-           JOIN phrase p ON p.category_id = c.id
-           WHERE p.reviewed = 0
-           ORDER BY c.position, c.id
-           LIMIT 1`
+            JOIN phrase p ON p.category_id = c.id
+            WHERE p.reviewed = 0
+            ORDER BY c.position, c.id
+            LIMIT 1`
       )
       return row?.id ?? null
     },
@@ -726,10 +726,10 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
         // Compare duplicate phrase text across the whole bank after trimming and ignoring case
         const existing = await tx.getFirstAsync<Phrase>(
           `SELECT p.* FROM phrase p
-           JOIN category c ON c.id = p.category_id
-           WHERE LOWER(TRIM(p.text)) = LOWER(?)
-           ORDER BY c.position, p.position, p.id
-           LIMIT 1`,
+            JOIN category c ON c.id = p.category_id
+            WHERE LOWER(TRIM(p.text)) = LOWER(?)
+            ORDER BY c.position, p.position, p.id
+            LIMIT 1`,
           trimmed
         )
         if (existing) {
@@ -739,8 +739,8 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
 
         const allPhrases = await tx.getAllAsync<Phrase>(
           `SELECT p.* FROM phrase p
-           JOIN category c ON c.id = p.category_id
-           ORDER BY c.position, p.position, p.id`
+            JOIN category c ON c.id = p.category_id
+            ORDER BY c.position, p.position, p.id`
         )
         const normalized = trimmed.toLowerCase()
         const jsMatch = allPhrases.find((p) => p.text.trim().toLowerCase() === normalized)
@@ -819,14 +819,14 @@ export function createBankStore(db: BankDatabase, starter: StarterBank, now: () 
       type CandidateRow = Phrase & { place_match: number }
       const rows = await db.getAllAsync<CandidateRow>(
         `SELECT p.id, p.category_id, p.text, p.position, p.fixed, p.reviewed, p.created_at,
-           EXISTS(
-             SELECT 1 FROM phrase_place pp
-             WHERE pp.phrase_id = p.id AND pp.place_id = ?
-           ) AS place_match
-         FROM phrase p
-         JOIN category c ON c.id = p.category_id
-         WHERE c.id != 'strip'
-         ORDER BY place_match DESC, c.position, p.position, p.id`,
+            EXISTS(
+              SELECT 1 FROM phrase_place pp
+              WHERE pp.phrase_id = p.id AND pp.place_id = ?
+            ) AS place_match
+          FROM phrase p
+          JOIN category c ON c.id = p.category_id
+          WHERE c.id != 'strip'
+          ORDER BY place_match DESC, c.position, p.position, p.id`,
         placeId ?? ''
       )
 
