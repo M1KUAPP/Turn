@@ -4,7 +4,7 @@
 
 **Goal:** Add `docs/IDEA.md`: the app a team will build and ship for RevenueCat Shipaton 2026 by September 30, 2026, chosen through ten rounds of ideation, with Jev built into the project.
 
-**Architecture:** Two new research notes, on [Jev](/docs/research/0005-jev.md) and the [2026 project gallery](/docs/research/0006-gallery-2026.md), join the [brief](/docs/BRIEF.md) and the [context](/docs/CONTEXT.md) as the inputs to ten rounds of ideation. Each round is one task and one commit, logged in `docs/research/0007-ideation.md`. `docs/IDEA.md` then states the chosen idea and how to ship it, linking to the brief, the context, and the log instead of repeating them. Each task on the idea adds whole sections with their `Contents:` entries, so every commit leaves a consistent document.
+**Architecture:** Two new research notes, on [Jev](/docs/research/0005-jev.md) and the [2026 project gallery](/docs/research/0006-gallery-2026.md), join the [brief](/docs/BRIEF.md) and the [context](/CONTEXT.md) as the inputs to ten rounds of ideation. Each round is one task and one commit, logged in `docs/research/0007-ideation.md`. `docs/IDEA.md` then states the chosen idea and how to ship it, linking to the brief, the context, and the log instead of repeating them. Each task on the idea adds whole sections with their `Contents:` entries, so every commit leaves a consistent document.
 
 **Tech Stack:** Markdown (GFM), Prettier 3 run by husky and lint-staged, commitlint with Conventional Commits, the `gh` CLI, Python 3 with curl for the local checks in the [appendix](#appendix-check-scripts), and subagents for the rounds that need independent views.
 
@@ -149,7 +149,7 @@ check() { f=$1; shift; for p in "$@"; do grep -qE -- "$p" "$f" || echo "MISSING:
 
 ## Tasks
 
-The inputs are the [brief](/docs/BRIEF.md), the [context](/docs/CONTEXT.md), the [Jev notes](/docs/research/0005-jev.md), and the [gallery notes](/docs/research/0006-gallery-2026.md). Every subagent prompt below also carries the repo rule: run `graphify query "<question>"` before grepping or reading repo files. Subagents write no repo file unless their prompt names one, and never run git.
+The inputs are the [brief](/docs/BRIEF.md), the [context](/CONTEXT.md), the [Jev notes](/docs/research/0005-jev.md), and the [gallery notes](/docs/research/0006-gallery-2026.md). Every subagent prompt below also carries the repo rule: run `graphify query "<question>"` before grepping or reading repo files. Subagents write no repo file unless their prompt names one, and never run git.
 
 ### Task 1: Research notes
 
@@ -449,7 +449,7 @@ git commit -m "docs(ideation): choose the idea (round 7)"
 
 - [ ] **Step 1: Design**
 
-From the context's [monetization section](/docs/CONTEXT.md#monetization-and-paywalls): the paywall moment, what stays free, the packages and prices within the common ranges, the trial length given the deadline, and the offer codes that give judges a free month or longer.
+From the context's [monetization section](/CONTEXT.md#monetization-and-paywalls): the paywall moment, what stays free, the packages and prices within the common ranges, the trial length given the deadline, and the offer codes that give judges a free month or longer.
 
 - [ ] **Step 2: Log, check, and commit**
 

@@ -796,7 +796,7 @@ The Worker integration tests that matter most:
 The plugin injects its own Node.js compatibility flags, unlike production from 2026-08-04, and Vitest's fake timers don't reach the KV simulator, so date logic takes the clock as a parameter ([Cloudflare notes][cf-tests]). Before each submission, the context's [review essentials][ctx-apple] and RevenueCat's launch checklist are the pre-flight (RELEASE-1).
 
 [cf-tests]: /docs/research/0010-cloudflare-workers.md#local-development-and-tests
-[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[ctx-apple]: /CONTEXT.md#apple-app-store-review-essentials
 
 ## Environments and release
 

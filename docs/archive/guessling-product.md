@@ -163,7 +163,7 @@ The targets below are decisions this document sets, except where a source is nam
 [idea-launch]: /docs/archive/guessling-idea.md#launch-and-pitch
 [idea-risks]: /docs/archive/guessling-idea.md#risks
 [prd-perf]: /docs/archive/guessling-prd.md#performance
-[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[ctx-money]: /CONTEXT.md#monetization-and-paywalls
 
 ## Roadmap
 
@@ -178,8 +178,8 @@ The targets below are decisions this document sets, except where a source is nam
   - Other languages, once Jev's accuracy outside English is known; English is "where accuracy is currently best" ([Jev notes][jev-lang]).
   - Leaderboards and friends, only in a form that can't spoil a puzzle.
 
-[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
-[ctx-push]: /docs/CONTEXT.md#retention-and-push-notifications
+[ctx-apple]: /CONTEXT.md#apple-app-store-review-essentials
+[ctx-push]: /CONTEXT.md#retention-and-push-notifications
 [jev-lang]: /docs/research/0005-jev.md#jev-platform-and-language-support
 
 ## What Guessling is not

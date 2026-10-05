@@ -182,7 +182,7 @@ https://apps.apple.com/app/id<APP_ID>
 - **PAY-7, Must.** Judges get a free month of Guessling+ through an Apple offer code: a custom code with a small redemption limit, for one month free with auto-renewal off, open to new, existing, and expired subscribers, sent as a redemption link. A judge whose Guessling+ doesn't unlock taps Restore Purchases. Check: once the app is live and the code is an hour old, since Apple says new codes can take that long to work, redeeming it on a real device unlocks the archive.
 - **PAY-8, Should.** Settings has Redeem Code, which opens Apple's offer code sheet, and Manage Subscription, which opens the App Store's subscription settings. Check: both open.
 
-[ctx-money]: /docs/CONTEXT.md#monetization-and-paywalls
+[ctx-money]: /CONTEXT.md#monetization-and-paywalls
 [rc-buttons]: /docs/research/0009-revenuecat-expo.md#close-restore-and-legal-buttons
 
 ### Reporting an answer
@@ -296,7 +296,7 @@ The context's [review essentials][ctx-apple] and store listing guidance apply; t
 - **STORE-7, Must.** The review notes say how to play, that answers come from the team's server so the device needs a network, how to test both notice choices, what "Report this answer" does, how to reach the archive and buy Guessling+ in the sandbox, and today's answers for the review days, within the 4,000 bytes the field allows. Check: a teammate follows them on a clean install.
 - **STORE-8, Must.** The app is offered in the United States and other storefronts, except China mainland and Vietnam, which need game licenses; Brazil once its tax form is in; and the EU's 27 once the team completes trader verification, which publishes its contact details on EU product pages ([Apple notes on storefronts][apple-eu]). The team starts that verification on September 22, because judges in the EU couldn't download the app without it, and the rules require access "without any restriction". The subscriptions use the same storefronts. Check: the availability settings.
 
-[ctx-apple]: /docs/CONTEXT.md#apple-app-store-review-essentials
+[ctx-apple]: /CONTEXT.md#apple-app-store-review-essentials
 [apple-rating]: /docs/research/0011-apple-requirements.md#questionnaire-answers-for-guessling
 [apple-privacy]: /docs/research/0011-apple-requirements.md#guesslings-data-classified
 [apple-eu]: /docs/research/0011-apple-requirements.md#eu-trader-status-and-storefronts
