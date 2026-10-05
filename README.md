@@ -6,8 +6,8 @@
 <div align="center">
   <a href="https://github.com/M1KUAPP/Turn">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="assets/pitch/readme-hero-dark.png">
-      <img src="assets/pitch/readme-hero-light.png" alt="Banner">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/readme/banner-dark.png">
+      <img src="docs/readme/banner-light.png" alt="Turn banner">
     </picture>
   </a>
 
@@ -16,11 +16,11 @@
   <p>
     An AAC iPhone app that listens to a conversation partner and suggests replies from the user's own saved phrases, so they can answer in time.
     <br />
-    <a href="https://github.com/M1KUAPP/Turn/releases/latest"><strong>Try the Simulator build »</strong></a>
+    <a href="https://github.com/M1KUAPP/Turn/releases/latest"><strong>Try the Simulator Build »</strong></a>
     &middot;
-    <a href="eval/results.md">Evaluation</a>
+    <a href="https://youtu.be/OIAwcZPi3oc">Demo Video</a>
     &middot;
-    <a href="PRIVACY.md">Privacy notice</a>
+    <a href="https://github.com/M1KUAPP/Turn/issues/new?labels=bug">Report a Bug</a>
     <br />
   </p>
 
