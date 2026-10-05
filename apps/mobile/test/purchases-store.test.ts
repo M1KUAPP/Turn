@@ -99,39 +99,30 @@ describe('purchases store', () => {
     const fakeConfig = createFakeConfig(0)
     const store = createPurchasesStore({ engine: fakeEngine.engine, config: fakeConfig })
 
-    // listen is null, count 0 -> locked
     expect(store.snapshot().locked).toBe(true)
 
-    // listen false, count 0 -> locked
     await store.start({ apiKey: 'key', appUserID: 'user' })
     fakeEngine.emitListen(false)
     expect(store.snapshot().locked).toBe(true)
 
-    // listen true, count 0 -> unlocked
     fakeEngine.emitListen(true)
     expect(store.snapshot().locked).toBe(false)
 
-    // count at 1: listen false -> not locked
     fakeConfig.setFreeLinesLeft(1)
     fakeEngine.emitListen(false)
     expect(store.snapshot().locked).toBe(false)
-    // count at 1: listen true -> not locked
     fakeEngine.emitListen(true)
     expect(store.snapshot().locked).toBe(false)
 
-    // count at 20: listen false -> not locked
     fakeConfig.setFreeLinesLeft(20)
     fakeEngine.emitListen(false)
     expect(store.snapshot().locked).toBe(false)
-    // count at 20: listen true -> not locked
     fakeEngine.emitListen(true)
     expect(store.snapshot().locked).toBe(false)
 
-    // count at null: listen false -> not locked
     fakeConfig.setFreeLinesLeft(null)
     fakeEngine.emitListen(false)
     expect(store.snapshot().locked).toBe(false)
-    // count at null: listen true -> not locked
     fakeEngine.emitListen(true)
     expect(store.snapshot().locked).toBe(false)
   })
@@ -141,32 +132,25 @@ describe('purchases store', () => {
     const fakeConfig = createFakeConfig(20)
     const store = createPurchasesStore({ engine: fakeEngine.engine, config: fakeConfig })
 
-    // count 20, listen null
     expect(store.snapshot().countLabel).toBe('20 free')
 
-    // count 1, listen null
     fakeConfig.setFreeLinesLeft(1)
     expect(store.snapshot().countLabel).toBe('1 free')
 
-    // count 0, listen null
     fakeConfig.setFreeLinesLeft(0)
     expect(store.snapshot().countLabel).toBeNull()
 
-    // count null, listen null
     fakeConfig.setFreeLinesLeft(null)
     expect(store.snapshot().countLabel).toBeNull()
 
-    // count 20, listen true -> null
     fakeConfig.setFreeLinesLeft(20)
     await store.start({ apiKey: 'key', appUserID: 'user' })
     fakeEngine.emitListen(true)
     expect(store.snapshot().countLabel).toBeNull()
 
-    // count 1, listen true -> null
     fakeConfig.setFreeLinesLeft(1)
     expect(store.snapshot().countLabel).toBeNull()
 
-    // count 20, listen false -> '20 free'
     fakeConfig.setFreeLinesLeft(20)
     fakeEngine.emitListen(false)
     expect(store.snapshot().countLabel).toBe('20 free')
@@ -177,48 +161,40 @@ describe('purchases store', () => {
     const fakeConfig = createFakeConfig(20)
     const store = createPurchasesStore({ engine: fakeEngine.engine, config: fakeConfig })
 
-    // 1. PURCHASED
     fakeEngine.setPresentPaywallResult(Promise.resolve('PURCHASED'))
     const rPurchased = await store.openPaywall('control')
     expect(rPurchased).toBe('unlocked')
     expect(store.snapshot().note).toBe('Listen mode is unlocked.')
     expect(store.snapshot().listen).toBe(true)
 
-    // Reset listen to null for next check
     fakeEngine.setRestoreResult(Promise.resolve(false))
     await store.restore()
     expect(store.snapshot().listen).toBe(false)
 
-    // 2. RESTORED
     fakeEngine.setPresentPaywallResult(Promise.resolve('RESTORED'))
     const rRestored = await store.openPaywall('line')
     expect(rRestored).toBe('unlocked')
     expect(store.snapshot().note).toBe('Listen mode is unlocked.')
     expect(store.snapshot().listen).toBe(true)
 
-    // Reset listen to false
     await store.restore()
     expect(store.snapshot().listen).toBe(false)
 
-    // 3. NOT_PRESENTED
     fakeEngine.setPresentPaywallResult(Promise.resolve('NOT_PRESENTED'))
     const rNotPresented = await store.openPaywall('settings')
     expect(rNotPresented).toBe('unlocked')
     expect(store.snapshot().note).toBe('Listen mode is unlocked.')
     expect(store.snapshot().listen).toBe(true)
 
-    // 4. CANCELLED (leaves listen unchanged)
     fakeEngine.setPresentPaywallResult(Promise.resolve('CANCELLED'))
     const rCancelled = await store.openPaywall('control')
     expect(rCancelled).toBe('locked')
     expect(store.snapshot().note).toBe("The purchase didn't go through. Listen mode is still locked.")
     expect(store.snapshot().listen).toBe(true)
 
-    // Reset listen to false
     await store.restore()
     expect(store.snapshot().listen).toBe(false)
 
-    // 5. ERROR (leaves listen unchanged)
     fakeEngine.setPresentPaywallResult(Promise.resolve('ERROR'))
     const rError = await store.openPaywall('control')
     expect(rError).toBe('locked')
@@ -246,7 +222,6 @@ describe('purchases store', () => {
     expect(secondCallResult).toBe('locked')
     expect(fakeEngine.calls.presentPaywall).toBe(1)
 
-    // Completing first call
     resolvePaywall('PURCHASED')
     const firstCallResult = await firstCall
     expect(firstCallResult).toBe('unlocked')
@@ -272,19 +247,16 @@ describe('purchases store', () => {
     const fakeConfig = createFakeConfig(20)
     const store = createPurchasesStore({ engine: fakeEngine.engine, config: fakeConfig })
 
-    // restore true
     fakeEngine.setRestoreResult(Promise.resolve(true))
     await store.restore()
     expect(store.snapshot().listen).toBe(true)
     expect(store.snapshot().note).toBe('Listen mode is unlocked.')
 
-    // restore false
     fakeEngine.setRestoreResult(Promise.resolve(false))
     await store.restore()
     expect(store.snapshot().listen).toBe(false)
     expect(store.snapshot().note).toBe('No purchase found for this phone. Listen mode is still locked.')
 
-    // restore null leaves listen unchanged
     fakeEngine.setRestoreResult(Promise.resolve(null))
     await store.restore()
     expect(store.snapshot().listen).toBe(false)
@@ -313,26 +285,20 @@ describe('purchases store', () => {
     const fakeConfig = createFakeConfig(20)
     const store = createPurchasesStore({ engine: fakeEngine.engine, config: fakeConfig })
 
-    // 1. Off at first
     expect(store.refreshNext()).toBe(false)
 
-    // 2. listenActive false
     fakeEngine.setListenActiveResult(Promise.resolve(false))
     await store.start({ apiKey: 'key', appUserID: 'user' })
     expect(store.refreshNext()).toBe(false)
 
-    // on after onListenChange(true) following listenActive false
     fakeEngine.emitListen(true)
     expect(store.refreshNext()).toBe(true)
 
-    // 3. Still on after a second refreshNext()
     expect(store.refreshNext()).toBe(true)
 
-    // 4. Off after refreshAnswered()
     store.refreshAnswered()
     expect(store.refreshNext()).toBe(false)
 
-    // 5. On after an unlocked paywall result
     fakeEngine.setPresentPaywallResult(Promise.resolve('PURCHASED'))
     await store.openPaywall('control')
     expect(store.refreshNext()).toBe(true)
@@ -350,7 +316,6 @@ describe('purchases store', () => {
     expect(fakeEngine.calls.listenActive).toBe(0)
     expect(fakeEngine.calls.configure).toHaveLength(1)
 
-    // Calling start a second time configures once
     await store.start({ apiKey: 'key2', appUserID: 'user2' })
     expect(fakeEngine.calls.configure).toHaveLength(1)
     expect(fakeEngine.calls.listenActive).toBe(0)

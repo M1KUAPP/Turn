@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 
 type Props = {
-  /** A capture in /img/screens, e.g. "home-row". Omit to pass a custom screen as children. */
+  /** A capture in /img/screens, e.g. "partner-view". Omit to pass a custom screen as children. */
   screen?: string
   alt?: string
   /** CSS width of the phone, e.g. "300px" or "clamp(220px, 24vw, 320px)". */
