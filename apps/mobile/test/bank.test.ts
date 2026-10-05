@@ -172,19 +172,16 @@ describe('bank store', () => {
       changeCount++
     })
 
-    // Returns null for empty or whitespace-only text
     expect(await store.saveTypedPhrase('')).toBeNull()
     expect(await store.saveTypedPhrase('   ')).toBeNull()
     expect(changeCount).toBe(0)
 
-    // Returns null for text longer than 200 characters after trimming
     const text200 = 'a'.repeat(200)
     const text201 = 'a'.repeat(201)
     expect(await store.saveTypedPhrase(text201)).toBeNull()
     expect(await store.saveTypedPhrase(`  ${text201}  `)).toBeNull()
     expect(changeCount).toBe(0)
 
-    // Saves valid 200-character phrase and creates Typed category lazily
     const categoriesBefore = await store.categories()
     expect(categoriesBefore.some((c) => c.id === 'typed')).toBe(false)
 
@@ -201,7 +198,6 @@ describe('bank store', () => {
     expect(typedCategory).toBeDefined()
     expect(typedCategory?.name).toBe('Typed')
 
-    // Appends subsequent phrases in bank order with unique ids
     const savedSecond = await store.saveTypedPhrase('A unique second phrase')
     expect(savedSecond).not.toBeNull()
     expect(savedSecond?.category_id).toBe('typed')
@@ -212,20 +208,16 @@ describe('bank store', () => {
     const typedPhrases = await store.phrases('typed')
     expect(typedPhrases.map((p) => p.text)).toEqual([text200, 'A unique second phrase'])
 
-    // Deduplicates across the whole bank after trimming and ignoring case
-    // 1. Existing starter bank phrase ('Yes' in Quick)
     const duplicateYes = await store.saveTypedPhrase('   yEs   ')
     expect(duplicateYes?.id).toBe('yes')
     expect(duplicateYes?.category_id).toBe('quick')
     expect(changeCount).toBe(2)
 
-    // 2. Existing strip phrase ("Wait, I'm typing")
     const duplicateStrip = await store.saveTypedPhrase("  wait, i'm typing  ")
     expect(duplicateStrip?.id).toBe('wait-im-typing')
     expect(duplicateStrip?.category_id).toBe('strip')
     expect(changeCount).toBe(2)
 
-    // 3. Existing typed phrase ('A unique second phrase')
     const duplicateTyped = await store.saveTypedPhrase('a UNIQUE second phrase')
     expect(duplicateTyped?.id).toBe(savedSecond?.id)
     expect(changeCount).toBe(2)
@@ -235,7 +227,6 @@ describe('bank store', () => {
     const store = createBankStore(database(), starterBank, () => new Date(2026, 8, 23))
     await store.initialize()
 
-    // Empty or whitespace-only input returns empty array
     expect(await store.typeMatches('', 'home')).toEqual([])
     expect(await store.typeMatches('   ', 'home')).toEqual([])
 
@@ -265,15 +256,12 @@ describe('bank store', () => {
     const multiWordMatches = await store.typeMatches('I want wa', 'home')
     expect(multiWordMatches.map((p) => p.id)).toEqual(homeMatches.map((p) => p.id))
 
-    // Matching words in the middle of a phrase
     const pleaseMatches = await store.typeMatches('ple', 'home')
     expect(pleaseMatches.some((p) => p.text === 'Water, please')).toBe(true)
 
-    // Substring in middle of word does not match
     const noSubstrings = await store.typeMatches('ter', 'home')
     expect(noSubstrings.some((p) => p.text === 'Water, please')).toBe(false)
 
-    // Matches saved typed phrases as well
     await store.saveTypedPhrase('Waffles for breakfast')
     const matchesWithTyped = await store.typeMatches('waf', 'home')
     expect(matchesWithTyped.some((p) => p.text === 'Waffles for breakfast')).toBe(true)
@@ -385,7 +373,6 @@ describe('place storage', () => {
     expect((await store.places())[0].position).toBe(0)
     expect((await store.places())[1].position).toBe(1)
 
-    // Moves it back down
     await store.movePlace('clinic', 1)
     expect(changes).toBe(2)
     expect((await store.places()).map((place) => place.name)).toEqual(['Home', 'Clinic', 'Shop', 'Out'])
@@ -421,7 +408,6 @@ describe('place storage', () => {
       changes++
     })
 
-    // Deleting a place that is not selected keeps the selection
     await store.deletePlace('shop')
     expect(changes).toBe(1)
     expect((await store.places()).map((place) => place.id)).toEqual(['home', 'clinic', 'out'])
@@ -430,7 +416,6 @@ describe('place storage', () => {
     ).toEqual([])
     expect((await store.selectedPlace())?.name).toBe('Home')
 
-    // Deleting the selected place falls back to the first remaining place
     await store.deletePlace('home')
     expect(changes).toBe(2)
     expect((await store.selectedPlace())?.name).toBe('Clinic')
@@ -439,7 +424,6 @@ describe('place storage', () => {
     await next.initialize()
     expect((await next.selectedPlace())?.name).toBe('Clinic')
 
-    // Deleting the last places leaves no place and no selection
     await store.deletePlace('clinic')
     await store.deletePlace('out')
     expect(changes).toBe(4)
@@ -516,7 +500,6 @@ describe('category storage', () => {
       changes++
     })
 
-    // Adds a category with trimmed name
     const added = await store.addCategory('  Custom  ')
     expect(added.name).toBe('Custom')
     expect(added.id).toBeTruthy()
@@ -525,10 +508,8 @@ describe('category storage', () => {
     const cats = await store.categories()
     expect(cats.some((c) => c.name === 'Custom')).toBe(true)
 
-    // Rejects empty or whitespace-only name
     await expect(store.addCategory('')).rejects.toThrow('Name is required')
     await expect(store.addCategory('   ')).rejects.toThrow('Name is required')
-    // Rejects 41 characters
     await expect(store.addCategory('c'.repeat(41))).rejects.toThrow('Name is too long')
     expect(changes).toBe(1)
 
@@ -540,7 +521,6 @@ describe('category storage', () => {
     await expect(store.addCategory('Twelfth in DB')).rejects.toThrow('Too many categories')
     expect(changes).toBe(1)
 
-    // Survives relaunch
     const next = createBankStore(db, starterBank)
     await next.initialize()
     expect((await next.categories()).some((c) => c.name === 'Custom')).toBe(true)
@@ -569,7 +549,6 @@ describe('category storage', () => {
       changes++
     })
 
-    // Normal category rename
     await store.renameCategory('chat', '  Conversations  ')
     expect(changes).toBe(1)
     expect((await store.categories()).find((c) => c.id === 'chat')?.name).toBe('Conversations')
@@ -578,30 +557,24 @@ describe('category storage', () => {
     await store.renameCategory('chat', 'Conversations')
     expect(changes).toBe(1)
 
-    // Quick CAN be renamed
     await store.renameCategory('quick', 'Fast')
     expect(changes).toBe(2)
     expect((await store.categories())[0].name).toBe('Fast')
 
-    // body-pain CAN be renamed
     await store.renameCategory('body-pain', 'Pain & Body')
     expect(changes).toBe(3)
     expect((await store.categories()).find((c) => c.id === 'body-pain')?.name).toBe('Pain & Body')
 
-    // strip CANNOT be renamed
     await expect(store.renameCategory('strip', 'New Strip')).rejects.toThrow('Cannot rename strip')
     expect(changes).toBe(3)
 
-    // Unknown category
     await expect(store.renameCategory('missing', 'Nowhere')).rejects.toThrow('Unknown category')
 
-    // Validation
     await expect(store.renameCategory('chat', '')).rejects.toThrow('Name is required')
     await expect(store.renameCategory('chat', '   ')).rejects.toThrow('Name is required')
     await expect(store.renameCategory('chat', 'a'.repeat(41))).rejects.toThrow('Name is too long')
     expect(changes).toBe(3)
 
-    // Survives relaunch
     const next = createBankStore(db, starterBank)
     await next.initialize()
     expect((await next.categories())[0].name).toBe('Fast')
@@ -624,19 +597,16 @@ describe('category storage', () => {
     expect(initial[1]).toBe('chat')
     expect(initial[2]).toBe('care')
 
-    // Moving care up (-1) swaps with chat (at index 1)
     await store.moveCategory('care', -1)
     expect(changes).toBe(1)
     const afterFirstMove = (await store.categories()).map((c) => c.id)
     expect(afterFirstMove[1]).toBe('care')
     expect(afterFirstMove[2]).toBe('chat')
 
-    // Moving care back down (1) swaps back with chat
     await store.moveCategory('care', 1)
     expect(changes).toBe(2)
     expect((await store.categories()).map((c) => c.id)).toEqual(initial)
 
-    // Moving Quick (-1 or 1) is refused
     await expect(store.moveCategory('quick', -1)).rejects.toThrow('Quick cannot be moved')
     await expect(store.moveCategory('quick', 1)).rejects.toThrow('Quick cannot be moved')
     expect(changes).toBe(2)
@@ -645,20 +615,16 @@ describe('category storage', () => {
     await expect(store.moveCategory('chat', -1)).rejects.toThrow('Quick must stay first')
     expect(changes).toBe(2)
 
-    // Moving strip is refused
     await expect(store.moveCategory('strip', 1)).rejects.toThrow('Cannot move strip')
     await expect(store.moveCategory('strip', -1)).rejects.toThrow('Cannot move strip')
 
-    // Moving unknown category is refused
     await expect(store.moveCategory('missing', 1)).rejects.toThrow('Unknown category')
     expect(changes).toBe(2)
 
-    // Moving last category down does nothing (no throw, no notify)
     const lastCat = initial[initial.length - 1]
     await store.moveCategory(lastCat, 1)
     expect(changes).toBe(2)
 
-    // Survives relaunch
     await store.moveCategory('care', -1)
     const next = createBankStore(db, starterBank)
     await next.initialize()
@@ -675,30 +641,23 @@ describe('category storage', () => {
       changes++
     })
 
-    // Fixed categories cannot be deleted
     await expect(store.deleteCategory('quick')).rejects.toThrow('Category cannot be deleted')
     await expect(store.deleteCategory('body-pain')).rejects.toThrow('Category cannot be deleted')
     await expect(store.deleteCategory('strip')).rejects.toThrow('Category cannot be deleted')
     expect(changes).toBe(0)
 
-    // Unknown category
     await expect(store.deleteCategory('missing')).rejects.toThrow('Unknown category')
 
-    // chat has phrases: deleting without destination is refused
     const chatPhrases = await store.phrases('chat')
     expect(chatPhrases.length).toBeGreaterThan(0)
     await expect(store.deleteCategory('chat')).rejects.toThrow('Destination category is required')
 
-    // Destination cannot be itself
     await expect(store.deleteCategory('chat', 'chat')).rejects.toThrow('Destination cannot be the same category')
 
-    // Destination cannot be strip
     await expect(store.deleteCategory('chat', 'strip')).rejects.toThrow('Cannot move phrases to strip')
 
-    // Destination cannot be unknown
     await expect(store.deleteCategory('chat', 'missing')).rejects.toThrow('Unknown destination category')
 
-    // Deleting chat with destination 'care' moves all phrases to care at its end in one transaction
     const carePhrasesBefore = await store.phrases('care')
     await store.deleteCategory('chat', 'care')
     expect(changes).toBe(1)
@@ -706,23 +665,19 @@ describe('category storage', () => {
 
     const carePhrasesAfter = await store.phrases('care')
     expect(carePhrasesAfter.length).toBe(carePhrasesBefore.length + chatPhrases.length)
-    // The moved phrases are at the end of care
     const movedIds = carePhrasesAfter.slice(carePhrasesBefore.length).map((p) => p.id)
     expect(movedIds).toEqual(chatPhrases.map((p) => p.id))
 
-    // Survives relaunch
     const next = createBankStore(db, starterBank)
     await next.initialize()
     expect((await next.categories()).some((c) => c.id === 'chat')).toBe(false)
     expect((await next.phrases('care')).length).toBe(carePhrasesAfter.length)
 
-    // Deleting an empty category succeeds without destination
     const emptyCat = await next.addCategory('Empty')
     expect((await next.phrases(emptyCat.id)).length).toBe(0)
     await next.deleteCategory(emptyCat.id)
     expect((await next.categories()).some((c) => c.id === emptyCat.id)).toBe(false)
 
-    // Typed category can be deleted like any other category
     await next.saveTypedPhrase('Something typed')
     expect((await next.categories()).some((c) => c.id === 'typed')).toBe(true)
     const typedPhrases = await next.phrases('typed')
@@ -755,20 +710,15 @@ describe('phrase storage and undo', () => {
     const places = await store.phrasePlaces(added.id)
     expect(places.sort()).toEqual(['clinic', 'home'])
 
-    // Rejects empty or whitespace-only text
     await expect(store.addPhrase('care', '')).rejects.toThrow('Text is required')
     await expect(store.addPhrase('care', '   ')).rejects.toThrow('Text is required')
 
-    // Rejects text longer than 200 characters
     await expect(store.addPhrase('care', 'p'.repeat(201))).rejects.toThrow('Text is too long')
 
-    // Rejects adding to strip
     await expect(store.addPhrase('strip', 'Strip phrase')).rejects.toThrow('Cannot add phrases to strip')
 
-    // Rejects unknown category
     await expect(store.addPhrase('missing', 'Hello')).rejects.toThrow('Unknown category')
 
-    // Survives relaunch
     const next = createBankStore(db, starterBank)
     await next.initialize()
     const nextCare = await next.phrases('care')
@@ -787,12 +737,10 @@ describe('phrase storage and undo', () => {
       changes++
     })
 
-    // Starter phrases have reviewed = 0 initially
     const carePhrases = await store.phrases('care')
     const starterPhrase = carePhrases[0]
     expect(starterPhrase.reviewed).toBe(0)
 
-    // Editing text sets reviewed = 1
     await store.editPhrase(starterPhrase.id, { text: '  Updated starter text  ' })
     expect(changes).toBe(1)
     const careAfterEdit = await store.phrases('care')
@@ -800,7 +748,6 @@ describe('phrase storage and undo', () => {
     expect(editedStarter?.text).toBe('Updated starter text')
     expect(editedStarter?.reviewed).toBe(1)
 
-    // Editing category moves phrase to the end of the new category
     const familyBefore = await store.phrases('family')
     await store.editPhrase(starterPhrase.id, { categoryId: 'family' })
     expect(changes).toBe(2)
@@ -810,45 +757,36 @@ describe('phrase storage and undo', () => {
     expect(movedPhrase?.id).toBe(starterPhrase.id)
     expect(movedPhrase?.position).toBe(familyBefore.length)
 
-    // Editing places
     await store.editPhrase(starterPhrase.id, { placeIds: ['shop'] })
     expect(changes).toBe(3)
     expect(await store.phrasePlaces(starterPhrase.id)).toEqual(['shop'])
 
     // Fixed phrase rules (BANK-5)
-    // 'yes' cannot be renamed
     await expect(store.editPhrase('yes', { text: 'Yeah' })).rejects.toThrow('Fixed phrases cannot be renamed')
-    // 'yes' cannot be moved out of Quick
     await expect(store.editPhrase('yes', { categoryId: 'care' })).rejects.toThrow(
       'Fixed phrases cannot be moved out of Quick'
     )
-    // 'yes' can update its places
     await store.editPhrase('yes', { placeIds: ['home'] })
     expect(changes).toBe(4)
     expect(await store.phrasePlaces('yes')).toEqual(['home'])
 
     // Strip phrase rules (SPEAK-7)
-    // Strip phrase can be reworded
     await store.editPhrase('wait-im-typing', { text: 'Please hold on' })
     expect(changes).toBe(5)
     expect((await store.phrases('strip')).find((p) => p.id === 'wait-im-typing')?.text).toBe('Please hold on')
 
-    // Strip phrase cannot be moved out of strip
     await expect(store.editPhrase('wait-im-typing', { categoryId: 'quick' })).rejects.toThrow(
       'Cannot move strip phrases'
     )
 
-    // Non-strip phrase cannot be moved into strip
     await expect(store.editPhrase(starterPhrase.id, { categoryId: 'strip' })).rejects.toThrow(
       'Cannot move phrases to strip'
     )
 
-    // Validation
     await expect(store.editPhrase(starterPhrase.id, { text: '' })).rejects.toThrow('Text is required')
     await expect(store.editPhrase(starterPhrase.id, { text: 't'.repeat(201) })).rejects.toThrow('Text is too long')
     await expect(store.editPhrase('missing', { text: 'Hello' })).rejects.toThrow('Unknown phrase')
 
-    // Survives relaunch
     const next = createBankStore(db, starterBank)
     await next.initialize()
     expect((await next.phrases('strip')).find((p) => p.id === 'wait-im-typing')?.text).toBe('Please hold on')
@@ -868,31 +806,25 @@ describe('phrase storage and undo', () => {
     const firstId = initialCare[0].id
     const secondId = initialCare[1].id
 
-    // Moving second phrase up (-1) swaps with first phrase
     await store.movePhrase(secondId, -1)
     expect(changes).toBe(1)
     const afterMove = await store.phrases('care')
     expect(afterMove[0].id).toBe(secondId)
     expect(afterMove[1].id).toBe(firstId)
 
-    // Moving it back down (1) restores order
     await store.movePhrase(secondId, 1)
     expect(changes).toBe(2)
     const afterRestore = await store.phrases('care')
     expect(afterRestore[0].id).toBe(firstId)
     expect(afterRestore[1].id).toBe(secondId)
 
-    // Strip phrases cannot be moved
     await expect(store.movePhrase('wait-im-typing', 1)).rejects.toThrow('Cannot move strip phrases')
 
-    // Unknown phrase throws
     await expect(store.movePhrase('missing', 1)).rejects.toThrow('Unknown phrase')
 
-    // Moving first phrase up does nothing (no throw, no notify)
     await store.movePhrase(firstId, -1)
     expect(changes).toBe(2)
 
-    // Survives relaunch
     await store.movePhrase(secondId, -1)
     const next = createBankStore(db, starterBank)
     await next.initialize()
@@ -909,40 +841,31 @@ describe('phrase storage and undo', () => {
       changes++
     })
 
-    // Fixed phrases cannot be deleted
     await expect(store.deletePhrase('yes')).rejects.toThrow('Fixed phrases cannot be deleted')
     await expect(store.deletePhrase('no')).rejects.toThrow('Fixed phrases cannot be deleted')
     await expect(store.deletePhrase('not-sure')).rejects.toThrow('Fixed phrases cannot be deleted')
     expect(changes).toBe(0)
 
-    // Strip phrases cannot be deleted
     await expect(store.deletePhrase('wait-im-typing')).rejects.toThrow('Cannot delete strip phrases')
     expect(changes).toBe(0)
 
-    // Unknown phrase cannot be deleted
     await expect(store.deletePhrase('missing')).rejects.toThrow('Unknown phrase')
 
-    // Pick a phrase from care to stage delete
     const carePhrases = await store.phrases('care')
     const target = carePhrases[0]
 
-    // Stage delete
     await store.deletePhrase(target.id)
     expect(changes).toBe(1)
 
-    // It hides immediately from phrases(category)
     const careAfterDelete = await store.phrases('care')
     expect(careAfterDelete.some((p) => p.id === target.id)).toBe(false)
 
-    // It hides immediately from phrases('all')
     const allAfterDelete = await store.phrases('all')
     expect(allAfterDelete.some((p) => p.id === target.id)).toBe(false)
 
-    // It hides immediately from rankingData()
     const ranking = await store.rankingData()
     expect(ranking.bank.some((p) => p.id === target.id)).toBe(false)
 
-    // Deleting already-staged phrase is refused
     await expect(store.deletePhrase(target.id)).rejects.toThrow('Unknown phrase')
 
     // Before commitDeletes, phrase is still in SQLite, so relaunching store still sees it
@@ -950,17 +873,14 @@ describe('phrase storage and undo', () => {
     await relaunchBeforeCommit.initialize()
     expect((await relaunchBeforeCommit.phrases('care')).some((p) => p.id === target.id)).toBe(true)
 
-    // Undo restores the staged phrase
     const restored = await store.undoDelete()
     expect(restored).not.toBeNull()
     expect(restored?.id).toBe(target.id)
     expect(changes).toBe(2)
 
-    // It reappears in phrases and rankingData
     expect((await store.phrases('care')).some((p) => p.id === target.id)).toBe(true)
     expect((await store.rankingData()).bank.some((p) => p.id === target.id)).toBe(true)
 
-    // Undo when empty returns null
     expect(await store.undoDelete()).toBeNull()
     expect(changes).toBe(2)
 
@@ -983,7 +903,6 @@ describe('phrase storage and undo', () => {
     expect(undoA?.id).toBe(target.id)
     expect(changes).toBe(7)
 
-    // Now test commitDeletes()
     await store.deletePhrase(target.id)
     expect(changes).toBe(8)
     await store.commitDeletes()
