@@ -34,7 +34,11 @@ The partner's lines, written by the director's `voice-lines.ts` and read by the 
   {
     "id": 1,
     "text": "How was physio?",
-    "words": [{"word": "How", "startMs": 0, "endMs": 186}, {"word": "was", "startMs": 221, "endMs": 313}, {"word": "physio?", "startMs": 360, "endMs": 1161}]
+    "words": [
+      { "word": "How", "startMs": 0, "endMs": 186 },
+      { "word": "was", "startMs": 221, "endMs": 313 },
+      { "word": "physio?", "startMs": 360, "endMs": 1161 }
+    ]
   }
 ]
 ```
@@ -78,11 +82,16 @@ One per recording, `cues/<scene>[-<clip>]-take<N>.json`: everything the edit nee
 ```json
 {
   "file": "video/s2-consent-take1.mp4",
-  "scene": "s2-consent", "flow": "s2-consent", "take": 1, "clip": null,
-  "recordingStartMs": 1790785257756.612, "recordingStartExact": true,
-  "recordingStopMs": 1790785288024.1, "recordedSeconds": 30.267,
-  "units": {"t": "seconds from recordingStartMs", "x": "points", "y": "points"},
-  "cues": [{"kind": "tap", "text": "Listen", "x": 294.0, "y": 85.0, "t": 4.223, "markT": 3.954}]
+  "scene": "s2-consent",
+  "flow": "s2-consent",
+  "take": 1,
+  "clip": null,
+  "recordingStartMs": 1790785257756.612,
+  "recordingStartExact": true,
+  "recordingStopMs": 1790785288024.1,
+  "recordedSeconds": 30.267,
+  "units": { "t": "seconds from recordingStartMs", "x": "points", "y": "points" },
+  "cues": [{ "kind": "tap", "text": "Listen", "x": 294.0, "y": 85.0, "t": 4.223, "markT": 3.954 }]
 }
 ```
 
@@ -111,15 +120,27 @@ The run, described for the director's ingest:
   "runUrl": "https://github.com/M1KUAPP/Turn/actions/runs/36739684140",
   "commit": "a4d723edc04ed027c7f4a6fbb1f134b037f2c7cc",
   "device": "iPhone 16 <udid> on com.apple.CoreSimulator.SimRuntime.iOS-27-0",
-  "voice": {"language": "en-US", "identifier": "com.apple.voice.super-compact.en-US.Samantha", "name": "Samantha", "mac-voice": "Samantha"},
-  "phrases": [{"file": "voice/thanks-for-listening.wav", "text": "Thanks for listening"}],
+  "voice": {
+    "language": "en-US",
+    "identifier": "com.apple.voice.super-compact.en-US.Samantha",
+    "name": "Samantha",
+    "mac-voice": "Samantha"
+  },
+  "phrases": [{ "file": "voice/thanks-for-listening.wav", "text": "Thanks for listening" }],
   "notes": ["video/ is simctl's own file: variable frame rate, ..."],
   "recordings": [
     {
-      "scene": "s2-consent", "take": 1, "clip": null,
-      "file": "video/s2-consent-take1.mp4", "duration": 30.373, "bytes": 14845211,
-      "video": {"width": 1178, "height": 2556, "codec": "h264", "avgFrameRate": "384600/18233", "frames": 641},
-      "commit": "a4d723e...", "cfr": null, "cues": "cues/s2-consent-take1.json", "notes": ["take PASS"]
+      "scene": "s2-consent",
+      "take": 1,
+      "clip": null,
+      "file": "video/s2-consent-take1.mp4",
+      "duration": 30.373,
+      "bytes": 14845211,
+      "video": { "width": 1178, "height": 2556, "codec": "h264", "avgFrameRate": "384600/18233", "frames": 641 },
+      "commit": "a4d723e...",
+      "cfr": null,
+      "cues": "cues/s2-consent-take1.json",
+      "notes": ["take PASS"]
     }
   ]
 }
