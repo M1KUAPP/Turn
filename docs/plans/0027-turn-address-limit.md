@@ -28,8 +28,8 @@ Contents:
     1.  [Task 6: The TRD](#task-6-the-trd)
     1.  [Task 7: Graph, pull request, review, deploy, and merge](#task-7-graph-pull-request-review-deploy-and-merge)
 
-[address-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/98
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[address-ticket]: https://github.com/M1KUAPP/Turn/issues/98
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [trd-limits]: /docs/TRD.md#validation-and-abuse-limits
 [trd-storage]: /docs/TRD.md#the-relays-storage
 [trd-secrets]: /docs/TRD.md#secrets-and-configuration
@@ -50,7 +50,7 @@ Contents:
 - **Secrets and identifiers.** The Cloudflare account ID, the account's login, the `workers.dev` subdomain, and this Mac's public addresses never appear in a command line's output, a tracked file, a commit, or a comment. A fail-closed scan reads each from a private file and checks every doc, message, and comment before it's committed or posted. The live check's app user IDs are fixed check IDs made for it, never a person's.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/48
+[app-ticket]: https://github.com/M1KUAPP/Turn/issues/48
 
 ## Skills
 

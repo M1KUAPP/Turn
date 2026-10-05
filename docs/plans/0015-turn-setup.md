@@ -30,9 +30,9 @@ Contents:
     1.  [The naming request](#the-naming-request)
     1.  [The organizers' question](#the-organizers-question)
 
-[key-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/14
-[setup-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/16
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[key-issue]: https://github.com/M1KUAPP/Turn/issues/14
+[setup-issue]: https://github.com/M1KUAPP/Turn/issues/16
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [trd-secrets]: /docs/TRD.md#secrets-and-configuration
 [trd-env]: /docs/TRD.md#environments-and-release
 

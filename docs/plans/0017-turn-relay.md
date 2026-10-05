@@ -33,8 +33,8 @@ Contents:
     1.  [Task 13: The TRD](#task-13-the-trd)
     1.  [Task 14: Graph, pull request, review, deploy, and merge](#task-14-graph-pull-request-review-deploy-and-merge)
 
-[relay-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/24
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[relay-issue]: https://github.com/M1KUAPP/Turn/issues/24
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [trd-api]: /docs/TRD.md#relay-api
 [trd-jev]: /docs/TRD.md#the-jev-request
 [trd-secrets]: /docs/TRD.md#secrets-and-configuration
@@ -61,12 +61,12 @@ Contents:
 - **Secrets and identifiers.** The Jev key and `ID_SALT` never appear in a command line, an output, a tracked file, a log, or a comment: the salt goes from `openssl rand -hex 32` through a pipe into `wrangler secret put`. Tests use made-up values from `vitest.config.ts`. No account ID, email, or subdomain goes into the repository; outputs that show them are summarized.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[count-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/30
-[limits-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/35
-[script-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/31
-[alert-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/32
-[real-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/28
-[app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/48
+[count-ticket]: https://github.com/M1KUAPP/Turn/issues/30
+[limits-ticket]: https://github.com/M1KUAPP/Turn/issues/35
+[script-ticket]: https://github.com/M1KUAPP/Turn/issues/31
+[alert-ticket]: https://github.com/M1KUAPP/Turn/issues/32
+[real-ticket]: https://github.com/M1KUAPP/Turn/issues/28
+[app-ticket]: https://github.com/M1KUAPP/Turn/issues/48
 
 ## Skills
 
