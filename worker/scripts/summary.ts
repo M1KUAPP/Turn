@@ -28,7 +28,7 @@ const failingOutcomes: readonly Outcome[] = ['credits', 'failed', 'internal', 'u
 /** Whether an outcome counts as a failure. */
 const isFailure = (outcome: string) => (failingOutcomes as readonly string[]).includes(outcome)
 
-/** The relay's `isRecord`, copied since the scripts import no package at run time, so the workflow needn't install. */
+/** The relay's `isRecord`, copied since the scripts import no package at run time, so they run without an install. */
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
