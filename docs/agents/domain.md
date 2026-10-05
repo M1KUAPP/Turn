@@ -1,13 +1,6 @@
-# Domain docs
+# Domain Docs
 
 How the engineering skills should consume this repo's domain documentation when exploring the codebase.
-
-Contents:
-
-1.  [Before exploring, read these](#before-exploring-read-these)
-1.  [File structure](#file-structure)
-1.  [Use the glossary's vocabulary](#use-the-glossarys-vocabulary)
-1.  [Flag ADR conflicts](#flag-adr-conflicts)
 
 ## Before exploring, read these
 
@@ -17,13 +10,11 @@ Contents:
 
 If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) creates them lazily when terms or decisions actually get resolved.
 
-`docs/CONTEXT.md` is not the glossary: it holds the Shipaton 2026 hackathon context. Keep glossary terms in the root `CONTEXT.md`.
-
 ## File structure
 
-This repo is single-context:
+Single-context repo (most repos):
 
-```text
+```
 /
 ├── CONTEXT.md
 ├── docs/adr/
@@ -32,9 +23,9 @@ This repo is single-context:
 └── src/
 ```
 
-A multi-context repo has a `CONTEXT-MAP.md` at the root instead:
+Multi-context repo (presence of `CONTEXT-MAP.md` at the root):
 
-```text
+```
 /
 ├── CONTEXT-MAP.md
 ├── docs/adr/                          ← system-wide decisions

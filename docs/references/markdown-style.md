@@ -193,8 +193,6 @@ Contents:
 1.  [Lists](#lists)
 ```
 
-Each link points at the heading's anchor as GitHub makes it: the heading text in lowercase, with each space turned into a hyphen and punctuation other than `-` and `_` dropped. A page with no headings below its H1 needs no list.
-
 Update the list whenever you add, rename, move, or remove a heading. A stale entry is a broken link.
 
 ### Place the contents list after the introduction
@@ -271,10 +269,15 @@ For example, instead of:
 
 ```markdown
 ## Foo
+
 ### Summary
+
 ### Example
+
 ## Bar
+
 ### Summary
+
 ### Example
 ```
 
@@ -282,10 +285,15 @@ prefer:
 
 ```markdown
 ## Foo
+
 ### Foo summary
+
 ### Foo example
+
 ## Bar
+
 ### Bar summary
+
 ### Bar example
 ```
 
@@ -342,7 +350,7 @@ However, if the list is small and you don't anticipate changing it, prefer fully
 
 ### Nested list spacing
 
-When nesting lists, indent the nested content so it lines up with the text of the item it belongs to: 4 spaces under a numbered item, 2 spaces under a bullet.
+When nesting lists, use a 4-space indent for both numbered and bulleted lists:
 
 ```markdown
 1.  Use 2 spaces after the item number, so the text itself is indented 4 spaces.
@@ -350,28 +358,28 @@ When nesting lists, indent the nested content so it lines up with the text of th
 
     Indent a continuation paragraph 4 spaces, aligned with the item text.
 
-- Use 1 space after a bullet, so the text itself is indented 2 spaces.
-  1.  Indent a list nested under a bullet 2 spaces.
+- Use 3 spaces after a bullet, so the text itself is indented 4 spaces.
+  1.  Use 2 spaces with numbered lists, as before.
 
-      A continuation paragraph in a nested list lines up with its item's text, here 6 spaces.
+      A continuation paragraph in a nested list needs an 8-space indent.
 
   2.  Looks nice, doesn't it?
-- Back to the bulleted list.
+- Back to the bulleted list, indented 3 spaces.
 ```
 
 The following works, but it's very messy:
 
 ```markdown
-- Bullet.
-     1. Irregular nesting... DO NOT DO THIS.
+- One space, with no alignment.
+  1.  Irregular nesting... DO NOT DO THIS.
 ```
 
-Even when there's no nesting, align continuation paragraphs and code blocks with the item text:
+Even when there's no nesting, using the 4-space indent keeps continuation paragraphs and code blocks aligned with the item text:
 
 ```markdown
 - Foo.
 
-  A second paragraph, indented 2 spaces.
+  A second paragraph, indented 4 spaces.
 
 1.  Two spaces for the list item.
 
@@ -380,9 +388,13 @@ Even when there's no nesting, align continuation paragraphs and code blocks with
 2.  Back to 2 spaces.
 ```
 
-However, when a numbered list is small, not nested, and each item is a single short line, one space after the number can suffice:
+However, when lists are small, not nested, and each item is a single short line, one space can suffice for both kinds of lists:
 
 ```markdown
+- Foo
+- Bar
+- Baz.
+
 1. Foo.
 2. Bar.
 ```
@@ -819,6 +831,6 @@ Do not write your own guide to a common technology or process. Link to it instea
 
 ## See also
 
-- [Google documentation guide](https://github.com/google/styleguide/tree/gh-pages/docguide) (version 2.0), the source of this guide, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). This synthesis merges its style, best practices, and philosophy pages; drops the 80-character line limit in favor of unlimited line length; replaces the `[TOC]` directive with a contents list; and follows Prettier's formatting of lists, emphasis, and tables.
+- [Google documentation guide](https://github.com/google/styleguide/tree/gh-pages/docguide) (version 2.0), the source of this guide, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). This synthesis merges its style, best practices, and philosophy pages; drops the 80-character line limit in favor of unlimited line length; and replaces the `[TOC]` directive with a contents list.
 - [Google developer documentation style guide](https://developers.google.com/style/)
 - [CommonMark spec](https://spec.commonmark.org/)
