@@ -50,37 +50,34 @@ Jev's input tokens: 21504
 
 ## The credit alert
 
-TypeSafe publishes no balance to read and no low-balance alert, so a [scheduled workflow](/.github/workflows/credit-alert.yml) reads the relay's logs instead (AVAIL-2). It runs every 3 hours at minute 17, in UTC, and on demand from the Actions tab or `gh workflow run`.
-
-- **When it fires:** when a line in its window ran out of Jev's credits (`credits`), or when the window's estimated spend passes the level. The spend is the answered lines' input tokens at `jev-1.13.0`'s $0.042 a million.
-- **The window:** the last 24 hours, or since the last alert issue was closed, if that's later.
-- **The level:** the repository variable `JEV_ALERT_DOLLARS`, or $0.50 when it's unset, about 12 million input tokens, far above a day of judging. A run started by hand can set its own.
-- **Who receives it:** the workflow opens "Jev's credits need attention", labeled `credit-alert`, and assigns kymil4, WhiteAvocad0, and AlaskanTuna, the repository's collaborators, whom GitHub notifies by their own settings; if one can't be assigned, it opens the issue without assignees. While that issue is open it opens no other, so close it once the credits are topped up.
-- **What it can't see:** with no balance to read, a slow drain shows only when a line runs out. A run that fails, such as with an expired token, notifies only the workflow's creator, or whoever last changed its schedule or re-enabled it, on the web or by email as their settings say.
-- **Secrets:** `TURN_CF_LOGS_TOKEN` and `TURN_CF_ACCOUNT_ID`, the same values as for `bun run logs`, in the repository's Actions secrets.
-
-To see it fire, lower the level after a day with any answered line, then close the issue it opens:
+TypeSafe publishes no balance to read and no low-balance alert, so `bun scripts/credits.ts` reads the relay's logs instead (AVAIL-2). A scheduled workflow ran it every 3 hours and opened an issue for the team until the repository's workflows were removed; the last commit with it is [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/credit-alert.yml). The check is now manual: run it from `worker/`, with the same two variables as `bun run logs`.
 
 ```shell
-gh workflow run credit-alert.yml -f level=0
+cd worker
+bun scripts/credits.ts                    # the last 24 hours, at the $0.50 level
+bun scripts/credits.ts --level 0 --out alert.md
 ```
 
-`bun scripts/credits.ts --level 0` in `worker/` runs the same check from the shell and prints the issue's body instead of opening it.
+- **When it fires:** when a line in its window ran out of Jev's credits (`credits`), or when the window's estimated spend passes the level. The spend is the answered lines' input tokens at `jev-1.13.0`'s $0.042 a million.
+- **The window:** the last 24 hours, or since `--since`, such as when the last alert issue was closed, if that's later.
+- **The level:** `--level`, in dollars, or $0.50 when it's unset, about 12 million input tokens, far above a day of judging.
+- **What it prints:** the log lines it read, the lines out of credits, and the spend against the level; when the alert fires, the issue's body, which it writes to `--out` instead when given one. Nothing opens an issue or notifies anyone now.
+- **What it can't see:** with no balance to read, a slow drain shows only when a line runs out.
 
 ## The daily check
 
-While judges try Turn from October 1 to 13, 2026, a [scheduled workflow](/.github/workflows/relay-check.yml) checks the relay once a day the way the Simulator build would use it (AVAIL-1, METRIC-2, RELEASE-5, PAY-9). It runs daily at 01:41 UTC, and on demand from the Actions tab or `gh workflow run`.
+While judges try Turn from October 1 to 13, 2026, `bun scripts/check.ts` checks the relay the way the Simulator build would use it (AVAIL-1, METRIC-2, RELEASE-5, PAY-9). A scheduled workflow ran it daily at 01:41 UTC and commented on issue #70 until the repository's workflows were removed; the last commit with it is [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/relay-check.yml). The check is now manual: run it once a day from `worker/`, and comment its report and yesterday's counts on #70.
 
 - **What it does:** checks `GET /v1/config` for a valid configuration, reporting `jevOn` and `freeLinesLeft`; then `POST /v1/lines` with the judge's line, "How was physio?", at Clinic, with the starter bank's categories and 40 starter phrases including "It was hard", checking that each candidate receives a score from 0 to 1, and reporting "It was hard"'s place among the scores.
-- **When it runs:** daily at 01:41 UTC, from October 1 to 13, 2026.
-- **Where it comments:** it comments the check report on issue #70, and logs yesterday's counts from the relay's logs under "Counts for <yesterday's date>" in a `text` code block (METRIC-2).
-- **What a failure opens:** when either step fails, it opens an issue titled "The relay check failed" with the label `relay-check`, assigned to kymil4, WhiteAvocad0, and AlaskanTuna, with the same unassigned fallback the credit alert has; while that issue is open, later failures comment on it.
-- **Running by hand:** `bun scripts/check.ts` runs the check from `worker/`:
+- **When to run it:** once a day, from October 1 to 13, 2026.
+- **Where it goes:** the check report on issue #70, and yesterday's counts from `bun run logs` under "Counts for <yesterday's date>" in a `text` code block (METRIC-2).
+- **When it fails:** it exits 1 and names the step that failed; nothing opens an issue now.
 
 ```shell
 cd worker
 bun scripts/check.ts                                 # against the default relay
 bun scripts/check.ts --relay https://turn-relay.m1ku-turn.workers.dev --out check.md
+gh issue comment 70 --body-file check.md
 ```
 
 ## See also
