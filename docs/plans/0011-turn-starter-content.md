@@ -31,9 +31,9 @@ Contents:
 1.  [Appendix: the line writers' brief](#appendix-the-line-writers-brief)
 1.  [Appendix: the bank's briefs](#appendix-the-banks-briefs)
 
-[bank-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/18
-[lines-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/19
-[spec]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/13
+[bank-issue]: https://github.com/M1KUAPP/Turn/issues/18
+[lines-issue]: https://github.com/M1KUAPP/Turn/issues/19
+[spec]: https://github.com/M1KUAPP/Turn/issues/13
 [prd-content]: /docs/PRD.md#content-requirements
 
 ## Global constraints
@@ -56,8 +56,8 @@ Contents:
 - **Commits** follow Conventional Commits: a lowercase subject, a header of at most 100 characters, body lines of at most 100 characters, and no attribution lines. Stage explicit paths only, never `-A` or `.`, and never `skills-lock.json`, `.agents/`, or `.claude/`.
 - Absolute dates only. Use they/them for anyone whose pronouns aren't stated.
 
-[app-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/22
-[grid-ticket]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/27
+[app-ticket]: https://github.com/M1KUAPP/Turn/issues/22
+[grid-ticket]: https://github.com/M1KUAPP/Turn/issues/27
 
 ## Skills
 
@@ -493,4 +493,4 @@ The bank's writer applied your report: all four must-fix items and every could-f
 ```
 
 [trd-eval-data]: /docs/TRD.md#the-evaluation-data
-[teammate-read]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/75
+[teammate-read]: https://github.com/M1KUAPP/Turn/issues/75

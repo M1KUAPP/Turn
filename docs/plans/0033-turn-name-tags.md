@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57 local modules, Swift, NaturalLanguage, React Native, Vitest.
 
-**Spec:** [Issue #34](https://github.com/RevenueCat-M1KU/RevenueCat/issues/34), [names as tags](/docs/TRD.md#names-as-tags), [the turn-listen module](/docs/TRD.md#the-turn-listen-module), [the repository layout](/docs/TRD.md#repository-layout), [iPhone notes on NLTagger](/docs/research/0023-turn-ios.md#swapping-names-for-tags-with-nltagger), [iPhone notes on local modules](/docs/research/0023-turn-ios.md#two-local-swift-modules-in-expo).
+**Spec:** [Issue #34](https://github.com/M1KUAPP/Turn/issues/34), [names as tags](/docs/TRD.md#names-as-tags), [the turn-listen module](/docs/TRD.md#the-turn-listen-module), [the repository layout](/docs/TRD.md#repository-layout), [iPhone notes on NLTagger](/docs/research/0023-turn-ios.md#swapping-names-for-tags-with-nltagger), [iPhone notes on local modules](/docs/research/0023-turn-ios.md#two-local-swift-modules-in-expo).
 
 Contents:
 

@@ -5,8 +5,8 @@ Pod::Spec.new do |s|
   s.description = 'Requests Personal Voice authorization and observes available voices.'
   s.license = { :type => 'MIT' }
   s.author = 'Turn'
-  s.homepage = 'https://github.com/RevenueCat-M1KU/RevenueCat'
-  s.source = { :git => 'https://github.com/RevenueCat-M1KU/RevenueCat.git', :tag => s.version.to_s }
+  s.homepage = 'https://github.com/M1KUAPP/Turn'
+  s.source = { :git => 'https://github.com/M1KUAPP/Turn.git', :tag => s.version.to_s }
   s.platform = :ios, '17.0'
   s.swift_version = '5.9'
   s.static_framework = true

@@ -53,7 +53,7 @@ Contents:
     1.  [The replay script](#the-replay-script)
     1.  [The report](#the-report)
 1.  [Testing](#testing)
-    1.  [Simulator screenshots from CI](#simulator-screenshots-from-ci)
+    1.  [Simulator screenshots](#simulator-screenshots)
 1.  [Environments and release](#environments-and-release)
 1.  [Requirements traceability](#requirements-traceability)
 1.  [Open technical questions](#open-technical-questions)
@@ -770,9 +770,8 @@ The paywall is presented by RevenueCat's UI over the current screen (PAY-2).
 | `POLICY`                             | var    | the relay        | the policy's changed values (ROW-8)         |
 | `SIMULATOR_UNLIMITED`                | var    | the relay        | judges' access in the Simulator (PAY-9)     |
 | `RC_PROJECT_ID`, `RC_ENTITLEMENT_ID` | var    | the relay        | the v2 check                                |
-| `TURN_CF_LOGS_TOKEN`                 | secret | shells, Actions  | reads Workers Logs (METRIC-2, AVAIL-2)      |
-| `TURN_CF_ACCOUNT_ID`                 | secret | shells, Actions  | the account whose logs it reads             |
-| `JEV_ALERT_DOLLARS`                  | var    | Actions          | the credit alert's level (AVAIL-2)          |
+| `TURN_CF_LOGS_TOKEN`                 | secret | shells           | reads Workers Logs (METRIC-2, AVAIL-2)      |
+| `TURN_CF_ACCOUNT_ID`                 | secret | shells           | the account whose logs it reads             |
 | Test Store public key                | public | the app's config | RevenueCat's SDK in debug builds            |
 | Relay URL                            | public | the app's config | the relay's address                         |
 
@@ -824,7 +823,7 @@ The relay's `wrangler.jsonc`, in the shape the services notes' local test ran un
   - An unknown key, a value of the wrong type, or a number outside 0 to 1 in `POLICY`, a `FREE_LINES` or `JEV_DAILY_CALLS` that isn't a whole number, or no `JEV_MODEL`, with which the SDK would pick a model of its own, answers `500 internal`, so a mistake shows at the next request.
   - A var changed in the dashboard lasts until the next `wrangler deploy`, which puts back `wrangler.jsonc`'s values.
 - **The Test Store key** is the only RevenueCat key the app carries, and it sits in the app's committed configuration so judges can build from source. RevenueCat's blogs keep test keys out of version control and advise rotating them, while its docs say nothing; every build a judge runs carries the key anyway, so the team commits it for judging and rotates it after the winners are announced (SEC-1).
-- **The logs token** is the team's, not the relay's: an API token that can query Workers Logs, which Wrangler's login can't. `bun run logs` reads it and the account's ID from the shell, and the credit alert from the repository's Actions secrets, where `JEV_ALERT_DOLLARS` is a variable. Neither name is Wrangler's, so neither changes what it deploys with ([relay logs notes][logs-notes]).
+- **The logs token** is the team's, not the relay's: an API token that can query Workers Logs, which Wrangler's login can't. `bun run logs` and the credit alert's script read it and the account's ID from the shell. Neither name is Wrangler's, so neither changes what it deploys with ([relay logs notes][logs-notes]).
 - **No secret key** is in the repository or its history, which a secret scan checks before it goes public (SUBMIT-1).
 
 [svc-secrets]: /docs/research/0024-turn-services.md#secrets-and-wranglerjsonc-for-the-relay
@@ -902,7 +901,7 @@ TypeSafe keeps rights "in perpetuity" to use requests for telemetry and abuse mo
   - `jevStatus`, the status a failed call to Jev returned.
 - **What else is logged.** The relay turns off automatic invocation logs, which hold each request's details, and leaves tracing off: from October 1, 2026, traces count against the same quota, and a trace of the RevenueCat call would keep the app user ID in its URL ([services notes][svc-logs]).
 - **A script,** `bun run logs` in `worker/`, reads a UTC day of logs through Cloudflare's telemetry query API with an API token, since Wrangler's login can't, and prints the counts and latencies METRIC-2 names, the latencies over answered lines by nearest rank ([the relay's README][relay-readme]). The Free plan keeps logs for 3 days, so the team runs it daily during judging.
-- **The credit alert.** TypeSafe publishes no balance and no low-balance alert ([credit alert notes][alert-notes]), so a GitHub Actions workflow reads the last 24 hours of logs every 3 hours. It opens an issue assigned to the team when a line ran out of credits, or when the spend it estimates at $0.042 a million input tokens passes `JEV_ALERT_DOLLARS` (AVAIL-2); [the README][relay-alert] names who receives it.
+- **The credit alert.** TypeSafe publishes no balance and no low-balance alert ([credit alert notes][alert-notes]), so a script, `bun scripts/credits.ts` in `worker/`, reads the last 24 hours of logs and fires when a line ran out of credits, or when the spend it estimates at $0.042 a million input tokens passes its level (AVAIL-2). A GitHub Actions workflow ran it every 3 hours and opened an issue assigned to the team until the repository's workflows were removed ([its last version][alert-workflow]); it now runs by hand, as [the README][relay-alert] says.
 - **The daily check** during judging sends one typed line to the relay from a team member's phone or the Simulator and records the result (AVAIL-1).
 
 [svc-logs]: /docs/research/0024-turn-services.md#workers-logs-and-traces-for-the-relay
@@ -910,6 +909,7 @@ TypeSafe keeps rights "in perpetuity" to use requests for telemetry and abuse mo
 [relay-readme]: /worker/README.md#daily-counts-from-the-logs
 [alert-notes]: /docs/research/0041-turn-credit-alert.md#typesafes-balance-alerts-and-billing
 [relay-alert]: /worker/README.md#the-credit-alert
+[alert-workflow]: https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/credit-alert.yml
 
 ### Service life
 
@@ -931,7 +931,7 @@ The relay and Jev's credits run until the winners are announced on October 21 or
 [lines-brief]: /docs/plans/0011-turn-starter-content.md#appendix-the-line-writers-brief
 [labels-plan]: /docs/plans/0013-turn-reply-labels.md#decisions
 [labels-brief]: /docs/plans/0013-turn-reply-labels.md#appendix-the-labelers-brief
-[floor-issue]: https://github.com/RevenueCat-M1KU/RevenueCat/issues/77
+[floor-issue]: https://github.com/M1KUAPP/Turn/issues/77
 [floor-plan]: /docs/plans/0022-turn-no-reply-floor.md#decisions
 [writer-brief]: /docs/plans/0022-turn-no-reply-floor.md#appendix-the-writers-brief
 
@@ -1040,16 +1040,11 @@ The shared code and the relay are tested with Vitest, the relay's tests running 
 - **Accessibility checks:** VoiceOver, Switch Control, Voice Control, the largest text size, Reduce Motion, and contrast (A11Y-1 to A11Y-7).
 - **The privacy check:** after a 10-minute session, the app's container and the relay's storage and logs hold no audio, transcript, or phrase text (RELEASE-3).
 
-### Simulator screenshots from CI
+### Simulator screenshots
 
-In Actions, dispatch **iOS Simulator build** with `screenshots` set to one of these (`none` skips capture):
+The `iOS Simulator build` workflow captured screenshots of every flow in `app/maestro/` on demand, on the iPhone 16 and the iPhone SE, at the default and the largest text size, and in dark mode, until the repository's workflows were removed ([its last version][sim-build-workflow]). Screenshots are now manual: on a Mac, build the app with `scripts/build-simulator.sh`, install it on a Simulator set to the size and appearance wanted, and run a flow with the Maestro CLI, `maestro test app/maestro/<flow>.yaml`, whose `takeScreenshot` steps capture the images.
 
-- `pr`: the iPhone 16 at the default size and the largest text size.
-- `dark`: the iPhone 16 at the default size in dark mode.
-- `small`: the iPhone SE at the default size and the largest text size.
-- `full`: all five combinations.
-
-`flows` limits a run to the named flows, for a quick rerun. Download `Turn-screenshots`; images are under `<device>/<size>-<appearance>/`, and `results.txt` records each flow.
+[sim-build-workflow]: https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml
 
 ## Environments and release
 
@@ -1058,7 +1053,7 @@ In Actions, dispatch **iOS Simulator build** with `screenshots` set to one of th
 - **Deploys:** `wrangler deploy` from `worker/`, after its tests pass; to undo one, the team deploys the previous commit again, and `JEV_ON` can turn Jev off at once meanwhile.
 - **Debug builds only.** A Release build with a Test Store key crashes at launch, so every build the team ships uses the Debug configuration ([services notes][svc-key]).
 - **The device build:** from `app/` on a Mac with Xcode 27, `EXPO_PUBLIC_BUILD_KIND=device bunx expo run:ios --device`, signed by a free Personal Team, with Developer Mode on and the certificate trusted on the phone. The Debug app loads its bundle from Metro over the Mac's Wi-Fi, so the phone joins that network and allows Turn under Local Network; Turn's Debug build first ran on the video iPhone this way on September 23 ([Debug iPhone notes][debug-iphone]). For timings and the video, Metro serves production JavaScript with `npx expo start --no-dev --minify`. Free profiles expire after seven days, so the video's build is installed on or after September 22 (COMPAT-4) ([iPhone build notes][ios-free-build]).
-- **The Simulator build:** `scripts/build-simulator.sh`, given a commit or none for the checkout, which the `iOS Simulator build` workflow runs too: `xcodebuild` in the Debug configuration for the `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the JavaScript bundle embedded so it runs without Metro, zipped as `Turn.app.zip`. That a Debug build runs from its embedded bundle is unverified, so the September 25 check covers it; if it can't, the README's Simulator path starts Metro first. The `.app` is zipped into a GitHub release, and the README installs it with `xcrun simctl install booted Turn.app` (SUBMIT-3, COMPAT-2).
+- **The Simulator build:** `scripts/build-simulator.sh`, given a commit or none for the checkout, run by hand on a Mac since the `iOS Simulator build` workflow was removed ([its last version][sim-build-workflow]): `xcodebuild` in the Debug configuration for the `iphonesimulator` SDK, from the prebuilt `ios/` workspace, with the JavaScript bundle embedded so it runs without Metro, zipped as `Turn.app.zip`. That a Debug build runs from its embedded bundle is unverified, so the September 25 check covers it; if it can't, the README's Simulator path starts Metro first. The `.app` is zipped into a GitHub release, published by hand with `gh release create`, and the README installs it with `xcrun simctl install booted Turn.app` (SUBMIT-3, COMPAT-2).
 - **The repository goes public** after the secret scan, with the MIT `LICENSE` at its root (SUBMIT-1).
 - **Work outside the build.** The clinic's review (CONTENT-5) runs on the device build with the feature chart, and its notes go in `docs/`; the video (SUBMIT-4) is recorded from the device build on September 28; while naming is off, a search of the app's strings, the README, and the description finds no TypeSafe or Jev name before submission (SUBMIT-6); and the release checklist records each Must's check with the build it ran on (RELEASE-1 to RELEASE-5).
 

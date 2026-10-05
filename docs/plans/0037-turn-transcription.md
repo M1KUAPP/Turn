@@ -8,7 +8,7 @@
 
 **Tech stack:** Expo SDK 57, Expo Modules API, the local `turn-listen` module (Speech framework, `en-US`), `expo-speech-recognition` 57.1.0, Vitest.
 
-**Spec:** [Issue #49](https://github.com/RevenueCat-M1KU/RevenueCat/issues/49), [Issue #51](https://github.com/RevenueCat-M1KU/RevenueCat/issues/51), [Listening](/docs/PRD.md#listening), [The turn-listen module](/docs/TRD.md#the-turn-listen-module), [The end of a line](/docs/TRD.md#the-end-of-a-line), [When transcription isn't available](/docs/TRD.md#when-transcription-isnt-available), [the caption](/docs/DESIGN.md#the-caption).
+**Spec:** [Issue #49](https://github.com/M1KUAPP/Turn/issues/49), [Issue #51](https://github.com/M1KUAPP/Turn/issues/51), [Listening](/docs/PRD.md#listening), [The turn-listen module](/docs/TRD.md#the-turn-listen-module), [The end of a line](/docs/TRD.md#the-end-of-a-line), [When transcription isn't available](/docs/TRD.md#when-transcription-isnt-available), [the caption](/docs/DESIGN.md#the-caption).
 
 Contents:
 
