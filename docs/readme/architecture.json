@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Turn: from a partner's line to a spoken reply",
+    "output": "architecture.html",
+    "quality_profile": "standard",
+    "viewBox": [1680, 552]
+  },
+  "components": [
+    {
+      "id": "partner",
+      "type": "external",
+      "label": "Partner",
+      "sublabel": "speaks or types a line",
+      "icon": "person",
+      "pos": [40, 220],
+      "size": [150, 64]
+    },
+    {
+      "id": "user",
+      "type": "external",
+      "label": "Person using Turn",
+      "sublabel": "taps a phrase to speak",
+      "icon": "person",
+      "pos": [580, 40],
+      "size": [170, 64]
+    },
+    {
+      "id": "listen",
+      "type": "frontend",
+      "label": "Transcription",
+      "sublabel": "turn-listen · SpeechAnalyzer",
+      "pos": [290, 220],
+      "size": [170, 64]
+    },
+    {
+      "id": "app",
+      "type": "frontend",
+      "label": "Turn app",
+      "sublabel": "Expo · React Native",
+      "tag": "40-phrase shortlist",
+      "pos": [580, 220],
+      "size": [170, 64]
+    },
+    {
+      "id": "bank",
+      "type": "database",
+      "label": "Phrase bank",
+      "sublabel": "SQLite, stays on the phone",
+      "pos": [580, 400],
+      "size": [170, 64]
+    },
+    {
+      "id": "voice",
+      "type": "frontend",
+      "label": "Speech",
+      "sublabel": "expo-speech · Personal Voice",
+      "pos": [290, 400],
+      "size": [170, 64]
+    },
+    {
+      "id": "relay",
+      "type": "backend",
+      "label": "Relay",
+      "sublabel": "Cloudflare Worker",
+      "tag": "checks + rate limits",
+      "pos": [890, 220],
+      "size": [170, 64]
+    },
+    {
+      "id": "device",
+      "type": "backend",
+      "label": "Device object",
+      "sublabel": "Durable Object, one per user",
+      "pos": [1170, 220],
+      "size": [170, 64]
+    },
+    {
+      "id": "model",
+      "type": "external",
+      "label": "Decision model",
+      "sublabel": "hosted service, over HTTPS",
+      "pos": [1470, 220],
+      "size": [170, 64]
+    },
+    {
+      "id": "revenuecat",
+      "type": "cloud",
+      "label": "RevenueCat",
+      "sublabel": "Test Store · REST API v2",
+      "pos": [1170, 400],
+      "size": [170, 64]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "iPhone",
+      "wraps": ["listen", "app", "bank", "voice"]
+    },
+    {
+      "kind": "region",
+      "label": "Cloudflare Workers",
+      "wraps": ["relay", "device"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "partner-speaks",
+      "from": "partner",
+      "to": "listen",
+      "label": "speech"
+    },
+    {
+      "id": "line-to-app",
+      "from": "listen",
+      "to": "app",
+      "label": "partner's line"
+    },
+    {
+      "id": "user-taps",
+      "from": "user",
+      "to": "app",
+      "label": "taps",
+      "labelAt": [644, 162]
+    },
+    {
+      "id": "app-bank",
+      "from": "app",
+      "to": "bank",
+      "label": "reads, saves",
+      "labelDx": -40,
+      "labelDy": 42
+    },
+    {
+      "id": "app-relay",
+      "from": "app",
+      "to": "relay",
+      "label": "POST /v1/lines",
+      "variant": "emphasis"
+    },
+    {
+      "id": "relay-device",
+      "from": "relay",
+      "to": "device",
+      "label": "counts line"
+    },
+    {
+      "id": "device-model",
+      "from": "device",
+      "to": "model",
+      "label": "rank 40 phrases",
+      "variant": "emphasis"
+    },
+    {
+      "id": "device-entitlement",
+      "from": "device",
+      "to": "revenuecat",
+      "label": "listen entitlement?",
+      "labelDx": -56,
+      "labelDy": 42
+    },
+    {
+      "id": "app-purchase",
+      "from": "app",
+      "to": "revenuecat",
+      "label": "Test Store purchase",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "app-speaks",
+      "from": "app",
+      "to": "voice",
+      "label": "speak on tap"
+    },
+    {
+      "id": "voice-partner",
+      "from": "voice",
+      "to": "partner",
+      "label": "spoken reply"
+    }
+  ]
+}

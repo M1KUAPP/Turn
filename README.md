@@ -201,9 +201,9 @@ For a face beside the toolbar, open **Settings → Companion** and choose Ren, S
   <img src="docs/readme/architecture-light.svg" alt="Turn's architecture. On the iPhone, transcription passes the partner's line to the Turn app, which reads the phrase bank in SQLite and posts the line to a relay on Cloudflare Workers. The relay's per-user Durable Object counts the line, checks the listen entitlement with RevenueCat past the free lines, and asks the hosted decision model to rank 40 phrases. The person taps a reply, and the app speaks it to the partner.">
 </picture>
 
-A partner's line becomes text on the iPhone, through Apple's SpeechAnalyzer or, where it isn't available, Expo's speech recognition. The app picks a shortlist of 40 phrases from the bank, swaps names for tags, and posts the line to the relay. The relay checks the request and a per-address rate limit, then the user's Durable Object counts the line, checks the `listen` entitlement with RevenueCat once the 20 free lines are used, and asks the hosted decision model to score the shortlist. When the relay fails or is switched off, the app ranks the shortlist on the phone.
+The diagram is drawn with [archify](https://github.com/tt-a1i/archify) from [`architecture.json`](docs/readme/architecture.json).
 
-The diagram was made with [archify](https://github.com/tt-a1i/archify) and tinted with Turn's color tokens.
+A partner's line becomes text on the iPhone, through Apple's SpeechAnalyzer or, where it isn't available, Expo's speech recognition. The app picks a shortlist of 40 phrases from the bank, swaps names for tags, and posts the line to the relay. The relay checks the request and a per-address rate limit, then the user's Durable Object counts the line, checks the `listen` entitlement with RevenueCat once the 20 free lines are used, and asks the hosted decision model to score the shortlist. When the relay fails or is switched off, the app ranks the shortlist on the phone.
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
