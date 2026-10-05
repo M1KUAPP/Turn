@@ -7,8 +7,8 @@ type Acknowledgements = { PreferenceSpecifiers: Specifier[] }
 type Entry = { name: string; license: string; text: string }
 
 const root = resolve(import.meta.dirname, '..')
-const source = join(root, 'app/ios/Pods/Target Support Files/Pods-Turn/Pods-Turn-acknowledgements.plist')
-const output = join(root, 'app/src/content/ios-licenses.json')
+const source = join(root, 'apps/mobile/ios/Pods/Target Support Files/Pods-Turn/Pods-Turn-acknowledgements.plist')
+const output = join(root, 'apps/mobile/src/content/ios-licenses.json')
 
 if (!existsSync(source)) throw new Error('Generate the iOS project with Expo and install CocoaPods first.')
 
