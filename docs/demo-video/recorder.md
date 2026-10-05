@@ -43,7 +43,7 @@ gh workflow run <build-workflow>.yml --repo <owner>/<repo> --ref <your-branch> \
   -f takes=1 -f listen_engine=replay
 ```
 
-**Turn has no workflows now.** They were removed after [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml), so GitHub won't dispatch Turn's `video` job, and recording Turn is manual: on a Mac with Xcode 27, CocoaPods and the Maestro CLI, check out `041a528`, whose branch is gone, and run the job's commands by hand:
+**Turn has no workflows now.** They were removed after [`7c48b24`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml), so GitHub won't dispatch Turn's `video` job, and recording Turn is manual: on a Mac with Xcode 27, CocoaPods and the Maestro CLI, check out `041a528`, whose branch is gone, and run the job's commands by hand:
 
 ```shell
 git fetch origin 041a5280867853a5d16e95c7d366629f5975c069

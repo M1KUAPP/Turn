@@ -3,7 +3,7 @@ name: Busy relay
 # PRD scenario 7, STATE-2: with the relay's address blocked, each line is ranked
 # on the phone, and after two failures in three lines Listen mode says it's
 # degraded. Block the relay's host on the Mac by hand for this flow only, as
-# scripts/simulator-screenshots.sh did until 679b340: point
+# scripts/simulator-screenshots.sh did until 7c48b24: point
 # turn-relay.m1ku-turn.workers.dev at 127.0.0.1 and ::1 in /etc/hosts, flush
 # the DNS cache, and remove the entries after. `apps/mobile/test/typed-remote.test.ts`
 # covers a success clearing the note, since the flow can't unblock the host

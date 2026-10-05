@@ -328,9 +328,9 @@ One round on #97, [posted there][review-97], had three reviewers: Standards, Spe
 
 ## The second run
 
-The first pull request merged as `1b3ff03` at 18:11:26 UTC on September 23, 2026. The run followed decision 13:
+The first pull request merged as `1835959` at 18:11:26 UTC on September 23, 2026. The run followed decision 13:
 
-- **How it ran:** once, with the appendix's script, whose text hadn't changed since this plan was written, in a detached worktree at `1b3ff03` from a clean tree. It ran from 18:12:08 to 18:34:16 UTC and exited 0, and it wrote its report on the first try. The report gives the Mac's local date, September 24, 2026.
+- **How it ran:** once, with the appendix's script, whose text hadn't changed since this plan was written, in a detached worktree at `1835959` from a clean tree. It ran from 18:12:08 to 18:34:16 UTC and exited 0, and it wrote its report on the first try. The report gives the Mac's local date, September 24, 2026.
 - **As generated:** the three outputs were committed before anyone read them, and each file's SHA-256 sum is the same in the run's worktree, in the branch, and in the commit: `results-extras.md` begins `e6a000c0`, the risk-coverage plot `14eda5ec`, and the reliability diagram `9332afa4`.
 - **Models:** all 320 of Jev's calls answered as version 1.13.0, and Apple's embedding was revision 1, of 512 numbers, on macOS 27.0 (Build 26A428).
 - **The extra rankers:** on the 64 lines with an acceptable phrase besides the fixed buttons, in top 6, qwen3 had 42%, the reranker 34%, and apple 23%, against Jev's 75% and embeddings' 45%; in top 1, 19%, 16%, and 4.7%, against Jev's 67%. On all 80 lines, qwen3's changed rows were wrong 61% of the time, the reranker's 67%, and apple's 71%, against Jev's 22%.
@@ -349,7 +349,7 @@ The first pull request merged as `1b3ff03` at 18:11:26 UTC on September 23, 2026
 - **Latency:** at the median, embeddings 172 ms, Jev 1,123 ms, the reranker 414 ms, qwen3 1,278 ms (6,496 ms at the 95th percentile), and apple 6.5 ms on this Mac.
 - **The plot's legend:** in its top right corner, it covers parts of the seven curves, where it cleared the first run's four. The file stays as the run wrote it. The table under the plot gives each curve's risk at 80% and 100% coverage, where the legend sits, and [issue #101][legend-issue] moves the legend.
 
-`eval/results.md` stays the first run's, at `8ea25eb`, and is the table the README will copy. `eval/results-extras.md` is the second run's, at `1b3ff03`, and every result above comes from it.
+`eval/results.md` stays the first run's, at `213f488`, and is the table the README will copy. `eval/results-extras.md` is the second run's, at `1835959`, and every result above comes from it.
 
 [legend-issue]: https://github.com/M1KUAPP/Turn/issues/101
 

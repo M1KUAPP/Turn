@@ -1,6 +1,6 @@
 # Turn's evaluation
 
-- **Run:** September 24, 2026, at commit `1b3ff03`.
+- **Run:** September 24, 2026, at commit `1835959`.
 - **Lines:** the 80 in `packages/eval/lines.jsonl`.
 - **Bank:** the app's own, `apps/mobile/src/content/starter-bank.json`.
 - **Models:** The hosted decision model, pinned to version 1.13.0 by `apps/relay/wrangler.jsonc`, which answered as version 1.13.0 on all 320 calls; Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling, `@cf/baai/bge-reranker-base`, and `@cf/qwen/qwen3-embedding-0.6b`, with the instruction "Given what a conversation partner just said, retrieve the reply that answers it"; and Apple's English sentence embedding at revision 1, of 512 numbers, on macOS 27.0 (Build 26A428).

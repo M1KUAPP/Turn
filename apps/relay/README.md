@@ -50,7 +50,7 @@ Jev's input tokens: 21504
 
 ## The credit alert
 
-TypeSafe publishes no balance to read and no low-balance alert, so `bun scripts/credits.ts` reads the relay's logs instead (AVAIL-2). A scheduled workflow ran it every 3 hours and opened an issue for the team until the repository's workflows were removed; the last commit with it is [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/credit-alert.yml). The check is now manual: run it from `apps/relay/`, with the same two variables as `bun run logs`.
+TypeSafe publishes no balance to read and no low-balance alert, so `bun scripts/credits.ts` reads the relay's logs instead (AVAIL-2). A scheduled workflow ran it every 3 hours and opened an issue for the team until the repository's workflows were removed; the last commit with it is [`7c48b24`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/credit-alert.yml). The check is now manual: run it from `apps/relay/`, with the same two variables as `bun run logs`.
 
 ```shell
 cd apps/relay
@@ -66,7 +66,7 @@ bun scripts/credits.ts --level 0 --out alert.md
 
 ## The daily check
 
-While judges try Turn from October 1 to 13, 2026, `bun scripts/check.ts` checks the relay the way the Simulator build would use it (AVAIL-1, METRIC-2, RELEASE-5, PAY-9). A scheduled workflow ran it daily at 01:41 UTC and commented on issue #70 until the repository's workflows were removed; the last commit with it is [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/relay-check.yml). The check is now manual: run it once a day from `apps/relay/`, and comment its report and yesterday's counts on #70.
+While judges try Turn from October 1 to 13, 2026, `bun scripts/check.ts` checks the relay the way the Simulator build would use it (AVAIL-1, METRIC-2, RELEASE-5, PAY-9). A scheduled workflow ran it daily at 01:41 UTC and commented on issue #70 until the repository's workflows were removed; the last commit with it is [`7c48b24`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/relay-check.yml). The check is now manual: run it once a day from `apps/relay/`, and comment its report and yesterday's counts on #70.
 
 - **What it does:** checks `GET /v1/config` for a valid configuration, reporting `jevOn` and `freeLinesLeft`; then `POST /v1/lines` with the judge's line, "How was physio?", at Clinic, with the starter bank's categories and 40 starter phrases including "It was hard", checking that each candidate receives a score from 0 to 1, and reporting "It was hard"'s place among the scores.
 - **When to run it:** once a day, from October 1 to 13, 2026.
