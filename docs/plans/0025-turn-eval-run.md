@@ -2,7 +2,7 @@
 
 **Goal:** Close [issue #40][run-issue]: Jev's settings stay as `main` froze them, the first run of all four rankers on the 80 labeled lines is committed with its date, model pin, and commit, and the relay's configuration matches the result, by rules this plan sets before any result exists.
 
-**Architecture:** The settings are the ones `main` holds at `8ea25eb`: the starting policy in `shared/src/row.ts`, the question wording in `shared/src/jev.ts`, and the relay's `JEV_MODEL` and empty `POLICY` in `worker/wrangler.jsonc`. A test pins their values. This plan, the test, and the research note are pushed before the run. `bun run eval --unnamed` then runs once, in a detached worktree at `8ea25eb`, and its report and plot are committed as written. The rules below turn the report's big-button list and Jev's verdict against embeddings into the relay's configuration and any follow-up, and a read of the deployed relay checks that it serves the evaluated settings.
+**Architecture:** The settings are the ones `main` holds at `213f488`: the starting policy in `shared/src/row.ts`, the question wording in `shared/src/jev.ts`, and the relay's `JEV_MODEL` and empty `POLICY` in `worker/wrangler.jsonc`. A test pins their values. This plan, the test, and the research note are pushed before the run. `bun run eval --unnamed` then runs once, in a detached worktree at `213f488`, and its report and plot are committed as written. The rules below turn the report's big-button list and Jev's verdict against embeddings into the relay's configuration and any follow-up, and a read of the deployed relay checks that it serves the evaluated settings.
 
 **Tech Stack:** Bun, Vitest 4.1.11, and TypeScript 6.0.3 in `@turn/eval`; TypeSafe's SDK 0.6.0 for Jev and Workers AI's REST API for embeddings; Wrangler 4 for the relay's check, which changes no configuration; the `gh` CLI.
 
@@ -67,10 +67,10 @@ Contents:
 
 ### Decisions
 
-1.  **The frozen settings** are those at `8ea25eb`, `main`'s head when this plan was written. No file of the relay's or `shared/src` has changed since #86 merged as `a21be9b`, and Task 10 checks what the relay serves:
+1.  **The frozen settings** are those at `213f488`, `main`'s head when this plan was written. No file of the relay's or `shared/src` has changed since #86 merged as `cb1f76f`, and Task 10 checks what the relay serves:
 
     ```shell
-    git diff a21be9b 8ea25eb -- worker shared/src  # prints nothing
+    git diff cb1f76f 213f488 -- worker shared/src  # prints nothing
     ```
 
     - **The policy,** `startingPolicy` in `shared/src/row.ts`: a floor of 0.6, a big button above 0.85, a margin of 0.15, phrases beside Yes, No, and Not sure, no big button on `body-pain` or `consent`, and no topic held to the fixed buttons. The relay serves it unchanged, since `POLICY` in `worker/wrangler.jsonc` is `{}`.
@@ -81,7 +81,7 @@ Contents:
     The TRD's frozen settings say where they come from: 0.6 and 0.85 from TypeSafe's routing example, and 80 lines are too few to refit them.
 
 1.  **A test pins them.** `eval/test/frozen.test.ts` gains a test that holds the policy's values and the request's wording as literals, so a later change fails a test named for EVAL-2. The pin already has tests, `eval/test/jev.test.ts` and `worker/test/jev-request.test.ts`, and `worker/test/config.test.ts` checks that the committed vars serve `startingPolicy`.
-1.  **The run's commit.** The run happens in a detached worktree at `8ea25eb` with a clean tree, so the report names a commit that stays on `main`. GitHub's rebase merge "Always updates the committer information and creates new commit SHAs" ([merge methods][gh-merge]), so a run on this branch's head would name a commit `main` never holds. This plan, the test, and the note are pushed before the run, so GitHub's record of the push dates them before any result.
+1.  **The run's commit.** The run happens in a detached worktree at `213f488` with a clean tree, so the report names a commit that stays on `main`. GitHub's rebase merge "Always updates the committer information and creates new commit SHAs" ([merge methods][gh-merge]), so a run on this branch's head would name a commit `main` never holds. This plan, the test, and the note are pushed before the run, so GitHub's record of the push dates them before any result.
 1.  **Naming stays off.** `TYPESAFE_NAMED` is `"false"`, and #79, which would have asked TypeSafe, closed as not planned with no answer recorded, so SUBMIT-6 keeps the names out of the README. The run uses `--unnamed`, and its report is the README's table. No second run makes a named copy, since Jev's answers vary between calls; the pin's name stays in `worker/wrangler.jsonc`.
 1.  **One run.** `bun run eval --unnamed` runs once. It writes the report only at its end and prints nothing but the report's path, so a run that stops first leaves no result: its cause is fixed without touching a setting, Task 7's log records the attempt, and the command runs again at the same commit, as the [run's notes][notes-deviation] advise. Once `eval/results.md` exists, nothing runs again, whatever it says.
 1.  **A preflight** on the fixture's 8 lines, none of them among the 80, checks both keys and both services with the same script, writing into the scratchpad.
@@ -110,7 +110,7 @@ Contents:
 ### Rejected alternatives
 
 - **Running on this branch's head:** the rebase merge would give the named commit a new hash, and the report would name a commit `main` lacks.
-- **A merge commit, or a second pull request for the results:** either keeps the hash, but the repository merges by rebase, and running at `8ea25eb` needs neither.
+- **A merge commit, or a second pull request for the results:** either keeps the hash, but the repository merges by rebase, and running at `213f488` needs neither.
 - **A named run beside the unnamed one:** a second run calls Jev again and gives other numbers than the README's.
 - **No big button anywhere,** a bar of 1, for EVAL-5: it changes a frozen setting, and EVAL-5 names only yes-or-no, pain, and consent lines.
 - **Keeping every answer** to score the rows again under EVAL-5's policy: nothing asks for it, and the relay's rules act on Jev's answers as they come.
@@ -153,7 +153,7 @@ Push the branch, and note the push's time from GitHub's activity for the branch.
 
 ### Task 5: The preflight
 
-In the detached worktree at `8ea25eb`, run the appendix's script with `--unnamed --lines eval/test/fixture/lines.jsonl` and `--out` in the scratchpad. It must write a report in which Jev answered as `jev-1.13.0`. No commit.
+In the detached worktree at `213f488`, run the appendix's script with `--unnamed --lines eval/test/fixture/lines.jsonl` and `--out` in the scratchpad. It must write a report in which Jev answered as `jev-1.13.0`. No commit.
 
 - **Attempt 1,** 14:25:39 to 14:26:20 UTC: it stopped at its first Workers AI request, before any Jev call, with Bun's `fetch` error "unknown certificate verification error", and wrote no report. Bun and curl reached the same host from the tool's shell a few minutes later, and nothing was changed.
 - **Attempt 2,** 14:30:49 to 14:31:35 UTC: it wrote the report. Jev answered as version 1.13.0 on all 32 calls, and neither the report nor its plot holds "jev" or "TypeSafe".
@@ -181,7 +181,7 @@ In the same worktree, `bun run eval:count`: every quota met, exit 0, and the agr
 
 ### Task 7: The run
 
-In the same worktree, with a clean tree at `8ea25eb`, the appendix's script with `--unnamed`. Log each attempt here: its start, its end, and how it ended.
+In the same worktree, with a clean tree at `213f488`, the appendix's script with `--unnamed`. Log each attempt here: its start, its end, and how it ended.
 
 - **Attempt 1,** 14:33:43 to 14:41:03 UTC, the only one: it exited 0 and wrote the report and its plot, whose SHA-256 are these:
 
@@ -210,7 +210,7 @@ Decision 11's reads, with the second appendix's script, which prints only the ch
 
 - **Done** during the run, at 14:36 UTC, and after it, at 14:43 UTC, with the same answers. `GET /v1/config` served `jevOn` true, `typesafeNamed` false, and the starting policy. Version `30a35862`, created at 12:58:31 UTC, served all traffic, with `JEV_MODEL` `jev-1.13.0`, `JEV_ON` `"true"`, and `POLICY` `{}`, as `main`'s `worker/wrangler.jsonc` has them. No deploy was needed.
 - **Each of those two checks** made a new user's object on the relay, as any first request does, since each asked as a fresh random user; the review found it. The script now asks as one fixed check user, and a third check with it, at 15:22 UTC, gave the same answers.
-- **The served code,** at 15:23 UTC, with the third appendix's script: the relay's `index.js`, 46,631 bytes, is byte for byte a local build of this branch's `worker/`, whose `worker/` and `shared/src` are `8ea25eb`'s: SHA-256 `36ea37745254ed62d6efb63e366a0a30e7d54919d1649449acc508b7a1267074`. So the relay sends the run's wording and serves its starting policy, though version `30a35862` was made before #86 merged.
+- **The served code,** at 15:23 UTC, with the third appendix's script: the relay's `index.js`, 46,631 bytes, is byte for byte a local build of this branch's `worker/`, whose `worker/` and `shared/src` are `213f488`'s: SHA-256 `36ea37745254ed62d6efb63e366a0a30e7d54919d1649449acc508b7a1267074`. So the relay sends the run's wording and serves its starting policy, though version `30a35862` was made before #86 merged.
 
 ### Task 11: Pull request and review
 
@@ -243,11 +243,11 @@ Three reviewers (Standards, Spec, and a fact check and bug hunt) found 5, 5, and
 
 ```zsh
 #!/bin/zsh
-# Runs `bun run eval` in the given worktree at 8ea25eb, from a clean tree,
+# Runs `bun run eval` in the given worktree at 213f488, from a clean tree,
 # with the keys in the environment only.
 setopt err_exit pipe_fail no_unset
 cd "${1:?}"; shift
-[[ $(git rev-parse --short HEAD) == 8ea25eb ]] || { print -u2 'Not at 8ea25eb'; exit 1 }
+[[ $(git rev-parse --short HEAD) == 213f488 ]] || { print -u2 'Not at 213f488'; exit 1 }
 git diff --quiet HEAD || { print -u2 'The tree has changes'; exit 1 }
 export CLOUDFLARE_ACCOUNT_ID="${TURN_CF_ACCOUNT_ID:?}"
 export CLOUDFLARE_API_TOKEN="$(cd worker && bunx wrangler auth token --json | jq -r .token)"

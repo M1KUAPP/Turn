@@ -1,6 +1,6 @@
 # Turn's evaluation
 
-- **Run:** September 23, 2026, at commit `8ea25eb`.
+- **Run:** September 23, 2026, at commit `213f488`.
 - **Lines:** the 80 in `packages/eval/lines.jsonl`.
 - **Bank:** the app's own, `apps/mobile/src/content/starter-bank.json`.
 - **Models:** The hosted decision model, pinned to version 1.13.0 by `apps/relay/wrangler.jsonc`, which answered as version 1.13.0 on all 320 calls; and Workers AI's `@cf/baai/bge-base-en-v1.5`, with `cls` pooling.
