@@ -1019,7 +1019,7 @@ bun run replay --lines packages/eval/replay.jsonl --relay http://localhost:8787
 
 - **Naming off.** `--unnamed` calls Jev the hosted decision model and gives its pin's version without the name, so the README can copy the table while naming is off (CONSENT-7).
 - **The 80 lines from a clean tree.** The command scores any of the 80 lines, whatever file holds them, only from a clean working tree, so the history shows Jev's settings committed before any result (EVAL-2).
-- **The two runs on the 80 lines.** The first is `packages/eval/results.md`, at `8ea25eb`, and the README's table copies it. The second is `packages/eval/results-extras.md`, at `1b3ff03`. It adds the three extra rankers and Jev's calibration (EVAL-8), and its first four rankers' ranking tables match the first run's. EVAL-4's verdict stays the first run's. A wrong big button on a yes-or-no, pain, or consent line in either run counts against EVAL-5, and the relay's configuration would then give those lines only the fixed buttons and the grid.
+- **The two runs on the 80 lines.** The first is `packages/eval/results.md`, at `9bf67a8`, and the README's table copies it. The second is `packages/eval/results-extras.md`, at `fdce2ca`. It adds the three extra rankers and Jev's calibration (EVAL-8), and its first four rankers' ranking tables match the first run's. EVAL-4's verdict stays the first run's. A wrong big button on a yes-or-no, pain, or consent line in either run counts against EVAL-5, and the relay's configuration would then give those lines only the fixed buttons and the grid.
 
 `bun run eval:count` prints each EVAL-1 quota with its count, exiting 1 when one falls short, then the labelers' agreement ([harness notes][harness-agreement]):
 

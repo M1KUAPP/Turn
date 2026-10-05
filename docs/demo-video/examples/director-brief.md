@@ -83,7 +83,7 @@ Target runtime is 1:55. If the cut runs long, N8 goes first, then the care monta
 - **The eval:** bars for keyword 23%, embeddings 45%, and the hosted decision model 75%, captioned "Right reply in the top 6 · 64 partner lines with a saved answer".
 - **End card:** the icon, the logline, "github.com/M1KUAPP/Turn", "Open source · MIT", and "Three students · Next Gen Award".
 
-Every number comes from the README's evaluation (Sep 23, `8ea25eb`) or the PRD.
+Every number comes from the README's evaluation (Sep 23, `9bf67a8`) or the PRD.
 
 ## Look and motion
 

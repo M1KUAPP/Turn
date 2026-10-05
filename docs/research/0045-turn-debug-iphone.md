@@ -161,7 +161,7 @@ node_modules/.bun/react-native@0.86.3+d04dbab8887f20e2/node_modules/react-native
 
 ## Hands-on check
 
-The session ran Turn's build on this Mac on September 23, 2026, with times in UTC, from a detached worktree at `main`'s head, `0113583`, after `bun install --frozen-lockfile`. Every log passed a redaction filter before it was kept.
+The session ran Turn's build on this Mac on September 23, 2026, with times in UTC, from a detached worktree at `main`'s head, `8a7f003`, after `bun install --frozen-lockfile`. Every log passed a redaction filter before it was kept.
 
 - **CocoaPods.** Before the run, `brew install cocoapods` installed CocoaPods 1.17.0 and its dependency, Ruby 4.0.7, so Expo's own install step didn't run.
 - **The build.** From `app/`, the ticket's command, with the phone's UDID after `--device`, started at 12:51:45. It printed "Finished prebuild" and "Installed CocoaPods", then "› Using --device" with the UDID and "› Signing and building iOS app with:" with the certificate's name. It ended with "› Build Succeeded" and "› 0 error(s), and 1 warning(s)", and no prompt appeared. `codesign` dates the signature 12:53:36.

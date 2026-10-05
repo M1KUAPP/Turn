@@ -32,7 +32,7 @@ Contents:
 
   A brand-new workflow file won't dispatch unless it also exists on `main`, so add a recording mode to your branch's copy of `.github/workflows/ios-simulator-build.yml` instead. Other runs are in flight on `main` (run 36641397957); a different `ref` string keeps yours from cancelling them. Poll in the background, not in a tight loop.
 
-  _Added after the brief:_ Turn's workflows were removed after [`679b340`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml), so this dispatch no longer runs. Recording Turn is now manual, on a Mac, as [the recording mode](/docs/demo-video/recorder.md#the-recording-mode) says.
+  _Added after the brief:_ Turn's workflows were removed after [`bcb0849`](https://github.com/M1KUAPP/Turn/blob/679b3409323eba612a38b67ae50fd31a43a0912f/.github/workflows/ios-simulator-build.yml), so this dispatch no longer runs. Recording Turn is now manual, on a Mac, as [the recording mode](/docs/demo-video/recorder.md#the-recording-mode) says.
 
 - **Secrets:** never print `~/.config/turn/rc-secret-key` or the proxy token.
 - **House rules** in `CLAUDE.md` and `docs/agents/` apply (rtk, Bun).
