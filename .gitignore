@@ -96,7 +96,7 @@ graphify-out/*
 .superpowers/
 .expo/
 .rtk/
-app/ios/
+apps/mobile/ios/
 
 # Python
 .venv/
@@ -109,8 +109,8 @@ dist/
 coverage/
 
 # The companion's Live2D models and page, fetched and built by scripts/fetch-companion-models.ts
-app/live2d/.cache/
-app/live2d/build/
+apps/mobile/live2d/.cache/
+apps/mobile/live2d/build/
 
 # Environment
 .dev.vars*

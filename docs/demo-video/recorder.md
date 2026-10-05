@@ -85,7 +85,7 @@ After all takes it renders the app's voice ([the app's own voice](#the-apps-own-
 
 ## The recording-control server
 
-Maestro can't run a shell command, but its JavaScript can make HTTP requests. So a small server on the runner (`scripts/video/recorder.py`, port 8765) does the work a flow can't, and logs every request with the host clock to `events.jsonl`. Flows call it through one script, `app/maestro/video/rec.js`, with `CMD` and its variables in `env`.
+Maestro can't run a shell command, but its JavaScript can make HTTP requests. So a small server on the runner (`scripts/video/recorder.py`, port 8765) does the work a flow can't, and logs every request with the host clock to `events.jsonl`. Flows call it through one script, `apps/mobile/maestro/video/rec.js`, with `CMD` and its variables in `env`.
 
 | Endpoint                                        | Does                                                                                                                                                                                                  |
 | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -103,7 +103,7 @@ One flow can film several scenes: `/start?scene=<name>` names each recording aft
 
 ## Scene flows
 
-A scene is one Maestro flow in `app/maestro/video/<scene>.yaml`, built from shared steps. The shape of Turn's hook scene, `s1b-hook.yaml`:
+A scene is one Maestro flow in `apps/mobile/maestro/video/<scene>.yaml`, built from shared steps. The shape of Turn's hook scene, `s1b-hook.yaml`:
 
 1.  **Off camera:** a fresh app at the clinic (`setup-clinic.yaml`, which ends by having the app speak once through `warm-speech.yaml`; see [lessons.md](lessons.md#speech)), then Listen mode started and consent accepted (`listen-setup.yaml`).
 1.  **Start** with `rec.js` `CMD: start`, `LEAD: '2000'`.
@@ -122,7 +122,7 @@ Write flows against what the app shows, never against fixed waits: wait for text
 
 ## The stand-in input
 
-The stand-in replaces exactly one input the cloud machine lacks, behind the app's own interface for that input, so nothing downstream can tell. Turn's is `app/src/listen/replay-engine.ts`, a `ListenEngine` that replays scripted partner lines word by word.
+The stand-in replaces exactly one input the cloud machine lacks, behind the app's own interface for that input, so nothing downstream can tell. Turn's is `apps/mobile/src/listen/replay-engine.ts`, a `ListenEngine` that replays scripted partner lines word by word.
 
 - **Selected by a build flag only.** `EXPO_PUBLIC_LISTEN_ENGINE=replay` makes `app.config.ts` set `extra.listenEngine` to `replay`, and the engine picker returns the stand-in only when the build kind is `simulator` and that flag is set. Every other build is unchanged, so the stand-in can't reach users.
 - **Timed like the device.** Measure the real input's stages on a real device first, then copy them. Turn's, from the video iPhone: the voice level falls 190 ms after the last word, finalizing takes 190 ms, the transcriber's results trail the audio by 1000 ms and arrive every 500 ms, and the line ends after a 500 ms silence window, so a line lands 0.88 s after its last word, as on the phone.
@@ -130,7 +130,7 @@ The stand-in replaces exactly one input the cloud machine lacks, behind the app'
 - **Cued over localhost, not deep links.** While listening, the engine polls `http://localhost:8765/cue-next` every 150 ms; a flow queues a line with `/cue`. A `turn://` link would also work, but iOS asks "Open in Turn?" first, and that question ends up on camera. Only the replay build adds the App Transport Security exception for plain HTTP to `localhost`.
 - **Timings read at run time.** The server reads `lines.json` on each `/cue`, so new voice timings from the director need no rebuild.
 - **Warmed up.** Its `warm` hook speaks one word at zero volume as Listen mode starts, muted and outside every store, so the first reply on camera isn't late ([lessons.md](lessons.md#speech)).
-- **Tested.** A unit test of one line's event timeline with fake timers (`app/test/replay-engine.test.ts`), plus the app's typecheck.
+- **Tested.** A unit test of one line's event timeline with fake timers (`apps/mobile/test/replay-engine.test.ts`), plus the app's typecheck.
 
 ## The app's own voice
 
