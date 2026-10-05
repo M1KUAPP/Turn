@@ -75,9 +75,9 @@
 
 Your own words, in time for your turn. Turn is an augmentative and alternative communication (AAC) app for iPhone, for adults who can read and tap but can't rely on their speech, such as people living with ALS or recovering from a stroke. It speaks their saved phrases and typed words aloud. In Listen mode, when a conversation partner finishes speaking, a row above the grid offers the person's own saved phrases that answer what was said, so they can reply before the conversation moves on.
 
-A hosted decision model chooses which of the person's phrases answer each line, and whether any do. It never writes a word, and nothing speaks until the person taps. Speaking is always free; Turn Listen, a one-time purchase through RevenueCat, keeps Listen mode on after 20 free partner lines. Turn was built for RevenueCat's Shipaton 2026.
+A hosted decision model chooses which of the person's phrases answer each line, and whether any do. It never writes a word, and nothing speaks until the person taps. Speaking is always free; Turn Listen, a one-time purchase through RevenueCat, keeps Listen mode on after 20 free partner lines.
 
-On September 23, 2026, at commit [`8ea25eb`](https://github.com/M1KUAPP/Turn/commit/8ea25eb), the team evaluated 80 partner lines with the hosted decision model pinned to version 1.13.0. On the 64 lines with an acceptable saved reply besides Yes, No, and Not sure:
+On September 23, 2026, at commit [`8ea25eb`](https://github.com/M1KUAPP/Turn/commit/8ea25eb), the team evaluated 80 partner lines. On the 64 lines with an acceptable saved reply besides Yes, No, and Not sure:
 
 | Ranker                | Top 1                        | Top 6                      | Mean reciprocal rank |
 | --------------------- | ---------------------------- | -------------------------- | -------------------- |
@@ -87,7 +87,9 @@ On September 23, 2026, at commit [`8ea25eb`](https://github.com/M1KUAPP/Turn/com
 | embeddings            | 14 of 64, 22% (14% to 33%)   | 29 of 64, 45% (34% to 57%) | 0.34                 |
 | hosted decision model | 43 of 64, 67% (55% to 77%)   | 48 of 64, 75% (63% to 84%) | 0.72                 |
 
-The hosted decision model's top 6 leads embeddings by 29.7 points, with a 95% paired interval of 17.2 to 42.2. Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. When it ran, no teammate had read the bank or labeled a line, and no clinic had reviewed the bank; text a language model wrote or labeled may suit a ranker built on one. The [evaluation report](eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
+Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. The [evaluation report](eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
+
+Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -310,11 +312,11 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgments
 
-- [RevenueCat Shipaton 2026](https://www.shipaton.com)
-- [archify](https://github.com/tt-a1i/archify)
-- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/), the font in the banner ([OFL](assets/pitch/fonts/OFL.txt))
-- The companion's faces, drawn with Live2D: Ren is Ren Foster, © Live2D Inc., under the Live2D Free Material License; Suit and Office are Suit Male and Office Girl by Ooie; and Ice is Ice Girl, "Live2D: @TianYeLulu"
-- [Live2D Cubism SDK for Web](https://www.live2d.com/en/sdk/about/), which draws the live companion: Cubism Core under the Live2D Proprietary Software License, and the Cubism Framework under the Live2D Open Software License
+- [RevenueCat Shipaton 2026](https://www.shipaton.com) — the event Turn was built for, organized by RevenueCat.
+- [archify](https://github.com/tt-a1i/archify) — architecture diagrams.
+- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/) — the font in the banner ([OFL](assets/pitch/fonts/OFL.txt)).
+- [Live2D](https://www.live2d.com/en/) — the companion's faces, drawn with Live2D: Ren is [Ren Foster](https://www.live2d.com/en/learn/sample/ren-foster/), © Live2D Inc., under the Live2D Free Material License; Suit and Office are [Suit Male](https://booth.pm/ja/items/5178925) and [Office Girl](https://booth.pm/ja/items/4304615) by Ooie; and Ice is [Ice Girl](https://booth.pm/ja/items/5975192), "Live2D: @TianYeLulu".
+- [Live2D Cubism SDK for Web](https://www.live2d.com/en/sdk/about/) — draws the live companion: Cubism Core under the Live2D Proprietary Software License, and the Cubism Framework under the Live2D Open Software License.
 - [Shields.io](https://shields.io)
 - [contrib.rocks](https://contrib.rocks)
 
