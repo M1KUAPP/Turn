@@ -130,7 +130,7 @@ The stand-in replaces exactly one input the cloud machine lacks, behind the app'
 - **Cued over localhost, not deep links.** While listening, the engine polls `http://localhost:8765/cue-next` every 150 ms; a flow queues a line with `/cue`. A `turn://` link would also work, but iOS asks "Open in Turn?" first, and that question ends up on camera. Only the replay build adds the App Transport Security exception for plain HTTP to `localhost`.
 - **Timings read at run time.** The server reads `lines.json` on each `/cue`, so new voice timings from the director need no rebuild.
 - **Warmed up.** Its `warm` hook speaks one word at zero volume as Listen mode starts, muted and outside every store, so the first reply on camera isn't late ([lessons.md](lessons.md#speech)).
-- **Tested.** A unit test of one line's event timeline with fake timers (`apps/mobile/test/replay-engine.test.ts`), plus the app's typecheck.
+- **Tested.** A unit test of one line's event timeline with fake timers (`apps/mobile/tests/replay-engine.test.ts`), plus the app's typecheck.
 
 ## The app's own voice
 
