@@ -42,7 +42,7 @@ test('accepts labels from the bank, and names the first line whose labels are mi
 })
 
 test("reads a command's lines from the file it names, or else the 80, naming the file from the root", () => {
-  expect(linesFrom(fixture('lines.jsonl').pathname)).toMatchObject({ file: 'packages/eval/test/fixture/lines.jsonl' })
+  expect(linesFrom(fixture('lines.jsonl').pathname)).toMatchObject({ file: 'packages/eval/tests/fixture/lines.jsonl' })
   expect(linesFrom(fixture('lines.jsonl').pathname).lines).toHaveLength(8)
   expect(linesFrom(undefined)).toMatchObject({ file: 'packages/eval/lines.jsonl' })
   expect(linesFrom(undefined).lines).toHaveLength(80)

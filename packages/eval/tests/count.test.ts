@@ -28,7 +28,7 @@ const jsonl = (rows: object[]) => {
 
 test('prints each EVAL-1 quota with its count, and exits 1 when one falls short', () => {
   const { code, printed } = onFixture()
-  expect(printed).toContain("EVAL-1's quotas, on the 8 lines in packages/eval/test/fixture/lines.jsonl:")
+  expect(printed).toContain("EVAL-1's quotas, on the 8 lines in packages/eval/tests/fixture/lines.jsonl:")
   for (const quota of [
     '- 8 lines, of exactly 80: not met',
     '- 2 with no acceptable reply, of at least 16: not met',
