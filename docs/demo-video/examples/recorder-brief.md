@@ -22,7 +22,7 @@ Contents:
 ## Rules
 
 - **Your own worktree:** `~/.cache/turn-work/wt/video-rec`, branch `video/replay-engine`, `bun install --frozen-lockfile`. Never touch the main clone at `~/CS/muba/RevenueCat`.
-- **This branch never merges.** No PR to `main`, no merges, no releases, no issue or PR comments, no repository settings. Skip `graphify update` on it.
+- **This branch never merges.** No PR to `main`, no merges, no releases, no issue or PR comments, no repository settings.
 - **CI:** dispatch the existing workflow with your branch as both refs, so it runs your branch's copy of the workflow file:
 
   ```shell
