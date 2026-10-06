@@ -11,7 +11,6 @@
     "check": "bun run lint && bun run typecheck && bun run test",
     "eval": "bun packages/eval/src/report.ts",
     "eval:count": "bun packages/eval/src/count.ts",
-    "graph": "graphify update . && EC_VERSION=v4.0.2 editorconfig-checker -fix graphify-out/graph.json",
     "lint": "EC_VERSION=v4.0.2 editorconfig-checker && prettier --check .",
     "lint:fix": "prettier --write .",
     "prepare": "husky",
