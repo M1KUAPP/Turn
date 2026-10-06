@@ -317,7 +317,7 @@ See [LICENSE](LICENSE) for more information.
 
 - [RevenueCat Shipaton 2026](https://www.shipaton.com) — the event Turn was built for, organized by RevenueCat.
 - [archify](https://github.com/tt-a1i/archify) — architecture diagrams.
-- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/) — the font in the banner ([OFL](assets/pitch/fonts/OFL.txt)).
+- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/) — the font in the banner ([OFL](docs/assets/pitch/fonts/OFL.txt)).
 - [Live2D](https://www.live2d.com/en/) — the companion's faces, drawn with Live2D: Ren is [Ren Foster](https://www.live2d.com/en/learn/sample/ren-foster/), © Live2D Inc., under the Live2D Free Material License; Suit and Office are [Suit Male](https://booth.pm/ja/items/5178925) and [Office Girl](https://booth.pm/ja/items/4304615) by Ooie; and Ice is [Ice Girl](https://booth.pm/ja/items/5975192), "Live2D: @TianYeLulu".
 - [Live2D Cubism SDK for Web](https://www.live2d.com/en/sdk/about/) — draws the live companion: Cubism Core under the Live2D Proprietary Software License, and the Cubism Framework under the Live2D Open Software License.
 - [Shields.io](https://shields.io)

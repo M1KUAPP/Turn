@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "assets/pitch"
+OUT = ROOT / "docs/assets/pitch"
 SCREENS = ROOT / "docs/readme"
 FONT = OUT / "fonts/AtkinsonHyperlegibleNext.ttf"
 BOARD = "#F4EFE7"
