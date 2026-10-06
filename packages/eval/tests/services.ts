@@ -75,7 +75,7 @@ export function fakeRerank({ query, contexts }: { query: string; contexts: { tex
 const endpoint = (model: string) => `https://api.cloudflare.com/client/v4/accounts/test-account/ai/run/${model}`
 
 /**
- * Stands in for Workers AI and Jev behind the `fetch` spy that `test/setup.ts` makes: Workers AI embeds each text with
+ * Stands in for Workers AI and Jev behind the `fetch` spy that `tests/setup.ts` makes: Workers AI embeds each text with
  * `fakeVector`, pooled as asked, or in 1,024 numbers for qwen3, and reranks with `fakeRerank`, and Jev answers with
  * `fakeJevAnswer`, as the model `modelFor` names for the call, if it names one. Returns the spy, whose calls a test can
  * read.

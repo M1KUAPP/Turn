@@ -60,7 +60,7 @@ test("keeps Jev's settings as the first run on the 80 lines used them (EVAL-2)",
     fixedOnlyTopics: []
   })
   // The request the run sent for a line at home, with one candidate: the wording, the pin, and the bank's place and
-  // categories, compared as sent, in its keys' order. `packages/shared/test/jev.test.ts` pins the wording piece by
+  // categories, compared as sent, in its keys' order. `packages/shared/tests/jev.test.ts` pins the wording piece by
   // piece and the relay's snapshot can be rewritten with `vitest -u`, so this holds all of it in one place, as EVAL-2
   // froze it.
   const request = buildJevRequest(

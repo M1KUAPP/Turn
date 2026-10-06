@@ -70,7 +70,7 @@ test('names the date, the commit, and the files it read', () => {
   expect(report).toMatch(
     /^- \*\*Run:\*\* [A-Z][a-z]+ \d{1,2}, \d{4}, at commit `[0-9a-f]{7,}`( with uncommitted changes)?\.$/m
   )
-  expect(report).toContain('- **Lines:** the 8 in `packages/eval/test/fixture/lines.jsonl`.')
+  expect(report).toContain('- **Lines:** the 8 in `packages/eval/tests/fixture/lines.jsonl`.')
   expect(report).toContain("- **Bank:** the app's own, `apps/mobile/src/content/starter-bank.json`.")
 })
 

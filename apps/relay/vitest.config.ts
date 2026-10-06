@@ -28,5 +28,5 @@ export default defineConfig({
       }
     })
   ],
-  test: { setupFiles: ['./test/setup.ts'] }
+  test: { setupFiles: ['./tests/setup.ts'] }
 })
