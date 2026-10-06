@@ -5,7 +5,7 @@ name: Busy relay
 # degraded. Block the relay's host on the Mac by hand for this flow only, as
 # scripts/simulator-screenshots.sh did until bcb0849: point
 # turn-relay.m1ku-turn.workers.dev at 127.0.0.1 and ::1 in /etc/hosts, flush
-# the DNS cache, and remove the entries after. `apps/mobile/test/typed-remote.test.ts`
+# the DNS cache, and remove the entries after. `apps/mobile/tests/typed-remote.test.ts`
 # covers a success clearing the note, since the flow can't unblock the host
 # partway.
 ---

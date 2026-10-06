@@ -24,10 +24,10 @@ Plan files are the exception: when a change has one, it's committed on the chang
 ## Formatting
 
 - Prettier formats Markdown when you commit, through lint-staged, with the template's `.prettierrc.json`. Its default `proseWrap: "preserve"` keeps one line per paragraph and list item as you write it, tables stay padded, and code blocks in a language Prettier knows are formatted too. Prettier fixes wrapping, list markers and indentation, emphasis, blank lines, and table padding; contents lists, anchors, links, and the guide's other rules are yours to keep. `bun run lint:fix` formats by hand and `bun run lint` fails on unformatted files, but no CI job runs either. `bun run check` runs the lint, typecheck, and tests.
-- `bun run lint` first runs editorconfig-checker, which holds every file, generated ones included, to `.editorconfig`: no trailing whitespace, a final newline, and indents in multiples of 2. Align numbered lists as `1.  ` with 4-space continuation lines, and break a Markdown line with a trailing `\`, not two spaces. `bun run graph` fixes `graphify-out/graph.json` after graphify writes it.
+- `bun run lint` first runs editorconfig-checker, which holds every file, generated ones included, to `.editorconfig`: no trailing whitespace, a final newline, and indents in multiples of 2. Align numbered lists as `1.  ` with 4-space continuation lines, and break a Markdown line with a trailing `\`, not two spaces.
 - Prettier reads text between two `$` signs as math and keeps its line breaks, so write a paragraph with two prices on one line.
 - Keep one `@path` import per line in the root `AGENTS.md`. It's an import list, not a document, so the style guide doesn't apply and Prettier keeps its line breaks.
-- Leave the formatting of copied and generated Markdown alone: `docs/research/design/` (verbatim copies) and `graphify-out/` (graphify's output), which `.prettierignore` lists. `packages/eval/results.md` and `packages/eval/results-extras.md` come from `bun run eval`, so change `packages/eval/src/report.ts` rather than the reports.
+- Leave the formatting of copied and generated Markdown alone: `.prettierignore` lists `docs/research/design/`, which holds verbatim copies. `packages/eval/results.md` and `packages/eval/results-extras.md` come from `bun run eval`, so change `packages/eval/src/report.ts` rather than the reports.
 - The `check_md.py` gate that plans 0001 to 0027 run checks the old 80-column style. Don't run it.
 
 ## Markdown style
