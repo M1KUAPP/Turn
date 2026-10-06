@@ -1,4 +1,0 @@
-# Formatting-only commits, so git blame skips them: Prettier's proseWrap never reformat,
-# then the paragraphs it reads as math, joined by hand.
-acc20f15641d6cf58fe3422b44703e44b1d90e5d
-12ff516747c07b3e5c5823c7ddc1dbfd1a0d2299
