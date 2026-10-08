@@ -6,8 +6,8 @@
 <div align="center">
   <a href="https://github.com/M1KUAPP/Turn">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/readme/banner-dark.png">
-      <img src="docs/readme/banner-light.png" alt="Turn banner">
+      <source media="(prefers-color-scheme: dark)" srcset="/docs/readme/banner-dark.png">
+      <img src="/docs/readme/banner-light.png" alt="Turn banner">
     </picture>
   </a>
 
@@ -87,7 +87,7 @@ On September 23, 2026, at commit [`213f488`](https://github.com/M1KUAPP/Turn/com
 | embeddings            | 14 of 64, 22% (14% to 33%)   | 29 of 64, 45% (34% to 57%) | 0.34                 |
 | hosted decision model | 43 of 64, 67% (55% to 77%)   | 48 of 64, 75% (63% to 84%) | 0.72                 |
 
-Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. The [evaluation report](packages/eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
+Claude subagents wrote the lines, the starter bank, and the acceptable-reply labels at the team's direction. The [evaluation report](/packages/eval/results.md) has the intervals, the row's risk and coverage, latency, and who wrote what.
 
 Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 
@@ -98,51 +98,51 @@ Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 <table>
   <tr>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with the conversation strip, Quick phrases, and floating Type, Repeat, Up, and Down toolbar" width="100%">
+      <img src="/docs/readme/screenshots/speaking-grid.png" alt="Clinic speaking grid with the conversation strip, Quick phrases, and floating Type, Repeat, Up, and Down toolbar" width="100%">
       <br />
       <strong>Speaking Grid</strong> · The Clinic grid of saved phrases, with the conversation strip and floating toolbar.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/partner-consent.png" alt="Partner consent card explaining Listen mode, with an under-18 switch and They agreed and They said no buttons" width="100%">
+      <img src="/docs/readme/screenshots/partner-consent.png" alt="Partner consent card explaining Listen mode, with an under-18 switch and They agreed and They said no buttons" width="100%">
       <br />
       <strong>Partner Consent</strong> · The consent card the partner sees each time listening starts, with an under-18 switch.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/suggested-replies.png" alt="Clinic reply row offering It went well, It was hard, It’s getting worse, and I’m good, thanks after How was physio?" width="100%">
+      <img src="/docs/readme/screenshots/suggested-replies.png" alt="Clinic reply row offering It went well, It was hard, It’s getting worse, and I’m good, thanks after How was physio?" width="100%">
       <br />
       <strong>Suggested Replies</strong> · Saved phrases that answer what the partner said, in a row above the grid.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/phrase-bank-editor.png" alt="Chat phrase bank with starter phrases, pencil edit buttons, and controls to reorder or add phrases" width="100%">
+      <img src="/docs/readme/screenshots/phrase-bank-editor.png" alt="Chat phrase bank with starter phrases, pencil edit buttons, and controls to reorder or add phrases" width="100%">
       <br />
       <strong>Phrase Bank Editor</strong> · A category's starter phrases, with buttons to edit, reorder, or add phrases.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen paywall showing Keep Listen mode on, a US$24.99 one-time purchase, and Restore Purchases" width="100%">
+      <img src="/docs/readme/screenshots/turn-listen-paywall.png" alt="Turn Listen paywall showing Keep Listen mode on, a US$24.99 one-time purchase, and Restore Purchases" width="100%">
       <br />
       <strong>Turn Listen Paywall</strong> · A one-time purchase that keeps Listen mode on after 20 free partner lines.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/settings.png" alt="Settings with voice and speech rate, Companion Off, Listen service Working, places, phrase bank, and purchase options" width="100%">
+      <img src="/docs/readme/screenshots/settings.png" alt="Settings with voice and speech rate, Companion Off, Listen service Working, places, phrase bank, and purchase options" width="100%">
       <br />
       <strong>Settings</strong> · Voice and speech rate, companion, Listen service status, places, phrase bank, and purchases.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/companion-settings.png" alt="Companion settings with Ren, Suit, Office, and Ice face choices and Let it move" width="100%">
+      <img src="/docs/readme/screenshots/companion-settings.png" alt="Companion settings with Ren, Suit, Office, and Ice face choices and Let it move" width="100%">
       <br />
       <strong>Choose a Companion</strong> · Choose Ren, Suit, Office, or Ice, and whether the face moves.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/companion-home.png" alt="Ren beside Home’s floating toolbar, below the Quick phrase grid" width="100%">
+      <img src="/docs/readme/screenshots/companion-home.png" alt="Ren beside Home’s floating toolbar, below the Quick phrase grid" width="100%">
       <br />
       <strong>Home with Ren</strong> · Ren sits beside the floating toolbar and mouths what Turn says.
     </td>
     <td width="33%" valign="top" align="left">
-      <img src="docs/readme/screenshots/companion-partner-view.png" alt="Partner view with Ren, I have something to say in big text, and Say it again" width="100%">
+      <img src="/docs/readme/screenshots/companion-partner-view.png" alt="Partner view with Ren, I have something to say in big text, and Say it again" width="100%">
       <br />
       <strong>Partner View</strong> · Tapping the face shows your line in big text, with Say it again.
     </td>
@@ -155,23 +155,23 @@ Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 
 1.  **Pick a place.** On first launch, tap **Review** to edit the starter phrases, or **Not now** to try them as supplied. The speaking grid has about 150 phrases in categories. Tap **Home** at the top of the grid and choose **Clinic**.
 
-    <img src="docs/readme/steps/1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
+    <img src="/docs/readme/steps/1-pick-a-place.png" alt="Place menu with Home selected, Clinic, Shop, Out, and Edit places" width="300">
 
 2.  **Speak.** Tap any phrase to hear it in a system voice or your Personal Voice. Tap **Type** to speak typed words, which join the phrase bank. If iOS shows its typing tutorial, tap **Continue**.
 
-    <img src="docs/readme/steps/2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
+    <img src="/docs/readme/steps/2-speak.png" alt="Type composer with I need a break, the Speak button, and the iOS keyboard" width="300">
 
 3.  **Start Listen mode.** Tap **Listen**, then **Allow** to let Turn send your phrases and the partner's words to the hosted decision model. Show the partner the consent card and tap **They agreed**.
 
-    <img src="docs/readme/steps/3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
+    <img src="/docs/readme/steps/3-listen.png" alt="Before Listen mode starts sheet explaining what is sent to the AI service, with the privacy notice, Allow, and Not now" width="300">
 
 4.  **Answer.** In the Simulator build, the partner's line is typed; on an iPhone, Turn can also transcribe the partner's speech. Tap **Tap here to type what they say.**, enter "How was physio?", and tap **Send**. "It was hard" appears in the row of suggested replies, though the two share no content word. Tap it to say it; **Repeat** changes to **Stop** while Turn speaks.
 
-    <img src="docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard" width="300">
+    <img src="/docs/readme/steps/4-answer.png" alt="How was physio? above four saved replies including It was hard" width="300">
 
 5.  **Keep listening.** Listen mode answers 20 partner lines for free; the 21st opens the Turn Listen paywall. To buy it, open **Settings**, tap **Unlock Listen mode**, and complete the purchase in RevenueCat's Test Store. **Restore Purchases** in Settings refreshes the status after a reinstall.
 
-    <img src="docs/readme/steps/5-keep-listening.png" alt="Turn Listen paywall with the US$24.99 one-time price, Unlock Listen mode, Restore Purchases, and privacy notice" width="300">
+    <img src="/docs/readme/steps/5-keep-listening.png" alt="Turn Listen paywall with the US$24.99 one-time price, Unlock Listen mode, Restore Purchases, and privacy notice" width="300">
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -186,7 +186,7 @@ Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 - **A view for the partner.** Tap the face to show the spoken line in big text with **Say it again**. In each place’s sheet, **Show the face here** turns the face on or off for that place.
 - **A face that moves with you.** The live Live2D face breathes and its hair follows its physics when **Let it move** is on and Reduce Motion is off. Otherwise, it holds still.
 - **Listening that's agreed and visible.** Your permission before any phrase leaves the phone, the partner's consent card each time listening starts, a light while it listens, and a switch that keeps a partner under 18 from being heard.
-- **Private by default.** No accounts; the phrase bank stays on the phone, names become tags before a line leaves it, and no audio is recorded. The [privacy notice](PRIVACY.md) is also in the app, under **Settings** and **About**.
+- **Private by default.** No accounts; the phrase bank stays on the phone, names become tags before a line leaves it, and no audio is recorded. The [privacy notice](/PRIVACY.md) is also in the app, under **Settings** and **About**.
 - **Useful offline.** Without a network, or when the model service is slow or down, the phone ranks phrases itself and says Listen mode is degraded.
 - **Speech is never sold.** The grid, typing, saved phrases, and Personal Voice are free; Turn Listen is sold once.
 
@@ -195,24 +195,22 @@ Built for [RevenueCat Shipaton 2026](https://www.shipaton.com).
 ### Architecture
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/architecture-dark.svg">
-  <img src="docs/readme/architecture-light.svg" alt="Turn's architecture. On the iPhone, transcription passes the partner's line to the Turn app, which reads the phrase bank in SQLite and posts the line to a relay on Cloudflare Workers. The relay's per-user Durable Object counts the line, checks the listen entitlement with RevenueCat past the free lines, and asks the hosted decision model to rank 40 phrases. The person taps a reply, and the app speaks it to the partner.">
+  <source media="(prefers-color-scheme: dark)" srcset="/docs/readme/architecture-dark.svg">
+  <img src="/docs/readme/architecture-light.svg" alt="Turn architecture">
 </picture>
 
-The diagram is drawn with [archify](https://github.com/tt-a1i/archify) from [`architecture.json`](docs/readme/architecture.json).
-
-A partner's line becomes text on the iPhone, through Apple's SpeechAnalyzer or, where it isn't available, Expo's speech recognition. The app picks a shortlist of 40 phrases from the bank, swaps names for tags, and posts the line to the relay. The relay checks the request and a per-address rate limit, then the user's Durable Object counts the line, checks the `listen` entitlement with RevenueCat once the 20 free lines are used, and asks the hosted decision model to score the shortlist. When the relay fails or is switched off, the app ranks the shortlist on the phone.
+Made with [Archify](https://github.com/tt-a1i/archify) from [`architecture.json`](/docs/readme/architecture.json).
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
 ### Tech Stack
 
 - **Languages:** TypeScript and Swift.
-- **Frontend:** Expo SDK 57, React Native 0.86, React 19.2, Expo Router, expo-speech, and expo-speech-recognition; Swift Expo modules for on-device transcription with SpeechAnalyzer ([`turn-listen`](packages/turn-listen)) and Personal Voice ([`turn-voice`](packages/turn-voice)); and the shortlist and the relay's types in [`packages/shared`](packages/shared), with MiniSearch for the phone's own ranking.
-- **Backend:** the relay, a Cloudflare Worker with SQLite-backed Durable Objects, in [`apps/relay`](apps/relay).
+- **Frontend:** Expo SDK 57, React Native 0.86, React 19.2, Expo Router, expo-speech, and expo-speech-recognition; Swift Expo modules for on-device transcription with SpeechAnalyzer ([`turn-listen`](/packages/turn-listen)) and Personal Voice ([`turn-voice`](/packages/turn-voice)); and the shortlist and the relay's types in [`packages/shared`](/packages/shared), with MiniSearch for the phone's own ranking.
+- **Backend:** the relay, a Cloudflare Worker with SQLite-backed Durable Objects, in [`apps/relay`](/apps/relay).
 - **Data:** expo-sqlite on the phone.
 - **AI and services:** RevenueCat's `react-native-purchases` and `react-native-purchases-ui`, with the Test Store, and its REST API v2 on the relay; and, for the evaluation, Workers AI embeddings and Apple's sentence embeddings through Swift.
-- **Tooling:** Bun workspaces, Vitest, Prettier, Husky with commitlint, Maestro flows, and the evaluation's Bun scripts in [`packages/eval`](packages/eval).
+- **Tooling:** Bun workspaces, Vitest, Prettier, Husky with commitlint, Maestro flows, and the evaluation's Bun scripts in [`packages/eval`](/packages/eval).
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -232,7 +230,7 @@ Install the Simulator build to try Turn, or build it from source, with no keys o
 - [CocoaPods](https://cocoapods.org/) — to build from source.
 - [Cloudflare](https://www.cloudflare.com/) account — to run your own relay.
 - [RevenueCat](https://www.revenuecat.com/) project with a `listen` entitlement — to run your own relay.
-- [Hosted decision model](apps/relay/.dev.vars.example) API key — to run your own relay or the evaluation.
+- [Hosted decision model](/apps/relay/.dev.vars.example) API key — to run your own relay or the evaluation.
 - [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) credentials — to run the evaluation.
 - [Swift](https://www.swift.org/) — to run the evaluation's Apple sentence embeddings.
 
@@ -260,16 +258,16 @@ Install the Simulator build to try Turn, or build it from source, with no keys o
 
     For a physical iPhone, set `EXPO_PUBLIC_BUILD_KIND=device` and run `bunx expo run:ios --device`, with your own signing team.
 
-3.  **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`apps/relay/.dev.vars.example`](apps/relay/.dev.vars.example) to `apps/relay/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`apps/relay/wrangler.jsonc`](apps/relay/wrangler.jsonc). Then start the relay:
+3.  **With your own keys.** The app is configured with the team's public Test Store key and relay. To use your own, copy [`apps/relay/.dev.vars.example`](/apps/relay/.dev.vars.example) to `apps/relay/.dev.vars`, fill in its three secrets, and set your RevenueCat project and entitlement IDs in [`apps/relay/wrangler.jsonc`](/apps/relay/wrangler.jsonc). Then start the relay:
 
     ```sh
     cd apps/relay
     bunx wrangler dev --port 8787
     ```
 
-    In [`apps/mobile/.env`](apps/mobile/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
+    In [`apps/mobile/.env`](/apps/mobile/.env.example), set `EXPO_PUBLIC_RELAY_URL=http://localhost:8787` and your public Test Store key, then build the app as above. Secret keys stay in the relay.
 
-4.  **The evaluation.** Set the environment variables that [`packages/eval/src/report.ts`](packages/eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
+4.  **The evaluation.** Set the environment variables that [`packages/eval/src/report.ts`](/packages/eval/src/report.ts) documents, then run it from a clean commit. It makes paid model calls and writes a report with its plots.
 
     ```sh
     bun run eval --unnamed --out packages/eval/your-results.md
@@ -296,7 +294,7 @@ See [open issues](https://github.com/M1KUAPP/Turn/issues) for a full list of pro
 ## Team
 
 <a href="https://github.com/M1KUAPP/Turn/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=M1KUAPP/Turn" alt="Team" />
+  <img src="https://contrib.rocks/image?repo=M1KUAPP/Turn" alt="Turn team" />
 </a>
 
 Made with [contrib.rocks](https://contrib.rocks).
@@ -307,7 +305,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 ## License
 
-See [LICENSE](LICENSE) for more information.
+See [LICENSE](/LICENSE) for more information.
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
@@ -316,12 +314,12 @@ See [LICENSE](LICENSE) for more information.
 ## Acknowledgments
 
 - [RevenueCat Shipaton 2026](https://www.shipaton.com) — the event Turn was built for, organized by RevenueCat.
-- [archify](https://github.com/tt-a1i/archify) — architecture diagrams.
-- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/) — the font in the banner ([OFL](docs/assets/pitch/fonts/OFL.txt)).
+- [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/) — the font in the banner ([OFL](/docs/assets/pitch/fonts/OFL.txt)).
 - [Live2D](https://www.live2d.com/en/) — the companion's faces, drawn with Live2D: Ren is [Ren Foster](https://www.live2d.com/en/learn/sample/ren-foster/), © Live2D Inc., under the Live2D Free Material License; Suit and Office are [Suit Male](https://booth.pm/ja/items/5178925) and [Office Girl](https://booth.pm/ja/items/4304615) by Ooie; and Ice is [Ice Girl](https://booth.pm/ja/items/5975192), "Live2D: @TianYeLulu".
 - [Live2D Cubism SDK for Web](https://www.live2d.com/en/sdk/about/) — draws the live companion: Cubism Core under the Live2D Proprietary Software License, and the Cubism Framework under the Live2D Open Software License.
-- [Shields.io](https://shields.io)
+- [Archify](https://github.com/tt-a1i/archify)
 - [contrib.rocks](https://contrib.rocks)
+- [Shields.io](https://shields.io)
 
 <p align="right"><a href="#readme-top">&uarr;</a></p>
 
