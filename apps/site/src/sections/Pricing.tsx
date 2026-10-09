@@ -91,7 +91,7 @@ export function Pricing() {
 
         <Reveal as="blockquote" className="pricing-quote" delay={120}>
           <p className="serif pricing-quote-text">“Paying monthly to be heard felt wrong.”</p>
-          <cite className="caps pricing-quote-byline">Team M1KU</cite>
+          <cite className="caps pricing-quote-byline">The Turn team</cite>
         </Reveal>
       </div>
     </section>
