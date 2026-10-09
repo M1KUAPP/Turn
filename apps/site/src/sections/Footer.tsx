@@ -112,7 +112,7 @@ export function Footer() {
               </li>
               <li>
                 <IconPin />
-                <span>Made in Malaysia by Team M1KU</span>
+                <span>Made in Malaysia</span>
               </li>
             </ul>
           </div>
@@ -145,7 +145,7 @@ export function Footer() {
         </div>
 
         <div className="wrap foot-legal">
-          <p>© 2026 Team M1KU. Built for RevenueCat Shipaton 2026.</p>
+          <p>© 2026 M1KUAPP. Built for RevenueCat Shipaton 2026.</p>
           <nav aria-label="Legal">
             <a href={LINKS.privacy} target="_blank" rel="noreferrer">
               Privacy notice
